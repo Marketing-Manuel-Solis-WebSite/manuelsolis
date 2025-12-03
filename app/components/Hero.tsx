@@ -36,7 +36,6 @@ export default function HeroProfessional() {
     })
   };
 
-  // Función para obtener el tamaño correcto según el logo
   const getLogoSize = (logoName: string) => {
     if (logoName.includes('aba-state')) {
       return { height: 80, width: 180, containerHeight: 'h-20' };
@@ -50,33 +49,30 @@ export default function HeroProfessional() {
     return { height: 120, width: 240, containerHeight: 'h-28' };
   };
 
-  // Función para obtener margen adicional antes de ciertos logos
   const getExtraMargin = (logoName: string) => {
-    if (logoName.includes('illinois-bar')) {
-      return 'ml-16';
-    }
-    if (logoName.includes('nm-state')) {
-      return 'ml-36';
-    }
-    if (logoName.includes('aba-state')) {
-      return 'ml-20'; // Juntar más ABA con NM
-    }
-    if (logoName.includes('pr-state')) {
-      return 'ml-20';
-    }
+    if (logoName.includes('illinois-bar')) return 'ml-16';
+    if (logoName.includes('nm-state')) return 'ml-36';
+    if (logoName.includes('aba-state')) return 'ml-20';
+    if (logoName.includes('pr-state')) return 'ml-20';
     return '';
   };
+
+  // --- LOGICA DEL CARRUSEL ---
+  const marqueeItems = [
+    ...associations, ...associations, 
+    ...associations, ...associations, 
+    ...associations, ...associations
+  ];
 
   return (
     <section 
       ref={containerRef}
-      className={`relative min-h-screen w-full flex flex-col justify-center bg-[#001540] overflow-hidden ${font.className} pt-36 lg:pt-44 pb-64`}
+      className={`relative min-h-screen w-full flex flex-col justify-center bg-[#001540] overflow-hidden ${font.className} pt-36 lg:pt-44 pb-72`}
     >
       {/* 1. FONDO ATMOSFÉRICO */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         
-        {/* --- 2. FONDO DE LA "N" GIGANTE --- */}
         <motion.div
             initial={{ x: "60%" }} 
             animate={{ x: "-160%" }} 
@@ -93,7 +89,6 @@ export default function HeroProfessional() {
             </span>
         </motion.div>
 
-        {/* Luces ambientales */}
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -109,40 +104,52 @@ export default function HeroProfessional() {
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10 flex-grow flex flex-col justify-center">
-        {/* Layout Principal */}
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
+        {/* CORRECCIÓN: flex-col-reverse para móvil (Texto arriba, Imagen abajo), grid para desktop (Imagen izq, Texto der) */}
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-12 items-center">
           
-          {/* --- IZQUIERDA: IMAGEN (Cols 5) --- */}
+          {/* --- IZQUIERDA (Desktop) / ABAJO (Móvil): IMAGEN (Cols 5) --- */}
           <motion.div 
-            className="lg:col-span-5 relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px]"
+            className="lg:col-span-5 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
           >
-            {/* Glow azul intenso detrás */}
             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-3xl rounded-full z-0 opacity-80" />
             
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 50, rotateY: 5, x: 0 }}
-              animate={{ opacity: 1, scale: 1.75, y: -80, x: -90, rotateY: 0 }}
+              animate={{ 
+                opacity: 1, 
+                // Ajustamos escala y posición para que en móvil no se corte
+                scale: [1, 1.75], // Animación genérica, ajustada abajo con style para responsividad
+                y: -80, 
+                x: -90, 
+                rotateY: 0 
+              }}
               transition={{ duration: 1.5, ease: "easeOut" }}
               className="relative z-10 w-full h-full origin-bottom"
+              // Sobrescribimos la animación con CSS para control exacto en móvil vs desktop
+              style={{ 
+                 transform: 'scale(1.1) translateY(-20px) translateX(0px)', // Móvil: más pequeño, centrado
+              }}
             >
-               {/* Imagen FIJA */}
-               <div className="relative w-full h-full">
-                 <Image
-                   src="/manuelsolisl.png"
-                   alt="Abogado Manuel Solis"
-                   fill
-                   className="object-contain object-bottom drop-shadow-[0_0_30px_rgba(56,189,248,0.6)]"
-                   priority
-                 />
+                {/* Truco: Usamos una clase lg: explícita para restaurar la transformación de escritorio */}
+               <div className="w-full h-full lg:scale-[1.75] lg:-translate-y-20 lg:-translate-x-24 transition-transform duration-1000 origin-bottom">
+                  <div className="relative w-full h-full">
+                    <Image
+                      src="/manuelsolisl.png"
+                      alt="Abogado Manuel Solis"
+                      fill
+                      className="object-contain object-bottom drop-shadow-[0_0_30px_rgba(56,189,248,0.6)]"
+                      priority
+                    />
+                  </div>
                </div>
             </motion.div>
 
-            {/* --- CUADRO FLOTANTE: 35+ AÑOS --- */}
+            {/* BADGE FLOTANTE: Centrado en móvil, Derecha en Desktop */}
             <motion.div
                 initial={{ opacity: 0, x: 20 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ delay: 0.8, duration: 1 }}
-                className="absolute bottom-10 right-[-20px] z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-2xl text-right min-w-[180px]"
+                className="absolute bottom-10 left-0 right-0 mx-auto w-fit lg:mx-0 lg:left-auto lg:right-[-20px] z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-2xl text-right min-w-[180px]"
             >
                 <div className="group">
                   <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 justify-end">
@@ -157,8 +164,9 @@ export default function HeroProfessional() {
           </motion.div>
 
 
-          {/* --- DERECHA: TEXTO (Cols 7) --- */}
-          <div className="lg:col-span-7 space-y-12 pl-0 lg:pl-48 relative z-20 -mt-20">
+          {/* --- DERECHA (Desktop) / ARRIBA (Móvil): TEXTO (Cols 7) --- */}
+          {/* Agregado w-full y lg:-mt-20 (solo negativo en desktop) */}
+          <div className="lg:col-span-7 w-full space-y-12 pl-0 lg:pl-48 relative z-20 lg:-mt-20">
             
             <motion.div 
               initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.5 }}
@@ -173,18 +181,11 @@ export default function HeroProfessional() {
                   </motion.span>
                 </span>
                 
-                {/* --- Inmigración (Dorado) --- */}
                 <span className="block overflow-hidden pb-4 pr-4 perspective-[400px]">
-                  {/* CORRECCIÓN: Se agregó 'pr-6' (padding-right-6) AL ELEMENTO INTERNO (motion.span).
-                     Esto fuerza a que el ancho del elemento sea mayor que el texto,
-                     asegurando que la 'n' y su sombra queden dentro del área visible
-                     y no sean cortadas por el overflow-hidden del padre.
-                  */}
                   <motion.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-medium relative w-fit pr-6">
                     <span className="text-[#B2904D] drop-shadow-2xl">
                       {language === 'es' ? 'Inmigración' : 'Immigration'}
                     </span>
-                    {/* Rayo de luz */}
                     <motion.span 
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
                       animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
@@ -195,15 +196,13 @@ export default function HeroProfessional() {
                   </motion.span>
                 </span>
                 
-                {/* --- & (Blanco) y Accidentes (Dorado) --- */}
                 <span className="block overflow-hidden perspective-[400px]">
                   <motion.div custom={2} variants={textRevealVariant} initial="hidden" animate="visible" className="flex items-center gap-4 relative">
                     <span className="text-3xl md:text-5xl font-thin text-white align-middle">&</span>
-                    <span className="font-light relative w-fit pr-6"> {/* También aplicado aquí por seguridad */}
+                    <span className="font-light relative w-fit pr-6">
                         <span className="text-[#B2904D] drop-shadow-2xl">
                           {language === 'es' ? 'Accidentes' : 'Accidents'}
                         </span>
-                        {/* Rayo de luz */}
                         <motion.span 
                           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
                           animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
@@ -234,7 +233,6 @@ export default function HeroProfessional() {
               className="flex flex-wrap items-center gap-16 -mt-10 pl-4 drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]"
             >
               <div className="group">
-                {/* 50,000 Grande */}
                 <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 group-hover:to-sky-400 transition-all duration-500">
                   <span className="text-7xl lg:text-9xl font-bold tracking-tighter">50,000</span>
                   <span className="text-5xl font-thin text-[#B2904D] ml-2 group-hover:rotate-12 transition-transform">+</span>
@@ -250,17 +248,17 @@ export default function HeroProfessional() {
       </div>
 
       {/* FOOTER: MARQUEE ASOCIACIONES */}
-      <div className="absolute bottom-0 left-0 right-0 z-30 w-full border-t border-white/5 bg-transparent pt-24 pb-16">
+      <div className="absolute bottom-0 left-0 right-0 z-30 w-full border-t border-white/5 bg-transparent pt-12 pb-24">
         <div className="relative w-full overflow-hidden mask-linear-fade">
-           <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#001540] to-transparent z-20" />
-           <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#001540] to-transparent z-20" />
+           <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#001540] to-transparent z-20" />
+           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#001540] to-transparent z-20" />
            
            <motion.div 
-             className="flex items-center gap-80 whitespace-nowrap pl-16" 
+             className="flex items-center gap-80 whitespace-nowrap" 
              animate={{ x: ["0%", "-33.333%"] }}
-             transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
            >
-             {[...associations, ...associations, ...associations].map((assoc, idx) => {
+             {marqueeItems.map((assoc, idx) => {
                const size = getLogoSize(assoc.logo);
                const extraMargin = getExtraMargin(assoc.logo);
                
@@ -284,7 +282,7 @@ export default function HeroProfessional() {
 
       <style jsx global>{`
         .mask-linear-fade {
-          mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
       `}</style>
     </section>

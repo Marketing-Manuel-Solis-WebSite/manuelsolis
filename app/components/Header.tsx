@@ -88,11 +88,11 @@ export default function HeaderProfessional() {
       submenu: language === 'es'
         ? [
           { name: 'Nuestro Equipo', href: `/${language}/abogados` },
-          { name: 'Sobre Nosotros', href: `/${language}/sobre-nosotros` },
+          { name: 'Sobre Nosotros', href: `/${language}/nosotros` },
         ]
         : [
           { name: 'Our Team', href: `/${language}/abogados` },
-          { name: 'About Us', href: `/${language}/sobre-nosotros` },
+          { name: 'About Us', href: `/${language}/nosotros` },
         ]
     },
     { 

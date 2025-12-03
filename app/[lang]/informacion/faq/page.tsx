@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { useLanguage } from '../../../context/LanguageContext'
 import { motion, AnimatePresence } from 'framer-motion'; 
 import { Outfit } from 'next/font/google';
+import Image from 'next/image';
 
 // --- FUENTE Y COLORES ---
 const font = Outfit({ 
@@ -81,7 +82,7 @@ function Accordion({ item, lang }: { item: FaqItemBilingual, lang: 'es' | 'en' }
   );
 }
 
-// --- COMPONENTE TÍTULO DE SECCIÓN (CORREGIDO: Definido fuera del componente principal) ---
+// --- COMPONENTE TÍTULO DE SECCIÓN ---
 const SectionTitle = ({ title }: { title: string }) => (
   <div className="mb-8 flex items-center gap-4">
      <div className="h-px bg-gradient-to-r from-transparent via-[#B2904D] to-transparent w-full opacity-50"></div>
@@ -105,6 +106,11 @@ const interfaceTexts = {
     immigrationLaw: { es: 'Ley de Inmigración', en: 'Immigration Law' },
     insuranceLaw: { es: 'Ley de Seguros', en: 'Insurance Law' },
   },
+  contact: {
+    title1: { es: '¿Aún tienes', en: 'Still have' },
+    title2: { es: 'dudas?', en: 'questions?' },
+    subtitle: { es: 'Contáctanos y te responderemos lo antes posible', en: 'Contact us and we will respond as soon as possible' },
+  }
 };
 
 // --- DATA ---
@@ -122,7 +128,7 @@ const faqDataBilingual = {
   criminalLaw: [
     {
       title: { es: "¿Cómo sé que he sido arrestado?", en: "How do I know I've been arrested?" },
-      content: { es: "Usted está bajo arresto si un oficial de policía lo detiene bajo “custodia”. Esto significa que usted cree razonablemente que no es libre de alejarse de la escena del contacto con el oficial. No todo contacto con un oficial de policía significa que está bajo arresto. Sin duda, si le ponen esposas, está bajo arresto.", en: "You are **under arrest** if a police officer detains you under 'custody'. This means you reasonably believe you are not free to walk away from the scene of the contact with the officer. Not all contact with a police officer means you are under arrest. Without a doubt, if you are handcuffed, you are under arrest." },
+      content: { es: "Usted está bajo arresto si un oficial de policía lo detiene bajo 'custodia'. Esto significa que usted cree razonablemente que no es libre de alejarse de la escena del contacto con el oficial. No todo contacto con un oficial de policía significa que está bajo arresto. Sin duda, si le ponen esposas, está bajo arresto.", en: "You are **under arrest** if a police officer detains you under 'custody'. This means you reasonably believe you are not free to walk away from the scene of the contact with the officer. Not all contact with a police officer means you are under arrest. Without a doubt, if you are handcuffed, you are under arrest." },
     },
     {
       title: { es: "¿Cuáles son las consecuencias de manejar ebrio?", en: "What are the consequences of driving while intoxicated (DWI)?" },
@@ -214,15 +220,15 @@ const faqDataBilingual = {
     },
     {
       title: { es: "¿Qué es el Boletín de Visas?", en: "What is the Visa Bulletin?" },
-      content: { es: "El Boletín de Visas, emitido cada mes por el Departamento de Estado de EE. UU., muestra cuáles solicitudes de “green card” pueden avanzar, en función de cuándo se presentó originalmente la petición I-130 que inicia el proceso de la “green card”. El Boletín de Visas existe porque el Congreso limita la cantidad de “green cards” que se pueden emitir cada año en ciertas categorías, lo que ha creado varios retrasos.", en: "The **Visa Bulletin**, issued each month by the U.S. Department of State, shows which 'green card' applications can move forward, based on when the I-130 petition that starts the 'green card' process was originally filed. The Visa Bulletin exists because Congress limits the number of 'green cards' that can be issued each year in certain categories, which has created various backlogs." },
+      content: { es: "El Boletín de Visas, emitido cada mes por el Departamento de Estado de EE. UU., muestra cuáles solicitudes de 'green card' pueden avanzar, en función de cuándo se presentó originalmente la petición I-130 que inicia el proceso de la 'green card'. El Boletín de Visas existe porque el Congreso limita la cantidad de 'green cards' que se pueden emitir cada año en ciertas categorías, lo que ha creado varios retrasos.", en: "The **Visa Bulletin**, issued each month by the U.S. Department of State, shows which 'green card' applications can move forward, based on when the I-130 petition that starts the 'green card' process was originally filed. The Visa Bulletin exists because Congress limits the number of 'green cards' that can be issued each year in certain categories, which has created various backlogs." },
     },
     {
-      title: { es: "¿Qué es una “Green Card” por matrimonio?", en: "What is a Marriage Green Card?" },
-      content: { es: "La mayoría de los ciudadanos estadounidenses y los titulares de la “green card” de los Estados Unidos tienen derecho por ley a patrocinar a sus cónyuges para una “green card”, también conocida como “estado de residente permanente”. El costo total, el tiempo de espera y otros detalles del proceso de la green card de matrimonio varían basado en varios factores.", en: "Most U.S. citizens and U.S. 'green card' holders are entitled by law to sponsor their spouses for a 'green card', also known as 'lawful permanent resident status'. The total cost, waiting time, and other details of the marriage green card process vary based on several factors." },
+      title: { es: "¿Qué es una 'Green Card' por matrimonio?", en: "What is a Marriage Green Card?" },
+      content: { es: "La mayoría de los ciudadanos estadounidenses y los titulares de la 'green card' de los Estados Unidos tienen derecho por ley a patrocinar a sus cónyuges para una 'green card', también conocida como 'estado de residente permanente'. El costo total, el tiempo de espera y otros detalles del proceso de la green card de matrimonio varían basado en varios factores.", en: "Most U.S. citizens and U.S. 'green card' holders are entitled by law to sponsor their spouses for a 'green card', also known as 'lawful permanent resident status'. The total cost, waiting time, and other details of the marriage green card process vary based on several factors." },
     },
     {
       title: { es: "¿Qué es una Green Card (Tarjeta Verde)?", en: "What is a Green Card?" },
-      content: { es: "Una Green Card “tarjeta verde”, emitida por los Servicios de Ciudadanía e Inmigración de los Estados Unidos (USCIS), proporciona prueba de la condición de residente permanente legal, con autorización para vivir y trabajar en cualquier lugar de los Estados Unidos. La mayoría de las Green Card deben renovarse cada 10 años, pero las Green Card condicionales basadas en matrimonio o inversiones deben reemplazarse después de los primeros 2 años.", en: "A **Green Card** (or 'tarjeta verde'), issued by the U.S. Citizenship and Immigration Services (USCIS), provides proof of lawful permanent resident status, with authorization to live and work anywhere in the United States. Most Green Cards must be renewed every 10 years, but conditional Green Cards based on marriage or investment must be replaced after the first 2 years." },
+      content: { es: "Una Green Card 'tarjeta verde', emitida por los Servicios de Ciudadanía e Inmigración de los Estados Unidos (USCIS), proporciona prueba de la condición de residente permanente legal, con autorización para vivir y trabajar en cualquier lugar de los Estados Unidos. La mayoría de las Green Card deben renovarse cada 10 años, pero las Green Card condicionales basadas en matrimonio o inversiones deben reemplazarse después de los primeros 2 años.", en: "A **Green Card** (or 'tarjeta verde'), issued by the U.S. Citizenship and Immigration Services (USCIS), provides proof of lawful permanent resident status, with authorization to live and work anywhere in the United States. Most Green Cards must be renewed every 10 years, but conditional Green Cards based on marriage or investment must be replaced after the first 2 years." },
     },
     {
       title: { es: "Crucé ilegalmente, pero tengo un familiar que me puede pedir. ¿Me pueden detener?", en: "I crossed illegally, but I have a relative who can petition for me. Can I be detained?" },
@@ -321,11 +327,21 @@ export default function PreguntasFrecuentesPage() {
          />
          
          {/* N Gigante (Opacidad muy baja para no molestar) */}
-         <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
+         <motion.div
+            initial={{ x: "60%" }} 
+            animate={{ x: "-160%" }} 
+            transition={{ 
+              duration: 80, 
+              repeat: Infinity, 
+              ease: "linear",
+              repeatType: "loop"
+            }}
+            className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden"
+         >
             <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
-               N/\
+               N/\И/\
             </span>
-         </div>
+         </motion.div>
       </div>
       
       {/* =========================================================================
@@ -333,26 +349,154 @@ export default function PreguntasFrecuentesPage() {
       ========================================================================= */}
       
       {/* --- HERO SECTION --- */}
-      <section className="relative pt-44 pb-16 z-10 text-center px-4">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
-        >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-thin text-white mb-6 drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]">
-            {t('hero.title').split(' ').map((word, index) => (
-              <React.Fragment key={index}>
-                  {word === 'FRECUENTES' || word === 'QUESTIONS' ? <span className='font-bold text-[#B2904D]'>{word}</span> : word}
-                  {' '}
-              </React.Fragment>
-            ))}
-          </h1>
-          <div className="w-24 h-1 bg-[#B2904D] mx-auto rounded-full shadow-[0_0_15px_#B2904D] mb-8" />
-          <p className="text-xl text-blue-100/70 font-light max-w-2xl mx-auto">
-            {t('hero.subtitle')}
-          </p>
-        </motion.div>
+      <section className="relative pt-44 pb-32 z-10 px-6 lg:px-12">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            
+            {/* --- IZQUIERDA: LOGO (Cols 5) --- */}
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="lg:col-span-5 relative h-[400px] lg:h-[600px] flex items-center justify-center"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-transparent to-transparent blur-3xl rounded-full z-0 opacity-80" />
+              
+              <motion.div
+                initial={{ scale: 0.8, rotateY: -15 }}
+                animate={{ scale: 1, rotateY: 0 }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+                className="relative z-10 w-full max-w-md"
+              >
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <Image
+                    src="/LogoInformacion.png"
+                    alt="Logo Información"
+                    width={500}
+                    height={500}
+                    className="object-contain drop-shadow-[0_0_40px_rgba(178,144,77,0.6)] hover:drop-shadow-[0_0_60px_rgba(178,144,77,0.8)] transition-all duration-500"
+                    priority
+                  />
+                </div>
+              </motion.div>
+
+              {/* Estadística decorativa */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ delay: 0.8, duration: 1 }}
+                className="absolute bottom-10 left-0 z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-2xl"
+              >
+                <div className="group">
+                  <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50">
+                    <span className="text-5xl font-extralight tracking-tighter">100</span> 
+                    <span className="text-4xl font-thin text-[#B2904D] ml-1 group-hover:rotate-12 transition-transform">+</span>
+                  </div>
+                  <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
+                    {lang === 'es' ? 'Preguntas Respondidas' : 'Questions Answered'}
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* --- DERECHA: TEXTO (Cols 7) --- */}
+            <div className="lg:col-span-7 space-y-10 pl-0 lg:pl-24 relative z-20">
+              
+              <motion.div 
+                initial={{ scaleY: 0 }} 
+                animate={{ scaleY: 1 }} 
+                transition={{ duration: 1.5, delay: 0.5 }}
+                className="absolute left-12 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-sky-500/30 to-transparent origin-top hidden lg:block" 
+              />
+
+              <div className="relative">
+                <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.95] font-thin text-white tracking-tight">
+                  <span className="block overflow-hidden pb-2 perspective-[400px]">
+                    <motion.span 
+                      initial={{ y: "100%", rotateX: -20, opacity: 0 }}
+                      animate={{ y: 0, rotateX: 0, opacity: 1 }}
+                      transition={{ duration: 1.2, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
+                      className="block text-white/90"
+                    >
+                      {lang === 'es' ? 'PREGUNTAS' : 'FREQUENTLY'}
+                    </motion.span>
+                  </span>
+                  
+                  <span className="block overflow-hidden pb-4 perspective-[400px]">
+                    <motion.span 
+                      initial={{ y: "100%", rotateX: -20, opacity: 0 }}
+                      animate={{ y: 0, rotateX: 0, opacity: 1 }}
+                      transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
+                      className="block font-medium relative w-fit pr-6"
+                    >
+                      <span className="text-[#B2904D] drop-shadow-2xl">
+                        {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
+                      </span>
+                      <motion.span 
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
+                        animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
+                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
+                      >
+                        {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
+                      </motion.span>
+                    </motion.span>
+                  </span>
+
+                  {lang === 'en' && (
+                    <span className="block overflow-hidden perspective-[400px]">
+                      <motion.span 
+                        initial={{ y: "100%", rotateX: -20, opacity: 0 }}
+                        animate={{ y: 0, rotateX: 0, opacity: 1 }}
+                        transition={{ duration: 1.2, delay: 0.45, ease: [0.25, 1, 0.5, 1] }}
+                        className="block font-medium relative w-fit pr-6"
+                      >
+                        <span className="text-[#B2904D] drop-shadow-2xl">
+                          QUESTIONS
+                        </span>
+                        <motion.span 
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
+                          animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
+                          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2, delay: 0.5 }}
+                        >
+                          QUESTIONS
+                        </motion.span>
+                      </motion.span>
+                    </span>
+                  )}
+                </h1>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 1 }}
+                className="relative"
+              >
+                <div className="w-32 h-1 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full shadow-[0_0_20px_#B2904D] mb-6" />
+                <p className="text-xl text-white/70 font-extralight max-w-xl leading-relaxed pl-4 border-l border-white/10">
+                  {t('hero.subtitle')}
+                </p>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
+                className="flex flex-wrap items-center gap-12 pl-4"
+              >
+                <div className="group">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-[#B2904D] shadow-[0_0_10px_#B2904D] group-hover:shadow-[0_0_20px_#B2904D] transition-all" />
+                    <p className="text-sm text-white/60 uppercase tracking-[0.2em] font-medium group-hover:text-white/90 transition-colors">
+                      {lang === 'es' ? 'Respuestas Claras y Profesionales' : 'Clear and Professional Answers'}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+            </div>
+          </div>
+        </div>
       </section>
       
       {/* --- SECCIONES DE ACORDEÓN --- */}
