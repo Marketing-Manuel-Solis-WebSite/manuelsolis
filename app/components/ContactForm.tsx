@@ -243,8 +243,8 @@ export default function ContactForm() {
                   </div>
                 </div>
                 <label htmlFor="consent" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
-                  {t('Autorizo recibir comunicaciones del Law Office of Manuel Solis para evaluar mi caso. Ver', 'I authorize receiving communications from the Law Office of Manuel Solis to evaluate my case. See')}{' '}
-                  <a href="#" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Privacidad', 'Privacy')}</a>.
+                  {t('Acepto recibir mensajes de texto de marketing y otros mensajes del Law Office of Manuel Solis al número proporcionado. Pueden aplicarse tarifas de mensajes y datos. El consentimiento no es una condición para recibir servicios. Para más información, por favor revise nuestra', 'I agree to receive marketing text messages and other messages from the Law Office of Manuel Solis at the number provided. Message and data rates may apply. Consent is not a condition of receiving services. For more information, please review our')}{' '}
+                  <a href="/privacidad" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Policy')}</a>.
                 </label>
               </motion.div>
 

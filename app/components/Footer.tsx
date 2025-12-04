@@ -23,12 +23,10 @@ export default function Footer() {
 
   // --- DATOS ---
   const footerLinks = [
-    { name: language === 'es' ? 'INICIO' : 'HOME', href: `/${language}` },
-    { name: language === 'es' ? 'AREAS LEGALES' : 'LEGAL AREAS', href: `/${language}/servicios` },
-    { name: language === 'es' ? 'TESTIMONIALES' : 'TESTIMONIALS', href: `/${language}/Testimonios` },
+    { name: language === 'es' ? 'INICIO' : 'HOME', href: `/${language}` },    { name: language === 'es' ? 'TESTIMONIALES' : 'TESTIMONIALS', href: `/${language}/Testimonios` },
     { name: language === 'es' ? 'ABOGADOS' : 'ATTORNEYS', href: `/${language}/abogados` },
     { name: language === 'es' ? 'OFICINAS' : 'OFFICES', href: `/${language}/oficinas` },
-    { name: language === 'es' ? 'INFORMACIÓN' : 'INFORMATION', href: `/${language}/noticias` },
+    { name: language === 'es' ? 'INFORMACIÓN' : 'INFORMATION', href: `/${language}/nosotros` },
   ]
 
   const socialLinks = [
