@@ -104,12 +104,11 @@ export default function HeroProfessional() {
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10 flex-grow flex flex-col justify-center">
-        {/* CORRECCIÓN: flex-col-reverse para móvil (Texto arriba, Imagen abajo), grid para desktop (Imagen izq, Texto der) */}
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-12 items-center">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* --- IZQUIERDA (Desktop) / ABAJO (Móvil): IMAGEN (Cols 5) --- */}
+          {/* --- IZQUIERDA (Desktop) / ABAJO (Móvil): IMAGEN --- */}
           <motion.div 
-            className="lg:col-span-5 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
+            className="lg:col-span-6 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-3xl rounded-full z-0 opacity-80" />
             
@@ -117,21 +116,19 @@ export default function HeroProfessional() {
               initial={{ opacity: 0, scale: 0.9, y: 50, rotateY: 5, x: 0 }}
               animate={{ 
                 opacity: 1, 
-                // Ajustamos escala y posición para que en móvil no se corte
-                scale: [1, 1.75], // Animación genérica, ajustada abajo con style para responsividad
-                y: -80, 
-                x: -90, 
+                scale: 1, 
+                y: -80, // Mantiene la imagen subida
+                x: 0, 
                 rotateY: 0 
               }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="relative z-10 w-full h-full origin-bottom"
-              // Sobrescribimos la animación con CSS para control exacto en móvil vs desktop
-              style={{ 
-                 transform: 'scale(1.1) translateY(-20px) translateX(0px)', // Móvil: más pequeño, centrado
-              }}
+              className="relative z-10 w-full h-full origin-bottom flex justify-center"
             >
-                {/* Truco: Usamos una clase lg: explícita para restaurar la transformación de escritorio */}
-               <div className="w-full h-full lg:scale-[1.75] lg:-translate-y-20 lg:-translate-x-24 transition-transform duration-1000 origin-bottom">
+               {/* CAMBIO AQUÍ: 
+                  Agregué 'lg:-translate-x-16' para mover la imagen a la izquierda SOLO en computadora.
+                  En móvil (sin lg:) se mantiene centrada y bien.
+               */}
+               <div className="w-full h-full lg:scale-[1.3] lg:-translate-x-16 lg:origin-bottom transition-transform duration-1000">
                   <div className="relative w-full h-full">
                     <Image
                       src="/manuelsolisl.png"
@@ -144,12 +141,12 @@ export default function HeroProfessional() {
                </div>
             </motion.div>
 
-            {/* BADGE FLOTANTE: Centrado en móvil, Derecha en Desktop */}
+            {/* BADGE FLOTANTE */}
             <motion.div
                 initial={{ opacity: 0, x: 20 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ delay: 0.8, duration: 1 }}
-                className="absolute bottom-10 left-0 right-0 mx-auto w-fit lg:mx-0 lg:left-auto lg:right-[-20px] z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-2xl text-right min-w-[180px]"
+                className="absolute bottom-10 left-0 right-0 mx-auto w-fit lg:mx-0 lg:left-auto lg:right-0 z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-2xl text-right min-w-[180px]"
             >
                 <div className="group">
                   <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 justify-end">
@@ -164,13 +161,12 @@ export default function HeroProfessional() {
           </motion.div>
 
 
-          {/* --- DERECHA (Desktop) / ARRIBA (Móvil): TEXTO (Cols 7) --- */}
-          {/* Agregado w-full y lg:-mt-20 (solo negativo en desktop) */}
-          <div className="lg:col-span-7 w-full space-y-12 pl-0 lg:pl-48 relative z-20 lg:-mt-20">
+          {/* --- DERECHA (Desktop) / ARRIBA (Móvil): TEXTO --- */}
+          <div className="lg:col-span-6 w-full space-y-12 pl-0 lg:pl-12 relative z-20 lg:-mt-20">
             
             <motion.div 
               initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.5 }}
-              className="absolute left-20 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-sky-500/30 to-transparent origin-top hidden lg:block" 
+              className="absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-sky-500/30 to-transparent origin-top hidden lg:block" 
             />
 
             <div className="relative">
