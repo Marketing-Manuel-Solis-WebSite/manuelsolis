@@ -1,208 +1,287 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Newspaper, Hammer, ArrowRight, Construction, HardHat, Compass } from 'lucide-react';
-import Link from 'next/link';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import React from 'react'
+import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import ContactForm from '../../components/ContactForm' 
+import { useLanguage } from '../../context/LanguageContext'
+import { motion, Variants } from 'framer-motion' 
+import { Outfit } from 'next/font/google'
+import Image from 'next/image'
+import { Landmark, MapPin } from 'lucide-react' 
 
-export default function NewsComingSoon() {
+// --- FUENTE ---
+const font = Outfit({ 
+  subsets: ['latin'], 
+  weight: ['100', '300', '400', '500', '700'] 
+})
+
+// --- TEXTOS UI (SANEADOS: SIN MÉXICO) ---
+const interfaceTexts = {
+  hero: {
+    title: { es: 'NUESTRA HISTORIA', en: 'OUR STORY' },
+    subtitle: { es: 'Un legado de más de 35 años defendiendo los derechos de los inmigrantes en Estados Unidos.', en: 'A legacy of over 35 years defending immigrant rights in the United States.' },
+  },
+  mission: {
+    solis: {
+        es: '**Law Offices of Manuel Solis** fue fundado por el abogado **Manuel Solis**, un defensor incansable de los derechos de los inmigrantes. Con más de **35 años de experiencia** y un profundo conocimiento de las leyes de inmigración, el despacho se ha consolidado como un referente legal.',
+        en: '**Law Offices of Manuel Solis** was founded by attorney **Manuel Solis**, a tireless advocate for immigrant rights. With over **35 years of experience** and a deep knowledge of immigration laws, the firm has established itself as a legal benchmark.'
+    },
+    commitment: {
+        es: 'Nuestro compromiso es brindar **asesoría legal confiable, humana y cercana** a la comunidad, luchando incansablemente por mantener a las familias unidas y proteger sus derechos en este país.',
+        en: 'Our commitment is to provide **reliable, humane, and close legal advice** to the community, fighting tirelessly to keep families together and protect their rights in this country.'
+    }
+  },
+  usaOffices: {
+    title: { es: 'NUESTRAS OFICINAS', en: 'OUR OFFICES' },
+    locations: 'Houston, Dallas, Harlingen, El Paso (**Texas**), Chicago (**Illinois**), Los Ángeles (**California**), Denver (**Colorado**), Memphis (**Tennessee**).',
+    description: {
+        es: 'Contamos con **8 oficinas físicas** estratégicamente ubicadas en estados clave de la unión americana para ofrecer una representación accesible y directa a nuestros clientes.',
+        en: 'We have **8 physical offices** strategically located in key states across the American union to offer accessible and direct representation to our clients.'
+    }
+  }
+};
+
+// --- UTILIDADES ---
+const parseContent = (text: string) => {
+  let parsed = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  parsed = parsed.replace(/\n/g, '<br />');
+  return parsed;
+};
+
+// --- COMPONENTE TÍTULO DE SECCIÓN ---
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="mb-8 flex items-center gap-4">
+    <div className="h-px bg-gradient-to-r from-transparent via-[#B2904D] to-transparent w-full opacity-50 hidden md:block"></div>
+    <h2 className="text-2xl md:text-3xl font-light text-white whitespace-nowrap drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+      {title}
+    </h2>
+    <div className="h-px bg-gradient-to-r from-transparent via-[#B2904D] to-transparent w-full opacity-50 hidden md:block"></div>
+  </div>
+);
+
+// --- PÁGINA NOSOTROS ---
+export default function NosotrosPage() {
+  const { language } = useLanguage();
+  const lang = language as 'es' | 'en';
+  
+  // Función 't' robusta para evitar errores de undefined
+  const t = (key: string): string => {
+    const parts = key.split('.');
+    let current: any = interfaceTexts;
+    for (const part of parts) {
+      if (current && current[part]) current = current[part];
+      else return ''; 
+    }
+    if (typeof current === 'object' && (current.es || current.en)) return current[lang] || current.es || '';
+    if (typeof current === 'string') return current;
+    return ''; 
+  };
+
+  const parseText = (key: string) => parseContent(t(key));
+
+  const getLocations = (key: string) => {
+      const text = t(key);
+      if (!text) return [];
+      const locations = text.split(', ');
+      return locations.map(location => parseContent(location.trim()));
+  }
+
   return (
-    // Se mantiene el fondo base Navy
-    <div className="min-h-screen flex flex-col bg-[#002342] text-white overflow-hidden relative">
-      
+    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden ${font.className}`}>
       <Header />
 
-      {/* --- CONTENIDO PRINCIPAL --- */}
-      {/* CAMBIO AQUI: Aumenté pt-36 a md:pt-44 para bajar el contenido y que no choque con el header */}
-      <main className="flex-grow flex items-center justify-center relative pt-36 md:pt-44 pb-20 px-4">
-        
-        {/* 1. FONDO ANIMADO MEJORADO (Más "Wow") */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-            {/* Luz central profunda */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#003366] rounded-full mix-blend-screen filter blur-[150px] opacity-40 animate-pulse-slow"></div>
+      {/* =========================================================================
+          FONDO ANIMADO (Fixed - Cubre toda la página)
+      ========================================================================= */}
+      <div className="fixed inset-0 z-0 w-full h-full bg-[#001540]">
+          {/* Gradiente Azul Profundo */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
+          
+          {/* Ruido de textura */}
+          <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+
+          {/* Orbes de luz con movimiento suave */}
+          <motion.div 
+            animate={{ 
+              opacity: [0.3, 0.5, 0.3], 
+              scale: [1, 1.2, 1], 
+              x: [0, 50, 0], 
+              y: [0, -30, 0] 
+            }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]" 
+          />
+          <motion.div 
+             animate={{ 
+               opacity: [0.2, 0.4, 0.2], 
+               scale: [1, 1.3, 1], 
+               x: [0, -40, 0],
+               y: [0, 40, 0]
+             }}
+             transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+             className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]" 
+          />
+          
+          {/* Texto de Fondo Sutil */}
+          <motion.div
+            initial={{ x: "20%" }} 
+            animate={{ x: "-20%" }} 
+            transition={{ 
+              duration: 60, 
+              repeat: Infinity, 
+              ease: "linear", 
+              repeatType: "mirror"
+            }}
+            className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden"
+          >
+            <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
+                MANUEL SOLIS
+            </span>
+          </motion.div>
+      </div>
+      
+      {/* =========================================================================
+          CONTENIDO
+      ========================================================================= */}
+      
+      {/* --- HERO SECTION --- */}
+      <section className="relative pt-44 pb-16 z-10 px-6 lg:px-12">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
             
-            {/* NUEVO: Patrón de Red Geométrica y Líneas de Construcción */}
-            <svg className="absolute inset-0 w-full h-full opacity-[0.15]" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
-                        <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#B2904D" strokeWidth="0.5"/>
-                    </pattern>
-                </defs>
-                {/* Red de fondo */}
-                <rect width="100%" height="100%" fill="url(#grid)" />
-                {/* Líneas diagonales grandes cruzando la pantalla */}
-                <motion.line 
-                  x1="0" y1="100%" x2="100%" y2="0" 
-                  stroke="#B2904D" strokeWidth="1" opacity="0.2"
-                  initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 5, ease: "easeInOut" }}
-                />
-                <motion.line 
-                  x1="-20%" y1="50%" x2="120%" y2="50%" 
-                  stroke="#B2904D" strokeWidth="1" opacity="0.1"
-                  strokeDasharray="10,10"
-                />
-            </svg>
-
-            {/* Partículas Doradas Flotantes (Se mantienen) */}
-            {[...Array(15)].map((_, i) => (
-                <motion.div
-                    key={i}
-                    className="absolute bg-[#B2904D] rounded-full"
-                    initial={{
-                        x: Math.random() * 100 - 50 + "%",
-                        y: Math.random() * 100 + "%",
-                        scale: Math.random() * 0.6 + 0.4,
-                        opacity: 0
-                    }}
-                    animate={{
-                        y: [null, "-120%"],
-                        opacity: [0, 0.4, 0],
-                    }}
-                    transition={{
-                        duration: Math.random() * 15 + 15,
-                        repeat: Infinity,
-                        ease: "linear",
-                        delay: Math.random() * 5
-                    }}
-                    style={{
-                        width: Math.random() * 5 + 3 + 'px',
-                        height: Math.random() * 5 + 3 + 'px',
-                    }}
-                />
-            ))}
-        </div>
-
-        {/* 2. TARJETA CENTRAL (Glassmorphism) */}
-        <motion.div 
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.8, type: "spring", delay: 0.2 }}
-            className="relative z-10 w-full max-w-3xl bg-[#001a33]/60 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 md:p-14 text-center shadow-2xl ring-1 ring-[#B2904D]/20"
-        >
-            {/* Decoración superior de la tarjeta */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[2px] bg-gradient-to-r from-transparent via-[#B2904D] to-transparent opacity-70"></div>
-
-            {/* Icono Animado Central */}
-            <div className="flex justify-center mb-8 relative">
-                <motion.div
-                    initial={{ rotate: -10 }}
-                    animate={{ rotate: 10 }}
-                    transition={{ duration: 5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-                    className="relative z-10 bg-gradient-to-br from-[#002342] to-[#00152b] p-6 rounded-full border-[3px] border-[#B2904D] shadow-[0_0_35px_rgba(178,144,77,0.4)]"
-                >
-                    <Newspaper size={64} className="text-white/90" />
-                    
-                    {/* Martillo y Brújula animados (Nuevo icono añadido) */}
-                    <motion.div 
-                        className="absolute -right-5 -top-2 bg-[#B2904D] p-2 rounded-full text-[#002342] shadow-lg"
-                        animate={{ rotate: [0, 30, 0], scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                    >
-                        <Hammer size={22} />
-                    </motion.div>
-                    <div className="absolute -left-4 bottom-0 text-[#B2904D] opacity-70">
-                       <Compass size={28} />
-                    </div>
-                </motion.div>
-            </div>
-
-            {/* Texto Principal */}
-            <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-3xl md:text-5xl font-serif font-bold mb-6 leading-tight"
+            {/* IZQUIERDA: IMAGEN LOGO INFORMACION (PUBLIC) */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]"
             >
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
-                    Estamos Cimentando
-                </span> <br />
-                <span className="text-[#B2904D] drop-shadow-md">La Verdad</span>
-            </motion.h1>
-
-            <motion.p 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="text-base md:text-lg text-gray-300 mb-10 max-w-xl mx-auto leading-relaxed font-light"
-            >
-                Nuestra sección de <strong>Noticias</strong> está bajo una reconstrucción estratégica. 
-                Pronto encontrará aquí análisis jurídicos profundos y actualizaciones migratorias esenciales.
-            </motion.p>
-
-            {/* --- Barra de Progreso 26% --- */}
-            <div className="max-w-md mx-auto mb-12 relative">
-                <div className="flex justify-between text-xs text-[#B2904D]/80 font-bold uppercase tracking-[0.2em] mb-3">
-                    <span>Fase Inicial de Arquitectura</span>
-                    <span className="text-[#B2904D]">26%</span>
-                </div>
+                {/* Luz detrás del logo */}
+                <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
                 
-                {/* Contenedor de la barra */}
-                <div className="h-3 w-full bg-[#001021] rounded-full overflow-hidden relative border border-white/10 box-shadow-inner">
-                    {/* Barra de relleno animada */}
-                    <motion.div 
-                        className="h-full bg-gradient-to-r from-[#B2904D] to-[#d4af67] absolute top-0 left-0 rounded-full relative overflow-hidden"
-                        initial={{ width: "0%" }}
-                        animate={{ width: "26%" }} /* CAMBIO: Ajustado al 26% */
-                        transition={{ duration: 1.5, ease: "easeOut", delay: 0.8 }}
-                    >
-                         {/* Brillo intenso en la punta de la barra */}
-                         <div className="absolute right-0 top-0 h-full w-[5px] bg-white blur-[3px]"></div>
-                    </motion.div>
-
-                    {/* Efecto de escaneo sobre la barra */}
-                    <motion.div 
-                        className="absolute top-0 bottom-0 w-10 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
-                        animate={{ x: [-50, 450] }}
-                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                <div className="relative z-10 w-full h-full flex items-center justify-center">
+                    <Image
+                       src="/LogoInformacion.png"
+                       alt="Law Offices of Manuel Solis"
+                       width={600}
+                       height={600}
+                       className="object-contain drop-shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:scale-105 transition-transform duration-700"
+                       priority
                     />
                 </div>
-            </div>
-
-            {/* Botones de Acción */}
-            <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
-                <Link href="/" className="group relative px-8 py-4 bg-white text-[#002342] font-bold rounded-full overflow-hidden shadow-[0_5px_15px_rgba(255,255,255,0.1)] hover:shadow-[0_5px_20px_rgba(255,255,255,0.2)] transition-all">
-                    <span className="relative z-10 flex items-center gap-2">
-                        Volver al Inicio
-                    </span>
-                </Link>
-
-                <Link href="/#oficinas" className="group relative px-8 py-4 text-[#B2904D] font-bold rounded-full overflow-hidden transition-all flex items-center justify-center gap-2 border-2 border-[#B2904D]/50 hover:border-[#B2904D]">
-                     <span className="relative z-10 flex items-center gap-2">
-                        Contactar <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                    </span>
-                     {/* Fondo sutil al hacer hover */}
-                    <div className="absolute inset-0 bg-[#B2904D] opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                </Link>
             </motion.div>
 
-        </motion.div>
+            {/* DERECHA: HISTORIA Y MISIÓN */}
+            <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
+              
+              <div className="relative">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tight leading-none">
+                  <span className="block text-white/90 font-extralight mb-2">
+                    {t('hero.title').split(' ')[0]} 
+                  </span>
+                  <span className="block font-medium text-[#B2904D] drop-shadow-2xl">
+                    {t('hero.title').split(' ').slice(1).join(' ')} 
+                  </span>
+                </h1>
+              </div>
 
-        {/* Elementos decorativos flotantes del fondo */}
-        <motion.div 
-            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-20 left-10 opacity-20 hidden lg:block pointer-events-none"
-        >
-            <Construction size={120} className="text-[#B2904D] blur-[2px]" />
-        </motion.div>
-        <motion.div 
-            animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-40 right-10 opacity-10 hidden lg:block pointer-events-none"
-        >
-            <HardHat size={100} className="text-white blur-[2px]" />
-        </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 1 }}
+                className="relative pl-6 border-l-2 border-[#B2904D]/50"
+              >
+                <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
+                  {t('hero.subtitle')}
+                </p>
+              </motion.div>
 
-      </main>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 1 }}
+                className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
+              >
+                 <div dangerouslySetInnerHTML={{ __html: parseText('mission.solis') }} />
+                 <div dangerouslySetInnerHTML={{ __html: parseText('mission.commitment') }} />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- SECCIÓN DE MAPA Y UBICACIONES (INTERACTIVO) --- */}
+      <section className="container mx-auto px-4 py-12 relative z-10 max-w-7xl">
+        
+        <SectionTitle title={t('usaOffices.title')} />
+
+        <div className="grid lg:grid-cols-12 gap-8 items-stretch">
+            
+            {/* LISTA DE OFICINAS */}
+            <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="lg:col-span-4 p-8 border border-white/10 rounded-2xl backdrop-blur-md bg-[#000814]/60 shadow-2xl flex flex-col justify-between"
+            >
+                <div>
+                  <Landmark size={40} className="text-[#B2904D] mb-4 drop-shadow-[0_0_15px_rgba(178,144,77,0.4)]" />
+                  <p className="text-base text-blue-100/80 font-light leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: parseContent(t('usaOffices.description')) }} />
+                </div>
+                
+                <div>
+                    <h4 className="text-sm font-bold text-[#B2904D] uppercase tracking-widest mb-4 border-b border-white/10 pb-2">
+                        {lang === 'es' ? 'Ubicaciones' : 'Locations'}
+                    </h4>
+                    <div className="space-y-3">
+                        {getLocations('usaOffices.locations').map((location, index) => (
+                            <div key={index} className="flex items-start gap-3 group">
+                                <MapPin size={18} className="text-white/40 mt-1 group-hover:text-[#B2904D] transition-colors" />
+                                <div className="text-sm font-light text-white/80 group-hover:text-white transition-colors cursor-default" dangerouslySetInnerHTML={{ __html: location }} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* MAPA DE GOOGLE INTERACTIVO */}
+            <motion.div 
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 className="lg:col-span-8 min-h-[500px] bg-[#000510] rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden relative"
+            >
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d14500000!2d-100!3d38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sLaw%20Offices%20of%20Manuel%20Solis!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) contrast(90%)' }} // Estilo oscuro hack para el iframe
+                  allowFullScreen={true} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full opacity-90 hover:opacity-100 transition-opacity duration-500"
+                  title="Google Maps Locations"
+                ></iframe>
+                
+                {/* Etiqueta flotante */}
+                <div className="absolute top-4 right-4 bg-black/70 backdrop-blur text-white px-4 py-2 rounded-lg text-xs font-bold border border-white/10 pointer-events-none">
+                   INTERACTIVE MAP
+                </div>
+            </motion.div>
+        </div>
+
+      </section>
+
+      {/* --- FORMULARIO DE CONTACTO --- */}
+      {/* NOTA: Renderizamos ContactForm directamente.
+         Como pediste, no tiene ningún texto encima y se mezcla con el fondo.
+      */}
+      <div className="relative z-20 mt-12">
+        <ContactForm />
+      </div>
 
       <Footer />
-    </div>
+    </main>
   );
 }
