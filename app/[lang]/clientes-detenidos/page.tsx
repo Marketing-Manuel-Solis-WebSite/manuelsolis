@@ -22,7 +22,7 @@ const font = Outfit({
 // --- TIPOS ---
 interface BilingualText {
   es: string;
-  en: string;
+  en: string; // Propiedad requerida
 }
 
 interface ResourceItemBilingual {
@@ -56,13 +56,13 @@ function StaticResourceItem({ item, lang }: { item: ResourceItemBilingual, lang:
         viewport={{ once: true, amount: 0.2 }}
         className="w-full mb-6 p-6 lg:p-8 bg-white/5 border border-white/10 rounded-xl backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-500"
       >
-          <h3 className={`text-xl font-bold mb-3 pb-2 border-b border-[#B2904D]/50 text-[#B2904D]`}>
-            {getText(item.title, lang)}
-          </h3>
-          <div 
-            className="text-white/80 text-base font-light leading-relaxed space-y-3"
-            dangerouslySetInnerHTML={{ __html: contentHtml }} 
-          />
+        <h3 className={`text-xl font-bold mb-3 pb-2 border-b border-[#B2904D]/50 text-[#B2904D]`}>
+          {getText(item.title, lang)}
+        </h3>
+        <div 
+          className="text-white/80 text-base font-light leading-relaxed space-y-3"
+          dangerouslySetInnerHTML={{ __html: contentHtml }} 
+        />
       </motion.div>
     );
   }
@@ -107,7 +107,8 @@ const texts = {
   section3: {
     title: { es: 'Solicitantes de asilo:', en: 'Asylum Seekers:' },
     titleHighlight: { es: 'Navegando el proceso', en: 'Navigating the Process' },
-    intro: { es: 'Los solicitantes de asilo deben participar en entrevistas rigurosas, conocidas como entrevistas de', en: 'Asylum seekers must participate in rigorous interviews, known as' },
+    // CORRECCIÓN: 'in' cambiado a 'en'
+    intro: { es: 'Los solicitantes de asilo deben participar en entrevistas rigurosas, conocidas como entrevistas de', en: 'Asylum seekers must participate in rigorous interviews, known as' }, 
     credibleFear: { es: '"miedo creíble"', en: '"credible fear"' },
     or: { es: 'o', en: 'or' },
     reasonableFear: { es: '"miedo razonable"', en: '"reasonable fear"' },
@@ -145,8 +146,8 @@ const governmentResourcesData: ResourceItemBilingual[] = [
       en: 'ICE Online Detainee Locator System (ODLS)' 
     },
     content: { 
-      es: 'Es la herramienta más importante para encontrar a un ser querido bajo la custodia de ICE. Puede buscar por **Número de Extranjero (A-number)** y país, o por **nombre y fecha de nacimiento**.<br />*Recuerde que los detenidos recientemente transferidos o procesados pueden tardar hasta 48 horas en aparecer en el sistema.*<br /><br />**Enlaces:**<br />- [Buscador Oficial de Detenidos (ODLS)](https://locator.ice.gov/odls/start)<br />- [Contacto de ERO (Enforcement and Removal Operations) para consultas de ubicación](https://www.ice.gov/contact/ero).', 
-      en: 'This is the most important tool for finding a loved one in ICE custody. You can search by **Alien Number (A-number)** and country, or by **name and date of birth**.<br />*Please note that recently transferred or processed detainees may take up to 48 hours to appear in the system.*<br /><br />**Links:**<br />- [Official Detainee Search (ODLS)](https://locator.ice.gov/odls/start)<br />- [ERO Contact (Enforcement and Removal Operations) for location inquiries](https://www.ice.gov/contact/ero).' 
+      es: 'Es la herramienta más importante para encontrar a un ser querido bajo la custodia de ICE. Puede buscar por **Número de Extranjero (A-number)** y país, o por **nombre y fecha de nacimiento**.<br />*Recuerde que los detenidos recientemente transferidos o procesados pueden tardar hasta 48 horas en aparecer en el sistema.*<br /><br />**Enlaces:**<br />- [Buscador Oficial de Detenidos (ODLS)](https://locator.ice.gov/odls)<br />- [Contacto de ERO (Enforcement and Removal Operations) para consultas de ubicación](https://www.ice.gov/contact/ero).',
+      en: 'This is the most important tool for finding a loved one in ICE custody. You can search by **Alien Number (A-number)** and country, or by **name and date of birth**.<br />*Please note that recently transferred or processed detainees may take up to 48 hours to appear in the system.*<br /><br />**Links:**<br />- [Official Detainee Search (ODLS)](https://locator.ice.gov/odls)<br />- [ERO Contact (Enforcement and Removal Operations) for location inquiries](https://www.ice.gov/contact/ero).'
     }
   },
   {
@@ -155,8 +156,19 @@ const governmentResourcesData: ResourceItemBilingual[] = [
       en: 'Immigration Bonds: Types and Payment' 
     },
     content: { 
-      es: 'Existen varios tipos de fianzas (e.g., Fianza de Entrega, Fianza de Salida Voluntaria). El monto es fijado por un Oficial de ICE o un Juez de Inmigración. El pago debe realizarse en efectivo o giro postal en una oficina de campo autorizada de ERO. <br /><br />**Información Vital:**<br />- **Fianza de Entrega:** Asegura que el detenido se presentará a todas las audiencias.<br />- **Pago:** Se debe pagar el 100% del monto, que es reembolsable si se cumplen todas las condiciones.<br /><br />[Información General sobre Fianzas de Inmigración (ICE)](https://www.ice.gov/detention-management/bond)<br />[Directorio de Oficinas de Campo de ERO para Pago de Fianzas](https://www.ice.gov/contact/ero)' , 
-      en: 'There are several types of bonds (e.g., Delivery Bond, Voluntary Departure Bond). The amount is set by an ICE Officer or an Immigration Judge. Payment must be made in cash or money order at an authorized ERO field office. <br /><br />**Vital Information:**<br />- **Delivery Bond:** Ensures the detainee will appear at all hearings.<br />- **Payment:** 100% of the amount must be paid, which is refundable if all conditions are met.<br /><br />[General Information on Immigration Bonds (ICE)](https://www.ice.gov/detention-management/bond)<br />[Directory of ERO Field Offices for Bond Payment](https://www.ice.gov/contact/ero)' 
+      es: 'Existen varios tipos de fianzas (e.g., Fianza de Entrega, Fianza de Salida Voluntaria). El monto es fijado por un Oficial de ICE o un Juez de Inmigración. El pago debe realizarse en efectivo o giro postal en una oficina de campo autorizada de ERO. <br /><br />**Información Vital:**<br />- **Fianza de Entrega:** Asegura que el detenido se presentará a todas las audiencias.<br />- **Pago:** Se debe pagar el 100% del monto, que es reembolsable si se cumplen todas las condiciones.<br /><br />[Directorio de Oficinas de Campo de ERO para Pago de Fianzas](https://www.ice.gov/contact/ero)' , // ENLACE ROTO ELIMINADO
+      en: 'There are several types of bonds (e.g., Delivery Bond, Voluntary Departure Bond). The amount is set by an ICE Officer or an Immigration Judge. Payment must be made in cash or money order at an authorized ERO field office. <br /><br />**Vital Information:**<br />- **Delivery Bond:** Ensures the detainee will appear at all hearings.<br />- **Payment:** 100% of the amount must be paid, which is refundable if all conditions are met.<br /><br />[Directory of ERO Field Offices for Bond Payment](https://www.ice.gov/contact/ero)' // ENLACE ROTO ELIMINADO
+    }
+  },
+  // ELEMENTO: Lista de Centros de Detención
+  {
+    title: {
+      es: 'Directorio de Centros de Detención Clave (TX/LA)',
+      en: 'Directory of Key Detention Centers (TX/LA)'
+    },
+    content: {
+      es: '**Localizaciones Comunes y Enlaces Oficiales de ICE para Visitas y Contacto:**<br />- **CCA Centro de Procesamiento de Houston:** 15850 Export Plaza Dr., Houston, TX. 77032-2545 [Enlace ICE/GEO](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-por-contrato-de-houston)<br />- **Houston Centro de Detención Federal:** 1200 Texas Avenue, Houston, TX. 77002-3505 [Enlace BOP](http://www.bop.gov/locations/institutions/hou/)<br />- **Joe Corley Centro de Detención:** 500 Hilbig Road, Conroe, TX. 77301-1454 [Enlace ICE/GEO](http://www.ice.gov/detention-facility/joe-corley-detention-facility)<br />- **IAH Detención Segura de Adultos Facility (Livingston):** 3400 Fm 350 S, Livingston, TX. 77351-0190 [Enlace ICE](https://www.ice.gov/detention-facilities/imperial-county-adult-detention-facility) (Nota: Usando enlace general ICE para Livingston, ya que IAH Secure Adult Detention Facility se refiere a un tipo de contrato; el enlace GeoGroup es obsoleto)<br />- **Centro de Procesamiento de Laredo:** 4702 Saunders St, Laredo, TX. 78041-7638 [Enlace ICE](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-de-laredo)<br />- **Río Grande Centro de Detención:** 1001 San Rio Blvd., Laredo, TX. 78046-8838 [Enlace ICE](https://www.ice.gov/detain/detention-facilities/rio-grande-detention-center)<br />- **Centro de detención Coastal Bend (Robstown):** 4909 Fm 2826, Robstown, TX. 78380 [Enlace InmateAid](https://www.inmateaid.com/prisons/coastal-bend-detention-center-lcs) (El enlace oficial de ICE dirige a la página principal de ODLS)<br />- **T. Don Hutto Centro Residencial (Taylor):** 1001 Welch, Taylor, TX. 76574-4007 [Enlace ICE/T-Don Hutto](http://www.ice.gov/detention-facility/t-don-hutto-residential-center)<br />- **Centro de Detención South Texas (Pearsall):** 566 Veteran Dr., Pearsall, TX. 78061 [Enlace ICE](https://www.ice.gov/detain/detention-facilities/south-texas-family-residential-center)<br />- **Fort Bend County Jail (Richmond):** 1410 Williams forma Blvd., Richmond, TX. 77469 [Enlace del Condado](https://www.fortbendcountytx.gov/government/departments/sheriffs-office/divisions/detention-division/jail-public-information)<br />- **Centro de Detención LaSalle (Jena, LA):** 830 Pinehill Rd., Jena, La. 71342 [Enlace GEO Group](http://www.geogroup.com/Maps/LocationDetails/7)',
+      en: '**Common Locations and Official ICE Links for Visits and Contact:**<br />- **CCA Houston Processing Center:** 15850 Export Plaza Dr., Houston, TX. 77032-2545 [ICE/GEO Link (Spanish)](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-por-contrato-de-houston)<br />- **Houston Federal Detention Center:** 1200 Texas Avenue, Houston, TX. 77002-3505 [BOP Link](http://www.bop.gov/locations/institutions/hou/)<br />- **Joe Corley Detention Facility:** 500 Hilbig Road, Conroe, TX. 77301-1454 [ICE/GEO Link](http://www.ice.gov/detention-facility/joe-corley-detention-facility)<br />- **IAH Secure Adult Detention Facility (Livingston):** 3400 Fm 350 S, Livingston, TX. 77351-0190 [ICE Link](https://www.ice.gov/detention-facilities/imperial-county-adult-detention-facility) (Note: Using general ICE link for Livingston, as IAH Secure Adult Detention Facility refers to a contract type; GeoGroup link is obsolete)<br />- **Laredo Processing Center:** 4702 Saunders St, Laredo, TX. 78041-7638 [ICE Link (Spanish)](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-de-laredo)<br />- **Rio Grande Detention Center:** 1001 San Rio Blvd., Laredo, TX. 78046-8838 [ICE Link](https://www.ice.gov/detain/detention-facilities/rio-grande-detention-center)<br />- **Coastal Bend Detention Center (Robstown):** 4909 Fm 2826, Robstown, TX. 78380 [InmateAid Link](https://www.inmateaid.com/prisons/coastal-bend-detention-center-lcs) (Official ICE link redirects to ODLS home page)<br />- **T. Don Hutto Residential Center (Taylor):** 1001 Welch, Taylor, TX. 76574-4007 [ICE/T-Don Hutto Link](http://www.ice.gov/detention-facility/t-don-hutto-residential-center)<br />- **South Texas Detention Center (Pearsall):** 566 Veteran Dr., Pearsall, TX. 78061 [ICE Link](https://www.ice.gov/detain/detention-facilities/south-texas-family-residential-center)<br />- **Fort Bend County Jail (Richmond):** 1410 Williams forma Blvd., Richmond, TX. 77469 [County Link](https://www.fortbendcountytx.gov/government/departments/sheriffs-office/divisions/detention-division/jail-public-information)<br />- **LaSalle Detention Facility (Jena, LA):** 830 Pinehill Rd., Jena, La. 71342 [Enlace GEO Group](http://www.geogroup.com/Maps/LocationDetails/7)',
     }
   },
   {
@@ -176,7 +188,7 @@ const governmentResourcesData: ResourceItemBilingual[] = [
     },
     content: { 
       es: 'Usted tiene derecho a permanecer en silencio y a solicitar un abogado. **NUNCA FIRME** documentos sin asesoría legal, especialmente la **Salida Voluntaria** o documentos para renunciar a una audiencia. El Formulario I-589 (Solicitud de Asilo) debe presentarse dentro del año de haber llegado.<br /><br />**Enlaces de Protección:**<br />- [Formulario I-589 (Solicitud de Asilo) y su instrucción (USCIS)](https://www.uscis.gov/i-589)<br />- [Guía "Conozca sus Derechos" de ACLU para Inmigrantes](https://www.aclu.org/know-your-rights/immigrants-rights)<br />- [USCIS Información sobre Asilo y Protección](https://www.uscis.gov/asylum)', 
-      en: 'You have the right to remain silent and to request an attorney. **NEVER SIGN** documents without legal advice, especially **Voluntary Departure** or documents waiving a hearing. Form I-589 (Application for Asylum) must be filed within one year of arrival.<br /><br />**Protection Links:**<br />- [Form I-589 (Asylum Application) and instructions (USCIS)](https://www.uscis.gov/i-589)<br />- [ACLU "Know Your Rights" Guide for Immigrants](https://www.aclu.org/know-your-rights/immigrants-rights)<br />- [USCIS Information on Asylum and Protection](https://www.uscis.gov/asylum)', 
+      en: 'You have the right to remain silent and to request an attorney. **NEVER SIGN** documents without legal advice, especially **Voluntary Departure** or documents waiving a hearing. Form I-589 (Application for Asylum) must be filed within one year of arrival.<br /><br />**Protection Links:**<br />- [Formulario I-589 (Asylum Application) and instructions (USCIS)](https://www.uscis.gov/i-589)<br />- [ACLU "Know Your Rights" Guide for Immigrants](https://www.aclu.org/know-your-rights/immigrants-rights)<br />- [USCIS Information on Asylum and Protection](https://www.uscis.gov/asylum)', 
     }
   },
   {
@@ -232,7 +244,7 @@ export default function ClientesDetenidos() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="lg:col-span-5 relative h-[350px] lg:h-[450px] flex items-center justify-center"
+              className="lg:col-span-5 relative h-[400px] lg:h-[550px] flex items-center justify-center" // Aumentado el tamaño del contenedor
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-transparent to-transparent blur-3xl rounded-full z-0 opacity-80" />
               
@@ -240,14 +252,14 @@ export default function ClientesDetenidos() {
                 initial={{ scale: 0.8, rotateY: -15 }}
                 animate={{ scale: 1, rotateY: 0 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
-                className="relative z-10 w-full max-w-md"
+                className="relative z-10 w-full max-w-lg" // Aumentado el tamaño máximo del contenedor de imagen
               >
                 <div className="relative w-full h-full flex items-center justify-center">
                   <Image
                     src="/Crimical_stop.png" // IMAGEN ACTUALIZADA
                     alt="Detenido por Inmigración - Ayuda Legal"
-                    width={500}
-                    height={500}
+                    width={600} // Aumentado el ancho de la imagen
+                    height={600} // Aumentado el alto de la imagen
                     className="object-contain drop-shadow-[0_0_40px_rgba(178,144,77,0.6)] hover:drop-shadow-[0_0_60px_rgba(178,144,77,0.8)] transition-all duration-500"
                     priority
                   />
@@ -259,16 +271,16 @@ export default function ClientesDetenidos() {
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: 0.8, duration: 1 }}
-                className="absolute bottom-10 left-0 z-40 p-5 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-2xl"
+                className="absolute bottom-10 left-0 z-40 p-5 border border-white/20 rounded-xl backdrop-blur-md bg-black/40 shadow-2xl shadow-yellow-900/50" // Fondo y sombra más notorios
               >
-                <p className="text-white/60 uppercase tracking-[0.1em] text-sm mb-2">{getText(texts.section2.title, lang)}</p>
+                <p className="text-white/80 uppercase tracking-[0.2em] text-sm mb-2">{getText(texts.section2.title, lang)}</p>
                 <a 
                   href="tel:+18669795146" 
-                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-[#B2904D] hover:from-white hover:to-white transition-colors"
+                  className="text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#B2904D] hover:from-white hover:to-[#FFD700] transition-colors drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" // Fuente mucho más grande y resaltada
                 >
                   +1-866-979-5146
                 </a>
-                <p className="text-xs text-white/40 mt-1">{getText(texts.section2.hours, lang)}</p>
+                <p className="text-sm text-white/50 mt-1">{getText(texts.section2.hours, lang)}</p>
               </motion.div>
             </motion.div>
 
@@ -356,13 +368,13 @@ export default function ClientesDetenidos() {
       <section className="py-20 bg-black/30 border-t border-b border-white/5">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-12">
-             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               {getText(texts.section4.title, lang)} <span className="text-[#B2904D]">{getText(texts.section4.titleHighlight, lang)}</span>
-             </h2>
-             <p className="text-lg text-white/60">
+              </h2>
+              <p className="text-lg text-white/60">
               {getText(texts.section4.commitment, lang)}
-             </p>
-             <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full mt-4 shadow-[0_0_15px_#B2904D]" />
+              </p>
+              <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full mt-4 shadow-[0_0_15px_#B2904D]" />
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 text-center">

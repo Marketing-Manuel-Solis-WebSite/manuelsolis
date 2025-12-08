@@ -50,7 +50,7 @@ export default function HeaderProfessional() {
 
   const menuItems = [
     { 
-      name: language === 'es' ? 'Servicios' : 'Practice Services',
+      name: language === 'es' ? 'Servicios' : 'Services',
       href: '', 
       type: 'dropdown',
       key: 'services',
@@ -71,7 +71,7 @@ export default function HeaderProfessional() {
         ]
     },
     {
-      name: language === 'es' ? 'Detenidos' : 'Detained Clients',
+      name: language === 'es' ? 'Detenidos' : 'Detained',
       href: `/${language}/clientes-detenidos`,
       type: 'link'
     },

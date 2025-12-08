@@ -179,14 +179,17 @@ export default function ContactForm() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight drop-shadow-lg">
-            {t('Solicitud de', 'Request')}{' '}
+            {t('Solicite su', 'Request Your')}{' '}
             <span className="font-medium text-[#B2904D] drop-shadow-[0_0_15px_rgba(178,144,77,0.3)]">
               {t('Consulta', 'Consultation')}
             </span>
           </h2>
           
           <p className="text-lg text-blue-100 max-w-2xl mx-auto font-light leading-relaxed opacity-90">
-            {t('Conecte con nuestro sistema legal inteligente. Respuesta prioritaria en menos de 10 minutos.', 'Connect with our intelligent legal system. Priority response within 10 minutes.')}
+            {t(
+              'Manténgase informado sobre actualizaciones e información importantes.',
+              'Stay informed about important updates and information.'
+            )}
           </p>
         </motion.div>
 
@@ -271,30 +274,7 @@ export default function ContactForm() {
               {/* --- ZONA DE CONSENTIMIENTOS --- */}
               <div className="space-y-4">
                   
-                  {/* 1. CHECKBOX OPCIONAL (Marketing) */}
-                  <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
-                    <div className="relative flex items-center pt-1">
-                      <input
-                        type="checkbox"
-                        id="marketingConsent"
-                        name="marketingConsent"
-                        checked={formData.marketingConsent}
-                        onChange={handleChange}
-                        className="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500"
-                      />
-                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100">
-                        <CheckCircle2 size={14} strokeWidth={3} />
-                      </div>
-                    </div>
-                    <label htmlFor="marketingConsent" className="text-xs text-blue-200/80 leading-relaxed cursor-pointer select-none group-hover:text-blue-100 transition-colors">
-                      {t(
-                          'Acepto recibir mensajes de texto de marketing y otros mensajes del Law Office of Manuel Solis al número proporcionado.', 
-                          'I agree to receive marketing text messages and other messages from the Law Office of Manuel Solis at the number provided.'
-                      )}
-                    </label>
-                  </motion.div>
-
-                  {/* 2. CHECKBOX OBLIGATORIO (Términos) */}
+                  {/* 1. CHECKBOX OBLIGATORIO (Términos y Privacidad) */}
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                     <div className="relative flex items-center pt-1">
                       <input
@@ -311,12 +291,42 @@ export default function ContactForm() {
                     </div>
                     <label htmlFor="acceptedTerms" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
                       {t(
-                          'Pueden aplicarse tarifas de mensajes y datos. El consentimiento no es una condición para recibir servicios. Para más información, por favor revise nuestra', 
-                          'Message and data rates may apply. Consent is not a condition of receiving services. For more information, please review our'
+                          'Acepto los',
+                          'I accept the'
                       )}{' '}
+                      <a href="/terminos" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
+                          {t('Términos de Servicio', 'Terms of Service')}
+                      </a>{' '}
+                      {t('y he leído la', 'and have read the')}{' '}
                       <a href="/privacidad" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
-                          {t('Política de Privacidad', 'Privacy Policy')}
+                          {t('Política de Privacidad', 'Privacy Statement')}
                       </a>.
+                    </label>
+                  </motion.div>
+
+                  {/* 2. CHECKBOX OPCIONAL (SMS/Marketing) */}
+                  <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
+                    <div className="relative flex items-center pt-1">
+                      <input
+                        type="checkbox"
+                        id="marketingConsent"
+                        name="marketingConsent"
+                        checked={formData.marketingConsent}
+                        onChange={handleChange}
+                        className="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500"
+                      />
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100">
+                        <CheckCircle2 size={14} strokeWidth={3} />
+                      </div>
+                    </div>
+                    <label htmlFor="marketingConsent" className="text-xs text-blue-200/80 leading-relaxed cursor-pointer select-none group-hover:text-blue-100 transition-colors">
+                      {t(
+                          'Me gustaría recibir actualizaciones del Law Office of Manuel Solis al número de teléfono proporcionado. Pueden aplicar tarifas de mensajes y datos. Responda STOP para cancelar, HELP para ayuda.',
+                          'I would like to receive updates from the Law Office of Manuel Solis at the phone number provided. Message and data rates may apply. Reply STOP to cancel, HELP for help.'
+                      )}{' '}
+                      <a href="/sms-terminos" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
+                          {t('Términos de Servicio SMS', 'Law Office of Manuel Solis SMS Terms of Service')}
+                      </a>
                     </label>
                   </motion.div>
 
@@ -343,7 +353,7 @@ export default function ContactForm() {
                     ) : (
                       <>
                         <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-slate-500" : "text-[#001026]"} />
-                        {t('Iniciar Análisis Gratuito', 'Start Free Analysis')}
+                        {t('Unirse', 'Join In')}
                       </>
                     )}
                   </span>
