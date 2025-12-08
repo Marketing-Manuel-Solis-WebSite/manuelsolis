@@ -8,9 +8,10 @@ import { useLanguage } from '../context/LanguageContext'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { Outfit } from 'next/font/google'
 
+// IMPORTANTE: Agregué pesos más gruesos (600, 700) para que el número grande se vea bien en bold.
 const font = Outfit({ 
   subsets: ['latin'], 
-  weight: ['200', '300', '400', '500'] 
+  weight: ['200', '300', '400', '500', '600', '700'] 
 })
 
 const FlagES = () => (
@@ -273,19 +274,25 @@ export default function HeaderProfessional() {
           </div>
         </div>
 
-        {/* PARTE INFERIOR: Línea de teléfono (Solo Desktop) */}
+        {/* PARTE INFERIOR: Línea de teléfono (SOLO DESKTOP) - ARREGLADA */}
+        {/* Se mantiene el fondo sutil bg-white/[0.02] y el borde original */}
         <div className="hidden lg:block w-full border-t border-white/5 bg-white/[0.02]">
           <div className="container mx-auto px-6 lg:px-12">
             <a 
               href={phoneLink}
-              className="flex items-center justify-center gap-3 py-2 w-full group cursor-pointer hover:bg-white/5 transition-colors duration-300"
+              // Aumenté ligeramente el padding vertical (py-3) para darle espacio al texto más grande
+              // Aumenté el gap entre el texto y el número (gap-4)
+              className="flex items-center justify-center gap-4 py-3 w-full group cursor-pointer hover:bg-white/5 transition-all duration-300"
             >
-              <span className="text-[11px] uppercase tracking-[0.2em] text-white/70 group-hover:text-white transition-colors font-light">
+              {/* Texto descriptivo aumentado ligeramente a text-xs */}
+              <span className="text-xs uppercase tracking-[0.2em] text-white/70 group-hover:text-white transition-colors font-light">
                 {callText}
               </span>
-              <div className="flex items-center gap-2">
-                  <Phone className="w-3 h-3 text-sky-300 group-hover:text-white transition-colors" />
-                  <span className="text-[12px] font-medium tracking-widest text-white group-hover:text-sky-200 transition-colors">
+              <div className="flex items-center gap-3">
+                  {/* Icono aumentado a w-4 h-4, manteniendo el color sky-300 original */}
+                  <Phone className="w-4 h-4 text-sky-300 group-hover:text-white transition-colors" />
+                  {/* Número aumentado significativamente a text-lg y font-bold, manteniendo colores originales */}
+                  <span className="text-lg font-bold tracking-widest text-white group-hover:text-sky-200 transition-colors">
                     {phoneNumber}
                   </span>
               </div>
@@ -348,9 +355,9 @@ export default function HeaderProfessional() {
                 <div className="pt-4 flex flex-col gap-4">
                     {/* BOTÓN JOIN IN (Mobile) */}
                     <Link 
-                        href={`/${language}/join-in`}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#B2904D] text-[#001026] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-lg"
+                      href={`/${language}/join-in`}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#B2904D] text-[#001026] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-lg"
                     >
                         {language === 'es' ? 'INICIAR CONSULTA' : 'START CONSULTATION'}
                     </Link>

@@ -25,7 +25,7 @@ interface BilingualText {
   en: string;
 }
 
-interface AccordionItemBilingual {
+interface ResourceItemBilingual {
   title: BilingualText;
   content: BilingualText;
 }
@@ -43,53 +43,29 @@ const getText = (obj: BilingualText, lang: 'es' | 'en'): string => {
   return obj[lang] || obj.es;
 };
 
-// --- COMPONENTE ACORDEÓN (ESTILO FAQ) ---
-function GovernmentAccordion({ item, lang }: { item: AccordionItemBilingual, lang: 'es' | 'en' }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const title = getText(item.title, lang);
-  const rawContent = getText(item.content, lang);
-  const contentHtml = parseContent(rawContent);
-
-  return (
-    <div className="group mb-4">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`
-          w-full px-6 py-5 flex items-center justify-between text-left transition-all duration-300 rounded-xl
-          ${isOpen 
-            ? `bg-white/10 shadow-[0_0_20px_rgba(255,255,255,0.15)] border-white/30` 
-            : 'bg-white/5 hover:bg-white/10 border-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]'
-          }
-          border backdrop-blur-md
-        `}
+// --- COMPONENTE RECURSO ESTÁTICO (NO DESPLEGABLE) ---
+function StaticResourceItem({ item, lang }: { item: ResourceItemBilingual, lang: 'es' | 'en' }) {
+    const rawContent = getText(item.content, lang);
+    const contentHtml = parseContent(rawContent);
+  
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true, amount: 0.2 }}
+        className="w-full mb-6 p-6 lg:p-8 bg-white/5 border border-white/10 rounded-xl backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-500"
       >
-        <span className={`text-lg font-light tracking-wide ${isOpen ? 'text-[#B2904D] font-medium' : 'text-white'}`}>
-          {title}
-        </span>
-        <div className={`p-2 rounded-full transition-all duration-300 ${isOpen ? 'bg-[#B2904D] text-[#001540]' : 'bg-white/5 text-white'}`}>
-          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-        </div>
-      </button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <div 
-              className="px-6 py-6 text-blue-100/80 text-base font-light leading-relaxed bg-black/20 rounded-b-xl mx-2 border-x border-b border-white/5 shadow-inner"
-              dangerouslySetInnerHTML={{ __html: contentHtml }} 
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
+          <h3 className={`text-xl font-bold mb-3 pb-2 border-b border-[#B2904D]/50 text-[#B2904D]`}>
+            {getText(item.title, lang)}
+          </h3>
+          <div 
+            className="text-white/80 text-base font-light leading-relaxed space-y-3"
+            dangerouslySetInnerHTML={{ __html: contentHtml }} 
+          />
+      </motion.div>
+    );
+  }
 
 // --- COMPONENTE TÍTULO DE SECCIÓN (Estilo FAQ) ---
 const SectionTitle = ({ title }: { title: string }) => (
@@ -161,8 +137,8 @@ const texts = {
   },
 }
 
-// --- DATA DE RECURSOS GUBERNAMENTALES (Acordeones EXPANDIDOS) ---
-const governmentResourcesData: AccordionItemBilingual[] = [
+// --- DATA DE RECURSOS GUBERNAMENTALES (Estático) ---
+const governmentResourcesData: ResourceItemBilingual[] = [
   {
     title: { 
       es: 'Localizador de Detenidos de ICE (Online Detainee Locator System)', 
@@ -190,7 +166,7 @@ const governmentResourcesData: AccordionItemBilingual[] = [
     },
     content: { 
       es: 'Si su ser querido ya está en procedimientos de remoción, el caso es manejado por la Oficina Ejecutiva para la Revisión de Inmigración (EOIR). Puede obtener información automatizada sobre la próxima audiencia y el estatus.<br /><br />**Herramientas y Contactos:**<br />- [Sistema Automatizado de Información de Casos (teléfono)](tel:18008987180) (Debe tener el Número A-number).<br />- [Directorio de Ubicaciones de Cortes de Inmigración (EOIR)](https://www.justice.gov/eoir/eoir-office-locations)<br />- [Verificar el Estatus de Caso de USCIS (si el proceso fue iniciado allí)](https://egov.uscis.gov/casestatus/landing.do)', 
-      en: 'If your loved one is already in removal proceedings, the case is handled by the Executive Office for Immigration Review (EOIR). You can get automated information about the next hearing and status.<br /><br />**Tools and Contacts:**<br />- [Automated Case Information System (phone)](tel:18008987180) (Must have the A-number).<br />- [Directory of Immigration Court Locations (EOIR)](https://www.justice.gov/eoir/eoir-office-locations)<br />- [Check USCIS Case Status (if the process was initiated there)](https://egov.uscis.gov/casestatus/landing.do)' 
+      en: 'If your loved one is already in removal proceedings, the case is handled by the Executive Office for Immigration Review (EOIR). You can get automated information about the next hearing and status.<br /><br />**Tools and Contacts:**<br />- [Automated Case Information System (phone)](tel:18008987180) (Must have the A-number).<br />- [Directory of Immigration Court Locations (EOIR)](https://www.justice.gov/eoir/eoir-office-locations)<br />- [Check USCIS Case Status (if the process was initiated there)](https://egov.uscis.gov/casestatus/landing.do)', 
     }
   },
   {
@@ -246,7 +222,7 @@ export default function ClientesDetenidos() {
           CONTENIDO (Z-10)
       ========================================================================= */}
       
-      {/* --- HERO SECTION (ACOTADO) --- */}
+      {/* --- HERO SECTION --- */}
       <section className="relative pt-44 pb-20 z-10 px-6 lg:px-12">
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -268,8 +244,8 @@ export default function ClientesDetenidos() {
               >
                 <div className="relative w-full h-full flex items-center justify-center">
                   <Image
-                    src="/apretondemanos-azul.png" 
-                    alt="Ayuda Inmediata Detenidos"
+                    src="/Crimical_stop.png" // IMAGEN ACTUALIZADA
+                    alt="Detenido por Inmigración - Ayuda Legal"
                     width={500}
                     height={500}
                     className="object-contain drop-shadow-[0_0_40px_rgba(178,144,77,0.6)] hover:drop-shadow-[0_0_60px_rgba(178,144,77,0.8)] transition-all duration-500"
@@ -296,7 +272,7 @@ export default function ClientesDetenidos() {
               </motion.div>
             </motion.div>
 
-            {/* --- DERECHA: TEXTO (Cols 7) --- */}
+            {/* --- DERECHA: TEXTO --- */}
             <div className="lg:col-span-7 space-y-10 pl-0 lg:pl-24 relative z-20">
               
               <motion.div 
@@ -376,17 +352,17 @@ export default function ClientesDetenidos() {
         </div>
       </section>
 
-      {/* --- SECTION 4: POR QUÉ ELEGIRNOS (NUEVA SECCIÓN CON EXPERIENCIA) --- */}
+      {/* --- SECTION 4: POR QUÉ ELEGIRNOS (EXPERIENCIA) --- */}
       <section className="py-20 bg-black/30 border-t border-b border-white/5">
         <div className="container mx-auto px-4 max-w-4xl">
-           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {getText(texts.section4.title, lang)} <span className="text-[#B2904D]">{getText(texts.section4.titleHighlight, lang)}</span>
-            </h2>
-            <p className="text-lg text-white/60">
-                {getText(texts.section4.commitment, lang)}
-            </p>
-            <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full mt-4 shadow-[0_0_15px_#B2904D]" />
+          <div className="text-center mb-12">
+             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              {getText(texts.section4.title, lang)} <span className="text-[#B2904D]">{getText(texts.section4.titleHighlight, lang)}</span>
+             </h2>
+             <p className="text-lg text-white/60">
+              {getText(texts.section4.commitment, lang)}
+             </p>
+             <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full mt-4 shadow-[0_0_15px_#B2904D]" />
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 text-center">
@@ -412,29 +388,30 @@ export default function ClientesDetenidos() {
         </div>
       </section>
       
-      {/* --- SECCIÓN: RECURSOS GUBERNAMENTALES (Acordeones EXPANDIDOS) --- */}
+      {/* --- SECCIÓN: RECURSOS GUBERNAMENTALES (AHORA SIEMPRE VISIBLE) --- */}
       <section className="container mx-auto px-4 py-16 relative z-10 max-w-4xl">
         
         <div className="mb-12 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                {getText(texts.sectionGovernment.title, lang)}
+              {getText(texts.sectionGovernment.title, lang)}
             </h2>
             <p className="text-lg text-white/60">
-                {getText(texts.sectionGovernment.subtitle, lang)}
+              {getText(texts.sectionGovernment.subtitle, lang)}
             </p>
             <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full mt-4 shadow-[0_0_15px_#B2904D]" />
         </div>
 
-        <div>
+        <div className="space-y-6">
           <SectionTitle title={lang === 'es' ? 'Enlaces Oficiales Clave (Más de 15 enlaces)' : 'Key Official Links (Over 15 Links)'} />
+          {/* USANDO EL COMPONENTE ESTÁTICO AQUÍ */}
           {governmentResourcesData.map((item, index) => (
-            <GovernmentAccordion key={index} item={item} lang={lang} />
+            <StaticResourceItem key={index} item={item} lang={lang} />
           ))}
         </div>
         
       </section>
       
-      {/* --- SECTION 3 (ASILO) - Original del usuario, con estilos nuevos --- */}
+      {/* --- SECTION 3 (ASILO) --- */}
       <section className="py-20 bg-black/20 border-t border-white/5">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -475,7 +452,7 @@ export default function ClientesDetenidos() {
         </div>
       </section>
 
-      {/* --- FORMULARIO DE CONTACTO (Sin header extra) --- */}
+      {/* --- FORMULARIO DE CONTACTO --- */}
       <div className="relative z-10">
         <ContactForm />
       </div>
