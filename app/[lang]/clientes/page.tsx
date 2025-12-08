@@ -14,8 +14,6 @@ export default function NewsComingSoon() {
       
       <Header />
 
-      {/* --- CONTENIDO PRINCIPAL --- */}
-      {/* CAMBIO AQUI: Aumenté pt-36 a md:pt-44 para bajar el contenido y que no choque con el header */}
       <main className="flex-grow flex items-center justify-center relative pt-36 md:pt-44 pb-20 px-4">
         
         {/* 1. FONDO ANIMADO MEJORADO (Más "Wow") */}

@@ -6,20 +6,15 @@ import { MapPin, Phone, Clock, Star, CheckCircle2, Play, X, Sparkles } from 'luc
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 
+// ✅ IMPORTACIONES CORRECTAS
+import ContactForm from '../components/ContactForm';
+import { useLanguage } from '../context/LanguageContext';
+
 // --- CONFIGURACIÓN DE FUENTE ---
 const font = Outfit({ 
   subsets: ['latin'], 
   weight: ['100', '200', '300', '400', '500', '800', '900'] 
 });
-
-// Simulamos hook de idioma y formulario si no existen
-const useLanguage = () => ({ language: 'es' }); 
-const ContactForm = () => (
-  <div className="text-white/80 p-6 text-center border-2 border-dashed border-white/10 rounded-xl">
-    <h5 className="text-xl font-bold mb-2">Formulario de Contacto</h5>
-    <p className="text-sm opacity-60">El formulario se cargará aquí.</p>
-  </div>
-);
 
 // --- TIPOS DE DATOS ---
 type TeamMember = {
@@ -41,6 +36,7 @@ type OfficeData = {
   hours: { es: string; en: string };
   mapLink: string;
   videoUrl?: string;
+  imageUrl?: string;
   services: { es: string; en: string }[];
   managers: TeamMember[];
   attorneys: TeamMember[];
@@ -54,7 +50,7 @@ const interfaceTexts = {
       es: 'Selecciona una oficina para ver la información detallada, servicios y el equipo legal a tu disposición.', 
       en: 'Select an office to view detailed information, services, and the legal team at your disposal.' 
     },
-    nationalPresence: { es: 'Presencia Nacional', en: 'National Presence' }
+    nationalPresence: { es: 'Ubicaciones Físicas', en: 'Physical Locations' }
   },
   contact: {
     address: { es: 'Dirección', en: 'Address' },
@@ -83,7 +79,7 @@ const officesData: OfficeData[] = [
     quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
     description: { es: 'Nuestras oficinas de Houston en Navigation Boulevard son las primeras que abrimos hace ya más de 30 años. Aquí es donde está el centro neurálgico de nuestra firma y donde recibimos a más de 200 clientes a la semana.', en: 'Our Houston offices on Navigation Boulevard were the first we opened more than 30 years ago. This is the nerve center of our firm and where we receive over 200 clients a week.' },
     address: '6657 Navigation Blvd, Houston, Texas 77011',
-    phone: '(713) 701-1731',
+    phone: '(832) 598-0914',
     email: 'houston@manuelsolis.com',
     hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
     mapLink: 'https://www.google.com/maps/search/?api=1&query=6657+Navigation+Blvd,+Houston,+Texas+77011',
@@ -343,6 +339,152 @@ const officesData: OfficeData[] = [
     attorneys: [
       { name: 'Ni Yan', role: { es: 'Abogada', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-8.png' },
     ]
+  },
+  {
+    id: 'houston-virtual',
+    city: 'Houston Virtual',
+    state: 'TX',
+    title: { es: 'Houston, TX Oficina Virtual', en: 'Houston, TX Virtual Office' },
+    quote: { es: 'Más de 34 años de experiencia y 50,000 casos ganados', en: 'Over 34 years of experience and 50,000 cases won' },
+    description: { es: 'El Abogado de Inmigración Manuel Solís le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal.', en: 'Immigration Attorney Manuel Solís guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permit, and permanent residency in the USA. We have legal representation throughout the United States and also offer advice in legal areas such as family law, accidents, medical malpractice, civil and criminal law.' },
+    address: '3730 Kirby Dr Suite 57, Houston, TX 77098',
+    phone: '+1 713-429-0237',
+    email: 'houston@manuelsolis.com',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    mapLink: 'https://www.google.com/maps/search/?api=1&query=3730+Kirby+Dr+Suite+57+Houston+TX+77098',
+    imageUrl: '/offices/ofhouston.png',
+    services: [
+      { es: 'VISA U / VISA T / VAWA', en: 'U VISA / T VISA / VAWA' },
+      { es: 'VISA JUVENIL SIJS', en: 'SIJS JUVENILE VISA' },
+      { es: 'RESIDENCIA PERMANENTE', en: 'PERMANENT RESIDENCY' },
+      { es: 'PERMISO DE TRABAJO', en: 'WORK PERMIT' },
+      { es: 'DERECHO FAMILIAR', en: 'FAMILY LAW' }
+    ],
+    managers: [],
+    attorneys: [
+      { name: 'Manuel Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/37490671-CAC5-4039-8A96-2680CC45304D.png' },
+      { name: 'Manuel E. Solís III', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-10.png' },
+      { name: 'Juan Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-9.png' },
+      { name: 'Andrew Fink', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-11.png' },
+      { name: 'Ana Patricia Rueda', role: { es: 'Abogada', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-13.png' },
+      { name: 'Eduardo García', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2025/05/imagen-768x1024.jpeg' },
+    ]
+  },
+  {
+    id: 'memphis-airways',
+    city: 'Memphis Airways',
+    state: 'TN',
+    title: { es: 'Memphis Airways, TN Oficina', en: 'Memphis Airways, TN Office' },
+    quote: { es: 'Contamos con representación legal en todo Estados Unidos', en: 'We have legal representation throughout the United States' },
+    description: { es: 'En el Bufete de Abogados Manuel Solís te guiamos en tu trámite de visa humanitaria, permiso de trabajo, ciudadanía, entre otros. Contamos con representación legal en todo Estados Unidos. Nuestro equipo analiza cada situación de manera detallada, elaborando estrategias legales personalizadas.', en: 'At the Law Office of Manuel Solís, we guide you through your humanitarian visa process, work permit, citizenship, and more. We have legal representation throughout the United States. Our team analyzes each situation in detail, developing personalized legal strategies.' },
+    address: '3385 Airways Blvd Suite 320, Memphis, TN 38116',
+    phone: '+1 901-557-8357',
+    email: 'memphis@manuelsolis.com',
+    hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 9:00 AM - 1:00 PM' },
+    mapLink: 'https://maps.app.goo.gl/s3zDpAmWvfZQdFt7A',
+    imageUrl: '/offices/ofAirways.png',
+    services: [
+      { es: 'VISA HUMANITARIA', en: 'HUMANITARIAN VISA' },
+      { es: 'PERMISO DE TRABAJO', en: 'WORK PERMIT' },
+      { es: 'CIUDADANÍA', en: 'CITIZENSHIP' },
+      { es: 'DEFENSA DE DEPORTACIÓN', en: 'DEPORTATION DEFENSE' }
+    ],
+    managers: [],
+    attorneys: [
+      { name: 'Manuel Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/37490671-CAC5-4039-8A96-2680CC45304D.png' },
+      { name: 'Manuel E. Solís III', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-10.png' },
+      { name: 'Juan Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-9.png' },
+      { name: 'Andrew Fink', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-11.png' },
+      { name: 'Ana Patricia Rueda', role: { es: 'Abogada', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-13.png' },
+      { name: 'Eduardo García', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2025/05/imagen-768x1024.jpeg' },
+    ]
+  },
+  {
+    id: 'houston-north-loop',
+    city: 'Houston North Loop',
+    state: 'TX',
+    title: { es: 'Houston (North Loop), TX Oficina', en: 'Houston (North Loop), TX Office' },
+    quote: { es: 'Más de 34 años de experiencia y 50,000 casos ganados', en: 'Over 34 years of experience and 50,000 cases won' },
+    description: { es: 'El Abogado de Inmigración Manuel Solís le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos.', en: 'Immigration Attorney Manuel Solís guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permit, and permanent residency in the USA. We have legal representation throughout the United States.' },
+    address: '2950 N Loop W, Houston, TX 77092',
+    phone: '+1 832-598-0914',
+    email: 'houston@manuelsolis.com',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    mapLink: 'https://maps.app.goo.gl/s3zDpAmWvfZQdFt7A',
+    imageUrl: '/offices/ofLoop.png',
+    services: [
+      { es: 'LEY DE INMIGRACIÓN', en: 'IMMIGRATION LAW' },
+      { es: 'LEY CRIMINAL', en: 'CRIMINAL LAW' },
+      { es: 'ACCIDENTES', en: 'ACCIDENTS' },
+      { es: 'DERECHO FAMILIAR', en: 'FAMILY LAW' }
+    ],
+    managers: [],
+    attorneys: [
+      { name: 'Manuel Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/37490671-CAC5-4039-8A96-2680CC45304D.png' },
+      { name: 'Manuel E. Solís III', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-10.png' },
+      { name: 'Juan Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-9.png' },
+      { name: 'Andrew Fink', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-11.png' },
+      { name: 'Ana Patricia Rueda', role: { es: 'Abogada', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-13.png' },
+      { name: 'Eduardo García', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2025/05/imagen-768x1024.jpeg' },
+    ]
+  },
+  {
+    id: 'houston-main',
+    city: 'Houston Main St',
+    state: 'TX',
+    title: { es: 'Houston (Main St), TX Oficina', en: 'Houston (Main St), TX Office' },
+    quote: { es: 'Más de 34 años de experiencia y 50,000 casos ganados', en: 'Over 34 years of experience and 50,000 cases won' },
+    description: { es: 'El Abogado de Inmigración Manuel Solís le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos.', en: 'Immigration Attorney Manuel Solís guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permit, and permanent residency in the USA. We have legal representation throughout the United States.' },
+    address: '708 Main St, Houston, TX 77002',
+    phone: '+1 713-842-9575',
+    email: 'houston@manuelsolis.com',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    mapLink: 'https://maps.app.goo.gl/s3zDpAmWvfZQdFt7A',
+    imageUrl: '/offices/main.png',
+    services: [
+      { es: 'LEY DE INMIGRACIÓN', en: 'IMMIGRATION LAW' },
+      { es: 'LEY CRIMINAL', en: 'CRIMINAL LAW' },
+      { es: 'ACCIDENTES', en: 'ACCIDENTS' },
+      { es: 'DERECHO FAMILIAR', en: 'FAMILY LAW' }
+    ],
+    managers: [],
+    attorneys: [
+      { name: 'Manuel Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/37490671-CAC5-4039-8A96-2680CC45304D.png' },
+      { name: 'Manuel E. Solís III', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-10.png' },
+      { name: 'Juan Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-9.png' },
+      { name: 'Andrew Fink', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-11.png' },
+      { name: 'Ana Patricia Rueda', role: { es: 'Abogada', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-13.png' },
+      { name: 'Eduardo García', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2025/05/imagen-768x1024.jpeg' },
+    ]
+  },
+  {
+    id: 'houston-northchase',
+    city: 'Houston Northchase',
+    state: 'TX',
+    title: { es: 'Houston (Northchase), TX Oficina', en: 'Houston (Northchase), TX Office' },
+    quote: { es: 'Más de 34 años de experiencia y 50,000 casos ganados', en: 'Over 34 years of experience and 50,000 cases won' },
+    description: { es: 'El Abogado de Inmigración Manuel Solís le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos.', en: 'Immigration Attorney Manuel Solís guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permit, and permanent residency in the USA. We have legal representation throughout the United States.' },
+    address: '16510 Northchase Dr, Houston, TX 77060',
+    phone: '+1 346-522-4848',
+    email: 'houston@manuelsolis.com',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    mapLink: 'https://maps.app.goo.gl/s3zDpAmWvfZQdFt7A',
+    imageUrl: '/offices/ofNorth.png',
+    services: [
+      { es: 'LEY DE INMIGRACIÓN', en: 'IMMIGRATION LAW' },
+      { es: 'LEY CRIMINAL', en: 'CRIMINAL LAW' },
+      { es: 'ACCIDENTES', en: 'ACCIDENTS' },
+      { es: 'DERECHO FAMILIAR', en: 'FAMILY LAW' }
+    ],
+    managers: [],
+    attorneys: [
+      { name: 'Manuel Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/37490671-CAC5-4039-8A96-2680CC45304D.png' },
+      { name: 'Manuel E. Solís III', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-10.png' },
+      { name: 'Juan Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-9.png' },
+      { name: 'Andrew Fink', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-11.png' },
+      { name: 'Ana Patricia Rueda', role: { es: 'Abogada', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-13.png' },
+      { name: 'Eduardo García', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2025/05/imagen-768x1024.jpeg' },
+    ]
   }
 ];
 
@@ -393,20 +535,17 @@ export default function OfficesPremium() {
     }
   }, [selectedId]);
 
-  // Force video play when activeOffice changes
   useEffect(() => {
-      if(mainVideoRef.current){
+      if(mainVideoRef.current && activeOffice.videoUrl){
           mainVideoRef.current.load();
           const playPromise = mainVideoRef.current.play();
           if (playPromise !== undefined) {
             playPromise.catch(error => {
-              // Auto-play was prevented
               console.log("Auto-play prevented");
             });
           }
       }
   }, [activeOffice]);
-
 
   const modalVideoRef = useRef<HTMLVideoElement>(null);
   
@@ -417,22 +556,16 @@ export default function OfficesPremium() {
     }
   }, [isVideoOpen, activeOffice.videoUrl]);
 
-
   return (
     <section 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      // 🛠️ SOLUCIÓN:
-      // 1. -mt-[140px]: Sube el componente 140px hacia arriba para cubrir el hueco blanco del header externo.
-      // 2. pt-[160px]: Añade padding arriba para que el contenido interno no se corte.
       className={`relative w-full min-h-screen bg-[#001540] overflow-hidden ${font.className} -mt-[140px] pt-[160px]`}
       id={lang === 'es' ? 'oficinas' : 'locations'}
     >
-      {/* 🌌 FONDO ATMOSFÉRICO */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         
-        {/* Orbes de animación */}
         <motion.div 
           animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
@@ -447,12 +580,8 @@ export default function OfficesPremium() {
         <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
-      {/* Ajuste de Padding Vertical (pt-8 en vez de py-16/24) 
-        para subir "Nuestras Sedes" y todo el contenido más arriba.
-      */}
       <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 pt-8 pb-16 md:pt-12 md:pb-24">
         
-        {/* HEADER DEL COMPONENTE */}
         <div className="text-center mb-10 md:mb-12">
           <motion.div
             initial={{ opacity: 0, y: -30 }}
@@ -494,10 +623,8 @@ export default function OfficesPremium() {
           </motion.p>
         </div>
 
-        {/* LAYOUT PRINCIPAL */}
         <div className="grid lg:grid-cols-12 gap-6 md:gap-8 lg:gap-12">
           
-          {/* SIDEBAR */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -505,52 +632,49 @@ export default function OfficesPremium() {
             transition={{ duration: 0.8 }}
             className="lg:col-span-3"
           >
-            <div className="lg:sticky lg:top-32"> {/* Ajustado top-24 a top-32 por el cambio de padding */}
-              <div className="relative bg-[#001540]/90 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-white/10 shadow-[0_0_40px_rgba(56,189,248,0.15)]">
-                
-                <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col lg:gap-3">
-                  {officesData.map((office) => (
-                    <motion.button
-                      key={office.id}
-                      onClick={() => setSelectedId(office.id)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={`
-                        relative group px-3 py-3 md:px-4 md:py-4 rounded-xl text-left transition-all duration-300
-                        ${selectedId === office.id 
-                          ? 'bg-gradient-to-br from-[#B2904D]/30 to-[#B2904D]/10 border-2 border-[#B2904D] shadow-[0_0_20px_rgba(178,144,77,0.4)]' 
-                          : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#B2904D]/30 hover:shadow-[0_0_15px_rgba(56,189,248,0.2)]'
-                        }
-                      `}
-                    >
-                      <div className="relative z-10 flex items-center justify-between">
-                        <div className="overflow-hidden flex-1 min-w-0">
-                          <span className={`block font-bold text-xs md:text-sm lg:text-base leading-tight truncate transition-colors duration-300 ${selectedId === office.id ? 'text-white' : 'text-white/80 group-hover:text-white'}`}>
-                            {office.city}
-                          </span>
-                          <span className={`text-[9px] md:text-[10px] uppercase tracking-[0.15em] mt-1 block font-medium transition-colors duration-300 ${selectedId === office.id ? 'text-[#B2904D]' : 'text-white/40 group-hover:text-white/60'}`}>
-                            {office.state}
-                          </span>
-                        </div>
-                        
-                        {selectedId === office.id && (
-                          <motion.div 
-                            layoutId="activeIndicator" 
-                            className="hidden md:block ml-2"
-                            transition={{ type: "spring", bounce: 0.4, duration: 0.6 }}
-                          >
-                            <Star fill="#B2904D" className="text-[#B2904D]" size={16} />
-                          </motion.div>
-                        )}
+            <div className="relative bg-[#001540]/90 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-white/10 shadow-[0_0_40px_rgba(56,189,248,0.15)]">
+              
+              <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col lg:gap-3">
+                {officesData.map((office) => (
+                  <motion.button
+                    key={office.id}
+                    onClick={() => setSelectedId(office.id)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`
+                      relative group px-3 py-3 md:px-4 md:py-4 rounded-xl text-left transition-all duration-300
+                      ${selectedId === office.id 
+                        ? 'bg-gradient-to-br from-[#B2904D]/30 to-[#B2904D]/10 border-2 border-[#B2904D] shadow-[0_0_20px_rgba(178,144,77,0.4)]' 
+                        : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#B2904D]/30 hover:shadow-[0_0_15px_rgba(56,189,248,0.2)]'
+                      }
+                    `}
+                  >
+                    <div className="relative z-10 flex items-center justify-between">
+                      <div className="overflow-hidden flex-1 min-w-0">
+                        <span className={`block font-bold text-xs md:text-sm lg:text-base leading-tight truncate transition-colors duration-300 ${selectedId === office.id ? 'text-white' : 'text-white/80 group-hover:text-white'}`}>
+                          {office.city}
+                        </span>
+                        <span className={`text-[9px] md:text-[10px] uppercase tracking-[0.15em] mt-1 block font-medium transition-colors duration-300 ${selectedId === office.id ? 'text-[#B2904D]' : 'text-white/40 group-hover:text-white/60'}`}>
+                          {office.state}
+                        </span>
                       </div>
-                    </motion.button>
-                  ))}
-                </div>
+                      
+                      {selectedId === office.id && (
+                        <motion.div 
+                          layoutId="activeIndicator" 
+                          className="hidden md:block ml-2"
+                          transition={{ type: "spring", bounce: 0.4, duration: 0.6 }}
+                        >
+                          <Star fill="#B2904D" className="text-[#B2904D]" size={16} />
+                        </motion.div>
+                      )}
+                    </div>
+                  </motion.button>
+                ))}
               </div>
             </div>
           </motion.div>
 
-          {/* MAIN CARD */}
           <div className="lg:col-span-9">
             <AnimatePresence mode="wait">
               <motion.div
@@ -564,7 +688,6 @@ export default function OfficesPremium() {
               >
                 <div className="relative bg-[#001540]/90 backdrop-blur-sm rounded-xl md:rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(56,189,248,0.2)]">
                   
-                  {/* VIDEO HERO - ARREGLADO */}
                   <div className="relative h-[280px] md:h-[400px] lg:h-[500px] w-full overflow-hidden group bg-black">
                     
                     {activeOffice.videoUrl ? (
@@ -575,17 +698,25 @@ export default function OfficesPremium() {
                         loop 
                         playsInline
                         preload="auto"
-                        // Eliminamos filtros y opacidades raras
                         className="absolute inset-0 w-full h-full object-cover" 
                       >
                         <source src={activeOffice.videoUrl} type="video/mp4" />
                         <source src={activeOffice.videoUrl.replace('.mp4', '.mov')} type="video/quicktime" />
                       </video>
+                    ) : activeOffice.imageUrl ? (
+                      <div className="relative w-full h-full">
+                        <Image 
+                          src={activeOffice.imageUrl}
+                          alt={`${activeOffice.city} Office`}
+                          fill
+                          className="object-cover"
+                          priority
+                        />
+                      </div>
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-[#002868] to-[#001540]" />
                     )}
                     
-                    {/* Degradado solo para texto */}
                     <div className="absolute bottom-0 left-0 w-full h-2/3 bg-gradient-to-t from-[#001540] via-[#001540]/60 to-transparent" />
 
                     {activeOffice.videoUrl && (
@@ -629,7 +760,6 @@ export default function OfficesPremium() {
                     </div>
                   </div>
 
-                  {/* CONTENT BODY */}
                   <div className="p-4 md:p-8 lg:p-12 space-y-8 md:space-y-12">
                     
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 md:gap-12">
@@ -711,7 +841,6 @@ export default function OfficesPremium() {
 
                     <div className="relative h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-                    {/* TEAM */}
                     <div>
                       {activeOffice.attorneys.length > 0 && (
                         <motion.div 
@@ -786,7 +915,6 @@ export default function OfficesPremium() {
                       )}
                     </div>
 
-                    {/* FORM */}
                     <motion.div 
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -809,7 +937,6 @@ export default function OfficesPremium() {
         </div>
       </div>
 
-      {/* VIDEO MODAL */}
       <AnimatePresence>
         {isVideoOpen && activeOffice.videoUrl && (
           <motion.div 

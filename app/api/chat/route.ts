@@ -1,8 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextRequest, NextResponse } from 'next/server';
 
-// --- CONFIGURACIÓN Y CONTEXTO DEL SITIO ---
-// Esta información alimenta a la IA con los datos REALES de tu sitio web.
+// --- CONFIGURACIÓN Y CONTEXTO DEL SITIO (ACTUALIZADO) ---
+// La información ha sido saneada: Nuevo número de teléfono y prohibición de enlaces.
 const SITE_CONTEXT = `
 ERES: "Nora", la asistente virtual oficial de las Oficinas Legales de Manuel Solís.
 TU OBJETIVO: Atender al cliente con profesionalismo, identificar su necesidad y CONVENCERLO de agendar una consulta o llamar.
@@ -10,115 +10,50 @@ TU OBJETIVO: Atender al cliente con profesionalismo, identificar su necesidad y 
 DATOS CLAVE DEL DESPACHO:
 - Experiencia: Más de 34 años y más de 50,000 casos ganados.
 - Eslogan: "Nuestra pasión es ayudarle."
-- Teléfono Principal: (713) 701-1731 (Siempre ofrécelo, o (866) 979-5146 para urgencias).
+- Teléfono Principal: (832) 598-0914 (Siempre ofrécelo, o (866) 979-5146 para urgencias).
 - Abogado Principal: Manuel Solís.
 - Oficinas Principales: Houston, Dallas, Los Ángeles, Chicago.
 
 ÁREAS DE PRÁCTICA (Servicios y Rutas):
-1. Inmigración: Defensa contra la deportación, Asilo, Visas (U/VAWA), Residencia (Familiar/Empleo), Ciudadanía, DACA. [Ruta: /servicios/inmigracion]
-2. Accidentes: Auto, Camiones 18 ruedas, Trabajo, Negligencia Médica, Explosiones. [Ruta: /servicios/accidentes]
-3. Ley Criminal: DWI/DUI, Violencia Doméstica, Asalto, Robos. [Ruta: /servicios/ley-criminal]
-4. Familia: Divorcios, Custodia, Manutención. [Ruta: /servicios/familia]
-5. Seguros: Reclamos por tormentas, granizo, incendios, techos. [Ruta: /servicios/seguros]
-6. Información General: Abogados, Oficinas, Testimonios, Preguntas Frecuentes. [Rutas: /abogados, /oficinas, /Testimonios, /informacion/faq]
+1. Inmigración: Defensa contra la deportación, Asilo, Visas (U/VAWA), Residencia (Familiar/Empleo), Ciudadanía, DACA.
+2. Accidentes: Auto, Camiones 18 ruedas, Trabajo, Negligencia Médica, Explosiones.
+3. Ley Criminal: DWI/DUI, Violencia Doméstica, Asalto, Robos.
+4. Familia: Divorcios, Custodia, Manutención.
+5. Seguros: Reclamos por tormentas, granizo, incendios, techos.
+6. Información General: Abogados, Oficinas, Testimonios, Preguntas Frecuentes, Políticas de Privacidad.
 
 REGLAS DE RESPUESTA (CRÍTICO):
 1. TONO: Estrictamente profesional, amable, empático y persuasivo. NUNCA uses emojis.
-2. FORMATO: Usa párrafos cortos y fáciles de leer. NUNCA uses negritas ni listas con viñetas o asteriscos en el texto crudo.
-3. ENLACES: Si tu respuesta menciona un área legal, una oficina o un tema clave, DEBES incluir el enlace completo de la página correspondiente, usando el formato [RESUMEN] (manuelsolis.com/[RUTA_COMPLETA]).
+2. FORMATO: Usa párrafos cortos separados por **saltos de línea doble** para garantizar una buena lectura (con espacio y separado). NUNCA uses negritas ni listas con viñetas o asteriscos.
+3. ENLACES: **NUNCA generes hipervínculos, URLs, ni rutas de archivo.** Solo proporciona información sobre el sitio cuando sea preguntado directamente sobre ese contenido.
 4. RESTRICCIONES:
     - NUNCA des consejo legal específico ("Usted califica para X"). Di: "Un abogado debe evaluar su caso específico".
     - NO inventes precios. Di: "Las consultas son gratuitas o de bajo costo dependiendo del caso".
-5. CIERRE: Siempre termina invitando a la acción de manera profesional: llamar para una consulta o usar el formulario de contacto, ofreciendo el número (713) 701-1731 o (866) 979-5146.
+5. CIERRE: Siempre termina invitando a la acción de manera profesional: llamar para una consulta o usar el formulario de contacto, ofreciendo el número (832) 598-0914 o (866) 979-5146.
 
-EJEMPLOS DE INTERACCIÓN (Ahora con el formato de enlace solicitado):
+EJEMPLOS DE INTERACCIÓN (Ahora sin enlaces):
 
 Usuario: "¿Quién es Manuel Solís?"
-IA: El Abogado Manuel Solís es el Fundador de las Oficinas Legales de Manuel Solís. Es un experto legal con más de 34 años de experiencia [Abogado Principal y Fundador] (https://manuelsolis.com/es/abogados). Su despacho ha ganado más de 50,000 casos en áreas clave como Inmigración y Accidentes. Si desea conocer más, puede ver el perfil completo [Perfil de Manuel Solís] (https://manuelsolis.com/es/abogados). Si tiene un caso, le recomiendo llamar al (713) 701-1731 para que su equipo revise su situación.
+IA: El Abogado Manuel Solís es el Fundador de las Oficinas Legales de Manuel Solís. Es un experto legal con más de 34 años de experiencia. Su despacho ha ganado más de 50,000 casos en áreas clave como Inmigración y Accidentes. Si desea conocer más, puede ver el perfil completo en la sección de Abogados de nuestro sitio web. Si tiene un caso, le recomiendo llamar al (832) 598-0914 para que su equipo revise su situación.
 
 Usuario: "Necesito un abogado de inmigración"
-IA: Entiendo su necesidad. En las Oficinas de Manuel Solís somos especialistas en casos de inmigración, incluyendo asilo, defensa contra la deportación y visas [Servicios de Inmigración] (https://manuelsolis.com/es/servicios/inmigracion). Contamos con más de 34 años de experiencia ayudando a familias a arreglar su estatus. Lo mejor es que un abogado revise su historial para ver qué opción es segura para usted. Por favor, llámenos al (713) 701-1731 para una evaluación confidencial.
+IA: Entiendo su necesidad. En las Oficinas de Manuel Solís somos especialistas en casos de inmigración, incluyendo asilo, defensa contra la deportación y visas. Contamos con más de 34 años de experiencia ayudando a familias a arreglar su estatus. Lo mejor es que un abogado revise su historial para ver qué opción es segura para usted. Por favor, llámenos al (832) 598-0914 para una evaluación confidencial.
 `;
 
-// --- MAPEO DE ENLACES PARA POST-PROCESAMIENTO ---
-const LINK_MAP = {
-    // Páginas de Servicios (General)
-    'inmigración': { summary: 'Servicios de Inmigración', route: '/servicios/inmigracion' },
-    'accidentes': { summary: 'Servicios de Accidentes', route: '/servicios/accidentes' },
-    'ley criminal': { summary: 'Servicios de Ley Criminal', route: '/servicios/ley-criminal' },
-    'familia': { summary: 'Servicios de Ley Familiar', route: '/servicios/familia' },
-    'seguros': { summary: 'Servicios de Reclamaciones de Seguros', route: '/servicios/seguros' },
-
-    // Temas Específicos
-    'deportación': { summary: 'Defensa Contra la Deportación', route: '/servicios/inmigracion' },
-    'asilo': { summary: 'Opciones de Asilo', route: '/servicios/inmigracion' },
-    'visas': { summary: 'Visas y Residencia', route: '/servicios/inmigracion' },
-    'residencia': { summary: 'Residencia Permanente', route: '/servicios/inmigracion' },
-    'ciudadanía': { summary: 'Proceso de Ciudadanía', route: '/servicios/inmigracion' },
-    'divorcio': { summary: 'Asesoría en Divorcios', route: '/servicios/familia' },
-    'custodia': { summary: 'Custodia de Hijos', route: '/servicios/familia' },
-    'dwi': { summary: 'Defensa por DWI', route: '/servicios/ley-criminal' },
-    'robo': { summary: 'Delitos de Robo y Hurto', route: '/servicios/ley-criminal' },
-
-    // Páginas de Información
-    'manuel solís': { summary: 'Abogado Principal y Fundador', route: '/abogados' },
-    'abogados': { summary: 'Conozca a Nuestros Abogados', route: '/abogados' },
-    'oficinas': { summary: 'Nuestras Ubicaciones en EE. UU.', route: '/oficinas' },
-    'testimonios': { summary: 'Historias de Éxito de Clientes', route: '/Testimonios' },
-    'preguntas frecuentes': { summary: 'Preguntas Frecuentes', route: '/informacion/faq' },
-    'consulta': { summary: 'Formulario de Contacto para Consulta', route: '#contacto' },
-};
-
-// Función para insertar los enlaces en la respuesta de la IA
-function linkifyResponse(text: string, lang: 'es' | 'en' = 'es'): string {
-    let result = text;
-    const baseUrl = `https://manuelsolis.com/${lang}`;
-
-    // Ordenar las claves por longitud descendente para priorizar frases largas
-    const sortedKeys = Object.keys(LINK_MAP).sort((a, b) => b.length - a.length);
-
-    // Mantenemos un registro de las sustituciones para evitar el doble linkeado
-    const substituted: { [key: string]: boolean } = {};
-
-    for (const key of sortedKeys) {
-        const linkInfo = LINK_MAP[key as keyof typeof LINK_MAP];
-        const fullLink = `(${baseUrl}${linkInfo.route})`;
-        const placeholder = `[${linkInfo.summary}]${fullLink}`;
-        
-        // Expresión regular para encontrar la palabra clave de forma insensible a mayúsculas/minúsculas y solo una vez
-        const regex = new RegExp(`\\b${key}\\b(?!\\))`, 'gi'); 
-        
-        // Usamos una función de reemplazo para controlar las sustituciones y evitar el doble linkeado
-        result = result.replace(regex, (match) => {
-            const lowerCaseMatch = match.toLowerCase();
-            
-            // Si ya sustituimos esta palabra clave, devolvemos la palabra original
-            if (substituted[lowerCaseMatch]) {
-                return match; 
-            }
-
-            // Realizar la sustitución y marcarla como sustituida
-            substituted[lowerCaseMatch] = true;
-            return placeholder;
-        });
-    }
-
-    // Limpieza de formato adicional (asegurarse de que los saltos de línea se manejen bien con el markdown)
-    result = result.replace(/\n\s*\[/g, '\n\n[');
-    
-    return result;
-}
+// --- MAPEO DE ENLACES ELIMINADO ---
+// Se elimina la función linkifyResponse y el LINK_MAP ya que los enlaces están prohibidos.
 
 export async function POST(request: NextRequest) {
     try {
+        // La detección del idioma no es necesaria ya que los enlaces fueron eliminados, pero mantenemos la lógica para ser robustos.
+        // const url = new URL(request.url);
+        // const lang = url.pathname.includes('/en') ? 'en' : 'es'; 
+        
         const apiKey = process.env.GEMINI_API_KEY;
-        const url = new URL(request.url);
-        // Detectar idioma desde la URL para generar el enlace correcto
-        const lang = url.pathname.includes('/en') ? 'en' : 'es'; 
 
         if (!apiKey) {
             return NextResponse.json(
-                { success: false, error: 'Error de configuración interna.' },
+                { success: false, error: 'Error de configuración interna: Clave de API faltante.' },
                 { status: 500 }
             );
         }
@@ -126,7 +61,7 @@ export async function POST(request: NextRequest) {
         const genAI = new GoogleGenerativeAI(apiKey);
         
         const model = genAI.getGenerativeModel({ 
-            model: 'gemini-2.0-flash', 
+            model: 'gemini-2.5-flash', // Modelo actualizado para mejor rendimiento
             systemInstruction: SITE_CONTEXT
         });
 
@@ -157,18 +92,25 @@ export async function POST(request: NextRequest) {
         const result = await chat.sendMessage(message);
         let responseText = result.response.text();
 
-        // --- POST-PROCESAMIENTO: ELIMINAR EMOJIS, NEGRITAS Y APLICAR ENLACES ---
+        // --- POST-PROCESAMIENTO: LIMPIEZA DE FORMATO ---
         
-        // 1. Aplicar enlaces usando el mapa (CRÍTICO)
-        responseText = linkifyResponse(responseText, lang);
-
-        // 2. Eliminar emojis (Regla: "NUNCA pongas emojis")
+        // 1. Eliminar emojis
         const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
         responseText = responseText.replace(emojiRegex, '');
 
-        // 3. Eliminar asteriscos dobles/simples si persisten (Regla: "NO uses asteriscos (**) ni negritas en el texto crudo")
+        // 2. Eliminar negritas y listas si persisten
         responseText = responseText.replace(/\*\*/g, '');
-        responseText = responseText.replace(/^\s*\*\s?/gm, ''); // Elimina listas si las creó
+        responseText = responseText.replace(/^\s*-\s?/gm, ''); // Elimina listas con guiones
+        responseText = responseText.replace(/^\s*\*\s?/gm, ''); // Elimina listas con asteriscos
+
+        // 3. Normalizar saltos de línea para asegurar el "espacio y separado"
+        // Primero, reemplaza múltiples saltos de línea por dos (párrafos separados)
+        responseText = responseText.replace(/(\n\s*){2,}/g, '\n\n');
+        // Luego, elimina cualquier salto de línea simple que no esté entre párrafos separados
+        responseText = responseText.replace(/([^\n])\n([^\n])/g, '$1 $2');
+        // Asegura que al final queden dobles saltos entre párrafos si el modelo solo puso uno
+        responseText = responseText.trim().replace(/\n/g, '\n\n');
+
 
         return NextResponse.json({
             success: true,
@@ -181,7 +123,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
             { 
                 success: false, 
-                error: 'Lo siento, hubo un problema de conexión. Por favor llámanos al (713) 701-1731.' 
+                // NÚMERO DE TELÉFONO ACTUALIZADO EN EL FALLBACK
+                error: 'Lo siento, hubo un problema de conexión. Por favor llámanos al (832) 598-0914.' 
             },
             { status: 500 }
         );

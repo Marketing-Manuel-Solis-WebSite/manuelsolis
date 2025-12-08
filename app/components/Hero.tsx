@@ -1,14 +1,14 @@
 'use client'
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Outfit } from 'next/font/google';
 
 const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '200', '300', '400', '500', '800', '900'] 
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '800', '900']
 })
 
 const associations = [
@@ -20,12 +20,31 @@ const associations = [
   { name: 'CD State Bar', logo: '/state-bar/cd-state.png' },
 ];
 
+const DESKTOP_DURATION = 15;
+const MOBILE_DURATION = 6;
+
 export default function HeroProfessional() {
   const { t, language } = useLanguage();
   const containerRef = useRef(null);
   
-  // Agregamos solo el estado para el Pop-up
   const [showPopup, setShowPopup] = useState(true);
+  
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    // Esta lógica se ejecuta solo en el cliente
+    const handleResize = () => {
+      // Consideramos Desktop si es mayor o igual a 1024px
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    // Ejecutar al montar
+    handleResize();
+
+    // Escuchar cambios de tamaño
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const textRevealVariant = {
     hidden: { y: "100%", rotateX: -20, opacity: 0 },
@@ -60,12 +79,14 @@ export default function HeroProfessional() {
     return '';
   };
 
-  // --- LOGICA DEL CARRUSEL ---
   const marqueeItems = [
     ...associations, ...associations, 
     ...associations, ...associations, 
     ...associations, ...associations
   ];
+
+  // Selecciona la duración basada en el estado
+  const carouselDuration = isDesktop ? DESKTOP_DURATION : MOBILE_DURATION;
 
   return (
     <section 
@@ -120,7 +141,7 @@ export default function HeroProfessional() {
               animate={{ 
                 opacity: 1, 
                 scale: 1, 
-                y: -80, // Mantiene la imagen subida
+                y: -80, 
                 x: 0, 
                 rotateY: 0 
               }}
@@ -251,7 +272,8 @@ export default function HeroProfessional() {
            <motion.div 
              className="flex items-center gap-80 whitespace-nowrap" 
              animate={{ x: ["0%", "-33.333%"] }}
-             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+             // Se aplica la velocidad dependiendo del dispositivo
+             transition={{ duration: carouselDuration, repeat: Infinity, ease: "linear" }}
            >
              {marqueeItems.map((assoc, idx) => {
                const size = getLogoSize(assoc.logo);
@@ -275,7 +297,7 @@ export default function HeroProfessional() {
         </div>
       </div>
 
-      {/* --- POP UP ROJO AÑADIDO (Absolute para no romper layout) --- */}
+      {/* POP UP */}
       {showPopup && (
         <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -286,7 +308,6 @@ export default function HeroProfessional() {
             <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-transparent rounded-2xl opacity-50 pointer-events-none" />
 
             <div className="relative z-10">
-                {/* Título simple sin adornos */}
                 <h3 className="text-xl font-bold mb-1 text-red-50 drop-shadow-md">
                     {language === 'es' ? '¿Familiar Detenido?' : 'Detained Relative?'}
                 </h3>
@@ -296,7 +317,6 @@ export default function HeroProfessional() {
                 </p>
                 
                 <div className="space-y-3">
-                    {/* Botón Cliente */}
                     <a 
                         href="tel:+18000000000"
                         className="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn"
@@ -309,7 +329,6 @@ export default function HeroProfessional() {
                         </span>
                     </a>
 
-                    {/* Botón No Cliente */}
                     <a 
                         href="tel:+18000000000"
                         className="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn"
@@ -323,7 +342,6 @@ export default function HeroProfessional() {
                     </a>
                 </div>
 
-                {/* Enlace de cierre */}
                 <button 
                     onClick={() => setShowPopup(false)}
                     className="block w-full text-center mt-4 text-xs text-red-200/50 hover:text-white underline decoration-red-200/30 hover:decoration-white transition-all"

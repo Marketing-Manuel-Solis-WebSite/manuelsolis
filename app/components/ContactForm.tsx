@@ -3,10 +3,11 @@
 import { useState } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
-import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap } from 'lucide-react' // Sparkles eliminado
+import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
 
 // --- COLORES ---
 const ACCENT_GOLD = '#B2904D';
+const API_URL = '/api/zapier-contact';
 
 // --- VARIANTS ---
 const containerVar: Variants = {
@@ -90,24 +91,61 @@ export default function ContactForm() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
   
-  const [formData, setFormData] = useState({ firstName: '', lastName: '', phone: '', email: '', message: '', consent: false });
+  // Estado actualizado con dos checkboxes separados
+  const [formData, setFormData] = useState({ 
+      firstName: '', 
+      lastName: '', 
+      phone: '', 
+      email: '', 
+      message: '', 
+      acceptedTerms: false, // OBLIGATORIO
+      marketingConsent: false // OPCIONAL
+  });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.consent) return;
+    // Solo validamos que acceptedTerms (el obligatorio) esté marcado
+    if (!formData.acceptedTerms || isSubmitting) return;
     
     setIsSubmitting(true);
+    setSubmitStatus('idle');
     
-    // Simulación de envío
-    setTimeout(() => {
-      setSubmitStatus('success');
-      setIsSubmitting(false);
-      setFormData({ firstName: '', lastName: '', phone: '', email: '', message: '', consent: false });
-      
-      setTimeout(() => setSubmitStatus('idle'), 4000);
-    }, 2000);
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ...formData,
+                // Mapeamos los campos para Zapier/Backend
+                // receiveUpdates ahora es el check de marketing (opcional)
+                receiveUpdates: formData.marketingConsent, 
+                language: lang
+            }),
+        });
+
+        if (response.ok) {
+            setSubmitStatus('success');
+            // Limpiamos todo excepto los consentimientos quizás, o todo el form
+            setFormData({ 
+                firstName: '', lastName: '', phone: '', email: '', message: '', 
+                acceptedTerms: false, marketingConsent: false 
+            });
+        } else {
+            console.error('Error enviando formulario');
+            setSubmitStatus('error');
+        }
+    } catch (error) {
+        console.error('Error de red:', error);
+        setSubmitStatus('error');
+    } finally {
+        setIsSubmitting(false);
+        setTimeout(() => setSubmitStatus('idle'), 4000);
+    }
   };
 
   const handleChange = (e: any) => {
@@ -123,19 +161,13 @@ export default function ContactForm() {
       {/* 1. FONDO AMBIENTAL */}
       <div className="absolute inset-0 z-0 pointer-events-none">
          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002050] via-[#001540] to-[#000814]" />
-         
-         {/* Orbe rotando lentamente */}
          <motion.div 
            animate={{ rotate: 360 }}
            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
            className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[100px]"
          />
-         
-         {/* Ruido sutil */}
          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.07] mix-blend-overlay"></div>
       </div>
-
-      {/* SE ELIMINARON LAS MÁSCARAS (ESCALONES) AQUÍ */}
 
       <div className="container mx-auto px-4 relative z-20 max-w-5xl">
         
@@ -146,8 +178,6 @@ export default function ContactForm() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          {/* SE ELIMINÓ EL LABEL "IMMEDIATE ATTENTION" AQUÍ */}
-          
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight drop-shadow-lg">
             {t('Solicitud de', 'Request')}{' '}
             <span className="font-medium text-[#B2904D] drop-shadow-[0_0_15px_rgba(178,144,77,0.3)]">
@@ -168,33 +198,46 @@ export default function ContactForm() {
           viewport={{ once: true }}
           className="relative bg-[#001026]/90 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] border border-white/10 overflow-hidden"
         >
-            {/* Brillo decorativo interno */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
 
             <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
               
-              {/* STATUS OVERLAY (ÉXITO) */}
+              {/* STATUS OVERLAY */}
               <AnimatePresence>
-                {submitStatus === 'success' && (
+                {submitStatus !== 'idle' && (
                   <motion.div 
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                     className="absolute inset-0 z-50 bg-[#001540]/95 flex flex-col items-center justify-center text-center rounded-[2rem] backdrop-blur-md"
                   >
-                     <motion.div
-                       initial={{ scale: 0 }} animate={{ scale: 1 }}
-                       transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                     >
-                       <CheckCircle2 size={80} className="text-green-400 mb-6 drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]" />
-                     </motion.div>
-                     <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('¡Enviado con Éxito!', 'Successfully Sent!')}</h3>
-                     <p className="text-blue-200">{t('Nuestro equipo revisará su caso de inmediato.', 'Our team will review your case immediately.')}</p>
+                      {submitStatus === 'success' ? (
+                        <>
+                            <motion.div
+                                initial={{ scale: 0 }} animate={{ scale: 1 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                            >
+                                <CheckCircle2 size={80} className="text-green-400 mb-6 drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]" />
+                            </motion.div>
+                            <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('¡Enviado con Éxito!', 'Successfully Sent!')}</h3>
+                            <p className="text-blue-200">{t('Nuestro equipo revisará su caso de inmediato.', 'Our team will review your case immediately.')}</p>
+                        </>
+                      ) : (
+                        <>
+                            <motion.div
+                                initial={{ scale: 0 }} animate={{ scale: 1 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                            >
+                                <XCircle size={80} className="text-red-400 mb-6 drop-shadow-[0_0_15px_rgba(252,165,165,0.5)]" />
+                            </motion.div>
+                            <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('Error de Envío', 'Submission Error')}</h3>
+                            <p className="text-red-200">{t('Hubo un problema. Intente de nuevo más tarde.', 'There was an issue. Please try again later.')}</p>
+                        </>
+                      )}
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              {/* CAMPOS DEL FORMULARIO EN GRID */}
+              {/* CAMPOS DEL FORMULARIO */}
               <div className="grid md:grid-cols-2 gap-8">
-                {/* Columna Izquierda */}
                 <motion.div variants={itemVar}>
                    <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
                    <div className="space-y-5">
@@ -203,7 +246,6 @@ export default function ContactForm() {
                    </div>
                 </motion.div>
 
-                {/* Columna Derecha */}
                 <motion.div variants={itemVar}>
                    <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
                    <div className="space-y-5">
@@ -213,7 +255,6 @@ export default function ContactForm() {
                 </motion.div>
               </div>
 
-              {/* Campo Mensaje */}
               <motion.div variants={itemVar}>
                 <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
                 <NeonInput 
@@ -227,35 +268,68 @@ export default function ContactForm() {
                 />
               </motion.div>
 
-              {/* Checkbox de Consentimiento */}
-              <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
-                <div className="relative flex items-center pt-1">
-                  <input
-                    type="checkbox"
-                    id="consent"
-                    name="consent"
-                    checked={formData.consent}
-                    onChange={handleChange}
-                    className="peer h-6 w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400"
-                  />
-                  <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100">
-                    <CheckCircle2 size={16} strokeWidth={3} />
-                  </div>
-                </div>
-                <label htmlFor="consent" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
-                  {t('Acepto recibir mensajes de texto de marketing y otros mensajes del Law Office of Manuel Solis al número proporcionado. Pueden aplicarse tarifas de mensajes y datos. El consentimiento no es una condición para recibir servicios. Para más información, por favor revise nuestra', 'I agree to receive marketing text messages and other messages from the Law Office of Manuel Solis at the number provided. Message and data rates may apply. Consent is not a condition of receiving services. For more information, please review our')}{' '}
-                  <a href="/privacidad" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Policy')}</a>.
-                </label>
-              </motion.div>
+              {/* --- ZONA DE CONSENTIMIENTOS --- */}
+              <div className="space-y-4">
+                  
+                  {/* 1. CHECKBOX OPCIONAL (Marketing) */}
+                  <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
+                    <div className="relative flex items-center pt-1">
+                      <input
+                        type="checkbox"
+                        id="marketingConsent"
+                        name="marketingConsent"
+                        checked={formData.marketingConsent}
+                        onChange={handleChange}
+                        className="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500"
+                      />
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100">
+                        <CheckCircle2 size={14} strokeWidth={3} />
+                      </div>
+                    </div>
+                    <label htmlFor="marketingConsent" className="text-xs text-blue-200/80 leading-relaxed cursor-pointer select-none group-hover:text-blue-100 transition-colors">
+                      {t(
+                          'Acepto recibir mensajes de texto de marketing y otros mensajes del Law Office of Manuel Solis al número proporcionado.', 
+                          'I agree to receive marketing text messages and other messages from the Law Office of Manuel Solis at the number provided.'
+                      )}
+                    </label>
+                  </motion.div>
 
-              {/* Botón de Envío */}
+                  {/* 2. CHECKBOX OBLIGATORIO (Términos) */}
+                  <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
+                    <div className="relative flex items-center pt-1">
+                      <input
+                        type="checkbox"
+                        id="acceptedTerms"
+                        name="acceptedTerms"
+                        checked={formData.acceptedTerms}
+                        onChange={handleChange}
+                        className="peer h-6 w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400"
+                      />
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100">
+                        <CheckCircle2 size={16} strokeWidth={3} />
+                      </div>
+                    </div>
+                    <label htmlFor="acceptedTerms" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
+                      {t(
+                          'Pueden aplicarse tarifas de mensajes y datos. El consentimiento no es una condición para recibir servicios. Para más información, por favor revise nuestra', 
+                          'Message and data rates may apply. Consent is not a condition of receiving services. For more information, please review our'
+                      )}{' '}
+                      <a href="/privacidad" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
+                          {t('Política de Privacidad', 'Privacy Policy')}
+                      </a>.
+                    </label>
+                  </motion.div>
+
+              </div>
+
+              {/* Botón de Envío (Deshabilitado solo si el obligatorio no está marcado) */}
               <motion.div variants={itemVar} className="pt-2">
                 <button
                   type="submit"
-                  disabled={isSubmitting || !formData.consent}
+                  disabled={isSubmitting || !formData.acceptedTerms}
                   className={`
                     group relative w-full h-16 overflow-hidden rounded-xl font-bold tracking-widest uppercase text-base transition-all shadow-xl
-                    ${!formData.consent 
+                    ${!formData.acceptedTerms 
                       ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5' 
                       : 'bg-[#B2904D] text-[#001026] hover:bg-[#cbb06d] shadow-[#B2904D]/20 hover:shadow-[#B2904D]/40 cursor-pointer transform hover:-translate-y-1'
                     }
@@ -268,14 +342,14 @@ export default function ContactForm() {
                       </span>
                     ) : (
                       <>
-                        <ShieldCheck size={22} className={!formData.consent ? "text-slate-500" : "text-[#001026]"} />
+                        <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-slate-500" : "text-[#001026]"} />
                         {t('Iniciar Análisis Gratuito', 'Start Free Analysis')}
                       </>
                     )}
                   </span>
                   
                   {/* Efecto de brillo al hover en el botón */}
-                  {!isSubmitting && formData.consent && (
+                  {!isSubmitting && formData.acceptedTerms && (
                       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out" />
                   )}
                 </button>
