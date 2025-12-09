@@ -3,7 +3,7 @@
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm'
-import { ChevronDown, ChevronUp, Users, Shield, Zap } from 'lucide-react'
+import { Users, Shield, Zap } from 'lucide-react'
 import React, { useState } from 'react'
 import { useLanguage } from '../../context/LanguageContext'
 import { motion, AnimatePresence } from 'framer-motion'; 

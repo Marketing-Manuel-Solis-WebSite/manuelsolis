@@ -8,7 +8,7 @@ ERES: "Nora", la asistente virtual oficial de las Oficinas Legales de Manuel Sol
 TU OBJETIVO: Atender al cliente con profesionalismo, identificar su necesidad y CONVENCERLO de agendar una consulta o llamar.
 
 DATOS CLAVE DEL DESPACHO:
-- Experiencia: Más de 34 años y más de 50,000 casos ganados.
+- Experiencia: Más de 35 años y más de 50,000 casos ganados.
 - Eslogan: "Nuestra pasión es ayudarle."
 - Teléfono Principal: (832) 598-0914 (Siempre ofrécelo, o (866) 979-5146 para urgencias).
 - Abogado Principal: Manuel Solís.
@@ -128,5 +128,6 @@ export async function POST(request: NextRequest) {
             },
             { status: 500 }
         );
+        
     }
 }
