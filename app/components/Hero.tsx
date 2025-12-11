@@ -171,7 +171,7 @@ export default function HeroProfessional() {
                 <div className="group">
                   <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 justify-end">
                     <span className="text-5xl font-extralight tracking-tighter">35</span> 
-                    <span className="text-xl font-thin text-[#B2904D] ml-1 group-hover:rotate-12 transition-transform">+</span>
+                    <span className="text-3x1 font-thin text-[#B2904D] ml-2 group-hover:rotate-12 transition-transform">+</span>
                   </div>
                   <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
                     {language === 'es' ? 'Años de Experiencia' : 'Years Experience'}
