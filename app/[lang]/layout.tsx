@@ -5,6 +5,8 @@ import AIChatButton from '../components/AIChatButton';
 import { translations, Language } from '../lib/translations';
 import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/next";
+// 1. IMPORTAR SPEED INSIGHTS
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import '../globals.css'; 
 
 interface LayoutParams {
@@ -70,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     other: {
       'og:site_name': 'Manuel Solis',
-      'article:publisher': 'https://www.facebook.com/manuelsolis', // Ajustado a FB si aplica, o la web
+      'article:publisher': 'https://www.facebook.com/manuelsolis',
     },
   };
 }
@@ -93,10 +95,9 @@ export default async function LangLayout({ children, params }: Props) {
       '@type': 'PostalAddress',
       addressCountry: 'US',
     },
-    // Asegúrate de que estas coordenadas sean de tu oficina principal
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: '29.7604', // Ejemplo: Coordenadas de Houston (ajústalas a tu oficina principal real)
+      latitude: '29.7604',
       longitude: '-95.3698',
     },
     areaServed: ['US', 'MX'],
@@ -158,7 +159,6 @@ export default async function LangLayout({ children, params }: Props) {
           strategy="beforeInteractive"
         />
         
-        {/* Google Analytics (GTM) */}
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
@@ -182,7 +182,12 @@ export default async function LangLayout({ children, params }: Props) {
           {children}
           <WhatsAppButton />
           <AIChatButton />
+          
+          {/* Vercel Tools */}
           <Analytics />
+          {/* 2. AGREGAR EL COMPONENTE SPEED INSIGHTS */}
+          <SpeedInsights />
+          
         </LanguageProvider>
       </body>
     </html>
