@@ -4,6 +4,7 @@ import WhatsAppButton from '../components/WhatsAppButton';
 import AIChatButton from '../components/AIChatButton';
 import { translations, Language } from '../lib/translations';
 import Script from 'next/script';
+import { Analytics } from "@vercel/analytics/next";
 import '../globals.css'; 
 
 interface LayoutParams {
@@ -20,6 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
   const t = translations[currentLang];
   
+  const baseUrl = 'https://manuelsolis.com';
+
   return {
     title: t.seo.home.title,
     description: t.seo.home.description,
@@ -28,13 +31,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: t.seo.home.title,
       description: t.seo.home.description,
-      url: 'https://comopuedoarreglar.com',
-      siteName: 'Como Puedo Arreglar',
+      url: baseUrl,
+      siteName: 'Manuel Solis',
       locale: currentLang === 'es' ? 'es_MX' : 'en_US',
       type: 'website',
       images: [
         {
-          url: 'https://comopuedoarreglar.com/og-image.jpg',
+          url: `${baseUrl}/og-image.jpg`,
           width: 1200,
           height: 630,
           alt: t.seo.home.title,
@@ -45,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: t.seo.home.title,
       description: t.seo.home.description,
-      images: ['https://comopuedoarreglar.com/og-image.jpg'],
+      images: [`${baseUrl}/og-image.jpg`],
     },
     robots: {
       index: true,
@@ -59,15 +62,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: `https://comopuedoarreglar.com/${currentLang}`,
+      canonical: `${baseUrl}/${currentLang}`,
       languages: {
-        'es-MX': 'https://comopuedoarreglar.com/es',
-        'en-US': 'https://comopuedoarreglar.com/en',
+        'es-MX': `${baseUrl}/es`,
+        'en-US': `${baseUrl}/en`,
       },
     },
     other: {
-      'og:site_name': 'Como Puedo Arreglar',
-      'article:publisher': 'https://manuelsolis.com',
+      'og:site_name': 'Manuel Solis',
+      'article:publisher': 'https://www.facebook.com/manuelsolis', // Ajustado a FB si aplica, o la web
     },
   };
 }
@@ -81,19 +84,20 @@ export default async function LangLayout({ children, params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'LegalService',
     name: 'Law Offices of Manuel Solis',
-    alternateName: 'Como Puedo Arreglar',
+    alternateName: 'Manuel Solis',
     description: t.seo.home.description,
-    url: 'https://comopuedoarreglar.com',
+    url: 'https://manuelsolis.com',
     telephone: '+1-866-979-5146',
     priceRange: '$$',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'US',
     },
+    // Asegúrate de que estas coordenadas sean de tu oficina principal
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: '34.0522',
-      longitude: '-118.2437',
+      latitude: '29.7604', // Ejemplo: Coordenadas de Houston (ajústalas a tu oficina principal real)
+      longitude: '-95.3698',
     },
     areaServed: ['US', 'MX'],
     aggregateRating: {
@@ -127,6 +131,14 @@ export default async function LangLayout({ children, params }: Props) {
             description: 'Accident and injury cases',
           },
         },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Criminal Law',
+            description: 'Criminal defense services',
+          },
+        },
       ],
     },
     parentOrganization: {
@@ -146,6 +158,7 @@ export default async function LangLayout({ children, params }: Props) {
           strategy="beforeInteractive"
         />
         
+        {/* Google Analytics (GTM) */}
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
@@ -169,6 +182,7 @@ export default async function LangLayout({ children, params }: Props) {
           {children}
           <WhatsAppButton />
           <AIChatButton />
+          <Analytics />
         </LanguageProvider>
       </body>
     </html>
