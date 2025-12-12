@@ -10,7 +10,7 @@ import { Outfit } from 'next/font/google'
 
 const font = Outfit({ 
   subsets: ['latin'], 
-  weight: ['200', '300', '400', '500', '600', '700'] 
+  weight: ['200', '300', '400', '500', '600', '700', '800'] 
 })
 
 const FlagES = () => (
@@ -40,7 +40,7 @@ export default function HeaderProfessional() {
   // Configuración de contacto
   const phoneNumber = "1-888-676-1238";
   const phoneLink = "tel:18886761238";
-  const callText = language === 'es' ? 'Llámanos ahora para una consulta:' : 'Call us now for a consultation:';
+  const callText = language === 'es' ? 'Llámanos para una consulta:' : 'Call for a consultation:';
   const joinInText = language === 'es' ? 'REGÍSTRATE' : 'REGISTER'; 
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -55,19 +55,19 @@ export default function HeaderProfessional() {
       key: 'services',
       submenu: language === 'es'
         ? [
-          { name: 'Inmigración', href: `/${language}/servicios/inmigracion` },
-          { name: 'Accidentes', href: `/${language}/servicios/accidentes` },
-          { name: 'Seguros', href: `/${language}/servicios/seguros` },
-          { name: 'Ley Criminal', href: `/${language}/servicios/ley-criminal` },
-          { name: 'Familia', href: `/${language}/servicios/familia` },
-        ]
+            { name: 'Inmigración', href: `/${language}/servicios/inmigracion` },
+            { name: 'Accidentes', href: `/${language}/servicios/accidentes` },
+            { name: 'Seguros', href: `/${language}/servicios/seguros` },
+            { name: 'Ley Criminal', href: `/${language}/servicios/ley-criminal` },
+            { name: 'Familia', href: `/${language}/servicios/familia` },
+          ]
         : [
-          { name: 'Immigration', href: `/${language}/servicios/inmigracion` },
-          { name: 'Accidents', href: `/${language}/servicios/accidentes` },
-          { name: 'Insurance', href: `/${language}/servicios/seguros` },
-          { name: 'Criminal Law', href: `/${language}/servicios/ley-criminal` },
-          { name: 'Family', href: `/${language}/servicios/familia` },
-        ]
+            { name: 'Immigration', href: `/${language}/servicios/inmigracion` },
+            { name: 'Accidents', href: `/${language}/servicios/accidentes` },
+            { name: 'Insurance', href: `/${language}/servicios/seguros` },
+            { name: 'Criminal Law', href: `/${language}/servicios/ley-criminal` },
+            { name: 'Family', href: `/${language}/servicios/familia` },
+          ]
     },
     {
       name: language === 'es' ? 'Detenidos' : 'Detained',
@@ -94,6 +94,7 @@ export default function HeaderProfessional() {
         { name: 'Arvada (Denver)', href: `/${language}/oficinas/arvada` },
         { name: 'Memphis', href: `/${language}/oficinas/memphis` },
         { name: 'Memphis Airways', href: `/${language}/oficinas/airways` },
+        { name: 'Houston Navigation', href: `/${language}/oficinas/houston-navigation` },
       ]
     },
     {
@@ -108,18 +109,18 @@ export default function HeaderProfessional() {
       key: 'attorneys',
       submenu: language === 'es'
         ? [
-          { name: 'Nuestro Equipo', href: `/${language}/abogados` },
-          { name: 'Sobre Nosotros', href: `/${language}/nosotros` },
-          { name: 'Preguntas Frecuentes', href: `/${language}/informacion/faq` },
-        ]
+            { name: 'Nuestro Equipo', href: `/${language}/abogados` },
+            { name: 'Sobre Nosotros', href: `/${language}/nosotros` },
+            { name: 'Preguntas Frecuentes', href: `/${language}/informacion/faq` },
+          ]
         : [
-          { name: 'Our Team', href: `/${language}/abogados` },
-          { name: 'About Us', href: `/${language}/nosotros` },
-          { name: 'FAQ', href: `/${language}/informacion/faq` },
-        ]
+            { name: 'Our Team', href: `/${language}/abogados` },
+            { name: 'About Us', href: `/${language}/nosotros` },
+            { name: 'FAQ', href: `/${language}/informacion/faq` },
+          ]
     },
     { 
-      name: language === 'es' ? 'Acceso a clientes' : 'Client access',
+      name: language === 'es' ? 'Acceso clientes' : 'Client access',
       href: 'https://solislawfirm.com',
       type: 'external' 
     },
@@ -178,8 +179,9 @@ export default function HeaderProfessional() {
         }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
+        {/* CORRECCIÓN AQUÍ: Se agregó 'relative z-[60]' para que el menú esté POR ENCIMA de la barra verde */}
         <div 
-          className="w-full transition-all duration-500"
+          className="w-full transition-all duration-500 relative z-[60]"
           style={{ 
             paddingTop: isScrolled ? '0.5rem' : '0.75rem', 
             paddingBottom: isScrolled ? '0.5rem' : '0.75rem' 
@@ -310,24 +312,37 @@ export default function HeaderProfessional() {
           </div>
         </div>
 
-        <div className="hidden lg:block w-full border-t border-white/5 bg-white/[0.02]">
-          <div className="container mx-auto px-6 lg:px-12">
+        {/* --- ETIQUETA VERDE (z-50) --- */}
+        <div className="hidden lg:flex justify-center w-full relative z-50">
+          <div className="bg-[#009b3a] shadow-lg rounded-b-2xl px-16 py-1.5 relative overflow-hidden group border-t border-white/10">
+            {/* Brillo sutil superior */}
+            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+
             <a 
               href={phoneLink}
-              className="flex items-center justify-center gap-4 py-3 w-full group cursor-pointer hover:bg-white/5 transition-all duration-300"
+              className="flex items-center justify-center gap-4 cursor-pointer transition-all duration-300 group/link"
             >
-              <span className="text-xs uppercase tracking-[0.2em] text-white/70 group-hover:text-white transition-colors font-light">
+              <span className="text-[11px] uppercase tracking-[0.2em] text-white/90 font-semibold pt-[2px]">
                 {callText}
               </span>
-              <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-sky-300 group-hover:text-white transition-colors" />
-                  <span className="text-lg font-bold tracking-widest text-white group-hover:text-sky-200 transition-colors">
+              
+              {/* NUMERO CON BRILLO DIRECTO */}
+              <div className="flex items-center gap-2.5">
+                  <Phone className="w-5 h-5 text-white transition-transform duration-300 group-hover/link:scale-110 group-hover/link:rotate-[-10deg]" fill="currentColor" />
+                  
+                  <span 
+                    className="text-xl font-extrabold tracking-widest text-white transition-all duration-300 group-hover/link:scale-105"
+                    style={{ 
+                      textShadow: '0 0 8px rgba(255,255,255,0.8), 0 0 15px rgba(255, 255, 255, 0.4)' 
+                    }}
+                  >
                     {phoneNumber}
                   </span>
               </div>
             </a>
           </div>
         </div>
+        {/* --------------------------------------------------------------- */}
 
       </motion.header>
 

@@ -18,34 +18,41 @@ const font = Outfit({
   weight: ['100', '200', '300', '400', '500', '800', '900'] 
 });
 
-// --- DATOS ESPECÍFICOS: EL PASO ---
+// --- DATOS ESPECÍFICOS: HOUSTON (6705 Navigation) ---
 const officeData = {
-  id: 'el-paso',
-  city: 'El Paso',
+  id: 'houston-main-st',
+  city: 'Houston',
   state: 'TX',
-  title: { es: 'El Paso, TX Oficina', en: 'El Paso, TX Office' },
+  title: { es: 'Houston, TX (Navigation 6705)', en: 'Houston, TX (Navigation 6705)' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
-  description: { es: 'Nuestras oficinas en la ciudad de El Paso, Texas, nos permiten tener una presencia estratégica en la frontera para atender de la manera más eficiente y rápida posible a nuestros clientes.', en: 'Our offices in the city of El Paso, Texas, allow us to have a strategic presence on the border to serve our clients in the most efficient and rapid way possible.' },
-  address: ' 3632 Admiral St, El Paso, TX 79925',
-  phone: '(915) 233-7127',
-  email: 'elpaso@manuelsolis.com',
-  hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM' },
-  mapLink: 'https://maps.google.com',
-  videoUrl: 'https://manuelsolis.com/wp-content/uploads/2023/12/elpaso.mov',
+  description: { es: 'Nuestras oficinas de Houston en Navigation Boulevard son el centro neurálgico de nuestra firma. Aquí brindamos atención personalizada y experta a cientos de clientes cada semana.', en: 'Our Houston offices on Navigation Boulevard are the nerve center of our firm. Here we provide expert, personalized attention to hundreds of clients every week.' },
+  
+  // --- DATOS ACTUALIZADOS ---
+  address: '6705 Navigation Blvd, Houston, TX 77011',
+  phone: '+1 (713) 231-5384',
+  email: 'houston@manuelsolis.com',
+  // -------------------------
+
+  hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
+  mapLink: 'https://www.google.com/maps/search/?api=1&query=6705+Navigation+Blvd,+Houston,+TX+77011',
+  videoUrl: 'https://manuelsolis.com/wp-content/uploads/2023/12/houston-main.mp4',
+  
   services: [
-    { es: 'LEY DE INMIGRACIÓN', en: 'IMMIGRATION LAW' },
-    { es: 'SEGUROS (ASEGURANZA)', en: 'INSURANCE' },
-    { es: 'ACCIDENTES', en: 'ACCIDENTS' },
-    { es: 'LEY DE FAMILIA', en: 'FAMILY LAW' },
-    { es: 'LEY CRIMINAL', en: 'CRIMINAL LAW' }
+    { es: 'ACCIDENTES', en: 'ACCIDENTS' }, 
+    { es: 'LEY DE FAMILIA', en: 'FAMILY LAW' }, 
+    { es: 'LEY DE INMIGRACIÓN', en: 'IMMIGRATION LAW' }, 
+    { es: 'LEY CRIMINAL', en: 'CRIMINAL LAW' }, 
+    { es: 'SEGUROS (ASEGURANZA)', en: 'INSURANCE' }
   ],
-  // El Paso no tiene managers en la data original, solo abogados
+  
+  // --- GERENCIA FILTRADA ---
+  managers: [
+    { name: 'Francisco Sotomayor', role: { es: 'Gerente', en: 'Manager' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-managers-houston-gray-9.png' },
+  ],
+
+  // --- ABOGADOS FILTRADOS ---
   attorneys: [
-    { name: 'Manuel Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/37490671-CAC5-4039-8A96-2680CC45304D.png' },
-    { name: 'Manuel E. Solís III', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-10.png' },
     { name: 'Juan Solís', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-9.png' },
-    { name: 'Andrew Fink', role: { es: 'Abogado', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-11.png' },
-    { name: 'Ana Patricia Rueda', role: { es: 'Abogada', en: 'Attorney' }, image: 'https://manuelsolis.com/wp-content/uploads/2024/03/Backgound-lawyers-gray-13.png' },
   ]
 };
 
@@ -56,10 +63,11 @@ const uiText = {
   hours: { es: 'Horario', en: 'Hours' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
   services: { es: 'Servicios en esta sede', en: 'Services at this Location' },
-  team: { es: 'Nuestro Equipo Legal', en: 'Our Legal Team' }
+  team: { es: 'Nuestros Abogados', en: 'Our Attorneys' },
+  managers: { es: 'Nuestra Gerencia', en: 'Our Management Team' }
 };
 
-export default function ElPasoPage() {
+export default function HoustonMainStPage() {
   const params = useParams();
   const lang = (params?.lang as 'es' | 'en') || 'es';
   const t = (obj: any) => obj[lang] || obj.es;
@@ -104,7 +112,7 @@ export default function ElPasoPage() {
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 mb-6">
                   <Sparkles className="text-[#B2904D]" size={14} />
-                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">El Paso, Texas</span>
+                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">Houston, Texas</span>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-thin text-white mb-6 leading-tight">
@@ -165,33 +173,33 @@ export default function ElPasoPage() {
                    </h3>
                    
                    <div className="space-y-6">
-                      {/* Dirección */}
-                      <div className="group">
-                        <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.address)}</p>
-                        <p className="text-white text-lg leading-snug">{officeData.address}</p>
-                        <a href={officeData.mapLink} target="_blank" className="inline-flex items-center gap-2 text-[#B2904D] mt-3 text-sm font-bold hover:text-[#fff] transition-colors">
-                          {t(uiText.viewMap)} →
-                        </a>
-                      </div>
-                      <div className="h-px bg-white/10" />
+                     {/* Dirección */}
+                     <div className="group">
+                       <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.address)}</p>
+                       <p className="text-white text-lg leading-snug">{officeData.address}</p>
+                       <a href={officeData.mapLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[#B2904D] mt-3 text-sm font-bold hover:text-[#fff] transition-colors">
+                         {t(uiText.viewMap)} →
+                       </a>
+                     </div>
+                     <div className="h-px bg-white/10" />
 
-                      {/* Teléfono */}
-                      <div>
-                        <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
-                        <a href={`tel:${officeData.phone}`} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
-                          {officeData.phone}
-                        </a>
-                      </div>
-                      <div className="h-px bg-white/10" />
+                     {/* Teléfono */}
+                     <div>
+                       <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
+                       <a href={`tel:${officeData.phone.replace(/\s/g, '')}`} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
+                         {officeData.phone}
+                       </a>
+                     </div>
+                     <div className="h-px bg-white/10" />
 
-                      {/* Horario */}
-                      <div>
-                        <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.hours)}</p>
-                        <div className="flex items-start gap-3">
-                          <Clock className="text-[#B2904D] mt-1 shrink-0" size={18} />
-                          <p className="text-white text-base">{t(officeData.hours)}</p>
-                        </div>
-                      </div>
+                     {/* Horario */}
+                     <div>
+                       <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.hours)}</p>
+                       <div className="flex items-start gap-3">
+                         <Clock className="text-[#B2904D] mt-1 shrink-0" size={18} />
+                         <p className="text-white text-base">{t(officeData.hours)}</p>
+                       </div>
+                     </div>
                    </div>
                  </motion.div>
 
@@ -219,8 +227,10 @@ export default function ElPasoPage() {
                  </motion.div>
               </div>
 
-              {/* Grid de Abogados */}
-              <div className="lg:col-span-7">
+              {/* Grid de Equipo (Abogados y Gerentes) */}
+              <div className="lg:col-span-7 space-y-16">
+                
+                {/* Abogados */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -256,6 +266,46 @@ export default function ElPasoPage() {
                     ))}
                   </div>
                 </motion.div>
+
+                {/* Gerencia */}
+                {officeData.managers.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <div className="flex items-center gap-4 mb-10">
+                      <div className="w-1 h-8 bg-white/50 rounded-full" />
+                      <h3 className="text-2xl font-thin text-white">{t(uiText.managers)}</h3>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                      {officeData.managers.map((person, idx) => (
+                        <div key={idx} className="group text-center bg-white/5 rounded-xl p-4 border border-white/5 hover:border-white/30 transition-all duration-300">
+                          <div className="relative w-20 h-20 mx-auto mb-4">
+                            <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/10 group-hover:border-white transition-all duration-500 shadow-lg">
+                              <Image 
+                                src={person.image} 
+                                alt={person.name} 
+                                width={80} 
+                                height={80} 
+                                className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" 
+                              />
+                            </div>
+                          </div>
+                          <h5 className="font-bold text-white text-sm leading-tight mb-1">
+                            {person.name}
+                          </h5>
+                          <span className="text-[10px] font-medium uppercase tracking-wider text-white/40">
+                            {t(person.role)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
               </div>
             </div>
 

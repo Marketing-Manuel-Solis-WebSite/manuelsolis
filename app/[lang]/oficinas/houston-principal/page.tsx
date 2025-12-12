@@ -27,7 +27,7 @@ const officeData = {
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { es: 'Nuestras oficinas de Houston en Navigation Boulevard son las primeras que abrimos hace ya más de 30 años. Aquí es donde está el centro neurálgico de nuestra firma y donde recibimos a más de 200 clientes a la semana.', en: 'Our Houston offices on Navigation Boulevard were the first we opened more than 30 years ago. This is the nerve center of our firm and where we receive over 200 clients a week.' },
   address: '6657 Navigation Blvd, Houston, Texas 77011',
-  phone: '(832) 598-0914',
+  phone: '(713) 701-1731',
   email: 'houston@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
   mapLink: 'https://www.google.com/maps/search/?api=1&query=6657+Navigation+Blvd,+Houston,+Texas+77011',

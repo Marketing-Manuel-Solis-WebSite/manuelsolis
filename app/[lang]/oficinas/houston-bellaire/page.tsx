@@ -27,7 +27,7 @@ const officeData = {
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { es: 'Nuestra oficina de Bellaire es un satélite de nuestra oficina principal en Houston donde atendemos casos de inmigración en la parte norte de esta gran ciudad. Allí, nuestra letrada Ni Yan, atiende en su lengua materna a clientes provenientes de China en sus casos de inmigración.', en: 'Our Bellaire office is a satellite of our main office in Houston where we handle immigration cases in the northern part of this great city. There, our attorney Ni Yan, serves clients from China in their native language for their immigration cases.' },
   address: '9188 Bellaire Blvd #E, Houston, Texas 77036',
-  phone: '(281) 903-0462',
+  phone: '(713) 903-7875',
   email: 'bellaire@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 8:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 8:00 AM - 4:00 PM' },
   mapLink: 'https://goo.gl/maps/g61U9JLhdEqqvvmv9',
