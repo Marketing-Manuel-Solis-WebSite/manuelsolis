@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react' // <--- 1. Importamos Suspense
 import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation' 
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
@@ -88,22 +88,22 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
   );
 };
 
-export default function ContactForm() {
+// --- 2. CONTENIDO PRINCIPAL DEL FORMULARIO (RENOMBRADO) ---
+function ContactFormContent() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
   
   // --- CAPTURA DE PARÁMETROS UTM ---
   const searchParams = useSearchParams();
 
-  // Estado actualizado con dos checkboxes separados
   const [formData, setFormData] = useState({ 
       firstName: '', 
       lastName: '', 
       phone: '', 
       email: '', 
       message: '', 
-      acceptedTerms: false, // OBLIGATORIO
-      marketingConsent: false // OPCIONAL
+      acceptedTerms: false, 
+      marketingConsent: false 
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -111,13 +111,11 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Solo validamos que acceptedTerms (el obligatorio) esté marcado
     if (!formData.acceptedTerms || isSubmitting) return;
     
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Recuperamos los valores UTM al momento de enviar
     const utmData = {
         utm_source: searchParams.get('utm_source') || '',
         utm_medium: searchParams.get('utm_medium') || '',
@@ -129,14 +127,10 @@ export default function ContactForm() {
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 ...formData,
-                ...utmData, // <-- AQUI ESTA LA CORRECCION CLAVE
-                // Mapeamos los campos para Zapier/Backend
-                // receiveUpdates ahora es el check de marketing (opcional)
+                ...utmData, 
                 receiveUpdates: formData.marketingConsent, 
                 language: lang
             }),
@@ -144,17 +138,14 @@ export default function ContactForm() {
 
         if (response.ok) {
             setSubmitStatus('success');
-            // Limpiamos todo excepto los consentimientos quizás, o todo el form
             setFormData({ 
                 firstName: '', lastName: '', phone: '', email: '', message: '', 
                 acceptedTerms: false, marketingConsent: false 
             });
         } else {
-            console.error('Error enviando formulario');
             setSubmitStatus('error');
         }
     } catch (error) {
-        console.error('Error de red:', error);
         setSubmitStatus('error');
     } finally {
         setIsSubmitting(false);
@@ -172,7 +163,7 @@ export default function ContactForm() {
   return (
     <section className="relative py-32 w-full bg-[#001540] overflow-hidden" id="contacto">
       
-      {/* 1. FONDO AMBIENTAL */}
+      {/* FONDO AMBIENTAL */}
       <div className="absolute inset-0 z-0 pointer-events-none">
          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002050] via-[#001540] to-[#000814]" />
          <motion.div 
@@ -198,16 +189,12 @@ export default function ContactForm() {
               {t('Consulta', 'Consultation')}
             </span>
           </h2>
-          
           <p className="text-lg text-blue-100 max-w-2xl mx-auto font-light leading-relaxed opacity-90">
-            {t(
-              'Manténgase informado sobre actualizaciones e información importantes.',
-              'Stay informed about important updates and information.'
-            )}
+            {t('Manténgase informado sobre actualizaciones e información importantes.', 'Stay informed about important updates and information.')}
           </p>
         </motion.div>
 
-        {/* TARJETA PRINCIPAL DEL FORMULARIO */}
+        {/* TARJETA PRINCIPAL */}
         <motion.div
           variants={containerVar}
           initial="hidden"
@@ -228,10 +215,7 @@ export default function ContactForm() {
                   >
                       {submitStatus === 'success' ? (
                         <>
-                            <motion.div
-                                initial={{ scale: 0 }} animate={{ scale: 1 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                            >
+                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
                                 <CheckCircle2 size={80} className="text-green-400 mb-6 drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]" />
                             </motion.div>
                             <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('¡Enviado con Éxito!', 'Successfully Sent!')}</h3>
@@ -239,10 +223,7 @@ export default function ContactForm() {
                         </>
                       ) : (
                         <>
-                            <motion.div
-                                initial={{ scale: 0 }} animate={{ scale: 1 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                            >
+                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
                                 <XCircle size={80} className="text-red-400 mb-6 drop-shadow-[0_0_15px_rgba(252,165,165,0.5)]" />
                             </motion.div>
                             <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('Error de Envío', 'Submission Error')}</h3>
@@ -253,7 +234,6 @@ export default function ContactForm() {
                 )}
               </AnimatePresence>
 
-              {/* CAMPOS DEL FORMULARIO */}
               <div className="grid md:grid-cols-2 gap-8">
                 <motion.div variants={itemVar}>
                    <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
@@ -262,7 +242,6 @@ export default function ContactForm() {
                       <NeonInput icon={User} name="lastName" placeholder={t('Apellido', 'Last Name')} value={formData.lastName} onChange={handleChange} required />
                    </div>
                 </motion.div>
-
                 <motion.div variants={itemVar}>
                    <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
                    <div className="space-y-5">
@@ -274,114 +253,60 @@ export default function ContactForm() {
 
               <motion.div variants={itemVar}>
                 <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
-                <NeonInput 
-                  icon={MessageSquare} 
-                  name="message" 
-                  isTextArea
-                  placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} 
-                  value={formData.message} 
-                  onChange={handleChange} 
-                  required 
-                />
+                <NeonInput icon={MessageSquare} name="message" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.message} onChange={handleChange} required />
               </motion.div>
 
-              {/* --- ZONA DE CONSENTIMIENTOS --- */}
               <div className="space-y-4">
-                  
-                  {/* 1. CHECKBOX OBLIGATORIO (Términos y Privacidad) */}
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                     <div className="relative flex items-center pt-1">
-                      <input
-                        type="checkbox"
-                        id="acceptedTerms"
-                        name="acceptedTerms"
-                        checked={formData.acceptedTerms}
-                        onChange={handleChange}
-                        className="peer h-6 w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400"
-                      />
-                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100">
-                        <CheckCircle2 size={16} strokeWidth={3} />
-                      </div>
+                      <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-6 w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400" />
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={16} strokeWidth={3} /></div>
                     </div>
                     <label htmlFor="acceptedTerms" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
-                      {t(
-                          'Acepto los',
-                          'I accept the'
-                      )}{' '}
-                      <a href="/sms-terminos" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
-                          {t('Términos de Servicio', 'Terms of Service')}
-                      </a>{' '}
+                      {t('Acepto los', 'I accept the')}{' '}
+                      <a href="/sms-terminos" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio', 'Terms of Service')}</a>{' '}
                       {t('y he leído la', 'and have read the')}{' '}
-                      <a href="/privacidad" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
-                          {t('Política de Privacidad', 'Privacy Statement')}
-                      </a>.
+                      <a href="/privacidad" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Statement')}</a>.
                     </label>
                   </motion.div>
 
-                  {/* 2. CHECKBOX OPCIONAL (SMS/Marketing) */}
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
                     <div className="relative flex items-center pt-1">
-                      <input
-                        type="checkbox"
-                        id="marketingConsent"
-                        name="marketingConsent"
-                        checked={formData.marketingConsent}
-                        onChange={handleChange}
-                        className="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500"
-                      />
-                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100">
-                        <CheckCircle2 size={14} strokeWidth={3} />
-                      </div>
+                      <input type="checkbox" id="marketingConsent" name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} className="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500" />
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
                     </div>
                     <label htmlFor="marketingConsent" className="text-xs text-blue-200/80 leading-relaxed cursor-pointer select-none group-hover:text-blue-100 transition-colors">
-                      {t(
-                          'Me gustaría recibir actualizaciones del Law Office of Manuel Solís al número de teléfono proporcionado. Pueden aplicar tarifas de mensajes y datos. Responda STOP para cancelar, HELP para ayuda.',
-                          'I would like to receive updates from the Law Office of Manuel Solís at the phone number provided. Message and data rates may apply. Reply STOP to cancel, HELP for help.'
-                      )}{' '}
-                      <a href="/sms-terminos" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
-                          {t('Términos de Servicio SMS', 'Law Office of Manuel Solís SMS Terms of Service')}
-                      </a>
+                      {t('Me gustaría recibir actualizaciones del Law Office of Manuel Solís al número de teléfono proporcionado. Pueden aplicar tarifas de mensajes y datos. Responda STOP para cancelar, HELP para ayuda.', 'I would like to receive updates from the Law Office of Manuel Solís at the phone number provided. Message and data rates may apply. Reply STOP to cancel, HELP for help.')}{' '}
+                      <a href="/sms-terminos" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio SMS', 'Law Office of Manuel Solís SMS Terms of Service')}</a>
                     </label>
                   </motion.div>
-
               </div>
 
-              {/* Botón de Envío (Deshabilitado solo si el obligatorio no está marcado) */}
               <motion.div variants={itemVar} className="pt-2">
-                <button
-                  type="submit"
-                  disabled={isSubmitting || !formData.acceptedTerms}
-                  className={`
-                    group relative w-full h-16 overflow-hidden rounded-xl font-bold tracking-widest uppercase text-base transition-all shadow-xl
-                    ${!formData.acceptedTerms 
-                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5' 
-                      : 'bg-[#B2904D] text-[#001026] hover:bg-[#cbb06d] shadow-[#B2904D]/20 hover:shadow-[#B2904D]/40 cursor-pointer transform hover:-translate-y-1'
-                    }
-                  `}
-                >
+                <button type="submit" disabled={isSubmitting || !formData.acceptedTerms} className={`group relative w-full h-16 overflow-hidden rounded-xl font-bold tracking-widest uppercase text-base transition-all shadow-xl ${!formData.acceptedTerms ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5' : 'bg-[#B2904D] text-[#001026] hover:bg-[#cbb06d] shadow-[#B2904D]/20 hover:shadow-[#B2904D]/40 cursor-pointer transform hover:-translate-y-1'}`}>
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <Zap className="animate-spin text-[#001026]" size={20} /> {t('Procesando...', 'Processing...')}
-                      </span>
+                      <span className="flex items-center gap-2"><Zap className="animate-spin text-[#001026]" size={20} /> {t('Procesando...', 'Processing...')}</span>
                     ) : (
-                      <>
-                        <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-slate-500" : "text-[#001026]"} />
-                        {t('Registrarse', 'Register')}
-                      </>
+                      <><ShieldCheck size={22} className={!formData.acceptedTerms ? "text-slate-500" : "text-[#001026]"} />{t('Registrarse', 'Register')}</>
                     )}
                   </span>
-                  
-                  {/* Efecto de brillo al hover en el botón */}
-                  {!isSubmitting && formData.acceptedTerms && (
-                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out" />
-                  )}
+                  {!isSubmitting && formData.acceptedTerms && (<div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out" />)}
                 </button>
               </motion.div>
-
             </form>
         </motion.div>
       </div>
     </section>
+  )
+}
+
+// --- 3. COMPONENTE DE EXPORTACIÓN CON SUSPENSE ---
+export default function ContactForm() {
+  return (
+    // El fallback puede ser un loader simple o nada mientras carga los UTMs
+    <Suspense fallback={<div className="py-32 w-full bg-[#001540] flex justify-center items-center"><Zap className="animate-spin text-[#B2904D]" size={40} /></div>}>
+      <ContactFormContent />
+    </Suspense>
   )
 }
