@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useLanguage } from '../context/LanguageContext'
-import { useSearchParams } from 'next/navigation' // <--- IMPORTANTE: Importamos esto
+import { useSearchParams } from 'next/navigation' 
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
 
@@ -134,7 +134,7 @@ export default function ContactForm() {
             },
             body: JSON.stringify({
                 ...formData,
-                ...utmData, // <-- AÑADIMOS AQUÍ LOS DATOS UTM
+                ...utmData, // <-- AQUI ESTA LA CORRECCION CLAVE
                 // Mapeamos los campos para Zapier/Backend
                 // receiveUpdates ahora es el check de marketing (opcional)
                 receiveUpdates: formData.marketingConsent, 
