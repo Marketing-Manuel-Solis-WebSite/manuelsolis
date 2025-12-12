@@ -312,12 +312,9 @@ export default function HeaderProfessional() {
           </div>
         </div>
 
-        {/* --- ETIQUETA VERDE (z-50) --- */}
+        {/* --- ETIQUETA DE CONTACTO (fondo transparente, línea verde abajo) --- */}
         <div className="hidden lg:flex justify-center w-full relative z-50">
-          <div className="bg-[#009b3a] shadow-lg rounded-b-2xl px-16 py-1.5 relative overflow-hidden group border-t border-white/10">
-            {/* Brillo sutil superior */}
-            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
-
+          <div className="px-16 py-1.5 relative overflow-hidden group border-b-[2px] border-[#009b3a]">
             <a 
               href={phoneLink}
               className="flex items-center justify-center gap-4 cursor-pointer transition-all duration-300 group/link"
@@ -326,15 +323,12 @@ export default function HeaderProfessional() {
                 {callText}
               </span>
               
-              {/* NUMERO CON BRILLO DIRECTO */}
+              {/* NUMERO SIN BRILLO */}
               <div className="flex items-center gap-2.5">
                   <Phone className="w-5 h-5 text-white transition-transform duration-300 group-hover/link:scale-110 group-hover/link:rotate-[-10deg]" fill="currentColor" />
                   
                   <span 
                     className="text-xl font-extrabold tracking-widest text-white transition-all duration-300 group-hover/link:scale-105"
-                    style={{ 
-                      textShadow: '0 0 8px rgba(255,255,255,0.8), 0 0 15px rgba(255, 255, 255, 0.4)' 
-                    }}
                   >
                     {phoneNumber}
                   </span>
