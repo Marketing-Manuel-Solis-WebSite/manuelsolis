@@ -26,8 +26,8 @@ const interfaceTexts = {
     lastUpdated: { es: 'Última actualización: 5 de diciembre de 2025', en: 'Last updated: December 5, 2025' },
   },
   generalStatement: {
-    es: 'La Oficina Legal de Manuel Solís (“nosotros”, “nuestro” o “nos”) se compromete a proteger su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y salvaguardamos su información cuando visita nuestro sitio web, envía formularios, se comunica con nuestra oficina o participa en nuestro programa de mensajería SMS/texto. Al utilizar nuestro sitio web o optar por recibir mensajes SMS, usted acepta las prácticas descritas en esta Política de Privacidad.',
-    en: 'The Law Office of Manuel Solís (“we,” “our,” or “us”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, submit forms, communicate with our office, or participate in our SMS/text messaging program. By using our website or opting in to receive SMS messages, you consent to the practices described in this Privacy Policy.'
+    es: 'La Oficina Legal de Manuel Solís ("nosotros", "nuestro" o "nos") se compromete a proteger su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y salvaguardamos su información cuando visita nuestro sitio web, envía formularios, se comunica con nuestra oficina o participa en nuestro programa de mensajería SMS/texto. Al utilizar nuestro sitio web o optar por recibir mensajes SMS, usted acepta las prácticas descritas en esta Política de Privacidad.',
+    en: 'The Law Office of Manuel Solís ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, submit forms, communicate with our office, or participate in our SMS/text messaging program. By using our website or opting in to receive SMS messages, you consent to the practices described in this Privacy Policy.'
   },
   
   // 1. Información que Recopilamos
@@ -175,7 +175,9 @@ const interfaceTexts = {
       { es: 'Solicitar la eliminación de datos que no sean de registro legal', en: 'Request deletion of non-legal record data' },
       { es: 'Negarse a proporcionar cierta información (aunque esto puede limitar nuestros servicios)', en: 'Decline to provide certain information (though this may limit our services)' },
     ],
-    contact: { es: 'Para ejercer sus derechos, contáctenos en:', en: 'To exercise your rights, contact us at:' }
+    contact: { es: 'Para ejercer sus derechos, contáctenos en:', en: 'To exercise your rights, contact us at:' },
+    email: 'support@manuelsolis.com',
+    phone: '713-844-2700'
   },
 
   // 8. Enlaces de Terceros
@@ -186,14 +188,14 @@ const interfaceTexts = {
 
   // 9. Privacidad de los Niños
   section9: {
-    title: { es: '9. Privacidad de los Niños', en: '9. Children’s Privacy' },
+    title: { es: '9. Privacidad de los Niños', en: '9. Children\'s Privacy' },
     content: { es: 'Nuestro sitio web y servicios SMS no están dirigidos a niños menores de 13 años. No recopilamos a sabiendas información de niños sin el consentimiento de los padres.', en: 'Our website and SMS services are not directed to children under 13. We do not knowingly collect information from children without parental consent.' }
   },
 
   // 10. Cambios a Esta Política
   section10: {
     title: { es: '10. Cambios a Esta Política', en: '10. Changes to This Policy' },
-    content: { es: 'Podemos actualizar esta Política de Privacidad de vez en cuando. Las versiones revisadas se publicarán en esta página con una fecha de "Última Actualización" actualizada.', en: 'We may update this Privacy Policy from time to time. Revised versions will be posted on this page with an updated “Last Updated” date.' }
+    content: { es: 'Podemos actualizar esta Política de Privacidad de vez en cuando. Las versiones revisadas se publicarán en esta página con una fecha de "Última Actualización" actualizada.', en: 'We may update this Privacy Policy from time to time. Revised versions will be posted on this page with an updated "Last Updated" date.' }
   },
 
   // 11. Contacto
@@ -386,18 +388,18 @@ export default function PrivacidadPage() {
       </section>
 
       {/* --- SECCIÓN PRINCIPAL DE POLÍTICA DE PRIVACIDAD --- */}
-      <section className="container mx-auto px-4 py-12 relative z-10 max-w-7xl">
+      <section className="container mx-auto px-4 py-20 relative z-10 max-w-7xl space-y-24">
         
         {/* SECCIÓN 1: INFORMACIÓN QUE RECOPILAMOS */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section1.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-8 shadow-xl">
                 
                 {/* A. Personal Information */}
-                <div className="p-4 bg-[#001026] rounded-xl border border-[#B2904D]/20">
-                    <h3 className="text-xl font-bold text-[#B2904D] mb-3 flex items-center gap-2"><UserCheck size={20}/> {t('section1.A.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-3">{t('section1.A.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
+                    <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><UserCheck size={20}/> {t('section1.A.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section1.A.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section1.A.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
@@ -405,10 +407,10 @@ export default function PrivacidadPage() {
                 </div>
 
                 {/* B. Automatically Collected Information */}
-                <div className="p-4 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2"><Globe size={20}/> {t('section1.B.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-3">{t('section1.B.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Globe size={20}/> {t('section1.B.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section1.B.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section1.B.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
@@ -417,10 +419,10 @@ export default function PrivacidadPage() {
                 </div>
 
                 {/* C. SMS/Text Messaging Information */}
-                <div className="p-4 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2"><MessageSquare size={20}/> {t('section1.C.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-3">{t('section1.C.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><MessageSquare size={20}/> {t('section1.C.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section1.C.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section1.C.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
@@ -431,11 +433,11 @@ export default function PrivacidadPage() {
         </motion.div>
 
         {/* SECCIÓN 2: USO DE INFORMACIÓN */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section2.title')} />
             <div className="p-8 bg-[#000814]/60 rounded-2xl border border-white/10 space-y-6 shadow-lg">
-                <p className="text-base text-blue-100/80 mb-4">{t('section2.intro')}</p>
-                <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
+                <p className="text-base text-blue-100/80 mb-6">{t('section2.intro')}</p>
+                <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
                     {interfaceTexts.section2.items.map((item, index) => (
                         <div key={index} className="flex items-start gap-3 text-white/90">
                             <FileText size={18} className="text-[#B2904D] flex-shrink-0 mt-1"/>
@@ -443,20 +445,20 @@ export default function PrivacidadPage() {
                         </div>
                     ))}
                 </div>
-                <p className="text-sm pt-4 border-t border-white/10 text-orange-300/80 font-medium">{t('section2.note')}</p>
+                <p className="text-sm pt-6 border-t border-white/10 text-orange-300/80 font-medium">{t('section2.note')}</p>
             </div>
         </motion.div>
 
         {/* SECCIÓN 3: PROGRAMA SMS/TEXTO */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section3.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
                 <p className="text-base text-blue-100/80 mb-4">{t('section3.intro')}</p>
                 
                 {/* A. Purpose */}
-                <div className="p-4 bg-[#001026] rounded-lg border border-white/10">
-                    <h4 className="text-lg font-semibold text-white mb-2">{t('section3.A.title')}</h4>
-                    <ul className="text-sm list-disc list-inside space-y-1 pl-4">
+                <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
+                    <h4 className="text-lg font-semibold text-white mb-4">{t('section3.A.title')}</h4>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section3.A.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
@@ -464,20 +466,20 @@ export default function PrivacidadPage() {
                 </div>
 
                 {/* B. Opt-Out */}
-                <div className="p-4 bg-[#001026] rounded-lg border border-red-500/30">
-                    <h4 className="text-lg font-semibold text-white mb-2">{t('section3.B.title')}</h4>
+                <div className="p-6 bg-[#001026] rounded-lg border border-red-500/30">
+                    <h4 className="text-lg font-semibold text-white mb-3">{t('section3.B.title')}</h4>
                     <div className="text-base text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.B.content') }} />
                 </div>
                 
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-6">
                     {/* C. Rates */}
-                    <div className="p-4 bg-[#001026] rounded-lg border border-white/10">
-                        <h4 className="text-lg font-semibold text-white mb-2">{t('section3.C.title')}</h4>
+                    <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
+                        <h4 className="text-lg font-semibold text-white mb-3">{t('section3.C.title')}</h4>
                         <div className="text-sm text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.C.content') }} />
                     </div>
                     {/* D. Carrier */}
-                    <div className="p-4 bg-[#001026] rounded-lg border border-white/10">
-                        <h4 className="text-lg font-semibold text-white mb-2">{t('section3.D.title')}</h4>
+                    <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
+                        <h4 className="text-lg font-semibold text-white mb-3">{t('section3.D.title')}</h4>
                         <div className="text-sm text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.D.content') }} />
                     </div>
                 </div>
@@ -485,16 +487,16 @@ export default function PrivacidadPage() {
         </motion.div>
         
         {/* SECCIÓN 4: CÓMO COMPARTIMOS SU INFORMACIÓN */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section4.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
                 <p className="text-base text-blue-100/80 mb-4">{t('section4.intro')}</p>
                 
                 {/* A. Service Providers */}
-                <div className="p-4 bg-[#001026] rounded-xl border border-[#B2904D]/20">
-                    <h3 className="text-xl font-bold text-[#B2904D] mb-3 flex items-center gap-2"><Server size={20}/> {t('section4.A.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-3">{t('section4.A.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
+                    <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><Server size={20}/> {t('section4.A.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section4.A.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section4.A.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
@@ -503,10 +505,10 @@ export default function PrivacidadPage() {
                 </div>
 
                 {/* B. Legal Requirements */}
-                <div className="p-4 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2"><FileText size={20}/> {t('section4.B.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-3">{t('section4.B.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><FileText size={20}/> {t('section4.B.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section4.B.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section4.B.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
@@ -517,13 +519,13 @@ export default function PrivacidadPage() {
         </motion.div>
 
         {/* SECCIONES 5, 6, 7 */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid lg:grid-cols-3 gap-8">
             {/* SECCIÓN 5: SEGURIDAD DE DATOS */}
             <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
                 <SectionTitle title={t('section5.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-blue-100/80">{t('section5.content1')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section5.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
@@ -537,7 +539,7 @@ export default function PrivacidadPage() {
                 <SectionTitle title={t('section6.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-blue-100/80">{t('section6.content1')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section6.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
@@ -549,24 +551,34 @@ export default function PrivacidadPage() {
             {/* SECCIÓN 7: DERECHOS Y OPCIONES */}
             <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
                 <SectionTitle title={t('section7.title')} />
-                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner flex flex-col">
                     <p className="text-base text-blue-100/80">{t('section7.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4 flex-grow">
                         {interfaceTexts.section7.items.map((item, index) => (
-                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseText(item[lang] || item.es) }} />
+                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: item[lang] || item.es }} />
                         ))}
                     </ul>
-                    <div className="pt-4 text-sm">
+                    <div className="pt-6 border-t border-white/10 space-y-2 text-sm">
                         <p className="text-white font-medium">{t('section7.contact')}</p>
-                        <p className="text-[#B2904D]">{interfaceTexts.section11.email}</p>
-                        <p className="text-[#B2904D]">{interfaceTexts.section11.phone}</p>
+                        <div className="flex items-center gap-2 text-[#B2904D]">
+                            <Mail size={16} />
+                            <a href={`mailto:${interfaceTexts.section7.email}`} className="hover:text-sky-300 transition">
+                              {interfaceTexts.section7.email}
+                            </a>
+                        </div>
+                        <div className="flex items-center gap-2 text-[#B2904D]">
+                            <Phone size={16} />
+                            <a href={`tel:${interfaceTexts.section7.phone}`} className="hover:text-sky-300 transition">
+                              {interfaceTexts.section7.phone}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </motion.div>
         </div>
         
         {/* SECCIONES 8, 9, 10, 11 */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 gap-8">
             {/* SECCIÓN 8: Enlaces de Terceros */}
             <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
                 <SectionTitle title={t('section8.title')} />
@@ -596,18 +608,22 @@ export default function PrivacidadPage() {
                 <SectionTitle title={t('section11.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-white font-medium">{t('section11.intro')}</p>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-4 text-sm">
                         <div className="flex items-center gap-3 text-white/90">
                             <Mail size={18} className="text-sky-400" /> 
-                            {interfaceTexts.section11.email}
+                            <a href={`mailto:${interfaceTexts.section11.email}`} className="hover:text-[#B2904D] transition">
+                              {interfaceTexts.section11.email}
+                            </a>
                         </div>
                         <div className="flex items-center gap-3 text-white/90">
                             <Phone size={18} className="text-sky-400" /> 
-                            {interfaceTexts.section11.phone}
+                            <a href={`tel:${interfaceTexts.section11.phone}`} className="hover:text-[#B2904D] transition">
+                              {interfaceTexts.section11.phone}
+                            </a>
                         </div>
-                        <div className="flex items-center gap-3 text-white/90">
-                            <MapPin size={18} className="text-sky-400" /> 
-                            {interfaceTexts.section11.address}
+                        <div className="flex items-start gap-3 text-white/90">
+                            <MapPin size={18} className="text-sky-400 flex-shrink-0 mt-1" /> 
+                            <span>{interfaceTexts.section11.address}</span>
                         </div>
                     </div>
                 </div>
@@ -618,7 +634,7 @@ export default function PrivacidadPage() {
       </section>
 
       {/* --- FORMULARIO DE CONTACTO --- */}
-      <div className="relative z-20 mt-12">
+      <div className="relative z-20 mt-24 py-12">
         <ContactForm />
       </div>
 
