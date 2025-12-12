@@ -1,13 +1,10 @@
-//[lang]/abogados/page.tsx
-
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  X, Play, Award, BookOpen, Scale, 
-  ChevronRight, Mail, ShieldCheck, 
-  Gavel, GraduationCap, ArrowRight, X as CloseIcon
+  Scale, ShieldCheck, Gavel, GraduationCap, 
+  ArrowRight, X as CloseIcon, Mail, Award, ChevronRight
 } from 'lucide-react';
 import Image from 'next/image';
 import Header from '../../components/Header'; 
@@ -18,33 +15,17 @@ import { useLanguage } from '../../context/LanguageContext';
 const PRIMARY_DARK = '#001540';
 const ACCENT_GOLD = '#B2904D';
 
-// Función auxiliar para manejar URLs de imágenes
-const getImageURL = (name: string) => {
-    const base = 'https://manuelsolis.com/wp-content/uploads/2025/07/';
-    const slug = name.replace(/[^a-zA-Z0-9 ]/g, '').replace(/\s/g, '-');
-    const suffixes = ['-922x1024.png', '.png', '-1.png', '-921x1024.png'];
-    for (const suffix of suffixes) {
-        if (name.includes('Manuel E. Solís III')) return `${base}Manuel-E.Solis-III-922x1024.png`;
-        if (name.includes('Eduardo García')) return `${base}Eduardo-Garcia-1-922x1024.png`;
-        if (name.includes('Magdalena')) return `${base}Maggie-922x1024.png`;
-        if (name.includes('Himani')) return `${base}Himani-Augustina-Vithanage-922x1024.png`;
-        return `${base}${slug}${suffix}`;
-    }
-    return '/placeholder-lawyer.jpg';
-};
-
-// Array de abogados
+// Array de abogados optimizado
 const attorneys = [
   // --- FUNDADORES Y SOCIOS PRINCIPALES ---
   {
     id: 'manuel-solis',
     name: 'Manuel Solís',
+    image: '/abogados/Manuel Solis.png',
     role: {
       es: 'Abogado Principal y Fundador',
       en: 'Principal Attorney and Founder'
     },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Manuel-Solis-922x1024.png', 
-    video: null, 
     bio: {
       es: [
         "Durante las casi tres décadas que han pasado desde que empecé a trabajar como abogado, he llegado a conocer bien a los inmigrantes. Sobretodo he podido ser testigo del impresionante coraje y valentía que muestran muchos de ellos.",
@@ -65,9 +46,8 @@ const attorneys = [
   {
     id: 'manuel-solis-iii',
     name: 'Manuel E. Solís III',
+    image: '/abogados/Manuel E Solis III.png',
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Manuel-E.Solis-III-922x1024.png',
-    video: 'https://manuelsolis.com/wp-content/uploads/2023/12/interview-manuel-iii_1.mp4',
     bio: {
       es: [
         "Manuel E. Solís III se ocupa principalmente de la ley de inmigración en las Oficinas Legales de Manuel Solís. Se graduó de la Universidad de Houston Downtown y completó su licenciatura en derecho en South Texas College of Law Houston.",
@@ -88,9 +68,8 @@ const attorneys = [
   {
     id: 'juan-solis',
     name: 'Juan Solís',
+    image: '/abogados/Juan Solis.png',
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Juan-Solis-922x1024.png', 
-    video: 'https://manuelsolis.com/wp-content/uploads/2023/12/pexels-john-hill-7049943-1080p.mp4', 
     bio: {
       es: [
         "Juan representa clientes en casos que van desde Inmigración hasta Litigios Civiles, y está muy involucrado en el departamento de Litigios de Seguros.",
@@ -113,9 +92,8 @@ const attorneys = [
   {
     id: 'andrew-fink',
     name: 'Andrew Fink',
+    image: '/abogados/Andrew Fink.png',
     role: { es: 'Socio de Litigio (Chicago)', en: 'Litigation Partner (Chicago)' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Andrew-Fink-922x1024.png',
-    video: 'https://manuelsolis.com/wp-content/uploads/2023/12/andrew-fink_1.mp4',
     bio: {
       es: [
         "Socio de litigio a nivel nacional. Centra su práctica en lesiones personales, accidentes y negligencia médica. Ha sido el abogado principal en aproximadamente 50 juicios con jurado.",
@@ -136,9 +114,8 @@ const attorneys = [
   {
     id: 'gregory-finney',
     name: 'Gregory Finney',
+    image: '/abogados/Gregory Finney.png',
     role: { es: 'Director de Litigio Civil', en: 'Civil Litigation Director' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Gregory-Finney-922x1024.png',
-    video: 'https://SolisPullZone.b-cdn.net/gregory-finney.mp4',
     bio: {
       es: [
         "Gregory Finney es el Director de Litigio Civil. Su experiencia incluye litigios comerciales complejos, fraude, energía y accidentes catastróficos.",
@@ -162,9 +139,8 @@ const attorneys = [
   {
     id: 'ni-yan',
     name: 'Ni Yan',
+    image: '/abogados/Ni Yan.png',
     role: { es: 'Abogada', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Ni-Yan-922x1024.png',
-    video: 'https://manuelsolis.com/wp-content/uploads/2023/12/ni-yan_1.mp4',
     bio: {
       es: [
         "Nacida en la República de China, Yan se especializa en ayudar a la comunidad asiática en casos de inmigración. Ha representado a más de 5,000 casos.",
@@ -185,9 +161,8 @@ const attorneys = [
   {
     id: 'mark-mcbroom',
     name: 'Mark McBroom',
+    image: '/abogados/Mark McBroom.png',
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Mark-McBroom-922x1024.png',
-    video: 'https://manuelsolis.com/wp-content/uploads/2023/12/INTERVIEW-MARC_1.mp4',
     bio: {
       es: [
         "El Sr. McBroom obtuvo su Doctorado en Jurisprudencia de la Universidad Metodista del Sur. Se dio cuenta de su pasión por las leyes de inmigración mientras era estudiante.",
@@ -208,9 +183,8 @@ const attorneys = [
   {
     id: 'ana-patricia-rueda',
     name: 'Ana Patricia Rueda',
+    image: '/abogados/Ana Patricia Rueda.png',
     role: { es: 'Abogada', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Ana-Patricia-Rueda-922x1024.png',
-    video: 'https://manuelsolis.com/wp-content/uploads/2023/12/INTERVIEW-ANA_1.mp4',
     bio: {
       es: [
         "La abogada Rueda nació en Zacatecas, México, e inmigró a los 7 años. Descubrió su pasión por la justicia durante sus estudios universitarios.",
@@ -231,9 +205,8 @@ const attorneys = [
   {
     id: 'edwin-zavala',
     name: 'Edwin Zavala',
+    image: '/abogados/Edwin Zavala.png',
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Edwin-Zavala-922x1024.png',
-    video: 'https://SolisPullZone.b-cdn.net/gregory-finney.mp4',
     bio: {
       es: [
         "Edwin Zavala nació y creció en Metairie, Louisiana. Obtuvo su título de Juris Doctor de la Facultad de Derecho de la Universidad de Loyola en Nueva Orleans, graduándose cum laude.",
@@ -254,9 +227,8 @@ const attorneys = [
   {
     id: 'alejandro-manzano',
     name: 'Alejandro Manzano',
+    image: '/abogados/placeholder.png', // No hay imagen específica en tu lista
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Alejandro-Manzano-922x1024.png',
-    video: null,
     bio: {
       es: [
         "Comprometido con la comunidad inmigrante, Alejandro ejerce en la oficina de Houston. Creció en el Valle del Río Grande, fortaleciendo su conexión con las comunidades que defiende.",
@@ -285,9 +257,8 @@ const attorneys = [
   {
     id: 'victor-rojas',
     name: 'Victor Rojas',
+    image: '/abogados/Victor Rojas.png',
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Victor-Rojas-922x1024.png',
-    video: 'https://SolisPullZone.b-cdn.net/interview-victor.mp4',
     bio: {
       es: [
         "Rojas se graduó de la Facultad de Derecho La Interamericana de Puerto Rico en 2003. Fue Defensor Público por varios años, luchando día tras día para que las ruedas de la Justicia no se descarrilen.",
@@ -311,9 +282,8 @@ const attorneys = [
   {
     id: 'austen-gunnels',
     name: 'Austen Gunnels',
+    image: '/abogados/Austen Gunnels.png',
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/08/Austen-Gunnels-921x1024.png',
-    video: null,
     bio: {
       es: [
         "Su práctica se enfoca en representar heridos en accidentes marítimos y de vehículos de motor. Tiene experiencia previa en defensa de seguros, lo que le da una ventaja estratégica al negociar.",
@@ -341,9 +311,8 @@ const attorneys = [
   {
     id: 'gabriel-perez',
     name: 'Gabriel Perez',
+    image: '/abogados/Gabriel Perez.png',
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Gabriel-Perez-922x1024.png',
-    video: null,
     bio: {
       es: [
         "Nacido en Houston, Texas. Comenzó como asistente legal en la firma y su pasión lo llevó a convertirse en abogado.",
@@ -367,9 +336,8 @@ const attorneys = [
   {
     id: 'sara-james',
     name: 'Sara James',
+    image: '/abogados/Sara James.png',
     role: { es: 'Abogada (Memphis)', en: 'Attorney (Memphis)' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Sara-James-922x1024.png',
-    video: null,
     bio: {
       es: [
         "Ejerce en Memphis con pasión por la comunidad hispana. Fue Presidenta de la Hispanic Law Student Association y ganadora del premio Champion of Justice 2021.",
@@ -393,9 +361,8 @@ const attorneys = [
   {
     id: 'eduardo-garcia',
     name: 'Eduardo García',
+    image: '/abogados/Eduardo.png',
     role: { es: 'Abogado', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Eduardo-Garcia-1-922x1024.png',
-    video: null,
     bio: {
       es: [
         "Antes de ser abogado, fue profesor de Historia. Tiene una Maestría en Historia con enfoque en Borderlands.",
@@ -419,9 +386,8 @@ const attorneys = [
   {
     id: 'alexis-alvarez',
     name: 'Alexis Alvarez',
+    image: '/abogados/Alexis-Alvarez.png',
     role: { es: 'Abogada', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Alexis-Alvarez-922x1024.png',
-    video: null,
     bio: {
       es: [
         "Originaria del Valle del Río Grande, Texas. Hija de trabajadores agrícolas migrantes. Esta historia familiar le dio una profunda admiración por la comunidad inmigrante.",
@@ -445,9 +411,8 @@ const attorneys = [
   {
     id: 'edward-s-reisman',
     name: 'Edward S. Reisman',
+    image: '/abogados/Edward-Steven-Reisman.png',
     role: { es: 'Abogado (Los Ángeles)', en: 'Attorney (Los Angeles)' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Edward-Steven-Reisman-922x1024.png',
-    video: null,
     bio: {
       es: [
         "Ejerce en Los Ángeles. Tiene un JD de Georgetown University Law Center. Su experiencia previa en el Servicio de Inmigración y Naturalización (INS) le da una visión única del sistema.",
@@ -471,9 +436,8 @@ const attorneys = [
   {
     id: 'stephanie-l-garcia-vidal',
     name: 'Stephanie L. García Vidal',
+    image: '/abogados/Stephanie.png',
     role: { es: 'Abogada (Dallas)', en: 'Attorney (Dallas)' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Stephanie-Garcia-Vidal-922x1024.png',
-    video: null,
     bio: {
       es: [
         "Ejerce en la oficina de Dallas del Bufete de Abogados Manuel Solís, donde brinda representación legal comprometida y empática a personas y familias inmigrantes. Su pasión por la abogacía nace del deseo de apoyar a quienes emprendieron un viaje transformador para construir un futuro más seguro y digno.",
@@ -506,9 +470,8 @@ const attorneys = [
   {
     id: 'lupita-valenzuela-martinez',
     name: 'Lupita Valenzuela Martinez',
+    image: '/abogados/Lupita.png',
     role: { es: 'Abogada (Memphis)', en: 'Attorney (Memphis)' },
-    image: '/lupita.png',
-    video: null,
     bio: {
       es: [
         "Ejerce la abogacía con pasión y entrega desde nuestra oficina de Memphis. Su mayor inspiración proviene de ayudar a quienes no pueden defenderse por sí mismos, y su misión es asegurar que todos reciban la representación comprometida y valiente que merecen. Su trabajo está profundamente guiado por el deseo de servir a la comunidad hispana, motor que alimenta su vocación día a día.",
@@ -542,9 +505,8 @@ const attorneys = [
   {
     id: 'himani-augustina-vithanage',
     name: 'Himani Augustina Vithanage',
+    image: '/abogados/Himani Augustina Vithanage.png',
     role: { es: 'Abogada', en: 'Attorney' },
-    image: 'https://manuelsolis.com/wp-content/uploads/2025/07/Himani-Augustina-Vithanage-922x1024.png',
-    video: null,
     bio: {
       es: [
         "Una voz firme para quienes más lo necesitan. Busca empoderar a sus clientes con empatía, conocimiento y pasión.",
@@ -568,21 +530,14 @@ export default function AttorneysPage() {
   const { language } = useLanguage();
   const [selectedAttorney, setSelectedAttorney] = useState<any>(null);
 
-  const handleImageError = (e: any) => {
-    e.target.src = 'https://manuelsolis.com/wp-content/uploads/2024/11/logo-manuelsolis.png';
-    e.target.style.objectFit = 'contain';
-    e.target.style.padding = '20px';
-    e.target.style.backgroundColor = '#002342';
-  };
-
-  // Función helper para obtener texto traducido
-  const getText = (obj: any) => {
+  // Función helper para obtener texto traducido (memoizada)
+  const getText = useMemo(() => (obj: any) => {
     if (typeof obj === 'string') return obj;
     return obj[language] || obj.es || obj;
-  };
+  }, [language]);
 
-  // Textos de la interfaz
-  const texts = {
+  // Textos de la interfaz (memoizados)
+  const texts = useMemo(() => ({
     hero: {
       badge: { es: 'Defensa de Clase Mundial', en: 'World-Class Defense' },
       title1: { es: 'Conozca a Sus', en: 'Meet Your' },
@@ -608,19 +563,18 @@ export default function AttorneysPage() {
       educationFallback: { es: 'Información disponible en consulta.', en: 'Information available upon consultation.' },
       admissionsFallback: { es: 'Abogado certificado y reconocido.', en: 'Certified and recognized attorney.' }
     }
-  };
+  }), []);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#001529] text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
       
       <Header />
 
-      {/* FONDO ATMOSFÉRICO FIJO - MÁS AZUL */}
+      {/* FONDO ATMOSFÉRICO OPTIMIZADO */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-         {/* Gradiente Atmosférico más azul e intenso */}
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
          
-         {/* Texto Gigante Animado de Fondo - MÁS LENTO */}
+         {/* Texto Gigante Animado - Optimizado con will-change */}
          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
            <motion.div
               initial={{ x: "100%" }} 
@@ -635,28 +589,26 @@ export default function AttorneysPage() {
               style={{ willChange: 'transform' }}
             >
               <span className="text-[120vh] font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12 inline-block">
-                    N/\И/\N/\N/
+                N/\И/\N/\N/
               </span>
             </motion.div>
          </div>
 
-         {/* Animaciones de Luz (Orbes) - MÁS AZULES */}
+         {/* Orbes de luz optimizados */}
          <motion.div 
            animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-           className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-500/30 rounded-full blur-[150px]" 
+           className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-500/30 rounded-full blur-[150px]"
+           style={{ willChange: 'transform, opacity' }}
          />
          <motion.div 
             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-600/30 rounded-full blur-[180px]" 
+            className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-600/30 rounded-full blur-[180px]"
+            style={{ willChange: 'transform, opacity' }}
          />
          
-         {/* Capa de azul adicional */}
          <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply"></div>
-         
-         {/* Ruido sutil */}
-         <div className="absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
       
       {/* HERO SECTION */}
@@ -695,24 +647,26 @@ export default function AttorneysPage() {
             
             {attorneys.map((attorney, index) => (
               <motion.div
-                key={index}
+                key={attorney.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.05, duration: 0.5 }}
                 onClick={() => setSelectedAttorney(attorney)}
                 className="group relative h-[450px] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#001540]/60 backdrop-blur-md hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] transition-all duration-500"
+                style={{ willChange: 'transform' }}
               >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                   <Image 
                     src={attorney.image} 
                     alt={attorney.name}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     className={attorney.id === 'lupita-valenzuela-martinez' 
                       ? "object-cover object-[center_20%]" 
                       : "object-cover object-top"}
-                    onError={handleImageError}
-                    unoptimized 
+                    loading={index < 8 ? "eager" : "lazy"}
+                    priority={index < 4}
                   />
                 </div>
 
@@ -740,7 +694,7 @@ export default function AttorneysPage() {
         </div>
       </section>
 
-      {/* MODAL DE DETALLE */}
+      {/* MODAL DE DETALLE OPTIMIZADO */}
       <AnimatePresence>
         {selectedAttorney && (
           <motion.div 
@@ -761,36 +715,24 @@ export default function AttorneysPage() {
               <button 
                 onClick={() => setSelectedAttorney(null)}
                 className="absolute top-4 right-4 z-50 bg-black/40 hover:bg-[#B2904D] text-white p-2 rounded-full transition-all border border-white/10 group"
+                aria-label="Cerrar"
               >
                 <CloseIcon size={24} className="group-hover:rotate-90 transition-transform" />
               </button>
 
-              {/* Media */}
-              <div className="w-full lg:w-5/12 bg-black relative h-[35vh] lg:h-auto group">
-                {selectedAttorney.video ? (
-                  <video 
-                    src={selectedAttorney.video} 
-                    controls 
-                    autoPlay 
-                    playsInline
-                    className="w-full h-full object-cover"
-                    poster={selectedAttorney.image} 
-                  />
-                ) : (
-                  <div className="relative w-full h-full">
-                    <Image 
-                      src={selectedAttorney.image} 
-                      alt={selectedAttorney.name}
-                      fill
-                      className={selectedAttorney.id === 'lupita-valenzuela-martinez' 
-                        ? "object-cover object-[center_20%]" 
-                        : "object-cover object-top"}
-                      onError={handleImageError}
-                      unoptimized
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-80"></div>
-                  </div>
-                )}
+              {/* Imagen del Abogado */}
+              <div className="w-full lg:w-5/12 bg-black relative h-[35vh] lg:h-auto">
+                <Image 
+                  src={selectedAttorney.image} 
+                  alt={selectedAttorney.name}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className={selectedAttorney.id === 'lupita-valenzuela-martinez' 
+                    ? "object-cover object-[center_20%]" 
+                    : "object-cover object-top"}
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-80"></div>
                 
                 <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-[#001f4a] to-transparent lg:hidden">
                   <h2 className="text-3xl font-bold text-white">{selectedAttorney.name}</h2>
@@ -798,7 +740,7 @@ export default function AttorneysPage() {
                 </div>
               </div>
 
-              {/* Info Content */}
+              {/* Contenido de Información */}
               <div className="w-full lg:w-7/12 p-6 lg:p-10 overflow-y-auto bg-gradient-to-br from-[#001f4a] to-[#001a33] relative">
                 
                 <div className="hidden lg:block mb-8">

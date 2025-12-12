@@ -217,6 +217,19 @@ export default function ImmigrationPage() {
   
   const gT = (obj: any): string => getText(obj, lang);
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
@@ -242,7 +255,6 @@ export default function ImmigrationPage() {
   }, [selectedId]);
 
 
-  // FIX TIPADO FRAMER MOTION: Uso de string en lugar de number[] para ease
   const textRevealVariant: Variants = {
     hidden: { y: "100%", rotateX: -20, opacity: 0 },
     visible: (custom: number) => ({
@@ -253,21 +265,15 @@ export default function ImmigrationPage() {
 
 
   return (
-    // FONDO AZUL OSCURO
     <div className="min-h-screen flex flex-col bg-[#001540] text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
       
       <Header />
 
-      {/* =========================================================================
-          1. FONDO ATMOSFÉRICO FIJO (AZUL)
-      ========================================================================= */}
       <div className="fixed inset-0 z-0 pointer-events-none w-full h-full">
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#001f5f]" />
          
-         {/* Ruido sutil */}
          <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-         {/* Animaciones de Luz (Orbes) */}
          <motion.div 
            animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -279,46 +285,38 @@ export default function ImmigrationPage() {
             className="absolute bottom-[-10%] left-[-5%] w-[70vw] h-[70vw] bg-sky-800/10 rounded-full blur-[150px]" 
          />
          
-         {/* N Gigante */}
          <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
             <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
-               N/\
+               INMIGRACIÓN
             </span>
          </div>
       </div>
 
 
-      {/* =========================================================================
-          2. HERO SECTION (SPLIT LAYOUT CON IMAGEN) - POSICIÓN MEDIA
-      ========================================================================= */}
       <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 px-4 z-10 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-center">
               
-              {/* --- COLUMNA IZQUIERDA: IMAGEN (HeroProfessional Style) - POSICIÓN MEDIA --- */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 className="lg:col-span-5 relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex items-center justify-center"
               >
-                 {/* Glow azul intenso detrás */}
                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-3xl rounded-full z-0 opacity-80" />
                  
-                 {/* Imagen del Abogado/Hero - POSICIÓN MEDIA */}
                  <div className="relative z-10 w-full h-full flex items-center justify-center">
                     <div className="relative w-full h-full">
                        <Image
-                         src="/immigration-hero.png" // NOMBRE TEMPORAL
+                         src="/immigration-hero.png"
                          alt="Abogado de Inmigración"
                          fill
-                         className="object-contain object-center drop-shadow-[0_0_30px_rgba(56,189,248,0.6)]" // Glow azul en la imagen
+                         className="object-contain object-center drop-shadow-[0_0_30px_rgba(56,189,248,0.6)]"
                          priority
                        />
                     </div>
                  </div>
 
-                 {/* Cuadro Flotante de Estadísticas (20k Familias) */}
                  <motion.div
                     initial={{ opacity: 0, x: -20 }} 
                     animate={{ opacity: 1, x: 0 }} 
@@ -335,9 +333,7 @@ export default function ImmigrationPage() {
                  </motion.div>
               </motion.div>
 
-              {/* --- COLUMNA DERECHA: TEXTO --- */}
               <div className="lg:col-span-7 space-y-6 md:space-y-8 pl-0 lg:pl-12 relative z-20">
-                 {/* Línea decorativa */}
                  <motion.div 
                    initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.5 }}
                    className="absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-[#B2904D]/50 to-transparent origin-top hidden lg:block" 
@@ -385,9 +381,6 @@ export default function ImmigrationPage() {
       </section>
 
 
-      {/* =========================================================================
-          3. GRID DE CASOS (DARK GLASSMORPHISM)
-      ========================================================================= */}
       <section className="px-4 pb-32 relative z-10 max-w-[1600px] mx-auto" id="casos">
 
         <div className="max-w-[1600px] mx-auto relative z-10">
@@ -521,7 +514,6 @@ export default function ImmigrationPage() {
         </div>
       </section>
 
-      {/* --- MODAL --- */}
       <AnimatePresence>
         {selectedId && selectedItem && (
           <motion.div 
@@ -603,7 +595,6 @@ export default function ImmigrationPage() {
                 </div>
               </div>
 
-              {/* DERECHA - FIX: Contenedor de contenido interior cambiado a tema oscuro */}
               <div className="w-full lg:w-3/5 p-8 md:p-12 overflow-y-auto bg-[#001540] text-white">
                 
                 <motion.div 
@@ -693,7 +684,6 @@ export default function ImmigrationPage() {
         )}
       </AnimatePresence>
 
-      {/* --- VIDEO SECTION (FIX: Fondo igual al principal) --- */}
       <section className="py-32 relative overflow-hidden bg-[#001540]"> 
         
         <div className="absolute inset-0 bg-[#001540] opacity-90" />
@@ -750,17 +740,21 @@ export default function ImmigrationPage() {
                 initial={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
+                onClick={togglePlayPause}
                 className="absolute inset-0 flex items-center justify-center z-10 cursor-pointer bg-black/10 hover:bg-black/0 transition-colors"
               >
-                <motion.div 
-                  whileHover={{ scale: 1.1 }}
-                  className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg border border-white/60"
-                >
-                  <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
-                </motion.div>
+                {!isPlaying && (
+                  <motion.div 
+                    whileHover={{ scale: 1.1 }}
+                    className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg border border-white/60"
+                  >
+                    <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
+                  </motion.div>
+                )}
               </motion.div>
               <video 
-                src="https://manuelsolis.com/wp-content/uploads/2023/12/pexels-john-hill-7049943-1080p.mp4" 
+                ref={videoRef}
+                src="https://vz-9f852395-0ee.b-cdn.net/d7979aa5-40db-49f2-8566-b8a580591661/playlist.m3u8" 
                 className="w-full h-full object-cover" 
                 aria-label={t('videoAlt')}
               />
@@ -769,7 +763,6 @@ export default function ImmigrationPage() {
         </div>
       </section>
 
-      {/* --- PROCESS SECTION (FIX: Fondo igual al principal) --- */}
       <section className="py-32 relative overflow-hidden bg-[#001540]">
         
         <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -848,7 +841,6 @@ export default function ImmigrationPage() {
         </div>
       </section>
 
-      {/* --- CONTACT FORM --- */}
       <section id="contacto" className="relative py-32 z-10 bg-transparent">
         
         <div className="max-w-4xl mx-auto px-4 relative z-10">

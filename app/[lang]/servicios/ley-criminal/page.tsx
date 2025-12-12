@@ -6,12 +6,12 @@ import {
   X,
   PhoneCall,
   ArrowRight,
-  Car, // Usado para DWI
-  Scale, // Usado para Prostitución/Solicitación y Proceso
-  FileText, // Usado para Hurto/Robo y Proceso
-  MessageSquare, // Usado para Violencia Doméstica
-  Zap, // Usado para Asalto
-  CheckCircle2, // Usado para Proceso
+  Car,
+  Scale,
+  FileText,
+  MessageSquare,
+  Zap,
+  CheckCircle2,
   Star,
   Globe, 
 } from 'lucide-react';
@@ -19,13 +19,11 @@ import {
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 
-// --- IMPORTACIONES DE COMPONENTES (RUTAS CORREGIDAS) ---
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ContactForm from '../../../components/ContactForm';
 import { useLanguage } from '../../../context/LanguageContext';
 
-// --- COLORES DE LA PLANTILLA DE DISEÑO (OSCURA) ---
 const PRIMARY_DARK = '#001540';
 const ACCENT_GOLD = '#B2904D';
 
@@ -34,13 +32,11 @@ const font = Outfit({
   weight: ['100', '200', '300', '400', '500', '700', '900'] 
 });
 
-// --- FUNCIÓN AUXILIAR ---
 const getText = (obj: any, lang: 'es' | 'en'): string => {
   if (typeof obj === 'string') return obj;
   return obj[lang] || obj.es;
 };
 
-// --- TIPADO PARA DATA ---
 interface ContentDetail { es: string; en: string; }
 interface CaseContent {
     intro: ContentDetail;
@@ -58,9 +54,6 @@ interface CaseItem {
     content: CaseContent;
 }
 
-// =========================================================================
-// --- DATOS DE LEY CRIMINAL (Traducciones Corregidas) ---
-// =========================================================================
 const texts = {
   mainCases: [
     {
@@ -178,10 +171,6 @@ const texts = {
   }
 };
 
-
-// =========================================================================
-// --- COMPONENTE PRINCIPAL (Diseño Oscuro) ---
-// =========================================================================
 export default function CriminalLawPage() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
@@ -201,6 +190,19 @@ export default function CriminalLawPage() {
   
   const gT = (obj: any): string => getText(obj, lang);
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
@@ -210,11 +212,8 @@ export default function CriminalLawPage() {
 
   const selectedItem = mainCasesData.find(item => item.id === selectedId);
 
-  // Mapeo para el layout del Grid (2 columnas para Violencia Doméstica y Prostitución, 1 para el resto)
   const responsiveCases = mainCasesData.map((item, index) => {
-    // Si index 0 (Violencia Doméstica) o index 4 (Prostitución), ocupa 2 columnas.
     if (index === 0 || index === 4) return { ...item, position: "col-span-3 lg:col-span-2 h-[450px]" };
-    // Los demás ocupan 1 columna.
     return { ...item, position: "col-span-3 lg:col-span-1 h-[450px]" };
   });
 
@@ -224,8 +223,6 @@ export default function CriminalLawPage() {
     return () => { document.body.style.overflow = 'unset'; };
   }, [selectedId]);
 
-
-  // Animación de Revelación de Texto (Tomada de la Plantilla de Diseño)
   const textRevealVariant: Variants = {
     hidden: { y: "100%", rotateX: -20, opacity: 0 },
     visible: (custom: number) => ({
@@ -234,23 +231,14 @@ export default function CriminalLawPage() {
     })
   };
 
-
   return (
-    // FONDO AZUL OSCURO (PRIMARY_DARK)
     <div className="min-h-screen flex flex-col bg-[#001540] text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
       
       <Header />
 
-      {/* =========================================================================
-          1. FONDO ATMOSFÉRICO FIJO (AZUL)
-      ========================================================================= */}
       <div className="fixed inset-0 z-0 pointer-events-none w-full h-full">
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#001f5f]" />
-         
-         {/* Ruido sutil */}
          <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
-
-         {/* Animaciones de Luz (Orbes) */}
          <motion.div 
            animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -261,34 +249,23 @@ export default function CriminalLawPage() {
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             className="absolute bottom-[-10%] left-[-5%] w-[70vw] h-[70vw] bg-sky-800/10 rounded-full blur-[150px]" 
          />
-         
-         {/* N Gigante */}
          <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
-            <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
-                N/\
-            </span>
+            <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">N/\</span>
          </div>
       </div>
 
-
-      {/* =========================================================================
-          2. HERO SECTION (SPLIT LAYOUT CON IMAGEN) - POSICIÓN MEDIA
-      ========================================================================= */}
       <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 px-4 z-10 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-center">
               
-              {/* --- COLUMNA IZQUIERDA: IMAGEN (POSICIÓN MEDIA - CENTRADA VERTICALMENTE) --- */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 className="lg:col-span-5 relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex items-center justify-center"
               >
-                 {/* Glow azul intenso detrás */}
                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-3xl rounded-full z-0 opacity-80" />
                  
-                 {/* Imagen del Abogado/Hero - POSICIÓN MEDIA (CENTRADA) */}
                  <div className="relative z-10 w-full h-full flex items-center justify-center">
                     <div className="relative w-full h-full">
                        <Image
@@ -301,7 +278,6 @@ export default function CriminalLawPage() {
                     </div>
                  </div>
 
-                 {/* Cuadro Flotante de Estadísticas (12K Casos) */}
                  <motion.div
                     initial={{ opacity: 0, x: -20 }} 
                     animate={{ opacity: 1, x: 0 }} 
@@ -318,9 +294,7 @@ export default function CriminalLawPage() {
                  </motion.div>
               </motion.div>
 
-              {/* --- COLUMNA DERECHA: TEXTO --- */}
               <div className="lg:col-span-7 space-y-6 md:space-y-8 pl-0 lg:pl-12 relative z-20">
-                 {/* Línea decorativa */}
                  <motion.div 
                    initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.5 }}
                    className="absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-[#B2904D]/50 to-transparent origin-top hidden lg:block" 
@@ -370,12 +344,7 @@ export default function CriminalLawPage() {
         </div>
       </section>
 
-
-      {/* =========================================================================
-          3. GRID DE CASOS (DARK GLASSMORPHISM)
-      ========================================================================= */}
       <section className="px-4 pb-32 relative z-10 max-w-[1600px] mx-auto" id="casos">
-
         <div className="max-w-[1600px] mx-auto relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -445,7 +414,6 @@ export default function CriminalLawPage() {
                     </p>
                 </div>
 
-
                 <div className="relative z-10 h-full flex flex-col">
                   
                   <motion.div 
@@ -507,7 +475,6 @@ export default function CriminalLawPage() {
         </div>
       </section>
 
-      {/* --- MODAL --- */}
       <AnimatePresence>
         {selectedId && selectedItem && (
           <motion.div 
@@ -589,7 +556,6 @@ export default function CriminalLawPage() {
                 </div>
               </div>
 
-              {/* DERECHA - Contenido del Modal (Tema Oscuro) */}
               <div className="w-full lg:w-3/5 p-8 md:p-12 overflow-y-auto bg-[#001540] text-white">
                 
                 <motion.div 
@@ -606,7 +572,6 @@ export default function CriminalLawPage() {
                   </p>
                 </motion.div>
 
-                {/* Sub-Puntos (Condiciones, Sanciones, etc.) */}
                 {selectedItem.content.subPoints && selectedItem.content.subTitle && (
                     <motion.div 
                       initial={{ opacity: 0, y: 20 }}
@@ -641,8 +606,6 @@ export default function CriminalLawPage() {
                     </motion.div>
                 )}
 
-
-                {/* Solution (Final) */}
                 {selectedItem.content.solution && (
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
@@ -656,7 +619,6 @@ export default function CriminalLawPage() {
                   </motion.div>
                 )}
 
-                {/* CTA */}
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -683,7 +645,6 @@ export default function CriminalLawPage() {
         )}
       </AnimatePresence>
 
-      {/* --- VIDEO SECTION --- */}
       <section className="py-32 relative overflow-hidden bg-[#001540]"> 
         
         <div className="absolute inset-0 bg-[#001540] opacity-90" />
@@ -719,7 +680,7 @@ export default function CriminalLawPage() {
               href="tel:+18664200405"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group inline-flex items-center gap-4 bg-[#B2904D] text-[#001540] px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-white transition-all"
+              className="group inline-flex items-center gap-4 bg-[#B2904D] text-[#002342] px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-white transition-all"
             >
               <div className="relative w-10 h-10 bg-black/10 rounded-lg flex items-center justify-center">
                 <PhoneCall size={20} />
@@ -740,17 +701,21 @@ export default function CriminalLawPage() {
                 initial={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
+                onClick={togglePlayPause}
                 className="absolute inset-0 flex items-center justify-center z-10 cursor-pointer bg-black/10 hover:bg-black/0 transition-colors"
               >
-                <motion.div 
-                  whileHover={{ scale: 1.1 }}
-                  className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg border border-white/60"
-                >
-                  <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
-                </motion.div>
+                {!isPlaying && (
+                  <motion.div 
+                    whileHover={{ scale: 1.1 }}
+                    className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg border border-white/60"
+                  >
+                    <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
+                  </motion.div>
+                )}
               </motion.div>
               <video 
-                src="https://manuelsolis.com/wp-content/uploads/2023/12/pexels-john-hill-7049943-1080p.mp4" 
+                ref={videoRef}
+                src="https://vz-9f852395-0ee.b-cdn.net/d7979aa5-40db-49f2-8566-b8a580591661/playlist.m3u8" 
                 className="w-full h-full object-cover" 
                 aria-label={t('videoAlt')}
               />
@@ -759,7 +724,6 @@ export default function CriminalLawPage() {
         </div>
       </section>
 
-      {/* --- PROCESS SECTION --- */}
       <section className="py-32 relative overflow-hidden bg-[#001540]">
         
         <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -823,7 +787,7 @@ export default function CriminalLawPage() {
                   <p className="text-white/70 text-sm leading-relaxed">{gT(step.desc)}</p>
                 </div>
 
-                {index < texts.processSteps.length - 1 && (
+                {index < processStepsData.length - 1 && (
                   <motion.div 
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
@@ -838,7 +802,6 @@ export default function CriminalLawPage() {
         </div>
       </section>
 
-      {/* --- CONTACT FORM --- */}
       <section id="contacto" className="relative py-32 z-10 bg-transparent">
         
         <div className="max-w-4xl mx-auto px-4 relative z-10">
