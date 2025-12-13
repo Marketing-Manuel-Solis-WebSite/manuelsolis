@@ -227,7 +227,7 @@ const attorneys = [
   {
     id: 'alejandro-manzano',
     name: 'Alejandro Manzano',
-    image: '/abogados/placeholder.png', // No hay imagen específica en tu lista
+    image: '/abogados/Alejandro.png',
     role: { es: 'Abogado', en: 'Attorney' },
     bio: {
       es: [

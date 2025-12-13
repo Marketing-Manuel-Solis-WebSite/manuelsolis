@@ -140,7 +140,7 @@ export default function HeaderProfessional() {
           ]
     },
     { 
-      name: language === 'es' ? 'Acceso clientes' : 'Client access',
+      name: language === 'es' ? 'Acceso a clientes' : 'Client access',
       href: 'https://solislawfirm.com',
       type: 'external' 
     },
