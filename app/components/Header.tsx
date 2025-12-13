@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, ChevronDown, Phone } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { Outfit } from 'next/font/google'
+import { usePathname } from 'next/navigation'
+import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
 
 const font = Outfit({ 
   subsets: ['latin'], 
@@ -30,6 +32,7 @@ const FlagUS = () => (
 
 export default function HeaderProfessional() {
   const { language, setLanguage } = useLanguage();
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
@@ -37,11 +40,28 @@ export default function HeaderProfessional() {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Configuración de contacto
-  const phoneNumber = "1-888-676-1238";
-  const phoneLink = "tel:18886761238";
+  // Obtener el teléfono dinámico basado en la ruta actual
+  const { phoneNumber, phoneLink } = useMemo(() => {
+    // Extrae el slug de la oficina de la ruta (ej: /es/oficinas/main-st → main-st)
+    const officeMatch = pathname.match(/\/oficinas\/([^/]+)/);
+    const officeSlug = officeMatch?.[1];
+    
+    if (officeSlug && officesPhoneMap[officeSlug]) {
+      const phone = officesPhoneMap[officeSlug];
+      return {
+        phoneNumber: phone,
+        phoneLink: `tel:${phone.replace(/\D/g, '')}`
+      };
+    }
+    
+    return {
+      phoneNumber: DEFAULT_PHONE,
+      phoneLink: DEFAULT_PHONE_LINK
+    };
+  }, [pathname]);
+
   const callText = language === 'es' ? 'Llámanos para una consulta:' : 'Call for a consultation:';
-  const joinInText = language === 'es' ? 'REGÍSTRATE' : 'REGISTER'; 
+  const joinInText = language === 'es' ? 'REGÍSTRATE' : 'REGISTER';
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 20);
@@ -55,7 +75,7 @@ export default function HeaderProfessional() {
       key: 'services',
       submenu: language === 'es'
         ? [
-            { name: 'Inmigración', href: `/${language}/servicios/inmigracion` },
+            { name: 'InmigraciÃ³n', href: `/${language}/servicios/inmigracion` },
             { name: 'Accidentes', href: `/${language}/servicios/accidentes` },
             { name: 'Seguros', href: `/${language}/servicios/seguros` },
             { name: 'Ley Criminal', href: `/${language}/servicios/ley-criminal` },
@@ -179,7 +199,7 @@ export default function HeaderProfessional() {
         }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* CORRECCIÓN AQUÍ: Se agregó 'relative z-[60]' para que el menú esté POR ENCIMA de la barra verde */}
+        {/* CORRECCIÃ“N AQUÃ: Se agregÃ³ 'relative z-[60]' para que el menÃº estÃ© POR ENCIMA de la barra verde */}
         <div 
           className="w-full transition-all duration-500 relative z-[60]"
           style={{ 
@@ -312,7 +332,7 @@ export default function HeaderProfessional() {
           </div>
         </div>
 
-        {/* --- ETIQUETA DE CONTACTO (fondo transparente, línea verde abajo) --- */}
+        {/* --- ETIQUETA DE CONTACTO (fondo transparente, lÃ­nea verde abajo) --- */}
         <div className="hidden lg:flex justify-center w-full relative z-50">
           <div className="px-16 py-1.5 relative overflow-hidden group border-b-[2px] border-[#009b3a]">
             <a 
