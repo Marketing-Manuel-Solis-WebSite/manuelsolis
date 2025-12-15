@@ -1,37 +1,76 @@
 // app/api/zapier-contact/route.ts
-
 import { NextRequest, NextResponse } from 'next/server';
 
-// Webhooks de Zapier proporcionados
-const ZAPIER_URLS = {
-    es: 'https://hooks.zapier.com/hooks/catch/23998383/u4rkb5i/',
-    en: 'https://hooks.zapier.com/hooks/catch/23998383/u4rffjf/',
-};
+// Nuevo endpoint directo
+const EXTERNAL_API_URL = 'https://bos.manuelsolis.com/lead/manuelsolis';
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { language, ...formData } = body;
+        
+        // 1. Desestructuramos lo que llega del Frontend (camelCase)
+        const { 
+            first_name, 
+            last_name, 
+            email, 
+            phone, 
+            enquiry_detail, 
+            acceptedTerms,    // Viene como 'acceptedTerms'
+            marketingConsent, // Viene como 'marketingConsent'
+            uri,
+            language 
+        } = body;
 
-        // Seleccionar el webhook basado en el idioma (por defecto español si falla)
-        const webhookUrl = language === 'en' ? ZAPIER_URLS.en : ZAPIER_URLS.es;
+        // 2. CREAMOS EL PAYLOAD FINAL (Transformación)
+        // Aquí es donde convertimos todo al formato que pide la API externa
+        const payload = {
+            // Requerimiento: Añadir name (copia de first_name)
+            name: first_name,
+            
+            // Datos estándar
+            first_name: first_name,
+            last_name: last_name,
+            phone: phone,
+            email: email,
+            enquiry_detail: enquiry_detail,
+            
+            // Requerimiento: Cambiar a snake_case y asegurar que sean booleanos
+            accepted_terms: Boolean(acceptedTerms),      
+            marketing_consent: Boolean(marketingConsent),
+            
+            // La URL con UTMs
+            uri: uri,
+            
+            // Extra opcional
+            language_preference: language
+        };
 
-        // Enviar datos a Zapier
-        const response = await fetch(webhookUrl, {
+        // --- LOG PARA DEBUGGING (Mira esto en tu terminal de VS Code) ---
+        console.log("------------------------------------------------");
+        console.log("🚀 ENVIANDO A MANUEL SOLIS (PAYLOAD FINAL):");
+        console.log(JSON.stringify(payload, null, 2));
+        console.log("------------------------------------------------");
+
+        // 3. Enviar al endpoint externo
+        const response = await fetch(EXTERNAL_API_URL, {
             method: 'POST',
-            body: JSON.stringify({
-                ...formData,
-                submittedAt: new Date().toISOString(),
-                source: 'Website Contact Form'
-            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload),
         });
 
         if (response.ok) {
+            console.log("✅ ÉXITO: Recibido 200 OK");
             return NextResponse.json({ success: true });
         } else {
-            return NextResponse.json({ success: false, error: 'Zapier error' }, { status: 500 });
+            const errorText = await response.text();
+            console.error('❌ ERROR API EXTERNA:', response.status, errorText);
+            return NextResponse.json({ success: false, error: 'External API error' }, { status: response.status });
         }
     } catch (error) {
+        console.error('❌ ERROR SERVIDOR:', error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
     }
 }

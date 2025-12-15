@@ -32,16 +32,11 @@ export default function HeroProfessional() {
   const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
-    // Esta lógica se ejecuta solo en el cliente
     const handleResize = () => {
-      // Consideramos Desktop si es mayor o igual a 1024px
       setIsDesktop(window.innerWidth >= 1024);
     };
 
-    // Ejecutar al montar
     handleResize();
-
-    // Escuchar cambios de tamaño
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -85,7 +80,6 @@ export default function HeroProfessional() {
     ...associations, ...associations
   ];
 
-  // Selecciona la duración basada en el estado
   const carouselDuration = isDesktop ? DESKTOP_DURATION : MOBILE_DURATION;
 
   return (
@@ -93,7 +87,7 @@ export default function HeroProfessional() {
       ref={containerRef}
       className={`relative min-h-screen w-full flex flex-col justify-center bg-[#001540] overflow-hidden ${font.className} pt-36 lg:pt-44 pb-72`}
     >
-      {/* 1. FONDO ATMOSFÉRICO */}
+      {/* FONDO ATMOSFÉRICO */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         
@@ -130,9 +124,9 @@ export default function HeroProfessional() {
       <div className="container mx-auto px-6 lg:px-12 relative z-10 flex-grow flex flex-col justify-center">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* --- IZQUIERDA (Desktop) / ABAJO (Móvil): IMAGEN --- */}
+          {/* IZQUIERDA: IMAGEN */}
           <motion.div 
-            className="lg:col-span-6 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
+            className="lg:col-span-5 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-3xl rounded-full z-0 opacity-80" />
             
@@ -180,83 +174,323 @@ export default function HeroProfessional() {
             </motion.div>
           </motion.div>
 
-
-          {/* --- DERECHA (Desktop) / ARRIBA (Móvil): TEXTO --- */}
-          <div className="lg:col-span-6 w-full space-y-12 pl-0 lg:pl-12 relative z-20 lg:-mt-20">
+          {/* DERECHA: CONTENIDO HERO */}
+          <div className="lg:col-span-7 w-full space-y-8 lg:space-y-10 pl-0 lg:pl-16 relative z-20 lg:-mt-20">
             
             <motion.div 
               initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.5 }}
               className="absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-sky-500/30 to-transparent origin-top hidden lg:block" 
             />
 
-            <div className="relative">
-              <h1 className="text-5xl md:text-6xl lg:text-[6rem] leading-[0.9] font-thin text-white tracking-tight">
-                <span className="block overflow-hidden pb-2 perspective-[400px]">
-                  <motion.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
-                    {language === 'es' ? 'Abogados de' : 'Attorneys for'}
-                  </motion.span>
-                </span>
-                
-                <span className="block overflow-hidden pb-4 pr-4 perspective-[400px]">
-                  <motion.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-medium relative w-fit pr-6">
-                    <span className="text-[#B2904D] drop-shadow-2xl">
-                      {language === 'es' ? 'Inmigración' : 'Immigration'}
-                    </span>
-                    <motion.span 
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
-                      animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
-                    >
-                      {language === 'es' ? 'Inmigración' : 'Immigration'}
-                    </motion.span>
-                  </motion.span>
-                </span>
-                
-                <span className="block overflow-hidden perspective-[400px]">
-                  <motion.div custom={2} variants={textRevealVariant} initial="hidden" animate="visible" className="flex items-center gap-4 relative">
-                    <span className="text-3xl md:text-5xl font-thin text-white align-middle">&</span>
-                    <span className="font-light relative w-fit pr-6">
-                        <span className="text-[#B2904D] drop-shadow-2xl">
-                          {language === 'es' ? 'Accidentes' : 'Accidents'}
-                        </span>
-                        <motion.span 
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
-                          animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
-                          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2, delay: 0.5 }}
-                        >
-                          {language === 'es' ? 'Accidentes' : 'Accidents'}
-                        </motion.span>
-                    </span>
-                  </motion.div>
-                </span>
-              </h1>
-            </div>
+            {/* CONTENEDOR PRINCIPAL DEL NÚMERO */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 30 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              transition={{ delay: 0.3, duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
+              className="relative"
+            >
+              {/* Resplandor de fondo dinámico */}
+              <motion.div
+                animate={{ 
+                  scale: [1, 1.3, 1],
+                  opacity: [0.2, 0.5, 0.2]
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="absolute -inset-20 bg-gradient-radial from-[#B2904D]/30 via-sky-500/20 to-transparent blur-[100px] -z-10"
+              />
 
-            <motion.p
+              {/* Partículas flotantes */}
+              {[...Array(8)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-[#B2904D]/40 rounded-full"
+                  style={{
+                    left: `${20 + i * 10}%`,
+                    top: `${30 + (i % 3) * 20}%`,
+                  }}
+                  animate={{
+                    y: [-20, 20, -20],
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.5, 0]
+                  }}
+                  transition={{
+                    duration: 3 + i * 0.3,
+                    repeat: Infinity,
+                    delay: i * 0.4,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+
+              {/* Rayos de luz giratorios */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 -z-10 opacity-30"
+              >
+                <div className="absolute top-1/2 left-1/2 w-[150%] h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/50 to-transparent -translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute top-1/2 left-1/2 w-[1px] h-[150%] bg-gradient-to-b from-transparent via-sky-400/50 to-transparent -translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute top-1/2 left-1/2 w-[150%] h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/30 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45" />
+                <div className="absolute top-1/2 left-1/2 w-[150%] h-[1px] bg-gradient-to-r from-transparent via-sky-400/30 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45" />
+              </motion.div>
+
+              <div className="relative flex flex-col items-center lg:items-start">
+                
+                {/* "Más de" - Texto Superior */}
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 1 }}
+                  className="mb-2 lg:mb-3"
+                >
+                  <span className="text-2xl md:text-3xl lg:text-4xl font-light text-white/60 uppercase tracking-[0.3em] relative">
+                    {language === 'es' ? 'Más de' : 'More than'}
+                    <motion.span
+                      className="absolute inset-0 blur-sm"
+                      animate={{ opacity: [0.3, 0.7, 0.3] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      style={{
+                        textShadow: '0 0 20px rgba(255,255,255,0.5)'
+                      }}
+                    >
+                      {language === 'es' ? 'Más de' : 'More than'}
+                    </motion.span>
+                  </span>
+                </motion.div>
+
+                {/* NÚMERO 50,000 - Tamaño optimizado */}
+                <div className="relative px-4 lg:px-0">
+                  {/* Sombra de profundidad */}
+                  <motion.div
+                    animate={{
+                      opacity: [0.3, 0.6, 0.3],
+                      scale: [0.95, 1.05, 0.95]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter text-[#B2904D]/20 blur-2xl flex items-center justify-center lg:justify-start"
+                  >
+                    50,000
+                  </motion.div>
+                  
+                  {/* Número principal con gradiente animado */}
+                  <motion.div 
+                    className="relative text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter leading-none flex items-center justify-center lg:justify-start"
+                    style={{
+                      background: 'linear-gradient(135deg, #ffffff 0%, #B2904D 20%, #FFD700 40%, #ffffff 60%, #B2904D 80%, #ffffff 100%)',
+                      backgroundSize: '300% 300%',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 40px rgba(178,144,77,0.6))'
+                    }}
+                    animate={{
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                    }}
+                    transition={{
+                      duration: 6,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    50,000
+                  </motion.div>
+
+                  {/* Overlay de brillo que cruza */}
+                  <motion.div
+                    className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter flex items-center justify-center lg:justify-start pointer-events-none"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%)',
+                      backgroundSize: '200% 100%',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}
+                    animate={{
+                      backgroundPosition: ['-200% 0', '200% 0']
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      repeatDelay: 1.5
+                    }}
+                  >
+                    50,000
+                  </motion.div>
+
+                  {/* Borde de luz pulsante */}
+                  <motion.div
+                    className="absolute -inset-4 rounded-3xl opacity-0"
+                    animate={{
+                      opacity: [0, 0.4, 0],
+                      scale: [0.95, 1.05, 0.95]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    style={{
+                      background: 'linear-gradient(135deg, transparent, #B2904D, transparent)',
+                      filter: 'blur(20px)'
+                    }}
+                  />
+                </div>
+
+                {/* "Casos Ganados" - Etiqueta con efecto neón */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9, duration: 1 }}
+                  className="mt-4 lg:mt-6 relative"
+                >
+                  <div className="relative inline-block">
+                    <p className="text-xl md:text-2xl lg:text-3xl text-white uppercase tracking-[0.4em] font-light">
+                      {language === 'es' ? 'Casos Ganados' : 'Cases Won'}
+                    </p>
+                    
+                    {/* Efecto neón pulsante */}
+                    <motion.div
+                      className="absolute inset-0 text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.4em] font-light blur-md"
+                      animate={{ 
+                        opacity: [0.4, 0.8, 0.4],
+                      }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      style={{
+                        color: '#38bdf8',
+                        textShadow: '0 0 30px rgba(56,189,248,0.8), 0 0 60px rgba(56,189,248,0.5)'
+                      }}
+                    >
+                      {language === 'es' ? 'Casos Ganados' : 'Cases Won'}
+                    </motion.div>
+
+                    {/* Línea decorativa animada debajo */}
+                    <motion.div
+                      className="absolute -bottom-2 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B2904D] to-transparent"
+                      animate={{
+                        scaleX: [0, 1, 0],
+                        opacity: [0, 1, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        repeatDelay: 1
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* DIVISOR DECORATIVO */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
+              className="w-full max-w-md mx-auto lg:mx-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent origin-left"
+            />
+
+            {/* TEXTO SECUNDARIO: Inmigración & Accidentes */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 1 }}
-              className="text-xl text-white/70 font-extralight max-w-lg leading-relaxed pl-4 border-l border-white/10"
+              transition={{ delay: 1.3, duration: 1 }}
+              className="space-y-6"
             >
-                <span className="text-white font-normal">Manuel Solís: </span> 
-                {t.hero?.description || (language === 'es' ? ' Nuestros abogados de inmigración están aquí para asistirle. Somos la opción más confiable para resolver sus desafíos legales con éxito.' : ' Expert immigration attorneys here to assist you. We are the most reliable option to successfully resolve your legal challenges.')}
-            </motion.p>
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6">
+                {/* Inmigración */}
+                <motion.span 
+                  className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90 group cursor-default"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {language === 'es' ? 'Inmigración' : 'Immigration'}
+                  
+                  {/* Efecto hover de luz */}
+                  <motion.span
+                    className="absolute -inset-3 bg-gradient-to-r from-[#B2904D]/0 via-[#B2904D]/30 to-[#B2904D]/0 blur-xl opacity-0 group-hover:opacity-100 -z-10"
+                    transition={{ duration: 0.3 }}
+                  />
+                  
+                  {/* Subrayado animado */}
+                  <motion.span
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-[#B2904D]/0 via-[#B2904D] to-[#B2904D]/0 scale-x-0 group-hover:scale-x-100 origin-left"
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.span>
 
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }} 
-              animate={{ opacity: 1, scale: 1 }} 
-              transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
-              className="flex flex-wrap items-center gap-16 -mt-10 pl-4 drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]"
-            >
-              <div className="group">
-                <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 group-hover:to-sky-400 transition-all duration-500">
-                  <span className="text-7xl lg:text-9xl font-bold tracking-tighter">50,000</span>
-                  <span className="text-8xl font-thin text-[#B2904D] ml-2 group-hover:rotate-12 transition-transform">+</span>
-                </div>
-                <p className="text-sm text-white/50 uppercase tracking-[0.3em] mt-2 font-medium group-hover:text-white/80 transition-colors">
-                  {language === 'es' ? 'Casos Ganados' : 'Cases Won'}
-                </p>
+                {/* Ampersand más grande con animación */}
+                <motion.span 
+                  className="text-5xl md:text-6xl lg:text-7xl font-thin text-[#B2904D]"
+                  animate={{ 
+                    rotate: [0, 5, -5, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  style={{
+                    filter: 'drop-shadow(0 0 20px rgba(178,144,77,0.6))'
+                  }}
+                >
+                  &
+                </motion.span>
+
+                {/* Accidentes */}
+                <motion.span 
+                  className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90 group cursor-default"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {language === 'es' ? 'Accidentes' : 'Accidents'}
+                  
+                  {/* Efecto hover de luz */}
+                  <motion.span
+                    className="absolute -inset-3 bg-gradient-to-r from-sky-500/0 via-sky-500/30 to-sky-500/0 blur-xl opacity-0 group-hover:opacity-100 -z-10"
+                    transition={{ duration: 0.3 }}
+                  />
+                  
+                  {/* Subrayado animado */}
+                  <motion.span
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-sky-500/0 via-sky-500 to-sky-500/0 scale-x-0 group-hover:scale-x-100 origin-left"
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.span>
               </div>
+
+              {/* Frase inspiradora con efecto de escritura */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.6, duration: 1.5 }}
+                className="relative"
+              >
+                <p className="text-base md:text-lg lg:text-xl text-white/50 font-light italic text-center lg:text-left tracking-wide relative z-10">
+                  {language === 'es' ? 'Inspirados por la gracia de Dios' : 'Inspired by the grace of God'}
+                </p>
+                
+                {/* Brillo sutil detrás del texto */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent blur-xl -z-10"
+                  animate={{
+                    opacity: [0, 0.5, 0],
+                    x: ['-100%', '100%']
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    repeatDelay: 2
+                  }}
+                />
+              </motion.div>
             </motion.div>
 
           </div>
@@ -272,7 +506,6 @@ export default function HeroProfessional() {
            <motion.div 
              className="flex items-center gap-80 whitespace-nowrap" 
              animate={{ x: ["0%", "-33.333%"] }}
-             // Se aplica la velocidad dependiendo del dispositivo
              transition={{ duration: carouselDuration, repeat: Infinity, ease: "linear" }}
            >
              {marqueeItems.map((assoc, idx) => {
@@ -355,6 +588,11 @@ export default function HeroProfessional() {
       <style jsx global>{`
         .mask-linear-fade {   
           mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
         }
       `}</style>
     </section>

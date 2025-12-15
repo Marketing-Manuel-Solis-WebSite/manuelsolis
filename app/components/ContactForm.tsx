@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useState, Suspense, useEffect } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation' 
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
@@ -8,16 +8,16 @@ import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCirc
 
 // --- COLORES ---
 const ACCENT_GOLD = '#B2904D';
-const API_URL = '/api/zapier-contact';
+// Mantenemos la ruta interna igual para no romper la conexión, 
+// aunque internamente ya no use Zapier.
+const API_URL = '/api/zapier-contact'; 
 
 // --- VARIANTS ---
 const containerVar: Variants = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 1, 
-    transition: { 
-      staggerChildren: 0.1 
-    } 
+    transition: { staggerChildren: 0.1 } 
   }
 };
 
@@ -30,13 +30,12 @@ const itemVar: Variants = {
   }
 };
 
-// --- SUBCOMPONENTE: INPUT CON EFECTOS DE FOCO ---
+// --- SUBCOMPONENTE: INPUT ---
 const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChange, required = false, isTextArea = false }: any) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className="relative group">
-      {/* Icono animado */}
       <motion.div 
         animate={isFocused ? { color: ACCENT_GOLD, scale: 1.1 } : { color: '#64748b', scale: 1 }}
         className="absolute left-4 top-4 z-20 transition-all duration-300 pointer-events-none"
@@ -44,7 +43,6 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
         <Icon size={20} />
       </motion.div>
 
-      {/* Input o Textarea */}
       {isTextArea ? (
         <textarea
           name={name}
@@ -75,7 +73,6 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
         />
       )}
       
-      {/* Línea inferior animada al hacer foco */}
       <div className="absolute bottom-0 left-2 right-2 h-[1px] bg-transparent overflow-hidden pointer-events-none">
          <motion.div 
            initial={{ x: "-100%" }}
@@ -88,19 +85,14 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
   );
 };
 
-// --- FUNCION CLAVE: RASTREA LA CONVERSIÓN ---
+// --- TRACKING ---
 const trackConversionEvents = () => {
-    // 1. Meta Pixel (Facebook / Instagram)
     if (typeof window !== 'undefined' && (window as any).fbq) {
         (window as any).fbq('track', 'Lead');
     }
-
-    // 2. TikTok Pixel
     if (typeof window !== 'undefined' && (window as any).ttq) {
         (window as any).ttq.track('CompleteRegistration');
     }
-
-    // 3. Google Analytics / Google Ads
     if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'generate_lead', {
             'event_category': 'Contact',
@@ -112,10 +104,8 @@ const trackConversionEvents = () => {
 function ContactFormContent() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
-  
   const searchParams = useSearchParams();
 
-  // Estado con los nombres de campos nuevos
   const [formData, setFormData] = useState({ 
       first_name: '',      
       last_name: '',       
@@ -129,6 +119,16 @@ function ContactFormContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  // Estado para guardar la URL completa (URI)
+  const [currentUri, setCurrentUri] = useState('');
+
+  // Capturar la URL completa al montar el componente (cliente)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+        setCurrentUri(window.location.href);
+    }
+  }, [searchParams]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.acceptedTerms || isSubmitting) return;
@@ -136,6 +136,7 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
+    // Capturamos UTMs individuales por si acaso, pero la clave es el 'uri'
     const utmData = {
         utm_source: searchParams.get('utm_source') || '',
         utm_medium: searchParams.get('utm_medium') || '',
@@ -149,19 +150,16 @@ function ContactFormContent() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                ...formData, // Esto ya incluye 'marketingConsent'
+                ...formData, 
                 ...utmData, 
+                uri: currentUri, // ENVIAMOS LA URL COMPLETA
                 language: lang
-                // ELIMINADO: receiveUpdates
             }),
         });
 
         if (response.ok) {
-            // Disparamos los eventos de conversión
             trackConversionEvents(); 
-            
             setSubmitStatus('success');
-            // Limpiamos el formulario
             setFormData({ 
                 first_name: '', last_name: '', phone: '', email: '', enquiry_detail: '', 
                 acceptedTerms: false, marketingConsent: false 
@@ -342,7 +340,6 @@ function ContactFormContent() {
                     )}
                   </span>
                   
-                  {/* Efecto de brillo al hover en el botón */}
                   {!isSubmitting && formData.acceptedTerms && (
                       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out" />
                   )}
