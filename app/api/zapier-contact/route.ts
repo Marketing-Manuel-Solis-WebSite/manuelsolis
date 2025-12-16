@@ -33,8 +33,8 @@ export async function POST(request: NextRequest) {
             phone: phone,
             email: email,
             enquiry_detail: enquiry_detail,
-            accepted_terms: acceptedTerms ? 1 : 0,      
-            marketing_consent: marketingConsent ? 1 : 0,
+            acceptedTerms: acceptedTerms ? 1 : 0,      
+            marketingConsent: marketingConsent ? 1 : 0,
             
             // La URL con UTMs
             uri: uri,
