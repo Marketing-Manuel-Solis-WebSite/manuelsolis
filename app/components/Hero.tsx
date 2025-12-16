@@ -124,7 +124,7 @@ export default function HeroProfessional() {
       <div className="container mx-auto px-6 lg:px-12 relative z-10 flex-grow flex flex-col justify-center">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* IZQUIERDA: IMAGEN */}
+          {/* IZQUIERDA: IMAGEN - TAMAÑO RESTAURADO */}
           <motion.div 
             className="lg:col-span-5 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
           >
@@ -142,7 +142,7 @@ export default function HeroProfessional() {
               transition={{ duration: 1.5, ease: "easeOut" }}
               className="relative z-10 w-full h-full origin-bottom flex justify-center"
             >
-               <div className="w-full h-full lg:scale-[1.3] lg:-translate-x-16 lg:origin-bottom transition-transform duration-1000">
+               <div className="w-full h-full lg:scale-[1.5] lg:-translate-x-24 lg:origin-bottom transition-transform duration-1000">
                   <div className="relative w-full h-full">
                     <Image
                       src="/manuelsolisl.png"
@@ -187,58 +187,45 @@ export default function HeroProfessional() {
               initial={{ opacity: 0, scale: 0.9, y: 30 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               transition={{ delay: 0.3, duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
-              className="relative"
+              className="relative overflow-visible"
             >
-              {/* Resplandor de fondo dinámico */}
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.3, 1],
-                  opacity: [0.2, 0.5, 0.2]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
-                }}
-                className="absolute -inset-20 bg-gradient-radial from-[#B2904D]/30 via-sky-500/20 to-transparent blur-[100px] -z-10"
-              />
+              {/* Resplandor de fondo estático */}
+              <div className="absolute -inset-20 bg-gradient-radial from-[#B2904D]/20 via-sky-500/10 to-transparent blur-[100px] -z-10 opacity-60" />
 
               {/* Partículas flotantes */}
-              {[...Array(8)].map((_, i) => (
+              {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-1 h-1 bg-[#B2904D]/40 rounded-full"
+                  className="absolute w-1 h-1 bg-[#B2904D]/30 rounded-full"
                   style={{
-                    left: `${20 + i * 10}%`,
+                    left: `${20 + i * 12}%`,
                     top: `${30 + (i % 3) * 20}%`,
                   }}
                   animate={{
                     y: [-20, 20, -20],
-                    opacity: [0, 1, 0],
+                    opacity: [0, 0.8, 0],
                     scale: [0, 1.5, 0]
                   }}
                   transition={{
                     duration: 3 + i * 0.3,
                     repeat: Infinity,
-                    delay: i * 0.4,
+                    delay: i * 0.5,
                     ease: "easeInOut"
                   }}
                 />
               ))}
 
-              {/* Rayos de luz giratorios */}
+              {/* Rayos de luz giratorios lentos */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 -z-10 opacity-30"
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 -z-10 opacity-20"
               >
-                <div className="absolute top-1/2 left-1/2 w-[150%] h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/50 to-transparent -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute top-1/2 left-1/2 w-[1px] h-[150%] bg-gradient-to-b from-transparent via-sky-400/50 to-transparent -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute top-1/2 left-1/2 w-[150%] h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/30 to-transparent -translate-x-1/2 -translate-y-1/2 rotate-45" />
-                <div className="absolute top-1/2 left-1/2 w-[150%] h-[1px] bg-gradient-to-r from-transparent via-sky-400/30 to-transparent -translate-x-1/2 -translate-y-1/2 -rotate-45" />
+                <div className="absolute top-1/2 left-1/2 w-[140%] h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/40 to-transparent -translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute top-1/2 left-1/2 w-[1px] h-[140%] bg-gradient-to-b from-transparent via-sky-400/40 to-transparent -translate-x-1/2 -translate-y-1/2" />
               </motion.div>
 
-              <div className="relative flex flex-col items-center lg:items-start">
+              <div className="relative flex flex-col items-center lg:items-start overflow-visible">
                 
                 {/* "Más de" - Texto Superior */}
                 <motion.div
@@ -251,8 +238,8 @@ export default function HeroProfessional() {
                     {language === 'es' ? 'Más de' : 'More than'}
                     <motion.span
                       className="absolute inset-0 blur-sm"
-                      animate={{ opacity: [0.3, 0.7, 0.3] }}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      animate={{ opacity: [0.3, 0.6, 0.3] }}
+                      transition={{ duration: 2.5, repeat: Infinity }}
                       style={{
                         textShadow: '0 0 20px rgba(255,255,255,0.5)'
                       }}
@@ -262,36 +249,29 @@ export default function HeroProfessional() {
                   </span>
                 </motion.div>
 
-                {/* NÚMERO 50,000 - Tamaño optimizado */}
-                <div className="relative px-4 lg:px-0">
+                {/* NÚMERO 50,000 - PADDING EXTENDIDO PARA EVITAR CORTES */}
+                <div className="relative w-full overflow-visible pl-4 pr-12 lg:pr-16 py-4">
                   {/* Sombra de profundidad */}
-                  <motion.div
-                    animate={{
-                      opacity: [0.3, 0.6, 0.3],
-                      scale: [0.95, 1.05, 0.95]
-                    }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter text-[#B2904D]/20 blur-2xl flex items-center justify-center lg:justify-start"
-                  >
+                  <div className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter text-[#B2904D]/15 blur-2xl flex items-center justify-center lg:justify-start pl-4 pr-12 lg:pr-16">
                     50,000
-                  </motion.div>
+                  </div>
                   
                   {/* Número principal con gradiente animado */}
                   <motion.div 
-                    className="relative text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter leading-none flex items-center justify-center lg:justify-start"
+                    className="relative text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter leading-none flex items-center justify-center lg:justify-start w-full"
                     style={{
                       background: 'linear-gradient(135deg, #ffffff 0%, #B2904D 20%, #FFD700 40%, #ffffff 60%, #B2904D 80%, #ffffff 100%)',
                       backgroundSize: '300% 300%',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
-                      filter: 'drop-shadow(0 0 40px rgba(178,144,77,0.6))'
+                      filter: 'drop-shadow(0 0 40px rgba(178,144,77,0.5))'
                     }}
                     animate={{
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     }}
                     transition={{
-                      duration: 6,
+                      duration: 8,
                       repeat: Infinity,
                       ease: "linear"
                     }}
@@ -299,11 +279,11 @@ export default function HeroProfessional() {
                     50,000
                   </motion.div>
 
-                  {/* Overlay de brillo que cruza */}
+                  {/* Overlay de brillo que cruza - EXTENDIDO PARA CUBRIR TODO */}
                   <motion.div
-                    className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter flex items-center justify-center lg:justify-start pointer-events-none"
+                    className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter flex items-center justify-center lg:justify-start pointer-events-none w-full pl-4 pr-12 lg:pr-16 py-4"
                     style={{
-                      background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%)',
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%)',
                       backgroundSize: '200% 100%',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
@@ -313,32 +293,14 @@ export default function HeroProfessional() {
                       backgroundPosition: ['-200% 0', '200% 0']
                     }}
                     transition={{
-                      duration: 3,
+                      duration: 4,
                       repeat: Infinity,
                       ease: "easeInOut",
-                      repeatDelay: 1.5
+                      repeatDelay: 2
                     }}
                   >
                     50,000
                   </motion.div>
-
-                  {/* Borde de luz pulsante */}
-                  <motion.div
-                    className="absolute -inset-4 rounded-3xl opacity-0"
-                    animate={{
-                      opacity: [0, 0.4, 0],
-                      scale: [0.95, 1.05, 0.95]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    style={{
-                      background: 'linear-gradient(135deg, transparent, #B2904D, transparent)',
-                      filter: 'blur(20px)'
-                    }}
-                  />
                 </div>
 
                 {/* "Casos Ganados" - Etiqueta con efecto neón */}
@@ -357,12 +319,12 @@ export default function HeroProfessional() {
                     <motion.div
                       className="absolute inset-0 text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.4em] font-light blur-md"
                       animate={{ 
-                        opacity: [0.4, 0.8, 0.4],
+                        opacity: [0.4, 0.7, 0.4],
                       }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                       style={{
                         color: '#38bdf8',
-                        textShadow: '0 0 30px rgba(56,189,248,0.8), 0 0 60px rgba(56,189,248,0.5)'
+                        textShadow: '0 0 30px rgba(56,189,248,0.6), 0 0 60px rgba(56,189,248,0.4)'
                       }}
                     >
                       {language === 'es' ? 'Casos Ganados' : 'Cases Won'}
@@ -376,10 +338,10 @@ export default function HeroProfessional() {
                         opacity: [0, 1, 0]
                       }}
                       transition={{
-                        duration: 3,
+                        duration: 3.5,
                         repeat: Infinity,
                         ease: "easeInOut",
-                        repeatDelay: 1
+                        repeatDelay: 1.5
                       }}
                     />
                   </div>
@@ -400,7 +362,7 @@ export default function HeroProfessional() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 1 }}
-              className="space-y-6"
+              className="space-y-8"
             >
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6">
                 {/* Inmigración */}
@@ -424,20 +386,19 @@ export default function HeroProfessional() {
                   />
                 </motion.span>
 
-                {/* Ampersand más grande con animación */}
+                {/* Ampersand tamaño reducido */}
                 <motion.span 
-                  className="text-5xl md:text-6xl lg:text-7xl font-thin text-[#B2904D]"
+                  className="text-4xl md:text-5xl font-thin text-[#B2904D]"
                   animate={{ 
                     rotate: [0, 5, -5, 0],
-                    scale: [1, 1.1, 1]
                   }}
                   transition={{ 
-                    duration: 4, 
+                    duration: 5, 
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
                   style={{
-                    filter: 'drop-shadow(0 0 20px rgba(178,144,77,0.6))'
+                    filter: 'drop-shadow(0 0 15px rgba(178,144,77,0.5))'
                   }}
                 >
                   &
@@ -465,14 +426,14 @@ export default function HeroProfessional() {
                 </motion.span>
               </div>
 
-              {/* Frase inspiradora con efecto de escritura */}
+              {/* Frase inspiradora MÁS GRANDE */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.6, duration: 1.5 }}
                 className="relative"
               >
-                <p className="text-base md:text-lg lg:text-xl text-white/50 font-light italic text-center lg:text-left tracking-wide relative z-10">
+                <p className="text-2xl md:text-3xl lg:text-4xl text-white/70 font-light italic text-center lg:text-left tracking-wide relative z-10">
                   {language === 'es' ? 'Inspirados por la gracia de Dios' : 'Inspired by the grace of God'}
                 </p>
                 
@@ -480,14 +441,14 @@ export default function HeroProfessional() {
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent blur-xl -z-10"
                   animate={{
-                    opacity: [0, 0.5, 0],
+                    opacity: [0, 0.4, 0],
                     x: ['-100%', '100%']
                   }}
                   transition={{
-                    duration: 4,
+                    duration: 5,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    repeatDelay: 2
+                    repeatDelay: 2.5
                   }}
                 />
               </motion.div>
@@ -588,11 +549,6 @@ export default function HeroProfessional() {
       <style jsx global>{`
         .mask-linear-fade {   
           mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-        
-        @keyframes gradient-shift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
         }
       `}</style>
     </section>
