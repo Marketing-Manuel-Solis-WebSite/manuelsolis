@@ -23,14 +23,14 @@ const font = Outfit({
 const testimonials = [
   {
     id: 'video-01',
-    name: 'Video Testimonio 1',
+    name: 'Luis Gutierrez',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV01.png',
     video: 'https://www.youtube.com/embed/dtKRXVMxcHU',
     youtubeId: 'dtKRXVMxcHU',
     quote: {
-      es: "Historias reales de nuestros clientes.",
-      en: "Real stories from our clients."
+      es: "Puedes conseguir una vida mejor, un trabajo mejor y saber que puedes regresar a ver a tu familia",
+      en: "You can get a better life, a better job, and know that you can return to see your family"
     },
     story: {
       es: "Descubre cómo ayudamos a nuestros clientes a alcanzar sus objetivos legales.",
@@ -39,14 +39,14 @@ const testimonials = [
   },
   {
     id: 'video-02',
-    name: 'Video Testimonio 2',
+    name: 'José Aguilar y Laura Lechuga',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV02.png',
     video: 'https://www.youtube.com/embed/y5BwL3Owhzg',
     youtubeId: 'y5BwL3Owhzg',
     quote: {
-      es: "Experiencias que transforman vidas.",
-      en: "Experiences that transform lives."
+      es: "Estuvieron al pendiente e hicieron todo con tiempo para agilizar el proceso",
+      en: "They stayed on top of everything and did everything in a timely manner to speed up the process"
     },
     story: {
       es: "Conoce más sobre los resultados exitosos que hemos logrado.",
@@ -55,14 +55,14 @@ const testimonials = [
   },
   {
     id: 'video-03',
-    name: 'Video Testimonio 3',
+    name: 'Alejandra Espinoza',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV03.png',
     video: 'https://www.youtube.com/embed/wZ7uJ0mHZjk',
     youtubeId: 'wZ7uJ0mHZjk',
     quote: {
-      es: "Compromiso y dedicación en cada caso.",
-      en: "Commitment and dedication in every case."
+      es: "Se siente uno en confianza para preguntar cualquier cosa",
+      en: "You feel comfortable and confident asking anything"
     },
     story: {
       es: "Testimonios que reflejan nuestro trabajo y pasión por ayudar.",
@@ -71,7 +71,7 @@ const testimonials = [
   },
   {
     id: 'video-04',
-    name: 'Video Testimonio 4',
+    name: 'Yesenia Zavala',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV04.png',
     video: 'https://www.youtube.com/embed/QXOZHRpSjSA',
@@ -81,13 +81,13 @@ const testimonials = [
       en: "Results that speak for themselves."
     },
     story: {
-      es: "Cada cliente tiene una historia única de éxito con nuestro equipo.",
-      en: "Each client has a unique success story with our team."
+      es: "En menos de un mes estuve de regreso con mi familia después de 2 años",
+      en: "In less than a month, I was back with my family after two years"
     }
   },
   {
     id: 'video-05',
-    name: 'Video Testimonio 5',
+    name: 'Ivonne Hernández',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV05.png',
     video: 'https://www.youtube.com/embed/kT9ZXCFW5KM',
@@ -97,20 +97,20 @@ const testimonials = [
       en: "Trust and professionalism guaranteed."
     },
     story: {
-      es: "Mira cómo hemos ayudado a familias a lograr sus sueños.",
-      en: "See how we have helped families achieve their dreams."
+      es: "Hace 4 años pedimos la solicitud de residencia por petición de mi hija",
+      en: "Four years ago, we applied for permanent residence through a petition filed by my daughter"
     }
   },
   {
     id: 'video-06',
-    name: 'Video Testimonio 6',
+    name: 'Octavio Varela',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV06.png',
     video: 'https://www.youtube.com/embed/cTJ9M5PT-S4',
     youtubeId: 'cTJ9M5PT-S4',
     quote: {
-      es: "Casos de éxito que nos inspiran.",
-      en: "Success cases that inspire us."
+      es: "Venía con inseguridades, pero ya estando aquí te das cuenta que el proceso te va guiando",
+      en: "I came in feeling uncertain, but once you’re here, you realize that the process guides you step by step"
     },
     story: {
       es: "Testimonios reales de personas que confiaron en nosotros.",
