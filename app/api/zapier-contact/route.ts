@@ -15,8 +15,8 @@ export async function POST(request: NextRequest) {
             email, 
             phone, 
             enquiry_detail, 
-            acceptedTerms,    // Viene como 'acceptedTerms'
-            marketingConsent, // Viene como 'marketingConsent'
+            acceptedTerms,    // Viene del front (probablemente true/false)
+            marketingConsent, // Viene del front (probablemente true/false)
             uri,
             language 
         } = body;
@@ -33,10 +33,8 @@ export async function POST(request: NextRequest) {
             phone: phone,
             email: email,
             enquiry_detail: enquiry_detail,
-            
-            // Requerimiento: Cambiar a snake_case y asegurar que sean booleanos
-            accepted_terms: Boolean(acceptedTerms),      
-            marketing_consent: Boolean(marketingConsent),
+            accepted_terms: acceptedTerms ? 1 : 0,      
+            marketing_consent: marketingConsent ? 1 : 0,
             
             // La URL con UTMs
             uri: uri,
@@ -45,7 +43,7 @@ export async function POST(request: NextRequest) {
             language_preference: language
         };
 
-        // --- LOG PARA DEBUGGING (Mira esto en tu terminal de VS Code) ---
+        // --- LOG PARA DEBUGGING ---
         console.log("------------------------------------------------");
         console.log("🚀 ENVIANDO A MANUEL SOLIS (PAYLOAD FINAL):");
         console.log(JSON.stringify(payload, null, 2));
