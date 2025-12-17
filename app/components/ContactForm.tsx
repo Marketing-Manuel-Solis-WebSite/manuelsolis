@@ -8,8 +8,6 @@ import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCirc
 
 // --- COLORES ---
 const ACCENT_GOLD = '#B2904D';
-// Mantenemos la ruta interna igual para no romper la conexión, 
-// aunque internamente ya no use Zapier.
 const API_URL = '/api/zapier-contact'; 
 
 // --- VARIANTS ---
@@ -87,12 +85,8 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
 
 // --- TRACKING ---
 const trackConversionEvents = () => {
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-        (window as any).fbq('track', 'Lead');
-    }
-    if (typeof window !== 'undefined' && (window as any).ttq) {
-        (window as any).ttq.track('CompleteRegistration');
-    }
+    if (typeof window !== 'undefined' && (window as any).fbq) (window as any).fbq('track', 'Lead');
+    if (typeof window !== 'undefined' && (window as any).ttq) (window as any).ttq.track('CompleteRegistration');
     if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'generate_lead', {
             'event_category': 'Contact',
@@ -107,27 +101,12 @@ function ContactFormContent() {
   const searchParams = useSearchParams();
 
   const [formData, setFormData] = useState({ 
-      first_name: '',      
-      last_name: '',       
-      phone: '', 
-      email: '', 
-      enquiry_detail: '',  
-      acceptedTerms: false, 
-      marketingConsent: false 
+      first_name: '', last_name: '', phone: '', email: '', enquiry_detail: '', 
+      acceptedTerms: false, marketingConsent: false 
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-  // Estado para guardar la URL completa (URI)
-  const [currentUri, setCurrentUri] = useState('');
-
-  // Capturar la URL completa al montar el componente (cliente)
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-        setCurrentUri(window.location.href);
-    }
-  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,11 +115,12 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Capturamos UTMs individuales por si acaso, pero la clave es el 'uri'
+    // CAPTURA DE URL Y LÓGICA DE ORIGEN "SITIO WEB"
+    const currentFullUri = typeof window !== 'undefined' ? window.location.href : '';
     const utmData = {
-        utm_source: searchParams.get('utm_source') || '',
-        utm_medium: searchParams.get('utm_medium') || '',
-        utm_campaign: searchParams.get('utm_campaign') || '',
+        utm_source: searchParams.get('utm_source') || 'Sitio web',
+        utm_medium: searchParams.get('utm_medium') || 'Organico',
+        utm_campaign: searchParams.get('utm_campaign') || 'Directo',
         utm_content: searchParams.get('utm_content') || '',
         utm_term: searchParams.get('utm_term') || ''
     };
@@ -152,7 +132,7 @@ function ContactFormContent() {
             body: JSON.stringify({
                 ...formData, 
                 ...utmData, 
-                uri: currentUri, // ENVIAMOS LA URL COMPLETA
+                uri: currentFullUri,
                 language: lang
             }),
         });
@@ -199,12 +179,7 @@ function ContactFormContent() {
       <div className="container mx-auto px-4 relative z-20 max-w-5xl">
         
         {/* HEADER */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight drop-shadow-lg">
             {t('Solicite su', 'Request Your')}{' '}
             <span className="font-medium text-[#B2904D] drop-shadow-[0_0_15px_rgba(178,144,77,0.3)]">
@@ -217,11 +192,7 @@ function ContactFormContent() {
         </motion.div>
 
         {/* TARJETA PRINCIPAL */}
-        <motion.div
-          variants={containerVar}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+        <motion.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
           className="relative bg-[#001026]/90 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] border border-white/10 overflow-hidden"
         >
             <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
@@ -231,10 +202,7 @@ function ContactFormContent() {
               {/* STATUS OVERLAY */}
               <AnimatePresence>
                 {submitStatus !== 'idle' && (
-                  <motion.div 
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    className="absolute inset-0 z-50 bg-[#001540]/95 flex flex-col items-center justify-center text-center rounded-[2rem] backdrop-blur-md"
-                  >
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/95 flex flex-col items-center justify-center text-center rounded-[2rem] backdrop-blur-md">
                       {submitStatus === 'success' ? (
                         <>
                             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
@@ -259,36 +227,28 @@ function ContactFormContent() {
               {/* CAMPOS DEL FORMULARIO */}
               <div className="grid md:grid-cols-2 gap-8">
                 <motion.div variants={itemVar}>
-                   <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
-                   <div className="space-y-5">
-                      <NeonInput icon={User} name="first_name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
-                      <NeonInput icon={User} name="last_name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
-                   </div>
+                    <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
+                    <div className="space-y-5">
+                       <NeonInput icon={User} name="first_name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
+                       <NeonInput icon={User} name="last_name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
+                    </div>
                 </motion.div>
 
                 <motion.div variants={itemVar}>
-                   <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
-                   <div className="space-y-5">
-                      <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
-                      <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
-                   </div>
+                    <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
+                    <div className="space-y-5">
+                       <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
+                       <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
+                    </div>
                 </motion.div>
               </div>
 
               <motion.div variants={itemVar}>
                 <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
-                <NeonInput 
-                  icon={MessageSquare} 
-                  name="enquiry_detail" 
-                  isTextArea
-                  placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} 
-                  value={formData.enquiry_detail} 
-                  onChange={handleChange} 
-                  required 
-                />
+                <NeonInput icon={MessageSquare} name="enquiry_detail" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
               </motion.div>
 
-              {/* --- ZONA DE CONSENTIMIENTOS --- */}
+              {/* --- ZONA DE CONSENTIMIENTOS (RESTAURADA) --- */}
               <div className="space-y-4">
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                     <div className="relative flex items-center pt-1">
@@ -319,8 +279,7 @@ function ContactFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting || !formData.acceptedTerms}
-                  className={`
-                    group relative w-full h-16 overflow-hidden rounded-xl font-bold tracking-widest uppercase text-base transition-all shadow-xl
+                  className={`group relative w-full h-16 overflow-hidden rounded-xl font-bold tracking-widest uppercase text-base transition-all shadow-xl
                     ${!formData.acceptedTerms 
                       ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5' 
                       : 'bg-[#B2904D] text-[#001026] hover:bg-[#cbb06d] shadow-[#B2904D]/20 hover:shadow-[#B2904D]/40 cursor-pointer transform hover:-translate-y-1'
@@ -339,7 +298,6 @@ function ContactFormContent() {
                       </>
                     )}
                   </span>
-                  
                   {!isSubmitting && formData.acceptedTerms && (
                       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out" />
                   )}

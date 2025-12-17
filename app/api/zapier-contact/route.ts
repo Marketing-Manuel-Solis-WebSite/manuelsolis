@@ -1,55 +1,58 @@
-// app/api/zapier-contact/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 
-// Nuevo endpoint directo
 const EXTERNAL_API_URL = 'https://bos.manuelsolis.com/lead/manuelsolis';
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         
-        // 1. Desestructuramos lo que llega del Frontend (camelCase)
+        // 1. Desestructuramos incluyendo los nuevos campos del front
         const { 
             first_name, 
             last_name, 
             email, 
             phone, 
             enquiry_detail, 
-            acceptedTerms,    // Viene del front (probablemente true/false)
-            marketingConsent, // Viene del front (probablemente true/false)
+            acceptedTerms,
+            marketingConsent,
             uri,
-            language 
+            language,
+            // CAPTURAMOS LOS UTMs QUE VIENEN DEL FRONT
+            utm_source,
+            utm_medium,
+            utm_campaign
         } = body;
 
-        // 2. CREAMOS EL PAYLOAD FINAL (Transformación)
-        // Aquí es donde convertimos todo al formato que pide la API externa
+        // 2. Lógica de Respaldo (Fallback)
+        // Si por alguna razón el front no envió utm_source, ponemos "Sitio web"
+        const finalSource = utm_source || 'Sitio web';
+        const finalMedium = utm_medium || 'Organico';
+
+        // 3. CREAMOS EL PAYLOAD FINAL
         const payload = {
-            // Requerimiento: Añadir name (copia de first_name)
             name: first_name,
-            
-            // Datos estándar
             first_name: first_name,
             last_name: last_name,
             phone: phone,
             email: email,
-            enquiry_detail: enquiry_detail,
+            // Agregamos el origen al detalle para que no se pierda
+            enquiry_detail: `${enquiry_detail} | Origen: ${finalSource} | Medio: ${finalMedium}`,
             acceptedTerms: acceptedTerms ? 1 : 0,      
             marketingConsent: marketingConsent ? 1 : 0,
-            
-            // La URL con UTMs
             uri: uri,
-            
-            // Extra opcional
-            language_preference: language
+            language_preference: language,
+            // Si la API externa acepta estos campos, los enviamos:
+            source: finalSource,
+            medium: finalMedium,
+            campaign: utm_campaign
         };
 
         // --- LOG PARA DEBUGGING ---
         console.log("------------------------------------------------");
-        console.log("🚀 ENVIANDO A MANUEL SOLIS (PAYLOAD FINAL):");
-        console.log(JSON.stringify(payload, null, 2));
+        console.log("🚀 PAYLOAD RECIBIDO DEL FRONT:", body);
+        console.log("📤 ENVIANDO A API EXTERNA CON ORIGEN:", finalSource);
         console.log("------------------------------------------------");
 
-        // 3. Enviar al endpoint externo
         const response = await fetch(EXTERNAL_API_URL, {
             method: 'POST',
             headers: {
@@ -60,11 +63,9 @@ export async function POST(request: NextRequest) {
         });
 
         if (response.ok) {
-            console.log("✅ ÉXITO: Recibido 200 OK");
             return NextResponse.json({ success: true });
         } else {
             const errorText = await response.text();
-            console.error('❌ ERROR API EXTERNA:', response.status, errorText);
             return NextResponse.json({ success: false, error: 'External API error' }, { status: response.status });
         }
     } catch (error) {
