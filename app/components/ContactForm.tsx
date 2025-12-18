@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense, useEffect } from 'react'
+import { useState, Suspense } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation' 
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
@@ -115,16 +115,38 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // CAPTURA DE URL Y LÓGICA DE ORIGEN "SITIO WEB"
-    const currentFullUri = typeof window !== 'undefined' ? window.location.href : '';
+    // --- CORRECCIÓN DE ORIGEN Y LIMPIEZA DE URL ---
+    
+    // 1. Extraer Params
+    const sourceParam = searchParams.get('utm_source');
+    const mediumParam = searchParams.get('utm_medium');
+    const campaignParam = searchParams.get('utm_campaign');
+
+    // 2. Determinar si es tráfico orgánico (sin UTMs)
+    // Si no hay source, asumimos que es orgánico/directo
+    const isOrganic = !sourceParam;
+
+    // 3. Configurar UTM Data (con valores por defecto explícitos)
     const utmData = {
-        utm_source: searchParams.get('utm_source') || 'Sitio web',
-        utm_medium: searchParams.get('utm_medium') || 'Organico',
-        utm_campaign: searchParams.get('utm_campaign') || 'Directo',
+        utm_source: sourceParam || 'Sitio web',
+        utm_medium: mediumParam || 'Organico',
+        utm_campaign: campaignParam || 'Directo',
         utm_content: searchParams.get('utm_content') || '',
         utm_term: searchParams.get('utm_term') || ''
     };
     
+    // 4. LIMPIAR URI
+    // Si es orgánico, enviamos la URL base limpia (sin query string) para evitar que el CRM 
+    // detecte parámetros residuales o gclids antiguos y lo marque como Google.
+    let currentCleanUri = '';
+    if (typeof window !== 'undefined') {
+        if (isOrganic) {
+            currentCleanUri = `${window.location.origin}${window.location.pathname}`;
+        } else {
+            currentCleanUri = window.location.href;
+        }
+    }
+
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -132,7 +154,7 @@ function ContactFormContent() {
             body: JSON.stringify({
                 ...formData, 
                 ...utmData, 
-                uri: currentFullUri,
+                uri: currentCleanUri, // Enviamos la URI procesada
                 language: lang
             }),
         });
@@ -248,7 +270,7 @@ function ContactFormContent() {
                 <NeonInput icon={MessageSquare} name="enquiry_detail" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
               </motion.div>
 
-              {/* --- ZONA DE CONSENTIMIENTOS (RESTAURADA) --- */}
+              {/* --- ZONA DE CONSENTIMIENTOS --- */}
               <div className="space-y-4">
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                     <div className="relative flex items-center pt-1">

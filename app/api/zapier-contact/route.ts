@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         
-        // 1. Desestructuramos incluyendo los nuevos campos del front
         const { 
             first_name, 
             last_name, 
@@ -23,10 +22,15 @@ export async function POST(request: NextRequest) {
             utm_campaign
         } = body;
 
-        // 2. Lógica de Respaldo (Fallback)
-        // Si por alguna razón el front no envió utm_source, ponemos "Sitio web"
-        const finalSource = utm_source || 'Sitio web';
-        const finalMedium = utm_medium || 'Organico';
+        // 1. Lógica de Respaldo Estricta
+        // Si viene null, undefined o string vacío, forzamos "Sitio web"
+        const finalSource = (utm_source && utm_source.trim() !== '') ? utm_source : 'Sitio web';
+        const finalMedium = (utm_medium && utm_medium.trim() !== '') ? utm_medium : 'Organico';
+        const finalCampaign = (utm_campaign && utm_campaign.trim() !== '') ? utm_campaign : 'Directo';
+
+        // 2. Construcción del detalle reforzado
+        // Agregamos el origen al cuerpo del mensaje para que quede constancia escrita en el CRM
+        const enhancedDetail = `${enquiry_detail} | Origen: ${finalSource} | Medio: ${finalMedium}`;
 
         // 3. CREAMOS EL PAYLOAD FINAL
         const payload = {
@@ -35,22 +39,24 @@ export async function POST(request: NextRequest) {
             last_name: last_name,
             phone: phone,
             email: email,
-            // Agregamos el origen al detalle para que no se pierda
-            enquiry_detail: `${enquiry_detail} | Origen: ${finalSource} | Medio: ${finalMedium}`,
+            enquiry_detail: enhancedDetail, 
             acceptedTerms: acceptedTerms ? 1 : 0,      
             marketingConsent: marketingConsent ? 1 : 0,
-            uri: uri,
+            uri: uri, // Usamos la URI limpia que envió el front
             language_preference: language,
-            // Si la API externa acepta estos campos, los enviamos:
+            
+            // Campos explícitos para la API externa
             source: finalSource,
             medium: finalMedium,
-            campaign: utm_campaign
+            campaign: finalCampaign
         };
 
         // --- LOG PARA DEBUGGING ---
         console.log("------------------------------------------------");
-        console.log("🚀 PAYLOAD RECIBIDO DEL FRONT:", body);
-        console.log("📤 ENVIANDO A API EXTERNA CON ORIGEN:", finalSource);
+        console.log("🚀 PROCESANDO LEAD");
+        console.log("📥 Source Original:", utm_source);
+        console.log("📤 Source Final:", finalSource);
+        console.log("🔗 URI:", uri);
         console.log("------------------------------------------------");
 
         const response = await fetch(EXTERNAL_API_URL, {
@@ -65,11 +71,13 @@ export async function POST(request: NextRequest) {
         if (response.ok) {
             return NextResponse.json({ success: true });
         } else {
+            // Log del error externo si ocurre
             const errorText = await response.text();
+            console.error("❌ ERROR API EXTERNA:", errorText);
             return NextResponse.json({ success: false, error: 'External API error' }, { status: response.status });
         }
     } catch (error) {
-        console.error('❌ ERROR SERVIDOR:', error);
+        console.error('❌ ERROR SERVIDOR INTERNO:', error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
     }
 }
