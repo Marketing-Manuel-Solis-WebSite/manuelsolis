@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useState, Suspense, useEffect } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation' 
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
@@ -10,7 +10,7 @@ import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCirc
 const ACCENT_GOLD = '#B2904D';
 const API_URL = '/api/zapier-contact'; 
 
-// --- VARIANTS ---
+// --- VARIANTS (Animaciones) ---
 const containerVar: Variants = {
   hidden: { opacity: 0 },
   visible: { 
@@ -115,38 +115,43 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // --- CORRECCIÓN DE ORIGEN Y LIMPIEZA DE URL ---
+    // --- LÓGICA DE UTMs Y ORIGEN (LA SOLUCIÓN) ---
     
-    // 1. Extraer Params
-    const sourceParam = searchParams.get('utm_source');
-    const mediumParam = searchParams.get('utm_medium');
-    const campaignParam = searchParams.get('utm_campaign');
+    // 1. Capturamos lo que viene en la URL
+    const rawSource = searchParams.get('utm_source');
+    const rawMedium = searchParams.get('utm_medium');
+    const rawCampaign = searchParams.get('utm_campaign');
 
-    // 2. Determinar si es tráfico orgánico (sin UTMs)
-    // Si no hay source, asumimos que es orgánico/directo
-    const isOrganic = !sourceParam;
+    // 2. Definimos si es orgánico (si no hay source)
+    const isOrganic = !rawSource;
 
-    // 3. Configurar UTM Data (con valores por defecto explícitos)
+    // 3. Establecemos los valores finales AQUI en el front
+    // Si es null o vacío, ponemos explícitamente "Sitio Web"
+    const finalSource = rawSource || 'Sitio Web';
+    const finalMedium = rawMedium || 'Organico';
+    const finalCampaign = rawCampaign || 'Directo';
+
     const utmData = {
-        utm_source: sourceParam || 'Sitio web',
-        utm_medium: mediumParam || 'Organico',
-        utm_campaign: campaignParam || 'Directo',
+        utm_source: finalSource,
+        utm_medium: finalMedium,
+        utm_campaign: finalCampaign,
         utm_content: searchParams.get('utm_content') || '',
         utm_term: searchParams.get('utm_term') || ''
     };
-    
-    // 4. LIMPIAR URI
-    // Si es orgánico, enviamos la URL base limpia (sin query string) para evitar que el CRM 
-    // detecte parámetros residuales o gclids antiguos y lo marque como Google.
+
+    // 4. LIMPIEZA DE URI (Para evitar que el CRM lea basura)
+    // Si es orgánico, enviamos la URL base limpia.
     let currentCleanUri = '';
     if (typeof window !== 'undefined') {
         if (isOrganic) {
+            // Envía: https://tudominio.com/es (Sin parámetros)
             currentCleanUri = `${window.location.origin}${window.location.pathname}`;
         } else {
+            // Envía la URL completa solo si hay campaña real
             currentCleanUri = window.location.href;
         }
     }
-
+    
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -154,7 +159,7 @@ function ContactFormContent() {
             body: JSON.stringify({
                 ...formData, 
                 ...utmData, 
-                uri: currentCleanUri, // Enviamos la URI procesada
+                uri: currentCleanUri, // Usamos la URI procesada
                 language: lang
             }),
         });
