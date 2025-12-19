@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense } from 'react' // Eliminé useEffect que no se usaba explícitamente en el snippet
+import { useState, Suspense } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation' 
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
@@ -115,7 +115,7 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // --- LÓGICA DE UTMs Y ORIGEN ---
+    // --- LÓGICA DE UTMs Y ORIGEN (CORREGIDA) ---
     
     // 1. Capturamos lo que viene en la URL
     const rawSource = searchParams.get('utm_source');
@@ -123,8 +123,8 @@ function ContactFormContent() {
     const rawCampaign = searchParams.get('utm_campaign');
 
     // 2. Definimos valores predeterminados
-    // Si rawSource es null, será 'Sitio Web' (esto activa la limpieza en el backend)
-    const finalSource = rawSource || 'Sitio Web';
+    // Si rawSource existe (ej. "FACEBOOK"), se usa. Si es null/vacío, se usa "SITIO WEB".
+    const finalSource = rawSource || 'SITIO WEB';
     const finalMedium = rawMedium || 'Organico';
     const finalCampaign = rawCampaign || 'Directo';
 
@@ -137,15 +137,16 @@ function ContactFormContent() {
     };
 
     // 3. LIMPIEZA DE URI
-    const isOrganic = !rawSource;
+    // Si es tráfico Orgánico ("SITIO WEB"), enviamos URL limpia. 
+    // Si es Campaña, enviamos URL completa para rastreo.
     let currentCleanUri = '';
     
     if (typeof window !== 'undefined') {
-        if (isOrganic) {
-            // Envía la URL limpia sin parámetros basura
+        if (finalSource === 'SITIO WEB') {
+            // Envía: https://tudominio.com/es (Sin parámetros)
             currentCleanUri = `${window.location.origin}${window.location.pathname}`;
         } else {
-            // Si hay campaña, enviamos todo para rastrear
+            // Envía la URL completa
             currentCleanUri = window.location.href;
         }
     }
@@ -187,9 +188,9 @@ function ContactFormContent() {
 
   const t = (es: string, en: string) => (lang === 'es' ? es : en);
 
-  // ... (El resto del renderizado visual es idéntico a tu código original)
   return (
     <section className="relative py-32 w-full bg-[#001540] overflow-hidden" id="contacto">
+      
       {/* FONDO AMBIENTAL */}
       <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002050] via-[#001540] to-[#000814]" />

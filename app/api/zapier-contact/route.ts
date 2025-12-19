@@ -22,42 +22,43 @@ export async function POST(request: NextRequest) {
             utm_campaign
         } = body;
 
-        // 1. REGLA DE ORO: Validar que no llegue vacío
-        // Si no hay utm_source, asumimos que es 'Sitio Web' (Orgánico)
-        const finalSource = (utm_source && utm_source.trim() !== '') ? utm_source : 'Sitio Web';
+        // --- 1. LÓGICA DE FUENTE (SOURCE) ---
+        let finalSource = utm_source;
+
+        // Si NO hay source (es null, undefined o vacío) -> Es tráfico Orgánico
+        if (!finalSource || finalSource.trim() === '') {
+            finalSource = 'SITIO WEB';
+        }
+        // Si SÍ hay source (ej. "Facebook"), se queda como está.
+
+        // Definimos Medio y Campaña por defecto para orgánicos
         const finalMedium = (utm_medium && utm_medium.trim() !== '') ? utm_medium : 'Organico';
         const finalCampaign = (utm_campaign && utm_campaign.trim() !== '') ? utm_campaign : 'Directo';
 
-        // 2. CORRECCIÓN: Lógica para "Pregunta" (enquiry_detail)
-        // Solo modificamos el detalle si NO es tráfico orgánico.
-        // Si es orgánico ('Sitio Web'), dejamos el mensaje del usuario limpio.
+        // --- 2. LÓGICA DE LA PREGUNTA (DETAIL) ---
+        // Objetivo: No ensuciar la pregunta si vienen directo del sitio.
+        
         let finalDetail = enquiry_detail;
 
-        if (finalSource !== 'Sitio Web') {
-             // Si viene de Google/Facebook/Ads, tal vez sí quieras ver el origen en el texto
+        // Solo agregamos info técnica si NO es tráfico orgánico del sitio web
+        if (finalSource !== 'SITIO WEB') {
              finalDetail = `${enquiry_detail} | Origen: ${finalSource} | Medio: ${finalMedium}`;
         }
-        // NOTA: Si quieres que NUNCA se concatene nada en la pregunta, simplemente borra el if de arriba
-        // y deja: const finalDetail = enquiry_detail;
 
-        // 3. PAYLOAD
+        // --- 3. PAYLOAD ---
         const payload = {
             name: first_name,
             first_name: first_name,
             last_name: last_name,
             phone: phone,
             email: email,
-            
-            // Aquí va el mensaje (Limpio si es orgánico, con detalles si es pagado)
-            enquiry_detail: finalDetail, 
-            
+            enquiry_detail: finalDetail, // Va limpia si es SITIO WEB, con datos si es CAMPAÑA
             acceptedTerms: acceptedTerms ? 1 : 0,      
             marketingConsent: marketingConsent ? 1 : 0,
             uri: uri, 
             language_preference: language,
             
-            // --- ESTO VA A LA CASILLA FUENTE DEL CRM ---
-            // Aquí aseguramos que "Sitio Web" llegue al campo Source
+            // --- ENVÍO DE FUENTE ---
             source: finalSource,       
             utm_source: finalSource,   
             medium: finalMedium,
@@ -65,11 +66,10 @@ export async function POST(request: NextRequest) {
             campaign: finalCampaign
         };
 
-        // --- LOG PARA VERIFICAR ---
         console.log("------------------------------------------------");
-        console.log("🚀 PROCESANDO LEAD (Backend)");
-        console.log("📤 Source (Fuente):", finalSource);
-        console.log("📝 Detalle enviado:", finalDetail);
+        console.log("🚀 PROCESANDO LEAD");
+        console.log("📤 Source Final:", finalSource); // Dirá "FACEBOOK" o "SITIO WEB"
+        console.log("📝 Pregunta Final:", finalDetail);
         console.log("------------------------------------------------");
 
         const response = await fetch(EXTERNAL_API_URL, {
