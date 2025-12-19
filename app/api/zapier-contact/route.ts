@@ -23,42 +23,53 @@ export async function POST(request: NextRequest) {
         } = body;
 
         // 1. REGLA DE ORO: Validar que no llegue vacío
-        // Usamos trim() para mayor seguridad contra cadenas con solo espacios.
+        // Si no hay utm_source, asumimos que es 'Sitio Web' (Orgánico)
         const finalSource = (utm_source && utm_source.trim() !== '') ? utm_source : 'Sitio Web';
         const finalMedium = (utm_medium && utm_medium.trim() !== '') ? utm_medium : 'Organico';
         const finalCampaign = (utm_campaign && utm_campaign.trim() !== '') ? utm_campaign : 'Directo';
 
-        // 2. Construcción del detalle reforzado
-        const enhancedDetail = `${enquiry_detail} | Origen: ${finalSource} | Medio: ${finalMedium}`;
+        // 2. CORRECCIÓN: Lógica para "Pregunta" (enquiry_detail)
+        // Solo modificamos el detalle si NO es tráfico orgánico.
+        // Si es orgánico ('Sitio Web'), dejamos el mensaje del usuario limpio.
+        let finalDetail = enquiry_detail;
 
-        // 3. PAYLOAD "A PRUEBA DE FALLOS"
-        // Duplicamos el source en 'utm_source' y 'source' para asegurar que el CRM lea uno de los dos.
+        if (finalSource !== 'Sitio Web') {
+             // Si viene de Google/Facebook/Ads, tal vez sí quieras ver el origen en el texto
+             finalDetail = `${enquiry_detail} | Origen: ${finalSource} | Medio: ${finalMedium}`;
+        }
+        // NOTA: Si quieres que NUNCA se concatene nada en la pregunta, simplemente borra el if de arriba
+        // y deja: const finalDetail = enquiry_detail;
+
+        // 3. PAYLOAD
         const payload = {
             name: first_name,
             first_name: first_name,
             last_name: last_name,
             phone: phone,
             email: email,
-            enquiry_detail: enhancedDetail, 
+            
+            // Aquí va el mensaje (Limpio si es orgánico, con detalles si es pagado)
+            enquiry_detail: finalDetail, 
+            
             acceptedTerms: acceptedTerms ? 1 : 0,      
             marketingConsent: marketingConsent ? 1 : 0,
-            uri: uri, // URI ya limpia desde el front
+            uri: uri, 
             language_preference: language,
             
-            // --- REDUNDANCIA DE ORIGEN ---
-            source: finalSource,       // Campo estándar
-            utm_source: finalSource,   // Campo backup
+            // --- ESTO VA A LA CASILLA FUENTE DEL CRM ---
+            // Aquí aseguramos que "Sitio Web" llegue al campo Source
+            source: finalSource,       
+            utm_source: finalSource,   
             medium: finalMedium,
             utm_medium: finalMedium,
             campaign: finalCampaign
         };
 
-        // --- LOG PARA VERIFICAR QUE SALE BIEN ---
+        // --- LOG PARA VERIFICAR ---
         console.log("------------------------------------------------");
         console.log("🚀 PROCESANDO LEAD (Backend)");
-        console.log("📥 Source Original:", utm_source);
-        console.log("📤 Source Final:", finalSource);
-        console.log("🔗 URI:", uri);
+        console.log("📤 Source (Fuente):", finalSource);
+        console.log("📝 Detalle enviado:", finalDetail);
         console.log("------------------------------------------------");
 
         const response = await fetch(EXTERNAL_API_URL, {

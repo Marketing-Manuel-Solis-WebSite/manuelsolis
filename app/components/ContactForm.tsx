@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense, useEffect } from 'react'
+import { useState, Suspense } from 'react' // Eliminé useEffect que no se usaba explícitamente en el snippet
 import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation' 
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
@@ -115,18 +115,15 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // --- LÓGICA DE UTMs Y ORIGEN (LA SOLUCIÓN) ---
+    // --- LÓGICA DE UTMs Y ORIGEN ---
     
     // 1. Capturamos lo que viene en la URL
     const rawSource = searchParams.get('utm_source');
     const rawMedium = searchParams.get('utm_medium');
     const rawCampaign = searchParams.get('utm_campaign');
 
-    // 2. Definimos si es orgánico (si no hay source)
-    const isOrganic = !rawSource;
-
-    // 3. Establecemos los valores finales AQUI en el front
-    // Si es null o vacío, ponemos explícitamente "Sitio Web"
+    // 2. Definimos valores predeterminados
+    // Si rawSource es null, será 'Sitio Web' (esto activa la limpieza en el backend)
     const finalSource = rawSource || 'Sitio Web';
     const finalMedium = rawMedium || 'Organico';
     const finalCampaign = rawCampaign || 'Directo';
@@ -139,15 +136,16 @@ function ContactFormContent() {
         utm_term: searchParams.get('utm_term') || ''
     };
 
-    // 4. LIMPIEZA DE URI (Para evitar que el CRM lea basura)
-    // Si es orgánico, enviamos la URL base limpia.
+    // 3. LIMPIEZA DE URI
+    const isOrganic = !rawSource;
     let currentCleanUri = '';
+    
     if (typeof window !== 'undefined') {
         if (isOrganic) {
-            // Envía: https://tudominio.com/es (Sin parámetros)
+            // Envía la URL limpia sin parámetros basura
             currentCleanUri = `${window.location.origin}${window.location.pathname}`;
         } else {
-            // Envía la URL completa solo si hay campaña real
+            // Si hay campaña, enviamos todo para rastrear
             currentCleanUri = window.location.href;
         }
     }
@@ -159,7 +157,7 @@ function ContactFormContent() {
             body: JSON.stringify({
                 ...formData, 
                 ...utmData, 
-                uri: currentCleanUri, // Usamos la URI procesada
+                uri: currentCleanUri,
                 language: lang
             }),
         });
@@ -189,18 +187,18 @@ function ContactFormContent() {
 
   const t = (es: string, en: string) => (lang === 'es' ? es : en);
 
+  // ... (El resto del renderizado visual es idéntico a tu código original)
   return (
     <section className="relative py-32 w-full bg-[#001540] overflow-hidden" id="contacto">
-      
       {/* FONDO AMBIENTAL */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002050] via-[#001540] to-[#000814]" />
-         <motion.div 
-           animate={{ rotate: 360 }}
-           transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-           className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[100px]"
-         />
-         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.07] mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002050] via-[#001540] to-[#000814]" />
+          <motion.div 
+            animate={{ rotate: 360 }}
+            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[100px]"
+          />
+          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.07] mix-blend-overlay"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-20 max-w-5xl">
@@ -256,16 +254,16 @@ function ContactFormContent() {
                 <motion.div variants={itemVar}>
                     <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
                     <div className="space-y-5">
-                       <NeonInput icon={User} name="first_name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
-                       <NeonInput icon={User} name="last_name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
+                        <NeonInput icon={User} name="first_name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
+                        <NeonInput icon={User} name="last_name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
                     </div>
                 </motion.div>
 
                 <motion.div variants={itemVar}>
                     <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
                     <div className="space-y-5">
-                       <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
-                       <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
+                        <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
+                        <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
                     </div>
                 </motion.div>
               </div>
