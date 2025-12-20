@@ -10,36 +10,29 @@ import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCirc
 const ACCENT_GOLD = '#B2904D';
 const API_URL = '/api/zapier-contact'; 
 
-// --- VARIANTS (Animaciones) ---
 const containerVar: Variants = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
-    transition: { staggerChildren: 0.1 } 
-  }
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
 };
 
 const itemVar: Variants = {
   hidden: { y: 20, opacity: 0 },
-  visible: { 
-    y: 0, 
-    opacity: 1, 
-    transition: { type: "spring", stiffness: 100 } 
-  }
+  visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } }
 };
 
-// --- SUBCOMPONENTE: INPUT ---
-const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChange, required = false, isTextArea = false }: any) => {
+// --- INPUT SEGURO ---
+const NeonInput = (props: any) => {
+  const { icon: Icon, name, type = "text", placeholder, value, onChange, required = false, isTextArea = false } = props;
   const [isFocused, setIsFocused] = useState(false);
+
+  const baseClasses = `w-full bg-[#000510]/50 border-2 rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-slate-500 focus:outline-none transition-all z-10 relative
+    ${isFocused ? 'border-[#B2904D]/50 bg-[#000510]/80 shadow-[0_0_20px_rgba(178,144,77,0.1)]' : 'border-white/10 hover:border-white/20'}`;
 
   return (
     <div className="relative group">
-      <motion.div 
-        animate={isFocused ? { color: ACCENT_GOLD, scale: 1.1 } : { color: '#64748b', scale: 1 }}
-        className="absolute left-4 top-4 z-20 transition-all duration-300 pointer-events-none"
-      >
+      <div className="absolute left-4 top-4 z-20 pointer-events-none text-[#64748b] group-focus-within:text-[#B2904D] transition-colors">
         <Icon size={20} />
-      </motion.div>
+      </div>
 
       {isTextArea ? (
         <textarea
@@ -50,23 +43,19 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
           onBlur={() => setIsFocused(false)}
           required={required}
           rows={5}
-          className={`w-full bg-[#000510]/50 border-2 rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-slate-500 focus:outline-none transition-all resize-none z-10 relative
-            ${isFocused ? 'border-[#B2904D]/50 bg-[#000510]/80 shadow-[0_0_20px_rgba(178,144,77,0.1)]' : 'border-white/10 hover:border-white/20'}
-          `}
+          className={`${baseClasses} resize-none`}
           placeholder={placeholder}
         />
       ) : (
         <input
           type={type}
-          name={name}
+          name={name} 
           value={value}
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           required={required}
-          className={`w-full bg-[#000510]/50 border-2 rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-slate-500 focus:outline-none transition-all z-10 relative
-            ${isFocused ? 'border-[#B2904D]/50 bg-[#000510]/80 shadow-[0_0_20px_rgba(178,144,77,0.1)]' : 'border-white/10 hover:border-white/20'}
-          `}
+          className={baseClasses}
           placeholder={placeholder}
         />
       )}
@@ -85,13 +74,17 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
 
 // --- TRACKING ---
 const trackConversionEvents = () => {
-    if (typeof window !== 'undefined' && (window as any).fbq) (window as any).fbq('track', 'Lead');
-    if (typeof window !== 'undefined' && (window as any).ttq) (window as any).ttq.track('CompleteRegistration');
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'generate_lead', {
-            'event_category': 'Contact',
-            'event_label': 'Form_Submission'
-        });
+    if (typeof window !== 'undefined') {
+        try {
+            if ((window as any).fbq) (window as any).fbq('track', 'Lead');
+            if ((window as any).ttq) (window as any).ttq.track('CompleteRegistration');
+            if ((window as any).gtag) {
+                (window as any).gtag('event', 'generate_lead', {
+                    'event_category': 'Contact',
+                    'event_label': 'Form_Submission'
+                });
+            }
+        } catch (e) { console.error("Tracking Error", e); }
     }
 };
 
@@ -115,52 +108,50 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // --- LÓGICA DE UTMs Y ORIGEN (CORREGIDA) ---
-    
-    // 1. Capturamos lo que viene en la URL
+    // 1. CAPTURA DE DATOS UTM (Para respaldo)
     const rawSource = searchParams.get('utm_source');
-    const rawMedium = searchParams.get('utm_medium');
-    const rawCampaign = searchParams.get('utm_campaign');
-
-    // 2. Definimos valores predeterminados
-    // Si rawSource existe (ej. "FACEBOOK"), se usa. Si es null/vacío, se usa "SITIO WEB".
-    const finalSource = rawSource || 'SITIO WEB';
-    const finalMedium = rawMedium || 'Organico';
-    const finalCampaign = rawCampaign || 'Directo';
-
+    
     const utmData = {
-        utm_source: finalSource,
-        utm_medium: finalMedium,
-        utm_campaign: finalCampaign,
+        utm_source: rawSource || 'SITIO WEB', 
+        utm_medium: searchParams.get('utm_medium') || 'Organico',
+        utm_campaign: searchParams.get('utm_campaign') || 'Directo',
         utm_content: searchParams.get('utm_content') || '',
         utm_term: searchParams.get('utm_term') || ''
     };
 
-    // 3. LIMPIEZA DE URI
-    // Si es tráfico Orgánico ("SITIO WEB"), enviamos URL limpia. 
-    // Si es Campaña, enviamos URL completa para rastreo.
-    let currentCleanUri = '';
+    // 2. LÓGICA DE URI (EL TRUCO PARA EL CRM)
+    // El CRM necesita ver "?utm_source=..." en la URL forzosamente.
+    let uriToSend = '';
     
     if (typeof window !== 'undefined') {
-        if (finalSource === 'SITIO WEB') {
-            // Envía: https://tudominio.com/es (Sin parámetros)
-            currentCleanUri = `${window.location.origin}${window.location.pathname}`;
+        const hasParams = searchParams.toString().length > 0;
+
+        if (hasParams) {
+            // CASO A: Ya tiene parámetros (Ads, Facebook, etc.)
+            // Enviamos la URL real tal cual.
+            uriToSend = window.location.href;
         } else {
-            // Envía la URL completa
-            currentCleanUri = window.location.href;
+            // CASO B: Orgánico (URL limpia)
+            // INYECTAMOS los parámetros manualmente para que el CRM los lea.
+            const baseUrl = `${window.location.origin}${window.location.pathname}`;
+            uriToSend = `${baseUrl}?utm_source=SITIO WEB&utm_medium=Organico&utm_campaign=Directo`;
         }
     }
     
     try {
+        const payload = {
+            ...formData, 
+            ...utmData, 
+            uri: uriToSend, // <--- Aquí va la URL con los parámetros inyectados
+            language: lang
+        };
+        
+        console.log("🚀 Enviando Payload con URI forzada:", payload);
+
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ...formData, 
-                ...utmData, 
-                uri: currentCleanUri,
-                language: lang
-            }),
+            body: JSON.stringify(payload),
         });
 
         if (response.ok) {
@@ -190,8 +181,7 @@ function ContactFormContent() {
 
   return (
     <section className="relative py-32 w-full bg-[#001540] overflow-hidden" id="contacto">
-      
-      {/* FONDO AMBIENTAL */}
+      {/* FONDO */}
       <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002050] via-[#001540] to-[#000814]" />
           <motion.div 
@@ -203,8 +193,6 @@ function ContactFormContent() {
       </div>
 
       <div className="container mx-auto px-4 relative z-20 max-w-5xl">
-        
-        {/* HEADER */}
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight drop-shadow-lg">
             {t('Solicite su', 'Request Your')}{' '}
@@ -217,15 +205,12 @@ function ContactFormContent() {
           </p>
         </motion.div>
 
-        {/* TARJETA PRINCIPAL */}
         <motion.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
           className="relative bg-[#001026]/90 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] border border-white/10 overflow-hidden"
         >
             <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
 
             <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
-              
-              {/* STATUS OVERLAY */}
               <AnimatePresence>
                 {submitStatus !== 'idle' && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/95 flex flex-col items-center justify-center text-center rounded-[2rem] backdrop-blur-md">
@@ -250,7 +235,6 @@ function ContactFormContent() {
                 )}
               </AnimatePresence>
 
-              {/* CAMPOS DEL FORMULARIO */}
               <div className="grid md:grid-cols-2 gap-8">
                 <motion.div variants={itemVar}>
                     <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
@@ -274,7 +258,6 @@ function ContactFormContent() {
                 <NeonInput icon={MessageSquare} name="enquiry_detail" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
               </motion.div>
 
-              {/* --- ZONA DE CONSENTIMIENTOS --- */}
               <div className="space-y-4">
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                     <div className="relative flex items-center pt-1">

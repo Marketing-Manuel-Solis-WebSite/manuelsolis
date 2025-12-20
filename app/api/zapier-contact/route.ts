@@ -6,6 +6,8 @@ export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         
+        console.log("📥 [BACKEND] Body recibido:", body);
+
         const { 
             first_name, 
             last_name, 
@@ -16,49 +18,46 @@ export async function POST(request: NextRequest) {
             marketingConsent,
             uri,
             language,
-            // CAPTURAMOS LOS UTMs
             utm_source,
             utm_medium,
             utm_campaign
         } = body;
 
-        // --- 1. LÓGICA DE FUENTE (SOURCE) ---
+        // --- LÓGICA DE FUENTE (SOURCE) ---
+        // 1. Usamos lo que viene (ej: "google").
         let finalSource = utm_source;
 
-        // Si NO hay source (es null, undefined o vacío) -> Es tráfico Orgánico
-        if (!finalSource || finalSource.trim() === '') {
+        // 2. Si llega vacío (Orgánico), le ponemos etiqueta "SITIO WEB".
+        if (!finalSource || finalSource.trim() === '' || finalSource === 'null' || finalSource === 'undefined') {
             finalSource = 'SITIO WEB';
         }
-        // Si SÍ hay source (ej. "Facebook"), se queda como está.
 
-        // Definimos Medio y Campaña por defecto para orgánicos
         const finalMedium = (utm_medium && utm_medium.trim() !== '') ? utm_medium : 'Organico';
         const finalCampaign = (utm_campaign && utm_campaign.trim() !== '') ? utm_campaign : 'Directo';
 
-        // --- 2. LÓGICA DE LA PREGUNTA (DETAIL) ---
-        // Objetivo: No ensuciar la pregunta si vienen directo del sitio.
-        
-        let finalDetail = enquiry_detail;
-
-        // Solo agregamos info técnica si NO es tráfico orgánico del sitio web
+        // --- LÓGICA DE PREGUNTA ---
+        let finalDetail = enquiry_detail || '';
         if (finalSource !== 'SITIO WEB') {
-             finalDetail = `${enquiry_detail} | Origen: ${finalSource} | Medio: ${finalMedium}`;
+             finalDetail = `${finalDetail} | Fuente: ${finalSource}`;
         }
 
-        // --- 3. PAYLOAD ---
+        // --- PAYLOAD ---
         const payload = {
-            name: first_name,
+            name: first_name,       
             first_name: first_name,
             last_name: last_name,
             phone: phone,
             email: email,
-            enquiry_detail: finalDetail, // Va limpia si es SITIO WEB, con datos si es CAMPAÑA
+            enquiry_detail: finalDetail, 
+            
             acceptedTerms: acceptedTerms ? 1 : 0,      
             marketingConsent: marketingConsent ? 1 : 0,
+            
+            // Aquí pasamos la URI tal cual vino del frontend (Completa o Limpia según corresponda)
             uri: uri, 
+            
             language_preference: language,
             
-            // --- ENVÍO DE FUENTE ---
             source: finalSource,       
             utm_source: finalSource,   
             medium: finalMedium,
@@ -66,11 +65,8 @@ export async function POST(request: NextRequest) {
             campaign: finalCampaign
         };
 
-        console.log("------------------------------------------------");
-        console.log("🚀 PROCESANDO LEAD");
-        console.log("📤 Source Final:", finalSource); // Dirá "FACEBOOK" o "SITIO WEB"
-        console.log("📝 Pregunta Final:", finalDetail);
-        console.log("------------------------------------------------");
+        console.log("🚀 [BACKEND] Enviando Source:", finalSource);
+        console.log("🔗 [BACKEND] Enviando URI:", uri);
 
         const response = await fetch(EXTERNAL_API_URL, {
             method: 'POST',
@@ -85,11 +81,11 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: true });
         } else {
             const errorText = await response.text();
-            console.error("❌ ERROR API EXTERNA:", errorText);
+            console.error("❌ ERROR API:", errorText);
             return NextResponse.json({ success: false, error: 'External API error' }, { status: response.status });
         }
     } catch (error) {
-        console.error('❌ ERROR SERVIDOR INTERNO:', error);
+        console.error('❌ ERROR SERVIDOR:', error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
     }
 }
