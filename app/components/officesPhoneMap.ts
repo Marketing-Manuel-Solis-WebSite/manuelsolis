@@ -1,7 +1,7 @@
 // Mapeo de slugs de oficinas a números de teléfono de emergencia
 export const officesPhoneMap: Record<string, string> = {
   'houston-principal': '(713) 701-1731',
-  'houston-navigation': '(713) 701-1731',
+  'houston-navigation': '(713) 277-7838',
   'main-st': '+1 713-842-9575',
   'north-loop': '+1 713-429-0237',
   'northchase': '+1 346-522-4848',
