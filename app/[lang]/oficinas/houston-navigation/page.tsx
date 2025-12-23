@@ -29,7 +29,7 @@ const officeData = {
   
   // --- DATOS ACTUALIZADOS ---
   address: '6705 Navigation Blvd, Houston, TX 77011',
-  phone: '+1 (713) 231-5384',
+  phone: '+1 (713) 277-7838',
   email: 'houston@manuelsolis.com',
   // -------------------------
 
