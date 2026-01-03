@@ -15,6 +15,7 @@ export const officesPhoneMap: Record<string, string> = {
   'arvada': '(720) 358-8973',
   'memphis': '(901) 557-8357',
   'airways': '+1 901-557-8357',
+  'league-city': '(832) 598-3782',
 };
 
 // Número por defecto (global)
