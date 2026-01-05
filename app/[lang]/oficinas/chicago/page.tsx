@@ -26,7 +26,7 @@ const officeData = {
   title: { es: 'Chicago, IL Oficina', en: 'Chicago, IL Office' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { es: 'Nuestras oficinas en la ciudad de Chicago nos llevan a otra de las grandes urbes de los Estados Unidos donde se concentran una buena cantidad de inmigrantes a los que servimos a diario. Con un edificio de oficinas a disposición de nuestros clientes, nuestra oficina de Chicago atiende casos de Inmigración, familia, criminal y accidentes.', en: 'Our offices in the city of Chicago take us to another of the great cities in the United States where a large number of immigrants we serve daily are concentrated. With an office building available to our clients, our Chicago office handles Immigration, Family, Criminal, and Accident cases.' },
-  address: 'W. 6000 Cermak Rd, Cicero, Chicago, Illinois 60804',
+  address: '6000 Cermak Rd, Cicero, IL 60804',
   phone: '(312) 477-0389',
   email: 'chicago@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 8:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 8:00 AM - 4:00 PM' },
