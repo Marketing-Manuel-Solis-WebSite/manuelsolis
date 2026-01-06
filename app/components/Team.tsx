@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useLanguage } from '../context/LanguageContext'
@@ -16,25 +16,42 @@ const font = Outfit({
 
 export default function Team() {
   const { language } = useLanguage();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLElement>(null);
 
   // --- 1. LÓGICA DE MOVIMIENTO (MOUSE PARALLAX) ---
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-    const { left, top, width, height } = currentTarget.getBoundingClientRect();
-    mouseX.set((clientX - left) / width - 0.5);
-    mouseY.set((clientY - top) / height - 0.5);
-  }
+  // Optimización: Usar useCallback para la función de evento
+  const handleMouseMove = useCallback(({ currentTarget, clientX, clientY }: React.MouseEvent) => {
+    // Usar requestAnimationFrame para no saturar el hilo principal en eventos de alta frecuencia (Mac trackpads)
+    requestAnimationFrame(() => {
+        const { left, top, width, height } = currentTarget.getBoundingClientRect();
+        
+        // Calcular valores normalizados (-0.5 a 0.5)
+        let newX = (clientX - left) / width - 0.5;
+        let newY = (clientY - top) / height - 0.5;
+
+        // CLAMP: Asegurar que nunca exceda los límites (el bug "disparado")
+        // A veces el mouse puede salir del elemento antes de que el evento termine
+        if (newX < -0.5) newX = -0.5;
+        if (newX > 0.5) newX = 0.5;
+        if (newY < -0.5) newY = -0.5;
+        if (newY > 0.5) newY = 0.5;
+
+        mouseX.set(newX);
+        mouseY.set(newY);
+    });
+  }, [mouseX, mouseY]);
 
   // Movimiento suave para la imagen
-  const xImg = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), { stiffness: 30, damping: 25 });
-  const yImg = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), { stiffness: 30, damping: 25 });
+  // Ajuste: Aumentar damping para evitar oscilaciones bruscas
+  const xImg = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), { stiffness: 50, damping: 30, mass: 0.8 });
+  const yImg = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), { stiffness: 50, damping: 30, mass: 0.8 });
 
-  // Movimiento opuesto para el elemento flotante (Badge) para crear profundidad 3D
-  const xBadge = useSpring(useTransform(mouseX, [-0.5, 0.5], [20, -20]), { stiffness: 40, damping: 20 });
-  const yBadge = useSpring(useTransform(mouseY, [-0.5, 0.5], [20, -20]), { stiffness: 40, damping: 20 });
+  // Movimiento opuesto para el elemento flotante (Badge)
+  const xBadge = useSpring(useTransform(mouseX, [-0.5, 0.5], [20, -20]), { stiffness: 60, damping: 25, mass: 0.8 });
+  const yBadge = useSpring(useTransform(mouseY, [-0.5, 0.5], [20, -20]), { stiffness: 60, damping: 25, mass: 0.8 });
 
   // --- 2. LÓGICA DE SCROLL ---
   const { scrollYProgress } = useScroll({
