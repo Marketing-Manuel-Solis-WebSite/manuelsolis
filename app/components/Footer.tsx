@@ -27,6 +27,7 @@ export default function Footer() {
     { name: language === 'es' ? 'ABOGADOS' : 'ATTORNEYS', href: `/${language}/abogados` },
     { name: language === 'es' ? 'OFICINAS' : 'OFFICES', href: `/${language}/oficinas` },
     { name: language === 'es' ? 'INFORMACIÓN' : 'INFORMATION', href: `/${language}/nosotros` },
+    { name: language === 'es' ? 'BLOG' : 'BLOG', href: `/${language}/blog` },
   ]
 
   const socialLinks = [
