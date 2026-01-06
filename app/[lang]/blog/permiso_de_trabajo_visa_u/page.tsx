@@ -25,7 +25,7 @@ const blogPost = {
     es: 'Permiso de trabajo Visa U (Bona Fide) antes de la aprobación final', 
     en: 'U Visa Work Permit (Bona Fide) Before Final Approval' 
   },
-  heroImage: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80',
+  heroImage: '',
   category: { es: 'Visa U', en: 'U Visa' },
   author: 'Manuel Solís',
   authorBio: {
@@ -44,7 +44,7 @@ const blogPost = {
       id: 'intro',
       title: { es: 'El Largo Camino de la Espera', en: 'The Long Road of Waiting' },
       icon: Clock,
-      image: 'https://images.unsplash.com/photo-1554224311-beee2aca88c7?w=800&q=80',
+      image: '',
       content: {
         es: 'La espera por la Visa U suele durar más de cinco años. Mientras tanto, muchas personas viven con ansiedad, sin poder trabajar legalmente, sostener a sus familias o acceder a servicios básicos. Es frustrante: colaboraste con las autoridades, fuiste víctima de un crimen, y aún así estás atrapado en una pausa indefinida.',
         en: 'The wait for the U Visa usually lasts more than five years...'
@@ -58,7 +58,7 @@ const blogPost = {
       id: 'que-es',
       title: { es: '¿Qué es la Determinación Bona Fide?', en: 'What is Bona Fide Determination?' },
       icon: Lightbulb,
-      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
+      image: '',
       content: {
         es: 'La determinación Bona Fide (o BFD por sus siglas en inglés) es una evaluación inicial que hace USCIS para decidir si una solicitud de Visa U es legítima y completa. Si tu petición pasa esta revisión, podrías recibir beneficios importantes que cambiarán tu vida.',
         en: 'Bona Fide Determination (or BFD) is an initial evaluation that USCIS makes...'
@@ -82,7 +82,7 @@ const blogPost = {
       id: 'por-que',
       title: { es: 'Una Respuesta al Colapso del Sistema', en: 'A Response to System Collapse' },
       icon: AlertCircle,
-      image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80',
+      image: '',
       content: {
         es: 'USCIS implementó esta política en 2021 debido al creciente retraso en la aprobación de Visas U, que supera los 5 años en muchos casos. Es una forma de reconocer que los solicitantes no deben quedar "congelados" durante años sin ninguna protección.',
         en: 'USCIS implemented this policy in 2021...'
@@ -98,7 +98,7 @@ const blogPost = {
       id: 'requisitos',
       title: { es: 'Requisitos Clave para Calificar', en: 'Key Requirements to Qualify' },
       icon: CheckCircle2,
-      image: 'https://images.unsplash.com/photo-1436450412740-6b988f486c6b?w=800&q=80',
+      image: '',
       content: {
         es: 'Para ser considerado para la determinación Bona Fide, debes cumplir con varios requisitos importantes. Cada uno es crucial para el éxito de tu aplicación.',
         en: 'To be considered for Bona Fide Determination...'
@@ -115,7 +115,7 @@ const blogPost = {
       id: 'tiempos',
       title: { es: 'Tiempos de Espera Actuales', en: 'Current Wait Times' },
       icon: TrendingUp,
-      image: 'https://images.unsplash.com/photo-1554224311-beee2aca88c7?w=800&q=80',
+      image: '',
       content: {
         es: 'En promedio, USCIS está tardando entre 12 y 18 meses en emitir la determinación Bona Fide. Aunque sigue siendo una espera considerable, es significativamente más corta que la aprobación total.',
         en: 'On average, USCIS is taking between 12 and 18 months...'
@@ -131,7 +131,7 @@ const blogPost = {
       id: 'caso-real',
       title: { es: 'Historia de Éxito: Myriam', en: 'Success Story: Myriam' },
       icon: Star,
-      image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80',
+      image: '',
       testimonial: {
         text: {
           es: 'Mi vida cambió completamente cuando recibí mi permiso de trabajo. Ahora puedo trabajar legalmente, mantener a mi familia y vivir sin miedo.',
@@ -155,7 +155,7 @@ const blogPost = {
       id: 'conclusion',
       title: { es: 'Tu Próximo Paso Hacia la Libertad', en: 'Your Next Step Towards Freedom' },
       icon: Send,
-      image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80',
+      image: '',
       content: {
         es: 'La espera de la Visa U no tiene que ser una sentencia de inmovilidad. El permiso de trabajo Bona Fide es tu oportunidad de recuperar el control de tu vida mientras esperas la aprobación final.',
         en: 'The U Visa wait doesn\'t have to be a sentence of immobility...'
