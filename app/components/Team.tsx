@@ -29,12 +29,12 @@ export default function Team() {
   }
 
   // Movimiento suave para la imagen
-  const xImg = useSpring(useTransform(mouseX, [-0.5, 0.5], [-20, 20]), { stiffness: 40, damping: 20 });
-  const yImg = useSpring(useTransform(mouseY, [-0.5, 0.5], [-20, 20]), { stiffness: 40, damping: 20 });
+  const xImg = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), { stiffness: 30, damping: 25 });
+  const yImg = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), { stiffness: 30, damping: 25 });
 
   // Movimiento opuesto para el elemento flotante (Badge) para crear profundidad 3D
-  const xBadge = useSpring(useTransform(mouseX, [-0.5, 0.5], [30, -30]), { stiffness: 50, damping: 15 });
-  const yBadge = useSpring(useTransform(mouseY, [-0.5, 0.5], [30, -30]), { stiffness: 50, damping: 15 });
+  const xBadge = useSpring(useTransform(mouseX, [-0.5, 0.5], [20, -20]), { stiffness: 40, damping: 20 });
+  const yBadge = useSpring(useTransform(mouseY, [-0.5, 0.5], [20, -20]), { stiffness: 40, damping: 20 });
 
   // --- 2. LÓGICA DE SCROLL ---
   const { scrollYProgress } = useScroll({
@@ -42,10 +42,9 @@ export default function Team() {
     offset: ["start end", "end start"]
   });
   
-  const yContent = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const yContent = useTransform(scrollYProgress, [0, 1], [30, -30]);
   // Movimiento vertical suave para los elementos de fondo
-  const yBg = useTransform(scrollYProgress, [0, 1], [0, 100]);
-
+  const yBg = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   return (
     <section 
@@ -54,86 +53,85 @@ export default function Team() {
       onMouseMove={handleMouseMove}
       className={`relative py-32 lg:py-48 w-full bg-[#001540] overflow-hidden ${font.className}`}
     >
-      {/* --- FONDO ATMOSFÉRICO VIVO --- */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      {/* --- FONDO ATMOSFÉRICO VIVO OPTIMIZADO --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden transform-gpu">
         <div className="absolute inset-0 bg-[#001540]" />
         
-        {/* --- GUIONES GIGANTES DE FONDO --- */}
+        {/* --- GUIONES GIGANTES DE FONDO - Optimizado con will-change y opacidad reducida --- */}
 
-        {/* 1. Guion EXTRA ARRIBA (Nuevo) - Derecha a Izquierda */}
+        {/* 1. Guion EXTRA ARRIBA */}
         <motion.div
-            style={{ y: yBg }} 
+            style={{ y: yBg, willChange: "transform" }} 
             animate={{ x: ["100%", "-100%"] }} 
             transition={{ 
-                duration: 45, // Más rápido
+                duration: 55,
                 repeat: Infinity, 
                 ease: "linear",
                 repeatType: "loop",
-                delay: -15 // Ya empezó hace 15 segundos (se ve inmediatamente)
+                delay: -15
             }}
-            // Opacidad subida a 0.07 y posición negativa top
-            className="absolute -top-40 right-0 flex items-center justify-center opacity-[0.07] select-none pointer-events-none"
+            className="absolute -top-40 right-0 flex items-center justify-center opacity-[0.03] select-none pointer-events-none"
         >
-            <span className={`text-[120vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
+            <span className={`text-[80vh] lg:text-[100vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
                 -
             </span>
         </motion.div>
 
-        {/* 2. Guion ARRIBA (Original) - Derecha a Izquierda */}
+        {/* 2. Guion ARRIBA */}
         <motion.div
-            style={{ y: yBg }} 
+            style={{ y: yBg, willChange: "transform" }} 
             animate={{ x: ["100%", "-100%"] }} 
             transition={{ 
-                duration: 55, // Más rápido que antes
+                duration: 65, 
                 repeat: Infinity, 
                 ease: "linear",
                 repeatType: "loop",
-                delay: -25 // Empieza a mitad de camino
+                delay: -25
             }}
-            // Opacidad subida a 0.07
-            className="absolute top-10 right-0 flex items-center justify-center opacity-[0.07] select-none pointer-events-none"
+            className="absolute top-10 right-0 flex items-center justify-center opacity-[0.03] select-none pointer-events-none"
         >
-            <span className={`text-[120vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
+            <span className={`text-[80vh] lg:text-[100vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
                 -
             </span>
         </motion.div>
 
-        {/* 3. Guion ABAJO (Original) - Izquierda a Derecha */}
+        {/* 3. Guion ABAJO */}
         <motion.div
-            style={{ y: yBg }}
+            style={{ y: yBg, willChange: "transform" }}
             animate={{ x: ["-100%", "100%"] }} 
             transition={{ 
-                duration: 60, // Más rápido que antes
+                duration: 70, 
                 repeat: Infinity, 
                 ease: "linear",
                 repeatType: "loop",
-                delay: -20 // Empieza a mitad de camino
+                delay: -20 
             }}
-            // Opacidad subida a 0.07
-            className="absolute bottom-10 left-0 flex items-center justify-center opacity-[0.07] select-none pointer-events-none"
+            className="absolute bottom-10 left-0 flex items-center justify-center opacity-[0.03] select-none pointer-events-none"
         >
-            <span className={`text-[120vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
+            <span className={`text-[80vh] lg:text-[100vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
                 -
             </span>
         </motion.div>
 
 
-        {/* Orbe Dorado (Derecha Arriba) */}
+        {/* Orbe Dorado (Derecha Arriba) - Blur optimizado */}
         <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
+          animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.25, 0.15] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#B2904D]/10 rounded-full blur-[150px] translate-x-1/3 -translate-y-1/3" 
+          style={{ willChange: "transform, opacity" }}
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#B2904D]/10 rounded-full blur-[80px] translate-x-1/3 -translate-y-1/3 translate-z-0" 
         />
         
-        {/* Orbe Azul (Izquierda Abajo) */}
+        {/* Orbe Azul (Izquierda Abajo) - Blur optimizado */}
         <motion.div 
-          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
+          animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-0 left-0 w-[900px] h-[900px] bg-blue-600/10 rounded-full blur-[180px] -translate-x-1/3 translate-y-1/3" 
+          style={{ willChange: "transform, opacity" }}
+          className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-[90px] -translate-x-1/3 translate-y-1/3 translate-z-0" 
         />
         
-        {/* Ruido de textura */}
-        <div className="absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+        {/* Ruido de textura - Optimizado */}
+        <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
@@ -148,7 +146,7 @@ export default function Team() {
             <motion.div 
                initial={{ opacity: 0, y: 30 }}
                whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
+               viewport={{ once: true, margin: "-100px" }}
                transition={{ duration: 0.8 }}
             >
                 <div className="flex items-center gap-3 mb-6">
@@ -201,7 +199,7 @@ export default function Team() {
             >
                 <Link
                   href={`/${language}/abogados`}
-                  className="group relative inline-flex items-center gap-4 px-8 py-4 bg-white/5 border border-white/10 rounded-full overflow-hidden hover:bg-white/10 hover:border-[#B2904D]/50 transition-all duration-300 backdrop-blur-md"
+                  className="group relative inline-flex items-center gap-4 px-8 py-4 bg-white/5 border border-white/10 rounded-full overflow-hidden hover:bg-white/10 hover:border-[#B2904D]/50 transition-all duration-300 backdrop-blur-sm"
                 >
                   <span className="relative z-10 text-white font-medium tracking-wide">
                     {language === 'es' ? 'Conoce al Equipo' : 'Meet the Team'}
@@ -220,41 +218,43 @@ export default function Team() {
           {/* --- COLUMNA DERECHA: IMAGEN FLOTANTE (Parallax) --- */}
           <motion.div 
             className="lg:col-span-6 relative perspective-[1000px] mt-12 lg:mt-0"
+            style={{ willChange: "transform" }}
           >
-             {/* Glow detrás de la imagen */}
+             {/* Glow detrás de la imagen - Animación simplificada */}
              <motion.div 
-               animate={{ opacity: [0.4, 0.7, 0.4], scale: [0.9, 1, 0.9] }}
+               animate={{ opacity: [0.4, 0.6, 0.4] }}
                transition={{ duration: 5, repeat: Infinity }}
-               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-blue-500/20 blur-[80px] rounded-full -z-10" 
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-blue-500/20 blur-[60px] rounded-full -z-10" 
              />
 
              {/* Contenedor Principal Imagen */}
              <motion.div 
-               style={{ x: xImg, y: yImg }}
+               style={{ x: xImg, y: yImg, willChange: "transform" }}
                className="relative z-10 w-full h-[500px] lg:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 bg-[#001540]"
              >
-                {/* AQUÍ ESTÁ EL CAMBIO: Se reemplazó la imagen anterior por MSTeam.png */}
                 <Image
                   src="/MSTeam.png"
                   alt="Equipo de abogados Manuel Solis"
                   fill
-                  className="object-cover scale-110" // Escala inicial para permitir movimiento sin bordes blancos
+                  className="object-cover scale-105" // Escala reducida para mejor rendimiento
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority={false} // Lazy loading ya que no es LCP
                 />
                 
                 {/* Overlay Gradiente Elegante */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-60" />
                 
-                {/* Efecto de reflejo de cristal */}
+                {/* Efecto de reflejo de cristal simplificado */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
              </motion.div>
 
              {/* BADGE FLOTANTE 3D (Se mueve opuesto a la imagen) */}
              <motion.div 
-               style={{ x: xBadge, y: yBadge }}
+               style={{ x: xBadge, y: yBadge, willChange: "transform" }}
                className="absolute -bottom-10 -left-6 lg:-left-12 z-20"
              >
-                <div className="relative p-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden group">
-                    {/* Brillo interno rotando */}
+                <div className="relative p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden group">
+                    {/* Brillo interno rotando - Simplificado */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-[#B2904D]/20 to-transparent opacity-50" />
                     
                     <div className="relative z-10 flex flex-col items-start gap-1">

@@ -23,7 +23,7 @@ export default function Services() {
   });
   
   // Movimiento vertical suave para los elementos de fondo
-  const yBg = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const yBg = useTransform(scrollYProgress, [0, 1], [0, 80]); // Reducido rango de movimiento
 
   // --- VARIANTS ---
   const fadeInUp: Variants = {
@@ -97,14 +97,14 @@ export default function Services() {
         ref={containerRef}
         className={`relative pt-24 pb-32 w-full bg-[#001540] overflow-hidden ${font.className}`}
     >
-      {/* --- FONDO ATMOSFÉRICO (Estilo Hero) --- */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      {/* --- FONDO ATMOSFÉRICO OPTIMIZADO --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden transform-gpu">
         {/* Base */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         
         {/* --- La "S" Gigante en Movimiento (Derecha a Izquierda) --- */}
         <motion.div
-            style={{ y: yBg }} 
+            style={{ y: yBg, willChange: "transform" }} 
             animate={{ x: ["100%", "-100%"] }} 
             transition={{ 
                 duration: 80, 
@@ -112,46 +112,48 @@ export default function Services() {
                 ease: "linear",
                 repeatType: "loop"
             }}
-            // CAMBIO: Opacidad subida de 0.025 a 0.06
-            className="absolute top-20 right-0 flex items-center justify-center opacity-[0.06] select-none pointer-events-none"
+            // CAMBIO: Opacidad reducida
+            className="absolute top-20 right-0 flex items-center justify-center opacity-[0.04] select-none pointer-events-none"
         >
-            <span className={`text-[120vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
+            <span className={`text-[80vh] lg:text-[100vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
                 S
             </span>
         </motion.div>
 
         {/* --- La "M" Gigante en Movimiento (Arriba a Abajo) --- */}
         <motion.div
+            style={{ willChange: "transform" }}
             animate={{ y: ["-120vh", "120vh"] }} // Movimiento vertical completo
             transition={{ 
-                duration: 80, 
+                duration: 90, // Más lento para suavizar
                 repeat: Infinity, 
                 ease: "linear",
                 repeatType: "loop",
-                delay: -15 // CAMBIO: Delay negativo para que empiece ya visible (adelanta la animación)
+                delay: -25
             }}
-            // CAMBIO: Opacidad subida de 0.025 a 0.06
-            className="absolute top-0 left-[-10%] flex items-center justify-center opacity-[0.06] select-none pointer-events-none"
+            className="absolute top-0 left-[-10%] flex items-center justify-center opacity-[0.04] select-none pointer-events-none"
         >
-            <span className={`text-[120vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
+            <span className={`text-[80vh] lg:text-[100vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
                 M
             </span>
         </motion.div>
 
-        {/* Luces Ambientales */}
+        {/* Luces Ambientales - Optimizadas (blur reducido) */}
+        <motion.div 
+            animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform, opacity" }}
+            className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[90px] translate-x-1/3 -translate-y-1/3 translate-z-0" 
+        />
         <motion.div 
             animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[150px] translate-x-1/3 -translate-y-1/3" 
-        />
-        <motion.div 
-            animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1] }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#B2904D]/10 rounded-full blur-[120px] -translate-x-1/3 translate-y-1/3" 
+            style={{ willChange: "transform, opacity" }}
+            className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#B2904D]/10 rounded-full blur-[90px] -translate-x-1/3 translate-y-1/3 translate-z-0" 
         />
         
-        {/* Ruido */}
-        <div className="absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+        {/* Ruido - Opacidad baja */}
+        <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
@@ -165,7 +167,7 @@ export default function Services() {
             className="mb-16 text-center"
           >
             {/* Pill decorativa */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shadow-[0_0_15px_rgba(178,144,77,0.1)]">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6 shadow-[0_0_10px_rgba(178,144,77,0.1)]">
               <span className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-blue-200/70 uppercase">
                 {language === 'es' ? 'EXPERIENCIA COMPROBADA' : 'PROVEN EXPERIENCE'}
               </span>
@@ -200,17 +202,17 @@ export default function Services() {
                   href={service.href} 
                   className="block h-full group perspective-[1000px]" 
                 >
-                  <div className="relative h-full p-8 rounded-[2rem] bg-[#000a20]/40 border border-white/10 backdrop-blur-md 
-                                  transition-all duration-500 hover:bg-white/10 hover:border-[#B2904D]/40 hover:-translate-y-2
-                                  flex flex-col justify-between overflow-hidden shadow-lg hover:shadow-[0_20px_40px_-15px_rgba(178,144,77,0.2)]">
+                  <div className="relative h-full p-8 rounded-[2rem] bg-[#000a20]/60 border border-white/10 backdrop-blur-sm 
+                                  transition-all duration-300 hover:bg-white/5 hover:border-[#B2904D]/30 hover:-translate-y-1 transform-gpu
+                                  flex flex-col justify-between overflow-hidden shadow-lg hover:shadow-[0_15px_30px_-10px_rgba(178,144,77,0.15)]">
                     
-                    {/* Brillo interno al hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Brillo interno al hover - Optimizado */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     <div className="relative z-10">
-                        <div className="flex items-center mb-6 pb-4 border-b border-white/10 group-hover:border-[#B2904D]/30 transition-colors duration-500">
-                            {/* Barra vertical decorativa dorada (Glow effect) */}
-                            <div className="w-1 h-8 bg-[#B2904D] rounded-full mr-5 group-hover:h-12 group-hover:shadow-[0_0_15px_rgba(178,144,77,0.8)] transition-all duration-500"></div>
+                        <div className="flex items-center mb-6 pb-4 border-b border-white/10 group-hover:border-[#B2904D]/30 transition-colors duration-300">
+                            {/* Barra vertical decorativa dorada */}
+                            <div className="w-1 h-8 bg-[#B2904D] rounded-full mr-5 group-hover:h-12 group-hover:shadow-[0_0_10px_rgba(178,144,77,0.6)] transition-all duration-300"></div>
                             
                             <h3 className="text-3xl font-light text-white group-hover:text-white transition-all duration-300">
                                 {service.title}
@@ -221,7 +223,7 @@ export default function Services() {
                         <div>
                             <ul className="space-y-3">
                                 {service.items.slice(0, 4).map((item: string, idx: number) => ( 
-                                    <li key={idx} className="flex items-start text-blue-100/60 group-hover:text-blue-50 transition-colors duration-300">
+                                    <li key={idx} className="flex items-start text-blue-100/60 group-hover:text-blue-50 transition-colors duration-200">
                                         {/* Pequeño punto dorado */}
                                         <div className="w-1 h-1 bg-[#B2904D]/50 rounded-full mt-2.5 mr-3 flex-shrink-0 group-hover:bg-[#B2904D] transition-colors"></div>
                                         <span className="font-light text-sm leading-relaxed">
@@ -234,7 +236,7 @@ export default function Services() {
                     </div>
                     
                     {/* Botón sutil "Ver más" */}
-                    <div className="relative z-10 mt-8 pt-4 border-t border-transparent group-hover:border-white/10 transition-colors duration-500">
+                    <div className="relative z-10 mt-8 pt-4 border-t border-transparent group-hover:border-white/10 transition-colors duration-300">
                         <span className="text-sm font-medium text-[#B2904D] tracking-wide flex items-center gap-2 opacity-80 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
                              {language === 'es' ? 'Ver detalles' : 'View details'} 
                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>

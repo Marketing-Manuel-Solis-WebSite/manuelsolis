@@ -42,7 +42,6 @@ export default function HeaderProfessional() {
 
   // Obtener el teléfono dinámico basado en la ruta actual
   const { phoneNumber, phoneLink } = useMemo(() => {
-    // Extrae el slug de la oficina de la ruta (ej: /es/oficinas/main-st → main-st)
     const officeMatch = pathname.match(/\/oficinas\/([^/]+)/);
     const officeSlug = officeMatch?.[1];
     
@@ -64,7 +63,10 @@ export default function HeaderProfessional() {
   const joinInText = language === 'es' ? 'REGÍSTRATE' : 'REGISTER';
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 20);
+    const shouldBeScrolled = latest > 20;
+    if (isScrolled !== shouldBeScrolled) {
+        setIsScrolled(shouldBeScrolled);
+    }
   });
 
   const menuItems = [
@@ -75,7 +77,7 @@ export default function HeaderProfessional() {
       key: 'services',
       submenu: language === 'es'
         ? [
-            { name: 'InmigraciÃ³n', href: `/${language}/servicios/inmigracion` },
+            { name: 'Inmigración', href: `/${language}/servicios/inmigracion` },
             { name: 'Accidentes', href: `/${language}/servicios/accidentes` },
             { name: 'Seguros', href: `/${language}/servicios/seguros` },
             { name: 'Ley Criminal', href: `/${language}/servicios/ley-criminal` },
@@ -193,16 +195,16 @@ export default function HeaderProfessional() {
     <>
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col ${font.className}`}
+        style={{ willChange: "transform, background-color, backdrop-filter" }} // OPTIMIZACIÓN
         initial={{ backgroundColor: 'rgba(0,0,0,0)', backdropFilter: 'blur(0px)' }}
         animate={{
-          backgroundColor: isScrolled ? 'rgba(5, 15, 30, 0.65)' : 'rgba(0,0,0,0)',
-          backdropFilter: isScrolled ? 'blur(16px)' : 'blur(0px)',
+          backgroundColor: isScrolled ? 'rgba(5, 15, 30, 0.85)' : 'rgba(0,0,0,0)', // Más opaco para mejor rendimiento
+          backdropFilter: isScrolled ? 'blur(10px)' : 'blur(0px)', // Blur reducido de 16px a 10px
         }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.4, ease: "easeOut" }} // Transición más rápida
       >
-        {/* CORRECCIÃ“N AQUÃ: Se agregÃ³ 'relative z-[60]' para que el menÃº estÃ© POR ENCIMA de la barra verde */}
         <div 
-          className="w-full transition-all duration-500 relative z-[60]"
+          className="w-full transition-all duration-300 relative z-[60]" // Duración reducida
           style={{ 
             paddingTop: isScrolled ? '0.5rem' : '0.75rem', 
             paddingBottom: isScrolled ? '0.5rem' : '0.75rem' 
@@ -211,13 +213,13 @@ export default function HeaderProfessional() {
           <div className="container mx-auto px-6 lg:px-12 flex items-center">
             
             <Link href={`/${language}`} className="relative z-50 mr-12 lg:mr-16">
-              <div className={`relative transition-all duration-700 ease-in-out ${isScrolled ? 'w-[140px]' : 'w-[190px]'}`}>
+              <div className={`relative transition-all duration-500 ease-in-out ${isScrolled ? 'w-[140px]' : 'w-[190px]'}`}>
                 <Image
                   src="/logo-manuel-solis.png" 
                   alt="Logo Manuel Solis"
                   width={200} 
                   height={65}
-                  className="w-full h-auto object-contain opacity-100 hover:scale-105 transition-all duration-500"
+                  className="w-full h-auto object-contain opacity-100" // Quitada animación de hover scale para logo
                   priority
                 />
               </div>
@@ -229,39 +231,37 @@ export default function HeaderProfessional() {
                   <div key={item.name} className="relative group">
                     <div className="flex items-center gap-1 cursor-pointer py-3">
                       {item.submenu ? (
-                        <Link 
-                          href={item.href}
-                          className="text-[12px] font-light uppercase tracking-[0.2em] text-white/95 group-hover:text-white transition-all duration-300 drop-shadow-sm"
-                        >
+                        <span className="text-[12px] font-light uppercase tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200">
                           {item.name}
-                        </Link>
+                        </span>
                       ) : item.type === 'external' ? (
                         renderLink(item)
                       ) : (
                         <Link 
                           href={item.href}
-                          className="text-[12px] font-light uppercase tracking-[0.2em] text-white/95 group-hover:text-white transition-all duration-300 drop-shadow-sm"
+                          className="text-[12px] font-light uppercase tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200"
                         >
                           {item.name}
                         </Link>
                       )}
                       {item.submenu && (
-                        <ChevronDown className="w-2.5 h-2.5 text-white/60 group-hover:text-white transition-transform duration-500 group-hover:rotate-180" />
+                        <ChevronDown className="w-2.5 h-2.5 text-white/60 group-hover:text-white transition-transform duration-300 group-hover:rotate-180" />
                       )}
                     </div>
                     
-                    <span className="absolute bottom-1 left-0 w-0 h-[0.5px] bg-sky-200 transition-all duration-500 ease-out group-hover:w-full box-shadow-glow" />
+                    <span className="absolute bottom-1 left-0 w-0 h-[0.5px] bg-sky-200 transition-all duration-300 ease-out group-hover:w-full" />
 
                     {item.submenu && (
-                      <div className="absolute top-full left-0 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 perspective-[1000px]">
-                        <div className="min-w-[260px] bg-[#0b1c33]/70 backdrop-blur-3xl rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] py-4 px-2 border border-white/10 transform origin-top transition-transform duration-500 max-h-[80vh] overflow-y-auto scrollbar-hide">
+                      <div className="absolute top-full left-0 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]">
+                        {/* Menú desplegable optimizado: Menos blur, sombra más simple */}
+                        <div className="min-w-[260px] bg-[#0b1c33]/90 backdrop-blur-md rounded-xl shadow-xl py-4 px-2 border border-white/10 transform origin-top max-h-[80vh] overflow-y-auto scrollbar-hide">
                           {item.submenu.map((subItem) => (
                             <Link
                               key={subItem.name}
                               href={subItem.href}
-                              className="group/item flex items-center px-4 py-3 rounded-lg hover:bg-white/10 transition-all duration-300"
+                              className="group/item flex items-center px-4 py-3 rounded-lg hover:bg-white/5 transition-colors duration-200"
                             >
-                              <span className="text-[12px] font-light text-gray-200 group-hover/item:text-white uppercase tracking-[0.15em] group-hover/item:translate-x-1 transition-transform duration-300">
+                              <span className="text-[12px] font-light text-gray-200 group-hover/item:text-white uppercase tracking-[0.15em] transition-colors duration-200">
                                 {subItem.name}
                               </span>
                             </Link>
@@ -280,7 +280,7 @@ export default function HeaderProfessional() {
               <div className="relative group">
                 <button
                   onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                  className="flex items-center gap-2 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.2em] transition-all duration-300"
+                  className="flex items-center gap-2 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.2em] transition-colors duration-200"
                 >
                   {language === 'es' ? <FlagES /> : <FlagUS />}
                   <span>{language === 'es' ? 'ES' : 'EN'}</span>
@@ -292,7 +292,7 @@ export default function HeaderProfessional() {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 top-full mt-4 w-32 bg-[#0b1c33]/80 backdrop-blur-3xl rounded-xl shadow-2xl border border-white/10 overflow-hidden p-1"
+                      className="absolute right-0 top-full mt-4 w-32 bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl border border-white/10 overflow-hidden p-1"
                     >
                       <button onClick={() => toggleLang('es')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
                         <FlagES /> <span className="text-[10px] font-light text-white tracking-widest">ESP</span>
@@ -307,7 +307,7 @@ export default function HeaderProfessional() {
 
               <Link 
                   href={`/${language}/join-in`}
-                  className="text-[10px] font-medium uppercase tracking-[0.15em] bg-[#B2904D] text-[#001026] px-4 py-2 rounded-lg transition-all duration-300 hover:opacity-90 shadow-md transform hover:-translate-y-[1px]"
+                  className="text-[10px] font-medium uppercase tracking-[0.15em] bg-[#B2904D] text-[#001026] px-4 py-2 rounded-lg transition-all duration-200 hover:opacity-90 shadow-sm hover:translate-y-[-1px]"
               >
                 {joinInText}
               </Link>
@@ -316,7 +316,7 @@ export default function HeaderProfessional() {
             <div className="lg:hidden flex items-center gap-4 ml-auto">
               <a 
                 href={phoneLink}
-                className="flex items-center gap-2 text-sky-300 hover:text-white transition-all"
+                className="flex items-center gap-2 text-sky-300 hover:text-white transition-colors"
                 aria-label="Call us"
               >
                 <Phone size={16} />
@@ -333,7 +333,7 @@ export default function HeaderProfessional() {
           </div>
         </div>
 
-        {/* --- ETIQUETA DE CONTACTO (fondo transparente, lÃ­nea verde abajo) --- */}
+        {/* --- ETIQUETA DE CONTACTO --- */}
         <div className="hidden lg:flex justify-center w-full relative z-50">
           <div className="px-16 py-1.5 relative overflow-hidden group border-b-[2px] border-[#009b3a]">
             <a 
@@ -344,12 +344,11 @@ export default function HeaderProfessional() {
                 {callText}
               </span>
               
-              {/* NUMERO SIN BRILLO */}
               <div className="flex items-center gap-2.5">
-                  <Phone className="w-5 h-5 text-white transition-transform duration-300 group-hover/link:scale-110 group-hover/link:rotate-[-10deg]" fill="currentColor" />
+                  <Phone className="w-5 h-5 text-white transition-transform duration-300 group-hover/link:scale-110" fill="currentColor" />
                   
                   <span 
-                    className="text-xl font-extrabold tracking-widest text-white transition-all duration-300 group-hover/link:scale-105"
+                    className="text-xl font-extrabold tracking-widest text-white transition-all duration-300"
                   >
                     {phoneNumber}
                   </span>
@@ -357,17 +356,19 @@ export default function HeaderProfessional() {
             </a>
           </div>
         </div>
-        {/* --------------------------------------------------------------- */}
 
       </motion.header>
 
+      {/* MENÚ MÓVIL OPTIMIZADO */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`fixed inset-0 z-40 bg-[#051120]/98 backdrop-blur-3xl lg:hidden ${font.className}`}
+            transition={{ duration: 0.3 }}
+            // Optimización: Fondo casi sólido, blur reducido
+            className={`fixed inset-0 z-40 bg-[#051120]/98 backdrop-blur-md lg:hidden ${font.className}`}
           >
             <div className="flex flex-col pt-24 px-8 h-full">
               <nav className="flex flex-col space-y-6 overflow-y-auto max-h-[80vh] pb-10">
@@ -413,7 +414,7 @@ export default function HeaderProfessional() {
                     <Link 
                       href={`/${language}/join-in`}
                       onClick={() => setIsMenuOpen(false)}
-                      className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#B2904D] text-[#001026] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-lg"
+                      className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#B2904D] text-[#001026] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-md"
                     >
                       {language === 'es' ? 'INICIAR CONSULTA' : 'START CONSULTATION'}
                     </Link>

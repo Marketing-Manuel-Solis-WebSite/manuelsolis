@@ -20,15 +20,14 @@ const associations = [
   { name: 'CD State Bar', logo: '/state-bar/cd-state.png' },
 ];
 
-const DESKTOP_DURATION = 15;
-const MOBILE_DURATION = 6;
+const DESKTOP_DURATION = 25; // Aumentado ligeramente para suavizar
+const MOBILE_DURATION = 15; // Aumentado para rendimiento en móviles
 
 export default function HeroProfessional() {
   const { t, language } = useLanguage();
   const containerRef = useRef(null);
   
   const [showPopup, setShowPopup] = useState(true);
-  
   const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
@@ -40,18 +39,6 @@ export default function HeroProfessional() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  const textRevealVariant = {
-    hidden: { y: "100%", rotateX: -20, opacity: 0 },
-    visible: (custom: number) => ({
-      y: 0, rotateX: 0, opacity: 1,
-      transition: { 
-        duration: 1.2, 
-        delay: custom * 0.15, 
-        ease: [0.25, 1, 0.5, 1] as const 
-      }
-    })
-  };
 
   const getLogoSize = (logoName: string) => {
     if (logoName.includes('aba-state')) {
@@ -87,48 +74,55 @@ export default function HeroProfessional() {
       ref={containerRef}
       className={`relative min-h-screen w-full flex flex-col justify-center bg-[#001540] overflow-hidden ${font.className} pt-36 lg:pt-44 pb-72`}
     >
-      {/* FONDO ATMOSFÉRICO */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      {/* --- FONDO ATMOSFÉRICO OPTIMIZADO --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden transform-gpu">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         
+        {/* TEXTO GIGANTE DE FONDO - Optimizado con will-change */}
         <motion.div
             initial={{ x: "60%" }} 
             animate={{ x: "-160%" }} 
+            style={{ willChange: "transform" }}
             transition={{ 
               duration: 80, 
               repeat: Infinity, 
               ease: "linear",
               repeatType: "loop"
             }}
-            className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center opacity-[0.04] select-none pointer-events-none"
+            className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center opacity-[0.03] select-none pointer-events-none"
         >
             <span className={`text-[160vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12 ${font.className}`}>
                   N/\И/\
             </span>
         </motion.div>
 
+        {/* ORBES DE COLOR - Blur reducido para rendimiento */}
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[150px]" 
+          style={{ willChange: "transform, opacity" }}
+          className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[80px] translate-z-0" 
         />
         <motion.div 
             animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
             transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[180px]" 
+            style={{ willChange: "transform, opacity" }}
+          className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[90px] translate-z-0" 
         />
         
-        <div className="absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+        {/* RUIDO - Opacidad reducida y optimizado */}
+        <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10 flex-grow flex flex-col justify-center">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* IZQUIERDA: IMAGEN - TAMAÑO RESTAURADO */}
+          {/* IZQUIERDA: IMAGEN */}
           <motion.div 
             className="lg:col-span-5 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-3xl rounded-full z-0 opacity-80" />
+            {/* Blur reducido de 3xl a 2xl para rendimiento */}
+            <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
             
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 50, rotateY: 5, x: 0 }}
@@ -142,25 +136,26 @@ export default function HeroProfessional() {
               transition={{ duration: 1.5, ease: "easeOut" }}
               className="relative z-10 w-full h-full origin-bottom flex justify-center"
             >
-               <div className="w-full h-full lg:scale-[1.5] lg:-translate-x-24 lg:origin-bottom transition-transform duration-1000">
+               <div className="w-full h-full lg:scale-[1.5] lg:-translate-x-24 lg:origin-bottom transition-transform duration-1000 transform-gpu">
                   <div className="relative w-full h-full">
                     <Image
                       src="/manuelsolisl.png"
                       alt="Abogado Manuel Solis"
                       fill
-                      className="object-contain object-bottom drop-shadow-[0_0_30px_rgba(56,189,248,0.6)]"
+                      className="object-contain object-bottom drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]" // Sombra reducida
                       priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                </div>
             </motion.div>
 
-            {/* BADGE FLOTANTE */}
+            {/* BADGE FLOTANTE - Optimizado backdrop-blur */}
             <motion.div
                 initial={{ opacity: 0, x: 20 }} 
                 animate={{ opacity: 1, x: 0 }} 
                 transition={{ delay: 0.8, duration: 1 }}
-                className="absolute bottom-10 left-0 right-0 mx-auto w-fit lg:mx-0 lg:left-auto lg:right-0 z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-2xl text-right min-w-[180px]"
+                className="absolute bottom-10 left-0 right-0 mx-auto w-fit lg:mx-0 lg:left-auto lg:right-0 z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/10 shadow-xl text-right min-w-[180px]"
             >
                 <div className="group">
                   <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 justify-end">
@@ -189,11 +184,11 @@ export default function HeroProfessional() {
               transition={{ delay: 0.3, duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
               className="relative overflow-visible"
             >
-              {/* Resplandor de fondo estático */}
-              <div className="absolute -inset-20 bg-gradient-radial from-[#B2904D]/20 via-sky-500/10 to-transparent blur-[100px] -z-10 opacity-60" />
+              {/* Resplandor de fondo estático - Blur reducido */}
+              <div className="absolute -inset-20 bg-gradient-radial from-[#B2904D]/20 via-sky-500/10 to-transparent blur-[60px] -z-10 opacity-60" />
 
-              {/* Partículas flotantes */}
-              {[...Array(6)].map((_, i) => (
+              {/* Partículas flotantes - Limitadas para rendimiento */}
+              {[...Array(4)].map((_, i) => ( // Reducido de 6 a 4 partículas
                 <motion.div
                   key={i}
                   className="absolute w-1 h-1 bg-[#B2904D]/30 rounded-full"
@@ -215,19 +210,9 @@ export default function HeroProfessional() {
                 />
               ))}
 
-              {/* Rayos de luz giratorios lentos */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 -z-10 opacity-20"
-              >
-                <div className="absolute top-1/2 left-1/2 w-[140%] h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/40 to-transparent -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute top-1/2 left-1/2 w-[1px] h-[140%] bg-gradient-to-b from-transparent via-sky-400/40 to-transparent -translate-x-1/2 -translate-y-1/2" />
-              </motion.div>
-
               <div className="relative flex flex-col items-center lg:items-start overflow-visible">
                 
-                {/* "Más de" - Texto Superior */}
+                {/* "Más de" */}
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -236,27 +221,15 @@ export default function HeroProfessional() {
                 >
                   <span className="text-2xl md:text-3xl lg:text-4xl font-light text-white/60 uppercase tracking-[0.3em] relative">
                     {language === 'es' ? 'Más de' : 'More than'}
-                    <motion.span
-                      className="absolute inset-0 blur-sm"
-                      animate={{ opacity: [0.3, 0.6, 0.3] }}
-                      transition={{ duration: 2.5, repeat: Infinity }}
-                      style={{
-                        textShadow: '0 0 20px rgba(255,255,255,0.5)'
-                      }}
-                    >
-                      {language === 'es' ? 'Más de' : 'More than'}
-                    </motion.span>
                   </span>
                 </motion.div>
 
-                {/* NÚMERO 50,000 - PADDING EXTENDIDO PARA EVITAR CORTES */}
+                {/* NÚMERO 50,000 */}
                 <div className="relative w-full overflow-visible pl-4 pr-12 lg:pr-16 py-4">
-                  {/* Sombra de profundidad */}
-                  <div className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter text-[#B2904D]/15 blur-2xl flex items-center justify-center lg:justify-start pl-4 pr-12 lg:pr-16">
+                  <div className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter text-[#B2904D]/15 blur-xl flex items-center justify-center lg:justify-start pl-4 pr-12 lg:pr-16">
                     50,000
                   </div>
                   
-                  {/* Número principal con gradiente animado */}
                   <motion.div 
                     className="relative text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter leading-none flex items-center justify-center lg:justify-start w-full"
                     style={{
@@ -265,7 +238,8 @@ export default function HeroProfessional() {
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
-                      filter: 'drop-shadow(0 0 40px rgba(178,144,77,0.5))'
+                      willChange: 'background-position', // Optimización
+                      filter: 'drop-shadow(0 0 25px rgba(178,144,77,0.4))'
                     }}
                     animate={{
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
@@ -279,15 +253,16 @@ export default function HeroProfessional() {
                     50,000
                   </motion.div>
 
-                  {/* Overlay de brillo que cruza - EXTENDIDO PARA CUBRIR TODO */}
+                  {/* Overlay de brillo - Optimizado */}
                   <motion.div
                     className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter flex items-center justify-center lg:justify-start pointer-events-none w-full pl-4 pr-12 lg:pr-16 py-4"
                     style={{
-                      background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%)',
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)', // Opacidad reducida
                       backgroundSize: '200% 100%',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
+                      willChange: 'background-position'
                     }}
                     animate={{
                       backgroundPosition: ['-200% 0', '200% 0']
@@ -303,7 +278,7 @@ export default function HeroProfessional() {
                   </motion.div>
                 </div>
 
-                {/* "Casos Ganados" - Etiqueta con efecto neón */}
+                {/* "Casos Ganados" */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -315,41 +290,20 @@ export default function HeroProfessional() {
                       {language === 'es' ? 'Casos Ganados' : 'Cases Won'}
                     </p>
                     
-                    {/* Efecto neón pulsante */}
                     <motion.div
-                      className="absolute inset-0 text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.4em] font-light blur-md"
-                      animate={{ 
-                        opacity: [0.4, 0.7, 0.4],
-                      }}
+                      className="absolute inset-0 text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.4em] font-light blur-sm" // Blur reducido
+                      animate={{ opacity: [0.4, 0.7, 0.4] }}
                       transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                      style={{
-                        color: '#38bdf8',
-                        textShadow: '0 0 30px rgba(56,189,248,0.6), 0 0 60px rgba(56,189,248,0.4)'
-                      }}
+                      style={{ color: '#38bdf8' }}
                     >
                       {language === 'es' ? 'Casos Ganados' : 'Cases Won'}
                     </motion.div>
-
-                    {/* Línea decorativa animada debajo */}
-                    <motion.div
-                      className="absolute -bottom-2 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B2904D] to-transparent"
-                      animate={{
-                        scaleX: [0, 1, 0],
-                        opacity: [0, 1, 0]
-                      }}
-                      transition={{
-                        duration: 3.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        repeatDelay: 1.5
-                      }}
-                    />
                   </div>
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* DIVISOR DECORATIVO */}
+            {/* DIVISOR */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -357,7 +311,7 @@ export default function HeroProfessional() {
               className="w-full max-w-md mx-auto lg:mx-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent origin-left"
             />
 
-            {/* TEXTO SECUNDARIO: Inmigración & Accidentes */}
+            {/* TEXTO SECUNDARIO */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -365,68 +319,18 @@ export default function HeroProfessional() {
               className="space-y-8"
             >
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6">
-                {/* Inmigración */}
-                <motion.span 
-                  className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90 group cursor-default"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
+                <span className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                   {language === 'es' ? 'Inmigración' : 'Immigration'}
-                  
-                  {/* Efecto hover de luz */}
-                  <motion.span
-                    className="absolute -inset-3 bg-gradient-to-r from-[#B2904D]/0 via-[#B2904D]/30 to-[#B2904D]/0 blur-xl opacity-0 group-hover:opacity-100 -z-10"
-                    transition={{ duration: 0.3 }}
-                  />
-                  
-                  {/* Subrayado animado */}
-                  <motion.span
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-[#B2904D]/0 via-[#B2904D] to-[#B2904D]/0 scale-x-0 group-hover:scale-x-100 origin-left"
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.span>
+                </span>
+                
+                <span className="text-4xl md:text-5xl font-thin text-[#B2904D]"> & </span>
 
-                {/* Ampersand tamaño reducido */}
-                <motion.span 
-                  className="text-4xl md:text-5xl font-thin text-[#B2904D]"
-                  animate={{ 
-                    rotate: [0, 5, -5, 0],
-                  }}
-                  transition={{ 
-                    duration: 5, 
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  style={{
-                    filter: 'drop-shadow(0 0 15px rgba(178,144,77,0.5))'
-                  }}
-                >
-                  &
-                </motion.span>
-
-                {/* Accidentes */}
-                <motion.span 
-                  className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90 group cursor-default"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
+                <span className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                   {language === 'es' ? 'Accidentes' : 'Accidents'}
-                  
-                  {/* Efecto hover de luz */}
-                  <motion.span
-                    className="absolute -inset-3 bg-gradient-to-r from-sky-500/0 via-sky-500/30 to-sky-500/0 blur-xl opacity-0 group-hover:opacity-100 -z-10"
-                    transition={{ duration: 0.3 }}
-                  />
-                  
-                  {/* Subrayado animado */}
-                  <motion.span
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-sky-500/0 via-sky-500 to-sky-500/0 scale-x-0 group-hover:scale-x-100 origin-left"
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.span>
+                </span>
               </div>
 
-              {/* Frase inspiradora MÁS GRANDE */}
+              {/* Frase inspiradora */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -436,21 +340,6 @@ export default function HeroProfessional() {
                 <p className="text-2xl md:text-3xl lg:text-4xl text-white/70 font-light italic text-center lg:text-left tracking-wide relative z-10">
                   {language === 'es' ? 'Inspirados por la gracia de Dios' : 'Inspired by the grace of God'}
                 </p>
-                
-                {/* Brillo sutil detrás del texto */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent blur-xl -z-10"
-                  animate={{
-                    opacity: [0, 0.4, 0],
-                    x: ['-100%', '100%']
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    repeatDelay: 2.5
-                  }}
-                />
               </motion.div>
             </motion.div>
 
@@ -458,7 +347,7 @@ export default function HeroProfessional() {
         </div>
       </div>
 
-      {/* FOOTER: MARQUEE ASOCIACIONES */}
+      {/* FOOTER: MARQUEE ASOCIACIONES - Optimizado */}
       <div className="absolute bottom-0 left-0 right-0 z-30 w-full border-t border-white/5 bg-transparent pt-12 pb-24">
         <div className="relative w-full overflow-hidden mask-linear-fade">
            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#001540] to-transparent z-20" />
@@ -466,6 +355,7 @@ export default function HeroProfessional() {
            
            <motion.div 
              className="flex items-center gap-80 whitespace-nowrap" 
+             style={{ willChange: "transform" }} // IMPORTANTE PARA EL MARQUEE
              animate={{ x: ["0%", "-33.333%"] }}
              transition={{ duration: carouselDuration, repeat: Infinity, ease: "linear" }}
            >
@@ -474,14 +364,15 @@ export default function HeroProfessional() {
                const extraMargin = getExtraMargin(assoc.logo);
                
                return (
-                 <div key={idx} className={`flex items-center justify-center group opacity-40 hover:opacity-100 transition-opacity duration-500 ${extraMargin}`}>
-                   <div className={`relative ${size.containerHeight} w-auto flex-shrink-0 filter grayscale brightness-[1.5] contrast-[1.2] group-hover:grayscale-0 group-hover:brightness-100 group-hover:contrast-100 transition-all duration-500`}>
+                 <div key={idx} className={`flex items-center justify-center opacity-50 ${extraMargin}`}>
+                   <div className={`relative ${size.containerHeight} w-auto flex-shrink-0 filter grayscale brightness-[1.5] contrast-[1.2]`}>
                        <Image 
                          src={assoc.logo} 
                          alt={assoc.name} 
                          height={size.height} 
                          width={size.width} 
-                         className="h-full w-auto object-contain drop-shadow-lg"
+                         className="h-full w-auto object-contain drop-shadow-sm"
+                         loading="lazy"
                        />
                    </div>
                  </div>
@@ -491,13 +382,13 @@ export default function HeroProfessional() {
         </div>
       </div>
 
-      {/* POP UP */}
+      {/* POP UP - Optimizado con blur reducido */}
       {showPopup && (
         <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-            className="absolute top-24 right-4 md:top-32 md:right-10 z-50 w-[90%] max-w-sm md:w-auto p-6 rounded-2xl bg-red-900/40 backdrop-blur-xl border border-red-500/30 shadow-[0_8px_32px_0_rgba(185,28,28,0.25)] group"
+            className="absolute top-24 right-4 md:top-32 md:right-10 z-50 w-[90%] max-w-sm md:w-auto p-6 rounded-2xl bg-red-900/80 backdrop-blur-md border border-red-500/30 shadow-xl group"
         >
             <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-transparent rounded-2xl opacity-50 pointer-events-none" />
 
