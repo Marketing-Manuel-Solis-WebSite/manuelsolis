@@ -591,21 +591,24 @@ export default function OfficesPremium() {
       className={`relative w-full min-h-screen bg-[#001540] overflow-hidden ${font.className} -mt-[140px] pt-[160px]`}
       id={lang === 'es' ? 'oficinas' : 'locations'}
     >
-      <div className="fixed inset-0 z-0 pointer-events-none">
+      <div className="fixed inset-0 z-0 pointer-events-none transform-gpu">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         
+        {/* Orbes optimizados: will-change */}
         <motion.div 
           animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[150px]" 
+          style={{ willChange: "transform, opacity" }}
+          className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[80px]" 
         />
         <motion.div 
           animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.35, 0.15] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-          className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[180px]" 
+          style={{ willChange: "transform, opacity" }}
+          className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[90px]" 
         />
         
-        <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+        <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
       <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 pt-8 pb-16 md:pt-12 md:pb-24">
@@ -660,9 +663,9 @@ export default function OfficesPremium() {
             transition={{ duration: 0.8 }}
             className="lg:col-span-3"
           >
-            <div className="relative bg-[#001540]/90 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-white/10 shadow-[0_0_40px_rgba(56,189,248,0.15)]">
+            <div className="relative bg-[#001540]/90 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-white/10 shadow-[0_0_20px_rgba(56,189,248,0.1)]">
               
-              <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col lg:gap-3">
+              <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col lg:gap-3 max-h-[80vh] overflow-y-auto custom-scrollbar">
                 {officesData.map((office) => (
                   <motion.button
                     key={office.id}
@@ -672,8 +675,8 @@ export default function OfficesPremium() {
                     className={`
                       relative group px-3 py-3 md:px-4 md:py-4 rounded-xl text-left transition-all duration-300
                       ${selectedId === office.id 
-                        ? 'bg-gradient-to-br from-[#B2904D]/30 to-[#B2904D]/10 border-2 border-[#B2904D] shadow-[0_0_20px_rgba(178,144,77,0.4)]' 
-                        : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#B2904D]/30 hover:shadow-[0_0_15px_rgba(56,189,248,0.2)]'
+                        ? 'bg-gradient-to-br from-[#B2904D]/30 to-[#B2904D]/10 border-2 border-[#B2904D] shadow-[0_0_10px_rgba(178,144,77,0.3)]' 
+                        : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#B2904D]/30 hover:shadow-[0_0_10px_rgba(56,189,248,0.1)]'
                       }
                     `}
                   >
@@ -714,7 +717,7 @@ export default function OfficesPremium() {
                 transition={{ duration: 0.3, ease: "easeOut" }} 
                 className="relative"
               >
-                <div className="relative bg-[#001540]/90 backdrop-blur-sm rounded-xl md:rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(56,189,248,0.2)]">
+                <div className="relative bg-[#001540]/90 backdrop-blur-sm rounded-xl md:rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(56,189,248,0.15)]">
                   
                   <div className="relative h-[280px] md:h-[400px] lg:h-[500px] w-full overflow-hidden group bg-black">
                     
@@ -982,7 +985,7 @@ export default function OfficesPremium() {
             >
               <X size={24} />
             </motion.button>
-            
+             
             <motion.div 
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
