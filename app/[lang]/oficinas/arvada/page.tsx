@@ -1,16 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Clock, Star, CheckCircle2, Sparkles, Play } from 'lucide-react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
-// --- IMPORTACIONES REQUERIDAS ---
+// --- IMPORTACIONES ---
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-import ContactForm from '../../../components/ContactForm';
+
+// --- OPTIMIZACIÓN: LAZY LOAD DEL FORMULARIO ---
+// El formulario es pesado y está al final. No necesitamos cargarlo en el Paint inicial.
+const ContactForm = dynamic(() => import('../../../components/ContactForm'), {
+  loading: () => <div className="w-full h-[600px] bg-[#001540]/50 rounded-2xl animate-pulse border border-white/5" />
+});
 
 // --- CONFIGURACIÓN DE FUENTE ---
 const font = Outfit({ 
@@ -32,6 +38,8 @@ const officeData = {
   hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb: 9:00 AM - 2:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat: 9:00 AM - 2:00 PM' },
   mapLink: 'https://maps.app.goo.gl/v8oPzNQr69oGFmpU9',
   videoUrl: 'https://manuelsolis.com/wp-content/uploads/2023/12/arvada.mov',
+  // Usamos una imagen estática del hero de inmigración como poster temporal si no hay uno específico
+  posterImage: '/immigration-hero.png', 
   services: [
     { es: 'LEY DE INMIGRACIÓN', en: 'IMMIGRATION LAW' },
     { es: 'SEGUROS (ASEGURANZA)', en: 'INSURANCE' }
@@ -60,6 +68,15 @@ export default function ArvadaPage() {
   const params = useParams();
   const lang = (params?.lang as 'es' | 'en') || 'es';
   const t = (obj: any) => obj[lang] || obj.es;
+  
+  // Optimización: Detectar móvil para reducir animaciones de fondo
+  const [isMobile, setIsMobile] = useState(true);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <>
@@ -67,22 +84,37 @@ export default function ArvadaPage() {
       
       <main className={`relative w-full min-h-screen bg-[#001540] overflow-hidden ${font.className}`}>
         
-        {/* --- BACKGROUND FX --- */}
-        <div className="fixed inset-0 z-0 pointer-events-none">
+        {/* --- BACKGROUND FX OPTIMIZADO --- */}
+        <div className="fixed inset-0 z-0 pointer-events-none transform-gpu">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
           
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[150px]" 
-          />
-          <motion.div 
-            animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.35, 0.15] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-            className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[180px]" 
-          />
+          {/* Solo animar en desktop para mejorar rendimiento en móviles */}
+          {!isMobile && (
+            <>
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                style={{ willChange: "transform, opacity" }}
+                className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[100px]" 
+              />
+              <motion.div 
+                animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.35, 0.15] }}
+                transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+                style={{ willChange: "transform, opacity" }}
+                className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[120px]" 
+              />
+            </>
+          )}
           
-          <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+          {/* Fallback estático para móviles (más ligero) */}
+          {isMobile && (
+             <>
+                <div className="absolute top-[-10%] right-[-10%] w-[80vw] h-[80vw] bg-blue-600/10 rounded-full blur-[80px]" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[80vw] h-[80vw] bg-sky-800/10 rounded-full blur-[80px]" />
+             </>
+          )}
+          
+          <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
         </div>
 
         {/* --- CONTENIDO PRINCIPAL --- */}
@@ -94,16 +126,16 @@ export default function ArvadaPage() {
               
               {/* Texto Hero */}
               <motion.div 
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, x: -20 }} // Reducido el movimiento
+                animate={{ opacity: 1, x: 0 }} // Usar animate en vez de whileInView para LCP
+                transition={{ duration: 0.6 }}
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 mb-6">
                   <Sparkles className="text-[#B2904D]" size={14} />
                   <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">Arvada, Colorado</span>
                 </div>
 
+                {/* h1 sin fade-in agresivo para mejorar LCP */}
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-thin text-white mb-6 leading-tight">
                   {t(officeData.title)}
                 </h1>
@@ -121,17 +153,18 @@ export default function ArvadaPage() {
 
               {/* Video Hero */}
               <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative aspect-video w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(56,189,248,0.15)] group bg-black"
               >
+                {/* IMPORTANTE: Añadir poster para LCP instantáneo */}
                 <video 
                   autoPlay 
                   muted 
                   loop 
                   playsInline 
+                  poster={officeData.posterImage} 
                   className="w-full h-full object-cover opacity-80"
                 >
                   <source src={officeData.videoUrl} type="video/mp4" />
@@ -154,7 +187,7 @@ export default function ArvadaPage() {
                  <motion.div 
                    initial={{ opacity: 0, y: 20 }}
                    whileInView={{ opacity: 1, y: 0 }}
-                   viewport={{ once: true }}
+                   viewport={{ once: true, margin: "-50px" }}
                    className="bg-white/5 backdrop-blur-md rounded-2xl p-6 md:p-8 border border-white/10"
                  >
                    <h3 className="text-2xl font-light text-white mb-8 flex items-center gap-3">
@@ -162,33 +195,33 @@ export default function ArvadaPage() {
                    </h3>
                    
                    <div className="space-y-6">
-                      {/* Dirección */}
-                      <div className="group">
-                        <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.address)}</p>
-                        <p className="text-white text-lg leading-snug">{officeData.address}</p>
-                        <a href={officeData.mapLink} target="_blank" className="inline-flex items-center gap-2 text-[#B2904D] mt-3 text-sm font-bold hover:text-[#fff] transition-colors">
-                          {t(uiText.viewMap)} →
-                        </a>
-                      </div>
-                      <div className="h-px bg-white/10" />
+                     {/* Dirección */}
+                     <div className="group">
+                       <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.address)}</p>
+                       <p className="text-white text-lg leading-snug">{officeData.address}</p>
+                       <a href={officeData.mapLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[#B2904D] mt-3 text-sm font-bold hover:text-[#fff] transition-colors">
+                         {t(uiText.viewMap)} →
+                       </a>
+                     </div>
+                     <div className="h-px bg-white/10" />
 
-                      {/* Teléfono */}
-                      <div>
-                        <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
-                        <a href={`tel:${officeData.phone}`} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
-                          {officeData.phone}
-                        </a>
-                      </div>
-                      <div className="h-px bg-white/10" />
+                     {/* Teléfono */}
+                     <div>
+                       <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
+                       <a href={`tel:${officeData.phone}`} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
+                         {officeData.phone}
+                       </a>
+                     </div>
+                     <div className="h-px bg-white/10" />
 
-                      {/* Horario */}
-                      <div>
-                        <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.hours)}</p>
-                        <div className="flex items-start gap-3">
-                          <Clock className="text-[#B2904D] mt-1 shrink-0" size={18} />
-                          <p className="text-white text-base">{t(officeData.hours)}</p>
-                        </div>
-                      </div>
+                     {/* Horario */}
+                     <div>
+                       <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.hours)}</p>
+                       <div className="flex items-start gap-3">
+                         <Clock className="text-[#B2904D] mt-1 shrink-0" size={18} />
+                         <p className="text-white text-base">{t(officeData.hours)}</p>
+                       </div>
+                     </div>
                    </div>
                  </motion.div>
 
@@ -239,6 +272,8 @@ export default function ArvadaPage() {
                               alt={person.name} 
                               width={96} 
                               height={96} 
+                              // Optimización: sizes para que el navegador baje la versión correcta
+                              sizes="(max-width: 768px) 100px, 96px"
                               className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" 
                             />
                           </div>
@@ -256,11 +291,11 @@ export default function ArvadaPage() {
               </div>
             </div>
 
-            {/* --- FORMULARIO DE CONTACTO --- */}
+            {/* --- FORMULARIO DE CONTACTO (LAZY LOADED) --- */}
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "100px" }} // Cargar un poco antes de llegar
               className="relative max-w-4xl mx-auto"
             >
               <div className="bg-[#001540]/80 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl">

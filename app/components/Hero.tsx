@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Outfit } from 'next/font/google';
 
 const font = Outfit({ 
@@ -20,8 +20,9 @@ const associations = [
   { name: 'CD State Bar', logo: '/state-bar/cd-state.png' },
 ];
 
-const DESKTOP_DURATION = 25; // Aumentado ligeramente para suavizar
-const MOBILE_DURATION = 15; // Aumentado para rendimiento en móviles
+// Tiempos de animación
+const DESKTOP_DURATION = 35; 
+const MOBILE_DURATION = 20;
 
 export default function HeroProfessional() {
   const { t, language } = useLanguage();
@@ -32,24 +33,26 @@ export default function HeroProfessional() {
 
   useEffect(() => {
     const handleResize = () => {
+      // Consideramos desktop pantallas grandes para activar efectos pesados
       setIsDesktop(window.innerWidth >= 1024);
     };
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    handleResize(); // Check inicial
+    // Debounce simple para evitar recálculos excesivos al redimensionar
+    let timeoutId: NodeJS.Timeout;
+    const debouncedResize = () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(handleResize, 100);
+    };
+
+    window.addEventListener('resize', debouncedResize);
+    return () => window.removeEventListener('resize', debouncedResize);
   }, []);
 
   const getLogoSize = (logoName: string) => {
-    if (logoName.includes('aba-state')) {
-      return { height: 80, width: 180, containerHeight: 'h-20' };
-    }
-    if (logoName.includes('illinois-bar') || logoName.includes('nm-state')) {
-      return { height: 140, width: 280, containerHeight: 'h-32' };
-    }
-    if (logoName.includes('Chicago-bar')) {
-      return { height: 130, width: 250, containerHeight: 'h-30' };
-    }
+    if (logoName.includes('aba-state')) return { height: 80, width: 180, containerHeight: 'h-20' };
+    if (logoName.includes('illinois-bar') || logoName.includes('nm-state')) return { height: 140, width: 280, containerHeight: 'h-32' };
+    if (logoName.includes('Chicago-bar')) return { height: 130, width: 250, containerHeight: 'h-30' };
     return { height: 120, width: 240, containerHeight: 'h-28' };
   };
 
@@ -61,28 +64,27 @@ export default function HeroProfessional() {
     return '';
   };
 
-  const marqueeItems = [
-    ...associations, ...associations, 
-    ...associations, ...associations, 
-    ...associations, ...associations
-  ];
-
+  const marqueeItems = [...associations, ...associations, ...associations];
   const carouselDuration = isDesktop ? DESKTOP_DURATION : MOBILE_DURATION;
+
+  // Parallax suave para elementos visuales (reducido para no saturar)
+  const { scrollY } = useScroll();
+  const yParallax = useTransform(scrollY, [0, 1000], [0, 150]);
 
   return (
     <section 
       ref={containerRef}
       className={`relative min-h-screen w-full flex flex-col justify-center bg-[#001540] overflow-hidden ${font.className} pt-36 lg:pt-44 pb-72`}
     >
-      {/* --- FONDO ATMOSFÉRICO OPTIMIZADO --- */}
+      {/* --- FONDO ATMOSFÉRICO --- */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden transform-gpu">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         
-        {/* TEXTO GIGANTE DE FONDO - Optimizado con will-change */}
+        {/* TEXTO GIGANTE DE FONDO - Optimizado: Solo se anima en desktop */}
         <motion.div
             initial={{ x: "60%" }} 
-            animate={{ x: "-160%" }} 
-            style={{ willChange: "transform" }}
+            animate={isDesktop ? { x: "-160%" } : { x: "0%" }} // En móvil estático para ahorrar memoria de textura
+            style={{ willChange: "transform", transform: "translateZ(0)" }}
             transition={{ 
               duration: 80, 
               repeat: Infinity, 
@@ -91,26 +93,26 @@ export default function HeroProfessional() {
             }}
             className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center opacity-[0.03] select-none pointer-events-none"
         >
-            <span className={`text-[160vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12 ${font.className}`}>
+            <span className={`text-[120vh] lg:text-[160vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12 ${font.className}`}>
                   N/\И/\
             </span>
         </motion.div>
 
-        {/* ORBES DE COLOR - Blur reducido para rendimiento */}
+        {/* ORBES DE COLOR - Blur reducido dinámicamente en móvil */}
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          style={{ willChange: "transform, opacity" }}
-          className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[80px] translate-z-0" 
+          style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+          className={`absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full ${isDesktop ? 'blur-[80px]' : 'blur-[40px]'} translate-z-0`} 
         />
         <motion.div 
             animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
             transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            style={{ willChange: "transform, opacity" }}
-          className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[90px] translate-z-0" 
+            style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+          className={`absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full ${isDesktop ? 'blur-[90px]' : 'blur-[45px]'} translate-z-0`} 
         />
         
-        {/* RUIDO - Opacidad reducida y optimizado */}
+        {/* RUIDO */}
         <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
@@ -121,19 +123,13 @@ export default function HeroProfessional() {
           <motion.div 
             className="lg:col-span-5 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
           >
-            {/* Blur reducido de 3xl a 2xl para rendimiento */}
             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
             
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 50, rotateY: 5, x: 0 }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1, 
-                y: -80, 
-                x: 0, 
-                rotateY: 0 
-              }}
+              animate={{ opacity: 1, scale: 1, y: -80, x: 0, rotateY: 0 }}
               transition={{ duration: 1.5, ease: "easeOut" }}
+              style={{ transform: "translateZ(0)" }}
               className="relative z-10 w-full h-full origin-bottom flex justify-center"
             >
                <div className="w-full h-full lg:scale-[1.5] lg:-translate-x-24 lg:origin-bottom transition-transform duration-1000 transform-gpu">
@@ -142,7 +138,7 @@ export default function HeroProfessional() {
                       src="/manuelsolisl.png"
                       alt="Abogado Manuel Solis"
                       fill
-                      className="object-contain object-bottom drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]" // Sombra reducida
+                      className="object-contain object-bottom drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]"
                       priority
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
@@ -150,7 +146,7 @@ export default function HeroProfessional() {
                </div>
             </motion.div>
 
-            {/* BADGE FLOTANTE - Optimizado backdrop-blur */}
+            {/* BADGE FLOTANTE */}
             <motion.div
                 initial={{ opacity: 0, x: 20 }} 
                 animate={{ opacity: 1, x: 0 }} 
@@ -160,7 +156,7 @@ export default function HeroProfessional() {
                 <div className="group">
                   <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 justify-end">
                     <span className="text-5xl font-extralight tracking-tighter">35</span> 
-                    <span className="text-3x1 font-thin text-[#B2904D] ml-2 group-hover:rotate-12 transition-transform">+</span>
+                    <span className="text-3xl font-thin text-[#B2904D] ml-2 group-hover:rotate-12 transition-transform">+</span>
                   </div>
                   <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
                     {language === 'es' ? 'Años de Experiencia' : 'Years Experience'}
@@ -184,18 +180,14 @@ export default function HeroProfessional() {
               transition={{ delay: 0.3, duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
               className="relative overflow-visible"
             >
-              {/* Resplandor de fondo estático - Blur reducido */}
               <div className="absolute -inset-20 bg-gradient-radial from-[#B2904D]/20 via-sky-500/10 to-transparent blur-[60px] -z-10 opacity-60" />
 
-              {/* Partículas flotantes - Limitadas para rendimiento */}
-              {[...Array(4)].map((_, i) => ( // Reducido de 6 a 4 partículas
+              {/* Partículas - Renderizado condicional para evitar sobrecarga */}
+              {isDesktop && [...Array(4)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="absolute w-1 h-1 bg-[#B2904D]/30 rounded-full"
-                  style={{
-                    left: `${20 + i * 12}%`,
-                    top: `${30 + (i % 3) * 20}%`,
-                  }}
+                  style={{ left: `${20 + i * 12}%`, top: `${30 + (i % 3) * 20}%` }}
                   animate={{
                     y: [-20, 20, -20],
                     opacity: [0, 0.8, 0],
@@ -212,7 +204,6 @@ export default function HeroProfessional() {
 
               <div className="relative flex flex-col items-center lg:items-start overflow-visible">
                 
-                {/* "Más de" */}
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -224,7 +215,7 @@ export default function HeroProfessional() {
                   </span>
                 </motion.div>
 
-                {/* NÚMERO 50,000 */}
+                {/* NÚMERO 50,000 - ANIMACIÓN RESTAURADA PERO OPTIMIZADA */}
                 <div className="relative w-full overflow-visible pl-4 pr-12 lg:pr-16 py-4">
                   <div className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter text-[#B2904D]/15 blur-xl flex items-center justify-center lg:justify-start pl-4 pr-12 lg:pr-16">
                     50,000
@@ -238,11 +229,14 @@ export default function HeroProfessional() {
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
-                      willChange: 'background-position', // Optimización
+                      willChange: "background-position", // Optimización clave
                       filter: 'drop-shadow(0 0 25px rgba(178,144,77,0.4))'
                     }}
-                    animate={{
+                    // OPTIMIZACIÓN: Solo animamos la posición del fondo en Desktop
+                    animate={isDesktop ? {
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                    } : {
+                        backgroundPosition: '0% 50%' // En móvil estático pero con el degradado visible
                     }}
                     transition={{
                       duration: 8,
@@ -253,32 +247,33 @@ export default function HeroProfessional() {
                     50,000
                   </motion.div>
 
-                  {/* Overlay de brillo - Optimizado */}
-                  <motion.div
-                    className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter flex items-center justify-center lg:justify-start pointer-events-none w-full pl-4 pr-12 lg:pr-16 py-4"
-                    style={{
-                      background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)', // Opacidad reducida
-                      backgroundSize: '200% 100%',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      willChange: 'background-position'
-                    }}
-                    animate={{
-                      backgroundPosition: ['-200% 0', '200% 0']
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      repeatDelay: 2
-                    }}
-                  >
-                    50,000
-                  </motion.div>
+                  {/* Overlay de brillo - Solo en Desktop */}
+                  {isDesktop && (
+                    <motion.div
+                        className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter flex items-center justify-center lg:justify-start pointer-events-none w-full pl-4 pr-12 lg:pr-16 py-4"
+                        style={{
+                        background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)',
+                        backgroundSize: '200% 100%',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                        willChange: 'background-position'
+                        }}
+                        animate={{
+                        backgroundPosition: ['-200% 0', '200% 0']
+                        }}
+                        transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        repeatDelay: 2
+                        }}
+                    >
+                        50,000
+                    </motion.div>
+                  )}
                 </div>
 
-                {/* "Casos Ganados" */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -291,7 +286,7 @@ export default function HeroProfessional() {
                     </p>
                     
                     <motion.div
-                      className="absolute inset-0 text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.4em] font-light blur-sm" // Blur reducido
+                      className="absolute inset-0 text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.4em] font-light blur-sm"
                       animate={{ opacity: [0.4, 0.7, 0.4] }}
                       transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                       style={{ color: '#38bdf8' }}
@@ -322,15 +317,12 @@ export default function HeroProfessional() {
                 <span className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                   {language === 'es' ? 'Inmigración' : 'Immigration'}
                 </span>
-                
                 <span className="text-4xl md:text-5xl font-thin text-[#B2904D]"> & </span>
-
                 <span className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                   {language === 'es' ? 'Accidentes' : 'Accidents'}
                 </span>
               </div>
 
-              {/* Frase inspiradora */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -342,12 +334,11 @@ export default function HeroProfessional() {
                 </p>
               </motion.div>
             </motion.div>
-
           </div>
         </div>
       </div>
 
-      {/* FOOTER: MARQUEE ASOCIACIONES - Optimizado */}
+      {/* FOOTER: MARQUEE ASOCIACIONES */}
       <div className="absolute bottom-0 left-0 right-0 z-30 w-full border-t border-white/5 bg-transparent pt-12 pb-24">
         <div className="relative w-full overflow-hidden mask-linear-fade">
            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#001540] to-transparent z-20" />
@@ -355,7 +346,7 @@ export default function HeroProfessional() {
            
            <motion.div 
              className="flex items-center gap-80 whitespace-nowrap" 
-             style={{ willChange: "transform" }} // IMPORTANTE PARA EL MARQUEE
+             style={{ willChange: "transform" }}
              animate={{ x: ["0%", "-33.333%"] }}
              transition={{ duration: carouselDuration, repeat: Infinity, ease: "linear" }}
            >
@@ -382,7 +373,7 @@ export default function HeroProfessional() {
         </div>
       </div>
 
-      {/* POP UP - Optimizado con blur reducido */}
+      {/* POP UP */}
       {showPopup && (
         <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -391,46 +382,24 @@ export default function HeroProfessional() {
             className="absolute top-24 right-4 md:top-32 md:right-10 z-50 w-[90%] max-w-sm md:w-auto p-6 rounded-2xl bg-red-900/80 backdrop-blur-md border border-red-500/30 shadow-xl group"
         >
             <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-transparent rounded-2xl opacity-50 pointer-events-none" />
-
             <div className="relative z-10">
                 <h3 className="text-xl font-bold mb-1 text-red-50 drop-shadow-md">
                     {language === 'es' ? '¿Familiar Detenido?' : 'Detained Relative?'}
                 </h3>
-                
                 <p className="text-sm font-medium text-red-100/90 mb-4">
                     {language === 'es' ? 'Indica cómo podemos ayudarte:' : 'Tell us how we can help:'}
                 </p>
-                
                 <div className="space-y-3">
-                    <a 
-                        href="tel:+18000000000"
-                        className="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn"
-                    >
-                        <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-200 text-xs font-bold group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">
-                            ✓
-                        </span>
-                        <span className="text-sm text-white font-light">
-                            {language === 'es' ? 'Sí, soy cliente' : 'Yes, I am a client'}
-                        </span>
+                    <a href="tel:+18000000000" className="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
+                        <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-200 text-xs font-bold group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">✓</span>
+                        <span className="text-sm text-white font-light">{language === 'es' ? 'Sí, soy cliente' : 'Yes, I am a client'}</span>
                     </a>
-
-                    <a 
-                        href="tel:+18000000000"
-                        className="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn"
-                    >
-                        <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-200 text-xs font-bold group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">
-                            ✓
-                        </span>
-                        <span className="text-sm text-white font-light">
-                            {language === 'es' ? 'Sí, pero no soy cliente' : 'Yes, but I am not a client'}
-                        </span>
+                    <a href="tel:+18000000000" className="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
+                        <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-200 text-xs font-bold group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">✓</span>
+                        <span className="text-sm text-white font-light">{language === 'es' ? 'Sí, pero no soy cliente' : 'Yes, but I am not a client'}</span>
                     </a>
                 </div>
-
-                <button 
-                    onClick={() => setShowPopup(false)}
-                    className="block w-full text-center mt-4 text-xs text-red-200/50 hover:text-white underline decoration-red-200/30 hover:decoration-white transition-all"
-                >
+                <button onClick={() => setShowPopup(false)} className="block w-full text-center mt-4 text-xs text-red-200/50 hover:text-white underline decoration-red-200/30 hover:decoration-white transition-all">
                     {language === 'es' ? 'Continuar al sitio' : 'Continue to site'}
                 </button>
             </div>

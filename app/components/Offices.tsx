@@ -41,7 +41,7 @@ type OfficeData = {
   services: { es: string; en: string }[];
 };
 
-// --- DATOS COMPLETOS (IMÁGENES ACTUALIZADAS A .PNG) ---
+// --- DATOS COMPLETOS ---
 const officesData: OfficeData[] = [
   {
     id: 'houston-principal',
@@ -252,9 +252,22 @@ export default function FuturisticOffices() {
   const [activeId, setActiveId] = useState(officesData[0].id);
   const activeOffice = officesData.find(o => o.id === activeId) || officesData[0];
   const [isOfficeOpen, setIsOfficeOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
 
   // --- LÓGICA DE STATUS ---
   useEffect(() => {
+    // Detectar si es escritorio (para efectos 3D)
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    handleResize();
+    let timeoutId: NodeJS.Timeout;
+    const debouncedResize = () => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(handleResize, 200);
+    };
+    window.addEventListener('resize', debouncedResize);
+
     const checkTime = () => {
         const now = new Date();
         const hour = now.getHours();
@@ -267,7 +280,10 @@ export default function FuturisticOffices() {
     };
     checkTime();
     const interval = setInterval(checkTime, 60000); // Revisar cada minuto
-    return () => clearInterval(interval);
+    return () => {
+        clearInterval(interval);
+        window.removeEventListener('resize', debouncedResize);
+    };
   }, []);
 
   // --- PARALLAX 3D EFFECT VARIABLES ---
@@ -278,7 +294,7 @@ export default function FuturisticOffices() {
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-2, 2]), { stiffness: 100, damping: 20 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
+    if (!isDesktop || !containerRef.current) return;
     const { left, top, width, height } = containerRef.current.getBoundingClientRect();
     mouseX.set((e.clientX - left) / width - 0.5);
     mouseY.set((e.clientY - top) / height - 0.5);
@@ -296,21 +312,23 @@ export default function FuturisticOffices() {
       id="oficinas"
       className={`relative py-32 lg:py-40 w-full min-h-screen bg-[${PRIMARY_COLOR_DARK}] overflow-hidden ${font.className} selection:bg-[${ACCENT_COLOR_GOLD}] selection:text-[${PRIMARY_COLOR_DARK}]`}
     >
-      {/* 1. FONDO ATMOSFÉRICO ACTIVO */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* 1. FONDO ATMOSFÉRICO ACTIVO - OPTIMIZADO */}
+      <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
         {/* Gradiente de profundidad */}
         <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/50 via-[${PRIMARY_COLOR_DARK}] to-[#000a20]`} />
         
-        {/* Orbes flotantes */}
+        {/* Orbes flotantes - Movimiento reducido en móvil y uso de GPU */}
         <motion.div 
-          animate={{ x: [0, 50, 0], y: [0, -50, 0], opacity: [0.3, 0.6, 0.3] }}
+          animate={isDesktop ? { x: [0, 50, 0], y: [0, -50, 0], opacity: [0.3, 0.6, 0.3] } : { opacity: 0.3 }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[120px] mix-blend-screen"
+          style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+          className={`absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full ${isDesktop ? 'blur-[120px]' : 'blur-[60px]'} mix-blend-screen`}
         />
         <motion.div 
-          animate={{ x: [0, -30, 0], y: [0, 30, 0], opacity: [0.2, 0.4, 0.2] }}
+          animate={isDesktop ? { x: [0, -30, 0], y: [0, 30, 0], opacity: [0.2, 0.4, 0.2] } : { opacity: 0.2 }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className={`absolute bottom-0 left-0 w-[600px] h-[600px] bg-[${ACCENT_COLOR_GOLD}]/5 rounded-full blur-[150px] mix-blend-screen`}
+          style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
+          className={`absolute bottom-0 left-0 w-[600px] h-[600px] bg-[${ACCENT_COLOR_GOLD}]/5 rounded-full ${isDesktop ? 'blur-[150px]' : 'blur-[70px]'} mix-blend-screen`}
         />
         {/* Textura de ruido */}
         <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
@@ -404,23 +422,27 @@ export default function FuturisticOffices() {
                 ref={containerRef}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                // OPTIMIZACIÓN: Solo activar 3D transforms en Desktop
+                style={isDesktop ? { rotateX, rotateY, transformStyle: "preserve-3d" } : {}}
                 initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                className={`relative h-full bg-[#000a20]/80 backdrop-blur-2xl rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col`}
+                // OPTIMIZACIÓN: Fondo más sólido para reducir el coste del backdrop-blur
+                className={`relative h-full bg-[#000a20]/90 backdrop-blur-xl rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col will-change-transform`}
               >
                 
                 {/* 1. TOP SECTION (Media + Title) */}
                 <div className="relative h-[350px] w-full bg-black group overflow-hidden">
                    
-                   {/* Imagen de fondo con efecto de foco */}
+                   {/* Imagen de fondo con efecto de foco - Optimizado para GPU */}
                    <Image 
                      src={activeOffice.image} 
                      alt={activeOffice.city} 
                      fill 
                      className="object-cover opacity-60 transition-transform duration-1000 group-hover:scale-105"
+                     sizes="(max-width: 768px) 100vw, 70vw"
+                     priority={false}
                    />
                    <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] via-transparent to-transparent opacity-90" />
                    
@@ -502,7 +524,6 @@ export default function FuturisticOffices() {
                          <span className={`text-[${ACCENT_COLOR_GOLD}] font-medium`}>{language === 'es' ? 'Protocolo' : 'Protocol'}</span> {language === 'es' ? 'de Acceso' : 'Access'}
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                         {/* Los enlaces están configurados para llamar, enviar email o ir al mapa */}
                          <ActionHUD label={language === 'es' ? 'Ubicación' : 'Location Grid'} value={activeOffice.address} icon={MapPin} href={activeOffice.mapLink} />
                          <ActionHUD label={language === 'es' ? 'Línea Directa' : 'Direct Line'} value={activeOffice.phone} icon={Phone} href={`tel:${activeOffice.phone.replace(/[^0-9]/g, '')}`} />
                          <ActionHUD label={language === 'es' ? 'Canal Email' : 'Email Channel'} value={activeOffice.email} icon={Mail} href={`mailto:${activeOffice.email}`} />
