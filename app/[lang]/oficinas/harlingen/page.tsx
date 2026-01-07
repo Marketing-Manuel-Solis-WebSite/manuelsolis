@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Clock, Star, CheckCircle2, Sparkles, Play } from 'lucide-react';
+import { MapPin, Clock, Star, CheckCircle2, Sparkles, Play } from 'lucide-react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
@@ -26,7 +26,7 @@ const officeData = {
   title: { es: 'Harlingen, TX Oficina', en: 'Harlingen, TX Office' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { es: 'Nuestras oficinas en la ciudad de Harlingen nos ayudan a estar más cerca de la frontera con México, sobretodo para los casos de detenidos en los centros de detención de la patrulla fronteriza y las peticiones de asilo.', en: 'Our offices in the city of Harlingen help us to be closer to the border with Mexico, especially for cases of detainees in border patrol detention centers and asylum petitions.' },
-  address: '320 E Jackson St, Harlingen, TX 78550',
+  address: '320 E Jackson St, Harlingen, Texas 78550, United States',
   phone: '(956) 597-7090',
   email: 'harlingen@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb (Solo con cita)', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat (Appointment Only)' },

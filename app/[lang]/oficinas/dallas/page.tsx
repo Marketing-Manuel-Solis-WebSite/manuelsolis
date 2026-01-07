@@ -26,7 +26,7 @@ const officeData = {
   title: { es: 'Dallas, TX Oficina', en: 'Dallas, TX Office' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { es: 'Dallas es una de las grandes ciudades de Texas en las que se concentra una buena cantidad de personas que han venido a este país a vivir y contribuir a su sociedad. Por eso, la firma del abogado Manuel Solís quiso abrir una oficina para ponernos al servicio de nuestros clientes. Nuestras oficinas de Dallas están abiertas de lunes a sábado en horario de 9 de la mañana a 9 de la noche, de manera ininterrumpida.', en: 'Dallas is one of the great cities in Texas where a large number of people who have come to this country to live and contribute to its society are concentrated. That is why the Law Firm of Manuel Solís wanted to open an office to serve our clients. Our Dallas offices are open Monday through Saturday from 9 AM to 9 PM, uninterrupted.' },
-  address: '1120 Empire Central Place, Dallas, Texas 75247',
+  address: '1120 Empire Central PL, Dallas, TX 75247, United States',
   phone: '(214) 753-8315',
   email: 'dallas@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 8:00 AM - 3:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 8:00 AM - 3:00 PM' },

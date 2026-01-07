@@ -26,7 +26,7 @@ const officeData = {
   title: { es: 'El Paso, TX Oficina', en: 'El Paso, TX Office' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { es: 'Nuestras oficinas en la ciudad de El Paso, Texas, nos permiten tener una presencia estratégica en la frontera para atender de la manera más eficiente y rápida posible a nuestros clientes.', en: 'Our offices in the city of El Paso, Texas, allow us to have a strategic presence on the border to serve our clients in the most efficient and rapid way possible.' },
-  address: ' 3632 Admiral St, El Paso, TX 79925',
+  address: ' 3632 Admiral ST, El Paso, TX 79925, United States',
   phone: '(915) 233-7127',
   email: 'elpaso@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM' },

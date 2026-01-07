@@ -32,7 +32,7 @@ const officeData = {
   title: { es: 'Arvada, CO Oficina (Área de Denver)', en: 'Arvada, CO Office (Denver Area)' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { es: 'Nuestras oficinas de Arvada, Colorado, (Denver) sirven a una gran población de inmigrantes que se movieron a la parte interior de los Estados Unidos. Siendo Denver un gran centro industrial, muchos residentes permanentes han buscado allí mejor fortuna y ya están preparados para obtener su ciudadanía o están buscando traer a algún familiar a los Estados Unidos. Desde las Oficinas del Abogado Manuel Solís nos ponemos a su disposición para prestarles el servicio.', en: 'Our Arvada, Colorado (Denver) offices serve a large immigrant population that moved to the interior part of the United States. With Denver being a major industrial center, many permanent residents have sought better fortune there and are now ready to obtain their citizenship or are looking to bring a family member to the United States. The Law Offices of Attorney Manuel Solís are at your disposal to provide service.' },
-  address: '5400 Ward Road, Building IV, Arvada, Colorado 80002',
+  address: '5400 Ward Rd, Bldg IV, Arvada, CO 80002, United States',
   phone: '(720) 358-8973',
   email: 'denver@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb: 9:00 AM - 2:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat: 9:00 AM - 2:00 PM' },

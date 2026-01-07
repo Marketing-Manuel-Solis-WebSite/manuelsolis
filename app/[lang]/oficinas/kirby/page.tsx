@@ -26,7 +26,7 @@ const officeData = {
   title: { es: 'Houston, TX Oficina', en: 'Houston, TX Office' },
   quote: { es: 'Más de 34 años de experiencia y 50,000 casos ganados', en: 'Over 34 years of experience and 50,000 cases won' },
   description: { es: 'El Abogado de Inmigración Manuel Solís le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal.', en: 'Immigration Attorney Manuel Solís guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permit, and permanent residency in the USA. We have legal representation throughout the United States and also offer advice in legal areas such as family law, accidents, medical malpractice, civil and criminal law.' },
-  address: '3730 Kirby Dr Suite 57, Houston, TX 77098',
+  address: '3730 Kirby Dr, Houston, TX 77098, United States',
   phone: '+1 713-429-0237',
   email: 'houston@manuelsolis.com',
   hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },

@@ -28,7 +28,7 @@ const officeData = {
   description: { es: 'Nuestras oficinas de Houston en Navigation Boulevard son el centro neurálgico de nuestra firma. Aquí brindamos atención personalizada y experta a cientos de clientes cada semana.', en: 'Our Houston offices on Navigation Boulevard are the nerve center of our firm. Here we provide expert, personalized attention to hundreds of clients every week.' },
   
   // --- DATOS ACTUALIZADOS ---
-  address: '6705 Navigation Blvd, Houston, TX 77011',
+  address: '6705 Navigation Blvd, Houston, TX 77011, United States',
   phone: '+1 (713) 277-7838',
   email: 'houston@manuelsolis.com',
   // -------------------------

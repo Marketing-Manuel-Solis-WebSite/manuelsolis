@@ -26,7 +26,7 @@ const officeData = {
   title: { es: 'Memphis Airways, TN Oficina', en: 'Memphis Airways, TN Office' },
   quote: { es: 'Contamos con representación legal en todo Estados Unidos', en: 'We have legal representation throughout the United States' },
   description: { es: 'En el Bufete de Abogados Manuel Solís te guiamos en tu trámite de visa humanitaria, permiso de trabajo, ciudadanía, entre otros. Contamos con representación legal en todo Estados Unidos. Nuestro equipo analiza cada situación de manera detallada, elaborando estrategias legales personalizadas.', en: 'At the Law Office of Manuel Solís, we guide you through your humanitarian visa process, work permit, citizenship, and more. We have legal representation throughout the United States. Our team analyzes each situation in detail, developing personalized legal strategies.' },
-  address: '3385 Airways Blvd Suite 320, Memphis, TN 38116',
+  address: '3385 Airways Blvd, STE 320, Memphis, TN 38116, United States',
   phone: '+1 901-557-8357',
   email: 'memphis@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 9:00 AM - 1:00 PM' },

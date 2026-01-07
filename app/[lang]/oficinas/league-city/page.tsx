@@ -33,7 +33,7 @@ const officeData = {
   title: { es: 'League City, TX', en: 'League City, TX' },
   quote: { es: 'Más de 34 años de experiencia y 50,000 casos ganados.', en: 'Over 34 years of experience and 50,000 cases won.' },
   description: { es: 'Abogado de Inmigración Manuel Solís, con más de 34 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal.', en: 'Immigration Attorney Manuel Solís, with more than 34 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permit in USA and permanent residence in USA. We have legal representation throughout the United States and also offer advice in legal areas such as family law, accidents, medical malpractice, civil and criminal law.' },
-  address: '2600 South Shore Blvd Suite 329, League City, TX 77573',
+  address: '2600 S Shore Blvd, League City, TX 77573, United States',
   phone: '(832) 598-3782',
   email: 'leaguecity@manuelsolis.com',
   hours: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },

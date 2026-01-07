@@ -26,7 +26,7 @@ const officeData = {
   title: { es: 'Memphis, TN Oficina', en: 'Memphis, TN Office' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { es: 'Nuestras oficinas de Memphis en Airways Boulevard recién inauguradas listas para atender a nuevos clientes. Nuestra Abogada es Lupita Martínez.', en: 'Our newly opened Memphis offices on Airways Boulevard are ready to serve new clients. Our Attorney is Lupita Martínez.' },
-  address: '3385 Airways Blvd Suite 320, Memphis, Tennessee 38116',
+  address: '3385 Airways Blvd, STE 320, Memphis, TN 38116, United States',
   phone: '(901) 557-8357',
   email: 'memphis@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
