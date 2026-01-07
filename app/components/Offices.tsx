@@ -357,7 +357,7 @@ export default function FuturisticOffices() {
             </span>
           </motion.div>
           <h2 className="text-5xl md:text-7xl font-thin text-white tracking-tight leading-none">
-            {language === 'es' ? 'Centro de' : 'Global'} <span className={`font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-[${ACCENT_COLOR_GOLD}] to-white`}>{language === 'es' ? 'Comando Global' : 'Command Center'}</span>
+            {language === 'es' ? 'Oficinas ubicadas' : 'Offices'} <span className={`font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-[${ACCENT_COLOR_GOLD}] to-white`}>{language === 'es' ? 'En Estados Unidos' : 'In United States'}</span>
           </h2>
         </div>
 
