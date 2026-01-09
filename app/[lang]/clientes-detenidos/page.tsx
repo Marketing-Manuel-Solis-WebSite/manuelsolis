@@ -218,7 +218,7 @@ export default function RecursosPage() {
       {/* =========================================================================
           HERO & INTRO
       ========================================================================= */}
-      <section className="relative pt-44 pb-16 z-10 px-6 lg:px-12">
+      <section className="relative pt-54 pb-16 z-10 px-6 lg:px-12">
         <div className="container mx-auto max-w-6xl text-center">
             
             <motion.h1 

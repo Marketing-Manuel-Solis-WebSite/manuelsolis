@@ -1,17 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Star, CheckCircle2, Sparkles, Play, User, Quote } from 'lucide-react';
+import { MapPin, Clock, User, Quote, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 // --- IMPORTACIONES ---
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-import ContactForm from '../../../components/ContactForm';
 
+// --- OPTIMIZACIÓN: LAZY LOAD DEL FORMULARIO ---
+const ContactForm = dynamic(() => import('../../../components/ContactForm'), {
+  loading: () => <div className="w-full h-[600px] bg-[#001540]/50 rounded-2xl animate-pulse border border-white/5" />
+});
+
+// --- CONFIGURACIÓN DE FUENTE ---
 const font = Outfit({ 
   subsets: ['latin'], 
   weight: ['100', '200', '300', '400', '500', '700', '900'] 
@@ -24,24 +30,23 @@ const officeData = {
   state: 'TN',
   title: { es: 'Memphis, TN (Airways)', en: 'Memphis, TN (Airways)' },
   quote: { es: 'Sirviendo a la comunidad de Tennessee con dedicación y excelencia.', en: 'Serving the Tennessee community with dedication and excellence.' },
-  description: { es: 'Nuestra oficina en Airways Blvd está estratégicamente ubicada para servir a la comunidad de Memphis. Contamos con un equipo experimentado listo para luchar por sus derechos en casos de inmigración y accidentes.', en: 'Our office on Airways Blvd is strategically located to serve the Memphis community. We have an experienced team ready to fight for your rights in immigration and accident cases.' },
-  address: '3385 Airways Blvd Suite 320, Memphis, TN 38116', // DIRECCIÓN REAL ACTUALIZADA
-  phone: '(901) 444-4444', // Teléfono ajustado al código de área de Memphis (o el general)
+  // DESCRIPCIÓN ESTANDARIZADA
+  description: { 
+    es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+    en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+  },
+  address: '3385 Airways Blvd Suite 320, Memphis, TN 38116',
+  phone: '(901) 444-4444',
   email: 'memphis@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 2:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 2:00 PM' },
-  mapLink: 'https://share.google/6RzLU9NgEZtNnQs2a', // URL PROPORCIONADA
-  videoUrl: 'https://manuelsolis.com/wp-content/uploads/2023/12/houston-main.mp4',
-  services: [
-    { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
-    { es: 'ACCIDENTES DE AUTO', en: 'CAR ACCIDENTS' }, 
-    { es: 'DEFENSA CRIMINAL', en: 'CRIMINAL DEFENSE' }, 
-    { es: 'LESIONES PERSONALES', en: 'PERSONAL INJURY' }
-  ],
-  // --- GERENCIA (SOLO TEXTO) ---
+  mapLink: 'https://share.google/6RzLU9NgEZtNnQs2a',
+  image: '/offices/ofAirways.png', // IMAGEN ESPECÍFICA
+  
+  // --- GERENCIA ---
   managers: [
     { name: 'Nombre Gerente', role: { es: 'Gerente de Oficina', en: 'Office Manager' } },
   ],
-  // --- ABOGADOS (LISTA COMPLETA CON BLOB IMAGES) ---
+  // --- ABOGADOS ---
   attorneys: [
     {
       id: 'manuel-solis',
@@ -109,13 +114,13 @@ const officeData = {
   ]
 };
 
+// --- TEXTOS DE INTERFAZ ---
 const uiText = {
   address: { es: 'Dirección', en: 'Address' },
   phone: { es: 'Teléfono', en: 'Phone' },
   hours: { es: 'Horario', en: 'Hours' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
-  services: { es: 'Servicios en esta sede', en: 'Services at this Location' },
-  team: { es: 'Nuestros Abogados', en: 'Our Attorneys' },
+  team: { es: 'Nuestro Equipo Legal', en: 'Our Legal Team' },
   managers: { es: 'Nuestra Gerencia', en: 'Our Management Team' }
 };
 
@@ -123,6 +128,15 @@ export default function OfficeClient() {
   const params = useParams();
   const lang = (params?.lang as 'es' | 'en') || 'es';
   const t = (obj: any) => obj[lang] || obj.es;
+  
+  // Optimización: Detectar móvil
+  const [isMobile, setIsMobile] = useState(true);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <>
@@ -131,21 +145,27 @@ export default function OfficeClient() {
       <main className={`relative w-full min-h-screen bg-[#001540] overflow-hidden ${font.className}`}>
         
         {/* --- BACKGROUND FX --- */}
-        <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="fixed inset-0 z-0 pointer-events-none transform-gpu">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
           
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[150px]" 
-          />
-          <motion.div 
-            animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.35, 0.15] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-            className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[180px]" 
-          />
+          {!isMobile && (
+            <>
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                style={{ willChange: "transform, opacity" }}
+                className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[100px]" 
+              />
+              <motion.div 
+                animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.35, 0.15] }}
+                transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+                style={{ willChange: "transform, opacity" }}
+                className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full blur-[120px]" 
+              />
+            </>
+          )}
           
-          <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+          <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
         </div>
 
         {/* --- CONTENIDO PRINCIPAL --- */}
@@ -155,15 +175,15 @@ export default function OfficeClient() {
             {/* --- HERO SECTION --- */}
             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16 md:mb-24">
               
+              {/* Texto Hero */}
               <motion.div 
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 mb-6">
                   <Sparkles className="text-[#B2904D]" size={14} />
-                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">Memphis, Tennessee</span>
+                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">Memphis, TN</span>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-thin text-white mb-6 leading-tight">
@@ -181,34 +201,29 @@ export default function OfficeClient() {
                 </p>
               </motion.div>
 
+              {/* IMAGEN DE OFICINA (SIN VIDEO NI BOTÓN PLAY) */}
               <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative aspect-video w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(56,189,248,0.15)] group bg-black"
               >
-                <video 
-                  autoPlay 
-                  muted 
-                  loop 
-                  playsInline 
-                  className="w-full h-full object-cover opacity-80"
-                >
-                  <source src={officeData.videoUrl} type="video/mp4" />
-                  <source src={officeData.videoUrl.replace('.mp4', '.mov')} type="video/quicktime" />
-                </video>
+                <Image 
+                  src={officeData.image} 
+                  alt={t(officeData.title)} 
+                  fill 
+                  className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-40" />
-                
-                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm p-2 rounded-full border border-white/20">
-                    <Play fill="white" size={16} className="text-white" />
-                </div>
               </motion.div>
             </div>
 
-            {/* --- INFO GRID --- */}
+            {/* --- INFO GRID (SIN CUADRO DE SERVICIOS) --- */}
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-24">
               
+              {/* Detalles de Contacto */}
               <div className="lg:col-span-5 space-y-8">
                  <motion.div 
                    initial={{ opacity: 0, y: 20 }}
@@ -224,7 +239,7 @@ export default function OfficeClient() {
                       <div className="group">
                         <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.address)}</p>
                         <p className="text-white text-lg leading-snug">{officeData.address}</p>
-                        <a href={officeData.mapLink} target="_blank" className="inline-flex items-center gap-2 text-[#B2904D] mt-3 text-sm font-bold hover:text-[#fff] transition-colors">
+                        <a href={officeData.mapLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[#B2904D] mt-3 text-sm font-bold hover:text-[#fff] transition-colors">
                           {t(uiText.viewMap)} →
                         </a>
                       </div>
@@ -247,33 +262,12 @@ export default function OfficeClient() {
                       </div>
                    </div>
                  </motion.div>
-
-                 <motion.div 
-                   initial={{ opacity: 0, y: 20 }}
-                   whileInView={{ opacity: 1, y: 0 }}
-                   viewport={{ once: true }}
-                   transition={{ delay: 0.1 }}
-                   className="p-6 md:p-8 rounded-2xl border border-[#B2904D]/30 bg-gradient-to-br from-[#B2904D]/10 to-transparent"
-                 >
-                   <h3 className="text-xl font-light text-white mb-6 flex items-center gap-2">
-                     <Star className="text-[#B2904D]" fill="#B2904D" size={20} /> {t(uiText.services)}
-                   </h3>
-                   <ul className="grid gap-4">
-                     {officeData.services.map((service, idx) => (
-                       <li key={idx} className="flex items-center gap-3">
-                         <CheckCircle2 className="text-[#B2904D] shrink-0" size={18} />
-                         <span className="text-white/90 text-sm md:text-base font-medium tracking-wide">
-                           {t(service)}
-                         </span>
-                       </li>
-                     ))}
-                   </ul>
-                 </motion.div>
               </div>
 
+              {/* Grid de Abogados */}
               <div className="lg:col-span-7 space-y-16">
                 
-                {/* --- ABOGADOS (CON HOVER QUOTES) --- */}
+                {/* --- ABOGADOS --- */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -294,10 +288,12 @@ export default function OfficeClient() {
                             src={person.image} 
                             alt={person.name} 
                             fill
+                            sizes="(max-width: 768px) 100px, 150px"
                             className="object-cover object-top transition-transform duration-700 group-hover:scale-110" 
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
                           
+                          {/* Quote en Hover */}
                           <div className="absolute inset-0 p-4 flex flex-col justify-end items-center text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#001540]/60 backdrop-blur-sm">
                              <Quote size={20} className="text-[#B2904D] mb-2 fill-[#B2904D]" />
                              <p className="text-xs text-white/90 italic leading-snug">
@@ -319,7 +315,7 @@ export default function OfficeClient() {
                   </div>
                 </motion.div>
 
-                {/* --- GERENCIA (SOLO TEXTO) --- */}
+                {/* --- GERENCIA --- */}
                 {officeData.managers.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -358,7 +354,7 @@ export default function OfficeClient() {
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "100px" }}
               className="relative max-w-4xl mx-auto"
             >
               <div className="bg-[#001540]/80 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl">

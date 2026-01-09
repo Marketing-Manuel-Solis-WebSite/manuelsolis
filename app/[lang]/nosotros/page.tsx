@@ -74,7 +74,7 @@ export default function NosotrosPage() {
   
   // Estado para optimizaciones
   const [isMobile, setIsMobile] = useState(true);
-  const [showMap, setShowMap] = useState(false);
+  // Eliminado: const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -148,7 +148,7 @@ export default function NosotrosPage() {
           <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] select-none overflow-hidden">
             {isMobile ? (
                <span className="text-[50vh] font-black italic text-white tracking-tighter whitespace-nowrap transform -skew-x-12">
-                  MANUEL SOLIS
+                 MANUEL SOLIS
                </span>
             ) : (
                 <motion.div
@@ -175,7 +175,7 @@ export default function NosotrosPage() {
       ========================================================================= */}
       
       {/* --- HERO SECTION --- */}
-      <section className="relative pt-44 pb-16 z-10 px-6 lg:px-12">
+      <section className="relative pt-54 pb-16 z-10 px-6 lg:px-12">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
@@ -233,8 +233,8 @@ export default function NosotrosPage() {
                 transition={{ delay: 0.6, duration: 1 }}
                 className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
               >
-                 <div dangerouslySetInnerHTML={{ __html: parseText('mission.solis') }} />
-                 <div dangerouslySetInnerHTML={{ __html: parseText('mission.commitment') }} />
+                  <div dangerouslySetInnerHTML={{ __html: parseText('mission.solis') }} />
+                  <div dangerouslySetInnerHTML={{ __html: parseText('mission.commitment') }} />
               </motion.div>
             </div>
           </div>
@@ -275,43 +275,25 @@ export default function NosotrosPage() {
                </div>
             </motion.div>
 
-            {/* MAPA DE GOOGLE OPTIMIZADO (FACADE) */}
+            {/* MAPA DE GOOGLE OPTIMIZADO (SIEMPRE VISIBLE) */}
             <motion.div 
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
                  viewport={{ once: true }}
                  className="lg:col-span-8 min-h-[500px] bg-[#000510] rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden relative"
             >
-               {!showMap ? (
-                   // ESTADO INICIAL: PORTADA ESTÁTICA
-                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#000510] z-10 p-6 text-center">
-                       <MapIcon size={64} className="text-white/20 mb-4" />
-                       <p className="text-white/60 mb-6 max-w-md">{t('usaOffices.description')}</p>
-                       <button 
-                           onClick={() => setShowMap(true)}
-                           className="px-6 py-3 bg-[#B2904D] hover:bg-white text-[#001540] font-bold rounded-xl transition-all shadow-lg flex items-center gap-2 group"
-                       >
-                           <MapPin size={20} className="group-hover:scale-110 transition-transform" />
-                           {t('usaOffices.loadMap')}
-                       </button>
-                   </div>
-               ) : (
-                   // ESTADO ACTIVO: IFRAME (Corrección de visibilidad)
-                   <motion.iframe 
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     transition={{ duration: 0.5 }}
-                     src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d14500000!2d-100!3d38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sLaw%20Offices%20of%20Manuel%20Solis!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
-                     width="100%" 
-                     height="100%" 
-                     style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) contrast(90%)' }}
-                     allowFullScreen={true} 
-                     loading="lazy" 
-                     referrerPolicy="no-referrer-when-downgrade"
-                     className="w-full h-full"
-                     title="Google Maps Locations"
-                   />
-               )}
+                {/* IFRAME SIEMPRE CARGADO */}
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d14500000!2d-100!3d38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sLaw%20Offices%20of%20Manuel%20Solis!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) contrast(90%)' }}
+                  allowFullScreen={true} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full"
+                  title="Google Maps Locations"
+                />
                
                {/* Etiqueta flotante */}
                <div className="absolute top-4 right-4 bg-black/70 backdrop-blur text-white px-4 py-2 rounded-lg text-xs font-bold border border-white/10 pointer-events-none z-20">

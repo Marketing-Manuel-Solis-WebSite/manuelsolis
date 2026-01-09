@@ -6,7 +6,7 @@ import { translations, Language } from '../lib/translations';
 import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import '../../globals.css'; 
+import '../globals.css'; 
 
 interface LayoutParams {
   lang: Language; 

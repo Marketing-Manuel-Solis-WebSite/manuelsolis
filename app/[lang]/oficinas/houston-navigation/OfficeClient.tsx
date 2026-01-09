@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Star, CheckCircle2, Sparkles, Play, User, Quote } from 'lucide-react';
+import { MapPin, Clock, User, Quote, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
@@ -25,31 +25,28 @@ const font = Outfit({
 
 // --- DATOS ESPECÍFICOS: HOUSTON NAVIGATION (6705) ---
 const officeData = {
-  id: 'houston-main-st', // ID interno que usabas
+  id: 'houston-navigation',
   city: 'Houston',
   state: 'TX',
   title: { es: 'Houston, TX (Navigation 6705)', en: 'Houston, TX (Navigation 6705)' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
-  description: { es: 'Nuestras oficinas de Houston en Navigation Boulevard son el centro neurálgico de nuestra firma. Aquí brindamos atención personalizada y experta a cientos de clientes cada semana.', en: 'Our Houston offices on Navigation Boulevard are the nerve center of our firm. Here we provide expert, personalized attention to hundreds of clients every week.' },
+  // DESCRIPCIÓN ESTANDARIZADA
+  description: { 
+    es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+    en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+  },
   address: '6705 Navigation Blvd, Houston, TX 77011, United States',
   phone: '+1 (713) 277-7838',
   email: 'houston@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
-  mapLink: 'https://share.google/wEP84RY0RqTOqR787', // URL PROPORCIONADA
-  videoUrl: 'https://manuelsolis.com/wp-content/uploads/2023/12/houston-main.mp4',
-  posterImage: '/offices/Houston.png', // Fallback
-  services: [
-    { es: 'ACCIDENTES', en: 'ACCIDENTS' }, 
-    { es: 'LEY DE FAMILIA', en: 'FAMILY LAW' }, 
-    { es: 'LEY DE INMIGRACIÓN', en: 'IMMIGRATION LAW' }, 
-    { es: 'LEY CRIMINAL', en: 'CRIMINAL LAW' }, 
-    { es: 'SEGUROS (ASEGURANZA)', en: 'INSURANCE' }
-  ],
-  // --- GERENCIA (SOLO TEXTO) ---
+  mapLink: 'https://share.google/wEP84RY0RqTOqR787',
+  image: '/offices/Houston.png', // IMAGEN ESPECÍFICA
+  
+  // --- GERENCIA ---
   managers: [
     { name: 'Francisco Sotomayor', role: { es: 'Gerente', en: 'Manager' } }
   ],
-  // --- ABOGADOS (LISTA CON BLOB IMAGES) ---
+  // --- ABOGADOS ---
   attorneys: [
     { 
       name: 'Juan Solís', 
@@ -66,7 +63,6 @@ const uiText = {
   phone: { es: 'Teléfono', en: 'Phone' },
   hours: { es: 'Horario', en: 'Hours' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
-  services: { es: 'Servicios en esta sede', en: 'Services at this Location' },
   team: { es: 'Nuestros Abogados', en: 'Our Attorneys' },
   managers: { es: 'Gerencia', en: 'Management' }
 };
@@ -147,33 +143,26 @@ export default function OfficeClient() {
                 </p>
               </motion.div>
 
-              {/* Video Hero */}
+              {/* IMAGEN DE OFICINA */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative aspect-video w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(56,189,248,0.15)] group bg-black"
               >
-                <video 
-                  autoPlay 
-                  muted 
-                  loop 
-                  playsInline 
-                  poster={officeData.posterImage}
-                  className="w-full h-full object-cover opacity-80"
-                >
-                  <source src={officeData.videoUrl} type="video/mp4" />
-                  <source src={officeData.videoUrl.replace('.mp4', '.mov')} type="video/quicktime" />
-                </video>
+                <Image 
+                  src={officeData.image} 
+                  alt={t(officeData.title)} 
+                  fill 
+                  className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-40" />
-                
-                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm p-2 rounded-full border border-white/20">
-                    <Play fill="white" size={16} className="text-white" />
-                </div>
               </motion.div>
             </div>
 
-            {/* --- INFO GRID --- */}
+            {/* --- INFO GRID (SIN CUADRO DE SERVICIOS) --- */}
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-24">
               
               {/* Detalles de Contacto */}
@@ -200,7 +189,7 @@ export default function OfficeClient() {
 
                       <div>
                         <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
-                        <a href={`tel:${officeData.phone.replace(/\s/g, '')}`} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
+                        <a href={`tel:${officeData.phone.replace(/\D/g,'')}`} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
                           {officeData.phone}
                         </a>
                       </div>
@@ -215,35 +204,12 @@ export default function OfficeClient() {
                       </div>
                    </div>
                  </motion.div>
-
-                 {/* Lista de Servicios */}
-                 <motion.div 
-                   initial={{ opacity: 0, y: 20 }}
-                   whileInView={{ opacity: 1, y: 0 }}
-                   viewport={{ once: true }}
-                   transition={{ delay: 0.1 }}
-                   className="p-6 md:p-8 rounded-2xl border border-[#B2904D]/30 bg-gradient-to-br from-[#B2904D]/10 to-transparent"
-                 >
-                   <h3 className="text-xl font-light text-white mb-6 flex items-center gap-2">
-                     <Star className="text-[#B2904D]" fill="#B2904D" size={20} /> {t(uiText.services)}
-                   </h3>
-                   <ul className="grid gap-4">
-                     {officeData.services.map((service, idx) => (
-                       <li key={idx} className="flex items-center gap-3">
-                         <CheckCircle2 className="text-[#B2904D] shrink-0" size={18} />
-                         <span className="text-white/90 text-sm md:text-base font-medium tracking-wide">
-                           {t(service)}
-                         </span>
-                       </li>
-                     ))}
-                   </ul>
-                 </motion.div>
               </div>
 
               {/* Grid de Equipo */}
               <div className="lg:col-span-7 space-y-16">
                 
-                {/* --- SECCIÓN GERENCIA (CONDICIONAL Y TIPADA) --- */}
+                {/* --- SECCIÓN GERENCIA (CONDICIONAL) --- */}
                 {officeData.managers.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -256,7 +222,7 @@ export default function OfficeClient() {
                       <h3 className="text-2xl font-thin text-white">{t(uiText.managers)}</h3>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                       {officeData.managers.map((person, idx) => (
                         <div key={idx} className="group flex flex-col items-center justify-center bg-white/5 rounded-lg p-4 border border-white/5 hover:border-white/20 transition-all duration-300 hover:bg-white/10">
                           <div className="mb-3 p-2 rounded-full bg-white/5 text-white/20 group-hover:text-[#B2904D] group-hover:bg-[#B2904D]/10 transition-colors">
@@ -266,7 +232,7 @@ export default function OfficeClient() {
                           <h5 className="font-bold text-white text-sm text-center leading-tight mb-1">
                             {person.name}
                           </h5>
-                          <span className="text-[10px] font-medium uppercase tracking-wider text-white/40 text-center">
+                          <span className="text-[9px] font-medium uppercase tracking-wider text-white/40 text-center">
                             {t(person.role)}
                           </span>
                         </div>

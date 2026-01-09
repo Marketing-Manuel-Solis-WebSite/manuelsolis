@@ -1,10 +1,10 @@
 'use client'
 
-import { useRef, useCallback } from 'react'
+import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useLanguage } from '../context/LanguageContext'
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Outfit } from 'next/font/google'
 import { ArrowRight } from 'lucide-react'
 
@@ -18,63 +18,27 @@ export default function Team() {
   const { language } = useLanguage();
   const containerRef = useRef<HTMLElement>(null);
 
-  // --- 1. LÓGICA DE MOVIMIENTO (MOUSE PARALLAX) ---
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Optimización: Usar useCallback para la función de evento
-  const handleMouseMove = useCallback(({ currentTarget, clientX, clientY }: React.MouseEvent) => {
-    // Usar requestAnimationFrame para no saturar el hilo principal en eventos de alta frecuencia (Mac trackpads)
-    requestAnimationFrame(() => {
-        const { left, top, width, height } = currentTarget.getBoundingClientRect();
-        
-        // Calcular valores normalizados (-0.5 a 0.5)
-        let newX = (clientX - left) / width - 0.5;
-        let newY = (clientY - top) / height - 0.5;
-
-        // CLAMP: Asegurar que nunca exceda los límites (el bug "disparado")
-        // A veces el mouse puede salir del elemento antes de que el evento termine
-        if (newX < -0.5) newX = -0.5;
-        if (newX > 0.5) newX = 0.5;
-        if (newY < -0.5) newY = -0.5;
-        if (newY > 0.5) newY = 0.5;
-
-        mouseX.set(newX);
-        mouseY.set(newY);
-    });
-  }, [mouseX, mouseY]);
-
-  // Movimiento suave para la imagen
-  // Ajuste: Aumentar damping para evitar oscilaciones bruscas
-  const xImg = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), { stiffness: 50, damping: 30, mass: 0.8 });
-  const yImg = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), { stiffness: 50, damping: 30, mass: 0.8 });
-
-  // Movimiento opuesto para el elemento flotante (Badge)
-  const xBadge = useSpring(useTransform(mouseX, [-0.5, 0.5], [20, -20]), { stiffness: 60, damping: 25, mass: 0.8 });
-  const yBadge = useSpring(useTransform(mouseY, [-0.5, 0.5], [20, -20]), { stiffness: 60, damping: 25, mass: 0.8 });
-
-  // --- 2. LÓGICA DE SCROLL ---
+  // --- 1. LÓGICA DE SCROLL (Sutil y segura, sin mouse) ---
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
   
+  // Movimiento vertical suave solo al hacer scroll (no afecta posición horizontal)
   const yContent = useTransform(scrollYProgress, [0, 1], [30, -30]);
-  // Movimiento vertical suave para los elementos de fondo
   const yBg = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   return (
     <section 
       id="equipo" 
       ref={containerRef}
-      onMouseMove={handleMouseMove}
       className={`relative py-32 lg:py-48 w-full bg-[#001540] overflow-hidden ${font.className}`}
     >
-      {/* --- FONDO ATMOSFÉRICO VIVO OPTIMIZADO --- */}
+      {/* --- FONDO ATMOSFÉRICO VIVO --- */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden transform-gpu">
         <div className="absolute inset-0 bg-[#001540]" />
         
-        {/* --- GUIONES GIGANTES DE FONDO - Optimizado con will-change y opacidad reducida --- */}
+        {/* --- GUIONES GIGANTES DE FONDO --- */}
 
         {/* 1. Guion EXTRA ARRIBA */}
         <motion.div
@@ -131,7 +95,7 @@ export default function Team() {
         </motion.div>
 
 
-        {/* Orbe Dorado (Derecha Arriba) - Blur optimizado */}
+        {/* Orbe Dorado (Derecha Arriba) */}
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.25, 0.15] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -139,7 +103,7 @@ export default function Team() {
           className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#B2904D]/10 rounded-full blur-[80px] translate-x-1/3 -translate-y-1/3 translate-z-0" 
         />
         
-        {/* Orbe Azul (Izquierda Abajo) - Blur optimizado */}
+        {/* Orbe Azul (Izquierda Abajo) */}
         <motion.div 
           animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
@@ -147,7 +111,7 @@ export default function Team() {
           className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-[90px] -translate-x-1/3 translate-y-1/3 translate-z-0" 
         />
         
-        {/* Ruido de textura - Optimizado */}
+        {/* Ruido de textura */}
         <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
@@ -232,46 +196,38 @@ export default function Team() {
             </motion.div>
           </motion.div>
 
-          {/* --- COLUMNA DERECHA: IMAGEN FLOTANTE (Parallax) --- */}
-          <motion.div 
-            className="lg:col-span-6 relative perspective-[1000px] mt-12 lg:mt-0"
-            style={{ willChange: "transform" }}
-          >
-             {/* Glow detrás de la imagen - Animación simplificada */}
+          {/* --- COLUMNA DERECHA: IMAGEN (ESTÁTICA) --- */}
+          <div className="lg:col-span-6 relative mt-12 lg:mt-0">
+             
+             {/* Glow detrás de la imagen */}
              <motion.div 
                animate={{ opacity: [0.4, 0.6, 0.4] }}
                transition={{ duration: 5, repeat: Infinity }}
                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-blue-500/20 blur-[60px] rounded-full -z-10" 
              />
 
-             {/* Contenedor Principal Imagen */}
-             <motion.div 
-               style={{ x: xImg, y: yImg, willChange: "transform" }}
-               className="relative z-10 w-full h-[500px] lg:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 bg-[#001540]"
-             >
+             {/* Contenedor Principal Imagen (SIN movimiento de mouse) */}
+             <div className="relative z-10 w-full h-[500px] lg:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 bg-[#001540]">
                 <Image
                   src="/MSTeam.png"
                   alt="Equipo de abogados Manuel Solis"
                   fill
-                  className="object-cover scale-105" // Escala reducida para mejor rendimiento
+                  className="object-cover scale-105"
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  priority={false} // Lazy loading ya que no es LCP
+                  priority={false}
                 />
                 
                 {/* Overlay Gradiente Elegante */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-60" />
                 
-                {/* Efecto de reflejo de cristal simplificado */}
+                {/* Efecto de reflejo de cristal */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-             </motion.div>
+             </div>
 
-             {/* BADGE FLOTANTE 3D (Se mueve opuesto a la imagen) */}
-             <motion.div 
-               style={{ x: xBadge, y: yBadge, willChange: "transform" }}
-               className="absolute -bottom-10 -left-6 lg:-left-12 z-20"
-             >
+             {/* BADGE FLOTANTE (ESTÁTICO) */}
+             <div className="absolute -bottom-10 -left-6 lg:-left-12 z-20">
                 <div className="relative p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden group">
-                    {/* Brillo interno rotando - Simplificado */}
+                    {/* Brillo interno */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-[#B2904D]/20 to-transparent opacity-50" />
                     
                     <div className="relative z-10 flex flex-col items-start gap-1">
@@ -286,9 +242,9 @@ export default function Team() {
                         </div>
                     </div>
                 </div>
-             </motion.div>
+             </div>
 
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { MapPin, Phone, Clock, Mail, Globe, Navigation, Scale, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MapPin, Phone, Clock, Navigation } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
 import { Outfit } from 'next/font/google';
@@ -27,188 +27,293 @@ const generateMapUrl = (address: string) => {
 // --- TIPOS DE DATOS ---
 type OfficeData = {
   id: string; 
-  city: string;
+  city: string; // Nombre corto para el menú (Ej: North Loop)
   state: string; 
-  title: { es: string; en: string }; 
-  quote: { es: string; en: string }; 
+  title: { es: string; en: string }; // Título completo para la tarjeta (Ej: Houston - North Loop)
   description: { es: string; en: string }; 
   address: string;
   phone: string;
-  email: string;
+  // Email eliminado
   hours: { es: string; en: string };
   mapLink: string;
   image: string;
   services: { es: string; en: string }[];
 };
 
-// --- DATOS COMPLETOS ---
+// --- DATOS COMPLETOS CON NOMBRES DE MENÚ ESPECÍFICOS ---
 const officesData: OfficeData[] = [
   {
     id: 'houston-principal',
-    city: 'Houston',
+    city: 'Navigation', // Antes "Houston"
     state: 'TX',
-    title: { es: 'Houston', en: 'Houston' },
-    quote: { es: 'El centro neurálgico de nuestra firma.', en: 'The nerve center of our firm.' },
-    description: { es: 'Nuestras oficinas de Houston en Navigation Boulevard son las primeras que abrimos hace más de 30 años. Aquí recibimos a más de 200 clientes a la semana.', en: 'Our Houston offices on Navigation Boulevard were the first we opened more than 30 years ago. Here we receive over 200 clients a week.' },
-    address: '6657 Navigation Blvd, Houston, Texas 77011',
-    phone: '(713) 701-1731',
-    email: 'houston@manuelsolis.com',
-    hours: { es: 'Lun - Vie 9am - 7pm | Sáb 9am - 4pm', en: 'Mon - Fri 9am - 7pm | Sat 9am - 4pm' },
-    mapLink: generateMapUrl('6657 Navigation Blvd, Houston, Texas 77011'),
-    image: '/offices/Houston.png',
-    services: [ { es: 'ACCIDENTES', en: 'ACCIDENTS' }, { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, { es: 'CRIMINAL', en: 'CRIMINAL' } ],
-  },
-  {
-    id: 'harlingen',
-    city: 'Harlingen',
-    state: 'TX',
-    title: { es: 'Harlingen', en: 'Harlingen' },
-    quote: { es: 'Conexión directa con la frontera.', en: 'Direct connection with the border.' },
-    description: { es: 'Especializados en defensa de deportación y casos de asilo en la zona de la frontera sur.', en: 'Specializing in deportation defense and asylum cases in the southern border area.' },
-    address: '320 E. Jackson St., Harlingen, Texas 78550',
-    phone: '(956) 597-7090',
-    email: 'harlingen@manuelsolis.com',
-    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
-    mapLink: generateMapUrl('320 E. Jackson St, Harlingen, TX 78550'),
-    image: '/offices/Harlingen.png',
-    services: [ { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, { es: 'DEPORTACIÓN', en: 'DEPORTATION' } ],
-  },
-  {
-    id: 'league-city',
-    city: 'League City',
-    state: 'TX',
-    title: { es: 'League City', en: 'League City' },
-    quote: { es: 'Más de 34 años de experiencia y 50,000 casos ganados.', en: 'Over 34 years of experience and 50,000 cases won.' },
+    title: { es: 'Houston (Navigation)', en: 'Houston (Navigation)' },
     description: { 
-      es: 'Abogado de Inmigración Manuel Solís, con más de 34 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal.', 
-      en: 'Immigration Attorney Manuel Solís, with more than 34 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permit in USA and permanent residence in USA. We have legal representation throughout the United States and also offer advice in legal areas such as family law, accidents, medical malpractice, civil and criminal law.' 
-    },
-    address: '2600 South Shore Blvd Suite 329, League City, TX 77573',
-    phone: '(832) 598-3782',
-    email: 'leaguecity@manuelsolis.com',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: generateMapUrl('2600 South Shore Blvd Suite 329, League City, TX 77573'),
-    image: '/offices/League.png',
-    services: [
-      { es: 'VISA U', en: 'U VISA' },
-      { es: 'VISA VAWA', en: 'VAWA VISA' },
-      { es: 'VISA T', en: 'T VISA' },
-      { es: 'VISA JUVENIL', en: 'JUVENILE VISA' },
-      { es: 'PERMISO DE TRABAJO', en: 'WORK PERMIT' },
-      { es: 'RESIDENCIA PERMANENTE', en: 'PERMANENT RESIDENCE' },
-      { es: 'DERECHO FAMILIAR', en: 'FAMILY LAW' },
-      { es: 'ACCIDENTES', en: 'ACCIDENTS' },
-      { es: 'NEGLIGENCIA MÉDICA', en: 'MEDICAL MALPRACTICE' },
-      { es: 'DERECHO CIVIL Y CRIMINAL', en: 'CIVIL & CRIMINAL LAW' }
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '6705 Navigation Blvd, Houston, TX 77011, United States',
+    phone: '(713) 701-1731',
+    hours: { es: 'Lun - Vie 8am - 5:30pm | Sáb 8am - 1pm', en: 'Mon - Fri 8am - 5:30pm | Sat 8am - 1pm' },
+    mapLink: generateMapUrl('6705 Navigation Blvd, Houston, TX 77011, United States'),
+    image: '/offices/Houston.png',
+    services: [ 
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'CIVIL', en: 'CIVIL' }, 
+        { es: 'CRIMINAL', en: 'CRIMINAL' },
+        { es: 'FAMILIAR', en: 'FAMILY LAW' }
+    ],
+  },
+  {
+    id: 'houston-north-loop',
+    city: 'North Loop', // Antes "Houston"
+    state: 'TX',
+    title: { es: 'Houston (North Loop)', en: 'Houston (North Loop)' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '2950 N Loop W, Houston, TX 77092, United States',
+    phone: '(713) 701-1731',
+    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    mapLink: generateMapUrl('2950 N Loop W, Houston, TX 77092, United States'),
+    image: '/offices/ofLoop.png',
+    services: [ 
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'CRIMINAL', en: 'CRIMINAL' } 
+    ],
+  },
+  {
+    id: 'houston-northchase',
+    city: 'Northchase', // Antes "Houston"
+    state: 'TX',
+    title: { es: 'Houston (Northchase)', en: 'Houston (Northchase)' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '16510 Northchase Dr, Houston, TX 77060, United States',
+    phone: '(713) 701-1731',
+    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    mapLink: generateMapUrl('16510 Northchase Dr, Houston, TX 77060, United States'),
+    image: '/offices/ofNorth.png',
+    services: [ 
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'FAMILIAR', en: 'FAMILY LAW' } 
+    ],
+  },
+  {
+    id: 'houston-main',
+    city: 'Main St', // Antes "Houston"
+    state: 'TX',
+    title: { es: 'Houston (Main St)', en: 'Houston (Main St)' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '708 Main St, Houston, TX 77002, United States', 
+    phone: '(713) 701-1731',
+    hours: { es: 'Lun - Vie 8am - 5pm', en: 'Mon - Fri 8am - 5pm' },
+    mapLink: generateMapUrl('708 Main St, Houston, TX 77002, United States'),
+    image: '/offices/main.png',
+    services: [ 
+        { es: 'CIVIL', en: 'CIVIL' }, 
+        { es: 'CRIMINAL', en: 'CRIMINAL' },
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }
+    ],
+  },
+  {
+    id: 'houston-kirby',
+    city: 'Kirby', // Antes "Houston"
+    state: 'TX',
+    title: { es: 'Houston (Kirby)', en: 'Houston (Kirby)' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '3730 Kirby Dr, Houston, TX 77098, United States',
+    phone: '(713) 701-1731',
+    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    mapLink: generateMapUrl('3730 Kirby Dr, Houston, TX 77098, United States'),
+    image: '/offices/Houston.png',
+    services: [ 
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'FAMILIAR', en: 'FAMILY LAW' }
     ],
   },
   {
     id: 'houston-bellaire',
-    city: 'Houston Bellaire',
+    city: 'Bellaire', // Antes "Houston Bellaire"
     state: 'TX',
-    title: { es: 'Houston Bellaire', en: 'Houston Bellaire' },
-    quote: { es: 'Asistencia especializada en el oeste.', en: 'Specialized assistance in the west.' },
+    title: { es: 'Houston (Bellaire)', en: 'Houston (Bellaire)' },
     description: { 
-        es: 'Nuestra ubicación en Bellaire ofrece servicios con personal bilingüe en inglés, español y chino para atender a la diversa población.', 
-        en: 'Our Bellaire location offers services with bilingual staff in English, Spanish, and Chinese to serve the diverse population.' 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
     }, 
-    address: '9600 Bellaire Blvd, Suite 237, Houston, TX 77036',
+    address: '9188 Bellaire Blvd E, Houston, TX 77036, United States',
     phone: '(713) 701-1731',
-    email: 'bellaire@manuelsolis.com',
     hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
-    mapLink: generateMapUrl('9600 Bellaire Blvd, Suite 237, Houston, TX 77036'),
+    mapLink: generateMapUrl('9188 Bellaire Blvd E, Houston, TX 77036, United States'),
     image: '/offices/Houston.png',
-    services: [ { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, { es: 'FAMILIA', en: 'FAMILY' } ],
-  },
-  {
-    id: 'dallas',
-    city: 'Dallas',
-    state: 'TX',
-    title: { es: 'Dallas', en: 'Dallas' },
-    quote: { es: 'Servicio ininterrumpido para usted.', en: 'Uninterrupted service for you.' },
-    description: { es: 'En el corazón de Dallas, nuestras puertas están abiertas seis días a la semana. Un refugio legal para la comunidad del norte de Texas.', en: 'In the heart of Dallas, our doors are open six days a week. A legal haven for the North Texas community.' },
-    address: '1120 Empire Central place, Dallas, Texas 75247',
-    phone: '(214) 753-8315',
-    email: 'dallas@manuelsolis.com',
-    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 3pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 3pm' },
-    mapLink: generateMapUrl('1120 Empire Central place, Dallas, Texas 75247'),
-    image: '/offices/Dallas.png',
-    services: [{ es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, { es: 'SEGUROS', en: 'INSURANCE' }],
-  },
-  {
-    id: 'el-paso',
-    city: 'El Paso',
-    state: 'TX',
-    title: { es: 'El Paso', en: 'El Paso' },
-    quote: { es: 'Luchando en la línea de batalla.', en: 'Fighting on the front line.' },
-    description: { es: 'Sirviendo a la comunidad de El Paso y Juarez con pasión y experiencia en la ley de inmigración.', en: 'Serving the El Paso and Juarez community with passion and experience in immigration law.' },
-    address: '3632 Admiral Street, El Paso, Texas 79925',
-    phone: '(915) 233-7127',
-    email: 'elpaso@manuelsolis.com',
-    hours: { es: 'Lun - Vie 9am - 5pm', en: 'Mon - Fri 9am - 5pm' },
-    mapLink: generateMapUrl('3632 Admiral Street, El Paso, Texas 79925'),
-    image: '/offices/El paso.png',
-    services: [{ es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, { es: 'CRIMINAL', en: 'CRIMINAL' }],
-  },
-  {
-    id: 'los-angeles',
-    city: 'Los Angeles',
-    state: 'CA',
-    title: { es: 'Los Angeles', en: 'Los Angeles' },
-    quote: { es: 'Defensa sin fronteras.', en: 'Defense without borders.' },
-    description: { es: 'Desde Pico Rivera servimos a toda California. Especialistas en casos complejos de deportación y visas de trabajo.', en: 'Serving all of California from Pico Rivera. Specialists in complex deportation cases and work visas.' },
-    address: '8337 Telegraph Rd, Unit 115, Pico Rivera, California 90660',
-    phone: '(213) 784-1554',
-    email: 'losangeles@manuelsolis.com',
-    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 2pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 2pm' },
-    mapLink: generateMapUrl('8337 Telegraph Rd, Unit 115, Pico Rivera, California 90660'),
-    image: '/offices/Los Angeles.png',
-    services: [{ es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, { es: 'ACCIDENTES', en: 'ACCIDENTS' }],
+    services: [ 
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'FAMILIAR', en: 'FAMILY LAW' } 
+    ],
   },
   {
     id: 'chicago',
     city: 'Chicago',
     state: 'IL',
     title: { es: 'Chicago', en: 'Chicago' }, 
-    quote: { es: 'Justicia para el medio oeste.', en: 'Justice for the Midwest.' },
-    description: { es: 'Atendemos casos de Inmigración, familia, criminal y accidentes en nuestro edificio propio en Cicero.', en: 'We handle Immigration, family, criminal, and accident cases in our own building in Cicero.' },
-    address: '6000 Cermak Rd, Cicero, IL 60804',
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '6000 Cermak Rd, Cicero, IL 60804, United States',
     phone: '(312) 477-0389',
-    email: 'chicago@manuelsolis.com',
     hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 4pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 4pm' },
-    mapLink: generateMapUrl('6000 Cermak Rd, Cicero, IL 60804'),
+    mapLink: generateMapUrl('6000 Cermak Rd, Cicero, IL 60804, United States'),
     image: '/offices/Chicago.png',
-    services: [{ es: 'CRIMINAL', en: 'CRIMINAL' }, { es: 'FAMILIA', en: 'FAMILY' }],
-  },
-  {
-    id: 'denver',
-    city: 'Denver',
-    state: 'CO',
-    title: { es: 'Denver', en: 'Denver' },
-    quote: { es: 'Protección para Colorado.', en: 'Protection for Colorado.' },
-    description: { es: 'Nuestra oficina en Denver extiende nuestros servicios al área de las Montañas Rocosas, enfocados en defensa migratoria.', en: 'Our Denver office extends our services to the Rocky Mountain area, focused on immigration defense.' },
-    address: '5400 Ward Road, Building IV, Arvada, Colorado 80002',
-    phone: '(720) 358-8973',
-    email: 'denver@manuelsolis.com',
-    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
-    mapLink: generateMapUrl('5400 Ward Road, Building IV, Arvada, Colorado 80002'),
-    image: '/offices/Denver.png',
-    services: [{ es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, { es: 'ACCIDENTES', en: 'ACCIDENTS' }],
+    services: [
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'FAMILIAR', en: 'FAMILY LAW' },
+        { es: 'CIVIL', en: 'CIVIL' },
+        { es: 'CRIMINAL', en: 'CRIMINAL' }
+    ],
   },
   {
     id: 'memphis',
     city: 'Memphis',
     state: 'TN',
     title: { es: 'Memphis', en: 'Memphis' },
-    quote: { es: 'Servicio en el corazón de Tennessee.', en: 'Service in the heart of Tennessee.' },
-    description: { es: 'Desde Memphis, servimos a la comunidad en Tennessee y estados circundantes, ofreciendo experiencia en casos de lesiones personales.', en: 'From Memphis, we serve the community in Tennessee and surrounding states, offering expertise in personal injury cases.' },
-    address: '3385 Airways Boulevard, Suite 320, Memphis, Tennessee 38116',
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '3385 Airways Blvd Suite 320, Memphis, TN 38116, United States',
     phone: '(901) 557-8357',
-    email: 'memphis@manuelsolis.com',
     hours: { es: 'Lun - Vie 9am - 5pm', en: 'Mon - Fri 9am - 5pm' },
-    mapLink: generateMapUrl('3385 Airways Boulevard, Suite 320, Memphis, Tennessee 38116'),
+    mapLink: generateMapUrl('3385 Airways Blvd Suite 320, Memphis, TN 38116, United States'),
     image: '/offices/Memphis.png',
-    services: [{ es: 'ACCIDENTES', en: 'ACCIDENTS' }, { es: 'SEGUROS', en: 'INSURANCE' }],
+    services: [
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'CRIMINAL', en: 'CRIMINAL' },
+        { es: 'FAMILIAR', en: 'FAMILY LAW' },
+        { es: 'CIVIL', en: 'CIVIL' }
+    ],
+  },
+  {
+    id: 'denver',
+    city: 'Arvada',
+    state: 'CO',
+    title: { es: 'Arvada (Denver)', en: 'Arvada (Denver)' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    },
+    address: '5400 Ward Rd BLDG IV, Arvada, CO 80002, United States',
+    phone: '(720) 358-8973',
+    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    mapLink: generateMapUrl('5400 Ward Rd BLDG IV, Arvada, CO 80002, United States'),
+    image: '/offices/Denver.png',
+    services: [
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }
+    ],
+  },
+  {
+    id: 'dallas',
+    city: 'Dallas',
+    state: 'TX',
+    title: { es: 'Dallas', en: 'Dallas' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '1120 Empire Central Pl, Dallas, TX 75247, United States',
+    phone: '(214) 753-8315',
+    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 3pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 3pm' },
+    mapLink: generateMapUrl('1120 Empire Central Pl, Dallas, TX 75247, United States'),
+    image: '/offices/Dallas.png',
+    services: [
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'CRIMINAL', en: 'CRIMINAL' },
+        { es: 'CIVIL', en: 'CIVIL' }
+    ],
+  },
+  {
+    id: 'el-paso',
+    city: 'El Paso',
+    state: 'TX',
+    title: { es: 'El Paso', en: 'El Paso' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '3632 Admiral St, El Paso, TX 79925, United States',
+    phone: '(915) 233-7127',
+    hours: { es: 'Lun - Vie 9am - 5pm', en: 'Mon - Fri 9am - 5pm' },
+    mapLink: generateMapUrl('3632 Admiral St, El Paso, TX 79925, United States'),
+    image: '/offices/El paso.png',
+    services: [
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }, 
+        { es: 'CRIMINAL', en: 'CRIMINAL' }
+    ],
+  },
+  {
+    id: 'harlingen',
+    city: 'Harlingen',
+    state: 'TX',
+    title: { es: 'Harlingen', en: 'Harlingen' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '320 E Jackson Ave, Harlingen, TX 78550, United States',
+    phone: '(956) 597-7090',
+    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    mapLink: generateMapUrl('320 E Jackson Ave, Harlingen, TX 78550, United States'),
+    image: '/offices/Harlingen.png',
+    services: [ 
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' }
+    ],
+  },
+  {
+    id: 'los-angeles',
+    city: 'Los Angeles',
+    state: 'CA',
+    title: { es: 'Los Angeles', en: 'Los Angeles' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660, United States',
+    phone: '(213) 784-1554',
+    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 2pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 2pm' },
+    mapLink: generateMapUrl('8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660, United States'),
+    image: '/offices/Los Angeles.png',
+    services: [ 
+        { es: 'INMIGRACIÓN', en: 'IMMIGRATION' },
+        { es: 'CIVIL', en: 'CIVIL' }
+    ],
+  },
+  {
+    id: 'league-city',
+    city: 'League City',
+    state: 'TX',
+    title: { es: 'League City', en: 'League City' },
+    description: { 
+        es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+        en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+    }, 
+    address: '2600 South Shore Blvd, League City, TX 77573, United States',
+    phone: '(832) 598-3782',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    mapLink: generateMapUrl('2600 South Shore Blvd, League City, TX 77573, United States'),
+    image: '/offices/League.png',
+    services: [
+      { es: 'INMIGRACIÓN', en: 'IMMIGRATION' },
+      { es: 'FAMILIAR', en: 'FAMILY LAW' },
+      { es: 'CIVIL', en: 'CIVIL' }
+    ],
   },
 ].sort((a, b) => a.city.localeCompare(b.city)).map(office => ({
     ...office,
@@ -217,13 +322,13 @@ const officesData: OfficeData[] = [
 
 // --- MINI COMPONENTE: ACCIÓN HUD ---
 const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: string, icon: React.ElementType, href: string }) => {
-    const isExternal = href.startsWith('http') || href.startsWith('tel') || href.startsWith('mailto');
+    const isExternal = href.startsWith('http') || href.startsWith('tel');
     
     return (
       <a 
         href={href}
-        target={isExternal && !href.startsWith('tel') && !href.startsWith('mailto') ? "_blank" : undefined}
-        rel={isExternal && !href.startsWith('tel') && !href.startsWith('mailto') ? "noopener noreferrer" : undefined}
+        target={isExternal && !href.startsWith('tel') ? "_blank" : undefined}
+        rel={isExternal && !href.startsWith('tel') ? "noopener noreferrer" : undefined}
         className="block p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 transition-all duration-300 group relative overflow-hidden"
         style={{ transitionProperty: 'background-color, transform' }}
       >
@@ -232,7 +337,7 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
             <p className="text-[10px] text-blue-300/60 font-bold uppercase tracking-widest mb-1 group-hover:text-[#B2904D] transition-colors">
               {label}
             </p>
-            {['tel', 'mailto'].some(prefix => href.startsWith(prefix)) ? (
+            {['tel'].some(prefix => href.startsWith(prefix)) ? (
                 <p className="text-white font-bold text-sm group-hover:text-white transition-colors">{value}</p>
             ) : (
                 <p className="text-white font-medium text-sm group-hover:text-white transition-colors">{value}</p>
@@ -256,7 +361,6 @@ export default function FuturisticOffices() {
 
   // --- LÓGICA DE STATUS ---
   useEffect(() => {
-    // Detectar si es escritorio (para efectos 3D)
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 1024);
     };
@@ -286,25 +390,6 @@ export default function FuturisticOffices() {
     };
   }, []);
 
-  // --- PARALLAX 3D EFFECT VARIABLES ---
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [2, -2]), { stiffness: 100, damping: 20 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-2, 2]), { stiffness: 100, damping: 20 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDesktop || !containerRef.current) return;
-    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
-    mouseX.set((e.clientX - left) / width - 0.5);
-    mouseY.set((e.clientY - top) / height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
   const gT = (obj: any) => obj[lang] || obj.es;
 
   return (
@@ -312,12 +397,12 @@ export default function FuturisticOffices() {
       id="oficinas"
       className={`relative py-32 lg:py-40 w-full min-h-screen bg-[${PRIMARY_COLOR_DARK}] overflow-hidden ${font.className} selection:bg-[${ACCENT_COLOR_GOLD}] selection:text-[${PRIMARY_COLOR_DARK}]`}
     >
-      {/* 1. FONDO ATMOSFÉRICO ACTIVO - OPTIMIZADO */}
+      {/* 1. FONDO ATMOSFÉRICO ACTIVO */}
       <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
         {/* Gradiente de profundidad */}
         <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/50 via-[${PRIMARY_COLOR_DARK}] to-[#000a20]`} />
         
-        {/* Orbes flotantes - Movimiento reducido en móvil y uso de GPU */}
+        {/* Orbes flotantes */}
         <motion.div 
           animate={isDesktop ? { x: [0, 50, 0], y: [0, -50, 0], opacity: [0.3, 0.6, 0.3] } : { opacity: 0.3 }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
@@ -334,10 +419,8 @@ export default function FuturisticOffices() {
         <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
-      {/* --- MÁSCARAS ESTILO ESCALÓN (Negro Degradado) --- */}
-      {/* Arriba */}
+      {/* --- MÁSCARAS ESTILO ESCALÓN --- */}
       <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#000a20] to-transparent z-10 opacity-80 pointer-events-none" />
-      {/* Abajo */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#000a20] to-transparent z-10 opacity-80 pointer-events-none" />
 
 
@@ -345,17 +428,6 @@ export default function FuturisticOffices() {
         
         {/* HEADER: TÍTULO */}
         <div className="text-center mb-20">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className={`inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 shadow-[0_0_20px_rgba(178,144,77,0.1)]`}
-          >
-            <Globe size={14} className={`text-[${ACCENT_COLOR_GOLD}]`} />
-            <span className="text-xs font-bold tracking-[0.3em] text-blue-100 uppercase">
-              {language === 'es' ? 'Diez Puntos de Misión' : 'Ten Mission Points'}
-            </span>
-          </motion.div>
           <h2 className="text-5xl md:text-7xl font-thin text-white tracking-tight leading-none">
             {language === 'es' ? 'Oficinas ubicadas' : 'Offices'} <span className={`font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-[${ACCENT_COLOR_GOLD}] to-white`}>{language === 'es' ? 'En Estados Unidos' : 'In United States'}</span>
           </h2>
@@ -419,23 +491,17 @@ export default function FuturisticOffices() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeOffice.id}
-                ref={containerRef}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                // OPTIMIZACIÓN: Solo activar 3D transforms en Desktop
-                style={isDesktop ? { rotateX, rotateY, transformStyle: "preserve-3d" } : {}}
                 initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                // OPTIMIZACIÓN: Fondo más sólido para reducir el coste del backdrop-blur
                 className={`relative h-full bg-[#000a20]/90 backdrop-blur-xl rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col will-change-transform`}
               >
                 
                 {/* 1. TOP SECTION (Media + Title) */}
                 <div className="relative h-[350px] w-full bg-black group overflow-hidden">
                    
-                   {/* Imagen de fondo con efecto de foco - Optimizado para GPU */}
+                   {/* Imagen de fondo con efecto de foco */}
                    <Image 
                      src={activeOffice.image} 
                      alt={activeOffice.city} 
@@ -446,7 +512,7 @@ export default function FuturisticOffices() {
                    />
                    <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] via-transparent to-transparent opacity-90" />
                    
-                   {/* HUD TOP CORNER: STATUS (ACTIVO / OFFLINE) */}
+                   {/* HUD TOP CORNER: STATUS */}
                    <div className="absolute top-6 right-6 z-20 p-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
                         <p className={`text-[10px] uppercase tracking-widest font-bold flex items-center gap-2 ${isOfficeOpen ? 'text-green-400' : 'text-red-400'}`}>
                             STATUS 
@@ -469,14 +535,11 @@ export default function FuturisticOffices() {
                         </motion.p>
                    </div>
                    
-                   {/* MAIN TITLE */}
+                   {/* MAIN TITLE (SIN QUOTE) */}
                    <div className="absolute bottom-0 left-0 w-full p-8 lg:p-12 z-20">
                      <h3 className="text-4xl md:text-5xl font-serif font-medium text-white mb-2 leading-tight">
                        {gT(activeOffice.title)}
                      </h3>
-                     <p className={`text-[${ACCENT_COLOR_GOLD}] font-light italic text-lg`}>
-                       "{gT(activeOffice.quote)}"
-                     </p>
                    </div>
                 </div>
 
@@ -485,31 +548,11 @@ export default function FuturisticOffices() {
                    
                    {/* DESCRIPTION & SERVICES GRID */}
                    <div className="grid lg:grid-cols-3 gap-8 border-b border-white/10 pb-8">
-                     <div className="lg:col-span-2">
+                     <div className="w-full lg:col-span-3">
                        <h4 className="text-xl font-thin text-white mb-3">{language === 'es' ? 'Contexto de Operación' : 'Operation Context'}</h4>
                        <p className="text-blue-100/70 text-base leading-relaxed text-justify border-l-2 border-white/10 pl-4">
                          {gT(activeOffice.description)}
                        </p>
-                     </div>
-
-                     <div className={`bg-white/5 rounded-2xl p-6 border border-white/10`}>
-                         <h4 className={`text-white font-bold text-sm mb-4 uppercase tracking-widest flex items-center gap-2`}>
-                            <Scale size={14} className={`text-[${ACCENT_COLOR_GOLD}]`} /> {language === 'es' ? 'Áreas Legales' : 'Legal Sectors'}
-                         </h4>
-                         <ul className="space-y-3">
-                             {activeOffice.services.map((service, idx) => (
-                                 <motion.li 
-                                   key={idx} 
-                                   initial={{ opacity: 0, x: -10 }} 
-                                   animate={{ opacity: 1, x: 0 }} 
-                                   transition={{ duration: 0.3, delay: 0.1 * idx }}
-                                   className="flex items-center gap-2 text-blue-100/80 text-sm"
-                                 >
-                                     <ArrowUpRight size={14} className={`text-[${LIGHT_BLUE_ACCENT}]`} />
-                                     {gT(service)}
-                                 </motion.li>
-                             ))}
-                         </ul>
                      </div>
                    </div>
                    
@@ -526,7 +569,7 @@ export default function FuturisticOffices() {
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                          <ActionHUD label={language === 'es' ? 'Ubicación' : 'Location Grid'} value={activeOffice.address} icon={MapPin} href={activeOffice.mapLink} />
                          <ActionHUD label={language === 'es' ? 'Línea Directa' : 'Direct Line'} value={activeOffice.phone} icon={Phone} href={`tel:${activeOffice.phone.replace(/[^0-9]/g, '')}`} />
-                         <ActionHUD label={language === 'es' ? 'Canal Email' : 'Email Channel'} value={activeOffice.email} icon={Mail} href={`mailto:${activeOffice.email}`} />
+                         {/* Email eliminado */}
                          <ActionHUD label={language === 'es' ? 'Horario Operativo' : 'Operating Hours'} value={gT(activeOffice.hours)} icon={Clock} href="#" />
                       </div>
                    </div>

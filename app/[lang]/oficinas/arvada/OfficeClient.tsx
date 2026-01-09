@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Star, CheckCircle2, Sparkles, Play, User, Quote } from 'lucide-react';
+import { MapPin, Clock, User, Quote, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
@@ -30,25 +30,23 @@ const officeData = {
   state: 'CO',
   title: { es: 'Arvada, CO Oficina (Área de Denver)', en: 'Arvada, CO Office (Denver Area)' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
-  description: { es: 'Nuestras oficinas de Arvada, Colorado, (Denver) sirven a una gran población de inmigrantes que se movieron a la parte interior de los Estados Unidos. Siendo Denver un gran centro industrial, muchos residentes permanentes han buscado allí mejor fortuna y ya están preparados para obtener su ciudadanía o están buscando traer a algún familiar a los Estados Unidos. Desde las Oficinas del Abogado Manuel Solís nos ponemos a su disposición para prestarles el servicio.', en: 'Our Arvada, Colorado (Denver) offices serve a large immigrant population that moved to the interior part of the United States. With Denver being a major industrial center, many permanent residents have sought better fortune there and are now ready to obtain their citizenship or are looking to bring a family member to the United States. The Law Offices of Attorney Manuel Solís are at your disposal to provide service.' },
+  // DESCRIPCIÓN ESTANDARIZADA
+  description: { 
+    es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+    en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
+  },
   address: '5400 Ward Rd, Bldg IV, Arvada, CO 80002',
   phone: '(720) 358-8973',
   email: 'denver@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb: 9:00 AM - 2:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat: 9:00 AM - 2:00 PM' },
-  mapLink: 'https://share.google/QbeutobA9WchbNPcu', // URL PROPORCIONADA
-  videoUrl: 'https://manuelsolis.com/wp-content/uploads/2023/12/arvada.mov',
-  posterImage: '/immigration-hero.png', // Fallback
-  services: [
-    { es: 'LEY DE INMIGRACIÓN', en: 'IMMIGRATION LAW' },
-    { es: 'SEGUROS (ASEGURANZA)', en: 'INSURANCE' },
-    { es: 'ACCIDENTES DE AUTO', en: 'CAR ACCIDENTS' },
-    { es: 'DEFENSA CRIMINAL', en: 'CRIMINAL DEFENSE' }
-  ],
-  // --- GERENCIA (SOLO TEXTO) ---
+  mapLink: 'https://share.google/QbeutobA9WchbNPcu',
+  image: '/offices/Denver.png', // IMAGEN ESPECÍFICA
+  
+  // --- GERENCIA ---
   managers: [
     { name: 'Nombre Gerente', role: { es: 'Gerente de Oficina', en: 'Office Manager' } },
   ],
-  // --- ABOGADOS (LISTA CON BLOB IMAGES) ---
+  // --- ABOGADOS ---
   attorneys: [
     { 
       name: 'Manuel Solís', 
@@ -107,7 +105,6 @@ const uiText = {
   phone: { es: 'Teléfono', en: 'Phone' },
   hours: { es: 'Horario', en: 'Hours' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
-  services: { es: 'Servicios en esta sede', en: 'Services at this Location' },
   team: { es: 'Nuestro Equipo Legal', en: 'Our Legal Team' },
   managers: { es: 'Nuestra Gerencia', en: 'Our Management Team' }
 };
@@ -171,7 +168,7 @@ export default function OfficeClient() {
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 mb-6">
                   <Sparkles className="text-[#B2904D]" size={14} />
-                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">Arvada, Colorado</span>
+                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">Arvada, CO</span>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-thin text-white mb-6 leading-tight">
@@ -189,33 +186,26 @@ export default function OfficeClient() {
                 </p>
               </motion.div>
 
-              {/* Video Hero */}
+              {/* IMAGEN DE OFICINA (SIN VIDEO NI BOTÓN PLAY) */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative aspect-video w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(56,189,248,0.15)] group bg-black"
               >
-                <video 
-                  autoPlay 
-                  muted 
-                  loop 
-                  playsInline 
-                  poster={officeData.posterImage} 
-                  className="w-full h-full object-cover opacity-80"
-                >
-                  <source src={officeData.videoUrl} type="video/mp4" />
-                  <source src={officeData.videoUrl.replace('.mp4', '.mov')} type="video/quicktime" />
-                </video>
+                <Image 
+                  src={officeData.image} 
+                  alt={t(officeData.title)} 
+                  fill 
+                  className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-40" />
-                
-                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm p-2 rounded-full border border-white/20">
-                    <Play fill="white" size={16} className="text-white" />
-                </div>
               </motion.div>
             </div>
 
-            {/* --- INFO GRID --- */}
+            {/* --- INFO GRID (SIN CUADRO DE SERVICIOS) --- */}
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-24">
               
               {/* Detalles de Contacto */}
@@ -257,35 +247,12 @@ export default function OfficeClient() {
                       </div>
                    </div>
                  </motion.div>
-
-                 {/* Lista de Servicios */}
-                 <motion.div 
-                   initial={{ opacity: 0, y: 20 }}
-                   whileInView={{ opacity: 1, y: 0 }}
-                   viewport={{ once: true }}
-                   transition={{ delay: 0.1 }}
-                   className="p-6 md:p-8 rounded-2xl border border-[#B2904D]/30 bg-gradient-to-br from-[#B2904D]/10 to-transparent"
-                 >
-                   <h3 className="text-xl font-light text-white mb-6 flex items-center gap-2">
-                     <Star className="text-[#B2904D]" fill="#B2904D" size={20} /> {t(uiText.services)}
-                   </h3>
-                   <ul className="grid gap-4">
-                     {officeData.services.map((service, idx) => (
-                       <li key={idx} className="flex items-center gap-3">
-                         <CheckCircle2 className="text-[#B2904D] shrink-0" size={18} />
-                         <span className="text-white/90 text-sm md:text-base font-medium tracking-wide">
-                           {t(service)}
-                         </span>
-                       </li>
-                     ))}
-                   </ul>
-                 </motion.div>
               </div>
 
               {/* Grid de Abogados */}
               <div className="lg:col-span-7 space-y-16">
                 
-                {/* --- ABOGADOS (CON HOVER QUOTES) --- */}
+                {/* --- ABOGADOS --- */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -333,7 +300,7 @@ export default function OfficeClient() {
                   </div>
                 </motion.div>
 
-                {/* --- GERENCIA (SOLO TEXTO) --- */}
+                {/* --- GERENCIA --- */}
                 {officeData.managers.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -368,7 +335,7 @@ export default function OfficeClient() {
               </div>
             </div>
 
-            {/* --- FORMULARIO DE CONTACTO (LAZY LOADED) --- */}
+            {/* --- FORMULARIO DE CONTACTO --- */}
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
