@@ -20,7 +20,6 @@ const associations = [
   { name: 'CD State Bar', logo: '/state-bar/cd-state.png' },
 ];
 
-// Tiempos de animación
 const DESKTOP_DURATION = 35; 
 const MOBILE_DURATION = 20;
 
@@ -33,12 +32,10 @@ export default function HeroProfessional() {
 
   useEffect(() => {
     const handleResize = () => {
-      // Consideramos desktop pantallas grandes para activar efectos pesados
       setIsDesktop(window.innerWidth >= 1024);
     };
 
-    handleResize(); // Check inicial
-    // Debounce simple para evitar recálculos excesivos al redimensionar
+    handleResize(); 
     let timeoutId: NodeJS.Timeout;
     const debouncedResize = () => {
         clearTimeout(timeoutId);
@@ -67,7 +64,6 @@ export default function HeroProfessional() {
   const marqueeItems = [...associations, ...associations, ...associations];
   const carouselDuration = isDesktop ? DESKTOP_DURATION : MOBILE_DURATION;
 
-  // Parallax suave para elementos visuales (reducido para no saturar)
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 1000], [0, 150]);
 
@@ -76,14 +72,12 @@ export default function HeroProfessional() {
       ref={containerRef}
       className={`relative min-h-screen w-full flex flex-col justify-center bg-[#001540] overflow-hidden ${font.className} pt-36 lg:pt-44 pb-72`}
     >
-      {/* --- FONDO ATMOSFÉRICO --- */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden transform-gpu">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         
-        {/* TEXTO GIGANTE DE FONDO - Optimizado: Solo se anima en desktop */}
         <motion.div
             initial={{ x: "60%" }} 
-            animate={isDesktop ? { x: "-160%" } : { x: "0%" }} // En móvil estático para ahorrar memoria de textura
+            animate={isDesktop ? { x: "-160%" } : { x: "0%" }}
             style={{ willChange: "transform", transform: "translateZ(0)" }}
             transition={{ 
               duration: 80, 
@@ -98,7 +92,6 @@ export default function HeroProfessional() {
             </span>
         </motion.div>
 
-        {/* ORBES DE COLOR - Blur reducido dinámicamente en móvil */}
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -112,14 +105,12 @@ export default function HeroProfessional() {
           className={`absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/20 rounded-full ${isDesktop ? 'blur-[90px]' : 'blur-[45px]'} translate-z-0`} 
         />
         
-        {/* RUIDO */}
         <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10 flex-grow flex flex-col justify-center">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* IZQUIERDA: IMAGEN */}
           <motion.div 
             className="lg:col-span-5 w-full relative h-[500px] lg:h-[750px] flex items-end justify-center perspective-[1000px] mt-0 lg:mt-0"
           >
@@ -146,7 +137,6 @@ export default function HeroProfessional() {
                </div>
             </motion.div>
 
-            {/* BADGE FLOTANTE */}
             <motion.div
                 initial={{ opacity: 0, x: 20 }} 
                 animate={{ opacity: 1, x: 0 }} 
@@ -165,7 +155,6 @@ export default function HeroProfessional() {
             </motion.div>
           </motion.div>
 
-          {/* DERECHA: CONTENIDO HERO */}
           <div className="lg:col-span-7 w-full space-y-8 lg:space-y-10 pl-0 lg:pl-16 relative z-20 lg:-mt-20">
             
             <motion.div 
@@ -173,7 +162,6 @@ export default function HeroProfessional() {
               className="absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-sky-500/30 to-transparent origin-top hidden lg:block" 
             />
 
-            {/* CONTENEDOR PRINCIPAL DEL NÚMERO */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, y: 30 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
@@ -182,7 +170,6 @@ export default function HeroProfessional() {
             >
               <div className="absolute -inset-20 bg-gradient-radial from-[#B2904D]/20 via-sky-500/10 to-transparent blur-[60px] -z-10 opacity-60" />
 
-              {/* Partículas - Renderizado condicional para evitar sobrecarga */}
               {isDesktop && [...Array(4)].map((_, i) => (
                 <motion.div
                   key={i}
@@ -215,7 +202,6 @@ export default function HeroProfessional() {
                   </span>
                 </motion.div>
 
-                {/* NÚMERO 50,000 - ANIMACIÓN RESTAURADA PERO OPTIMIZADA */}
                 <div className="relative w-full overflow-visible pl-4 pr-12 lg:pr-16 py-4">
                   <div className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter text-[#B2904D]/15 blur-xl flex items-center justify-center lg:justify-start pl-4 pr-12 lg:pr-16">
                     50,000
@@ -229,14 +215,13 @@ export default function HeroProfessional() {
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
-                      willChange: "background-position", // Optimización clave
+                      willChange: "background-position",
                       filter: 'drop-shadow(0 0 25px rgba(178,144,77,0.4))'
                     }}
-                    // OPTIMIZACIÓN: Solo animamos la posición del fondo en Desktop
                     animate={isDesktop ? {
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                     } : {
-                        backgroundPosition: '0% 50%' // En móvil estático pero con el degradado visible
+                        backgroundPosition: '0% 50%'
                     }}
                     transition={{
                       duration: 8,
@@ -247,7 +232,6 @@ export default function HeroProfessional() {
                     50,000
                   </motion.div>
 
-                  {/* Overlay de brillo - Solo en Desktop */}
                   {isDesktop && (
                     <motion.div
                         className="absolute inset-0 text-[6rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter flex items-center justify-center lg:justify-start pointer-events-none w-full pl-4 pr-12 lg:pr-16 py-4"
@@ -298,7 +282,6 @@ export default function HeroProfessional() {
               </div>
             </motion.div>
 
-            {/* DIVISOR */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -306,14 +289,14 @@ export default function HeroProfessional() {
               className="w-full max-w-md mx-auto lg:mx-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent origin-left"
             />
 
-            {/* TEXTO SECUNDARIO */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 1 }}
               className="space-y-8"
             >
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6">
+              {/* --- SEO FIX: H1 HEADER IMPLEMENTED --- */}
+              <h1 className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6">
                 <span className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                   {language === 'es' ? 'Inmigración' : 'Immigration'}
                 </span>
@@ -321,7 +304,7 @@ export default function HeroProfessional() {
                 <span className="relative text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                   {language === 'es' ? 'Accidentes' : 'Accidents'}
                 </span>
-              </div>
+              </h1>
 
               <motion.div
                 initial={{ opacity: 0 }}
@@ -338,7 +321,6 @@ export default function HeroProfessional() {
         </div>
       </div>
 
-      {/* FOOTER: MARQUEE ASOCIACIONES */}
       <div className="absolute bottom-0 left-0 right-0 z-30 w-full border-t border-white/5 bg-transparent pt-12 pb-24">
         <div className="relative w-full overflow-hidden mask-linear-fade">
            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#001540] to-transparent z-20" />
@@ -373,7 +355,6 @@ export default function HeroProfessional() {
         </div>
       </div>
 
-      {/* POP UP */}
       {showPopup && (
         <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.95 }}

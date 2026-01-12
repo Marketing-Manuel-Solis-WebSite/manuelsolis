@@ -49,6 +49,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   const localeSEO = currentLang === 'es' ? 'es-US' : 'en-US';
 
+  const keywordList = typeof t.seo.home.keywords === 'string' 
+    ? t.seo.home.keywords.split(',').map(k => k.trim()) 
+    : t.seo.home.keywords;
+
   return {
     metadataBase: new URL(SITE_URL),
     title: {
@@ -57,7 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     description: t.seo.home.description,
     keywords: [
-      ...t.seo.home.keywords,
+      ...keywordList,
       "Abogado de Inmigración USA",
       "Immigration Lawyer USA",
       "Defensa Criminal",
