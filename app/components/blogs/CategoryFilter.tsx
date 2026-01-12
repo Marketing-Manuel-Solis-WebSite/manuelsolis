@@ -20,33 +20,32 @@ export default function CategoryFilter({ categories, selected, onSelect, lang }:
   const t = (obj: any) => obj[lang] || obj.es;
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="flex flex-wrap justify-center gap-3 md:gap-4">
       {categories.map((cat, idx) => {
         const isSelected = selected === cat.id;
         
         return (
           <motion.button
             key={cat.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
+            transition={{ delay: idx * 0.05 }}
             onClick={() => onSelect(cat.id)}
             className={`
-              relative px-6 py-2.5 rounded-full text-sm font-medium tracking-wide transition-all duration-300
-              border backdrop-blur-sm
+              relative px-6 py-2.5 rounded-full text-xs md:text-sm font-bold tracking-widest uppercase transition-all duration-300
+              border backdrop-blur-sm overflow-hidden group
               ${isSelected 
-                ? 'bg-[#B2904D] border-[#B2904D] text-white shadow-[0_0_20px_rgba(178,144,77,0.4)]' 
-                : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:border-white/30 hover:text-white'
+                ? 'bg-[#B2904D] border-[#B2904D] text-[#001540] shadow-[0_0_20px_rgba(178,144,77,0.4)]' 
+                : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white hover:border-white/30'
               }
             `}
           >
-            {/* Texto de la categoría */}
-            <span className="relative z-10">{t(cat)}</span>
-
-            {/* Efecto de fondo sutil al hacer hover */}
+            {/* Fondo animado al hover */}
             {!isSelected && (
-              <div className="absolute inset-0 rounded-full bg-white opacity-0 hover:opacity-5 transition-opacity duration-300" />
+                 <span className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             )}
+            
+            <span className="relative z-10">{t(cat)}</span>
           </motion.button>
         );
       })}

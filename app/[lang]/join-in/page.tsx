@@ -7,6 +7,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { motion, AnimatePresence, Variants } from 'framer-motion'; 
 import { User, Phone, Mail, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react';
 import { Outfit } from 'next/font/google';
+import { track } from '@vercel/analytics/react'; // 1. Importación para Analytics
 
 // --- CONFIGURACIÓN DE FUENTE Y COLORES ---
 const font = Outfit({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700'] });
@@ -263,6 +264,14 @@ export default function JoinInPage() {
             });
 
             if (response.ok) {
+                
+                // 2. TRACKING DEL EVENTO PERSONALIZADO "Join In Clicks"
+                track('Join In Clicks', {
+                    location: 'join_in_page',
+                    language: lang,
+                    timestamp: new Date().toISOString()
+                });
+
                 setSubmitStatus('success');
                 setFormData({ 
                     firstName: '', 
