@@ -23,6 +23,17 @@ const font = Outfit({
   weight: ['100', '200', '300', '400', '500', '700', '800', '900'] 
 });
 
+// IMPORTANTE: Cambia esto por tu dominio real si es diferente
+const SITE_URL = 'https://www.manuelsolis.com'; 
+
+// Rutas a imágenes existentes en tu carpeta public
+const IMAGES = {
+  // Usamos immigration-hero.png ya que existe en tu proyecto. 
+  // Si subes una imagen específica para este blog, cambia esta ruta.
+  article: '/immigration-hero.png', 
+  author: '/abogado-manuel-solis.jpg'
+};
+
 // --- CONTENIDO TRADUCIDO ---
 const blogContent = {
   es: {
@@ -237,17 +248,38 @@ const blogContent = {
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
+  
+  // Construcción de la URL de la imagen (Ruta absoluta para redes sociales)
+  const imageUrl = `${SITE_URL}${IMAGES.article}`;
 
   return {
     title: t.metaTitle,
     description: t.metaDesc,
+    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
-      images: ['/images/blog/visa-u-bonafide.jpg'],
+      url: `${SITE_URL}/${lang}/blog/permiso_de_trabajo_visa_u`,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: t.title,
+        },
+      ],
       type: 'article',
       publishedTime: '2025-01-16T08:00:00.000Z',
       authors: ['Manuel Solís'],
+      section: 'Inmigración',
+      tags: ['Visa U', 'Permiso de Trabajo', 'Bona Fide', 'Inmigración USA'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t.title,
+      description: t.metaDesc,
+      images: [imageUrl],
+      creator: '@AbogadoMSolis',
     }
   };
 }
@@ -255,31 +287,34 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 // --- CONTENIDO DEL POST ---
 export default async function BlogPostPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const isEs = lang === 'es';
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  // Schema.org JSON-LD
+  // Schema.org JSON-LD (Datos estructurados para Google)
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": t.title,
-    "image": "https://www.manuelsolis.com/images/blog/visa-u-bonafide.jpg",
+    "image": `${SITE_URL}${IMAGES.article}`,
     "author": {
       "@type": "Person",
       "name": "Manuel Solís",
-      "url": "https://www.manuelsolis.com/abogados/manuel-solis"
+      "url": `${SITE_URL}/abogados`
     },
     "publisher": {
       "@type": "Organization",
       "name": "Manuel Solis Law Firm",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.manuelsolis.com/logo-manuel-solis.png"
+        "url": `${SITE_URL}/logo-manuel-solis.png`
       }
     },
     "datePublished": "2025-01-16",
     "dateModified": "2025-01-16",
-    "description": t.metaDesc
+    "description": t.metaDesc,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/${lang}/blog/permiso_de_trabajo_visa_u`
+    }
   };
 
   return (
@@ -330,21 +365,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
             </h1>
 
             {/* Autor & Share */}
-            <div className="flex items-center gap-4 border-t border-white/10 pt-8 animate-fade-in-up delay-200">
-              <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#B2904D] shadow-lg shadow-[#B2904D]/20">
-                <Image 
-                  src="https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20Solis.png"
-                  alt="Abogado Manuel Solis"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div>
-                <p className="text-white font-bold text-lg">Abogado Manuel Solís</p>
-                <p className="text-white/50 text-sm">{t.ui.authorRole}</p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-t border-white/10 pt-8 animate-fade-in-up delay-200">
+              <div className="flex items-center gap-4">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#B2904D] shadow-lg shadow-[#B2904D]/20">
+                  <Image 
+                    src={IMAGES.author}
+                    alt="Abogado Manuel Solis"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="text-white font-bold text-lg">Abogado Manuel Solís</p>
+                  <p className="text-white/50 text-sm">{t.ui.authorRole}</p>
+                </div>
               </div>
               
-              {/* Botones de compartir funcionales */}
+              {/* Botones de compartir */}
               <ShareButtons title={t.title} uiShareText={t.ui.share} />
             </div>
           </section>
@@ -372,7 +409,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   {/* Introducción */}
                   <section>
                     {t.intro.map((paragraph, idx) => (
-                      <p key={idx} dangerouslySetInnerHTML={{ __html: paragraph }} />
+                      <p key={idx} dangerouslySetInnerHTML={{ __html: paragraph }} className="mb-6" />
                     ))}
                   </section>
 
@@ -382,10 +419,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Lightbulb size={24} className="text-[#B2904D]" /></div>
                       {t.sections.whatIs.title}
                     </h2>
-                    <p className="text-xl text-white italic mb-4 border-l-4 border-[#B2904D] pl-6">
+                    <p className="text-xl text-white italic mb-6 border-l-4 border-[#B2904D] pl-6 py-2">
                       {t.sections.whatIs.quote}
                     </p>
-                    <p>{t.sections.whatIs.text}</p>
+                    <p className="mb-4">{t.sections.whatIs.text}</p>
                     <ul className="grid gap-4 mt-6 list-none pl-0">
                       {t.sections.whatIs.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -402,28 +439,29 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   {/* Por qué existe */}
                   <section>
                     <h2 className="text-3xl font-serif text-white mb-6">{t.sections.whyExists.title}</h2>
-                    <p>{t.sections.whyExists.text}</p>
+                    <p className="mb-8">{t.sections.whyExists.text}</p>
                     <div className="grid md:grid-cols-2 gap-4 my-8">
-                       <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2">
+                        {/* Cards Reusables con Tailwind */}
+                        <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2 hover:border-[#B2904D]/50 transition-colors">
                           <FileText className="text-[#B2904D]" />
                           <span className="font-bold text-white">{t.sections.whyExists.cards.complete.title}</span>
                           <span className="text-sm">{t.sections.whyExists.cards.complete.desc}</span>
-                       </div>
-                       <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2">
+                        </div>
+                        <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2 hover:border-[#B2904D]/50 transition-colors">
                           <ShieldCheck className="text-[#B2904D]" />
                           <span className="font-bold text-white">{t.sections.whyExists.cards.victim.title}</span>
                           <span className="text-sm">{t.sections.whyExists.cards.victim.desc}</span>
-                       </div>
-                       <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2">
+                        </div>
+                        <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2 hover:border-[#B2904D]/50 transition-colors">
                           <User className="text-[#B2904D]" />
                           <span className="font-bold text-white">{t.sections.whyExists.cards.coop.title}</span>
                           <span className="text-sm">{t.sections.whyExists.cards.coop.desc}</span>
-                       </div>
-                       <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2">
+                        </div>
+                        <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2 hover:border-[#B2904D]/50 transition-colors">
                           <AlertCircle className="text-[#B2904D]" />
                           <span className="font-bold text-white">{t.sections.whyExists.cards.record.title}</span>
                           <span className="text-sm">{t.sections.whyExists.cards.record.desc}</span>
-                       </div>
+                        </div>
                     </div>
                     <p>{t.sections.whyExists.footer}</p>
                   </section>
@@ -442,7 +480,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                         ))}
                       </ul>
                       <div className="mt-6 p-4 bg-[#B2904D]/10 rounded-xl border border-[#B2904D]/20 text-sm text-[#B2904D]">
-                         {t.sections.requirements.note}
+                          {t.sections.requirements.note}
                       </div>
                     </div>
                   </section>
@@ -450,7 +488,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   {/* Tiempos */}
                   <section>
                      <h2 className="text-3xl font-serif text-white mb-6">{t.sections.timeline.title}</h2>
-                     <div className="flex items-center gap-4 mb-6">
+                     <div className="flex items-center gap-4 mb-6 p-4 bg-white/5 rounded-xl inline-flex w-full md:w-auto">
                         <TrendingUp size={32} className="text-[#B2904D]" />
                         <span className="text-2xl font-bold text-white">{t.sections.timeline.time}</span>
                      </div>
@@ -458,82 +496,82 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   </section>
 
                   {/* Caso Real */}
-                  <section className="relative">
+                  <section className="relative my-12">
                     <div className="absolute -left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-[#B2904D] to-transparent hidden md:block" />
                     <h2 className="text-3xl font-serif text-white mb-8">{t.sections.realCase.title}</h2>
                     
-                    <div className="bg-[#000a20] p-8 rounded-2xl border border-white/10 shadow-xl relative overflow-hidden group">
+                    <div className="bg-[#000a20] p-8 rounded-2xl border border-white/10 shadow-xl relative overflow-hidden group hover:border-[#B2904D]/30 transition-all">
                        <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                           <Quote size={120} />
                        </div>
                        
                        <h3 className="text-xl font-bold text-white mb-2">{t.sections.realCase.caseTitle}</h3>
-                       <p className="text-sm text-[#B2904D] mb-6">{t.sections.realCase.date}</p>
+                       <p className="text-sm text-[#B2904D] mb-6 font-bold uppercase tracking-wider">{t.sections.realCase.date}</p>
 
-                       <p className="italic text-white/90 mb-6">
+                       <p className="italic text-white/90 mb-6 text-lg">
                          {t.sections.realCase.quote}
                        </p>
 
-                       <p>{t.sections.realCase.result}</p>
+                       <p className="mb-6">{t.sections.realCase.result}</p>
 
-                       <div className="grid grid-cols-2 gap-4 mt-6">
-                          <div className="flex items-center gap-2 text-sm text-white font-medium">
+                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                          <div className="flex items-center gap-2 text-sm text-white font-medium bg-white/5 p-3 rounded-lg">
                              <Award size={16} className="text-[#B2904D]" /> {t.sections.realCase.benefits[0]}
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-white font-medium">
+                          <div className="flex items-center gap-2 text-sm text-white font-medium bg-white/5 p-3 rounded-lg">
                              <Heart size={16} className="text-[#B2904D]" /> {t.sections.realCase.benefits[1]}
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-white font-medium">
+                          <div className="flex items-center gap-2 text-sm text-white font-medium bg-white/5 p-3 rounded-lg">
                              <Star size={16} className="text-[#B2904D]" /> {t.sections.realCase.benefits[2]}
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-white font-medium">
+                          <div className="flex items-center gap-2 text-sm text-white font-medium bg-white/5 p-3 rounded-lg">
                              <CheckCircle2 size={16} className="text-[#B2904D]" /> {t.sections.realCase.benefits[3]}
                           </div>
                        </div>
                     </div>
                   </section>
                   
-                  {/* Preguntas Finales */}
+                  {/* Preguntas Frecuentes */}
                   <section>
                     <h3 className="text-2xl text-white font-bold mb-4">{t.sections.faq.q1}</h3>
                     <p dangerouslySetInnerHTML={{ __html: t.sections.faq.a1 }} />
 
-                    <h3 className="text-2xl text-white font-bold mb-4 mt-8">{t.sections.faq.q2}</h3>
+                    <h3 className="text-2xl text-white font-bold mb-4 mt-10">{t.sections.faq.q2}</h3>
                     <p>{t.sections.faq.a2}</p>
-                    <ul className="list-disc pl-6 space-y-2">
-                       {t.sections.faq.list2.map((item, idx) => (
-                         <li key={idx}>{item}</li>
-                       ))}
+                    <ul className="list-disc pl-6 space-y-2 mt-4 text-white/80">
+                        {t.sections.faq.list2.map((item, idx) => (
+                          <li key={idx}>{item}</li>
+                        ))}
                     </ul>
-                    <p className="mt-4">{t.sections.faq.footer}</p>
+                    <p className="mt-4 font-medium text-white">{t.sections.faq.footer}</p>
                   </section>
 
                   {/* Conclusión */}
                   <div className="p-8 bg-gradient-to-r from-[#B2904D] to-[#8a6e36] rounded-3xl text-[#001540] shadow-lg mt-12">
-                     <h2 className="text-2xl font-bold font-serif mb-4 flex items-center gap-2">
-                        <MessageCircle size={28} /> {t.sections.conclusion.title}
-                     </h2>
-                     <p className="font-medium text-lg mb-6">
-                       {t.sections.conclusion.text}
-                     </p>
-                     <p className="font-bold text-xl mb-8">
-                       {t.sections.conclusion.advice}
-                     </p>
-                     
-                     <Link href="#contacto" className="inline-flex items-center justify-center w-full md:w-auto px-8 py-4 bg-[#001540] text-white font-bold rounded-xl hover:bg-white hover:text-[#001540] transition-all shadow-xl gap-2">
-                        <Send size={18} />
-                        {t.ui.ctaButton}
-                     </Link>
+                      <h2 className="text-2xl font-bold font-serif mb-4 flex items-center gap-2">
+                         <MessageCircle size={28} /> {t.sections.conclusion.title}
+                      </h2>
+                      <p className="font-medium text-lg mb-6 leading-relaxed">
+                        {t.sections.conclusion.text}
+                      </p>
+                      <p className="font-bold text-xl mb-8">
+                        {t.sections.conclusion.advice}
+                      </p>
+                      
+                      <Link href="#contacto" className="inline-flex items-center justify-center w-full md:w-auto px-8 py-4 bg-[#001540] text-white font-bold rounded-xl hover:bg-white hover:text-[#001540] transition-all shadow-xl gap-2">
+                         <Send size={18} />
+                         {t.ui.ctaButton}
+                      </Link>
                   </div>
 
                   {/* Fuentes */}
                   <div className="border-t border-white/10 pt-8 mt-12">
-                     <h4 className="text-sm font-bold text-white/40 uppercase mb-4">{t.sections.sources.title}</h4>
-                     <ul className="space-y-2 text-sm text-white/40 list-none pl-0">
-                        {t.sections.sources.list.map((source, idx) => (
-                          <li key={idx} className="flex items-center gap-2"><ArrowUpRight size={12} /> {source}</li>
-                        ))}
-                     </ul>
+                      <h4 className="text-xs font-bold text-white/40 uppercase mb-4 tracking-widest">{t.sections.sources.title}</h4>
+                      <ul className="space-y-2 text-sm text-white/40 list-none pl-0">
+                         {t.sections.sources.list.map((source, idx) => (
+                           <li key={idx} className="flex items-center gap-2 hover:text-[#B2904D] transition-colors"><ArrowUpRight size={12} /> {source}</li>
+                         ))}
+                      </ul>
                   </div>
 
                 </div>
@@ -544,14 +582,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                  
                  {/* Card de Autor */}
                  <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md sticky top-32">
-                    <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-wider border-b border-white/10 pb-4">Sobre el Autor</h3>
+                    <h3 className="text-xs font-bold text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-4">Sobre el Autor</h3>
                     <div className="flex flex-col items-center text-center">
                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#001540] shadow-[0_0_0_2px_#B2904D] mb-4">
-                          <Image src="https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20Solis.png" alt="Manuel Solis" fill className="object-cover" />
+                          <Image src={IMAGES.author} alt="Manuel Solis" fill className="object-cover" />
                        </div>
                        <h4 className="text-xl font-bold text-white">Manuel Solís</h4>
                        <p className="text-sm text-[#B2904D] mb-4">{t.ui.authorRole}</p>
-                       <Link href="/abogados" className="text-sm font-bold text-white border border-white/20 px-6 py-2 rounded-full hover:bg-white hover:text-[#001540] transition-colors w-full">
+                       <Link href={`/${lang}/abogados`} className="text-sm font-bold text-white border border-white/20 px-6 py-2 rounded-full hover:bg-white hover:text-[#001540] transition-colors w-full">
                          Ver Perfil
                        </Link>
                     </div>
@@ -565,7 +603,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         </main>
         
         {/* --- FORMULARIO DE CONTACTO --- */}
-        <ContactForm />
+        <div id="contacto">
+           <ContactForm />
+        </div>
 
         {/* --- FOOTER --- */}
         <Footer />
