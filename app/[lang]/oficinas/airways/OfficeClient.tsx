@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, User, Quote, Sparkles } from 'lucide-react';
+import { MapPin, Clock, User, Quote, Sparkles, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
@@ -46,71 +46,39 @@ const officeData = {
   managers: [
     { name: 'Nombre Gerente', role: { es: 'Gerente de Oficina', en: 'Office Manager' } },
   ],
-  // --- ABOGADOS ---
+  // --- ABOGADOS (ACTUALIZADO SEGÚN TU LISTA) ---
   attorneys: [
     {
-      id: 'manuel-solis',
-      name: 'Manuel Solís',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20Solis.png',
-      role: { es: 'Abogado Principal y Fundador', en: 'Principal Attorney and Founder' },
-      quote: { es: "Me siento enormemente bendecido por servir de herramienta para cumplir sus sueños.", en: "I feel enormously blessed to serve as a tool to fulfill their dreams." }
-    },
-    {
-      id: 'manuel-solis-iii',
-      name: 'Manuel E. Solís III',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20E%20Solis%20III.png',
-      role: { es: 'Abogado', en: 'Attorney' },
-      quote: { es: "Me apasiona ayudar a la comunidad y a las personas necesitadas.", en: "I am passionate about helping the community and people in need." }
-    },
-    {
-      id: 'juan-solis',
-      name: 'Juan Solís',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Juan%20Solis.png',
-      role: { es: 'Abogado', en: 'Attorney' },
-      quote: { es: "Saber no es suficiente; debemos aplicar. Estar dispuesto no es suficiente; debemos hacer.", en: "Knowing is not enough; we must apply. Being willing is not enough; we must do." }
+      id: 'lupita-valenzuela-martinez',
+      name: 'Lupita Valenzuela Martinez',
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Lupita.png',
+      role: { es: 'Abogada', en: 'Attorney' },
+      quote: { es: "Una defensora impulsada por un propósito.", en: "An advocate driven by purpose." }
     },
     {
       id: 'sara-james',
       name: 'Sara James',
       image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Sara%20James.png',
-      role: { es: 'Abogada (Memphis)', en: 'Attorney (Memphis)' },
+      role: { es: 'Abogada', en: 'Attorney' },
       quote: { es: "Apoyarlos a alcanzar su sueño americano es un honor y un privilegio.", en: "Supporting them to achieve their American dream is an honor and a privilege." }
     },
     {
-      id: 'lupita-valenzuela-martinez',
-      name: 'Lupita Valenzuela Martinez',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Lupita.png',
-      role: { es: 'Abogada (Memphis)', en: 'Attorney (Memphis)' },
-      quote: { es: "Una defensora impulsada por un propósito.", en: "An advocate driven by purpose." }
-    },
-    {
-      id: 'alejandro-manzano',
-      name: 'Alejandro Manzano',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Alejandro.png',
+      id: 'roberto-garcia',
+      name: 'Roberto Garcia',
+      image: '/LogoInformacion.png', // Placeholder
       role: { es: 'Abogado', en: 'Attorney' },
-      quote: { es: "Un acompañamiento legal claro y humano.", en: "Clear and humane legal representation." }
-    },
-    {
-      id: 'gabriel-perez',
-      name: 'Gabriel Perez',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gabriel%20Perez.png',
-      role: { es: 'Abogado', en: 'Attorney' },
-      quote: { es: "No hay excusa para que nadie trabaje más duro que tú.", en: "There's no excuse for anyone to work harder than you." }
-    },
-    {
-      id: 'ni-yan',
-      name: 'Ni Yan',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Ni%20Yan.png',
-      role: { es: 'Abogada', en: 'Attorney' },
-      quote: { es: "Orgullosa de ayudar a las personas a alcanzar el sueño americano.", en: "Proud to help people achieve the American dream." }
-    },
-    {
-      id: 'andrew-fink',
-      name: 'Andrew Fink',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Andrew%20Fink.png',
-      role: { es: 'Socio de Litigio', en: 'Litigation Partner' },
-      quote: { es: "Integridad, trabajo duro, pasión, competencia y humildad.", en: "Integrity, hard work, passion, competence, and humility." }
+      quote: { es: "Compromiso total con la justicia.", en: "Total commitment to justice." }
     }
+  ],
+  // --- SERVICIOS (AÑADIDO) ---
+  services: [
+    { es: 'Inmigración', en: 'Immigration' },
+    { es: 'Planificación Patrimonial', en: 'Estate Planning' },
+    { es: 'Familiar', en: 'Family Law' },
+    { es: 'Seguros', en: 'Insurance' },
+    { es: 'Accidentes', en: 'Accidents' },
+    { es: 'Ticket', en: 'Traffic Tickets' },
+    { es: 'Detenidos', en: 'Detained' }
   ]
 };
 
@@ -121,7 +89,8 @@ const uiText = {
   hours: { es: 'Horario', en: 'Hours' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
   team: { es: 'Nuestro Equipo Legal', en: 'Our Legal Team' },
-  managers: { es: 'Nuestra Gerencia', en: 'Our Management Team' }
+  managers: { es: 'Nuestra Gerencia', en: 'Our Management Team' },
+  services: { es: 'Servicios Disponibles', en: 'Available Services' } // Nuevo texto
 };
 
 export default function OfficeClient() {
@@ -201,7 +170,7 @@ export default function OfficeClient() {
                 </p>
               </motion.div>
 
-              {/* IMAGEN DE OFICINA (SIN VIDEO NI BOTÓN PLAY) */}
+              {/* IMAGEN DE OFICINA */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -220,7 +189,7 @@ export default function OfficeClient() {
               </motion.div>
             </div>
 
-            {/* --- INFO GRID (SIN CUADRO DE SERVICIOS) --- */}
+            {/* --- INFO GRID --- */}
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-24">
               
               {/* Detalles de Contacto */}
@@ -264,7 +233,7 @@ export default function OfficeClient() {
                  </motion.div>
               </div>
 
-              {/* Grid de Abogados */}
+              {/* Grid de Equipo y Servicios */}
               <div className="lg:col-span-7 space-y-16">
                 
                 {/* --- ABOGADOS --- */}
@@ -315,13 +284,34 @@ export default function OfficeClient() {
                   </div>
                 </motion.div>
 
+                {/* --- SERVICIOS AÑADIDOS --- */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="w-1 h-8 bg-blue-400 rounded-full" />
+                    <h3 className="text-2xl font-thin text-white">{t(uiText.services)}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {officeData.services.map((service, idx) => (
+                      <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 hover:bg-[#B2904D]/20 transition-colors cursor-default flex items-center gap-2">
+                        <Scale size={14} className="text-[#B2904D]" />
+                        {t(service)}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+
                 {/* --- GERENCIA --- */}
                 {officeData.managers.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
+                    transition={{ delay: 0.4 }}
                   >
                     <div className="flex items-center gap-4 mb-10">
                       <div className="w-1 h-8 bg-white/50 rounded-full" />

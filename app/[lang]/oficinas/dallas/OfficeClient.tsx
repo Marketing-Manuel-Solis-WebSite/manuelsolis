@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, User, Quote, Sparkles } from 'lucide-react';
+import { MapPin, Clock, User, Quote, Sparkles, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
@@ -30,7 +30,6 @@ const officeData = {
   state: 'TX',
   title: { es: 'Dallas, TX Oficina', en: 'Dallas, TX Office' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
-  // DESCRIPCIÓN ESTANDARIZADA
   description: { 
     es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
@@ -40,32 +39,14 @@ const officeData = {
   email: 'dallas@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 8:00 AM - 3:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 8:00 AM - 3:00 PM' },
   mapLink: 'https://share.google/sotBoLXMzRVJcTVJ5',
-  image: '/offices/Dallas.png', // IMAGEN ESPECÍFICA
+  image: '/offices/Dallas.png',
   
   // --- GERENCIA ---
   managers: [
     { name: 'Maribel Degollado', role: { es: 'Gerente', en: 'Manager' } }
   ],
-  // --- ABOGADOS ---
+  // --- ABOGADOS (ACTUALIZADO SEGÚN TU LISTA) ---
   attorneys: [
-    { 
-      name: 'Manuel Solís', 
-      role: { es: 'Abogado', en: 'Attorney' }, 
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20Solis.png',
-      quote: { es: "Me siento enormemente bendecido por servir de herramienta para cumplir sus sueños.", en: "I feel enormously blessed to serve as a tool to fulfill their dreams." }
-    },
-    { 
-      name: 'Manuel E. Solís III', 
-      role: { es: 'Abogado', en: 'Attorney' }, 
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20E%20Solis%20III.png',
-      quote: { es: "Me apasiona ayudar a la comunidad y a las personas necesitadas.", en: "I am passionate about helping the community and people in need." }
-    },
-    { 
-      name: 'Juan Solís', 
-      role: { es: 'Abogado', en: 'Attorney' }, 
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Juan%20Solis.png',
-      quote: { es: "Saber no es suficiente; debemos aplicar. Estar dispuesto no es suficiente; debemos hacer.", en: "Knowing is not enough; we must apply. Being willing is not enough; we must do." }
-    },
     { 
       name: 'Mark McBroom', 
       role: { es: 'Abogado', en: 'Attorney' }, 
@@ -73,17 +54,24 @@ const officeData = {
       quote: { es: "Representación eficiente y precisa con compasión y comprensión.", en: "Efficient and accurate representation with compassion and understanding." }
     },
     { 
-      name: 'Gregory Finney', 
-      role: { es: 'Abogado', en: 'Attorney' }, 
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gregory%20Finney.png',
-      quote: { es: "Mantente curioso.", en: "Stay curious." }
-    },
-    { 
       name: 'Stephanie L. García Vidal', 
       role: { es: 'Abogada', en: 'Attorney' }, 
       image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Stephanie.png',
       quote: { es: "Un compromiso con la esperanza.", en: "A commitment to hope." }
+    },
+    { 
+      name: 'Michael Salas', 
+      role: { es: 'Abogado', en: 'Attorney' }, 
+      image: '/LogoInformacion.png', // Placeholder
+      quote: { es: "Defendiendo el futuro de su familia.", en: "Defending your family's future." }
     }
+  ],
+  // --- SERVICIOS (AÑADIDO) ---
+  services: [
+    { es: 'Inmigración', en: 'Immigration' },
+    { es: 'Seguros', en: 'Insurance' },
+    { es: 'Accidentes', en: 'Accidents' },
+    { es: 'Detenidos', en: 'Detained' }
   ]
 };
 
@@ -94,7 +82,8 @@ const uiText = {
   hours: { es: 'Horario', en: 'Hours' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
   team: { es: 'Nuestro Equipo Legal', en: 'Our Legal Team' },
-  managers: { es: 'Gerencia', en: 'Management' }
+  managers: { es: 'Gerencia', en: 'Management' },
+  services: { es: 'Servicios Disponibles', en: 'Available Services' } // Nuevo
 };
 
 export default function OfficeClient() {
@@ -147,7 +136,6 @@ export default function OfficeClient() {
             {/* --- HERO SECTION --- */}
             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16 md:mb-24">
               
-              {/* Texto Hero */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -173,7 +161,6 @@ export default function OfficeClient() {
                 </p>
               </motion.div>
 
-              {/* IMAGEN DE OFICINA (SIN VIDEO NI BOTÓN PLAY) */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -192,10 +179,9 @@ export default function OfficeClient() {
               </motion.div>
             </div>
 
-            {/* --- INFO GRID (SIN CUADRO DE SERVICIOS) --- */}
+            {/* --- INFO GRID --- */}
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-24">
               
-              {/* Detalles de Contacto */}
               <div className="lg:col-span-5 space-y-8">
                  <motion.div 
                    initial={{ opacity: 0, y: 20 }}
@@ -236,47 +222,14 @@ export default function OfficeClient() {
                  </motion.div>
               </div>
 
-              {/* Grid de Equipo */}
               <div className="lg:col-span-7 space-y-16">
                 
-                {/* --- SECCIÓN GERENCIA (CONDICIONAL) --- */}
-                {officeData.managers.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <div className="flex items-center gap-4 mb-8">
-                      <div className="w-1 h-8 bg-white/50 rounded-full" />
-                      <h3 className="text-2xl font-thin text-white">{t(uiText.managers)}</h3>
-                    </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {officeData.managers.map((person, idx) => (
-                        <div key={idx} className="group flex flex-col items-center justify-center bg-white/5 rounded-lg p-4 border border-white/5 hover:border-white/20 transition-all duration-300 hover:bg-white/10">
-                          <div className="mb-3 p-2 rounded-full bg-white/5 text-white/20 group-hover:text-[#B2904D] group-hover:bg-[#B2904D]/10 transition-colors">
-                             <User size={18} />
-                          </div>
-                          
-                          <h5 className="font-bold text-white text-sm text-center leading-tight mb-1">
-                            {person.name}
-                          </h5>
-                          <span className="text-[9px] font-medium uppercase tracking-wider text-white/40 text-center">
-                            {t(person.role)}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* --- SECCIÓN ABOGADOS --- */}
+                {/* --- ABOGADOS --- */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.2 }}
                 >
                   <div className="flex items-center gap-4 mb-10">
                     <div className="w-1 h-10 bg-[#B2904D] rounded-full" />
@@ -291,13 +244,12 @@ export default function OfficeClient() {
                           <Image 
                             src={person.image} 
                             alt={person.name} 
-                            fill
+                            fill 
                             sizes="(max-width: 768px) 100px, 150px"
                             className="object-cover object-top transition-transform duration-700 group-hover:scale-110" 
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
                           
-                          {/* Quote en Hover */}
                           <div className="absolute inset-0 p-4 flex flex-col justify-end items-center text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#001540]/60 backdrop-blur-sm">
                              <Quote size={20} className="text-[#B2904D] mb-2 fill-[#B2904D]" />
                              <p className="text-xs text-white/90 italic leading-snug">
@@ -319,10 +271,61 @@ export default function OfficeClient() {
                   </div>
                 </motion.div>
 
+                {/* --- SERVICIOS AÑADIDOS --- */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="w-1 h-8 bg-blue-400 rounded-full" />
+                    <h3 className="text-2xl font-thin text-white">{t(uiText.services)}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {officeData.services.map((service, idx) => (
+                      <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 hover:bg-[#B2904D]/20 transition-colors cursor-default flex items-center gap-2">
+                        <Scale size={14} className="text-[#B2904D]" />
+                        {t(service)}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* --- GERENCIA --- */}
+                {officeData.managers.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <div className="flex items-center gap-4 mb-10">
+                      <div className="w-1 h-8 bg-white/50 rounded-full" />
+                      <h3 className="text-2xl font-thin text-white">{t(uiText.managers)}</h3>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                      {officeData.managers.map((person, idx) => (
+                        <div key={idx} className="group flex flex-col items-center justify-center bg-white/5 rounded-lg p-4 border border-white/5 hover:border-white/20 transition-all duration-300 hover:bg-white/10">
+                          <div className="mb-3 p-2 rounded-full bg-white/5 text-white/20 group-hover:text-[#B2904D] group-hover:bg-[#B2904D]/10 transition-colors">
+                             <User size={18} />
+                          </div>
+                          <h5 className="font-bold text-white text-sm text-center leading-tight mb-1">
+                            {person.name}
+                          </h5>
+                          <span className="text-[9px] font-medium uppercase tracking-wider text-white/40 text-center">
+                            {t(person.role)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
               </div>
             </div>
 
-            {/* --- FORMULARIO DE CONTACTO --- */}
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -331,7 +334,6 @@ export default function OfficeClient() {
             >
               <div className="bg-[#001540]/80 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
                 <div className="h-1.5 w-full bg-gradient-to-r from-[#B2904D] via-[#D4AF37] to-[#B2904D]" />
-                
                 <div className="p-6 md:p-12">
                    <ContactForm />
                 </div>

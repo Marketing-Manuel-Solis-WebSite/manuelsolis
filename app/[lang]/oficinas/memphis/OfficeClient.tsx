@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, User, Quote, Sparkles } from 'lucide-react';
+import { MapPin, Clock, User, Quote, Sparkles, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
@@ -30,7 +30,6 @@ const officeData = {
   state: 'TN',
   title: { es: 'Memphis, TN Oficina', en: 'Memphis, TN Office' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
-  // DESCRIPCIÓN ESTANDARIZADA
   description: { 
     es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
@@ -40,20 +39,42 @@ const officeData = {
   email: 'memphis@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
   mapLink: 'https://share.google/Fc3ISgQAihcayfmws',
-  image: '/offices/ofAirways.png', // IMAGEN ESPECÍFICA
+  image: '/offices/ofAirways.png',
   
-  // --- GERENCIA ---
-  managers: [
-    { name: 'Michelle Magdonald', role: { es: 'Asistente Legal', en: 'Legal Assistant' } }
-  ],
+  // --- GERENCIA (ELIMINADO) ---
+  managers: [],
+  
   // --- ABOGADOS ---
   attorneys: [
+    { 
+      name: 'Lupita Valenzuela Martinez', 
+      role: { es: 'Abogada', en: 'Attorney' }, 
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Lupita.png',
+      quote: { es: "Una defensora impulsada por un propósito.", en: "An advocate driven by purpose." }
+    },
     { 
       name: 'Sara James', 
       role: { es: 'Abogada', en: 'Attorney' }, 
       image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Sara%20James.png', 
       quote: { es: "Apoyarlos a alcanzar su sueño americano es un honor y un privilegio.", en: "Supporting them to achieve their American dream is an honor and a privilege." }
+    },
+    { 
+      name: 'Roberto Garcia', 
+      role: { es: 'Abogado', en: 'Attorney' }, 
+      image: '/LogoInformacion.png', // Placeholder
+      quote: { es: "Compromiso con la justicia.", en: "Commitment to justice." }
     }
+  ],
+
+  // --- SERVICIOS ---
+  services: [
+    { es: 'Inmigración', en: 'Immigration' }, 
+    { es: 'Planificación Patrimonial', en: 'Estate Planning' },
+    { es: 'Familiar', en: 'Family Law' },
+    { es: 'Seguros', en: 'Insurance' },
+    { es: 'Accidentes', en: 'Accidents' },
+    { es: 'Ticket', en: 'Traffic Tickets' },
+    { es: 'Detenidos', en: 'Detained' }
   ]
 };
 
@@ -63,8 +84,9 @@ const uiText = {
   phone: { es: 'Teléfono', en: 'Phone' },
   hours: { es: 'Horario', en: 'Hours' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
-  team: { es: 'Nuestros Abogados', en: 'Our Attorneys' },
-  managers: { es: 'Nuestra Gerencia', en: 'Our Management Team' }
+  team: { es: 'Nuestro Equipo Legal', en: 'Our Legal Team' },
+  managers: { es: 'Gerencia', en: 'Management' },
+  services: { es: 'Servicios Disponibles', en: 'Available Services' }
 };
 
 export default function OfficeClient() {
@@ -162,7 +184,7 @@ export default function OfficeClient() {
               </motion.div>
             </div>
 
-            {/* --- INFO GRID (SIN CUADRO DE SERVICIOS) --- */}
+            {/* --- INFO GRID --- */}
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 mb-24">
               
               {/* Detalles de Contacto */}
@@ -227,9 +249,9 @@ export default function OfficeClient() {
                         
                         <div className="relative w-full aspect-square overflow-hidden">
                           <Image 
-                            src={person.image} 
+                            src={person.image || '/LogoInformacion.png'} 
                             alt={person.name} 
-                            fill
+                            fill 
                             sizes="(max-width: 768px) 100px, 150px"
                             className="object-cover object-top transition-transform duration-700 group-hover:scale-110" 
                           />
@@ -257,37 +279,26 @@ export default function OfficeClient() {
                   </div>
                 </motion.div>
 
-                {/* --- SECCIÓN GERENCIA --- */}
-                {officeData.managers.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    <div className="flex items-center gap-4 mb-10">
-                      <div className="w-1 h-8 bg-white/50 rounded-full" />
-                      <h3 className="text-2xl font-thin text-white">{t(uiText.managers)}</h3>
-                    </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {officeData.managers.map((person, idx) => (
-                        <div key={idx} className="group flex flex-col items-center justify-center bg-white/5 rounded-lg p-4 border border-white/5 hover:border-white/20 transition-all duration-300 hover:bg-white/10">
-                          <div className="mb-3 p-2 rounded-full bg-white/5 text-white/20 group-hover:text-[#B2904D] group-hover:bg-[#B2904D]/10 transition-colors">
-                             <User size={18} />
-                          </div>
-                          
-                          <h5 className="font-bold text-white text-sm text-center leading-tight mb-1">
-                            {person.name}
-                          </h5>
-                          <span className="text-[9px] font-medium uppercase tracking-wider text-white/40 text-center">
-                            {t(person.role)}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
+                {/* --- SECCIÓN SERVICIOS --- */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="w-1 h-8 bg-blue-400 rounded-full" />
+                    <h3 className="text-2xl font-thin text-white">{t(uiText.services)}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {officeData.services.map((service, idx) => (
+                      <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 hover:bg-[#B2904D]/20 transition-colors cursor-default flex items-center gap-2">
+                        <Scale size={14} className="text-[#B2904D]" />
+                        {t(service)}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
 
               </div>
             </div>
