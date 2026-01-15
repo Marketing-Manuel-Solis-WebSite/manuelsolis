@@ -9,7 +9,8 @@ import BlogFeed from '../../components/blogs/BlogFeed';
 
 // --- CONFIGURACIÓN DEL SITIO ---
 const SITE_URL = 'https://www.manuelsolis.com';
-const DEFAULT_OG_IMAGE = `${SITE_URL}/images/blog-og.jpg`; // Asegúrate que esta imagen exista en public/images/
+// ✅ CLAVE: Esta es la imagen que se mostrará al compartir el link general del blog
+const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`; 
 
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 const BLOG_DATA = {
@@ -30,11 +31,11 @@ const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-01-16',
       readTime: '8 min',
-      // Ruta absoluta recomendada para evitar fallos
-      image: '/images/blog/visa-u.jpg', 
+      // ✅ ACTUALIZADO: Ruta correcta de la imagen subida en public
+      image: '/blog/visa-u.png', 
       featured: true
     }
-    // Agrega más posts aquí...
+    // Aquí puedes agregar más posts en el futuro...
   ],
   categories: [
     { id: 'all', es: 'Todos', en: 'All' },
@@ -78,6 +79,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         'en-US': `${SITE_URL}/en/blog`,
       },
     },
+    // ✅ OPEN GRAPH: Aquí aseguramos que al compartir se vea la imagen
     openGraph: {
       title,
       description,
@@ -86,22 +88,23 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName: 'Manuel Solís Law Firm',
       locale: isEs ? 'es_US' : 'en_US',
       images: [{
-        url: DEFAULT_OG_IMAGE, // URL LIMPIA SIN MARKDOWN
+        url: DEFAULT_OG_IMAGE, // La imagen de la Visa U
         width: 1200,
         height: 630,
         alt: title
       }]
     },
+    // ✅ TWITTER CARD: Para que se vea grande en X/Twitter
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [DEFAULT_OG_IMAGE], // URL LIMPIA
+      images: [DEFAULT_OG_IMAGE], 
       creator: '@AbogadoMSolis'
     },
     keywords: isEs 
-      ? ['blog inmigración', 'noticias visa u', 'abogado manuel solis', 'permiso trabajo', 'noticias legales usa']
-      : ['immigration blog', 'u visa news', 'attorney manuel solis', 'work permit', 'legal news usa'],
+      ? ['blog inmigración', 'noticias visa u', 'abogado manuel solis', 'permiso trabajo', 'noticias legales usa', 'bona fide visa u']
+      : ['immigration blog', 'u visa news', 'attorney manuel solis', 'work permit', 'legal news usa', 'bona fide u visa'],
   };
 }
 

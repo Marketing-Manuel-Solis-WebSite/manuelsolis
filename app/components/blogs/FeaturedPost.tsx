@@ -46,12 +46,13 @@ export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
         <div className="grid lg:grid-cols-2 gap-0">
           
           {/* Imagen */}
-          <div className="relative aspect-[4/3] lg:aspect-auto lg:min-h-[550px] overflow-hidden">
+          {/* ✅ CORRECCIÓN: 'aspect-video' asegura que la imagen horizontal se vea completa (16:9) y no como un cuadro */}
+          <div className="relative aspect-video lg:aspect-auto lg:h-full lg:min-h-[450px] overflow-hidden">
             <Image
               src={post.image || '/placeholder.jpg'}
               alt={t(post.title)}
               fill
-              className="object-cover transition-transform duration-1000 group-hover:scale-105"
+              className="object-cover object-center transition-transform duration-1000 group-hover:scale-105"
               priority
             />
             {/* Overlays */}

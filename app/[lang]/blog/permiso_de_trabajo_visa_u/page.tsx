@@ -23,25 +23,23 @@ const font = Outfit({
   weight: ['100', '200', '300', '400', '500', '700', '800', '900'] 
 });
 
-// IMPORTANTE: Cambia esto por tu dominio real si es diferente
 const SITE_URL = 'https://www.manuelsolis.com'; 
 
-// Rutas a imágenes existentes en tu carpeta public
+// ✅ ACTUALIZADO: La imagen específica para este artículo
 const IMAGES = {
-  // Usamos immigration-hero.png ya que existe en tu proyecto. 
-  // Si subes una imagen específica para este blog, cambia esta ruta.
-  article: '/immigration-hero.png', 
+  article: '/blog/visa-u.png', 
   author: '/abogado-manuel-solis.jpg'
 };
 
 // --- CONTENIDO TRADUCIDO ---
 const blogContent = {
   es: {
+    // Título y descripción optimizados para compartir
     metaTitle: 'Permiso de trabajo Visa U 2026: ¿Qué es la Bona Fide? | Manuel Solís',
-    metaDesc: 'Obtén tu permiso de trabajo por Visa U antes de la aprobación. Descubre cómo funciona la determinación Bona Fide y empieza a trabajar legalmente en 2026.',
+    metaDesc: 'Obtén tu permiso de trabajo por Visa U antes de la aprobación final. Descubre cómo funciona la determinación Bona Fide y empieza a trabajar legalmente.',
     ui: {
       back: 'Volver al blog',
-      share: 'Compartir',
+      share: 'Compartir artículo',
       writtenBy: 'Escrito por',
       published: 'Publicado',
       readTime: '8 min de lectura',
@@ -53,7 +51,7 @@ const blogContent = {
     },
     title: 'Permiso de trabajo Visa U (Bona Fide) antes de la aprobación final',
     summary: {
-      title: 'Resumen Inicial',
+      title: 'Lo que debes saber',
       text: '¿Solicitaste la Visa U y estás esperando desde hace años sin poder trabajar legalmente? En la Firma del Abogado Manuel Solís te explicamos cómo obtener un permiso de trabajo bajo la determinación <strong>Bona Fide</strong>, una alternativa legal que te permite salir de la espera y empezar a generar ingresos mientras llega tu aprobación final.'
     },
     intro: [
@@ -144,7 +142,7 @@ const blogContent = {
     metaDesc: 'Get your U Visa work permit before final approval. Discover how Bona Fide Determination works and start working legally in 2026.',
     ui: {
       back: 'Back to blog',
-      share: 'Share',
+      share: 'Share Article',
       writtenBy: 'Written by',
       published: 'Published',
       readTime: '8 min read',
@@ -156,7 +154,7 @@ const blogContent = {
     },
     title: 'U Visa Work Permit (Bona Fide) Before Final Approval',
     summary: {
-      title: 'Initial Summary',
+      title: 'What you need to know',
       text: 'Did you apply for the U Visa and have been waiting for years without being able to work legally? At the Manuel Solís Law Firm, we explain how to obtain a work permit under the <strong>Bona Fide</strong> determination, a legal alternative that allows you to stop waiting and start generating income while your final approval arrives.'
     },
     intro: [
@@ -244,12 +242,12 @@ const blogContent = {
   }
 };
 
-// --- METADATA SEO ---
+// --- METADATA SEO PARA EL ARTÍCULO ---
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
   
-  // Construcción de la URL de la imagen (Ruta absoluta para redes sociales)
+  // URL de la imagen para compartir (Absoluta)
   const imageUrl = `${SITE_URL}${IMAGES.article}`;
 
   return {
@@ -262,7 +260,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       url: `${SITE_URL}/${lang}/blog/permiso_de_trabajo_visa_u`,
       images: [
         {
-          url: imageUrl,
+          url: imageUrl, // Aquí usamos visa-u.png
           width: 1200,
           height: 630,
           alt: t.title,
@@ -393,6 +391,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
               {/* COLUMNA IZQUIERDA (Contenido) */}
               <article className="lg:col-span-8 prose prose-lg prose-invert max-w-none">
                 
+                {/* IMAGEN HERO DEL POST */}
+                <div className="mb-12 relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
+                   <Image 
+                     src={IMAGES.article} 
+                     alt="Visa U Permiso de Trabajo"
+                     fill
+                     className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                     priority
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-30" />
+                </div>
+
                 {/* Resumen Inicial Destacado */}
                 <div className="p-8 rounded-3xl bg-gradient-to-br from-[#B2904D]/20 to-transparent border border-[#B2904D]/30 mb-10 shadow-2xl">
                    <h3 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
