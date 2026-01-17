@@ -8,7 +8,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { Outfit } from 'next/font/google'
 import { usePathname } from 'next/navigation'
-import { track } from '@vercel/analytics/react'
+import { track } from '@vercel/analytics/react' // 👈 Importamos track
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
 
 const font = Outfit({ 
@@ -43,7 +43,7 @@ export default function HeaderProfessional() {
 
   // Obtener el teléfono dinámico basado en la ruta actual
   const { phoneNumber, phoneLink } = useMemo(() => {
-    // Protección simple por si pathname es null (aunque usePathname suele devolver string)
+    // Verificación de seguridad para pathname
     const currentPath = pathname || '';
     const officeMatch = currentPath.match(/\/oficinas\/([^/]+)/);
     const officeSlug = officeMatch?.[1];
@@ -62,15 +62,16 @@ export default function HeaderProfessional() {
     };
   }, [pathname]);
 
-  // --- FUNCIÓN DE RASTREO DE LLAMADA ---
+  // --- ⚡️ EVENTO DE RASTREO DE LLAMADA ⚡️ ---
   const handleCallClick = () => {
-    // Esto guarda el evento con la fecha actual y el número específico
+    // Enviamos el evento a Vercel
     track('Call Header Click', {
-      location: 'header_navigation',
       phoneNumber: phoneNumber,
-      timestamp: new Date().toISOString(),
-      page: pathname || 'unknown'
+      location: 'header_main',
+      page: pathname || 'unknown',
+      timestamp: new Date().toISOString()
     });
+    console.log(`Event tracked: Call Click on ${phoneNumber}`);
   };
 
   const callText = language === 'es' ? 'Llámanos para una consulta:' : 'Call for a consultation:';
@@ -328,9 +329,10 @@ export default function HeaderProfessional() {
 
             {/* --- 3. BOTÓN MÓVIL CON CLICK --- */}
             <div className="lg:hidden flex items-center gap-4 ml-auto">
+              {/* ✅ AQUÍ AÑADÍ EL EVENTO DE CLICK PARA MÓVIL */}
               <a 
                 href={phoneLink}
-                onClick={handleCallClick} // Rastreo en móvil
+                onClick={handleCallClick} 
                 className="flex items-center gap-2 text-sky-300 hover:text-white transition-colors"
                 aria-label="Call us"
               >
@@ -351,9 +353,10 @@ export default function HeaderProfessional() {
         {/* --- 4. BARRA SUPERIOR ESCRITORIO CON CLICK --- */}
         <div className="hidden lg:flex justify-center w-full relative z-50">
           <div className="px-16 py-1.5 relative overflow-hidden group border-b-[2px] border-[#009b3a]">
+            {/* ✅ AQUÍ AÑADÍ EL EVENTO DE CLICK PARA ESCRITORIO */}
             <a 
               href={phoneLink}
-              onClick={handleCallClick} // Rastreo en escritorio
+              onClick={handleCallClick}
               className="flex items-center justify-center gap-4 cursor-pointer transition-all duration-300 group/link"
             >
               <span className="text-[11px] uppercase tracking-[0.2em] text-white/90 font-semibold pt-[2px]">

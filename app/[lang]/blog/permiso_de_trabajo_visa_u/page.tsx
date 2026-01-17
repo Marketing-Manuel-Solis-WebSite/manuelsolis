@@ -10,12 +10,13 @@ import {
   Send, ArrowUpRight, ShieldCheck, FileText, User
 } from 'lucide-react';
 
+// IMPORTACIONES
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
-import BlogTracker from '../../../components/blogs/BlogTracker';
+import BlogTracker from '../../../components/blogs/BlogTracker'; // 👈 Importamos el tracker
 
 const font = Outfit({ 
   subsets: ['latin'], 
@@ -201,7 +202,7 @@ const blogContent = {
         caseTitle: 'Myriam, victim of violent invasion',
         date: 'January 16, 2025',
         quote: '"Myriam and her son lived a traumatic moment: a man entered her house without permission, forever altering her peace of mind... For a long time, Myriam lived in fear, without economic stability."',
-        result: 'Thanks to a strategic lawsuit filed by the Manuel Solis Law Firm, Myriam received her work permit in early 2025. Since then:',
+        result: 'Gracias a una demanda estratégica presentada por la firma del Abogado Manuel Solis, Myriam received her work permit in early 2025. Since then:',
         benefits: [
           'Has formal employment',
           'Emotional stability',
@@ -315,6 +316,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       
+      {/* AQUÍ INYECTAMOS EL TRACKER QUE CUENTA VISTAS, SCROLL Y NOMBRE */}
       <BlogTracker 
         title={t.title} 
         author="Manuel Solís" 
@@ -329,6 +331,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
         <main className="relative z-10 pt-32 pb-20">
           
+          {/* HERO */}
           <section className="container mx-auto px-4 md:px-6 lg:px-8 mb-16">
             
             <div className="mb-10">
@@ -374,6 +377,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
             </div>
           </section>
 
+          {/* CONTENIDO */}
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="grid lg:grid-cols-12 gap-12">
               

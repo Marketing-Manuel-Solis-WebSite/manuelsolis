@@ -12,13 +12,13 @@ interface BlogTrackerProps {
 
 export default function BlogTracker({ title, author, category }: BlogTrackerProps) {
     const pathname = usePathname();
+    // Flags para no registrar el mismo evento múltiples veces por visita
     const [scrolled25, setScrolled25] = useState(false);
     const [scrolled50, setScrolled50] = useState(false);
     const [scrolled75, setScrolled75] = useState(false);
     const [scrolled100, setScrolled100] = useState(false);
 
-    // Intentar obtener el nombre del usuario si se guardó previamente
-    // (Por ejemplo, al enviar un formulario de contacto)
+    // Intentamos obtener el nombre si se guardó en el formulario de contacto previamente
     const getUserName = () => {
         if (typeof window !== 'undefined') {
             const savedName = localStorage.getItem('user_first_name'); 
@@ -30,30 +30,33 @@ export default function BlogTracker({ title, author, category }: BlogTrackerProp
     useEffect(() => {
         const userName = getUserName();
 
-        // 1. RASTREO DE VISTA (Al cargar el componente)
+        // 1. RASTREO DE VISITA AL CARGAR (PAGE VIEW)
         track('Blog Post View', {
-            slug: pathname,
+            slug: pathname || 'unknown',
             title: title,
             category: category,
             author: author,
-            visitorName: userName, // Envía el nombre si existe
+            visitorName: userName,
             timestamp: new Date().toISOString()
         });
 
         const handleScroll = () => {
-            // Calcular porcentaje de scroll
             const scrollTop = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            
+            // Protección contra división por cero
+            if (docHeight <= 0) return;
+
             const scrollPercent = (scrollTop / docHeight) * 100;
 
             const commonData = {
-                slug: pathname,
+                slug: pathname || 'unknown',
                 title: title,
                 visitorName: userName,
                 timestamp: new Date().toISOString()
             };
 
-            // 2. RASTREO DE SCROLL DEPTH (Solo dispara una vez por porcentaje)
+            // 2. RASTREO DE PROFUNDIDAD (SCROLL DEPTH)
             if (scrollPercent > 25 && !scrolled25) {
                 track('Blog Scroll 25%', commonData);
                 setScrolled25(true);
@@ -72,7 +75,7 @@ export default function BlogTracker({ title, author, category }: BlogTrackerProp
             }
         };
 
-        // Agregar listener con un pequeño delay para performance (throttling básico)
+        // Optimizamos el evento scroll (throttling)
         let timeoutId: NodeJS.Timeout;
         const throttledScroll = () => {
             if (timeoutId) return;
@@ -90,6 +93,5 @@ export default function BlogTracker({ title, author, category }: BlogTrackerProp
         };
     }, [pathname, title, category, author, scrolled25, scrolled50, scrolled75, scrolled100]);
 
-    // Este componente no renderiza nada visible, es solo lógica
-    return null; 
+    return null; // Este componente es invisible, solo lógica
 }
