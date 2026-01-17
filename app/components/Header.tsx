@@ -8,6 +8,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { Outfit } from 'next/font/google'
 import { usePathname } from 'next/navigation'
+import { track } from '@vercel/analytics/react'
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
 
 const font = Outfit({ 
@@ -42,7 +43,9 @@ export default function HeaderProfessional() {
 
   // Obtener el teléfono dinámico basado en la ruta actual
   const { phoneNumber, phoneLink } = useMemo(() => {
-    const officeMatch = pathname.match(/\/oficinas\/([^/]+)/);
+    // Protección simple por si pathname es null (aunque usePathname suele devolver string)
+    const currentPath = pathname || '';
+    const officeMatch = currentPath.match(/\/oficinas\/([^/]+)/);
     const officeSlug = officeMatch?.[1];
     
     if (officeSlug && officesPhoneMap[officeSlug]) {
@@ -58,6 +61,17 @@ export default function HeaderProfessional() {
       phoneLink: DEFAULT_PHONE_LINK
     };
   }, [pathname]);
+
+  // --- FUNCIÓN DE RASTREO DE LLAMADA ---
+  const handleCallClick = () => {
+    // Esto guarda el evento con la fecha actual y el número específico
+    track('Call Header Click', {
+      location: 'header_navigation',
+      phoneNumber: phoneNumber,
+      timestamp: new Date().toISOString(),
+      page: pathname || 'unknown'
+    });
+  };
 
   const callText = language === 'es' ? 'Llámanos para una consulta:' : 'Call for a consultation:';
   const joinInText = language === 'es' ? 'REGÍSTRATE' : 'REGISTER';
@@ -195,16 +209,16 @@ export default function HeaderProfessional() {
     <>
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col ${font.className}`}
-        style={{ willChange: "transform, background-color, backdrop-filter" }} // OPTIMIZACIÓN
+        style={{ willChange: "transform, background-color, backdrop-filter" }}
         initial={{ backgroundColor: 'rgba(0,0,0,0)', backdropFilter: 'blur(0px)' }}
         animate={{
-          backgroundColor: isScrolled ? 'rgba(5, 15, 30, 0.85)' : 'rgba(0,0,0,0)', // Más opaco para mejor rendimiento
-          backdropFilter: isScrolled ? 'blur(10px)' : 'blur(0px)', // Blur reducido de 16px a 10px
+          backgroundColor: isScrolled ? 'rgba(5, 15, 30, 0.85)' : 'rgba(0,0,0,0)',
+          backdropFilter: isScrolled ? 'blur(10px)' : 'blur(0px)',
         }}
-        transition={{ duration: 0.4, ease: "easeOut" }} // Transición más rápida
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <div 
-          className="w-full transition-all duration-300 relative z-[60]" // Duración reducida
+          className="w-full transition-all duration-300 relative z-[60]"
           style={{ 
             paddingTop: isScrolled ? '0.5rem' : '0.75rem', 
             paddingBottom: isScrolled ? '0.5rem' : '0.75rem' 
@@ -219,7 +233,7 @@ export default function HeaderProfessional() {
                   alt="Logo Manuel Solis"
                   width={200} 
                   height={65}
-                  className="w-full h-auto object-contain opacity-100" // Quitada animación de hover scale para logo
+                  className="w-full h-auto object-contain opacity-100" 
                   priority
                 />
               </div>
@@ -253,7 +267,6 @@ export default function HeaderProfessional() {
 
                     {item.submenu && (
                       <div className="absolute top-full left-0 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]">
-                        {/* Menú desplegable optimizado: Menos blur, sombra más simple */}
                         <div className="min-w-[260px] bg-[#0b1c33]/90 backdrop-blur-md rounded-xl shadow-xl py-4 px-2 border border-white/10 transform origin-top max-h-[80vh] overflow-y-auto scrollbar-hide">
                           {item.submenu.map((subItem) => (
                             <Link
@@ -313,9 +326,11 @@ export default function HeaderProfessional() {
               </Link>
             </div>
 
+            {/* --- 3. BOTÓN MÓVIL CON CLICK --- */}
             <div className="lg:hidden flex items-center gap-4 ml-auto">
               <a 
                 href={phoneLink}
+                onClick={handleCallClick} // Rastreo en móvil
                 className="flex items-center gap-2 text-sky-300 hover:text-white transition-colors"
                 aria-label="Call us"
               >
@@ -333,11 +348,12 @@ export default function HeaderProfessional() {
           </div>
         </div>
 
-        {/* --- ETIQUETA DE CONTACTO --- */}
+        {/* --- 4. BARRA SUPERIOR ESCRITORIO CON CLICK --- */}
         <div className="hidden lg:flex justify-center w-full relative z-50">
           <div className="px-16 py-1.5 relative overflow-hidden group border-b-[2px] border-[#009b3a]">
             <a 
               href={phoneLink}
+              onClick={handleCallClick} // Rastreo en escritorio
               className="flex items-center justify-center gap-4 cursor-pointer transition-all duration-300 group/link"
             >
               <span className="text-[11px] uppercase tracking-[0.2em] text-white/90 font-semibold pt-[2px]">
@@ -359,7 +375,6 @@ export default function HeaderProfessional() {
 
       </motion.header>
 
-      {/* MENÚ MÓVIL OPTIMIZADO */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -367,7 +382,6 @@ export default function HeaderProfessional() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            // Optimización: Fondo casi sólido, blur reducido
             className={`fixed inset-0 z-40 bg-[#051120]/98 backdrop-blur-md lg:hidden ${font.className}`}
           >
             <div className="flex flex-col pt-24 px-8 h-full">

@@ -10,14 +10,13 @@ import {
   Send, ArrowUpRight, ShieldCheck, FileText, User
 } from 'lucide-react';
 
-// --- IMPORTS DE COMPONENTES ---
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
+import BlogTracker from '../../../components/blogs/BlogTracker';
 
-// --- CONFIGURACIÓN ---
 const font = Outfit({ 
   subsets: ['latin'], 
   weight: ['100', '200', '300', '400', '500', '700', '800', '900'] 
@@ -25,16 +24,13 @@ const font = Outfit({
 
 const SITE_URL = 'https://www.manuelsolis.com'; 
 
-// ✅ ACTUALIZADO: La imagen específica para este artículo
 const IMAGES = {
   article: '/blog/visa-u.png', 
   author: '/abogado-manuel-solis.jpg'
 };
 
-// --- CONTENIDO TRADUCIDO ---
 const blogContent = {
   es: {
-    // Título y descripción optimizados para compartir
     metaTitle: 'Permiso de trabajo Visa U 2026: ¿Qué es la Bona Fide? | Manuel Solís',
     metaDesc: 'Obtén tu permiso de trabajo por Visa U antes de la aprobación final. Descubre cómo funciona la determinación Bona Fide y empieza a trabajar legalmente.',
     ui: {
@@ -242,12 +238,10 @@ const blogContent = {
   }
 };
 
-// --- METADATA SEO PARA EL ARTÍCULO ---
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
   
-  // URL de la imagen para compartir (Absoluta)
   const imageUrl = `${SITE_URL}${IMAGES.article}`;
 
   return {
@@ -260,7 +254,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       url: `${SITE_URL}/${lang}/blog/permiso_de_trabajo_visa_u`,
       images: [
         {
-          url: imageUrl, // Aquí usamos visa-u.png
+          url: imageUrl, 
           width: 1200,
           height: 630,
           alt: t.title,
@@ -282,12 +276,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 }
 
-// --- CONTENIDO DEL POST ---
 export default async function BlogPostPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  // Schema.org JSON-LD (Datos estructurados para Google)
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -322,21 +314,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
+      
+      <BlogTracker 
+        title={t.title} 
+        author="Manuel Solís" 
+        category="Inmigración" 
+      />
 
       <div className={`min-h-screen bg-[#001540] text-white selection:bg-[#B2904D] selection:text-[#001540] ${font.className}`}>
         
-        {/* --- HEADER --- */}
         <Header />
 
-        {/* --- BACKGROUND FX --- */}
         <BlogBackground />
 
         <main className="relative z-10 pt-32 pb-20">
           
-          {/* --- HERO DEL ARTÍCULO --- */}
           <section className="container mx-auto px-4 md:px-6 lg:px-8 mb-16">
             
-            {/* Botón Volver */}
             <div className="mb-10">
               <Link href={`/${lang}/blog`} className="inline-flex items-center gap-2 text-white/60 hover:text-[#B2904D] transition-colors group text-sm font-medium uppercase tracking-wider">
                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
@@ -344,7 +338,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
               </Link>
             </div>
 
-            {/* Tags & Meta */}
             <div className="flex flex-wrap items-center gap-4 mb-6 animate-fade-in-up">
               <span className="px-3 py-1 bg-[#B2904D] text-[#001540] text-xs font-bold uppercase tracking-widest rounded-full">
                 {t.ui.tags}
@@ -357,12 +350,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
               </span>
             </div>
 
-            {/* Título Principal */}
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-medium text-white leading-[1.1] mb-8 max-w-5xl animate-fade-in-up delay-100">
               {t.title}
             </h1>
 
-            {/* Autor & Share */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-t border-white/10 pt-8 animate-fade-in-up delay-200">
               <div className="flex items-center gap-4">
                 <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#B2904D] shadow-lg shadow-[#B2904D]/20">
@@ -379,19 +370,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                 </div>
               </div>
               
-              {/* Botones de compartir */}
               <ShareButtons title={t.title} uiShareText={t.ui.share} />
             </div>
           </section>
 
-          {/* --- CUERPO DEL ARTÍCULO --- */}
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="grid lg:grid-cols-12 gap-12">
               
-              {/* COLUMNA IZQUIERDA (Contenido) */}
               <article className="lg:col-span-8 prose prose-lg prose-invert max-w-none">
                 
-                {/* IMAGEN HERO DEL POST */}
                 <div className="mb-12 relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
                    <Image 
                      src={IMAGES.article} 
@@ -403,7 +390,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                    <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-30" />
                 </div>
 
-                {/* Resumen Inicial Destacado */}
                 <div className="p-8 rounded-3xl bg-gradient-to-br from-[#B2904D]/20 to-transparent border border-[#B2904D]/30 mb-10 shadow-2xl">
                    <h3 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
                      <Sparkles size={20} /> {t.summary.title}
@@ -416,14 +402,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
                 <div className="space-y-12 text-blue-50/80 font-light text-lg leading-8">
                   
-                  {/* Introducción */}
                   <section>
                     {t.intro.map((paragraph, idx) => (
                       <p key={idx} dangerouslySetInnerHTML={{ __html: paragraph }} className="mb-6" />
                     ))}
                   </section>
 
-                  {/* Qué es la determinación */}
                   <section>
                     <h2 className="text-3xl font-serif text-white mt-0 mb-6 flex items-center gap-3">
                       <div className="p-2 bg-white/10 rounded-lg"><Lightbulb size={24} className="text-[#B2904D]" /></div>
@@ -446,12 +430,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </p>
                   </section>
 
-                  {/* Por qué existe */}
                   <section>
                     <h2 className="text-3xl font-serif text-white mb-6">{t.sections.whyExists.title}</h2>
                     <p className="mb-8">{t.sections.whyExists.text}</p>
                     <div className="grid md:grid-cols-2 gap-4 my-8">
-                        {/* Cards Reusables con Tailwind */}
                         <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2 hover:border-[#B2904D]/50 transition-colors">
                           <FileText className="text-[#B2904D]" />
                           <span className="font-bold text-white">{t.sections.whyExists.cards.complete.title}</span>
@@ -476,7 +458,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p>{t.sections.whyExists.footer}</p>
                   </section>
 
-                  {/* Requisitos */}
                   <section>
                     <h2 className="text-3xl font-serif text-white mb-6">{t.sections.requirements.title}</h2>
                     <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
@@ -495,7 +476,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </div>
                   </section>
 
-                  {/* Tiempos */}
                   <section>
                      <h2 className="text-3xl font-serif text-white mb-6">{t.sections.timeline.title}</h2>
                      <div className="flex items-center gap-4 mb-6 p-4 bg-white/5 rounded-xl inline-flex w-full md:w-auto">
@@ -505,7 +485,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                      <p>{t.sections.timeline.text}</p>
                   </section>
 
-                  {/* Caso Real */}
                   <section className="relative my-12">
                     <div className="absolute -left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-[#B2904D] to-transparent hidden md:block" />
                     <h2 className="text-3xl font-serif text-white mb-8">{t.sections.realCase.title}</h2>
@@ -541,7 +520,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </div>
                   </section>
                   
-                  {/* Preguntas Frecuentes */}
                   <section>
                     <h3 className="text-2xl text-white font-bold mb-4">{t.sections.faq.q1}</h3>
                     <p dangerouslySetInnerHTML={{ __html: t.sections.faq.a1 }} />
@@ -556,7 +534,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="mt-4 font-medium text-white">{t.sections.faq.footer}</p>
                   </section>
 
-                  {/* Conclusión */}
                   <div className="p-8 bg-gradient-to-r from-[#B2904D] to-[#8a6e36] rounded-3xl text-[#001540] shadow-lg mt-12">
                       <h2 className="text-2xl font-bold font-serif mb-4 flex items-center gap-2">
                          <MessageCircle size={28} /> {t.sections.conclusion.title}
@@ -574,7 +551,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       </Link>
                   </div>
 
-                  {/* Fuentes */}
                   <div className="border-t border-white/10 pt-8 mt-12">
                       <h4 className="text-xs font-bold text-white/40 uppercase mb-4 tracking-widest">{t.sections.sources.title}</h4>
                       <ul className="space-y-2 text-sm text-white/40 list-none pl-0">
@@ -587,10 +563,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                 </div>
               </article>
 
-              {/* COLUMNA DERECHA (Sidebar Sticky) */}
               <aside className="lg:col-span-4 space-y-8">
                  
-                 {/* Card de Autor */}
                  <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md sticky top-32">
                     <h3 className="text-xs font-bold text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-4">Sobre el Autor</h3>
                     <div className="flex flex-col items-center text-center">
@@ -612,12 +586,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
         </main>
         
-        {/* --- FORMULARIO DE CONTACTO --- */}
         <div id="contacto">
            <ContactForm />
         </div>
 
-        {/* --- FOOTER --- */}
         <Footer />
       </div>
     </>
