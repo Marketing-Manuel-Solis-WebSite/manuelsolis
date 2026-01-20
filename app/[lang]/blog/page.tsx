@@ -9,12 +9,33 @@ import BlogFeed from '../../components/blogs/BlogFeed';
 
 // --- CONFIGURACIÓN DEL SITIO ---
 const SITE_URL = 'https://www.manuelsolis.com';
-// ✅ CLAVE: Esta es la imagen que se mostrará al compartir el link general del blog
 const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`; 
 
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 const BLOG_DATA = {
   posts: [
+    // --- NUEVO BLOG POST ---
+    {
+      id: 'que-hacer-si-la-policia-no-firma',
+      slug: 'que_hacer_si_la_policia_no_firma_la_certificacion_visa_u',
+      title: { 
+        es: '¿Qué hacer si la policía no firma la certificación Visa U?', 
+        en: 'What to do if the police refuse to sign the U Visa certification?' 
+      },
+      excerpt: { 
+        es: '¿La policía se negó a firmar tu certificación para la Visa U? No todo está perdido. Descubre qué hacer y quién más podría firmar el suplemento B.', 
+        en: 'Did the police refuse to sign your certification for the U Visa? All is not lost. Discover what to do and who else could sign Supplement B.' 
+      },
+      categoryId: 'visa-u',
+      category: { es: 'Visa U', en: 'U Visa' },
+      author: 'Manuel Solís',
+      date: '2025-01-20',
+      readTime: '6 min',
+      // Imagen de portada actualizada
+      image: '/blog/blog_02/B2_CR1.png', 
+      featured: true
+    },
+    // --- BLOG POST ANTERIOR ---
     {
       id: 'permiso_de_trabajo_visa_u',
       slug: 'permiso_de_trabajo_visa_u',
@@ -31,11 +52,9 @@ const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-01-16',
       readTime: '8 min',
-      // ✅ ACTUALIZADO: Ruta correcta de la imagen subida en public
       image: '/blog/visa-u.png', 
-      featured: true
+      featured: false
     }
-    // Aquí puedes agregar más posts en el futuro...
   ],
   categories: [
     { id: 'all', es: 'Todos', en: 'All' },
@@ -79,7 +98,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         'en-US': `${SITE_URL}/en/blog`,
       },
     },
-    // ✅ OPEN GRAPH: Aquí aseguramos que al compartir se vea la imagen
     openGraph: {
       title,
       description,
@@ -88,13 +106,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName: 'Manuel Solís Law Firm',
       locale: isEs ? 'es_US' : 'en_US',
       images: [{
-        url: DEFAULT_OG_IMAGE, // La imagen de la Visa U
+        url: DEFAULT_OG_IMAGE, 
         width: 1200,
         height: 630,
         alt: title
       }]
     },
-    // ✅ TWITTER CARD: Para que se vea grande en X/Twitter
     twitter: {
       card: 'summary_large_image',
       title,
