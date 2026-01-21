@@ -93,7 +93,7 @@ const attorneys = [
     id: 'andrew-fink',
     name: 'Andrew Fink',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Andrew%20Fink.png',
-    role: { es: 'Socio de Litigio (Chicago)', en: 'Litigation Partner (Chicago)' },
+    role: { es: 'Abogado', en: 'Attorney' },
     bio: {
       es: [
         "Socio de litigio a nivel nacional. Centra su práctica en lesiones personales, accidentes y negligencia médica. Ha sido el abogado principal en aproximadamente 50 juicios con jurado.",
@@ -115,7 +115,7 @@ const attorneys = [
     id: 'gregory-finney',
     name: 'Gregory Finney',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gregory%20Finney.png',
-    role: { es: 'Director de Litigio Civil', en: 'Civil Litigation Director' },
+    role: { es: 'Abogado', en: 'Attorney' },
     bio: {
       es: [
         "Gregory Finney es el Director de Litigio Civil. Su experiencia incluye litigios comerciales complejos, fraude, energía y accidentes catastróficos.",
@@ -337,7 +337,7 @@ const attorneys = [
     id: 'sara-james',
     name: 'Sara James',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Sara%20James.png',
-    role: { es: 'Abogada (Memphis)', en: 'Attorney (Memphis)' },
+    role: { es: 'Abogada', en: 'Attorney' },
     bio: {
       es: [
         "Ejerce en Memphis con pasión por la comunidad hispana. Fue Presidenta de la Hispanic Law Student Association y ganadora del premio Champion of Justice 2021.",
@@ -412,7 +412,7 @@ const attorneys = [
     id: 'edward-s-reisman',
     name: 'Edward S. Reisman',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Edward-Steven-Reisman.png',
-    role: { es: 'Abogado (Los Ángeles)', en: 'Attorney (Los Angeles)' },
+    role: { es: 'Abogado', en: 'Attorney' },
     bio: {
       es: [
         "Ejerce en Los Ángeles. Tiene un JD de Georgetown University Law Center. Su experiencia previa en el Servicio de Inmigración y Naturalización (INS) le da una visión única del sistema.",
@@ -437,7 +437,7 @@ const attorneys = [
     id: 'stephanie-l-garcia-vidal',
     name: 'Stephanie L. García Vidal',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Stephanie.png',
-    role: { es: 'Abogada (Dallas)', en: 'Attorney (Dallas)' },
+    role: { es: 'Abogada', en: 'Attorney' },
     bio: {
       es: [
         "Ejerce en la oficina de Dallas del Bufete de Abogados Manuel Solís, donde brinda representación legal comprometida y empática a personas y familias inmigrantes. Su pasión por la abogacía nace del deseo de apoyar a quienes emprendieron un viaje transformador para construir un futuro más seguro y digno.",
@@ -471,7 +471,7 @@ const attorneys = [
     id: 'lupita-valenzuela-martinez',
     name: 'Lupita Valenzuela Martinez',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Lupita.png',
-    role: { es: 'Abogada (Memphis)', en: 'Attorney (Memphis)' },
+    role: { es: 'Abogada', en: 'Attorney' },
     bio: {
       es: [
         "Ejerce la abogacía con pasión y entrega desde nuestra oficina de Memphis. Su mayor inspiración proviene de ayudar a quienes no pueden defenderse por sí mismos, y su misión es asegurar que todos reciban la representación comprometida y valiente que merecen. Su trabajo está profundamente guiado por el deseo de servir a la comunidad hispana, motor que alimenta su vocación día a día.",

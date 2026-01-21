@@ -551,7 +551,7 @@ export default function FuturisticOffices() {
                    
                    {/* DESCRIPTION */}
                    <div className="w-full">
-                       <h4 className="text-xl font-thin text-white mb-3">{language === 'es' ? 'Contexto de Operación' : 'Operation Context'}</h4>
+                       <h4 className="text-xl font-thin text-white mb-3">{language === 'es' ? 'Sobre nuestra experiencia legal' : 'About Our Legal Experience'}</h4>
                        <p className="text-blue-100/70 text-base leading-relaxed text-justify border-l-2 border-white/10 pl-4">
                          {gT(activeOffice.description)}
                        </p>
@@ -561,7 +561,7 @@ export default function FuturisticOffices() {
                    <div className="border-y border-white/10 py-8">
                       <div>
                           <h5 className="text-sm font-bold text-blue-300/50 uppercase tracking-widest mb-4 flex items-center gap-2">
-                             <Scale size={14} className="text-[#B2904D]" />
+                             <Scale size={14} className="text-[#fffff]" />
                              {language === 'es' ? 'Servicios Disponibles' : 'Available Services'}
                           </h5>
                           <div className="flex flex-wrap gap-2">
@@ -582,7 +582,7 @@ export default function FuturisticOffices() {
                            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                            className={`w-4 h-4 rounded-full border border-dashed border-[${ACCENT_COLOR_GOLD}]`}
                          />
-                         <span className={`text-[${ACCENT_COLOR_GOLD}] font-medium`}>{language === 'es' ? 'Protocolo' : 'Protocol'}</span> {language === 'es' ? 'de Acceso' : 'Access'}
+                         <span className={`text-[${ACCENT_COLOR_GOLD}] font-medium`}>{language === 'es' ? 'Datos' : 'Contact'}</span> {language === 'es' ? 'de contacto' : 'Information'}
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                          <ActionHUD label={language === 'es' ? 'Ubicación' : 'Location Grid'} value={activeOffice.address} icon={MapPin} href={activeOffice.mapLink} />
