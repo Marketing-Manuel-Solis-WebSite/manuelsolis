@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from '../context/LanguageContext';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, Variants } from 'framer-motion';
@@ -22,8 +21,8 @@ export default function About() {
     offset: ["start end", "end start"]
   });
 
-  const yBg = useTransform(scrollYProgress, [0, 1], [0, -80]); // Reducido
-  const yOrb = useTransform(scrollYProgress, [0, 1], [0, 150]); // Reducido
+  const yBg = useTransform(scrollYProgress, [0, 1], [0, -80]); 
+  const yOrb = useTransform(scrollYProgress, [0, 1], [0, 150]); 
 
   // --- 2. LÓGICA DE MOUSE (PARALLAX INTERACTIVO) ---
   const mouseX = useMotionValue(0);
@@ -35,7 +34,7 @@ export default function About() {
     mouseY.set((clientY - top) / height - 0.5);
   }
 
-  const x = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), { stiffness: 40, damping: 25 }); // Reducido
+  const x = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), { stiffness: 40, damping: 25 });
   const y = useSpring(useTransform(mouseY, [-0.5, 0.5], [-5, 5]), { stiffness: 40, damping: 25 });
 
   // --- VARIANTS ---
@@ -68,7 +67,6 @@ export default function About() {
         <div className="absolute inset-0 bg-[#001540]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002868]/30 via-transparent to-[#000a20]/80" />
 
-        {/* Orbes optimizados: Menos blur y sin mix-blend-screen si es posible, o con opacidad reducida */}
         <motion.div 
             style={{ y: yOrb, willChange: "transform" }}
             className="absolute top-0 left-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[100px] -translate-x-1/3 -translate-y-1/3 mix-blend-screen opacity-60" 
@@ -127,7 +125,7 @@ export default function About() {
               </p>
             </motion.div>
 
-            {/* ESTADÍSTICAS - Optimizado: Menos blur y sombras */}
+            {/* ESTADÍSTICAS */}
             <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-6 pl-2 pt-4">
                 <div className="p-5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/5 transition-colors duration-300">
                     <h3 className="text-4xl font-light text-white flex items-baseline">
@@ -147,7 +145,7 @@ export default function About() {
                 </div>
             </motion.div>
 
-            {/* BOTÓN MEJORADO */}
+            {/* BOTÓN */}
             <motion.div variants={fadeInUp} className="pt-6 pl-2">
                 <Link
                   href={`/${language}/Testimonios`}
@@ -167,10 +165,10 @@ export default function About() {
             </motion.div>
           </motion.div>
 
-          {/* --- COLUMNA DERECHA: IMAGEN (Cols 6) --- */}
+          {/* --- COLUMNA DERECHA: VIDEO --- */}
           <motion.div 
             style={{ x, y, willChange: "transform" }}
-            className="lg:col-span-6 relative h-[500px] lg:h-[700px] w-full perspective-[2000px] mt-32 mb-24 lg:mt-0 lg:mb-0"
+            className="lg:col-span-6 relative h-[350px] md:h-[500px] lg:h-[450px] xl:h-[500px] w-full perspective-[2000px] mt-32 mb-24 lg:mt-0 lg:mb-0"
           >
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-blue-600/20 blur-[80px] rounded-full -z-10" />
               <div className="absolute top-4 -right-4 w-full h-full border border-[#B2904D]/20 rounded-[2rem] z-0 hidden lg:block" />
@@ -180,16 +178,22 @@ export default function About() {
                whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
                viewport={{ once: true }}
                transition={{ duration: 1.2, ease: "easeOut" }}
-               className="relative z-10 w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border border-white/5"
+               className="relative z-10 w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border border-white/5 bg-black"
               >
-                 <Image
-                   src="/Familia.png"
-                   alt="Equipo Legal Manuel Solis"
-                   fill
-                   className="object-cover object-[18%_50%] scale-105 hover:scale-110 transition-transform duration-[1.8s]"
-                   sizes="(max-width: 768px) 100vw, 50vw"
-                 />
-                 <div className="absolute inset-0 bg-gradient-to-t from-[#001540]/80 via-transparent to-transparent opacity-60" />
+                  {/* --- YOUTUBE EMBED --- */}
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/PmU1yOfB9C8?rel=0&controls=1" 
+                    title="YouTube video player" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full object-cover"
+                  ></iframe>
+                  
+                  {/* Overlay muy sutil solo para borde/ruido (pointer-events-none es CRUCIAL para poder dar clic al video) */}
+                  <div className="absolute inset-0 border border-white/10 rounded-[2rem] pointer-events-none" />
               </motion.div>
               
           </motion.div>
