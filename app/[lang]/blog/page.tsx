@@ -16,6 +16,26 @@ const BLOG_DATA = {
   posts: [
     // --- NUEVO BLOG POST ---
     {
+      id: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
+      slug: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
+      title: { 
+        es: 'Perdón I-192: cómo arreglar con la Visa U si tienes deportaciones previas', 
+        en: 'I-192 Waiver: How to Fix Your U Visa Case with Prior Deportations' 
+      },
+      excerpt: { 
+        es: '¿Tienes deportaciones previas, reingresos ilegales o un historial migratorio complicado? Descubre como el perdon I-192 puede permitirte arreglar con la Visa U incluso cuando otros caminos estan cerrados.', 
+        en: 'Do you have prior deportations, illegal reentries, or a complicated immigration history? Learn how the I-192 waiver may allow you to fix your U Visa case even when other options are closed.' 
+      },
+      categoryId: 'visa-u',
+      category: { es: 'Visa U', en: 'U Visa' },
+      author: 'Manuel Solís',
+      date: '2025-01-23',
+      readTime: '10 min',
+      image: '/blog/blog_03/B3_CR1.png', 
+      featured: true
+    },
+    // --- BLOG POST ANTERIOR ---
+    {
       id: 'que-hacer-si-la-policia-no-firma',
       slug: 'que_hacer_si_la_policia_no_firma_la_certificacion_visa_u',
       title: { 
@@ -33,7 +53,7 @@ const BLOG_DATA = {
       readTime: '6 min',
       // Imagen de portada actualizada
       image: '/blog/blog_02/B2_CR1.png', 
-      featured: true
+      featured: false
     },
     // --- BLOG POST ANTERIOR ---
     {
