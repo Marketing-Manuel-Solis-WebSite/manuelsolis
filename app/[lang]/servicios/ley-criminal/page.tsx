@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, Variants } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import {
-  X,
   PhoneCall,
   ArrowRight,
   Car,
@@ -13,7 +12,6 @@ import {
   Zap,
   CheckCircle2,
   Star,
-  Globe, 
 } from 'lucide-react';
 
 import Image from 'next/image';
@@ -23,9 +21,6 @@ import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ContactForm from '../../../components/ContactForm';
 import { useLanguage } from '../../../context/LanguageContext';
-
-const PRIMARY_DARK = '#001540';
-const ACCENT_GOLD = '#B2904D';
 
 const font = Outfit({ 
   subsets: ['latin'], 
@@ -50,7 +45,6 @@ interface CaseItem {
     title: ContentDetail;
     subtitle: ContentDetail;
     icon: React.ElementType;
-    position: string;
     content: CaseContent;
 }
 
@@ -61,7 +55,6 @@ const texts = {
       title: { es: "Violencia Doméstica", en: "Domestic Violence" },
       subtitle: { es: "Delitos Emotivos y Complejos", en: "Emotional and Complex Offenses" },
       icon: MessageSquare,
-      position: "col-span-3 lg:col-span-2 h-[450px]",
       content: {
         intro: { es: "¿Está acusado de violencia doméstica?", en: "Are you accused of domestic violence?" },
         description: { es: "Los casos de violencia doméstica se encuentran entre los delitos penales más emotivos y complejos. Si usted y un familiar tienen una relación hostil, es fácil terminar en problemas legales. A menudo resulta en un arresto basado en versiones diferentes del mismo evento.", en: "Domestic violence cases are among the most emotional and complex criminal offenses. If you and a family member have a hostile relationship, it's easy to end up in legal trouble. It often results in an arrest based on different versions of the same event." },
@@ -80,7 +73,6 @@ const texts = {
       title: { es: "Asalto y Agresión", en: "Assault and Battery" },
       subtitle: { es: "Violencia Física o Amenaza de Daño", en: "Physical Violence or Threat of Harm" },
       icon: Zap, 
-      position: "col-span-3 lg:col-span-1 h-[450px]", 
       content: {
         intro: { es: "¿Ha sido acusado de asalto o agresión?", en: "Have you been charged with assault or battery?" },
         description: { es: "El asalto implica causar intencionalmente que otra persona tenga temor razonable de un contacto dañino inminente. No siempre se requiere una lesión física. Si hay violencia física real, el cargo se combina con un cargo de agresión.", en: "Assault involves intentionally causing another person to have reasonable fear of imminent harmful contact. A physical injury is not always required. If there is actual physical violence, the charge is combined with a battery charge." },
@@ -92,7 +84,6 @@ const texts = {
       title: { es: "DWI - Manejo en Estado de Ebriedad", en: "DWI - Driving While Intoxicated" },
       subtitle: { es: "Conducir Bajo la Influencia (DUI)", en: "Driving Under the Influence (DUI)" },
       icon: Car, 
-      position: "col-span-3 lg:col-span-1 h-[450px]", 
       content: {
         intro: { es: "¿Necesita un abogado después de ser sorprendido conduciendo bajo la influencia?", en: "Need an attorney after being caught driving under the influence?" },
         description: { es: "El límite legal de contenido de alcohol en la sangre es típicamente 0.08%, pero puede ser detenido por sospecha de consumo de drogas o alcohol, independientemente de la cantidad exacta.", en: "The legal limit for blood alcohol content is typically 0.08%, but you can be arrested for suspicion of drug or alcohol consumption, regardless of the exact amount." },
@@ -111,7 +102,6 @@ const texts = {
       title: { es: "Hurto, Robo y Delitos Patrimoniales", en: "Theft, Robbery, and Property Crimes" },
       subtitle: { es: "Fraude, Malversación y Robo de Identidad", en: "Fraud, Embezzlement, and Identity Theft" },
       icon: FileText, 
-      position: "col-span-3 lg:col-span-1 h-[450px]", 
       content: {
         intro: { es: "¿Ha sido acusado de un delito de robo o hurto?", en: "Have you been charged with a theft or larceny offense?" },
         description: { es: "Este delito penal suele aplicarse de manera amplia; es delito de hurto cuando una persona se apropia intencional o fraudulentamente de los bienes personales de otra persona sin su consentimiento expreso.", en: "This criminal offense is often broadly applied; it is a theft offense when a person intentionally or fraudulently appropriates another person's personal property without their express consent." },
@@ -131,7 +121,6 @@ const texts = {
       title: { es: "Prostitución y Solicitación", en: "Prostitution and Solicitation" },
       subtitle: { es: "Delito Grave y Sanciones Estrictas", en: "Felony Offense and Strict Penalties" },
       icon: Scale, 
-      position: "col-span-3 lg:col-span-2 h-[450px]",
       content: {
         intro: { es: "¿Ha sido acusado de prostitución o solicitación?", en: "Have you been charged with prostitution or solicitation?" },
         description: { es: "Las leyes han endurecido las penas, por ejemplo, en Texas, la solicitud de prostitución puede ser un delito grave. Alguien es culpable si 'la persona a sabiendas ofrece o acepta pagar una tarifa a otra persona con el fin de participar en una conducta sexual'.", en: "Laws have stiffened penalties; for example, in Texas, solicitation of prostitution can be a felony offense. Someone is guilty if 'the person knowingly offers or agrees to pay a fee to another person for the purpose of engaging in sexual conduct'." },
@@ -156,13 +145,9 @@ const texts = {
     stats: { es: "Casos Defendidos", en: "Cases Defended" },
     casesTitle: { es: "Delitos que Defendemos", en: "Offenses We Defend" },
     ctaConsultation: { es: "Consulta Ahora", en: "Consult Now" },
-    ctaCases: { es: "Ver Tipos de Casos", en: "View Case Types" },
     specialties: { es: "Nuestra Defensa", en: "Our Defense" },
     details: { es: "Ver Detalles", en: "View Details" },
     modalClosing: { es: "Abogados defensores penales listos para proteger su libertad.", en: "Criminal defense attorneys ready to protect your freedom." },
-    videoSectionBadge: { es: "Conoce a Nuestro Equipo", en: "Meet Our Team" },
-    videoSectionTitle: { es: "Abogado", en: "Attorney" },
-    videoSectionSubtitle: { es: "Escucha directamente de nuestros socios cómo protegemos tu libertad y derechos en casos criminales.", en: "Hear directly from our partners how we protect your freedom and rights in criminal cases." },
     callNow: { es: "Llámanos Ahora Mismo", en: "Call Us Right Now" },
     processMethod: { es: "Nuestro Método", en: "Our Method" },
     processTitle: { es: "Su Ruta Hacia la Defensa", en: "Your Path to Defense" },
@@ -204,25 +189,12 @@ export default function CriminalLawPage() {
     }
   };
 
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [selectedTab, setSelectedTab] = useState<string>(texts.mainCases[0].id);
   
   const mainCasesData = texts.mainCases;
   const processStepsData = texts.processSteps;
-
-  const selectedItem = mainCasesData.find(item => item.id === selectedId);
-
-  // Optimización: Cálculo simplificado
-  const responsiveCases = mainCasesData.map((item, index) => {
-    if (index === 0 || index === 4) return { ...item, position: "col-span-3 lg:col-span-2 h-[450px]" };
-    return { ...item, position: "col-span-3 lg:col-span-1 h-[450px]" };
-  });
-
-  useEffect(() => {
-    if (selectedId) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'unset';
-    return () => { document.body.style.overflow = 'unset'; };
-  }, [selectedId]);
+  
+  const activeService = mainCasesData.find(s => s.id === selectedTab) || mainCasesData[0];
 
   const textRevealVariant: Variants = {
     hidden: { y: "100%", rotateX: -20, opacity: 0 },
@@ -243,7 +215,6 @@ export default function CriminalLawPage() {
          
          <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-         {/* Orbes optimizados: Blur reducido, will-change y opacity controlada */}
          <motion.div 
            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -264,6 +235,7 @@ export default function CriminalLawPage() {
          </div>
       </div>
 
+      {/* --- HERO SECTION --- */}
       <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 px-4 z-10 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-center">
@@ -274,7 +246,6 @@ export default function CriminalLawPage() {
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 className="lg:col-span-5 relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex items-center justify-center"
               >
-                 {/* Blur reducido */}
                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
                  
                  <div className="relative z-10 w-full h-full flex items-center justify-center transform-gpu">
@@ -294,7 +265,6 @@ export default function CriminalLawPage() {
                     initial={{ opacity: 0, x: -20 }} 
                     animate={{ opacity: 1, x: 0 }} 
                     transition={{ delay: 1, duration: 1 }}
-                    // Blur reducido y optimizado
                     className="absolute bottom-4 md:bottom-10 left-0 md:left-[-20px] z-20 p-4 md:p-6 border border-white/10 rounded-2xl backdrop-blur-md bg-white/10 shadow-2xl"
                  >
                     <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50">
@@ -319,12 +289,12 @@ export default function CriminalLawPage() {
                  </div>
 
                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-thin text-white tracking-tight leading-[0.9]">
-                    <span className="block overflow-hidden pb-2 perspective-[400px]">
+                    <span className="block overflow-hidden pb-2">
                        <motion.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
                           {t('heroTitle1')}
                        </motion.span>
                     </span>
-                    <span className="block overflow-hidden pb-4 perspective-[400px]">
+                    <span className="block overflow-hidden pb-4">
                        <motion.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D]">
                           {t('heroTitle2')}
                        </motion.span>
@@ -354,16 +324,18 @@ export default function CriminalLawPage() {
         </div>
       </section>
 
+      {/* --- SECCIÓN DE TABS - TÍTULOS HORIZONTALES --- */}
+      <section className="px-4 pb-32 relative z-10" id="casos">
 
-      <section className="px-4 pb-32 relative z-10 max-w-[1600px] mx-auto" id="casos">
-
-        <div className="max-w-[1600px] mx-auto relative z-10">
+        <div className="max-w-7xl mx-auto relative z-10">
+          
+          {/* Header de la sección */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mb-20 text-center"
+            className="mb-16 text-center"
           >
             <motion.div
               initial={{ scale: 0 }}
@@ -376,9 +348,10 @@ export default function CriminalLawPage() {
               <span className="text-xs font-bold tracking-[0.2em] text-white/80 uppercase">{t('specialties')}</span>
             </motion.div>
             
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
               {t('casesTitle')}
             </h2>
+            
             <motion.div 
               initial={{ width: 0 }}
               whileInView={{ width: 80 }}
@@ -388,271 +361,140 @@ export default function CriminalLawPage() {
             />
           </motion.div>
 
-          <div className="grid grid-cols-3 gap-6">
-            {responsiveCases.map((item, index) => (
-              <motion.div
-                layoutId={`card-container-${item.id}`}
-                key={item.id}
-                initial={{ opacity: 0, y: 40 }}
+          {/* TABS - Títulos horizontales */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {mainCasesData.map((service, index) => (
+              <motion.button
+                key={service.id}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ 
-                  delay: index * 0.05,
-                  duration: 0.6,
-                  ease: "easeOut" 
-                }}
-                onClick={() => setSelectedId(item.id)}
-                onMouseEnter={() => setHoveredCard(item.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                className={`
-                  col-span-3 sm:col-span-2 lg:col-span-1 ${item.position} 
-                  group relative rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-8 cursor-pointer 
-                  bg-white/5 backdrop-blur-md border border-white/10 transition-all duration-300 
-                  shadow-[0_5px_15px_rgba(0,0,0,0.2)] 
-                  hover:scale-[1.01] hover:border-[#B2904D]/70 
-                  hover:shadow-[0_0_20px_rgba(178,144,77,0.2)] 
-                  overflow-hidden transform-gpu`}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08, duration: 0.5 }}
+                onClick={() => setSelectedTab(service.id)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`group relative px-5 py-3 rounded-2xl transition-all duration-300 border backdrop-blur-md ${
+                  selectedTab === service.id
+                    ? 'bg-gradient-to-br from-[#B2904D] to-[#D4AF37] border-[#B2904D] shadow-[0_0_20px_rgba(178,144,77,0.3)]'
+                    : 'bg-white/5 border-white/10 hover:border-[#B2904D]/50 hover:bg-white/10'
+                }`}
               >
-                
-                <div 
-                    className={`absolute inset-0 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#B2904D]/10 to-transparent 80%`}
-                />
-                
-                <div 
-                    className="absolute inset-0 flex items-center justify-center p-8 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-                >
-                    <p className="text-center text-4xl font-black text-white/10 leading-snug">
-                        {gT(item.content.intro)}
-                    </p>
+                <div className="flex items-center gap-2">
+                  <service.icon 
+                    size={20} 
+                    className={`transition-all ${
+                      selectedTab === service.id ? 'text-white' : 'text-white/70 group-hover:text-[#B2904D]'
+                    }`}
+                  />
+                  <span className={`font-bold text-xs md:text-sm whitespace-nowrap ${
+                    selectedTab === service.id ? 'text-white' : 'text-white/80 group-hover:text-white'
+                  }`}>
+                    {gT(service.title)}
+                  </span>
                 </div>
-
-
-                <div className="relative z-10 h-full flex flex-col">
-                  
-                  <motion.div 
-                    whileHover={{ scale: 1.05 }} 
-                    transition={{ duration: 0.4 }}
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-6 shadow-md transition-all 
-                               bg-white/10 group-hover:bg-gradient-to-br group-hover:from-[#B2904D] group-hover:to-[#D4AF37]"
-                  >
-                    <item.icon size={30} strokeWidth={1.5} />
-                  </motion.div>
-
-                  <div className="flex-1">
-                    <motion.h3 
-                      layoutId={`card-title-${item.id}`}
-                      className="text-2xl md:text-3xl font-black mb-3 transition-colors leading-tight text-white group-hover:text-[#B2904D]"
-                    >
-                      {gT(item.title)}
-                    </motion.h3>
-                    
-                    <motion.p 
-                      layoutId={`card-subtitle-${item.id}`}
-                      className="text-xs text-white/60 font-bold uppercase tracking-widest mb-6"
-                    >
-                      {gT(item.subtitle)}
-                    </motion.p>
-                    
-                    <p className="text-white/70 text-sm leading-relaxed mb-4 line-clamp-3">
-                        {gT(item.content.description).substring(0, 150)}...
-                    </p>
-
-                    <div className="h-px bg-white/20 mb-6 transition-all group-hover:bg-[#B2904D] shadow-[0_0_5px_#B2904D]" />
-                  </div>
-
-                  <motion.div 
-                    className="flex items-center justify-between mt-auto"
-                    initial={{ x: -10, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.05 + 0.3 }}
-                  >
-                    <span 
-                        className="font-bold flex items-center gap-2 group-hover:gap-4 transition-all text-white group-hover:text-[#B2904D]"
-                    >
-                      {t('details')}
-                      <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform"/>
-                    </span>
-                    <motion.div 
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm bg-white/10 group-hover:bg-[#B2904D] text-[#002342] group-hover:text-white"
-                    >
-                      <ArrowRight size={16} className="text-white/80 group-hover:text-white transition-colors"/>
-                    </motion.div>
-                  </motion.div>
-                </div>
-
-              </motion.div>
+              </motion.button>
             ))}
           </div>
-        </div>
-      </section>
 
-      <AnimatePresence>
-        {selectedId && selectedItem && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            // Optimización: Menos blur y más opacidad en el fondo
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8 bg-black/95 backdrop-blur-sm"
-            onClick={() => setSelectedId(null)}
-          >
+          {/* CONTENIDO EXPANDIDO - Muestra solo el servicio seleccionado */}
+          <AnimatePresence mode="wait">
             <motion.div
-              layoutId={`card-container-${selectedItem.id}`}
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="w-full max-w-7xl h-[90vh] md:h-[80vh] rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row z-10 ring-1 ring-white/10 bg-[#001540]"
-              onClick={(e) => e.stopPropagation()} 
+              key={selectedTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="max-w-5xl mx-auto"
             >
-              
-              <motion.button
-                onClick={(e) => { e.stopPropagation(); setSelectedId(null); }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="absolute top-6 right-6 z-50 bg-black/40 hover:bg-[#002342] text-white p-3 rounded-full backdrop-blur-md transition-all duration-300 border border-white/20"
-              >
-                <X size={24} />
-              </motion.button>
-
-              <div className="w-full lg:w-2/5 bg-gradient-to-br from-[#002342] via-[#003366] to-[#002342] p-8 md:p-12 flex flex-col justify-center text-white relative overflow-hidden">
+              <div className="bg-white/5 backdrop-blur-md rounded-[3rem] p-8 md:p-12 border border-white/10 shadow-2xl">
                 
-                <motion.div 
-                  className="absolute -right-20 -bottom-20 opacity-5"
-                >
-                  <selectedItem.icon size={450} strokeWidth={0.5} />
-                </motion.div>
-
-                <div className="relative z-10">
+                {/* Header del contenido */}
+                <div className="flex items-start gap-6 mb-8 pb-8 border-b border-white/10">
                   <motion.div 
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
-                    transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-                    className="w-16 h-16 bg-gradient-to-br from-[#B2904D] to-[#D4AF37] rounded-xl flex items-center justify-center mb-6 shadow-xl"
+                    transition={{ type: "spring", stiffness: 200 }}
+                    className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#B2904D] to-[#D4AF37] flex items-center justify-center shadow-xl flex-shrink-0"
                   >
-                    <selectedItem.icon size={30} className="text-white" />
+                    <activeService.icon size={40} className="text-white" />
                   </motion.div>
                   
-                  <motion.h3 
-                    layoutId={`card-title-${selectedItem.id}`}
-                    className="text-4xl font-black mb-3 leading-tight"
-                  >
-                    {gT(selectedItem.title)}
-                  </motion.h3>
-                  
-                  <motion.p 
-                    layoutId={`card-subtitle-${selectedItem.id}`}
-                    className="text-[#B2904D] text-xs font-bold uppercase tracking-widest mb-6"
-                  >
-                    {gT(selectedItem.subtitle)}
-                  </motion.p>
-
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: 60 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    className="h-1 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full mb-6"
-                  />
-
-                  <p className="text-white/70 text-sm leading-relaxed">
-                    {t('modalClosing')}
-                  </p>
-                </div>
-              </div>
-
-              <div className="w-full lg:w-3/5 p-8 md:p-12 overflow-y-auto bg-[#001540] text-white scrollbar-custom">
-                
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="mb-8"
-                >
-                  <h4 className="text-2xl md:text-3xl font-black text-white mb-4 leading-snug">
-                    {gT(selectedItem.content.intro)}
-                  </h4>
-                  <p className="text-lg text-blue-100/70 leading-relaxed">
-                    {gT(selectedItem.content.description)}
-                  </p>
-                </motion.div>
-
-                {selectedItem.content.subPoints && selectedItem.content.subTitle && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                      className="space-y-6"
-                    >
-                      <div className="bg-white/5 p-6 md:p-8 rounded-2xl border border-white/10 shadow-sm">
-                        <h5 className="font-black text-white mb-5 flex items-center gap-3 text-xl">
-                          <div 
-                            className="w-10 h-10 rounded-lg flex items-center justify-center shadow-md bg-white/10" 
-                          >
-                            <Scale size={20} className="text-white"/> 
-                          </div>
-                          {gT(selectedItem.content.subTitle)}
-                        </h5>
-                        <div className="grid md:grid-cols-2 gap-3">
-                          {selectedItem.content.subPoints?.map((point: any, i: number) => ( 
-                            <motion.div 
-                              key={i}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.6 + i * 0.05 }}
-                              className="flex items-start gap-3 text-white/70 bg-black/20 p-3 rounded-lg border border-white/10 shadow-xs"
-                            >
-                              <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0 bg-[#B2904D]"></div> 
-                              <span className="text-sm font-medium">{gT(point)}</span>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                )}
-
-
-                {selectedItem.content.solution && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="mt-8 bg-white/5 p-6 rounded-2xl border border-white/10 shadow-sm"
-                  >
-                    <p className="text-white/80 leading-relaxed font-medium text-base">
-                      {gT(selectedItem.content.solution)}
+                  <div className="flex-1">
+                    <h3 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
+                      {gT(activeService.title)}
+                    </h3>
+                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest">
+                      {gT(activeService.subtitle)}
                     </p>
-                  </motion.div>
-                )}
+                  </div>
+                </div>
 
+                {/* Contenido principal */}
+                <div className="space-y-8">
+                  
+                  <div>
+                    <h4 className="text-2xl font-black text-white mb-4">
+                      {gT(activeService.content.intro)}
+                    </h4>
+                    <p className="text-lg text-white/70 leading-relaxed">
+                      {gT(activeService.content.description)}
+                    </p>
+                  </div>
 
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 }}
-                  className="mt-10 pt-6 border-t border-white/10"
-                >
-                  <motion.a 
-                    href="#contacto" 
-                    onClick={() => setSelectedId(null)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group w-full py-4 bg-[#B2904D] text-[#002342] rounded-xl font-black flex items-center justify-center gap-3 shadow-lg hover:bg-white transition-all"
-                  >
-                    <span className="relative flex items-center gap-3 text-lg">
-                      <PhoneCall size={20}/>
-                      {t('requestEvaluation')}
-                    </span>
-                  </motion.a>
-                </motion.div>
+                  {/* Puntos especiales si existen */}
+                  {activeService.content.subPoints && activeService.content.subTitle && (
+                    <div className="bg-white/5 p-8 rounded-2xl border border-white/10">
+                      <h5 className="font-black text-white mb-6 flex items-center gap-3 text-xl">
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center shadow-md bg-white/10">
+                          <Scale size={24} className="text-white"/> 
+                        </div>
+                        {gT(activeService.content.subTitle)}
+                      </h5>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {activeService.content.subPoints?.map((point: any, i: number) => ( 
+                          <div 
+                            key={i}
+                            className="flex items-start gap-3 text-white/70 bg-black/20 p-4 rounded-xl border border-white/10"
+                          >
+                            <div className="w-2 h-2 rounded-full mt-2 shrink-0 bg-[#B2904D]"></div>
+                            <span className="text-sm font-medium">{gT(point)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Solución */}
+                  {activeService.content.solution && (
+                    <div className="bg-white/5 p-8 rounded-2xl border border-white/10">
+                      <p className="text-white/80 leading-relaxed font-medium text-lg">
+                        {gT(activeService.content.solution)}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* CTA */}
+                  <div className="pt-8 border-t border-white/10">
+                    <motion.a 
+                      href="#contacto"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="group w-full py-5 bg-[#B2904D] text-[#001540] rounded-2xl font-black flex items-center justify-center gap-3 shadow-lg hover:bg-white transition-all text-lg"
+                    >
+                      <PhoneCall size={24}/>
+                      <span>{t('requestEvaluation')}</span>
+                      <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform"/>
+                    </motion.a>
+                  </div>
+                </div>
+
               </div>
-
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </AnimatePresence>
+        </div>
+      </section>
 
+      {/* --- PROCESO SECTION --- */}
       <section className="py-32 relative overflow-hidden bg-[#001540]">
         
         <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -667,7 +509,7 @@ export default function CriminalLawPage() {
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: "spring", stiffness: 200 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 mb-8"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8"
             >
               <FileText size={14} className="text-[#B2904D]" />
               <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">{t('processMethod')}</span>
@@ -694,7 +536,7 @@ export default function CriminalLawPage() {
                 whileHover={{ y: -5, scale: 1.01 }}
                 className="group relative"
               >
-                <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20 hover:bg-white/20 hover:border-[#B2904D]/50 transition-all duration-300 h-full shadow-lg">
+                <div className="bg-white/10 backdrop-blur-md p-8 rounded-[2rem] border border-white/20 hover:bg-white/20 hover:border-[#B2904D]/50 transition-all duration-300 h-full shadow-lg">
                   
                   <motion.div 
                     initial={{ scale: 0, rotate: -180 }}
@@ -731,6 +573,7 @@ export default function CriminalLawPage() {
         </div>
       </section>
 
+      {/* --- CONTACTO SECTION --- */}
       <section id="contacto" className="relative py-32 z-10 bg-transparent">
         
         <div className="max-w-4xl mx-auto px-4 relative z-10">
@@ -753,6 +596,24 @@ export default function CriminalLawPage() {
       </section>
 
       <Footer />
+
+      {/* Estilos para scrollbar */}
+      <style jsx global>{`
+        .scrollbar-custom::-webkit-scrollbar {
+          width: 8px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 10px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-thumb {
+          background: #B2904D;
+          border-radius: 10px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+          background: #D4AF37;
+        }
+      `}</style>
     </div>
   );
 }
