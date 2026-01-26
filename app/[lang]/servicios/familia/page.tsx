@@ -114,7 +114,7 @@ const texts = {
     heroTitle2: { es: "Derecho Familiar", en: "Family Law" }, 
     heroDescription: { es: "Protegemos sus derechos y el bienestar de sus hijos durante transiciones difíciles.", en: "We protect your rights and the well-being of your children during difficult transitions." },
     stats: { es: "Familias Apoyadas", en: "Families Supported" },
-    casesTitle: { es: "Servicios de Derecho Familiar", en: "Family Law Services" },
+    casesTitle: { es: "Soluciones Legales en Inmigración", en: "Legal Solutions in Immigration" },
     ctaConsultation: { es: "Consulta Ahora", en: "Consult Now" },
     specialties: { es: "Nuestras Especialidades", en: "Our Specialties" },
     details: { es: "Ver Detalles", en: "View Details" },

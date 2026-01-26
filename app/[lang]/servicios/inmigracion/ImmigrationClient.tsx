@@ -57,7 +57,7 @@ const texts = {
   mainCases: [
     {
       id: 'deportacion',
-      title: { es: "Defensa Contra la Deportación", en: "Defense Against Deportation" },
+      title: { es: "Defensa y casos urgentes; Defensa contra la Deportación y Asilo", en: "Defense and urgent cases; Defense against Deportation and Asylum" },
       subtitle: { es: "Asilo, Cancelación de Remoción y Fianzas", en: "Asylum, Cancellation of Removal, and Bonds" },
       icon: Shield, 
       content: {
@@ -71,6 +71,22 @@ const texts = {
           { es: "Liberación de detención (Fianzas por ICE o Juez)", en: "Release from detention (Bonds by ICE or Judge)" },
         ],
         solution: { es: "Le ayudaremos a presentar la evidencia y argumentos necesarios para la Cancelación de Remoción o a asegurar una fianza para su liberación de detención.", en: "We will help you present the necessary evidence and arguments for Cancellation of Removal or secure a bond for your release from detention." },
+      }
+    },
+    {
+      id: 'uvawa',
+      title: { es: "Visas Humanitarias; Visa U, Visa T, VAWA y SIJS", en: "Humanitarian Visas; U Visa, T Visa, VAWA and SIJS" },
+      subtitle: { es: "Víctimas de Delitos y Agresión Familiar", en: "Victims of Crimes and Family Aggression" },
+      icon: MessageSquare, 
+      content: {
+        intro: { es: "¿Ha sido agredido o es víctima de un delito violento o crueldad familiar en los Estados Unidos?", en: "Have you been assaulted or are you a victim of a violent crime or family cruelty in the United States?" },
+        description: { es: "La Visa U es para víctimas de un delito grave que cooperan con la policía. VAWA (Ley de Violencia contra Mujeres) es para víctimas de agresión o crueldad cometida por familiares (cónyuges, padres, hijos) ciudadanos o residentes permanentes.", en: "The U Visa is for victims of a serious crime who cooperate with the police. VAWA (Violence Against Women Act) is for victims of assault or cruelty committed by family members (spouses, parents, children) who are citizens or permanent residents." },
+        subTitle: { es: "Calificación para VAWA:", en: "Qualification for VAWA:" },
+        subPoints: [
+          { es: "Víctima de agresión o crueldad por: Cónyuge, ex cónyuge, padre o hijo de un ciudadano de los EEUU.", en: "Victim of assault or cruelty by: Spouse, ex-spouse, parent, or child of a U.S. citizen." },
+          { es: "Víctima de agresión o crueldad por: Cónyuge, ex cónyuge, o padre quien es residente permanente legal.", en: "Victim of assault or cruelty by: Spouse, ex-spouse, or parent who is a lawful permanent resident." },
+        ],
+        solution: { es: "Podemos ayudarle a obtener la Residencia Permanente Legal (LPR) protegiéndole de la violencia y la amenaza de deportación, sin depender de su agresor.", en: "We can help you obtain Lawful Permanent Residency (LPR) by protecting you from violence and the threat of deportation, without depending on your abuser." },
       }
     },
     {
@@ -91,46 +107,13 @@ const texts = {
     },
     {
       id: 'residencia_empleador',
-      title: { es: "Residencia por Empleador", en: "Employer-Based Residency" },
+      title: { es: "Residencia por Empleo", en: "Employment-Based Residency" },
       subtitle: { es: "Peticiones Basadas en Empleo (Green Card)", en: "Employment-Based Petitions (Green Card)" },
       icon: HardHat, 
       content: {
         intro: { es: "¿Desea convertirse en residente legal de los EE. UU. a través de su trabajo?", en: "Do you wish to become a lawful permanent resident of the U.S. through your job?" },
         description: { es: "Si usted entró legalmente a los Estados Unidos y su permiso aún está vigente, o usted sometió alguna petición antes de 4/30/2001 y su patrón está dispuesto a ayudarlo, tiene posibilidades de arreglar su residencia.", en: "If you entered the United States legally and your permit is still valid, or you filed a petition before 4/30/2001 and your employer is willing to help you, you have possibilities to arrange your residency." },
         solution: { es: "Nuestro equipo le ayudará a navegar los complejos procesos de certificación laboral y peticiones I-140 para asegurar su futuro en el país. Esto aplica incluso si usted está en su país de origen y una empresa Estadounidense lo patrocina.", en: "Our team will help you navigate the complex labor certification processes and I-140 petitions to secure your future in the country. This applies even if you are in your home country and an American company sponsors you." },
-      }
-    },
-    {
-      id: 'asilo_main',
-      title: { es: "Asilo", en: "Asylum" },
-      subtitle: { es: "Persecución por Opinión Política, Raza o Religión", en: "Persecution based on Political Opinion, Race, or Religion" },
-      icon: Zap, 
-      content: {
-        intro: { es: "¿Está usted perseguido en su país? Le podemos ayudar con el proceso de solicitar asilo.", en: "Are you persecuted in your country? We can help you with the asylum application process." },
-        description: { es: "Usted debe haber sido perseguido o estar en peligro de persecución en su país de origen, a causa de su opinión política, religión, raza o nacionalidad. Usted debe tener un temor bien fundamentado de ser perseguido por las mismas razones si regresa a su país de origen.", en: "You must have been persecuted or be in danger of persecution in your home country, due to your political opinion, religion, race, or nationality. You must have a well-founded fear of being persecuted for the same reasons if you return to your home country." },
-        subTitle: { es: "Tipos de Procesos de Asilo:", en: "Types of Asylum Processes:" },
-        subPoints: [
-          { es: "Asilo afirmativo (Para personas que no están en procedimientos judiciales)", en: "Affirmative asylum (For people not in court proceedings)" },
-          { es: "Asilo defensivo (Para personas que ya están en algún procedimiento judicial)", en: "Defensive asylum (For people already in court proceedings)" },
-          { es: "Requisito: Solicitar dentro de un año de entrar a los Estados Unidos (con excepciones).", en: "Requirement: Apply within one year of entering the United States (with exceptions)." },
-        ],
-        solution: { es: "Lo guiaremos en la recopilación de pruebas y la presentación de su caso, ya sea Asilo Afirmativo o Defensivo, para protegerlo de la deportación.", en: "We will guide you in gathering evidence and presenting your case, whether Affirmative or Defensive Asylum, to protect you from deportation." },
-      }
-    },
-    {
-      id: 'uvawa',
-      title: { es: "Visa U / VAWA", en: "U Visa / VAWA" },
-      subtitle: { es: "Víctimas de Delitos y Agresión Familiar", en: "Victims of Crimes and Family Aggression" },
-      icon: MessageSquare, 
-      content: {
-        intro: { es: "¿Ha sido agredido o es víctima de un delito violento o crueldad familiar en los Estados Unidos?", en: "Have you been assaulted or are you a victim of a violent crime or family cruelty in the United States?" },
-        description: { es: "La Visa U es para víctimas de un delito grave que cooperan con la policía. VAWA (Ley de Violencia contra Mujeres) es para víctimas de agresión o crueldad cometida por familiares (cónyuges, padres, hijos) ciudadanos o residentes permanentes.", en: "The U Visa is for victims of a serious crime who cooperate with the police. VAWA (Violence Against Women Act) is for victims of assault or cruelty committed by family members (spouses, parents, children) who are citizens or permanent residents." },
-        subTitle: { es: "Calificación para VAWA:", en: "Qualification for VAWA:" },
-        subPoints: [
-          { es: "Víctima de agresión o crueldad por: Cónyuge, ex cónyuge, padre o hijo de un ciudadano de los EEUU.", en: "Victim of assault or cruelty by: Spouse, ex-spouse, parent, or child of a U.S. citizen." },
-          { es: "Víctima de agresión o crueldad por: Cónyuge, ex cónyuge, o padre quien es residente permanente legal.", en: "Victim of assault or cruelty by: Spouse, ex-spouse, or parent who is a lawful permanent resident." },
-        ],
-        solution: { es: "Podemos ayudarle a obtener la Residencia Permanente Legal (LPR) protegiéndole de la violencia y la amenaza de deportación, sin depender de su agresor.", en: "We can help you obtain Lawful Permanent Residency (LPR) by protecting you from violence and the threat of deportation, without depending on your abuser." },
       }
     },
     {
@@ -167,7 +150,7 @@ const texts = {
     title2: { es: "Expertos en EE.UU.", en: "U.S. Experts" }, 
     heroDescription: { es: "Representación experta en todos los aspectos de ley de inmigración para proteger su futuro en Estados Unidos. Deportación, Visas y Ciudadanía.", en: "Expert representation in all aspects of immigration law to protect your future in the United States. Deportation, Visas, and Citizenship." },
     stats: { es: "Familias Unidas", en: "Families Reunited" },
-    casesTitle: { es: "Áreas de Práctica Migratoria", en: "Immigration Practice Areas" },
+    casesTitle: { es: "Soluciones Legales en Inmigración", en: "Legal Solutions in Immigration" },
     ctaConsultation: { es: "Consulta Ahora", en: "Consult Now" },
     specialties: { es: "Nuestras Especialidades", en: "Our Specialties" },
     details: { es: "Ver Detalles", en: "View Details" },
