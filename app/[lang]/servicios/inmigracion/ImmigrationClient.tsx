@@ -13,6 +13,7 @@ import {
   HardHat,
   CheckCircle2,
   Shield,
+  MapPin
 } from 'lucide-react';
 
 import Image from 'next/image';
@@ -50,6 +51,7 @@ interface CaseItem {
     subtitle: ContentDetail;
     icon: React.ElementType;
     content: CaseContent;
+    offices: string[]; // NUEVO: Array de oficinas que ofrecen este servicio
 }
 
 // --- DATOS GLOBALES ---
@@ -59,7 +61,25 @@ const texts = {
       id: 'deportacion',
       title: { es: "Defensa y casos urgentes; Defensa contra la Deportación y Asilo", en: "Defense and urgent cases; Defense against Deportation and Asylum" },
       subtitle: { es: "Asilo, Cancelación de Remoción y Fianzas", en: "Asylum, Cancellation of Removal, and Bonds" },
-      icon: Shield, 
+      icon: Shield,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Está usted o un ser querido enfrentando la deportación? ¡Contáctenos inmediatamente!", en: "Are you or a loved one facing deportation? Contact us immediately!" },
         description: { es: "Los casos de deportación casi siempre son urgentes. Nuestro equipo experto en inmigración luchará por usted. Existen varias formas de evitar la deportación.", en: "Deportation cases are almost always urgent. Our expert immigration team will fight for you. There are several ways to avoid deportation." },
@@ -77,7 +97,25 @@ const texts = {
       id: 'uvawa',
       title: { es: "Visas Humanitarias; Visa U, Visa T, VAWA y SIJS", en: "Humanitarian Visas; U Visa, T Visa, VAWA and SIJS" },
       subtitle: { es: "Víctimas de Delitos y Agresión Familiar", en: "Victims of Crimes and Family Aggression" },
-      icon: MessageSquare, 
+      icon: MessageSquare,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Ha sido agredido o es víctima de un delito violento o crueldad familiar en los Estados Unidos?", en: "Have you been assaulted or are you a victim of a violent crime or family cruelty in the United States?" },
         description: { es: "La Visa U es para víctimas de un delito grave que cooperan con la policía. VAWA (Ley de Violencia contra Mujeres) es para víctimas de agresión o crueldad cometida por familiares (cónyuges, padres, hijos) ciudadanos o residentes permanentes.", en: "The U Visa is for victims of a serious crime who cooperate with the police. VAWA (Violence Against Women Act) is for victims of assault or cruelty committed by family members (spouses, parents, children) who are citizens or permanent residents." },
@@ -94,6 +132,24 @@ const texts = {
       title: { es: "Residencia por un Familiar", en: "Residency Through a Family Member" },
       subtitle: { es: "Peticiones I-130 y Ajuste de Estatus", en: "I-130 Petitions and Adjustment of Status" },
       icon: FileText,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Espera alcanzar la condición de residente legal de los EE. UU.?", en: "Do you hope to achieve lawful permanent resident status in the U.S.?" },
         description: { es: "Si usted tiene un familiar en los Estados Unidos que goza del estatus de Residente Permanente o es ciudadano americano, usted posiblemente califique para una Residencia Permanente.", en: "If you have a family member in the United States who holds Permanent Resident status or is a U.S. citizen, you may qualify for Permanent Residency." },
@@ -109,7 +165,25 @@ const texts = {
       id: 'residencia_empleador',
       title: { es: "Residencia por Empleo", en: "Employment-Based Residency" },
       subtitle: { es: "Peticiones Basadas en Empleo (Green Card)", en: "Employment-Based Petitions (Green Card)" },
-      icon: HardHat, 
+      icon: HardHat,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Desea convertirse en residente legal de los EE. UU. a través de su trabajo?", en: "Do you wish to become a lawful permanent resident of the U.S. through your job?" },
         description: { es: "Si usted entró legalmente a los Estados Unidos y su permiso aún está vigente, o usted sometió alguna petición antes de 4/30/2001 y su patrón está dispuesto a ayudarlo, tiene posibilidades de arreglar su residencia.", en: "If you entered the United States legally and your permit is still valid, or you filed a petition before 4/30/2001 and your employer is willing to help you, you have possibilities to arrange your residency." },
@@ -120,7 +194,25 @@ const texts = {
       id: 'naturalizacion',
       title: { es: "Naturalización", en: "Naturalization" },
       subtitle: { es: "Conviértete en Ciudadano Estadounidense", en: "Become a U.S. Citizen" },
-      icon: CheckCircle2, 
+      icon: CheckCircle2,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Desea convertirse en ciudadano estadounidense?", en: "Do you want to become a U.S. citizen?" },
         description: { es: "¿Por qué permanecer con la residencia legal si puede llegar a ser un ciudadano estadounidense y disfrutar de todos los derechos que corresponden? La naturalización es el paso final hacia la plena ciudadanía.", en: "Why remain with legal residency if you can become a U.S. citizen and enjoy all the corresponding rights? Naturalization is the final step towards full citizenship." },
@@ -159,7 +251,9 @@ const texts = {
     processMethod: { es: "Nuestro Método Legal", en: "Our Legal Method" },
     processTitle: { es: "Tu Ruta Hacia el Estatus Legal", en: "Your Path to Legal Status" },
     requestEvaluation: { es: "Solicitar Evaluación de Caso", en: "Request Case Evaluation" },
-    videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." }
+    videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." },
+    availableOffices: { es: "Oficinas Disponibles", en: "Available Offices" },
+    officesCount: { es: "oficinas", en: "offices" }
   }
 };
 
@@ -431,9 +525,17 @@ export default function ImmigrationClient() {
                     <h3 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
                       {gT(activeService.title)}
                     </h3>
-                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest">
+                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest mb-4">
                       {gT(activeService.subtitle)}
                     </p>
+                    
+                    {/* NUEVO: Badge con contador de oficinas */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20">
+                      <MapPin size={14} className="text-[#B2904D]" />
+                      <span className="text-xs text-white/80 font-medium">
+                        {activeService.offices.length} {t('officesCount')}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -447,6 +549,28 @@ export default function ImmigrationClient() {
                     <p className="text-lg text-white/70 leading-relaxed">
                       {gT(activeService.content.description)}
                     </p>
+                  </div>
+
+                  {/* NUEVO: Sección de oficinas disponibles */}
+                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                    <h5 className="font-black text-white mb-4 flex items-center gap-3 text-lg">
+                      <MapPin size={20} className="text-[#B2904D]" />
+                      {t('availableOffices')}
+                    </h5>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                      {activeService.offices.map((office, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: i * 0.03 }}
+                          className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm"
+                        >
+                          <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
+                          <span className="font-medium text-xs">{office}</span>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Puntos especiales si existen */}

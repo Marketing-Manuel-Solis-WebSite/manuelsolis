@@ -12,6 +12,7 @@ import {
   Zap,
   CheckCircle2,
   Star,
+  MapPin
 } from 'lucide-react';
 
 import Image from 'next/image';
@@ -46,6 +47,7 @@ interface CaseItem {
     subtitle: ContentDetail;
     icon: React.ElementType;
     content: CaseContent;
+    offices: string[]; // NUEVO: Array de oficinas que ofrecen este servicio
 }
 
 const texts = {
@@ -55,6 +57,18 @@ const texts = {
       title: { es: "Violencia Doméstica", en: "Domestic Violence" },
       subtitle: { es: "Delitos Emotivos y Complejos", en: "Emotional and Complex Offenses" },
       icon: MessageSquare,
+      offices: [
+        'Chicago',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Está acusado de violencia doméstica?", en: "Are you accused of domestic violence?" },
         description: { es: "Los casos de violencia doméstica se encuentran entre los delitos penales más emotivos y complejos. Si usted y un familiar tienen una relación hostil, es fácil terminar en problemas legales. A menudo resulta en un arresto basado en versiones diferentes del mismo evento.", en: "Domestic violence cases are among the most emotional and complex criminal offenses. If you and a family member have a hostile relationship, it's easy to end up in legal trouble. It often results in an arrest based on different versions of the same event." },
@@ -72,7 +86,19 @@ const texts = {
       id: 'asalto',
       title: { es: "Asalto y Agresión", en: "Assault and Battery" },
       subtitle: { es: "Violencia Física o Amenaza de Daño", en: "Physical Violence or Threat of Harm" },
-      icon: Zap, 
+      icon: Zap,
+      offices: [
+        'Chicago',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Ha sido acusado de asalto o agresión?", en: "Have you been charged with assault or battery?" },
         description: { es: "El asalto implica causar intencionalmente que otra persona tenga temor razonable de un contacto dañino inminente. No siempre se requiere una lesión física. Si hay violencia física real, el cargo se combina con un cargo de agresión.", en: "Assault involves intentionally causing another person to have reasonable fear of imminent harmful contact. A physical injury is not always required. If there is actual physical violence, the charge is combined with a battery charge." },
@@ -83,7 +109,19 @@ const texts = {
       id: 'dwi',
       title: { es: "DWI - Manejo en Estado de Ebriedad", en: "DWI - Driving While Intoxicated" },
       subtitle: { es: "Conducir Bajo la Influencia (DUI)", en: "Driving Under the Influence (DUI)" },
-      icon: Car, 
+      icon: Car,
+      offices: [
+        'Chicago',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Necesita un abogado después de ser sorprendido conduciendo bajo la influencia?", en: "Need an attorney after being caught driving under the influence?" },
         description: { es: "El límite legal de contenido de alcohol en la sangre es típicamente 0.08%, pero puede ser detenido por sospecha de consumo de drogas o alcohol, independientemente de la cantidad exacta.", en: "The legal limit for blood alcohol content is typically 0.08%, but you can be arrested for suspicion of drug or alcohol consumption, regardless of the exact amount." },
@@ -101,7 +139,19 @@ const texts = {
       id: 'hurto',
       title: { es: "Hurto, Robo y Delitos Patrimoniales", en: "Theft, Robbery, and Property Crimes" },
       subtitle: { es: "Fraude, Malversación y Robo de Identidad", en: "Fraud, Embezzlement, and Identity Theft" },
-      icon: FileText, 
+      icon: FileText,
+      offices: [
+        'Chicago',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Ha sido acusado de un delito de robo o hurto?", en: "Have you been charged with a theft or larceny offense?" },
         description: { es: "Este delito penal suele aplicarse de manera amplia; es delito de hurto cuando una persona se apropia intencional o fraudulentamente de los bienes personales de otra persona sin su consentimiento expreso.", en: "This criminal offense is often broadly applied; it is a theft offense when a person intentionally or fraudulently appropriates another person's personal property without their express consent." },
@@ -120,7 +170,19 @@ const texts = {
       id: 'prostitucion',
       title: { es: "Prostitución y Solicitación", en: "Prostitution and Solicitation" },
       subtitle: { es: "Delito Grave y Sanciones Estrictas", en: "Felony Offense and Strict Penalties" },
-      icon: Scale, 
+      icon: Scale,
+      offices: [
+        'Chicago',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Ha sido acusado de prostitución o solicitación?", en: "Have you been charged with prostitution or solicitation?" },
         description: { es: "Las leyes han endurecido las penas, por ejemplo, en Texas, la solicitud de prostitución puede ser un delito grave. Alguien es culpable si 'la persona a sabiendas ofrece o acepta pagar una tarifa a otra persona con el fin de participar en una conducta sexual'.", en: "Laws have stiffened penalties; for example, in Texas, solicitation of prostitution can be a felony offense. Someone is guilty if 'the person knowingly offers or agrees to pay a fee to another person for the purpose of engaging in sexual conduct'." },
@@ -152,7 +214,9 @@ const texts = {
     processMethod: { es: "Nuestro Método", en: "Our Method" },
     processTitle: { es: "Su Ruta Hacia la Defensa", en: "Your Path to Defense" },
     requestEvaluation: { es: "Solicitar Consulta Privada", en: "Request Private Consultation" },
-    videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." }
+    videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." },
+    availableOffices: { es: "Oficinas Disponibles", en: "Available Offices" },
+    officesCount: { es: "oficinas", en: "offices" }
   }
 };
 
@@ -423,9 +487,17 @@ export default function CriminalLawPage() {
                     <h3 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
                       {gT(activeService.title)}
                     </h3>
-                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest">
+                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest mb-4">
                       {gT(activeService.subtitle)}
                     </p>
+                    
+                    {/* NUEVO: Badge con contador de oficinas */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20">
+                      <MapPin size={14} className="text-[#B2904D]" />
+                      <span className="text-xs text-white/80 font-medium">
+                        {activeService.offices.length} {t('officesCount')}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -439,6 +511,28 @@ export default function CriminalLawPage() {
                     <p className="text-lg text-white/70 leading-relaxed">
                       {gT(activeService.content.description)}
                     </p>
+                  </div>
+
+                  {/* NUEVO: Sección de oficinas disponibles */}
+                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                    <h5 className="font-black text-white mb-4 flex items-center gap-3 text-lg">
+                      <MapPin size={20} className="text-[#B2904D]" />
+                      {t('availableOffices')}
+                    </h5>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {activeService.offices.map((office, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: i * 0.05 }}
+                          className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm"
+                        >
+                          <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
+                          <span className="font-medium text-xs">{office}</span>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Puntos especiales si existen */}

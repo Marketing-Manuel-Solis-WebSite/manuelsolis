@@ -13,6 +13,7 @@ import {
   FileText,
   HandCoins,
   Star,
+  MapPin
 } from 'lucide-react';
 
 import Image from 'next/image';
@@ -47,6 +48,7 @@ interface CaseItem {
     subtitle: ContentDetail;
     icon: React.ElementType;
     content: CaseContent;
+    offices: string[]; // NUEVO: Array de oficinas que ofrecen este servicio
 }
 
 const texts = {
@@ -56,6 +58,23 @@ const texts = {
       title: { es: "Reclamaciones por Incendio", en: "Fire Claims" },
       subtitle: { es: "Daños por Fuego, Humo y Agua", en: "Fire, Smoke, and Water Damage" },
       icon: Zap,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "El fuego causa estragos en propiedades. ¿Siente que su aseguradora no lo cubre?", en: "Fire causes havoc on properties. Do you feel your insurer isn't covering you?" },
         description: { es: "Los daños causados por un incendio, el humo y el agua pueden ser catastróficos. Las compañías de seguros a menudo buscan formas de minimizar el pago o negar el reclamo por completo. Le ayudamos a luchar por la compensación total que se merece.", en: "Damage caused by fire, smoke, and water can be catastrophic. Insurance companies often look for ways to minimize payment or deny the claim outright. We help you fight for the full compensation you deserve." },
@@ -73,7 +92,24 @@ const texts = {
       id: 'granizo_viento',
       title: { es: "Daños por Granizo y Viento", en: "Hail and Wind Damage" },
       subtitle: { es: "Techos, Estructuras y Fachadas", en: "Roofs, Structures, and Facades" },
-      icon: Truck, 
+      icon: Truck,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Su techo o propiedad fue dañado por una tormenta de viento o granizo?", en: "Was your roof or property damaged by a wind or hail storm?" },
         description: { es: "El granizo y los vientos fuertes pueden causar daños estructurales invisibles que las aseguradoras intentarán ignorar o clasificar como 'daño preexistente'. Es posible que podamos ayudarlo a recibir la compensación que se merece.", en: "Hail and strong winds can cause invisible structural damage that insurers will try to ignore or classify as 'pre-existing damage'. We may be able to help you receive the compensation you deserve." },
@@ -84,7 +120,24 @@ const texts = {
       id: 'tornado',
       title: { es: "Reclamaciones por Tornado", en: "Tornado Claims" },
       subtitle: { es: "Pérdida Total y Reconstrucción", en: "Total Loss and Reconstruction" },
-      icon: Car, 
+      icon: Car,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Ha sufrido una pérdida catastrófica debido a un tornado?", en: "Have you suffered a catastrophic loss due to a tornado?" },
         description: { es: "Los tornados a menudo resultan en pérdidas totales o daños estructurales masivos. Las disputas giran en torno al valor de reemplazo. Su compañía de seguros debe pagar lo suficiente para que usted reconstruya. Esto puede ser un proceso largo que requiere representación experta.", en: "Tornadoes often result in total losses or massive structural damage. Disputes revolve around replacement value. Your insurance company must pay enough for you to rebuild. This can be a lengthy process that requires expert representation." },
@@ -95,7 +148,24 @@ const texts = {
       id: 'tuberias_congeladas',
       title: { es: "Tuberías Congeladas / Daños por Agua", en: "Frozen Pipes / Water Damage" },
       subtitle: { es: "Daños Invernales e Inundaciones", en: "Winter Damage and Flooding" },
-      icon: Stethoscope, 
+      icon: Stethoscope,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "Daños causados por tuberías congeladas o roturas de agua durante tormentas invernales.", en: "Damage caused by frozen pipes or water leaks during winter storms." },
         description: { es: "El daño por agua es costoso y las aseguradoras a menudo argumentan 'falta de mantenimiento'. Póngase en contacto con nosotros si su casa sufrió daños como resultado de tuberías congeladas. Es posible que podamos ayudarle a recuperar costos de reparación y subsistencia.", en: "Water damage is costly, and insurers often argue 'lack of maintenance'. Contact us if your home suffered damage as a result of frozen pipes. We may be able to help you recover repair and living expenses." },
@@ -113,7 +183,24 @@ const texts = {
       id: 'disputas_mala_fe',
       title: { es: "Disputas con la Aseguradora", en: "Insurer Disputes" },
       subtitle: { es: "Negación, Retraso y Mala Fe", en: "Denial, Delay, and Bad Faith" },
-      icon: Scale, 
+      icon: Scale,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Siente que su compañía de seguros lo está tratando injustamente?", en: "Do you feel your insurance company is treating you unfairly?" },
         description: { es: "Representamos a asegurados en disputas con sus compañías de seguros. Las compañías con frecuencia niegan la cobertura, no pagan lo suficiente por la propiedad dañada o tardan demasiado. Ha pagado sus primas, usted merece ser tratado de manera justa.", en: "We represent policyholders in disputes with their insurance companies. Companies frequently deny coverage, underpay for damaged property, or take too long. You've paid your premiums, you deserve to be treated fairly." },
@@ -156,7 +243,9 @@ const texts = {
     processMethod: { es: "Nuestro Método", en: "Our Method" },
     processTitle: { es: "El Proceso de su Reclamación", en: "Your Claim Process" },
     requestEvaluation: { es: "Solicitar Evaluación", en: "Request Evaluation" },
-    videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." }
+    videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." },
+    availableOffices: { es: "Oficinas Disponibles", en: "Available Offices" },
+    officesCount: { es: "oficinas", en: "offices" }
   }
 };
 
@@ -425,9 +514,17 @@ export default function InsuranceClaimsPage() {
                     <h3 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
                       {gT(activeService.title)}
                     </h3>
-                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest">
+                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest mb-4">
                       {gT(activeService.subtitle)}
                     </p>
+                    
+                    {/* NUEVO: Badge con contador de oficinas */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20">
+                      <MapPin size={14} className="text-[#B2904D]" />
+                      <span className="text-xs text-white/80 font-medium">
+                        {activeService.offices.length} {t('officesCount')}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -441,6 +538,28 @@ export default function InsuranceClaimsPage() {
                     <p className="text-lg text-white/70 leading-relaxed">
                       {gT(activeService.content.description)}
                     </p>
+                  </div>
+
+                  {/* NUEVO: Sección de oficinas disponibles */}
+                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                    <h5 className="font-black text-white mb-4 flex items-center gap-3 text-lg">
+                      <MapPin size={20} className="text-[#B2904D]" />
+                      {t('availableOffices')}
+                    </h5>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                      {activeService.offices.map((office, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: i * 0.03 }}
+                          className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm"
+                        >
+                          <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
+                          <span className="font-medium text-xs">{office}</span>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Puntos especiales si existen */}

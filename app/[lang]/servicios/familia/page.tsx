@@ -10,6 +10,7 @@ import {
   HandCoins, 
   MessageSquare, 
   Star,
+  MapPin
 } from 'lucide-react';
 
 import Image from 'next/image';
@@ -47,6 +48,7 @@ interface CaseItem {
     subtitle: ContentDetail;
     icon: React.ElementType;
     content: CaseContent;
+    offices: string[]; // NUEVO: Array de oficinas que ofrecen este servicio
 }
 
 // --- DATOS GLOBALES (FAMILY LAW) ---
@@ -57,6 +59,11 @@ const texts = {
       title: { es: "Divorcio", en: "Divorce" },
       subtitle: { es: "Separación Legal y Acuerdos Mutuos", en: "Legal Separation and Mutual Agreements" },
       icon: FileText,
+      offices: [
+        'Chicago',
+        'Memphis',
+        'Memphis (Airways)'
+      ],
       content: {
         intro: { es: "¿Necesita un buen abogado de divorcio?", en: "Do you need a good divorce attorney?" },
         description: { es: "Un matrimonio es un contrato legalmente establecido entre dos personas que debe resolverse de manera adecuada para proteger sus intereses futuros. Es recomendable acudir a un abogado para que le ayude a tomar las mejores decisiones.", en: "A marriage is a legally established contract between two people that must be properly resolved to protect your future interests. It is advisable to go to an attorney to help you make the best decisions." },
@@ -67,7 +74,12 @@ const texts = {
       id: 'custodia',
       title: { es: "Custodia de los Hijos", en: "Child Custody" },
       subtitle: { es: "Disputas, Visitas y Bienestar Infantil", en: "Disputes, Visitation, and Child Welfare" },
-      icon: MessageSquare, 
+      icon: MessageSquare,
+      offices: [
+        'Chicago',
+        'Memphis',
+        'Memphis (Airways)'
+      ],
       content: {
         intro: { es: "Permítanos apoyarle en las disputas por la custodia de sus hijos.", en: "Allow us to support you in child custody disputes." },
         description: { es: "Los niños son, indudablemente, los más perjudicados en la separación de sus padres. Es crucial que los abogados negocien en su nombre desde un punto de vista técnico y no emocional para lograr la mejor resolución.", en: "Children are undoubtedly the most affected by the separation of their parents. It is crucial that attorneys negotiate on your behalf from a technical rather than emotional point of view to achieve the best resolution." },
@@ -84,7 +96,12 @@ const texts = {
       id: 'manutencion',
       title: { es: "Manutención de los Hijos", en: "Child Support" },
       subtitle: { es: "Cálculo y Cumplimiento de Pagos", en: "Calculation and Enforcement of Payments" },
-      icon: HandCoins, 
+      icon: HandCoins,
+      offices: [
+        'Chicago',
+        'Memphis',
+        'Memphis (Airways)'
+      ],
       content: {
         intro: { es: "La manutención infantil es un aspecto clave del derecho de familia.", en: "Child support is a key aspect of family law." },
         description: { es: "Los padres tienen el deber de mantener a sus hijos. La manutención les ayuda económicamente, asegurándose de que los niños tengan ropa en la espalda y comida en la mesa. La cantidad se calcula sobre la base de los recursos netos del padre.", en: "Parents have a duty to support their children. Support helps them financially, ensuring that children have clothes on their backs and food on the table. The amount is calculated based on the father's net resources." },
@@ -126,7 +143,9 @@ const texts = {
     processMethod: { es: "Nuestro Método", en: "Our Method" },
     processTitle: { es: "El Proceso para su Resolución Familiar", en: "The Process for Your Family Resolution" },
     requestEvaluation: { es: "Solicitar Consulta", en: "Request Consultation" },
-    videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." }
+    videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." },
+    availableOffices: { es: "Oficinas Disponibles", en: "Available Offices" },
+    officesCount: { es: "oficinas", en: "offices" }
   }
 };
 
@@ -392,9 +411,17 @@ export default function FamilyLawPage() {
                     <h3 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
                       {gT(activeService.title)}
                     </h3>
-                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest">
+                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest mb-4">
                       {gT(activeService.subtitle)}
                     </p>
+                    
+                    {/* NUEVO: Badge con contador de oficinas */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20">
+                      <MapPin size={14} className="text-[#B2904D]" />
+                      <span className="text-xs text-white/80 font-medium">
+                        {activeService.offices.length} {t('officesCount')}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -408,6 +435,28 @@ export default function FamilyLawPage() {
                     <p className="text-lg text-white/70 leading-relaxed">
                       {gT(activeService.content.description)}
                     </p>
+                  </div>
+
+                  {/* NUEVO: Sección de oficinas disponibles */}
+                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                    <h5 className="font-black text-white mb-4 flex items-center gap-3 text-lg">
+                      <MapPin size={20} className="text-[#B2904D]" />
+                      {t('availableOffices')}
+                    </h5>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {activeService.offices.map((office, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: i * 0.05 }}
+                          className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm"
+                        >
+                          <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
+                          <span className="font-medium text-xs">{office}</span>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Puntos especiales si existen */}

@@ -15,7 +15,8 @@ import {
   HandCoins,
   Star,
   Quote,
-  CheckCircle2
+  CheckCircle2,
+  MapPin
 } from 'lucide-react';
 
 import Image from 'next/image';
@@ -53,6 +54,7 @@ interface CaseItem {
     subtitle: ContentDetail;
     icon: React.ElementType;
     content: CaseContent;
+    offices: string[]; // NUEVO: Array de oficinas que ofrecen este servicio
 }
 
 // --- FUNCIÓN AUXILIAR ---
@@ -69,6 +71,24 @@ const texts = {
       title: { es: "Accidentes Automovilísticos", en: "Car Accidents" },
       subtitle: { es: "Colisiones y Lesiones Graves", en: "Collisions and Serious Injuries" },
       icon: Car,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Herido y buscando compensación por un accidente de vehículo?", en: "Injured and seeking compensation after a vehicle accident?" },
         description: { es: "Las lesiones causadas por una colisión pueden no mostrarse o sentirse durante días, o pueden ser obvias y requerir atención médica inmediata. Las lesiones, como las de la cabeza y, sobretodo, el cerebro, pueden causar sufrimiento de por vida. Incluso después de sanar físicamente, puedes experimentar un trauma emocional y ansiedad que pueden seguirte durante años.", en: "Injuries caused by a collision may not show or be felt for days, or they may be obvious and require immediate medical attention. Injuries, such as those to the head and, especially, the brain, can cause lifelong suffering. Even after physically healing, you may experience emotional trauma and anxiety that can follow you for years." },
@@ -80,6 +100,24 @@ const texts = {
       title: { es: "Accidentes de 18 Ruedas", en: "18-Wheeler Accidents" },
       subtitle: { es: "Tráilers y Vehículos Comerciales", en: "Tractor-Trailers and Commercial Vehicles" },
       icon: Truck,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Ha quedado usted o un miembro de su familia herido en un accidente con un camión de 18 ruedas?", en: "Have you or a family member been injured in an 18-wheeler accident?" },
         description: { es: "Es posible que tenga derecho a una indemnización significativa. Usted no debe verse destinado a un futuro de dolor, sufrimiento y deudas a causa de un accidente. Es un hecho que la calidad de su vida de ahora en adelante se verá afectada significativamente por la cantidad de indemnización que reciba.", en: "You may be entitled to significant compensation. You should not be destined to a future of pain, suffering, and debt because of an accident. It is a fact that the quality of your life from now on will be significantly affected by the amount of compensation you receive." },
@@ -98,6 +136,24 @@ const texts = {
       title: { es: "Negligencia Médica", en: "Medical Malpractice" },
       subtitle: { es: "Errores Médicos y Farmacéuticos", en: "Medical and Pharmaceutical Errors" },
       icon: Stethoscope,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Herido por negligencia médica o por un producto farmacéutico?", en: "Injured due to medical malpractice or a pharmaceutical product?" },
         description: { es: "A veces, una mala experiencia debida a una enfermedad o un accidente puede ser aun peor si no recibimos un trato profesional por parte del médico o el hospital que supuestamente debe ayudarnos. Podría ser que incluso usted sospeche que el fallecimiento de un ser querido posiblemente se deba a una mala decisión.", en: "Sometimes, a bad experience due to illness or accident can be even worse if we do not receive professional treatment from the doctor or hospital that is supposed to help us. You might even suspect that the death of a loved one is possibly due to a bad decision." },
@@ -109,6 +165,24 @@ const texts = {
       title: { es: "Explosión de Plantas", en: "Plant Explosions" },
       subtitle: { es: "Industriales y Refinerías", en: "Industrial and Refinery" },
       icon: Zap,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "Es posible que tenga derecho a una indemnización significativa.", en: "You may be entitled to significant compensation." },
         description: { es: "Las explosiones de plantas parecen estar ocurriendo con demasiada frecuencia en estos días. Las explosiones pueden ser causadas por muchos factores, por lo que es necesario realizar una investigación exhaustiva para determinar la causa.", en: "Plant explosions seem to be occurring too often these days. Explosions can be caused by many factors, so a thorough investigation is necessary to determine the cause." },
@@ -120,6 +194,24 @@ const texts = {
       title: { es: "Lesiones y Accidentes en el Trabajo", en: "Work Injuries and Accidents" },
       subtitle: { es: "Construcción, Fábricas y Más", en: "Construction, Factories, and More" },
       icon: HardHat,
+      offices: [
+        'Arvada (Denver)',
+        'Chicago',
+        'Dallas',
+        'El Paso',
+        'Harlingen',
+        'Bellaire',
+        'Los Angeles',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
       content: {
         intro: { es: "¿Sufriste una lesión o accidente en tu trabajo?", en: "Did you suffer an injury or accident at work?" },
         description: { es: "Ayudamos a trabajadores que se esfuerzan cada día. Miles de inmigrantes realizan trabajos físicos y lamentablemente sufren accidentes. Creemos que nadie debe enfrentar esto solo.", en: "We help workers who strive every day. Thousands of immigrants perform physical work and unfortunately suffer accidents. We believe no one should face this alone." },
@@ -171,7 +263,9 @@ const texts = {
     processTitle: { es: "Cómo Funciona el Proceso", en: "How the Process Works" },
     requestEvaluation: { es: "Solicitar Evaluación", en: "Request Evaluation" },
     videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." },
-    specialties: { es: "Nuestras Especialidades", en: "Our Specialties" }
+    specialties: { es: "Nuestras Especialidades", en: "Our Specialties" },
+    availableOffices: { es: "Oficinas Disponibles", en: "Available Offices" },
+    officesCount: { es: "oficinas", en: "offices" }
   }
 };
 
@@ -441,9 +535,17 @@ export default function AccidentsPageBilingual() {
                     <h3 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
                       {gT(activeService.title)}
                     </h3>
-                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest">
+                    <p className="text-[#B2904D] text-sm font-bold uppercase tracking-widest mb-4">
                       {gT(activeService.subtitle)}
                     </p>
+                    
+                    {/* NUEVO: Badge con contador de oficinas */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20">
+                      <MapPin size={14} className="text-[#B2904D]" />
+                      <span className="text-xs text-white/80 font-medium">
+                        {activeService.offices.length} {t('officesCount')}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -457,6 +559,28 @@ export default function AccidentsPageBilingual() {
                     <p className="text-lg text-white/70 leading-relaxed">
                       {gT(activeService.content.description)}
                     </p>
+                  </div>
+
+                  {/* NUEVO: Sección de oficinas disponibles */}
+                  <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
+                    <h5 className="font-black text-white mb-4 flex items-center gap-3 text-lg">
+                      <MapPin size={20} className="text-[#B2904D]" />
+                      {t('availableOffices')}
+                    </h5>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                      {activeService.offices.map((office, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: i * 0.05 }}
+                          className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm"
+                        >
+                          <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
+                          <span className="font-medium text-xs">{office}</span>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Quotes especiales para 18 Ruedas */}
