@@ -16,6 +16,26 @@ const BLOG_DATA = {
   posts: [
     // --- NUEVO BLOG POST ---
     {
+      id: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
+      slug: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
+      title: { 
+        es: 'VAWA para padres: maltrato de hijos ciudadanos estadounidenses', 
+        en: 'VAWA for Parents: Abuse by U.S. Citizen Children' 
+      },
+      excerpt: { 
+        es: '¿Te sientes maltratado por tu hijo ciudadano estadounidense y no sabes qué hacer? Descubre cómo la ley VAWA podría ayudarte a protegerte y obtener la residencia legal sin depender del hijo que te agrede.', 
+        en: 'Are you being abused by your U.S. citizen child and don’t know what to do? Learn how VAWA may help you protect yourself and obtain legal residency without relying on the abusive child.' 
+      },
+      categoryId: 'visa-VAWA',
+      category: { es: 'Visa VAWA', en: 'VAWA Visa' },
+      author: 'Manuel Solís',
+      date: '2025-01-28',
+      readTime: '10 min',
+      image: '/blog/blog_05/B5_CR1.png', 
+      featured: true
+    },
+    // --- BLOG POST ANTERIOR ---
+    {
       id: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
       slug: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
       title: { 
@@ -32,7 +52,7 @@ const BLOG_DATA = {
       date: '2025-01-23',
       readTime: '10 min',
       image: '/blog/blog_03/B3_CR1.png', 
-      featured: true
+      featured: false
     },
     // --- BLOG POST ANTERIOR ---
     {
