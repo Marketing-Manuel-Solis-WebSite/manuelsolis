@@ -147,7 +147,7 @@ const blogContent = {
       published: 'Published',
       readTime: '10 min read',
       tags: 'VAWA for Parents',
-      date: 'Jan 23, 2025',
+      date: 'Jan 28, 2025',
       time: '10 min',
       authorRole: 'Founder & Principal Attorney',
       ctaButton: 'Consult with an Attorney Now'
@@ -270,7 +270,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       publishedTime: '2025-01-20T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
-      tags: ['Visa U', 'Certificación', 'Policía', 'Suplemento B', 'Inmigración USA'],
+      tags: ['VAWA', 'VAWA para padres', 'Abuso familiar', 'Hijo ciudadano', 'Inmigración USA'],
     },
     twitter: {
       card: 'summary_large_image',
