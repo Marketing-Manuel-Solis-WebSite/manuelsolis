@@ -42,7 +42,7 @@ const blogContent = {
       published: 'Publicado',
       readTime: '10 min de lectura',
       tags: 'VAWA para padres',
-      date: '23 Ene, 2025',
+      date: '28 Ene, 2025',
       time: '10 min',
       authorRole: 'Fundador & Abogado Principal',
       ctaButton: 'Consultar con un Abogado Ahora'
