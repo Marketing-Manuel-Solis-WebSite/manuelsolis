@@ -16,6 +16,26 @@ const BLOG_DATA = {
   posts: [
     // --- NUEVO BLOG POST ---
     {
+      id: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
+      slug: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
+      title: { 
+        es: 'VAWA para hombres: protección migratoria por abuso de pareja ciudadana o residente', 
+        en: 'VAWA for Men: Immigration Protection from Abuse by a Citizen or Resident Spouse' 
+      },
+      excerpt: { 
+        es: '¿Eres hombre y estás siendo maltratado por tu esposa ciudadana o residente permanente? Conoce cómo VAWA puede protegerte y permitirte solicitar la residencia sin depender de tu agresora.', 
+        en: 'Are you a man being abused by your U.S. citizen or permanent resident spouse? Learn how VAWA can protect you and allow you to apply for residency without relying on your abuser.' 
+      },
+      categoryId: 'visa-VAWA',
+      category: { es: 'Visa VAWA', en: 'VAWA Visa' },
+      author: 'Manuel Solís',
+      date: '2025-01-30',
+      readTime: '8 min',
+      image: '/blog/blog_06/B6_CR1.png', 
+      featured: true
+    },
+    // --- BLOG POST ANTERIOR ---
+    {
       id: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
       slug: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
       title: { 
@@ -32,7 +52,7 @@ const BLOG_DATA = {
       date: '2025-01-28',
       readTime: '10 min',
       image: '/blog/blog_05/B5_CR1.png', 
-      featured: true
+      featured: false
     },
     // --- BLOG POST ANTERIOR ---
     {
