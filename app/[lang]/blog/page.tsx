@@ -16,6 +16,26 @@ const BLOG_DATA = {
   posts: [
     // --- NUEVO BLOG POST ---
     {
+      id: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
+      slug: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
+      title: { 
+        es: 'Visa T: papeles para víctimas de coyotes y trabajo forzado por deuda', 
+        en: 'T Visa: Immigration Relief for Victims of Forced Labor and Smuggling Debt' 
+      },
+      excerpt: { 
+        es: '¿Te obligaron a trabajar para pagarle a un coyote bajo amenazas o coerción? Esa experiencia podría calificarte para la Visa T, una protección legal para víctimas de trata laboral que permite vivir y trabajar legalmente en EE. UU.', 
+        en: 'Were you forced to work to repay a smuggler under threats or coercion? That experience may qualify you for a T Visa, a form of immigration protection for victims of labor trafficking in the United States.' 
+      },
+      categoryId: 'visa-T',
+      category: { es: 'Visa T', en: 'T Visa' },
+      author: 'Manuel Solís',
+      date: '2025-02-03',
+      readTime: '9 min',
+      image: '/blog/blog_07/B7_CR1.png', 
+      featured: true
+    },
+    // --- BLOG POST ANTERIOR ---
+    {
       id: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
       slug: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
       title: { 
@@ -32,7 +52,7 @@ const BLOG_DATA = {
       date: '2025-01-30',
       readTime: '8 min',
       image: '/blog/blog_06/B6_CR1.png', 
-      featured: true
+      featured: false
     },
     // --- BLOG POST ANTERIOR ---
     {
