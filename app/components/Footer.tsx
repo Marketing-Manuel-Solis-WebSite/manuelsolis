@@ -155,6 +155,7 @@ export default function Footer() {
                © {currentYear} Manuel Solis Law Firm. {language === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
              </p>
           </div>
+          
         </div>
 
       </div>

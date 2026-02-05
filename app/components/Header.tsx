@@ -97,6 +97,7 @@ export default function HeaderProfessional() {
             { name: 'Seguros', href: `/${language}/servicios/seguros` },
             { name: 'Ley Criminal', href: `/${language}/servicios/ley-criminal` },
             { name: 'Familia', href: `/${language}/servicios/familia` },
+            { name: 'Inversionistas', href: `/${language}/servicios/visa-e2` }, // Agregado Inversionistas
           ]
         : [
             { name: 'Immigration', href: `/${language}/servicios/inmigracion` },
@@ -104,6 +105,7 @@ export default function HeaderProfessional() {
             { name: 'Insurance', href: `/${language}/servicios/seguros` },
             { name: 'Criminal Law', href: `/${language}/servicios/ley-criminal` },
             { name: 'Family', href: `/${language}/servicios/familia` },
+            { name: 'Investors', href: `/${language}/servicios/visa-e2` }, // Added Investors
           ]
     },
     {

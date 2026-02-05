@@ -23,6 +23,8 @@ export async function POST(request: NextRequest) {
             utm_campaign
         } = body;
 
+        // --- LÓGICA DE FUENTE (SOURCE) ---
+        // 1. Usamos lo que viene (ej: "google").
         let finalSource = utm_source;
 
         // 2. Si llega vacío (Orgánico), le ponemos etiqueta "SITIO WEB".
