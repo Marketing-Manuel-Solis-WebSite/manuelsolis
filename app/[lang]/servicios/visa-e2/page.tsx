@@ -224,24 +224,27 @@ export default function VisaE2Page() {
       </div>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 px-4 z-10 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center">
+      {/* Ajustado padding top/bottom y height para centrar más el contenido */}
+      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
              
-             {/* IMAGE CONTAINER */}
+             {/* IMAGE CONTAINER - AJUSTADO */}
              <motion.div 
                initial={{ opacity: 0, x: -50 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ duration: 1.2, ease: "easeOut" }}
-               className="lg:col-span-5 relative h-[500px] md:h-[600px] lg:h-[750px] flex items-center justify-center order-2 lg:order-1"
+               // Aumentada altura en Desktop y ajustada en móvil. Alineación cambiada para mejor posicionamiento
+               className="lg:col-span-5 relative h-[450px] md:h-[600px] lg:h-[80vh] flex items-end justify-center order-2 lg:order-1"
              >
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent blur-xl z-10 h-1/3 bottom-0 w-full" />
-                <div className="relative z-0 w-full h-full">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent blur-xl z-10 h-1/4 bottom-0 w-full" />
+                <div className="relative z-0 w-full h-full flex items-end justify-center">
                    <Image
-                     src="/María del Pilar Llusa.png"
+                     src="/E-1.png"
                      alt="María del Pilar Llusa - Abogada experta en Inmigración"
                      fill
-                     className="object-contain object-bottom drop-shadow-[0_0_25px_rgba(178,144,77,0.2)] pb-12"
+                     // Actualizado: Scale 110 (un poco mas grande) y translate negativo -280px (bajada tantito)
+                     className="object-contain object-bottom md:scale-105 lg:scale-110 lg:-translate-y-[280px] drop-shadow-[0_0_35px_rgba(178,144,77,0.25)]"
                      priority
                      sizes="(max-width: 768px) 100vw, 50vw"
                    />
@@ -251,7 +254,8 @@ export default function VisaE2Page() {
                    initial={{ opacity: 0, y: 20 }} 
                    animate={{ opacity: 1, y: 0 }} 
                    transition={{ delay: 0.8, duration: 0.8 }}
-                   className="absolute bottom-10 -right-4 md:-right-10 z-20 p-6 border border-[#B2904D]/30 rounded-2xl backdrop-blur-xl bg-[#001540]/60 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                   // Subido badge de experiencia MUCHO más arriba (bottom-48 en desktop)
+                   className="absolute bottom-32 lg:bottom-48 -right-4 md:-right-10 z-20 p-6 border border-[#B2904D]/30 rounded-2xl backdrop-blur-xl bg-[#001540]/60 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
                 >
                    <div className="flex items-center gap-3 mb-1">
                       <Star className="w-5 h-5 text-[#B2904D] fill-[#B2904D]" />
@@ -265,23 +269,23 @@ export default function VisaE2Page() {
              </motion.div>
 
              {/* TEXT CONTAINER */}
-             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-8 relative z-20 order-1 lg:order-2">
+             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-8 relative z-20 order-1 lg:order-2 flex flex-col justify-center items-start">
                  
-                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#B2904D]/30 bg-[#B2904D]/10 backdrop-blur-sm shadow-[0_0_15px_rgba(178,144,77,0.1)]">
+                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#B2904D]/30 bg-[#B2904D]/10 backdrop-blur-sm shadow-[0_0_15px_rgba(178,144,77,0.1)] self-start">
                    <Briefcase size={16} className="text-[#B2904D]" />
                    <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">{gT(texts.interface.badge)}</span>
                  </div>
 
                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-thin text-white tracking-tight leading-[1.1]">
                    <span className="block">
-                      <motion.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
+                     <motion.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
                          {gT(texts.interface.heroTitle1)}
-                      </motion.span>
+                     </motion.span>
                    </span>
                    <span className="block">
-                      <motion.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">
+                     <motion.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">
                          {gT(texts.interface.heroTitle2)}
-                      </motion.span>
+                     </motion.span>
                    </span>
                  </h1>
 
@@ -589,7 +593,7 @@ export default function VisaE2Page() {
                   <div className="absolute inset-0 bg-gradient-to-br from-[#B2904D]/0 to-[#B2904D]/0 group-hover:from-[#B2904D]/10 group-hover:to-transparent transition-all duration-500"></div>
 
                   <div className="flex justify-between items-start mb-6">
-                     <motion.div 
+                      <motion.div 
                         className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-[#B2904D] transition-colors duration-300 shadow-inner"
                       >
                         <step.icon size={30} className="text-white/80 group-hover:text-[#001540] transition-colors" />
