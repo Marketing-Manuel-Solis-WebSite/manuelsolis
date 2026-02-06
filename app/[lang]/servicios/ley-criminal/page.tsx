@@ -205,7 +205,7 @@ const texts = {
     heroTitle2: { es: "Defensa Penal", en: "Criminal Defense" }, 
     heroDescription: { es: "Desde DWI, hasta hurto y asalto. Protegemos su libertad y su futuro. Su primera llamada debe ser a nuestro abogado defensor.", en: "From DWI to theft and assault. We protect your freedom and future. Your first call should be to our defense attorney." },
     stats: { es: "Casos Defendidos", en: "Cases Defended" },
-    casesTitle: { es: "Soluciones Legales en Inmigración", en: "Legal Solutions in Immigration" },
+    casesTitle: { es: "Soluciones Legales en defensa criminal", en: "Solutions in Criminal Defense" },
     ctaConsultation: { es: "Consulta Ahora", en: "Consult Now" },
     specialties: { es: "Nuestra Defensa", en: "Our Defense" },
     details: { es: "Ver Detalles", en: "View Details" },
