@@ -250,7 +250,7 @@ const texts = {
     heroTitle2: { es: "Compensación", en: "Compensation" }, 
     heroDescription: { es: "Si sufrió un accidente en el trabajo o carretera, luchamos para que reciba la indemnización máxima sin importar su estatus migratorio.", en: "If you suffered an accident at work or on the road, we fight for you to receive maximum compensation regardless of your immigration status." },
     stats: { es: "Compensación Recuperada", en: "Compensation Recovered" },
-    casesTitle: { es: "Soluciones Legales en Accidentes", en: "Legal Solutions in Accidents" },
+    casesTitle: { es: "Soluciones en Accidentes", en: "Solutions in AccidentsPageBilingual" },
     casesSubtitle: { es: "Todos nuestros servicios están disponibles para proteger tus derechos", en: "All our services are available to protect your rights" },
     ctaConsultation: { es: "Consulta Ahora", en: "Consult Now" },
     details: { es: "Ver Detalles", en: "View Details" },
