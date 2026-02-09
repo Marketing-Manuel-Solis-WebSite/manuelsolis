@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { LanguageProvider } from '../context/LanguageContext';
 import WhatsAppButton from '../components/WhatsAppButton';
 import AIChatButton from '../components/AIChatButton';
@@ -6,7 +6,7 @@ import { translations, Language } from '../lib/translations';
 import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import '../globals.css'; 
+import '../globals.css';
 
 interface LayoutParams {
   lang: Language; 
@@ -37,29 +37,39 @@ const organizationSchema = {
     '@type': 'ContactPoint',
     telephone: '+1-866-979-5146',
     contactType: 'customer service',
-    areaServed: 'US', // Audiencia principal: Estados Unidos
+    areaServed: 'US',
     availableLanguage: ['English', 'Spanish']
   }
+};
+
+// NUEVO: Configuración de Viewport separada (Corrige el error de build)
+export const viewport: Viewport = {
+  themeColor: '#051120',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
-  const t = translations[currentLang];
+  const t = translations[currentLang] || translations['es']; 
   
-  const localeSEO = currentLang === 'es' ? 'es-US' : 'en-US';
+  const ogLocale = currentLang === 'es' ? 'es_US' : 'en_US';
 
-  const keywordList = typeof t.seo.home.keywords === 'string' 
-    ? t.seo.home.keywords.split(',').map(k => k.trim()) 
-    : t.seo.home.keywords;
+  const keywordList = t.seo?.home?.keywords 
+    ? (typeof t.seo.home.keywords === 'string' 
+        ? t.seo.home.keywords.split(',').map(k => k.trim()) 
+        : t.seo.home.keywords)
+    : ["Abogado de Inmigración", "Accidentes"];
 
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: t.seo.home.title,
+      default: t.seo?.home?.title || 'Manuel Solis Law Firm',
       template: `%s | Manuel Solis Law Firm`
     },
-    description: t.seo.home.description,
+    description: t.seo?.home?.description || 'Abogados expertos en inmigración y accidentes.',
     keywords: [
       ...keywordList,
       "Abogado de Inmigración USA",
@@ -83,14 +93,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
     },
     
-    themeColor: '#051120',
+    // Eliminado themeColor de aquí (movido a export const viewport)
     
     openGraph: {
-      title: t.seo.home.title,
-      description: t.seo.home.description,
+      title: t.seo?.home?.title,
+      description: t.seo?.home?.description,
       url: `${SITE_URL}/${currentLang}`,
       siteName: 'Manuel Solis Law Firm',
-      locale: localeSEO,
+      locale: ogLocale,
       type: 'website',
       images: [
         {
@@ -104,8 +114,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     
     twitter: {
       card: 'summary_large_image',
-      title: t.seo.home.title,
-      description: t.seo.home.description,
+      title: t.seo?.home?.title,
+      description: t.seo?.home?.description,
       creator: '@manuelsolis',
       images: [`/og-image.jpg`],
     },
@@ -125,9 +135,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `${SITE_URL}/${currentLang}`,
       languages: {
-        'es-US': `${SITE_URL}/es`, // SEO Targeting específico para hispanos en USA
-        'en-US': `${SITE_URL}/en`,
-        'x-default': `${SITE_URL}/es`, // Fallback por defecto
+        'es': `${SITE_URL}/es`,
+        'en': `${SITE_URL}/en`,
+        'x-default': `${SITE_URL}/es`,
       },
     },
   };
@@ -137,13 +147,11 @@ export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params;
   const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
   
-  // HTML Lang attribute corregido para targeting
   const htmlLang = currentLang === 'es' ? 'es-US' : 'en-US';
   
   return (
     <html lang={htmlLang} suppressHydrationWarning>
       <head>
-        {/* 1. SCHEMA ORG GLOBAL - ORGANIZATION ENTITY */}
         <Script
           id="schema-org-global"
           type="application/ld+json"
@@ -151,7 +159,6 @@ export default async function LangLayout({ children, params }: Props) {
           strategy="beforeInteractive"
         />
         
-        {/* 2. GOOGLE ANALYTICS (GA4) */}
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-V5F8J8QMZ4"
@@ -170,7 +177,6 @@ export default async function LangLayout({ children, params }: Props) {
           }}
         />
 
-        {/* 3. META PIXEL */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
@@ -190,7 +196,6 @@ export default async function LangLayout({ children, params }: Props) {
           }}
         />
 
-        {/* 4. TIKTOK PIXEL */}
         <Script
           id="tiktok-pixel"
           strategy="afterInteractive"
