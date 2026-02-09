@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://manuelsolis.com/sitemap.xml
+# Bloquear partes privadas o de API para ahorrar presupuesto de rastreo
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+# Indica explícitamente dónde está tu sitemap dinámico
+Sitemap: https://www.manuelsolis.com/sitemap.xml
