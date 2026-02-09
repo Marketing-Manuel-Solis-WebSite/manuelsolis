@@ -28,6 +28,18 @@ function getLocale(request: NextRequest): string {
 }
 
 export function middleware(request: NextRequest) {
+  // --- NUEVA PROTECCIÓN: Bloquear indexación en entornos de prueba ---
+  const hostname = request.headers.get('host') || '';
+  
+  // Si el dominio es v2.manuelsolis.com o bos.manuelsolis.com
+  if (hostname.includes('v2.manuelsolis') || hostname.includes('bos.manuelsolis') || hostname.includes('.vercel.app')) {
+    const response = NextResponse.next();
+    // Este header le dice a Google: "No guardes esta página en tus resultados"
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    return response;
+  }
+  // -------------------------------------------------------------------
+
   const pathname = request.nextUrl.pathname;
 
   // Si ya tiene locale, dejar pasar
