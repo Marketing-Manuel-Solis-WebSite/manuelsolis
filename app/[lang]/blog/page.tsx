@@ -16,6 +16,26 @@ const BLOG_DATA = {
   posts: [
     // --- NUEVO BLOG POST ---
     {
+      id: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
+      slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
+      title: { 
+        es: 'Parar deportación urgente: cómo frenarla con Visa U o VAWA pendiente (Stay of Removal)', 
+        en: 'Stop an Urgent Deportation: How a Pending U Visa or VAWA Can Help (Stay of Removal)' 
+      },
+      excerpt: { 
+        es: '¿Recibiste una orden de deportación y no sabes qué hacer? Aprende cómo podrías frenar una deportación inminente con una solicitud humanitaria pendiente (Visa U, VAWA u otras) mediante un Stay of Removal ante ICE.', 
+        en: 'Have a final removal order and don’t know what to do? Learn how a pending humanitarian petition (U Visa, VAWA, and others) may help pause an urgent deportation through a Stay of Removal with ICE.' 
+      },
+      categoryId: 'visa-humanitaria',
+      category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+      author: 'Manuel Solís',
+      date: '2025-02-10',
+      readTime: '7 min',
+      image: '/blog/blog_08/B8_CR1.png', 
+      featured: true
+    },
+    // --- BLOG POST ANTERIOR ---
+    {
       id: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
       slug: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
       title: { 
@@ -32,7 +52,7 @@ const BLOG_DATA = {
       date: '2025-02-03',
       readTime: '9 min',
       image: '/blog/blog_07/B7_CR1.png', 
-      featured: true
+      featured: false
     },
     // --- BLOG POST ANTERIOR ---
     {
