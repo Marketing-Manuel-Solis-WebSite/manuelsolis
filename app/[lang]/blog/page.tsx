@@ -16,6 +16,25 @@ const BLOG_DATA = {
   posts: [
     // --- NUEVO BLOG POST ---
     {
+      id: 'Formulario_G28_Cambiar_Abogado_Inmigracion',
+      slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion',
+      title: { 
+        es: 'Cambiar de abogado en inmigración: cómo usar el Formulario G-28 sin dañar tu caso', 
+        en: 'Changing Immigration Attorneys: How to Use Form G-28 Without Hurting Your Case' 
+      },
+      excerpt: { 
+        es: '¿Quieres cambiar de abogado pero temes afectar tu proceso migratorio? Aprende para qué sirve el Formulario G-28 y cómo notificar correctamente a USCIS sin poner en riesgo tu caso.', 
+        en: 'Thinking about changing attorneys but worried about your immigration case? Learn what Form G-28 does and how to properly notify USCIS without risking your process.' 
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-02-12',
+      readTime: '10 min',
+      image: '/blog/blog_09/B9_CR1.png', 
+      featured: true
+    },
+    {
       id: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
       slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
       title: { 
@@ -32,7 +51,7 @@ const BLOG_DATA = {
       date: '2025-02-10',
       readTime: '7 min',
       image: '/blog/blog_08/B8_CR1.png', 
-      featured: true
+      featured: false
     },
     // --- BLOG POST ANTERIOR ---
     {
