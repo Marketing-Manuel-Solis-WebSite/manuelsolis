@@ -14,7 +14,27 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`;
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 const BLOG_DATA = {
   posts: [
-    // --- NUEVO BLOG POST ---
+    // --- BLOG 10 - NUEVO ---
+    {
+      id: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
+      slug: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
+      title: { 
+        es: 'Visa U y VAWA: Incluir a hijos y nuevos esposos (Derivados)', 
+        en: 'U Visa & VAWA: Including Children and New Spouses (Derivatives)' 
+      },
+      excerpt: { 
+        es: '¿Solicitaste la Visa U o VAWA y te preocupa qué pasará con tus hijos o tu nueva pareja? Descubre cómo incluir a familiares como derivados en tu caso, los requisitos, los límites de edad y cómo reunificar a tu familia legalmente.', 
+        en: 'Did you apply for a U Visa or VAWA and are worried about your children or new partner? Learn how to include family members as derivatives, the requirements, age limits, and how to legally reunify your family.' 
+      },
+      categoryId: 'visa-u',
+      category: { es: 'Visa U & VAWA', en: 'U Visa & VAWA' },
+      author: 'Manuel Solís',
+      date: '2025-02-16',
+      readTime: '8 min',
+      image: '/blog/blog_10/B10_CR1.png', 
+      featured: true
+    },
+    // --- BLOG 08 ---
     {
       id: 'Formulario_G28_Cambiar_Abogado_Inmigracion',
       slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion',
@@ -43,7 +63,7 @@ const BLOG_DATA = {
       },
       excerpt: { 
         es: '¿Recibiste una orden de deportación y no sabes qué hacer? Aprende cómo podrías frenar una deportación inminente con una solicitud humanitaria pendiente (Visa U, VAWA u otras) mediante un Stay of Removal ante ICE.', 
-        en: 'Have a final removal order and don’t know what to do? Learn how a pending humanitarian petition (U Visa, VAWA, and others) may help pause an urgent deportation through a Stay of Removal with ICE.' 
+        en: 'Have a final removal order and don\'t know what to do? Learn how a pending humanitarian petition (U Visa, VAWA, and others) may help pause an urgent deportation through a Stay of Removal with ICE.' 
       },
       categoryId: 'visa-humanitaria',
       category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
@@ -53,7 +73,7 @@ const BLOG_DATA = {
       image: '/blog/blog_08/B8_CR1.png', 
       featured: false
     },
-    // --- BLOG POST ANTERIOR ---
+    // --- BLOG 07 ---
     {
       id: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
       slug: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
@@ -73,7 +93,7 @@ const BLOG_DATA = {
       image: '/blog/blog_07/B7_CR1.png', 
       featured: false
     },
-    // --- BLOG POST ANTERIOR ---
+    // --- BLOG 06 ---
     {
       id: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
       slug: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
@@ -93,7 +113,7 @@ const BLOG_DATA = {
       image: '/blog/blog_06/B6_CR1.png', 
       featured: false
     },
-    // --- BLOG POST ANTERIOR ---
+    // --- BLOG 05 ---
     {
       id: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
       slug: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
@@ -103,7 +123,7 @@ const BLOG_DATA = {
       },
       excerpt: { 
         es: '¿Te sientes maltratado por tu hijo ciudadano estadounidense y no sabes qué hacer? Descubre cómo la ley VAWA podría ayudarte a protegerte y obtener la residencia legal sin depender del hijo que te agrede.', 
-        en: 'Are you being abused by your U.S. citizen child and don’t know what to do? Learn how VAWA may help you protect yourself and obtain legal residency without relying on the abusive child.' 
+        en: 'Are you being abused by your U.S. citizen child and don\'t know what to do? Learn how VAWA may help you protect yourself and obtain legal residency without relying on the abusive child.' 
       },
       categoryId: 'visa-VAWA',
       category: { es: 'Visa VAWA', en: 'VAWA Visa' },
@@ -113,7 +133,7 @@ const BLOG_DATA = {
       image: '/blog/blog_05/B5_CR1.png', 
       featured: false
     },
-    // --- BLOG POST ANTERIOR ---
+    // --- BLOG 03 ---
     {
       id: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
       slug: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
@@ -133,7 +153,7 @@ const BLOG_DATA = {
       image: '/blog/blog_03/B3_CR1.png', 
       featured: false
     },
-    // --- BLOG POST ANTERIOR ---
+    // --- BLOG 02 ---
     {
       id: 'que-hacer-si-la-policia-no-firma',
       slug: 'que_hacer_si_la_policia_no_firma_la_certificacion_visa_u',
@@ -150,11 +170,10 @@ const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-01-20',
       readTime: '6 min',
-      // Imagen de portada actualizada
       image: '/blog/blog_02/B2_CR1.png', 
       featured: false
     },
-    // --- BLOG POST ANTERIOR ---
+    // --- BLOG 01 ---
     {
       id: 'permiso_de_trabajo_visa_u',
       slug: 'permiso_de_trabajo_visa_u',
