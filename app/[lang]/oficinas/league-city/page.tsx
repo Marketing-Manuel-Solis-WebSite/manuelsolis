@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import Script from 'next/script';
+import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -37,6 +38,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     alternates: {
       canonical: `https://www.manuelsolis.com/${lang}/oficinas/league-city`,
+      languages: {
+        'es': `https://www.manuelsolis.com/es/oficinas/league-city`,
+        'en': `https://www.manuelsolis.com/en/oficinas/league-city`,
+        'x-default': `https://www.manuelsolis.com/en/oficinas/league-city`,
+      },
     },
     openGraph: {
       title,
@@ -94,6 +100,11 @@ const getLocalBusinessSchema = (lang: string) => {
 export default async function LeagueCityPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getLocalBusinessSchema(lang);
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
+    { name: lang === 'es' ? 'Oficinas' : 'Offices', url: `/${lang}/oficinas` },
+    { name: 'League City', url: `/${lang}/oficinas/league-city` },
+  ]);
 
   return (
     <>
@@ -101,6 +112,10 @@ export default async function LeagueCityPage({ params }: Props) {
         id="local-schema-league-city"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
       <OfficeClient />
     </>

@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, User, Quote, Sparkles, Scale } from 'lucide-react';
 import Image from 'next/image';
-import { Outfit } from 'next/font/google';
 import { useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
@@ -18,10 +17,6 @@ const ContactForm = dynamic(() => import('../../../components/ContactForm'), {
 });
 
 // --- CONFIGURACIÓN DE FUENTE ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '200', '300', '400', '500', '700', '800', '900'] 
-});
 
 // --- DATOS ESPECÍFICOS: HOUSTON KIRBY ---
 const officeData = {
@@ -123,7 +118,7 @@ export default function OfficeClient() {
     <>
       <Header />
       
-      <main className={`relative w-full min-h-screen bg-[#001540] overflow-hidden ${font.className}`}>
+      <main className={`relative w-full min-h-screen bg-[#001540] overflow-hidden`}>
         
         {/* --- BACKGROUND FX --- */}
         <div className="fixed inset-0 z-0 pointer-events-none transform-gpu">

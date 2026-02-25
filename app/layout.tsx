@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
-// Asegúrate de que la ruta de importación sea correcta según tu estructura
 import { LanguageProvider } from "./context/LanguageContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Manuel Solis",
-  description: "Aplicación Manuel Solis",
+  title: "Manuel Solis Law Firm | Abogados de Inmigración y Accidentes",
+  description: "Law Offices of Manuel Solis — 35+ years defending immigrant rights. Immigration, accidents, criminal defense, family law & insurance across Texas, California, Illinois, Colorado & Tennessee.",
 };
 
 export default function RootLayout({
@@ -16,16 +20,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Al estar en la raíz (app/layout.tsx), no recibimos 'params.lang' automáticamente.
-  // Definimos un idioma por defecto para satisfacer el tipo requerido por LanguageProvider.
-  const defaultLanguage = "es"; // Puedes cambiar esto a "en" si prefieres inglés por defecto
+  const defaultLanguage = "en";
 
   return (
-    <html lang={defaultLanguage}>
-      <body className={inter.className}>
-        {/* CORRECCIÓN: Agregamos la propiedad 'initialLanguage' que faltaba.
-          Esto soluciona el error: Property 'initialLanguage' is missing...
-        */}
+    <html lang={defaultLanguage} className={outfit.variable}>
+      <body className={outfit.className}>
         <LanguageProvider initialLanguage={defaultLanguage}>
           {children}
         </LanguageProvider>

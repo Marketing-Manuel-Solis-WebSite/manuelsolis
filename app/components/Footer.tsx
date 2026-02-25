@@ -5,13 +5,6 @@ import Image from 'next/image'
 import { Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowUp } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { motion } from 'framer-motion'
-import { Outfit } from 'next/font/google'
-
-// --- FUENTE ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['300', '400', '500', '700'] 
-})
 
 export default function Footer() {
   const { language } = useLanguage();
@@ -39,7 +32,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className={`relative bg-[#001540] text-white overflow-hidden ${font.className}`}>
+    <footer role="contentinfo" className={`relative bg-[#001540] text-white overflow-hidden`}>
       
       {/* 1. DECORACIÓN DE FONDO OPTIMIZADA */}
       
@@ -49,21 +42,8 @@ export default function Footer() {
       {/* Borde superior brillante */}
       <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B2904D] to-transparent opacity-50`} />
       
-      {/* Glow ambiental superior ANIMADO - Optimizado */}
-      <motion.div 
-        animate={{ 
-          opacity: [0.15, 0.25, 0.15],
-          scale: [1, 1.05, 1]
-        }}
-        transition={{ 
-          duration: 8, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
-        }}
-        style={{ willChange: "transform, opacity" }} // Optimización
-        // Blur reducido de 100px a 60px
-        className={`absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-[#B2904D]/15 blur-[60px] pointer-events-none rounded-full`} 
-      />
+      {/* Static ambient glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-[#B2904D]/15 blur-[60px] pointer-events-none rounded-full opacity-20" />
       
       <div className="container mx-auto px-4 py-20 relative z-10">
         
@@ -108,7 +88,7 @@ export default function Footer() {
         </div>
 
         {/* NAVIGATION LINKS (GRID) */}
-        <nav className="mb-12 border-t border-white/10 border-b py-10">
+        <nav aria-label="Footer navigation" className="mb-12 border-t border-white/10 border-b py-10">
           <ul className="flex flex-wrap justify-center gap-x-8 gap-y-4 md:gap-12">
             {footerLinks.map((link) => (
               <li key={link.name}>

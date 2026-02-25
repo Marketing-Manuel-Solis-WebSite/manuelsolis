@@ -2,6 +2,9 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 
+// Utilidades
+import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+
 // Componentes
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -232,8 +235,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     alternates: {
       canonical: `${SITE_URL}/${lang}/blog`,
       languages: {
-        'es-US': `${SITE_URL}/es/blog`,
-        'en-US': `${SITE_URL}/en/blog`,
+        'en': `${SITE_URL}/en/blog`,
+        'es': `${SITE_URL}/es/blog`,
+        'x-default': `${SITE_URL}/en/blog`,
       },
     },
     openGraph: {
@@ -296,8 +300,13 @@ const getBlogSchema = (lang: string) => {
 
 export default async function BlogPageIndex({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const currentLang = (lang === 'es' || lang === 'en') ? lang : 'es';
+  const currentLang = (lang === 'es' || lang === 'en') ? lang : 'en';
   const schemaData = getBlogSchema(currentLang);
+
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: currentLang === 'es' ? 'Inicio' : 'Home', url: `/${currentLang}` },
+    { name: 'Blog', url: `/${currentLang}/blog` },
+  ]);
 
   return (
     <>
@@ -305,6 +314,12 @@ export default async function BlogPageIndex({ params }: { params: Promise<{ lang
         id="blog-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
 
       <Header />

@@ -6,17 +6,11 @@ import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm' 
 import { useLanguage } from '../../context/LanguageContext' 
 import { motion, Variants } from 'framer-motion' 
-import { Outfit } from 'next/font/google'
 import Image from 'next/image'
 import { 
   MessageSquare, Mail, Phone, MapPin, FileText, UserCheck, Share2, Server, Globe 
 } from 'lucide-react' 
 
-// --- FUENTE ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '300', '400', '500', '700'] 
-})
 
 // --- TEXTOS UI (PRIVACIDAD ACTUALIZADA) ---
 const interfaceTexts = {
@@ -265,7 +259,7 @@ export default function PrivacidadPage() {
   };
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden ${font.className}`}>
+    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
       {/* =========================================================================

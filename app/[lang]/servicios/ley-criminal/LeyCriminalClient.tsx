@@ -5,33 +5,29 @@ import { motion, AnimatePresence, Variants } from 'framer-motion';
 import {
   PhoneCall,
   ArrowRight,
-  Scale, 
-  FileText, 
+  Car,
+  Scale,
+  FileText,
   MessageSquare,
-  Star, 
   Zap,
-  HardHat,
   CheckCircle2,
-  Shield,
+  Star,
   MapPin
 } from 'lucide-react';
 
 import Image from 'next/image';
 
-// --- IMPORTACIONES DE COMPONENTES ---
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ContactForm from '../../../components/ContactForm';
 import { useLanguage } from '../../../context/LanguageContext';
 
 
-// --- FUNCIÓN AUXILIAR ---
 const getText = (obj: any, lang: 'es' | 'en'): string => {
   if (typeof obj === 'string') return obj;
   return obj[lang] || obj.es;
 };
 
-// --- TIPADO PARA DATA ---
 interface ContentDetail { es: string; en: string; }
 interface CaseContent {
     intro: ContentDetail;
@@ -49,58 +45,15 @@ interface CaseItem {
     offices: string[]; // NUEVO: Array de oficinas que ofrecen este servicio
 }
 
-// --- DATOS GLOBALES ---
 const texts = {
   mainCases: [
     {
-      id: 'deportacion',
-      title: { es: "Defensa y casos urgentes; Defensa contra la Deportación y Asilo", en: "Defense and urgent cases; Defense against Deportation and Asylum" },
-      subtitle: { es: "Asilo, Cancelación de Remoción y Fianzas", en: "Asylum, Cancellation of Removal, and Bonds" },
-      icon: Shield,
-      offices: [
-        'Arvada (Denver)',
-        'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
-        'Houston Principal',
-        'Houston Navigation',
-        'Houston Main St',
-        'Houston NorthLoop',
-        'Houston NorthChase',
-        'Houston Kirby',
-        'Memphis',
-        'Memphis (Airways)',
-        'League City, TX'
-      ],
-      content: {
-        intro: { es: "¿Está usted o un ser querido enfrentando la deportación? ¡Contáctenos inmediatamente!", en: "Are you or a loved one facing deportation? Contact us immediately!" },
-        description: { es: "Los casos de deportación casi siempre son urgentes. Nuestro equipo experto en inmigración luchará por usted. Existen varias formas de evitar la deportación.", en: "Deportation cases are almost always urgent. Our expert immigration team will fight for you. There are several ways to avoid deportation." },
-        subTitle: { es: "Estrategias de Defensa Incluyen:", en: "Defense Strategies Include:" },
-        subPoints: [
-          { es: "Asilo (Persecución por raza, religión, etc.)", en: "Asylum (Persecution based on race, religion, etc.)" },
-          { es: "Cancelación de Remoción (10 años de presencia, buen carácter, dificultad excepcional)", en: "Cancellation of Removal (10 years presence, good moral character, exceptional hardship)" },
-          { es: "Ajuste de estatus", en: "Adjustment of status" },
-          { es: "Liberación de detención (Fianzas por ICE o Juez)", en: "Release from detention (Bonds by ICE or Judge)" },
-        ],
-        solution: { es: "Le ayudaremos a presentar la evidencia y argumentos necesarios para la Cancelación de Remoción o a asegurar una fianza para su liberación de detención.", en: "We will help you present the necessary evidence and arguments for Cancellation of Removal or secure a bond for your release from detention." },
-      }
-    },
-    {
-      id: 'uvawa',
-      title: { es: "Visas Humanitarias; Visa U, Visa T, VAWA y SIJS", en: "Humanitarian Visas; U Visa, T Visa, VAWA and SIJS" },
-      subtitle: { es: "Víctimas de Delitos y Agresión Familiar", en: "Victims of Crimes and Family Aggression" },
+      id: 'violencia_domestica',
+      title: { es: "Violencia Doméstica", en: "Domestic Violence" },
+      subtitle: { es: "Delitos Emotivos y Complejos", en: "Emotional and Complex Offenses" },
       icon: MessageSquare,
       offices: [
-        'Arvada (Denver)',
         'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
         'Houston Principal',
         'Houston Navigation',
         'Houston Main St',
@@ -112,29 +65,78 @@ const texts = {
         'League City, TX'
       ],
       content: {
-        intro: { es: "¿Ha sido agredido o es víctima de un delito violento o crueldad familiar en los Estados Unidos?", en: "Have you been assaulted or are you a victim of a violent crime or family cruelty in the United States?" },
-        description: { es: "La Visa U es para víctimas de un delito grave que cooperan con la policía. VAWA (Ley de Violencia contra Mujeres) es para víctimas de agresión o crueldad cometida por familiares (cónyuges, padres, hijos) ciudadanos o residentes permanentes.", en: "The U Visa is for victims of a serious crime who cooperate with the police. VAWA (Violence Against Women Act) is for victims of assault or cruelty committed by family members (spouses, parents, children) who are citizens or permanent residents." },
-        subTitle: { es: "Calificación para VAWA:", en: "Qualification for VAWA:" },
+        intro: { es: "¿Está acusado de violencia doméstica?", en: "Are you accused of domestic violence?" },
+        description: { es: "Los casos de violencia doméstica se encuentran entre los delitos penales más emotivos y complejos. Si usted y un familiar tienen una relación hostil, es fácil terminar en problemas legales. A menudo resulta en un arresto basado en versiones diferentes del mismo evento.", en: "Domestic violence cases are among the most emotional and complex criminal offenses. If you and a family member have a hostile relationship, it's easy to end up in legal trouble. It often results in an arrest based on different versions of the same event." },
+        subTitle: { es: "Sanciones Potenciales Incluyen:", en: "Potential Penalties Include:" },
         subPoints: [
-          { es: "Víctima de agresión o crueldad por: Cónyuge, ex cónyuge, padre o hijo de un ciudadano de los EEUU.", en: "Victim of assault or cruelty by: Spouse, ex-spouse, parent, or child of a U.S. citizen." },
-          { es: "Víctima de agresión o crueldad por: Cónyuge, ex cónyuge, o padre quien es residente permanente legal.", en: "Victim of assault or cruelty by: Spouse, ex-spouse, or parent who is a lawful permanent resident." },
+          { es: "Multas y libertad condicional.", en: "Fines and probation." },
+          { es: "Órdenes de protección y restricción.", en: "Protection and restraining orders." },
+          { es: "Consejería obligatoria y clases de control de ira.", en: "Mandatory counseling and anger management classes." },
+          { es: "Órdenes de custodia de menores y encarcelamiento.", en: "Child custody orders and imprisonment." },
         ],
-        solution: { es: "Podemos ayudarle a obtener la Residencia Permanente Legal (LPR) protegiéndole de la violencia y la amenaza de deportación, sin depender de su agresor.", en: "We can help you obtain Lawful Permanent Residency (LPR) by protecting you from violence and the threat of deportation, without depending on your abuser." },
+        solution: { es: "Si ha sido arrestado o acusado, es esencial que busque asesoría legal inmediata. Le proporcionaremos una defensa sólida para proteger su libertad y sus derechos familiares.", en: "If you have been arrested or charged, it is essential that you seek immediate legal advice. We will provide you with a solid defense to protect your freedom and family rights." },
       }
     },
     {
-      id: 'residencia_familiar',
-      title: { es: "Residencia por un Familiar", en: "Residency Through a Family Member" },
-      subtitle: { es: "Peticiones I-130 y Ajuste de Estatus", en: "I-130 Petitions and Adjustment of Status" },
+      id: 'asalto',
+      title: { es: "Asalto y Agresión", en: "Assault and Battery" },
+      subtitle: { es: "Violencia Física o Amenaza de Daño", en: "Physical Violence or Threat of Harm" },
+      icon: Zap,
+      offices: [
+        'Chicago',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
+      content: {
+        intro: { es: "¿Ha sido acusado de asalto o agresión?", en: "Have you been charged with assault or battery?" },
+        description: { es: "El asalto implica causar intencionalmente que otra persona tenga temor razonable de un contacto dañino inminente. No siempre se requiere una lesión física. Si hay violencia física real, el cargo se combina con un cargo de agresión.", en: "Assault involves intentionally causing another person to have reasonable fear of imminent harmful contact. A physical injury is not always required. If there is actual physical violence, the charge is combined with a battery charge." },
+        solution: { es: "Es importante conocer la gravedad de las repercusiones, como el tiempo en la cárcel o multas. Nuestros abogados de defensa criminal están aquí para brindarle el asesoramiento y la representación que necesita.", en: "It is important to know the seriousness of the repercussions, such as jail time or fines. Our criminal defense attorneys are here to provide you with the advice and representation you need." },
+      }
+    },
+    {
+      id: 'dwi',
+      title: { es: "DWI - Manejo en Estado de Ebriedad", en: "DWI - Driving While Intoxicated" },
+      subtitle: { es: "Conducir Bajo la Influencia (DUI)", en: "Driving Under the Influence (DUI)" },
+      icon: Car,
+      offices: [
+        'Chicago',
+        'Houston Principal',
+        'Houston Navigation',
+        'Houston Main St',
+        'Houston NorthLoop',
+        'Houston NorthChase',
+        'Houston Kirby',
+        'Memphis',
+        'Memphis (Airways)',
+        'League City, TX'
+      ],
+      content: {
+        intro: { es: "¿Necesita un abogado después de ser sorprendido conduciendo bajo la influencia?", en: "Need an attorney after being caught driving under the influence?" },
+        description: { es: "El límite legal de contenido de alcohol en la sangre es típicamente 0.08%, pero puede ser detenido por sospecha de consumo de drogas o alcohol, independientemente de la cantidad exacta.", en: "The legal limit for blood alcohol content is typically 0.08%, but you can be arrested for suspicion of drug or alcohol consumption, regardless of the exact amount." },
+        subTitle: { es: "Graves Consecuencias Incluyen:", en: "Serious Consequences Include:" },
+        subPoints: [
+          { es: "Un registro de antecedentes penales.", en: "A criminal record." },
+          { es: "Suspensión o revocación de su licencia de conducir.", en: "Suspension or revocation of your driver's license." },
+          { es: "Sentencia de cárcel y multas elevadas.", en: "Jail sentence and high fines." },
+          { es: "Programas de tratamiento requeridos y aumento del costo del seguro.", en: "Required treatment programs and increased insurance cost." },
+        ],
+        solution: { es: "Nuestros abogados de defensa criminal están aquí para brindarle el asesoramiento y la representación que necesita para luchar contra los cargos de DWI.", en: "Our criminal defense attorneys are here to provide you with the advice and representation you need to fight DWI charges." },
+      }
+    },
+    {
+      id: 'hurto',
+      title: { es: "Hurto, Robo y Delitos Patrimoniales", en: "Theft, Robbery, and Property Crimes" },
+      subtitle: { es: "Fraude, Malversación y Robo de Identidad", en: "Fraud, Embezzlement, and Identity Theft" },
       icon: FileText,
       offices: [
-        'Arvada (Denver)',
         'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
         'Houston Principal',
         'Houston Navigation',
         'Houston Main St',
@@ -146,29 +148,26 @@ const texts = {
         'League City, TX'
       ],
       content: {
-        intro: { es: "¿Espera alcanzar la condición de residente legal de los EE. UU.?", en: "Do you hope to achieve lawful permanent resident status in the U.S.?" },
-        description: { es: "Si usted tiene un familiar en los Estados Unidos que goza del estatus de Residente Permanente o es ciudadano americano, usted posiblemente califique para una Residencia Permanente.", en: "If you have a family member in the United States who holds Permanent Resident status or is a U.S. citizen, you may qualify for Permanent Residency." },
-        subTitle: { es: "Categorías de Familiares que Califican:", en: "Qualifying Family Member Categories:" },
+        intro: { es: "¿Ha sido acusado de un delito de robo o hurto?", en: "Have you been charged with a theft or larceny offense?" },
+        description: { es: "Este delito penal suele aplicarse de manera amplia; es delito de hurto cuando una persona se apropia intencional o fraudulentamente de los bienes personales de otra persona sin su consentimiento expreso.", en: "This criminal offense is often broadly applied; it is a theft offense when a person intentionally or fraudulently appropriates another person's personal property without their express consent." },
+        subTitle: { es: "Delitos de Hurto Incluidos:", en: "Theft Offenses Included:" },
         subPoints: [
-          { es: "Residente Permanente pide a: Cónyuge, Hijos solteros menores de 21 años.", en: "Permanent Resident petitions for: Spouse, Unmarried children under 21." },
-          { es: "Ciudadano Americano pide a: Cónyuge, Hijos y familia, Padres, Hermanos y familia.", en: "U.S. Citizen petitions for: Spouse, Children and family, Parents, Siblings and family." },
+          { es: "Robo en tiendas y Hurto menor.", en: "Shoplifting and petty theft." },
+          { es: "Hurto y Malversación.", en: "Larceny and Embezzlement." },
+          { es: "Robo de identidad y Fraude/Falsificación.", en: "Identity theft and Fraud/Forgery." },
+          { es: "Robo con cheque o emisión de cheques sin fondos.", en: "Theft by check or issuing bad checks." }, 
+          { es: "Uso ilegal/no autorizado de un vehículo motorizado.", en: "Illegal/unauthorized use of a motor vehicle." },
         ],
-        solution: { es: "Guiaremos a su familiar patrocinador en el proceso de Petición Familiar (I-130) y el subsiguiente Ajuste de Estatus para obtener su Green Card.", en: "We will guide your sponsoring family member through the Family Petition process (I-130) and the subsequent Adjustment of Status to obtain your Green Card." },
+        solution: { es: "Si lo acusan de un delito en esta lista, contáctenos ahora. Lucharemos para proteger su reputación y evitar consecuencias penales severas.", en: "If you are accused of a crime on this list, contact us now. We will fight to protect your reputation and avoid severe criminal consequences." },
       }
     },
     {
-      id: 'residencia_empleador',
-      title: { es: "Residencia por Empleo", en: "Employment-Based Residency" },
-      subtitle: { es: "Peticiones Basadas en Empleo (Green Card)", en: "Employment-Based Petitions (Green Card)" },
-      icon: HardHat,
+      id: 'prostitucion',
+      title: { es: "Prostitución y Solicitación", en: "Prostitution and Solicitation" },
+      subtitle: { es: "Delito Grave y Sanciones Estrictas", en: "Felony Offense and Strict Penalties" },
+      icon: Scale,
       offices: [
-        'Arvada (Denver)',
         'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
         'Houston Principal',
         'Houston Navigation',
         'Houston Main St',
@@ -180,80 +179,43 @@ const texts = {
         'League City, TX'
       ],
       content: {
-        intro: { es: "¿Desea convertirse en residente legal de los EE. UU. a través de su trabajo?", en: "Do you wish to become a lawful permanent resident of the U.S. through your job?" },
-        description: { es: "Si usted entró legalmente a los Estados Unidos y su permiso aún está vigente, o usted sometió alguna petición antes de 4/30/2001 y su patrón está dispuesto a ayudarlo, tiene posibilidades de arreglar su residencia.", en: "If you entered the United States legally and your permit is still valid, or you filed a petition before 4/30/2001 and your employer is willing to help you, you have possibilities to arrange your residency." },
-        solution: { es: "Nuestro equipo le ayudará a navegar los complejos procesos de certificación laboral y peticiones I-140 para asegurar su futuro en el país. Esto aplica incluso si usted está en su país de origen y una empresa Estadounidense lo patrocina.", en: "Our team will help you navigate the complex labor certification processes and I-140 petitions to secure your future in the country. This applies even if you are in your home country and an American company sponsors you." },
+        intro: { es: "¿Ha sido acusado de prostitución o solicitación?", en: "Have you been charged with prostitution or solicitation?" },
+        description: { es: "Las leyes han endurecido las penas, por ejemplo, en Texas, la solicitud de prostitución puede ser un delito grave. Alguien es culpable si 'la persona a sabiendas ofrece o acepta pagar una tarifa a otra persona con el fin de participar en una conducta sexual'.", en: "Laws have stiffened penalties; for example, in Texas, solicitation of prostitution can be a felony offense. Someone is guilty if 'the person knowingly offers or agrees to pay a fee to another person for the purpose of engaging in sexual conduct'." },
+        solution: { es: "Según la definición, no es necesario que el dinero cambie de manos ni que se realice ningún acto sexual. Las sanciones varían ampliamente; es esencial consultar con nuestro abogado defensor penal para determinar las posibles sanciones y las opciones legales que tiene.", en: "According to the definition, no money needs to change hands or sexual act take place. Penalties vary widely; it is essential to consult with our criminal defense attorney to determine the possible penalties and the legal options you have." },
       }
     },
-    {
-      id: 'naturalizacion',
-      title: { es: "Naturalización", en: "Naturalization" },
-      subtitle: { es: "Conviértete en Ciudadano Estadounidense", en: "Become a U.S. Citizen" },
-      icon: CheckCircle2,
-      offices: [
-        'Arvada (Denver)',
-        'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
-        'Houston Principal',
-        'Houston Navigation',
-        'Houston Main St',
-        'Houston NorthLoop',
-        'Houston NorthChase',
-        'Houston Kirby',
-        'Memphis',
-        'Memphis (Airways)',
-        'League City, TX'
-      ],
-      content: {
-        intro: { es: "¿Desea convertirse en ciudadano estadounidense?", en: "Do you want to become a U.S. citizen?" },
-        description: { es: "¿Por qué permanecer con la residencia legal si puede llegar a ser un ciudadano estadounidense y disfrutar de todos los derechos que corresponden? La naturalización es el paso final hacia la plena ciudadanía.", en: "Why remain with legal residency if you can become a U.S. citizen and enjoy all the corresponding rights? Naturalization is the final step towards full citizenship." },
-        subTitle: { es: "Maneras Comunes de Calificar:", en: "Common Ways to Qualify:" },
-        subPoints: [
-          { es: "Residencia Permanente por al menos 5 años.", en: "Permanent residency for at least 5 years." },
-          { es: "Residencia permanente como cónyuge de un ciudadano de los EEUU.", en: "Permanent residency as the spouse of a U.S. citizen." },
-          { es: "Calificar sirviendo en las fuerzas armadas de los EEUU.", en: "Qualify by serving in the U.S. armed forces." },
-          { es: "Naturalización para hijos de ciudadanos (Cumpliendo requisitos).", en: "Naturalization for children of citizens (Meeting requirements)." },
-          { es: "Requisito: Pasar un examen de ciudadanía en inglés.", en: "Requirement: Pass a citizenship test in English." },
-        ],
-        solution: { es: "Lo guiaremos en el proceso de solicitud, la preparación para el examen de ciudadanía y la entrevista final para que obtenga su pasaporte americano.", en: "We will guide you through the application process, preparation for the citizenship test, and the final interview so that you obtain your American passport." },
-      }
-    }
   ] as CaseItem[],
-  
+
   processSteps: [
-    { id: 1, title: { es: "Contacto", en: "Contact" }, icon: PhoneCall, desc: { es: "Llámanos para iniciar tu evaluación legal.", en: "Call us to start your legal evaluation." } },
-    { id: 2, title: { es: "Análisis", en: "Analysis" }, icon: FileText, desc: { es: "Revisamos tu historial migratorio y evidencia.", en: "We review your immigration history and evidence." } },
-    { id: 3, title: { es: "Estrategia", en: "Strategy" }, icon: Scale, desc: { es: "Diseñamos la ruta legal para tu objetivo.", en: "We design the legal route for your goal." } },
-    { id: 4, title: { es: "Resultados", en: "Results" }, icon: CheckCircle2, desc: { es: "Te acompañamos hasta alcanzar tu estatus migratorio.", en: "We accompany you until you achieve your immigration status." } },
+    { id: 1, title: { es: "Detención y Contacto", en: "Arrest and Contact" }, icon: PhoneCall, desc: { es: "Llámenos inmediatamente tras un arresto para proteger sus derechos.", en: "Call us immediately after an arrest to protect your rights." } },
+    { id: 2, title: { es: "Análisis de Pruebas", en: "Evidence Analysis" }, icon: FileText, desc: { es: "Revisamos informes policiales, testimonios y toda la evidencia.", en: "We review police reports, testimonies, and all evidence." } },
+    { id: 3, title: { es: "Estrategia Legal", en: "Legal Strategy" }, icon: Scale, desc: { es: "Desarrollamos una defensa sólida y exploramos todas las opciones.", en: "We develop a solid defense and explore all options." } },
+    { id: 4, title: { es: "Representación en Corte", en: "Court Representation" }, icon: CheckCircle2, desc: { es: "Lo representamos en la corte para luchar por el mejor resultado posible.", en: "We represent you in court to fight for the best possible outcome." } }, 
   ],
 
   interface: {
-    badge: { es: "Especialistas en Inmigración", en: "Immigration Specialists" },
-    title1: { es: "Abogados de Inmigración", en: "Immigration Attorneys" },
-    title2: { es: "Expertos en EE.UU.", en: "U.S. Experts" }, 
-    heroDescription: { es: "Representación experta en todos los aspectos de ley de inmigración para proteger su futuro en Estados Unidos. Deportación, Visas y Ciudadanía.", en: "Expert representation in all aspects of immigration law to protect your future in the United States. Deportation, Visas, and Citizenship." },
-    stats: { es: "Familias Unidas", en: "Families Reunited" },
-    casesTitle: { es: "Soluciones Legales en Inmigración", en: "Legal Solutions in Immigration" },
+    badge: { es: "Defensa Legal Inmediata", en: "Immediate Legal Defense" },
+    mainTitle: { es: "LEY CRIMINAL", en: "CRIMINAL LAW" },
+    heroTitle1: { es: "Expertos en", en: "Experts in" },
+    heroTitle2: { es: "Defensa Penal", en: "Criminal Defense" }, 
+    heroDescription: { es: "Desde DWI, hasta hurto y asalto. Protegemos su libertad y su futuro. Su primera llamada debe ser a nuestro abogado defensor.", en: "From DWI to theft and assault. We protect your freedom and future. Your first call should be to our defense attorney." },
+    stats: { es: "Casos Defendidos", en: "Cases Defended" },
+    casesTitle: { es: "Soluciones Legales en defensa criminal", en: "Solutions in Criminal Defense" },
     ctaConsultation: { es: "Consulta Ahora", en: "Consult Now" },
-    specialties: { es: "Nuestras Especialidades", en: "Our Specialties" },
+    specialties: { es: "Nuestra Defensa", en: "Our Defense" },
     details: { es: "Ver Detalles", en: "View Details" },
-    modalClosing: { es: "Representación legal especializada con décadas de experiencia en temas de inmigración", en: "Specialized legal representation with decades of experience in immigration matters" },
+    modalClosing: { es: "Abogados defensores penales listos para proteger su libertad.", en: "Criminal defense attorneys ready to protect your freedom." },
     callNow: { es: "Llámanos Ahora Mismo", en: "Call Us Right Now" },
-    processMethod: { es: "Nuestro Método Legal", en: "Our Legal Method" },
-    processTitle: { es: "Tu Ruta Hacia el Estatus Legal", en: "Your Path to Legal Status" },
-    requestEvaluation: { es: "Solicitar Evaluación de Caso", en: "Request Case Evaluation" },
+    processMethod: { es: "Nuestro Método", en: "Our Method" },
+    processTitle: { es: "Su Ruta Hacia la Defensa", en: "Your Path to Defense" },
+    requestEvaluation: { es: "Solicitar Consulta Privada", en: "Request Private Consultation" },
     videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." },
     availableOffices: { es: "Oficinas Disponibles", en: "Available Offices" },
     officesCount: { es: "oficinas", en: "offices" }
   }
 };
 
-
-export default function ImmigrationClient() {
+export default function CriminalLawPage() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
   
@@ -327,7 +289,7 @@ export default function ImmigrationClient() {
          
          <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
             <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
-               INMIGRACIÓN
+               CRIMINAL
             </span>
          </div>
       </div>
@@ -348,8 +310,8 @@ export default function ImmigrationClient() {
                  <div className="relative z-10 w-full h-full flex items-center justify-center transform-gpu">
                     <div className="relative w-full h-full">
                        <Image
-                         src="/immigration-hero.png"
-                         alt="Abogado de Inmigración en USA Manuel Solís"
+                         src="/criminal-hero.png"
+                         alt="Abogado de Ley Criminal"
                          fill
                          className="object-contain object-center drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]"
                          priority
@@ -365,7 +327,7 @@ export default function ImmigrationClient() {
                     className="absolute bottom-4 md:bottom-10 left-0 md:left-[-20px] z-20 p-4 md:p-6 border border-white/10 rounded-2xl backdrop-blur-md bg-white/10 shadow-2xl"
                  >
                     <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50">
-                       <span className="text-4xl md:text-5xl font-bold tracking-tighter">20k</span> 
+                       <span className="text-4xl md:text-5xl font-bold tracking-tighter">12K</span> 
                        <span className="text-3xl md:text-4xl font-thin text-[#B2904D] ml-1">+</span>
                     </div>
                     <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
@@ -388,12 +350,12 @@ export default function ImmigrationClient() {
                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-thin text-white tracking-tight leading-[0.9]">
                     <span className="block overflow-hidden pb-2">
                        <motion.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
-                          {t('title1')}
+                          {t('heroTitle1')}
                        </motion.span>
                     </span>
                     <span className="block overflow-hidden pb-4">
                        <motion.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D]">
-                          {t('title2')}
+                          {t('heroTitle2')}
                        </motion.span>
                     </span>
                  </h1>
@@ -552,13 +514,13 @@ export default function ImmigrationClient() {
                       <MapPin size={20} className="text-[#B2904D]" />
                       {t('availableOffices')}
                     </h5>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {activeService.offices.map((office, i) => (
                         <motion.div
                           key={i}
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: i * 0.03 }}
+                          transition={{ delay: i * 0.05 }}
                           className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm"
                         >
                           <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />

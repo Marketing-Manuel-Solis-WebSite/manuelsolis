@@ -5,13 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Clock, Navigation, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
-import { Outfit } from 'next/font/google';
-
-// --- CONFIGURACIÓN DE FUENTE & ESTILOS ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '200', '300', '400', '500', '600', '700'] 
-});
 
 // --- COLORES DE LA PALETA ---
 const PRIMARY_COLOR_DARK = '#001540';
@@ -398,7 +391,7 @@ export default function FuturisticOffices() {
   return (
     <section 
       id="oficinas"
-      className={`relative py-32 lg:py-40 w-full min-h-screen bg-[${PRIMARY_COLOR_DARK}] overflow-hidden ${font.className} selection:bg-[${ACCENT_COLOR_GOLD}] selection:text-[${PRIMARY_COLOR_DARK}]`}
+      className={`relative py-32 lg:py-40 w-full min-h-screen bg-[${PRIMARY_COLOR_DARK}] overflow-hidden selection:bg-[${ACCENT_COLOR_GOLD}] selection:text-[${PRIMARY_COLOR_DARK}]`}
     >
       {/* 1. FONDO ATMOSFÉRICO ACTIVO */}
       <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">

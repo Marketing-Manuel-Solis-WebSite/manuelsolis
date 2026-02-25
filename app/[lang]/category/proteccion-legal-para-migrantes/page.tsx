@@ -6,14 +6,9 @@ import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { useLanguage } from '../../../context/LanguageContext'; 
 import { motion, Variants } from 'framer-motion';
-import { Outfit } from 'next/font/google'; 
 import { BookOpen, Calendar, User } from 'lucide-react'; 
 
 // --- FUENTE ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '300', '400', '500', '700'] 
-});
 
 // --- FUNCIÓN AUXILIAR PARA OBTENER EL TEXTO TRADUCIDO ---
 const getTranslatedText = (key: string, lang: 'es' | 'en') => {
@@ -704,7 +699,7 @@ export default function ProteccionLegalPage() {
   const t = (key: string) => getTranslatedText(key, lang);
 
   return (
-    <div className={`min-h-screen w-full bg-[#001540] text-white ${font.className}`}>
+    <div className={`min-h-screen w-full bg-[#001540] text-white`}>
       
       <Header />
 

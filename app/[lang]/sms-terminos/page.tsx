@@ -6,15 +6,8 @@ import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm' 
 import { useLanguage } from '../../context/LanguageContext' 
 import { motion, Variants } from 'framer-motion' 
-import { Outfit } from 'next/font/google'
 import Image from 'next/image'
-import { MessageSquare, Shield, Mail, Phone, Clock, XOctagon } from 'lucide-react' 
-
-// --- FUENTE ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '300', '400', '500', '700'] 
-})
+import { MessageSquare, Shield, Mail, Phone, Clock, XOctagon } from 'lucide-react'
 
 // --- TEXTOS UI (TÉRMINOS SMS) ---
 // Nota: La sección de términos de servicio de SMS generalmente es monolingüe (Inglés) para fines legales en EE. UU.
@@ -170,7 +163,7 @@ export default function SmsTermsPage() {
   };
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden ${font.className}`}>
+    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
       {/* =========================================================================

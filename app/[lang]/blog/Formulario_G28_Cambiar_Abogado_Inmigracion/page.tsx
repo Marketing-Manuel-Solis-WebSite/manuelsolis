@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Outfit } from 'next/font/google';
 import Script from 'next/script';
 import { 
   Calendar, Clock, ArrowLeft, Sparkles, CheckCircle2, AlertCircle, 
@@ -11,6 +10,7 @@ import {
 } from 'lucide-react';
 
 // IMPORTACIONES
+import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -18,10 +18,6 @@ import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
 
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '200', '300', '400', '500', '700', '800', '900'] 
-});
 
 const SITE_URL = 'https://www.manuelsolis.com'; 
 
@@ -278,7 +274,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       description: t.metaDesc,
       images: [imageUrl],
       creator: '@AbogadoMSolis',
-    }
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${lang}/blog/Formulario_G28_Cambiar_Abogado_Inmigracion`,
+      languages: {
+        'es': `${SITE_URL}/es/blog/Formulario_G28_Cambiar_Abogado_Inmigracion`,
+        'en': `${SITE_URL}/en/blog/Formulario_G28_Cambiar_Abogado_Inmigracion`,
+        'x-default': `${SITE_URL}/en/blog/Formulario_G28_Cambiar_Abogado_Inmigracion`,
+      },
+    },
   };
 }
 
@@ -313,6 +317,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
     }
   };
 
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
+    { name: 'Blog', url: `/${lang}/blog` },
+    { name: t.title, url: `/${lang}/blog/Formulario_G28_Cambiar_Abogado_Inmigracion` },
+  ]);
+
   return (
     <>
       <Script
@@ -320,14 +330,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-      
+
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      />
+
       <BlogTracker 
         title={t.title} 
         author="Manuel Solís" 
         category="Inmigración" 
       />
 
-      <div className={`min-h-screen bg-[#001540] text-white selection:bg-[#B2904D] selection:text-[#001540] ${font.className}`}>
+      <div className={`min-h-screen bg-[#001540] text-white selection:bg-[#B2904D] selection:text-[#001540]`}>
         
         <Header />
 

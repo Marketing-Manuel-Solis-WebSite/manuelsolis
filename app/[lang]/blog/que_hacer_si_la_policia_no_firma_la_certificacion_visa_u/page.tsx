@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Outfit } from 'next/font/google';
 import Script from 'next/script';
 import { 
   Calendar, Clock, ArrowLeft, Sparkles, CheckCircle2, AlertCircle, 
@@ -11,6 +10,7 @@ import {
 } from 'lucide-react';
 
 // IMPORTACIONES
+import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -18,10 +18,6 @@ import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
 
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '200', '300', '400', '500', '700', '800', '900'] 
-});
 
 const SITE_URL = 'https://www.manuelsolis.com'; 
 
@@ -278,7 +274,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       description: t.metaDesc,
       images: [imageUrl],
       creator: '@AbogadoMSolis',
-    }
+    },
+    alternates: {
+      canonical: `${SITE_URL}/${lang}/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`,
+      languages: {
+        'es': `${SITE_URL}/es/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`,
+        'en': `${SITE_URL}/en/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`,
+        'x-default': `${SITE_URL}/en/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`,
+      },
+    },
   };
 }
 
@@ -309,9 +313,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
     "description": t.metaDesc,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/que-hacer-si-la-policia-no-firma-la-certificacion-visa-u`
+      "@id": `${SITE_URL}/${lang}/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`
     }
   };
+
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
+    { name: 'Blog', url: `/${lang}/blog` },
+    { name: t.title, url: `/${lang}/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u` },
+  ]);
 
   return (
     <>
@@ -320,24 +330,30 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-      
-      <BlogTracker 
-        title={t.title} 
-        author="Manuel Solís" 
-        category="Inmigración" 
+
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
 
-      <div className={`min-h-screen bg-[#001540] text-white selection:bg-[#B2904D] selection:text-[#001540] ${font.className}`}>
-        
+      <BlogTracker
+        title={t.title}
+        author="Manuel Solís"
+        category="Inmigración"
+      />
+
+      <div className={`min-h-screen bg-[#001540] text-white selection:bg-[#B2904D] selection:text-[#001540]`}>
+
         <Header />
 
         <BlogBackground />
 
         <main className="relative z-10 pt-32 pb-20">
-          
+
           {/* HERO */}
           <section className="container mx-auto px-4 md:px-6 lg:px-8 mb-16">
-            
+
             <div className="mb-10">
               <Link href={`/${lang}/blog`} className="inline-flex items-center gap-2 text-white/60 hover:text-[#B2904D] transition-colors group text-sm font-medium uppercase tracking-wider">
                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />

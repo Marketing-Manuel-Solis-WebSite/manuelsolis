@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import Script from 'next/script';
+import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -37,6 +38,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     alternates: {
       canonical: `https://www.manuelsolis.com/${lang}/oficinas/kirby`,
+      languages: {
+        'es': `https://www.manuelsolis.com/es/oficinas/kirby`,
+        'en': `https://www.manuelsolis.com/en/oficinas/kirby`,
+        'x-default': `https://www.manuelsolis.com/en/oficinas/kirby`,
+      },
     },
     openGraph: {
       title,
@@ -94,6 +100,11 @@ const getLocalBusinessSchema = (lang: string) => {
 export default async function KirbyPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getLocalBusinessSchema(lang);
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
+    { name: lang === 'es' ? 'Oficinas' : 'Offices', url: `/${lang}/oficinas` },
+    { name: 'Houston Kirby', url: `/${lang}/oficinas/kirby` },
+  ]);
 
   return (
     <>
@@ -101,6 +112,10 @@ export default async function KirbyPage({ params }: Props) {
         id="local-schema-kirby"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
       <OfficeClient />
     </>

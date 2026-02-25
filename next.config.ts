@@ -2,6 +2,8 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: 'https',
@@ -11,16 +13,18 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'manuelsolis.com',
       },
-      // ✅ CORRECCIÓN: Este es el dominio nuevo que te dio el error
       {
         protocol: 'https',
         hostname: 'uenjwzjx3vckezns.public.blob.vercel-storage.com',
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+      },
     ],
   },
-  // Configuración para i18n
   async redirects() {
     return [
       {
@@ -30,9 +34,17 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // Headers para SEO
   async headers() {
     return [
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
       {
         source: '/:path*',
         headers: [

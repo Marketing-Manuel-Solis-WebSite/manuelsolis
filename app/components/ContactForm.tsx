@@ -189,13 +189,7 @@ function ContactFormContent() {
       {/* FONDO OPTIMIZADO */}
       <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002050] via-[#001540] to-[#000814]" />
-          <motion.div 
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            style={{ willChange: "transform" }}
-            // Blur reducido de 100px a 80px
-            className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[80px]"
-          />
+          <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[80px]" />
           <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.05] mix-blend-overlay"></div>
       </div>
 

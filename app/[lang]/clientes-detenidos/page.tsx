@@ -7,13 +7,8 @@ import ContactForm from '../../components/ContactForm';
 import { Users, Shield, Zap, FileText, ExternalLink, Phone, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { motion } from 'framer-motion'; 
-import { Outfit } from 'next/font/google';
 
-// --- FUENTE Y COLORES ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '300', '400', '500', '700', '900'] 
-})
+// --- COLORES ---
 
 // --- TIPOS ---
 interface BilingualText {
@@ -190,7 +185,7 @@ export default function RecursosPage() {
   const getT = (obj: BilingualText) => getText(obj, lang);
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden ${font.className}`}>
+    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       
       <Header />
 

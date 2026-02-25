@@ -6,15 +6,9 @@ import Image from 'next/image'
 import { Menu, X, ChevronDown, Phone } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
-import { Outfit } from 'next/font/google'
 import { usePathname } from 'next/navigation'
 import { track } from '@vercel/analytics/react' // 👈 Importamos track
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
-
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['200', '300', '400', '500', '600', '700', '800'] 
-})
 
 const FlagES = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-3 w-3 rounded-[1px] flex-shrink-0 opacity-90">
@@ -142,7 +136,12 @@ export default function HeaderProfessional() {
       href: `/${language}/Testimonios`,
       type: 'link'
     },
-    { 
+    {
+      name: 'Blog',
+      href: `/${language}/blog`,
+      type: 'link'
+    },
+    {
       name: language === 'es' ? 'Abogados' : 'Attorneys',
       href: '', 
       type: 'dropdown',
@@ -211,7 +210,8 @@ export default function HeaderProfessional() {
   return (
     <>
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col ${font.className}`}
+        role="banner"
+        className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col`}
         style={{ willChange: "transform, background-color, backdrop-filter" }}
         initial={{ backgroundColor: 'rgba(0,0,0,0)', backdropFilter: 'blur(0px)' }}
         animate={{
@@ -243,7 +243,7 @@ export default function HeaderProfessional() {
             </Link>
 
             <div className="hidden lg:flex items-center">
-              <nav className="flex items-center gap-6 xl:gap-8">
+              <nav aria-label="Main navigation" className="flex items-center gap-6 xl:gap-8">
                 {menuItems.map((item) => (
                   <div key={item.name} className="relative group">
                     <div className="flex items-center gap-1 cursor-pointer py-3">
@@ -387,7 +387,7 @@ export default function HeaderProfessional() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className={`fixed inset-0 z-40 bg-[#051120]/98 backdrop-blur-md lg:hidden ${font.className}`}
+            className={`fixed inset-0 z-40 bg-[#051120]/98 backdrop-blur-md lg:hidden`}
           >
             <div className="flex flex-col pt-24 px-8 h-full">
               <nav className="flex flex-col space-y-6 overflow-y-auto max-h-[80vh] pb-10">

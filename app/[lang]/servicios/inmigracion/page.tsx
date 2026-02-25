@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import ImmigrationClient from './ImmigrationClient';
 import Script from 'next/script';
+import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+
+const SITE_URL = 'https://www.manuelsolis.com';
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -19,7 +22,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? 'Abogados de inmigración con más de 30 años de experiencia. Expertos en defensa de deportación, asilo, Visa U, VAWA y peticiones familiares. ¡Consulta Gratis!'
       : 'Experienced immigration lawyers fighting for your rights. Experts in deportation defense, asylum, U Visa, VAWA, and family petitions. Free Consultation!',
     alternates: {
-      canonical: `https://www.manuelsolis.com/${lang}/servicios/inmigracion`,
+      canonical: `${SITE_URL}/${lang}/servicios/inmigracion`,
+      languages: {
+        'es': `${SITE_URL}/es/servicios/inmigracion`,
+        'en': `${SITE_URL}/en/servicios/inmigracion`,
+        'x-default': `${SITE_URL}/en/servicios/inmigracion`,
+      },
     },
     openGraph: {
       title: isEs 
@@ -58,17 +66,23 @@ const getImmigrationSchema = (lang: string) => {
 export default async function ImmigrationPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getImmigrationSchema(lang);
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
+    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/#servicios` },
+    { name: lang === 'es' ? 'Inmigración' : 'Immigration', url: `/${lang}/servicios/inmigracion` },
+  ]);
 
   return (
     <>
-      {/* INYECCIÓN DE SCHEMA EN EL HEAD */}
       <Script
         id="immigration-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
-      
-      {/* RENDERIZADO DEL COMPONENTE VISUAL */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      />
       <ImmigrationClient />
     </>
   );

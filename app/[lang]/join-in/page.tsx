@@ -6,11 +6,8 @@ import Footer from '../../components/Footer';
 import { useLanguage } from '../../context/LanguageContext';
 import { motion, AnimatePresence, Variants } from 'framer-motion'; 
 import { User, Phone, Mail, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react';
-import { Outfit } from 'next/font/google';
-import { track } from '@vercel/analytics/react'; // 1. Importación para Analytics
+import { track } from '@vercel/analytics/react';
 
-// --- CONFIGURACIÓN DE FUENTE Y COLORES ---
-const font = Outfit({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700'] });
 const ACCENT_GOLD = '#B2904D';
 const API_URL = '/api/signup-proxy'; 
 
@@ -300,7 +297,7 @@ export default function JoinInPage() {
     };
 
     return (
-        <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden ${font.className}`}>
+        <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
             <Header />
 
             <div className="fixed inset-0 z-0 pointer-events-none w-full h-full transform-gpu">

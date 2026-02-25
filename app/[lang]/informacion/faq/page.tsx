@@ -7,14 +7,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import React, { useState } from 'react'
 import { useLanguage } from '../../../context/LanguageContext'
 import { motion, AnimatePresence } from 'framer-motion'; 
-import { Outfit } from 'next/font/google';
 import Image from 'next/image';
-
-// --- FUENTE Y COLORES ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '300', '400', '500', '700'] 
-})
 
 // --- TIPOS ---
 interface FaqItemBilingual {
@@ -301,8 +294,34 @@ export default function PreguntasFrecuentesPage() {
     return current[lang] || current.es;
   };
 
+  // Build FAQ schema from all categories
+  const allFaqItems = [
+    ...faqDataBilingual.civilLaw,
+    ...faqDataBilingual.criminalLaw,
+    ...faqDataBilingual.familyLaw,
+    ...faqDataBilingual.immigrationLaw,
+    ...faqDataBilingual.insuranceLaw,
+  ];
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: allFaqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.title[lang],
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.content[lang].replace(/\*\*/g, ''),
+      },
+    })),
+  };
+
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden ${font.className}`}>
+    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Header />
 
       {/* =========================================================================

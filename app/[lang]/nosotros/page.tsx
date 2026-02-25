@@ -5,7 +5,6 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { useLanguage } from '../../context/LanguageContext'
 import { motion } from 'framer-motion' 
-import { Outfit } from 'next/font/google'
 import Image from 'next/image'
 import { Landmark, MapPin, Map as MapIcon } from 'lucide-react' 
 import dynamic from 'next/dynamic'
@@ -15,12 +14,6 @@ import dynamic from 'next/dynamic'
 const ContactForm = dynamic(() => import('../../components/ContactForm'), {
   loading: () => <div className="h-[600px] w-full bg-white/5 animate-pulse rounded-2xl border border-white/10" />
 });
-
-// --- FUENTE ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '300', '400', '500', '700'] 
-})
 
 // --- TEXTOS UI ---
 const interfaceTexts = {
@@ -105,7 +98,7 @@ export default function NosotrosPage() {
   }
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden ${font.className}`}>
+    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
       {/* =========================================================================

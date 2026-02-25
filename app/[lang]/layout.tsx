@@ -6,7 +6,6 @@ import { translations, Language } from '../lib/translations';
 import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import '../globals.css';
 
 interface LayoutParams {
   lang: Language; 
@@ -23,9 +22,30 @@ const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'LawFirm',
   name: 'Manuel Solis Law Firm',
-  alternateName: 'Abogados Manuel Solis',
+  alternateName: ['Abogados Manuel Solis', 'Law Offices of Manuel Solis'],
   url: SITE_URL,
   logo: `${SITE_URL}/logo-manuel-solis.png`,
+  image: `${SITE_URL}/og-image.jpg`,
+  foundingDate: '1990',
+  slogan: 'Defending immigrant rights for over 35 years',
+  knowsAbout: [
+    'Immigration Law',
+    'Deportation Defense',
+    'Personal Injury',
+    'Criminal Defense',
+    'Family Law',
+    'Insurance Claims',
+    'Asylum',
+    'U Visa',
+    'VAWA'
+  ],
+  areaServed: [
+    { '@type': 'State', name: 'Texas' },
+    { '@type': 'State', name: 'California' },
+    { '@type': 'State', name: 'Illinois' },
+    { '@type': 'State', name: 'Colorado' },
+    { '@type': 'State', name: 'Tennessee' }
+  ],
   sameAs: [
     'https://www.facebook.com/AbogadoManuelSolisOficial/',
     'https://twitter.com/AbogadoMSolis',
@@ -38,7 +58,29 @@ const organizationSchema = {
     telephone: '+1-866-979-5146',
     contactType: 'customer service',
     areaServed: 'US',
-    availableLanguage: ['English', 'Spanish']
+    availableLanguage: ['English', 'Spanish (Español)']
+  },
+  numberOfEmployees: {
+    '@type': 'QuantitativeValue',
+    minValue: 50
+  }
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Manuel Solis Law Firm',
+  alternateName: 'Abogados Manuel Solis',
+  url: SITE_URL,
+  inLanguage: ['en', 'es'],
+  publisher: {
+    '@type': 'LawFirm',
+    name: 'Manuel Solis Law Firm'
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE_URL}/en?q={search_term_string}`,
+    'query-input': 'required name=search_term_string'
   }
 };
 
@@ -47,13 +89,12 @@ export const viewport: Viewport = {
   themeColor: '#051120',
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
-  const t = translations[currentLang] || translations['es']; 
+  const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'en';
+  const t = translations[currentLang] || translations['en'];
   
   const ogLocale = currentLang === 'es' ? 'es_US' : 'en_US';
 
@@ -61,7 +102,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? (typeof t.seo.home.keywords === 'string' 
         ? t.seo.home.keywords.split(',').map(k => k.trim()) 
         : t.seo.home.keywords)
-    : ["Abogado de Inmigración", "Accidentes"];
+    : ["Immigration Lawyer", "Accident Attorney"];
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -69,7 +110,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       default: t.seo?.home?.title || 'Manuel Solis Law Firm',
       template: `%s | Manuel Solis Law Firm`
     },
-    description: t.seo?.home?.description || 'Abogados expertos en inmigración y accidentes.',
+    description: t.seo?.home?.description || 'Expert immigration and accident attorneys with 35+ years of experience serving the US.',
     keywords: [
       ...keywordList,
       "Abogado de Inmigración USA",
@@ -107,7 +148,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: `/og-image.jpg`,
           width: 1200,
           height: 630,
-          alt: 'Manuel Solis Law Firm - Inmigración y Accidentes',
+          alt: 'Manuel Solis Law Firm - Immigration & Accident Attorneys',
         },
       ],
     },
@@ -137,7 +178,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `${SITE_URL}/es`,
         'en': `${SITE_URL}/en`,
-        'x-default': `${SITE_URL}/es`,
+        'x-default': `${SITE_URL}/en`,
       },
     },
   };
@@ -145,41 +186,43 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params;
-  const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
+  const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'en';
   
   const htmlLang = currentLang === 'es' ? 'es-US' : 'en-US';
   
   return (
     <html lang={htmlLang} suppressHydrationWarning>
       <head>
-        <Script
-          id="schema-org-global"
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-          strategy="beforeInteractive"
         />
-        
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-V5F8J8QMZ4"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         <Script
           id="google-analytics"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-V5F8J8QMZ4'); 
+              gtag('config', 'G-V5F8J8QMZ4');
             `,
           }}
         />
 
         <Script
           id="meta-pixel"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)
@@ -198,12 +241,12 @@ export default async function LangLayout({ children, params }: Props) {
 
         <Script
           id="tiktok-pixel"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               !function (w, d, t) {
                 w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=i+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-                
+
                 ttq.load('CVERFVJC77U9L0C1P6O0');
                 ttq.page();
               }(window, document, 'ttq');
@@ -238,5 +281,5 @@ export default async function LangLayout({ children, params }: Props) {
 }
 
 export function generateStaticParams() {
-  return [{ lang: 'es' }, { lang: 'en' }];
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

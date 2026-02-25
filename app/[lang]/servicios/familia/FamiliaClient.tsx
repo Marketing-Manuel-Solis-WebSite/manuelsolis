@@ -1,18 +1,15 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   PhoneCall,
   ArrowRight,
   Scale, 
   FileText, 
-  MessageSquare,
-  Star, 
-  Zap,
-  HardHat,
-  CheckCircle2,
-  Shield,
+  HandCoins, 
+  MessageSquare, 
+  Star,
   MapPin
 } from 'lucide-react';
 
@@ -49,203 +46,98 @@ interface CaseItem {
     offices: string[]; // NUEVO: Array de oficinas que ofrecen este servicio
 }
 
-// --- DATOS GLOBALES ---
+// --- DATOS GLOBALES (FAMILY LAW) ---
 const texts = {
   mainCases: [
     {
-      id: 'deportacion',
-      title: { es: "Defensa y casos urgentes; Defensa contra la Deportación y Asilo", en: "Defense and urgent cases; Defense against Deportation and Asylum" },
-      subtitle: { es: "Asilo, Cancelación de Remoción y Fianzas", en: "Asylum, Cancellation of Removal, and Bonds" },
-      icon: Shield,
-      offices: [
-        'Arvada (Denver)',
-        'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
-        'Houston Principal',
-        'Houston Navigation',
-        'Houston Main St',
-        'Houston NorthLoop',
-        'Houston NorthChase',
-        'Houston Kirby',
-        'Memphis',
-        'Memphis (Airways)',
-        'League City, TX'
-      ],
-      content: {
-        intro: { es: "¿Está usted o un ser querido enfrentando la deportación? ¡Contáctenos inmediatamente!", en: "Are you or a loved one facing deportation? Contact us immediately!" },
-        description: { es: "Los casos de deportación casi siempre son urgentes. Nuestro equipo experto en inmigración luchará por usted. Existen varias formas de evitar la deportación.", en: "Deportation cases are almost always urgent. Our expert immigration team will fight for you. There are several ways to avoid deportation." },
-        subTitle: { es: "Estrategias de Defensa Incluyen:", en: "Defense Strategies Include:" },
-        subPoints: [
-          { es: "Asilo (Persecución por raza, religión, etc.)", en: "Asylum (Persecution based on race, religion, etc.)" },
-          { es: "Cancelación de Remoción (10 años de presencia, buen carácter, dificultad excepcional)", en: "Cancellation of Removal (10 years presence, good moral character, exceptional hardship)" },
-          { es: "Ajuste de estatus", en: "Adjustment of status" },
-          { es: "Liberación de detención (Fianzas por ICE o Juez)", en: "Release from detention (Bonds by ICE or Judge)" },
-        ],
-        solution: { es: "Le ayudaremos a presentar la evidencia y argumentos necesarios para la Cancelación de Remoción o a asegurar una fianza para su liberación de detención.", en: "We will help you present the necessary evidence and arguments for Cancellation of Removal or secure a bond for your release from detention." },
-      }
-    },
-    {
-      id: 'uvawa',
-      title: { es: "Visas Humanitarias; Visa U, Visa T, VAWA y SIJS", en: "Humanitarian Visas; U Visa, T Visa, VAWA and SIJS" },
-      subtitle: { es: "Víctimas de Delitos y Agresión Familiar", en: "Victims of Crimes and Family Aggression" },
-      icon: MessageSquare,
-      offices: [
-        'Arvada (Denver)',
-        'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
-        'Houston Principal',
-        'Houston Navigation',
-        'Houston Main St',
-        'Houston NorthLoop',
-        'Houston NorthChase',
-        'Houston Kirby',
-        'Memphis',
-        'Memphis (Airways)',
-        'League City, TX'
-      ],
-      content: {
-        intro: { es: "¿Ha sido agredido o es víctima de un delito violento o crueldad familiar en los Estados Unidos?", en: "Have you been assaulted or are you a victim of a violent crime or family cruelty in the United States?" },
-        description: { es: "La Visa U es para víctimas de un delito grave que cooperan con la policía. VAWA (Ley de Violencia contra Mujeres) es para víctimas de agresión o crueldad cometida por familiares (cónyuges, padres, hijos) ciudadanos o residentes permanentes.", en: "The U Visa is for victims of a serious crime who cooperate with the police. VAWA (Violence Against Women Act) is for victims of assault or cruelty committed by family members (spouses, parents, children) who are citizens or permanent residents." },
-        subTitle: { es: "Calificación para VAWA:", en: "Qualification for VAWA:" },
-        subPoints: [
-          { es: "Víctima de agresión o crueldad por: Cónyuge, ex cónyuge, padre o hijo de un ciudadano de los EEUU.", en: "Victim of assault or cruelty by: Spouse, ex-spouse, parent, or child of a U.S. citizen." },
-          { es: "Víctima de agresión o crueldad por: Cónyuge, ex cónyuge, o padre quien es residente permanente legal.", en: "Victim of assault or cruelty by: Spouse, ex-spouse, or parent who is a lawful permanent resident." },
-        ],
-        solution: { es: "Podemos ayudarle a obtener la Residencia Permanente Legal (LPR) protegiéndole de la violencia y la amenaza de deportación, sin depender de su agresor.", en: "We can help you obtain Lawful Permanent Residency (LPR) by protecting you from violence and the threat of deportation, without depending on your abuser." },
-      }
-    },
-    {
-      id: 'residencia_familiar',
-      title: { es: "Residencia por un Familiar", en: "Residency Through a Family Member" },
-      subtitle: { es: "Peticiones I-130 y Ajuste de Estatus", en: "I-130 Petitions and Adjustment of Status" },
+      id: 'divorcio',
+      title: { es: "Divorcio", en: "Divorce" },
+      subtitle: { es: "Separación Legal y Acuerdos Mutuos", en: "Legal Separation and Mutual Agreements" },
       icon: FileText,
       offices: [
-        'Arvada (Denver)',
         'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
-        'Houston Principal',
-        'Houston Navigation',
-        'Houston Main St',
-        'Houston NorthLoop',
-        'Houston NorthChase',
-        'Houston Kirby',
         'Memphis',
-        'Memphis (Airways)',
-        'League City, TX'
+        'Memphis (Airways)'
       ],
       content: {
-        intro: { es: "¿Espera alcanzar la condición de residente legal de los EE. UU.?", en: "Do you hope to achieve lawful permanent resident status in the U.S.?" },
-        description: { es: "Si usted tiene un familiar en los Estados Unidos que goza del estatus de Residente Permanente o es ciudadano americano, usted posiblemente califique para una Residencia Permanente.", en: "If you have a family member in the United States who holds Permanent Resident status or is a U.S. citizen, you may qualify for Permanent Residency." },
-        subTitle: { es: "Categorías de Familiares que Califican:", en: "Qualifying Family Member Categories:" },
-        subPoints: [
-          { es: "Residente Permanente pide a: Cónyuge, Hijos solteros menores de 21 años.", en: "Permanent Resident petitions for: Spouse, Unmarried children under 21." },
-          { es: "Ciudadano Americano pide a: Cónyuge, Hijos y familia, Padres, Hermanos y familia.", en: "U.S. Citizen petitions for: Spouse, Children and family, Parents, Siblings and family." },
-        ],
-        solution: { es: "Guiaremos a su familiar patrocinador en el proceso de Petición Familiar (I-130) y el subsiguiente Ajuste de Estatus para obtener su Green Card.", en: "We will guide your sponsoring family member through the Family Petition process (I-130) and the subsequent Adjustment of Status to obtain your Green Card." },
+        intro: { es: "¿Necesita un buen abogado de divorcio?", en: "Do you need a good divorce attorney?" },
+        description: { es: "Un matrimonio es un contrato legalmente establecido entre dos personas que debe resolverse de manera adecuada para proteger sus intereses futuros. Es recomendable acudir a un abogado para que le ayude a tomar las mejores decisiones.", en: "A marriage is a legally established contract between two people that must be properly resolved to protect your future interests. It is advisable to go to an attorney to help you make the best decisions." },
+        solution: { es: "Le podemos ayudar a preparar y entregar los documentos necesarios para un acuerdo de divorcio. Si fuera necesario, le representaremos en la corte ante un posible litigio para proteger sus derechos.", en: "We can help you prepare and submit the necessary documents for a divorce settlement. If necessary, we will represent you in court before possible litigation to protect your rights." },
       }
     },
     {
-      id: 'residencia_empleador',
-      title: { es: "Residencia por Empleo", en: "Employment-Based Residency" },
-      subtitle: { es: "Peticiones Basadas en Empleo (Green Card)", en: "Employment-Based Petitions (Green Card)" },
-      icon: HardHat,
+      id: 'custodia',
+      title: { es: "Custodia de los Hijos", en: "Child Custody" },
+      subtitle: { es: "Disputas, Visitas y Bienestar Infantil", en: "Disputes, Visitation, and Child Welfare" },
+      icon: MessageSquare,
       offices: [
-        'Arvada (Denver)',
         'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
-        'Houston Principal',
-        'Houston Navigation',
-        'Houston Main St',
-        'Houston NorthLoop',
-        'Houston NorthChase',
-        'Houston Kirby',
         'Memphis',
-        'Memphis (Airways)',
-        'League City, TX'
+        'Memphis (Airways)'
       ],
       content: {
-        intro: { es: "¿Desea convertirse en residente legal de los EE. UU. a través de su trabajo?", en: "Do you wish to become a lawful permanent resident of the U.S. through your job?" },
-        description: { es: "Si usted entró legalmente a los Estados Unidos y su permiso aún está vigente, o usted sometió alguna petición antes de 4/30/2001 y su patrón está dispuesto a ayudarlo, tiene posibilidades de arreglar su residencia.", en: "If you entered the United States legally and your permit is still valid, or you filed a petition before 4/30/2001 and your employer is willing to help you, you have possibilities to arrange your residency." },
-        solution: { es: "Nuestro equipo le ayudará a navegar los complejos procesos de certificación laboral y peticiones I-140 para asegurar su futuro en el país. Esto aplica incluso si usted está en su país de origen y una empresa Estadounidense lo patrocina.", en: "Our team will help you navigate the complex labor certification processes and I-140 petitions to secure your future in the country. This applies even if you are in your home country and an American company sponsors you." },
+        intro: { es: "Permítanos apoyarle en las disputas por la custodia de sus hijos.", en: "Allow us to support you in child custody disputes." },
+        description: { es: "Los niños son, indudablemente, los más perjudicados en la separación de sus padres. Es crucial que los abogados negocien en su nombre desde un punto de vista técnico y no emocional para lograr la mejor resolución.", en: "Children are undoubtedly the most affected by the separation of their parents. It is crucial that attorneys negotiate on your behalf from a technical rather than emotional point of view to achieve the best resolution." },
+        subTitle: { es: "Nuestra Defensa Incluye:", en: "Our Defense Includes:" },
+        subPoints: [
+          { es: "Defenderle en un caso de custodia.", en: "Defend you in a custody case." },
+          { es: "Negociar la manutención y las visitas.", en: "Negotiate child support and visitation." },
+          { es: "Representarle en corte si no es posible llegar a un acuerdo.", en: "Represent you in court if an agreement is not possible." },
+        ],
+        solution: { es: "Contamos con abogados preparados para defender sus intereses y el de sus hijos, buscando la mejor solución para la estabilidad familiar.", en: "We have attorneys prepared to defend your interests and those of your children, seeking the best solution for family stability." },
       }
     },
     {
-      id: 'naturalizacion',
-      title: { es: "Naturalización", en: "Naturalization" },
-      subtitle: { es: "Conviértete en Ciudadano Estadounidense", en: "Become a U.S. Citizen" },
-      icon: CheckCircle2,
+      id: 'manutencion',
+      title: { es: "Manutención de los Hijos", en: "Child Support" },
+      subtitle: { es: "Cálculo y Cumplimiento de Pagos", en: "Calculation and Enforcement of Payments" },
+      icon: HandCoins,
       offices: [
-        'Arvada (Denver)',
         'Chicago',
-        'Dallas',
-        'El Paso',
-        'Harlingen',
-        'Bellaire',
-        'Los Angeles',
-        'Houston Principal',
-        'Houston Navigation',
-        'Houston Main St',
-        'Houston NorthLoop',
-        'Houston NorthChase',
-        'Houston Kirby',
         'Memphis',
-        'Memphis (Airways)',
-        'League City, TX'
+        'Memphis (Airways)'
       ],
       content: {
-        intro: { es: "¿Desea convertirse en ciudadano estadounidense?", en: "Do you want to become a U.S. citizen?" },
-        description: { es: "¿Por qué permanecer con la residencia legal si puede llegar a ser un ciudadano estadounidense y disfrutar de todos los derechos que corresponden? La naturalización es el paso final hacia la plena ciudadanía.", en: "Why remain with legal residency if you can become a U.S. citizen and enjoy all the corresponding rights? Naturalization is the final step towards full citizenship." },
-        subTitle: { es: "Maneras Comunes de Calificar:", en: "Common Ways to Qualify:" },
+        intro: { es: "La manutención infantil es un aspecto clave del derecho de familia.", en: "Child support is a key aspect of family law." },
+        description: { es: "Los padres tienen el deber de mantener a sus hijos. La manutención les ayuda económicamente, asegurándose de que los niños tengan ropa en la espalda y comida en la mesa. La cantidad se calcula sobre la base de los recursos netos del padre.", en: "Parents have a duty to support their children. Support helps them financially, ensuring that children have clothes on their backs and food on the table. The amount is calculated based on the father's net resources." },
+        subTitle: { es: "Cómo se Calcula la Manutención (Base General):", en: "How Child Support is Calculated (General Basis):" },
         subPoints: [
-          { es: "Residencia Permanente por al menos 5 años.", en: "Permanent residency for at least 5 years." },
-          { es: "Residencia permanente como cónyuge de un ciudadano de los EEUU.", en: "Permanent residency as the spouse of a U.S. citizen." },
-          { es: "Calificar sirviendo en las fuerzas armadas de los EEUU.", en: "Qualify by serving in the U.S. armed forces." },
-          { es: "Naturalización para hijos de ciudadanos (Cumpliendo requisitos).", en: "Naturalization for children of citizens (Meeting requirements)." },
-          { es: "Requisito: Pasar un examen de ciudadanía en inglés.", en: "Requirement: Pass a citizenship test in English." },
+          { es: "Se calcula a partir de los recursos netos (ingresos menos impuestos esenciales y gastos de seguro médico).", en: "It is calculated based on net resources (income minus essential taxes and health insurance expenses)." },
+          { es: "La base es el 20% del ingreso neto mensual.", en: "The base is 20% of the net monthly income." },
+          { es: "Se agrega el 5% por cada hijo adicional.", en: "5% is added for each additional child." },
+          { es: "Puede embargarse del salario, ofreciendo tranquilidad a ambas partes.", en: "It can be garnished from salary, offering peace of mind to both parties." },
         ],
-        solution: { es: "Lo guiaremos en el proceso de solicitud, la preparación para el examen de ciudadanía y la entrevista final para que obtenga su pasaporte americano.", en: "We will guide you through the application process, preparation for the citizenship test, and the final interview so that you obtain your American passport." },
+        solution: { es: "Le asistimos en el cálculo preciso y la ejecución de la orden judicial de manutención, asegurando la estabilidad económica de sus hijos.", en: "We assist you with the accurate calculation and enforcement of the judicial support order, ensuring the economic stability of your children." },
       }
-    }
+    },
   ] as CaseItem[],
   
   processSteps: [
-    { id: 1, title: { es: "Contacto", en: "Contact" }, icon: PhoneCall, desc: { es: "Llámanos para iniciar tu evaluación legal.", en: "Call us to start your legal evaluation." } },
-    { id: 2, title: { es: "Análisis", en: "Analysis" }, icon: FileText, desc: { es: "Revisamos tu historial migratorio y evidencia.", en: "We review your immigration history and evidence." } },
-    { id: 3, title: { es: "Estrategia", en: "Strategy" }, icon: Scale, desc: { es: "Diseñamos la ruta legal para tu objetivo.", en: "We design the legal route for your goal." } },
-    { id: 4, title: { es: "Resultados", en: "Results" }, icon: CheckCircle2, desc: { es: "Te acompañamos hasta alcanzar tu estatus migratorio.", en: "We accompany you until you achieve your immigration status." } },
+    { id: 1, title: { es: "Consulta Privada", en: "Private Consultation" }, icon: PhoneCall, desc: { es: "Evaluamos su situación personal y sus objetivos familiares.", en: "We evaluate your personal situation and family goals." } },
+    { id: 2, title: { es: "Estrategia y Documentación", en: "Strategy & Documentation" }, icon: FileText, desc: { es: "Recopilamos pruebas, ingresos y preparamos los documentos legales.", en: "We gather evidence, income statements, and prepare the legal documents." } },
+    { id: 3, title: { es: "Negociación / Mediación", en: "Negotiation / Mediation" }, icon: MessageSquare, desc: { es: "Buscamos un acuerdo amistoso fuera de la corte para reducir el impacto emocional.", en: "We seek an amicable out-of-court settlement to reduce emotional impact." } },
+    { id: 4, title: { es: "Representación en Corte", en: "Court Representation" }, icon: Scale, desc: { es: "Lo representamos si es necesario litigar para defender sus derechos.", en: "We represent you if litigation is necessary to defend your rights." } },
   ],
 
   interface: {
-    badge: { es: "Especialistas en Inmigración", en: "Immigration Specialists" },
-    title1: { es: "Abogados de Inmigración", en: "Immigration Attorneys" },
-    title2: { es: "Expertos en EE.UU.", en: "U.S. Experts" }, 
-    heroDescription: { es: "Representación experta en todos los aspectos de ley de inmigración para proteger su futuro en Estados Unidos. Deportación, Visas y Ciudadanía.", en: "Expert representation in all aspects of immigration law to protect your future in the United States. Deportation, Visas, and Citizenship." },
-    stats: { es: "Familias Unidas", en: "Families Reunited" },
-    casesTitle: { es: "Soluciones Legales en Inmigración", en: "Legal Solutions in Immigration" },
+    badge: { es: "Protección Familiar y Patrimonial", en: "Family and Patrimonial Protection" },
+    mainTitle: { es: "FAMILIA", en: "FAMILY LAW" },
+    heroTitle1: { es: "Expertos en", en: "Experts in" },
+    heroTitle2: { es: "Derecho Familiar", en: "Family Law" }, 
+    heroDescription: { es: "Protegemos sus derechos y el bienestar de sus hijos durante transiciones difíciles.", en: "We protect your rights and the well-being of your children during difficult transitions." },
+    stats: { es: "Familias Apoyadas", en: "Families Supported" },
+    casesTitle: { es: "Soluciones Legales en Ley familiar", en: "Solutions in Family Law" },
     ctaConsultation: { es: "Consulta Ahora", en: "Consult Now" },
     specialties: { es: "Nuestras Especialidades", en: "Our Specialties" },
     details: { es: "Ver Detalles", en: "View Details" },
-    modalClosing: { es: "Representación legal especializada con décadas de experiencia en temas de inmigración", en: "Specialized legal representation with decades of experience in immigration matters" },
+    modalClosing: { es: "Protegiendo su futuro y el de sus hijos durante transiciones difíciles.", en: "Protecting your future and your children's during difficult transitions." },
+    videoSectionBadge: { es: "Conoce a Nuestro Equipo", en: "Meet Our Team" },
+    videoSectionTitle: { es: "Abogado", en: "Attorney" },
+    videoSectionSubtitle: { es: "Escucha directamente de nuestros socios cómo protegemos su estabilidad familiar.", en: "Hear directly from our partners how we protect your family stability." },
     callNow: { es: "Llámanos Ahora Mismo", en: "Call Us Right Now" },
-    processMethod: { es: "Nuestro Método Legal", en: "Our Legal Method" },
-    processTitle: { es: "Tu Ruta Hacia el Estatus Legal", en: "Your Path to Legal Status" },
-    requestEvaluation: { es: "Solicitar Evaluación de Caso", en: "Request Case Evaluation" },
+    processMethod: { es: "Nuestro Método", en: "Our Method" },
+    processTitle: { es: "El Proceso para su Resolución Familiar", en: "The Process for Your Family Resolution" },
+    requestEvaluation: { es: "Solicitar Consulta", en: "Request Consultation" },
     videoAlt: { es: "Video explicativo sobre la dedicación del equipo legal.", en: "Explanation video about the legal team's dedication." },
     availableOffices: { es: "Oficinas Disponibles", en: "Available Offices" },
     officesCount: { es: "oficinas", en: "offices" }
@@ -253,7 +145,7 @@ const texts = {
 };
 
 
-export default function ImmigrationClient() {
+export default function FamilyLawPage() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
   
@@ -293,14 +185,6 @@ export default function ImmigrationClient() {
   
   const activeService = mainCasesData.find(s => s.id === selectedTab) || mainCasesData[0];
 
-  const textRevealVariant: Variants = {
-    hidden: { y: "100%", rotateX: -20, opacity: 0 },
-    visible: (custom: number) => ({
-      y: 0, rotateX: 0, opacity: 1,
-      transition: { duration: 1.2, delay: custom * 0.15, ease: "easeOut" } 
-    })
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-[#001540] text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
       
@@ -326,12 +210,13 @@ export default function ImmigrationClient() {
          />
          
          <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
-            <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
-               INMIGRACIÓN
+            <span className="text-[120vh] font-black italic text-white tracking-tighter whitespace-nowrap">
+                FAMILIA
             </span>
          </div>
       </div>
-
+      
+      
       {/* --- HERO SECTION --- */}
       <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 px-4 z-10 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
@@ -348,8 +233,8 @@ export default function ImmigrationClient() {
                  <div className="relative z-10 w-full h-full flex items-center justify-center transform-gpu">
                     <div className="relative w-full h-full">
                        <Image
-                         src="/immigration-hero.png"
-                         alt="Abogado de Inmigración en USA Manuel Solís"
+                         src="/family-hero.png"
+                         alt="Abogado de Derecho Familiar"
                          fill
                          className="object-contain object-center drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]"
                          priority
@@ -365,7 +250,7 @@ export default function ImmigrationClient() {
                     className="absolute bottom-4 md:bottom-10 left-0 md:left-[-20px] z-20 p-4 md:p-6 border border-white/10 rounded-2xl backdrop-blur-md bg-white/10 shadow-2xl"
                  >
                     <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50">
-                       <span className="text-4xl md:text-5xl font-bold tracking-tighter">20k</span> 
+                       <span className="text-4xl md:text-5xl font-bold tracking-tighter">10K</span> 
                        <span className="text-3xl md:text-4xl font-thin text-[#B2904D] ml-1">+</span>
                     </div>
                     <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
@@ -385,31 +270,31 @@ export default function ImmigrationClient() {
                     <span className="text-[#B2904D] text-xs font-bold tracking-widest uppercase">{t('badge')}</span>
                  </div>
 
-                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-thin text-white tracking-tight leading-[0.9]">
-                    <span className="block overflow-hidden pb-2">
-                       <motion.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
-                          {t('title1')}
-                       </motion.span>
+                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-thin text-white tracking-tight leading-none">
+                    <span className="block text-white/90 font-extralight mb-2">
+                      {t('heroTitle1')} 
                     </span>
-                    <span className="block overflow-hidden pb-4">
-                       <motion.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D]">
-                          {t('title2')}
-                       </motion.span>
+                    <span className="block font-medium text-[#B2904D] drop-shadow-xl">
+                      {t('heroTitle2')} 
                     </span>
                  </h1>
 
-                 <motion.p 
-                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
-                    className="text-lg md:text-xl text-blue-100/70 font-light max-w-xl leading-relaxed border-l border-white/10 pl-4 md:pl-6"
+                 <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4, duration: 1 }}
+                    className="relative pl-6 border-l-2 border-[#B2904D]/50"
                  >
-                    {t('heroDescription')}
-                 </motion.p>
+                    <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
+                      {t('heroDescription')}
+                    </p>
+                 </motion.div>
 
                  <motion.div 
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
                     className="flex flex-wrap gap-4 pt-4"
                  >
-                    <a href="#contacto" className="px-6 md:px-8 py-3 md:py-4 bg-[#B2904D] hover:bg-white text-[#001540] font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(178,144,77,0.4)] flex items-center gap-2 group text-sm md:text-base">
+                    <a href="#contacto" className="px-6 md:px-8 py-3 md:py-4 bg-[#B2904D] hover:bg-white text-[#001540] font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(178,144,77,0.3)] flex items-center gap-2 group text-sm md:text-base">
                        <PhoneCall size={18} className="md:w-5 md:h-5" />
                        {t('ctaConsultation')}
                        <ArrowRight size={16} className="md:w-[18px] md:h-[18px] group-hover:translate-x-1 transition-transform"/>
@@ -420,6 +305,7 @@ export default function ImmigrationClient() {
            </div>
         </div>
       </section>
+
 
       {/* --- SECCIÓN DE TABS - TÍTULOS HORIZONTALES --- */}
       <section className="px-4 pb-32 relative z-10" id="casos">
@@ -466,24 +352,24 @@ export default function ImmigrationClient() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.08, duration: 0.5 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
                 onClick={() => setSelectedTab(service.id)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`group relative px-5 py-3 rounded-2xl transition-all duration-300 border backdrop-blur-md ${
+                className={`group relative px-6 py-4 rounded-2xl transition-all duration-300 border backdrop-blur-md ${
                   selectedTab === service.id
                     ? 'bg-gradient-to-br from-[#B2904D] to-[#D4AF37] border-[#B2904D] shadow-[0_0_20px_rgba(178,144,77,0.3)]'
                     : 'bg-white/5 border-white/10 hover:border-[#B2904D]/50 hover:bg-white/10'
                 }`}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <service.icon 
-                    size={20} 
+                    size={24} 
                     className={`transition-all ${
                       selectedTab === service.id ? 'text-white' : 'text-white/70 group-hover:text-[#B2904D]'
                     }`}
                   />
-                  <span className={`font-bold text-xs md:text-sm whitespace-nowrap ${
+                  <span className={`font-bold text-sm md:text-base whitespace-nowrap ${
                     selectedTab === service.id ? 'text-white' : 'text-white/80 group-hover:text-white'
                   }`}>
                     {gT(service.title)}
@@ -552,13 +438,13 @@ export default function ImmigrationClient() {
                       <MapPin size={20} className="text-[#B2904D]" />
                       {t('availableOffices')}
                     </h5>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {activeService.offices.map((office, i) => (
                         <motion.div
                           key={i}
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: i * 0.03 }}
+                          transition={{ delay: i * 0.05 }}
                           className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm"
                         >
                           <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />

@@ -3,19 +3,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, TrendingUp, Sparkles, Frown } from 'lucide-react';
-import { Outfit } from 'next/font/google';
-
 // Imports de tus componentes existentes
 import BlogCard from './BlogCard';
 import FeaturedPost from './FeaturedPost';
 import CategoryFilter from './CategoryFilter';
 import SearchBar from './SearchBar';
 import BlogBackground from './BlogBackground';
-
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '200', '300', '400', '500', '700', '800', '900'] 
-});
 
 interface BlogFeedProps {
   initialPosts: any[];
@@ -48,7 +41,7 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
   });
 
   return (
-    <div className={`relative w-full min-h-screen bg-[#001540] overflow-hidden ${font.className}`}>
+    <div className={`relative w-full min-h-screen bg-[#001540] overflow-hidden`}>
       
       {/* --- Fondo Animado (Reutilizamos tu componente) --- */}
       <BlogBackground />

@@ -11,13 +11,8 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer'; 
 import ContactForm from '../../components/ContactForm';
 import { useLanguage } from '../../context/LanguageContext';
-import { Outfit } from 'next/font/google';
 
 // --- FUENTE ---
-const font = Outfit({ 
-  subsets: ['latin'], 
-  weight: ['100', '200', '300', '400', '500', '800', '900'] 
-});
 
 // --- DATA CON LOS 6 VIDEOS DE YOUTUBE ---
 const testimonials = [
@@ -157,7 +152,7 @@ export default function TestimonialsPage() {
   };
 
   return (
-    <div className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden ${font.className}`}>
+    <div className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       
       <Header />
 
@@ -179,7 +174,7 @@ export default function TestimonialsPage() {
             style={{ willChange: "transform" }}
             className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center opacity-[0.04] select-none pointer-events-none"
          >
-            <span className={`text-[160vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12 ${font.className}`}>
+            <span className={`text-[160vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
                  N/\И/\
             </span>
          </motion.div>
