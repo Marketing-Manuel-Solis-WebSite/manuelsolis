@@ -132,12 +132,12 @@ const texts = {
   ] as TabItem[],
 
   processSteps: [
-    { id: 1, title: { es: "Consulta Inicial", en: "Initial Consultation" }, icon: MessageSquare, desc: { es: "Evaluamos tu perfil, objetivos y elegibilidad para la Visa E-2.", en: "We evaluate your profile, goals, and eligibility for the E-2 Visa." } },
-    { id: 2, title: { es: "Análisis de Inversión", en: "Investment Analysis" }, icon: Search, desc: { es: "Asesoría en la selección o creación del negocio ideal.", en: "Advice on selecting or creating the ideal business." } },
-    { id: 3, title: { es: "Estructuración", en: "Structuring" }, icon: Building2, desc: { es: "Formación legal de la empresa y obtención de licencias.", en: "Legal formation of the company and obtaining licenses." } },
-    { id: 4, title: { es: "Preparación del Caso", en: "Case Preparation" }, icon: FileText, desc: { es: "Elaboración del plan de negocios y documentación legal.", en: "Preparation of the business plan and legal documentation." } },
-    { id: 5, title: { es: "Presentación", en: "Submission" }, icon: Send, desc: { es: "Gestión de la solicitud ante USCIS o el Consulado.", en: "Management of the application with USCIS or the Consulate." } },
-    { id: 6, title: { es: "Aprobación", en: "Approval" }, icon: CheckCircle2, desc: { es: "Preparación para entrevista y seguimiento post-aprobación.", en: "Interview preparation and post-approval follow-up." } },
+    { id: 1, title: { es: "Consulta Inicial", en: "Initial Consultation" }, icon: MessageSquare, desc: { es: "Evaluamos tu perfil, tipo de inversión y viabilidad migratoria para la Visa E2.", en: "We evaluate your profile, investment type, and immigration viability for the E2 Visa." } },
+    { id: 2, title: { es: "Análisis del Proyecto", en: "Project Analysis" }, icon: Search, desc: { es: "Te orientamos sobre los requisitos que tu inversión debe cumplir según la ley migratoria.", en: "We guide you on the requirements your investment must meet under immigration law." } },
+    { id: 3, title: { es: "Estructuración Legal", en: "Legal Structuring" }, icon: Building2, desc: { es: "Asesoramos en la formación de la empresa y estructura corporativa adecuada.", en: "We advise on business formation and the appropriate corporate structure." } },
+    { id: 4, title: { es: "Plan de Negocios", en: "Business Plan" }, icon: FileText, desc: { es: "El plan debe ser desarrollado por un especialista financiero. Nosotros revisamos que cumpla con los estándares migratorios.", en: "The plan must be developed by a financial specialist. We review it to ensure it meets immigration standards." } },
+    { id: 5, title: { es: "Preparación del Caso", en: "Case Preparation" }, icon: CheckCircle2, desc: { es: "Preparamos y organizamos toda la documentación legal requerida para tu solicitud.", en: "We prepare and organize all the legal documentation required for your application." } },
+    { id: 6, title: { es: "Presentación y Seguimiento", en: "Submission & Follow-up" }, icon: Send, desc: { es: "Gestionamos la solicitud ante USCIS o el Consulado y te preparamos para entrevista.", en: "We manage the application with USCIS or the Consulate and prepare you for the interview." } },
   ],
 
   faqs: [

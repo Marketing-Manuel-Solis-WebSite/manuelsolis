@@ -58,6 +58,9 @@ const routes: SitemapEntry[] = [
   { route: '/clientes-detenidos', priority: 0.7, changeFrequency: 'monthly' },
   { route: '/join-in', priority: 0.6, changeFrequency: 'monthly' },
 
+  // Landing pages
+  { route: '/inversionistas', priority: 0.8, changeFrequency: 'monthly' },
+
   // Info / Legal — lower priority
   { route: '/informacion/faq', priority: 0.5, changeFrequency: 'monthly' },
   { route: '/privacidad', priority: 0.3, changeFrequency: 'yearly' },
