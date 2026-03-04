@@ -50,6 +50,10 @@ const routes: SitemapEntry[] = [
   { route: '/blog/Formulario_G28_Cambiar_Abogado_Inmigracion', priority: 0.7, changeFrequency: 'monthly' },
   { route: '/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', priority: 0.7, changeFrequency: 'monthly' },
   { route: '/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/ley_de_los_10_anos_cancelacion_de_deportacion', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/advance_parole_2026_viajar_con_daca_tps_visa_u', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/residencia_laboral_eb3_ley_245i_entrada_indocumentada', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/foia_migratoria_pedir_record_antes_de_aplicar', priority: 0.7, changeFrequency: 'monthly' },
 
   // Key pages
   { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly' },

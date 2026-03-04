@@ -34,7 +34,7 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
       t(post.excerpt).toLowerCase().includes(searchQuery.toLowerCase());
 
     // Si es la vista por defecto, no mostramos el destacado en la lista (para no duplicarlo)
-    if (isDefaultView && post.featured) {
+    if (isDefaultView && featuredPost && post.id === featuredPost.id) {
       return false;
     }
     return matchesCategory && matchesSearch;

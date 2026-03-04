@@ -17,7 +17,87 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`;
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 const BLOG_DATA = {
   posts: [
-    // --- BLOG 10 - NUEVO ---
+    // --- BLOG 14 - NUEVO ---
+    {
+      id: 'foia_migratoria_pedir_record_antes_de_aplicar',
+      slug: 'foia_migratoria_pedir_record_antes_de_aplicar',
+      title: {
+        es: 'No apliques a ciegas: por qué pedir tu récord (FOIA) podría salvar tu caso',
+        en: 'Don\'t Apply Blind: Why Requesting Your Record (FOIA) Could Save Your Case'
+      },
+      excerpt: {
+        es: 'Muchos procesos migratorios se complican por información incompleta o mal recordada. Aprende qué es una FOIA, qué información podría revelar y por qué pedir tu récord antes de aplicar podría marcar la diferencia.',
+        en: 'Many immigration processes get complicated due to incomplete or misremembered information. Learn what a FOIA is, what it could reveal, and why requesting your record before applying could make a big difference.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-03-12',
+      readTime: '9 min',
+      image: '/blog/blog_14/BLOG04_CR1.png',
+      featured: true
+    },
+    // --- BLOG 13 - NUEVO ---
+    {
+      id: 'residencia_laboral_eb3_ley_245i_entrada_indocumentada',
+      slug: 'residencia_laboral_eb3_ley_245i_entrada_indocumentada',
+      title: {
+        es: '¿Puede mi patrón pedirme la residencia si entré indocumentado? Visas EB-3 y la Ley 245(i)',
+        en: 'Can My Employer Sponsor My Residency If I Entered Undocumented? EB-3 Visas and Section 245(i)'
+      },
+      excerpt: {
+        es: '¿Tu jefe quiere pedirte la residencia? Conoce si una visa laboral podría funcionar si entraste indocumentado, los riesgos del proceso consular y la excepción clave de la Ley 245(i).',
+        en: 'Can your employer sponsor your green card? Learn if an employment visa could work if you entered undocumented, the risks of consular processing, and the key exception under Section 245(i).'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-03-08',
+      readTime: '10 min',
+      image: '/blog/blog_13/BLOG03_CR1.png',
+      featured: true
+    },
+    // --- BLOG 12 - NUEVO ---
+    {
+      id: 'advance_parole_2026_viajar_con_daca_tps_visa_u',
+      slug: 'advance_parole_2026_viajar_con_daca_tps_visa_u',
+      title: {
+        es: 'Advance Parole 2026: ¿Es seguro viajar a mi país con DACA, TPS o Visa U pendiente?',
+        en: 'Advance Parole 2026: Is It Safe to Travel with DACA, TPS, or a Pending U Visa?'
+      },
+      excerpt: {
+        es: '¿Tienes DACA o TPS y quieres viajar? Conoce los riesgos y posibles beneficios del Advance Parole en 2026 y cuándo podría ayudarte o cuándo podría ser peligroso.',
+        en: 'Have DACA or TPS and want to travel? Learn the risks and possible benefits of Advance Parole in 2026 and when it could help you or when it could be dangerous.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-03-05',
+      readTime: '9 min',
+      image: '/blog/blog_12/BLOG02_CR1.png',
+      featured: false
+    },
+    // --- BLOG 11 - NUEVO ---
+    {
+      id: 'ley_de_los_10_anos_cancelacion_de_deportacion',
+      slug: 'ley_de_los_10_anos_cancelacion_de_deportacion',
+      title: {
+        es: '¿Califico para la "Ley de los 10 años" solo por vivir aquí? Mitos de la Cancelación de Deportación',
+        en: 'Do I Qualify for the "10-Year Rule" Just by Living Here? Myths of Cancellation of Removal'
+      },
+      excerpt: {
+        es: '¿Crees que calificas por tener 10 años en EE. UU.? Conoce la verdad sobre la Cancelación de Deportación, por qué no es automática y los mitos más comunes de esta defensa legal.',
+        en: 'Think you qualify just by living 10 years in the U.S.? Learn the truth about Cancellation of Removal, why it is not automatic, and the most common myths about this legal defense.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2025-03-02',
+      readTime: '10 min',
+      image: '/blog/blog_11/BLOG01_CR1.png',
+      featured: false
+    },
+    // --- BLOG 10 ---
     {
       id: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
       slug: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
@@ -200,8 +280,11 @@ const BLOG_DATA = {
   categories: [
     { id: 'all', es: 'Todos', en: 'All' },
     { id: 'visa-u', es: 'Visa U', en: 'U Visa' },
-    { id: 'immigration', es: 'Inmigración', en: 'Immigration' },
-    { id: 'work-permits', es: 'Permisos de Trabajo', en: 'Work Permits' }
+    { id: 'procesos-migratorios', es: 'Procesos Migratorios', en: 'Immigration Process' },
+    { id: 'defensa-deportacion', es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+    { id: 'visa-humanitaria', es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+    { id: 'visa-T', es: 'Visa T', en: 'T Visa' },
+    { id: 'visa-VAWA', es: 'Visa VAWA', en: 'VAWA Visa' }
   ],
   uiText: {
     hero: {
