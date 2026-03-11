@@ -1,7 +1,7 @@
 // Mapeo de slugs de oficinas a números de teléfono de emergencia
 export const officesPhoneMap: Record<string, string> = {
   'houston-principal': '(713) 701-1731',
-  'houston-navigation': '(713) 277-7838',
+  'houston-navigation': '(713) 231-5384',
   'main-st': '+1 713-842-9575',
   'north-loop': '+1 713-429-0237',
   'northchase': '+1 346-522-4848',
@@ -14,7 +14,7 @@ export const officesPhoneMap: Record<string, string> = {
   'losangeles': '(213) 784-1554',
   'arvada': '(720) 358-8973',
   'memphis': '(901) 557-8357',
-  'airways': '+1 901-557-8357',
+  'airways': '(901) 557-8357',
   'league-city': '(832) 598-3782',
 };
 

@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(cd:*)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(npm:*)",
+      "Bash(find app:*)",
+      "Bash(rm:*)",
+      "Bash(taskkill:*)",
+      "Bash(npx tsc:*)"
     ]
   }
 }

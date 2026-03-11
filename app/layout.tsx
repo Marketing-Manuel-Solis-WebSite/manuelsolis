@@ -20,10 +20,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const defaultLanguage = "en";
+  const defaultLanguage = "es";
 
   return (
-    <html lang={defaultLanguage} className={outfit.variable}>
+    <html lang={defaultLanguage} className={outfit.variable} suppressHydrationWarning>
       <body className={outfit.className}>
         <LanguageProvider initialLanguage={defaultLanguage}>
           {children}

@@ -110,6 +110,8 @@ export default function AIChatButton() {
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center group outline-none"
+        aria-label={isOpen ? (language === 'es' ? 'Cerrar asistente legal' : 'Close legal assistant') : (language === 'es' ? 'Abrir asistente legal IA' : 'Open AI legal assistant')}
+        aria-expanded={isOpen}
         style={{
           background: 'radial-gradient(circle at 35% 35%, #F9E79F 0%, #D4AF37 40%, #997B2F 100%)',
           boxShadow: `
@@ -162,7 +164,7 @@ export default function AIChatButton() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed bottom-28 right-6 z-50 w-[90vw] md:w-[400px] h-[600px] max-h-[75vh] flex flex-col overflow-hidden rounded-[30px] border border-white/10 shadow-2xl"
+            className="fixed bottom-28 right-3 sm:right-6 z-50 w-[94vw] sm:w-[90vw] md:w-[400px] h-[70vh] sm:h-[600px] max-h-[75vh] flex flex-col overflow-hidden rounded-[30px] border border-white/10 shadow-2xl"
             style={{
               // OPTIMIZACIÓN CRÍTICA:
               // 1. Aumentamos opacidad del fondo (0.92)
@@ -210,7 +212,7 @@ export default function AIChatButton() {
               {/* Botones de sugerencia */}
               {messages.length === 1 && (
                 <div className="space-y-3 mt-4">
-                  <p className="text-white/30 text-[10px] font-bold uppercase tracking-[0.2em] pl-1">
+                  <p className="text-white/50 text-[10px] font-bold uppercase tracking-[0.2em] pl-1">
                     {language === 'es' ? 'Opciones:' : 'Options:'}
                   </p>
                   {texts.examples.map((example, idx) => (
@@ -263,7 +265,7 @@ export default function AIChatButton() {
                 </button>
               </div>
               <div className="text-center mt-3">
-                <p className="text-[10px] text-white/20 font-medium tracking-wide">
+                <p className="text-[10px] text-white/40 font-medium tracking-wide">
                   Manuel Solis Law Firm AI © {new Date().getFullYear()}
                 </p>
               </div>

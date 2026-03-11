@@ -20,7 +20,7 @@ const Team = dynamic(() => import('../components/Team'), {
 });
 
 const Offices = dynamic(() => import('../components/Offices'), {
-  loading: () => <div className="w-full h-[800px] bg-[#001540] animate-pulse" />
+  loading: () => <div className="w-full h-[800px] bg-[#001540]" />
 });
 
 const ContactForm = dynamic(() => import('../components/ContactForm'), {
@@ -29,15 +29,27 @@ const ContactForm = dynamic(() => import('../components/ContactForm'), {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#001540]">
+    <main className="min-h-screen bg-[#001540] grain">
       <Hero />
       <Header />
-      <About />
-      <Services />
-      <Testimonials />
-      <Team />
-      <Offices />
-      <ContactForm />
+      <div className="content-auto">
+        <About />
+      </div>
+      <div className="content-auto">
+        <Services />
+      </div>
+      <div className="content-auto">
+        <Testimonials />
+      </div>
+      <div className="content-auto">
+        <Team />
+      </div>
+      <div className="content-auto">
+        <Offices />
+      </div>
+      <div className="content-auto">
+        <ContactForm />
+      </div>
       <Footer />
     </main>
   );

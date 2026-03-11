@@ -6,10 +6,12 @@ import { MapPin, Clock, User, Quote, Sparkles, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 // --- IMPORTACIONES ---
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import { pushToDataLayer, trackConversion } from '../../../lib/tracking';
 
 // --- OPTIMIZACIÓN: LAZY LOAD DEL FORMULARIO ---
 const ContactForm = dynamic(() => import('../../../components/ContactForm'), {
@@ -223,7 +225,7 @@ export default function OfficeClient() {
 
                       <div>
                         <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
-                        <a href={`tel:${officeData.phone.replace(/[\s()-+]/g, '')}`} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
+                        <a href={`tel:${officeData.phone.replace(/[\s()-+]/g, '')}`} onClick={() => { pushToDataLayer('phone_click', { event_category: 'conversion', event_label: 'office_page_call' }); trackConversion('phone_click', 'office_page_call'); }} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
                           {officeData.phone}
                         </a>
                       </div>
@@ -303,12 +305,35 @@ export default function OfficeClient() {
                     <h3 className="text-2xl font-thin text-white">{t(uiText.services)}</h3>
                   </div>
                   <div className="flex flex-wrap gap-3">
-                    {officeData.services.map((service, idx) => (
-                      <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 hover:bg-[#B2904D]/20 transition-colors cursor-default flex items-center gap-2">
-                        <Scale size={14} className="text-[#B2904D]" />
-                        {t(service)}
-                      </span>
-                    ))}
+                    {officeData.services.map((service, idx) => {
+                      const serviceLinks: Record<string, string> = {
+                        'Inmigración': '/servicios/inmigracion',
+                        'Immigration': '/servicios/inmigracion',
+                        'Accidentes': '/servicios/accidentes',
+                        'Accidents': '/servicios/accidentes',
+                        'Seguros': '/servicios/seguros',
+                        'Insurance': '/servicios/seguros',
+                        'Defensa Criminal': '/servicios/ley-criminal',
+                        'Criminal Defense': '/servicios/ley-criminal',
+                        'Visa E-2': '/servicios/visa-e2',
+                        'E-2 Visa': '/servicios/visa-e2',
+                        'Familia': '/servicios/familia',
+                        'Family': '/servicios/familia',
+                      };
+                      const label = t(service);
+                      const href = serviceLinks[label];
+                      return href ? (
+                        <Link key={idx} href={`/${lang}/servicios/${href.split('/').pop()}`} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 hover:bg-[#B2904D]/20 hover:border-[#B2904D]/40 transition-colors flex items-center gap-2">
+                          <Scale size={14} className="text-[#B2904D]" />
+                          {label}
+                        </Link>
+                      ) : (
+                        <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 flex items-center gap-2">
+                          <Scale size={14} className="text-[#B2904D]" />
+                          {label}
+                        </span>
+                      );
+                    })}
                   </div>
                 </motion.div>
 

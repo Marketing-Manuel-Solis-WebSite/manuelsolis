@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '../../lib/rateLimit';
 
 const EXTERNAL_API_URL = 'https://bos.manuelsolis.com/lead/manuelsolis';
 
 export async function POST(request: NextRequest) {
     try {
+        // Rate limiting: 5 form submissions per minute per IP
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+                   request.headers.get('x-real-ip') ||
+                   'anonymous';
+        const { success: rateLimitOk } = rateLimit(`contact:${ip}`, 5, 60000);
+        if (!rateLimitOk) {
+            return NextResponse.json(
+                { success: false, error: 'Too many requests. Please wait before submitting again.' },
+                { status: 429, headers: { 'Retry-After': '60' } }
+            );
+        }
+
         const body = await request.json();
         
         console.log("📥 [BACKEND] Body recibido:", body);

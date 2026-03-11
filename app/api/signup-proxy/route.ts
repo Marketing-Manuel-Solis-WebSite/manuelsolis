@@ -1,6 +1,7 @@
 // app/api/signup-proxy/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '../../lib/rateLimit';
 
 const EXTERNAL_API_URL = 'https://solislawruler.azurewebsites.net/api/signup';
 // Usamos HARDCODED_TOKEN para evitar problemas de parsing en .env.local con el símbolo '$'
@@ -19,6 +20,18 @@ export async function POST(request: NextRequest) {
     }
 
     try {
+        // Rate limiting: 5 signups per minute per IP
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+                   request.headers.get('x-real-ip') ||
+                   'anonymous';
+        const { success: rateLimitOk } = rateLimit(`signup:${ip}`, 5, 60000);
+        if (!rateLimitOk) {
+            return NextResponse.json(
+                { success: false, error: 'Too many requests. Please wait before submitting again.' },
+                { status: 429, headers: { 'Retry-After': '60' } }
+            );
+        }
+
         const data = await request.json();
 
         // Limpieza de datos

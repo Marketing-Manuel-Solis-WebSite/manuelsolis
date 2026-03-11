@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  experimental: {
+    workerThreads: false,
+    cpus: 4,
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000,
@@ -30,7 +34,7 @@ const nextConfig: NextConfig = {
       {
         source: '/',
         destination: '/es',
-        permanent: false,
+        permanent: true,
       },
     ];
   },
@@ -38,6 +42,36 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Cache optimized images aggressively
+        source: '/_next/image/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Cache static assets in public folder
+        source: '/:path*.(png|jpg|jpeg|gif|webp|avif|ico|svg)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Cache font files
+        source: '/:path*.(woff|woff2|ttf|otf)',
         headers: [
           {
             key: 'Cache-Control',
@@ -67,6 +101,10 @@ const nextConfig: NextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin'
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
           },
         ],
       },

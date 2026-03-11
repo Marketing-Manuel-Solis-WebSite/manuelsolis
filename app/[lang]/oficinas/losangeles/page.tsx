@@ -90,7 +90,7 @@ const getLocalBusinessSchema = (lang: string) => {
       {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: 'Saturday',
-        opens: '08:00',
+        opens: '09:00',
         closes: '14:00'
       }
     ],

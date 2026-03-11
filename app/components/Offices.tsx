@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Clock, Navigation, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
+import { pushToDataLayer, trackConversion } from '../lib/tracking';
 
 // --- COLORES DE LA PALETA ---
 const PRIMARY_COLOR_DARK = '#001540';
@@ -47,8 +48,8 @@ const officesData: OfficeData[] = [
     title: { es: 'Houston (Navigation)', en: 'Houston (Navigation)' },
     description: ORIGINAL_DESC,
     address: '6705 Navigation Blvd, Houston, TX 77011, United States',
-    phone: '(713) 701-1731',
-    hours: { es: 'Lun - Vie 8am - 5:30pm | Sáb 8am - 1pm', en: 'Mon - Fri 8am - 5:30pm | Sat 8am - 1pm' },
+    phone: '(713) 231-5384',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
     mapLink: generateMapUrl('6705 Navigation Blvd, Houston, TX 77011, United States'),
     image: '/offices/Houston.png',
     services: [ 
@@ -67,8 +68,8 @@ const officesData: OfficeData[] = [
     title: { es: 'Houston (North Loop)', en: 'Houston (North Loop)' },
     description: ORIGINAL_DESC,
     address: '2950 N Loop W, Houston, TX 77092, United States',
-    phone: '(713) 701-1731',
-    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    phone: '+1 713-429-0237',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
     mapLink: generateMapUrl('2950 N Loop W, Houston, TX 77092, United States'),
     image: '/offices/ofLoop.png',
     services: [ 
@@ -87,8 +88,8 @@ const officesData: OfficeData[] = [
     title: { es: 'Houston (Northchase)', en: 'Houston (Northchase)' },
     description: ORIGINAL_DESC,
     address: '16510 Northchase Dr, Houston, TX 77060, United States',
-    phone: '(713) 701-1731',
-    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    phone: '+1 346-522-4848',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
     mapLink: generateMapUrl('16510 Northchase Dr, Houston, TX 77060, United States'),
     image: '/offices/ofNorth.png',
     services: [ 
@@ -106,9 +107,9 @@ const officesData: OfficeData[] = [
     state: 'TX',
     title: { es: 'Houston (Main St)', en: 'Houston (Main St)' },
     description: ORIGINAL_DESC,
-    address: '708 Main St, Houston, TX 77002, United States', 
-    phone: '(713) 701-1731',
-    hours: { es: 'Lun - Vie 8am - 5pm', en: 'Mon - Fri 8am - 5pm' },
+    address: '708 Main St, Houston, TX 77002, United States',
+    phone: '+1 713-842-9575',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
     mapLink: generateMapUrl('708 Main St, Houston, TX 77002, United States'),
     image: '/offices/main.png',
     services: [ 
@@ -127,8 +128,8 @@ const officesData: OfficeData[] = [
     title: { es: 'Houston (Kirby)', en: 'Houston (Kirby)' },
     description: ORIGINAL_DESC,
     address: '3730 Kirby Dr, Houston, TX 77098, United States',
-    phone: '(713) 701-1731',
-    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    phone: '(713) 903-7875',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
     mapLink: generateMapUrl('3730 Kirby Dr, Houston, TX 77098, United States'),
     image: '/offices/Houston.png',
     services: [ 
@@ -147,8 +148,8 @@ const officesData: OfficeData[] = [
     title: { es: 'Houston (Bellaire)', en: 'Houston (Bellaire)' },
     description: ORIGINAL_DESC,
     address: '9188 Bellaire Blvd E, Houston, TX 77036, United States',
-    phone: '(713) 701-1731',
-    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    phone: '+1 832-598-0914',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
     mapLink: generateMapUrl('9188 Bellaire Blvd E, Houston, TX 77036, United States'),
     image: '/offices/Houston.png',
     services: [ 
@@ -186,7 +187,7 @@ const officesData: OfficeData[] = [
     description: ORIGINAL_DESC,
     address: '3385 Airways Blvd Suite 320, Memphis, TN 38116, United States',
     phone: '(901) 557-8357',
-    hours: { es: 'Lun - Vie 9am - 5pm', en: 'Mon - Fri 9am - 5pm' },
+    hours: { es: 'Lun - Vie 9am - 5pm | Sáb 9am - 1pm', en: 'Mon - Fri 9am - 5pm | Sat 9am - 1pm' },
     mapLink: generateMapUrl('3385 Airways Blvd Suite 320, Memphis, TN 38116, United States'),
     image: '/offices/Memphis.png',
     services: [
@@ -207,7 +208,7 @@ const officesData: OfficeData[] = [
     description: ORIGINAL_DESC,
     address: '5400 Ward Rd BLDG IV, Arvada, CO 80002, United States',
     phone: '(720) 358-8973',
-    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
+    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 9am - 2pm', en: 'Mon - Fri 9am - 6pm | Sat 9am - 2pm' },
     mapLink: generateMapUrl('5400 Ward Rd BLDG IV, Arvada, CO 80002, United States'),
     image: '/offices/Denver.png',
     services: [
@@ -226,7 +227,7 @@ const officesData: OfficeData[] = [
     description: ORIGINAL_DESC,
     address: '1120 Empire Central Pl, Dallas, TX 75247, United States',
     phone: '(214) 753-8315',
-    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 3pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 3pm' },
+    hours: { es: 'Lun - Vie 9am - 7pm | Sáb 8am - 4pm', en: 'Mon - Fri 9am - 7pm | Sat 8am - 4pm' },
     mapLink: generateMapUrl('1120 Empire Central Pl, Dallas, TX 75247, United States'),
     image: '/offices/Dallas.png',
     services: [
@@ -244,7 +245,7 @@ const officesData: OfficeData[] = [
     description: ORIGINAL_DESC,
     address: '3632 Admiral St, El Paso, TX 79925, United States',
     phone: '(915) 233-7127',
-    hours: { es: 'Lun - Vie 9am - 5pm', en: 'Mon - Fri 9am - 5pm' },
+    hours: { es: 'Lun - Vie 9am - 5pm | Sáb 9am - 2pm', en: 'Mon - Fri 9am - 5pm | Sat 9am - 2pm' },
     mapLink: generateMapUrl('3632 Admiral St, El Paso, TX 79925, United States'),
     image: '/offices/El paso.png',
     services: [
@@ -280,7 +281,7 @@ const officesData: OfficeData[] = [
     description: ORIGINAL_DESC,
     address: '8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660, United States',
     phone: '(213) 784-1554',
-    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 2pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 2pm' },
+    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 9am - 2pm', en: 'Mon - Fri 9am - 6pm | Sat 9am - 2pm' },
     mapLink: generateMapUrl('8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660, United States'),
     image: '/offices/Los Angeles.png',
     services: [ 
@@ -319,12 +320,25 @@ const officesData: OfficeData[] = [
 // --- MINI COMPONENTE: ACCIÓN HUD ---
 const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: string, icon: React.ElementType, href: string }) => {
     const isExternal = href.startsWith('http') || href.startsWith('tel');
-    
+    const isTel = href.startsWith('tel');
+
+    const handleClick = () => {
+      if (isTel) {
+        pushToDataLayer('phone_click', {
+          event_category: 'conversion',
+          event_label: 'office_phone_button',
+          phone_number: value,
+        });
+        trackConversion('phone_click', 'office_phone_button');
+      }
+    };
+
     return (
-      <a 
+      <a
         href={href}
-        target={isExternal && !href.startsWith('tel') ? "_blank" : undefined}
-        rel={isExternal && !href.startsWith('tel') ? "noopener noreferrer" : undefined}
+        onClick={handleClick}
+        target={isExternal && !isTel ? "_blank" : undefined}
+        rel={isExternal && !isTel ? "noopener noreferrer" : undefined}
         className="block p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 transition-all duration-300 group relative overflow-hidden"
         style={{ transitionProperty: 'background-color, transform' }}
       >

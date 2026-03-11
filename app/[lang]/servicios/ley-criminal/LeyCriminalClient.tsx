@@ -662,24 +662,108 @@ export default function CriminalLawPage() {
         </div>
       </section>
 
+      {/* --- BLOG SUGGESTIONS SECTION --- */}
+      <section className="py-24 relative bg-[#001540]">
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl font-black text-white mb-4">
+              {lang === 'es' ? 'Recursos Legales Relacionados' : 'Related Legal Resources'}
+            </h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              {lang === 'es'
+                ? 'Artículos informativos preparados por nuestros abogados para ayudarle a entender sus opciones legales.'
+                : 'Informative articles prepared by our attorneys to help you understand your legal options.'}
+            </p>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: 80 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="h-1 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6"
+            />
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                slug: 'ley_de_los_10_anos_cancelacion_de_deportacion',
+                title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' },
+                category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+                image: '/blog/blog_11/BLOG01_CR1.png',
+              },
+              {
+                slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
+                title: { es: 'Frenar deportación con Visa Humanitaria', en: 'Stop Deportation with Humanitarian Visa' },
+                category: { es: 'Visa Humanitaria', en: 'Humanitarian Visa' },
+                image: '/blog/blog_08/B8_CR1.png',
+              },
+              {
+                slug: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
+                title: { es: 'Perdón I-192: arreglar con Visa U con deportaciones previas', en: 'I-192 Waiver: Fix with U Visa Despite Prior Deportations' },
+                category: { es: 'Visa U', en: 'U Visa' },
+                image: '/blog/blog_03/B3_CR1.png',
+              },
+            ].map((article, i) => (
+              <motion.a
+                key={article.slug}
+                href={`/${lang}/blog/${article.slug}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                className="group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(178,144,77,0.15)]"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={article.image}
+                    alt={article.title[lang as 'es' | 'en'] || article.title.es}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
+                  <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-widest text-[#B2904D] bg-[#001540]/80 backdrop-blur-sm px-2 py-1 rounded">
+                    {article.category[lang as 'es' | 'en'] || article.category.es}
+                  </span>
+                </div>
+                <div className="p-4">
+                  <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">
+                    {article.title[lang as 'es' | 'en'] || article.title.es}
+                  </h4>
+                  <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                    {lang === 'es' ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* --- CONTACTO SECTION --- */}
       <section id="contacto" className="relative py-32 z-10 bg-transparent">
-        
+
         <div className="max-w-4xl mx-auto px-4 relative z-10">
-          
+
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative z-10 p-8 md:p-12 bg-white/5 backdrop-blur-md rounded-[2rem] shadow-2xl border border-white/10" 
+            className="relative z-10 p-8 md:p-12 bg-white/5 backdrop-blur-md rounded-[2rem] shadow-2xl border border-white/10"
           >
-             <div className="text-white"> 
+             <div className="text-white">
                 <h2 className="text-3xl font-black mb-6">{t('requestEvaluation')}</h2>
                 <p className="text-white/70 mb-8">{t('heroDescription')}</p>
-                <ContactForm /> 
+                <ContactForm />
              </div>
-            
+
           </motion.div>
         </div>
       </section>

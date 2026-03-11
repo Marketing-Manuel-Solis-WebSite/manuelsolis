@@ -17,9 +17,12 @@ import BlogBackground from '../../../components/blogs/BlogBackground';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
+import ReadingProgress from '../../../components/blogs/ReadingProgress';
+import RelatedContent from '../../../components/blogs/RelatedContent';
+import { getRelatedArticles } from '../../../lib/blogRelations';
 
 
-const SITE_URL = 'https://www.manuelsolis.com'; 
+const SITE_URL = 'https://www.manuelsolis.com';
 
 const IMAGES = {
   // Asegúrate de que este archivo exista en tu carpeta public/blog/
@@ -329,6 +332,29 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
     { name: t.title, url: `/${lang}/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria` },
   ]);
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": t.sections.faq.q1,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t.sections.faq.a1.replace(/<[^>]*>/g, ''),
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t.sections.faq.q2,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${t.sections.faq.a2} ${t.sections.faq.list2.join('. ')}.`,
+        }
+      },
+    ],
+  };
+
   return (
     <>
       <Script
@@ -343,11 +369,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
 
-      <BlogTracker 
-        title={t.title} 
-        author="Manuel Solís" 
-        category="Inmigración" 
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+
+      <BlogTracker
+        title={t.title}
+        author="Manuel Solís"
+        category="Inmigración"
+      />
+
+      <ReadingProgress />
 
       <div className={`min-h-screen bg-[#001540] text-white selection:bg-[#B2904D] selection:text-[#001540]`}>
         
@@ -391,7 +425,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     alt="Abogado Manuel Solis"
                     fill
                     className="object-cover"
-                    unoptimized
                   />
                 </div>
                 <div>
@@ -417,7 +450,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                      fill
                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
                      priority
-                     unoptimized
                    />
                    <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-30" />
                 </div>
@@ -584,8 +616,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   </div>
 
                   <div className="border-t border-white/10 pt-8 mt-12">
-                      <h4 className="text-xs font-bold text-white/40 uppercase mb-4 tracking-widest">{t.sections.sources.title}</h4>
-                      <ul className="space-y-2 text-sm text-white/40 list-none pl-0">
+                      <h4 className="text-xs font-bold text-white/50 uppercase mb-4 tracking-widest">{t.sections.sources.title}</h4>
+                      <ul className="space-y-2 text-sm text-white/50 list-none pl-0">
                          {t.sections.sources.list.map((source, idx) => (
                            <li key={idx} className="flex items-center gap-2 hover:text-[#B2904D] transition-colors"><ArrowUpRight size={12} /> {source}</li>
                          ))}
@@ -601,7 +633,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <h3 className="text-xs font-bold text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-4">Sobre el Autor</h3>
                     <div className="flex flex-col items-center text-center">
                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#001540] shadow-[0_0_0_2px_#B2904D] mb-4">
-                          <Image src={IMAGES.author} alt="Manuel Solis" fill className="object-cover" unoptimized />
+                          <Image src={IMAGES.author} alt="Manuel Solis" fill className="object-cover" />
                        </div>
                        <h4 className="text-xl font-bold text-white">Manuel Solís</h4>
                        <p className="text-sm text-[#B2904D] mb-4">{t.ui.authorRole}</p>
@@ -618,6 +650,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
         </main>
         
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+          <RelatedContent
+            articles={getRelatedArticles('Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', (lang as 'es' | 'en') || 'es')}
+            lang={(lang as 'es' | 'en') || 'es'}
+            servicePath="/servicios/inmigracion"
+          />
+        </div>
+
         <div id="contacto">
            <ContactForm />
         </div>

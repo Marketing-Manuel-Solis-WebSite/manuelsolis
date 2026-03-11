@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
 import { motion } from 'framer-motion';
+import { pushToDataLayer, trackConversion } from '../lib/tracking';
 
 const associations = [
   { name: 'Chicago Bar Association', logo: '/state-bar/Chicago-bar.png' },
@@ -52,6 +53,14 @@ export default function HeroProfessional() {
     return '';
   };
 
+  const handleDetainedCallClick = (label: string) => {
+    pushToDataLayer('phone_click', {
+      event_category: 'conversion',
+      event_label: label,
+    });
+    trackConversion('phone_click', label);
+  };
+
   const marqueeItems = [...associations, ...associations, ...associations];
 
   return (
@@ -82,7 +91,7 @@ export default function HeroProfessional() {
               transition={{ duration: 1.5, ease: "easeOut" }}
               className="relative z-10 w-full h-full origin-bottom flex justify-center"
             >
-               <div className="w-full h-full scale-110 sm:scale-125 lg:scale-[1.5] lg:-translate-x-24 lg:origin-bottom transform-gpu">
+               <div className="w-full h-full scale-110 sm:scale-125 lg:scale-[1.65] lg:-translate-x-24 lg:origin-bottom transform-gpu">
                   <div className="relative w-full h-full">
                     <Image
                       src="/manuelsolisl.png"
@@ -266,11 +275,11 @@ export default function HeroProfessional() {
                     {language === 'es' ? 'Indica cómo podemos ayudarte:' : 'Tell us how we can help:'}
                 </p>
                 <div className="space-y-2 sm:space-y-3">
-                    <a href="tel:+18000000000" className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
+                    <a href="tel:+18000000000" onClick={() => handleDetainedCallClick('detained_popup_client')} className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
                         <span className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-200 text-xs font-bold group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">✓</span>
                         <span className="text-xs sm:text-sm text-white font-light">{language === 'es' ? 'Sí, soy cliente' : 'Yes, I am a client'}</span>
                     </a>
-                    <a href="tel:+18000000000" className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
+                    <a href="tel:+18000000000" onClick={() => handleDetainedCallClick('detained_popup_non_client')} className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
                         <span className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-200 text-xs font-bold group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">✓</span>
                         <span className="text-xs sm:text-sm text-white font-light">{language === 'es' ? 'Sí, pero no soy cliente' : 'Yes, but I am not a client'}</span>
                     </a>

@@ -220,7 +220,7 @@ export default function VisaE2Page() {
 
       {/* --- HERO SECTION --- */}
       {/* Ajustado padding top/bottom y height para centrar más el contenido */}
-      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
+      <section className="relative pt-32 md:pt-40 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
              
@@ -641,6 +641,85 @@ export default function VisaE2Page() {
         </div>
       </section>
 
+      {/* --- RELATED BLOG ARTICLE --- */}
+      <section className="py-24 relative bg-[#001540]">
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl font-black text-white mb-4">
+              {lang === 'es' ? 'Recursos Relacionados' : 'Related Resources'}
+            </h2>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: 80 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="h-1 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6"
+            />
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              {
+                slug: 'residencia_laboral_eb3_ley_245i_entrada_indocumentada',
+                title: { es: 'Residencia laboral EB-3 y Ley 245(i)', en: 'EB-3 Work Residency & Section 245(i)' },
+                category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
+                image: '/blog/blog_13/BLOG03_CR1.png',
+              },
+              {
+                slug: 'advance_parole_2026_viajar_con_daca_tps_visa_u',
+                title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' },
+                category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
+                image: '/blog/blog_12/BLOG02_CR1.png',
+              },
+              {
+                slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion',
+                title: { es: 'Formulario G-28: cómo cambiar de abogado', en: 'Form G-28: How to Change Attorney' },
+                category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
+                image: '/blog/blog_09/B9_CR1.png',
+              },
+            ].map((article, i) => (
+              <motion.a
+                key={article.slug}
+                href={`/${lang}/blog/${article.slug}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                className="group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(178,144,77,0.15)]"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={article.image}
+                    alt={article.title[lang as 'es' | 'en'] || article.title.es}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
+                  <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-widest text-[#B2904D] bg-[#001540]/80 backdrop-blur-sm px-2 py-1 rounded">
+                    {article.category[lang as 'es' | 'en'] || article.category.es}
+                  </span>
+                </div>
+                <div className="p-4">
+                  <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">
+                    {article.title[lang as 'es' | 'en'] || article.title.es}
+                  </h4>
+                  <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                    {lang === 'es' ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* --- CONTACTO SECTION --- */}
       <section id="contacto" className="relative py-32 z-10 bg-transparent">
         <div className="max-w-4xl mx-auto px-4 relative z-10">
@@ -649,7 +728,7 @@ export default function VisaE2Page() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative z-10 p-8 md:p-12 bg-white/5 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/10 overflow-hidden" 
+            className="relative z-10 p-8 md:p-12 bg-white/5 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/10 overflow-hidden"
           >
               <div className="absolute top-0 right-0 w-96 h-96 bg-[#B2904D]/20 rounded-full blur-[100px] pointer-events-none -mr-20 -mt-20"></div>
               

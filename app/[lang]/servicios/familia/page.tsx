@@ -50,8 +50,28 @@ const getLegalServiceSchema = (lang: string) => ({
   url: `${SITE_URL}/${lang}/servicios/familia`,
   priceRange: '$$',
   telephone: '+1-866-979-5146',
-  areaServed: { '@type': 'Country', name: 'US' },
-  serviceType: ['Family Law', 'Family Petitions', 'Reunification', 'Custody'],
+  areaServed: [
+    { '@type': 'State', name: 'Texas' },
+    { '@type': 'State', name: 'California' },
+    { '@type': 'State', name: 'Illinois' },
+    { '@type': 'State', name: 'Colorado' },
+    { '@type': 'State', name: 'Tennessee' },
+  ],
+  provider: {
+    '@type': 'LawFirm',
+    name: 'Manuel Solis Law Firm',
+    url: 'https://www.manuelsolis.com',
+    telephone: '+1-866-979-5146',
+  },
+  serviceType: [
+    'Family Law',
+    'Family Petitions',
+    'Reunification',
+    'Custody',
+    'VAWA Self-Petition',
+    'Immigrant Family Protection',
+  ],
+  availableLanguage: ['English', 'Spanish'],
 });
 
 export default async function FamiliaPage({ params }: Props) {

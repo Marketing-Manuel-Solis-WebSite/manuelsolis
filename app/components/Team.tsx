@@ -17,9 +17,10 @@ export default function Team() {
       ref={containerRef}
       className="relative py-32 lg:py-48 w-full bg-[#001540] overflow-hidden"
     >
-      {/* Static Background */}
+      {/* Background */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-[#001540]" />
+        <div className="absolute inset-0 gradient-mesh-dark" />
 
         {/* Static orbs */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#B2904D]/10 rounded-full blur-[80px] translate-x-1/3 -translate-y-1/3 opacity-20" />
@@ -120,9 +121,15 @@ export default function Team() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
              </div>
 
-             {/* Static badge */}
-             <div className="absolute -bottom-10 -left-6 lg:-left-12 z-20">
-                <div className="relative p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden group">
+             {/* Badge with glow */}
+             <motion.div
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute -bottom-10 -left-6 lg:-left-12 z-20"
+             >
+                <div className="relative p-6 glass-elevated rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] overflow-hidden group glow-gold shimmer">
                     <div className="absolute inset-0 bg-gradient-to-tr from-[#B2904D]/20 to-transparent opacity-50" />
 
                     <div className="relative z-10 flex flex-col items-start gap-1">
@@ -137,7 +144,7 @@ export default function Team() {
                         </div>
                     </div>
                 </div>
-             </div>
+             </motion.div>
 
           </div>
         </div>

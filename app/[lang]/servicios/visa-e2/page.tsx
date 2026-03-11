@@ -50,8 +50,27 @@ const getLegalServiceSchema = (lang: string) => ({
   url: `${SITE_URL}/${lang}/servicios/visa-e2`,
   priceRange: '$$',
   telephone: '+1-866-979-5146',
-  areaServed: { '@type': 'Country', name: 'US' },
-  serviceType: ['E-2 Visa', 'Investor Visa', 'Business Immigration'],
+  areaServed: [
+    { '@type': 'State', name: 'Texas' },
+    { '@type': 'State', name: 'California' },
+    { '@type': 'State', name: 'Illinois' },
+    { '@type': 'State', name: 'Colorado' },
+    { '@type': 'State', name: 'Tennessee' },
+  ],
+  provider: {
+    '@type': 'LawFirm',
+    name: 'Manuel Solis Law Firm',
+    url: 'https://www.manuelsolis.com',
+    telephone: '+1-866-979-5146',
+  },
+  serviceType: [
+    'E-2 Investor Visa',
+    'Business Immigration',
+    'Treaty Investor Visa',
+    'Business Plan Preparation',
+    'Visa Renewal and Extension',
+  ],
+  availableLanguage: ['English', 'Spanish'],
 });
 
 export default async function VisaE2Page({ params }: Props) {

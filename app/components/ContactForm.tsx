@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
 import { track } from '@vercel/analytics/react' // 1. Importamos el tracker de Vercel
+import { pushToDataLayer, trackConversion } from '../lib/tracking'
 
 // --- COLORES ---
 const API_URL = '/api/zapier-contact'; 
@@ -37,25 +38,31 @@ const NeonInput = (props: any) => {
 
       {isTextArea ? (
         <textarea
+          id={name}
           name={name}
           value={value}
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           required={required}
+          aria-required={required}
+          aria-label={placeholder}
           rows={5}
           className={`${baseClasses} resize-none`}
           placeholder={placeholder}
         />
       ) : (
         <input
+          id={name}
           type={type}
-          name={name} 
+          name={name}
           value={value}
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           required={required}
+          aria-required={required}
+          aria-label={placeholder}
           className={baseClasses}
           placeholder={placeholder}
         />
@@ -86,6 +93,20 @@ const trackConversionEvents = () => {
                     'event_label': 'Form_Submission'
                 });
             }
+
+            // FASE 3: dataLayer push para GTM → GA4 (form_submit)
+            pushToDataLayer('form_submit', {
+                event_category: 'conversion',
+                event_label: 'contact_form',
+                form_type: 'consultation_request',
+            });
+
+            // FASE 3: dataLayer push — qualified_lead (validación pasó + API respondió OK)
+            pushToDataLayer('qualified_lead', {
+                event_category: 'conversion',
+                event_label: 'contact_form_qualified',
+            });
+
         } catch (e) { console.error("Tracking Error", e); }
     }
 };
@@ -151,15 +172,18 @@ function ContactFormContent() {
         });
 
         if (response.ok) {
-            // Ejecutar tus pixels de conversión existentes (FB, TikTok, GA)
-            trackConversionEvents(); 
-            
-            // 2. VERCEL ANALYTICS TRACKING (NUEVO)
-            // Se registra solo si la API responde 200 OK
+            // Ejecutar tus pixels de conversión existentes (FB, TikTok, GA) + dataLayer pushes
+            trackConversionEvents();
+
+            // 2. VERCEL ANALYTICS TRACKING
             track('Contact Form Submit', {
                 source: 'contact_page',
                 language: lang
             });
+
+            // FASE 4: Flight Check — form_submit + qualified_lead
+            trackConversion('form_submit', 'contact_form');
+            trackConversion('qualified_lead', 'contact_form_qualified');
 
             setSubmitStatus('success');
             setFormData({ 
@@ -215,7 +239,7 @@ function ContactFormContent() {
             <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
               <AnimatePresence>
                 {submitStatus !== 'idle' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-[2rem]">
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-[2rem]" role="alert" aria-live="assertive">
                       {submitStatus === 'success' ? (
                         <>
                             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
@@ -263,7 +287,7 @@ function ContactFormContent() {
               <div className="space-y-4">
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                     <div className="relative flex items-center pt-1">
-                      <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-6 w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400" />
+                      <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-7 w-7 sm:h-6 sm:w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400" />
                       <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={16} strokeWidth={3} /></div>
                     </div>
                     <label htmlFor="acceptedTerms" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
@@ -276,7 +300,7 @@ function ContactFormContent() {
 
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
                     <div className="relative flex items-center pt-1">
-                      <input type="checkbox" id="marketingConsent" name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} className="peer h-5 w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500" />
+                      <input type="checkbox" id="marketingConsent" name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} className="peer h-6 w-6 sm:h-5 sm:w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500" />
                       <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
                     </div>
                     <label htmlFor="marketingConsent" className="text-xs text-blue-200/80 leading-relaxed cursor-pointer select-none group-hover:text-blue-100 transition-colors">

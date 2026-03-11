@@ -14,7 +14,7 @@ const OFFICE_INFO = {
   city: "Houston",
   state: "TX",
   zip: "77011",
-  phone: "+1-713-277-7838",
+  phone: "+1-713-231-5384",
   // Coordenadas para 6705 Navigation Blvd (aproximadas para esta dirección específica)
   latitude: "29.7426", 
   longitude: "-95.3156",
@@ -83,15 +83,9 @@ const getLocalBusinessSchema = (lang: string) => {
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        opens: '09:00',
-        closes: '19:00'
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: 'Saturday',
-        opens: '09:00',
-        closes: '16:00'
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59'
       }
     ],
     sameAs: [

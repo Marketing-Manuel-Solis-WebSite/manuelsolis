@@ -9,6 +9,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import { usePathname } from 'next/navigation'
 import { track } from '@vercel/analytics/react' // 👈 Importamos track
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
+import { pushToDataLayer, trackConversion } from '../lib/tracking'
 
 const FlagES = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-3 w-3 rounded-[1px] flex-shrink-0 opacity-90">
@@ -58,14 +59,23 @@ export default function HeaderProfessional() {
 
   // --- ⚡️ EVENTO DE RASTREO DE LLAMADA ⚡️ ---
   const handleCallClick = () => {
-    // Enviamos el evento a Vercel
+    // Vercel Analytics
     track('Call Header Click', {
       phoneNumber: phoneNumber,
       location: 'header_main',
       page: pathname || 'unknown',
       timestamp: new Date().toISOString()
     });
-    console.log(`Event tracked: Call Click on ${phoneNumber}`);
+
+    // FASE 3: dataLayer push para GTM → GA4
+    pushToDataLayer('phone_click', {
+      event_category: 'conversion',
+      event_label: 'header_phone_button',
+      phone_number: phoneNumber,
+    });
+
+    // FASE 4: Flight Check (tracking propio)
+    trackConversion('phone_click', 'header_phone_button');
   };
 
   const callText = language === 'es' ? 'Llámanos para una consulta:' : 'Call for a consultation:';
@@ -182,7 +192,7 @@ export default function HeaderProfessional() {
           className={`
             ${isMobile ? 
               'block text-white/90 group-hover:text-white text-lg font-thin uppercase tracking-[0.2em]' : 
-              'text-[12px] font-light uppercase tracking-[0.2em] text-white/95 group-hover:text-white transition-all duration-300 drop-shadow-sm'
+              'text-[10px] xl:text-[12px] font-light uppercase tracking-[0.12em] xl:tracking-[0.2em] text-white/95 group-hover:text-white transition-all duration-300 drop-shadow-sm'
             }
           `}
         >
@@ -198,7 +208,7 @@ export default function HeaderProfessional() {
         className={`
           ${isMobile ? 
             'block text-white/90 group-hover:text-white text-lg font-thin uppercase tracking-[0.2em]' : 
-            'text-[12px] font-light uppercase tracking-[0.2em] text-white/95 group-hover:text-white transition-all duration-300 drop-shadow-sm'
+            'text-[10px] xl:text-[12px] font-light uppercase tracking-[0.12em] xl:tracking-[0.2em] text-white/95 group-hover:text-white transition-all duration-300 drop-shadow-sm'
           }
         `}
       >
@@ -229,8 +239,8 @@ export default function HeaderProfessional() {
         >
           <div className="container mx-auto px-6 lg:px-12 flex items-center">
             
-            <Link href={`/${language}`} className="relative z-50 mr-12 lg:mr-16">
-              <div className={`relative transition-all duration-500 ease-in-out ${isScrolled ? 'w-[140px]' : 'w-[190px]'}`}>
+            <Link href={`/${language}`} className="relative z-50 mr-6 xl:mr-12">
+              <div className={`relative transition-all duration-500 ease-in-out ${isScrolled ? 'w-[120px] xl:w-[140px]' : 'w-[150px] xl:w-[190px]'}`}>
                 <Image
                   src="/logo-manuel-solis.png" 
                   alt="Logo Manuel Solis"
@@ -243,12 +253,12 @@ export default function HeaderProfessional() {
             </Link>
 
             <div className="hidden lg:flex items-center">
-              <nav aria-label="Main navigation" className="flex items-center gap-6 xl:gap-8">
+              <nav aria-label="Main navigation" className="flex items-center gap-3 xl:gap-6">
                 {menuItems.map((item) => (
                   <div key={item.name} className="relative group">
                     <div className="flex items-center gap-1 cursor-pointer py-3">
                       {item.submenu ? (
-                        <span className="text-[12px] font-light uppercase tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200">
+                        <span className="text-[10px] xl:text-[12px] font-light uppercase tracking-[0.12em] xl:tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200">
                           {item.name}
                         </span>
                       ) : item.type === 'external' ? (
@@ -256,7 +266,7 @@ export default function HeaderProfessional() {
                       ) : (
                         <Link 
                           href={item.href}
-                          className="text-[12px] font-light uppercase tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200"
+                          className="text-[10px] xl:text-[12px] font-light uppercase tracking-[0.12em] xl:tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200"
                         >
                           {item.name}
                         </Link>

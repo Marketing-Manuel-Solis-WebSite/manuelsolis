@@ -44,7 +44,7 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
       className="group h-full"
     >
       <Link href={`/${lang}/blog/${post.slug}`} className="block h-full">
-        <div className="bg-[#000F24] rounded-2xl overflow-hidden border border-white/10 hover:border-[#B2904D]/50 transition-all duration-300 h-full flex flex-col hover:shadow-[0_10px_30px_-10px_rgba(178,144,77,0.15)] group-hover:-translate-y-1">
+        <div className="bg-[#000F24] rounded-2xl overflow-hidden border border-white/10 hover:border-[#B2904D]/50 transition-all duration-500 h-full flex flex-col hover:shadow-[0_20px_40px_-10px_rgba(178,144,77,0.15)] group-hover:-translate-y-1 shimmer">
           
           {/* Imagen */}
           <div className="relative aspect-[16/10] overflow-hidden bg-gray-900">

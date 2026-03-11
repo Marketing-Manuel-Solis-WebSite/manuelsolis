@@ -6,7 +6,6 @@ type SitemapEntry = {
   route: string;
   priority: number;
   changeFrequency: 'daily' | 'weekly' | 'monthly' | 'yearly';
-  lastModified?: string;
 };
 
 const routes: SitemapEntry[] = [
@@ -75,7 +74,7 @@ const routes: SitemapEntry[] = [
   { route: '/category/proteccion-legal-para-migrantes', priority: 0.5, changeFrequency: 'monthly' },
 ];
 
-const languages = ['en', 'es'];
+const languages = ['en', 'es'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.flatMap((entry) =>
@@ -84,6 +83,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: entry.changeFrequency,
       priority: entry.priority,
+      alternates: {
+        languages: Object.fromEntries(
+          languages.map((l) => [l, `${BASE_URL}/${l}${entry.route}`])
+        ),
+      },
     }))
   );
 }

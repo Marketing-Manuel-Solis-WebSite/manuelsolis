@@ -46,7 +46,7 @@ export default function ShareButtons({ title, uiShareText }: ShareButtonsProps) 
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-bold text-white/40 uppercase tracking-widest mr-2 hidden sm:inline-block">
+      <span className="text-xs font-bold text-white/60 uppercase tracking-widest mr-2 hidden sm:inline-block">
         {uiShareText}
       </span>
       

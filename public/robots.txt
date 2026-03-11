@@ -1,10 +1,28 @@
 User-agent: *
 Allow: /
+Crawl-delay: 1
 
-# Bloquear partes privadas o de API para ahorrar presupuesto de rastreo
+# Googlebot ignores Crawl-delay but we signal intent
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Allow SEO audit tools
+User-agent: Sitebulb
+Allow: /
+Crawl-delay: 2
+
+User-agent: Screaming Frog SEO Spider
+Allow: /
+Crawl-delay: 1
+
+# Block private and internal routes to save crawl budget
 Disallow: /api/
 Disallow: /_next/
 Disallow: /private/
 
-# Indica explícitamente dónde está tu sitemap dinámico
+# Sitemap location
 Sitemap: https://www.manuelsolis.com/sitemap.xml

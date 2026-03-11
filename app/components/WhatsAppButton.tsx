@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { track } from '@vercel/analytics/react'; // 1. Importar track de Vercel
+import { pushToDataLayer, trackConversion } from '../lib/tracking';
 
 export default function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -22,8 +23,8 @@ export default function WhatsAppButton() {
   
   const handleClick = () => {
     window.open(whatsappUrl, '_blank');
-    
-    // 2. Vercel Analytics Tracking (NUEVO)
+
+    // 2. Vercel Analytics Tracking
     track('Whatsapp Click', {
       location: 'floating_button',
       timestamp: new Date().toISOString()
@@ -36,6 +37,15 @@ export default function WhatsAppButton() {
         'event_label': 'whatsapp_button'
       });
     }
+
+    // FASE 3: dataLayer push para GTM → GA4
+    pushToDataLayer('whatsapp_click', {
+      event_category: 'conversion',
+      event_label: 'whatsapp_cta',
+    });
+
+    // FASE 4: Flight Check (tracking propio)
+    trackConversion('whatsapp_click', 'whatsapp_floating_button');
   };
 
   // Mensaje del Tooltip: Usamos el mensaje del cliente si existe, si no, uno por defecto
@@ -44,7 +54,7 @@ export default function WhatsAppButton() {
   return (
     <>
       {/* Botón flotante de WhatsApp */}
-      <div className="fixed bottom-6 right-24 z-50">
+      <div className="fixed bottom-24 right-6 sm:bottom-6 sm:right-24 z-50">
         
         {/* Tooltip */}
         {showTooltip && (

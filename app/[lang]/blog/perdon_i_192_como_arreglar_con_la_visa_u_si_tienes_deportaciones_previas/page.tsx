@@ -17,9 +17,12 @@ import BlogBackground from '../../../components/blogs/BlogBackground';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker'; // 👈 Importamos el tracker
+import ReadingProgress from '../../../components/blogs/ReadingProgress';
+import RelatedContent from '../../../components/blogs/RelatedContent';
+import { getRelatedArticles } from '../../../lib/blogRelations';
 
 
-const SITE_URL = 'https://www.manuelsolis.com'; 
+const SITE_URL = 'https://www.manuelsolis.com';
 
 const IMAGES = {
   article: '/blog/blog_03/B3_CR1.png', 
@@ -320,6 +323,29 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
     { name: t.title, url: `/${lang}/blog/perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas` },
   ]);
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": t.sections.faq.q1,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t.sections.faq.a1.replace(/<[^>]*>/g, ''),
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t.sections.faq.q2,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${t.sections.faq.a2} ${t.sections.faq.list2.join('. ')}.`,
+        }
+      },
+    ],
+  };
+
   return (
     <>
       <Script
@@ -334,11 +360,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
 
-      <BlogTracker 
-        title={t.title} 
-        author="Manuel Solís" 
-        category="Inmigración" 
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+
+      <BlogTracker
+        title={t.title}
+        author="Manuel Solís"
+        category="Inmigración"
+      />
+
+      <ReadingProgress />
 
       <div className={`min-h-screen bg-[#001540] text-white selection:bg-[#B2904D] selection:text-[#001540]`}>
         
@@ -573,8 +607,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   </div>
 
                   <div className="border-t border-white/10 pt-8 mt-12">
-                      <h4 className="text-xs font-bold text-white/40 uppercase mb-4 tracking-widest">{t.sections.sources.title}</h4>
-                      <ul className="space-y-2 text-sm text-white/40 list-none pl-0">
+                      <h4 className="text-xs font-bold text-white/50 uppercase mb-4 tracking-widest">{t.sections.sources.title}</h4>
+                      <ul className="space-y-2 text-sm text-white/50 list-none pl-0">
                          {t.sections.sources.list.map((source, idx) => (
                            <li key={idx} className="flex items-center gap-2 hover:text-[#B2904D] transition-colors"><ArrowUpRight size={12} /> {source}</li>
                          ))}
@@ -607,6 +641,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
         </main>
         
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+          <RelatedContent
+            articles={getRelatedArticles('perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas', (lang as 'es' | 'en') || 'es')}
+            lang={(lang as 'es' | 'en') || 'es'}
+            servicePath="/servicios/inmigracion"
+          />
+        </div>
+
         <div id="contacto">
            <ContactForm />
         </div>

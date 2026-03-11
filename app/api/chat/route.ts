@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '../../lib/rateLimit';
 
 // --- CONFIGURACIÓN Y CONTEXTO DEL SITIO (ACTUALIZADO) ---
 // La información ha sido saneada: Nuevo número de teléfono y prohibición de enlaces.
@@ -45,10 +46,18 @@ IA: Entiendo su necesidad. En las Oficinas de Manuel Solís somos especialistas 
 
 export async function POST(request: NextRequest) {
     try {
-        // La detección del idioma no es necesaria ya que los enlaces fueron eliminados, pero mantenemos la lógica para ser robustos.
-        // const url = new URL(request.url);
-        // const lang = url.pathname.includes('/en') ? 'en' : 'es'; 
-        
+        // Rate limiting: 15 requests per minute per IP
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+                   request.headers.get('x-real-ip') ||
+                   'anonymous';
+        const { success: rateLimitOk } = rateLimit(`chat:${ip}`, 15, 60000);
+        if (!rateLimitOk) {
+            return NextResponse.json(
+                { success: false, error: 'Demasiadas solicitudes. Por favor espere un momento antes de enviar otro mensaje.' },
+                { status: 429, headers: { 'Retry-After': '60' } }
+            );
+        }
+
         const apiKey = process.env.GEMINI_API_KEY;
 
         if (!apiKey) {

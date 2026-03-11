@@ -13,11 +13,11 @@ export default function About() {
   const [showVideo, setShowVideo] = useState(false);
 
   const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
     }
   };
 
@@ -25,7 +25,7 @@ export default function About() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15 }
+      transition: { staggerChildren: 0.12, delayChildren: 0.1 }
     }
   };
 
@@ -34,10 +34,11 @@ export default function About() {
       ref={containerRef}
       className="relative py-32 lg:py-44 w-full bg-[#001540] overflow-hidden"
     >
-      {/* Static Background */}
+      {/* Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[#001540]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002868]/30 via-transparent to-[#000a20]/80" />
+        <div className="absolute inset-0 gradient-mesh-dark" />
 
         {/* Static orbs */}
         <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[100px] -translate-x-1/3 -translate-y-1/3 opacity-60" />
@@ -86,17 +87,17 @@ export default function About() {
             </motion.div>
 
             <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-6 pl-2 pt-4">
-                <div className="p-5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/5 transition-colors duration-300">
+                <div className="p-5 rounded-xl glass glow-gold-hover transition-all duration-500 group/stat">
                     <h3 className="text-4xl font-light text-white flex items-baseline">
-                        200 <span className="text-[#B2904D] text-2xl ml-0.5">+</span>
+                        200 <span className="text-[#B2904D] text-2xl ml-0.5 group-hover/stat:rotate-12 transition-transform">+</span>
                     </h3>
                     <p className="text-[0.65rem] md:text-xs text-blue-200/70 uppercase tracking-[0.2em] mt-2 font-medium">
                         {language === 'es' ? 'Profesionales' : 'Professionals'}
                     </p>
                 </div>
-                <div className="p-5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/5 transition-colors duration-300">
+                <div className="p-5 rounded-xl glass glow-gold-hover transition-all duration-500 group/stat">
                     <h3 className="text-4xl font-light text-white flex items-baseline">
-                        35 <span className="text-sky-400 text-2xl ml-0.5">+</span>
+                        35 <span className="text-sky-400 text-2xl ml-0.5 group-hover/stat:rotate-12 transition-transform">+</span>
                     </h3>
                     <p className="text-[0.65rem] md:text-xs text-blue-200/70 uppercase tracking-[0.2em] mt-2 font-medium">
                         {language === 'es' ? 'Años Experiencia' : 'Years Experience'}
@@ -123,7 +124,7 @@ export default function About() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: YouTube Click-to-Load Facade */}
+          {/* Right Column: YouTube with Voces overlay */}
           <div className="lg:col-span-6 relative h-[350px] md:h-[500px] lg:h-[450px] xl:h-[500px] w-full mt-32 mb-24 lg:mt-0 lg:mb-0">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-blue-600/20 blur-[80px] rounded-full -z-10" />
               <div className="absolute top-4 -right-4 w-full h-full border border-[#B2904D]/20 rounded-[2rem] z-0 hidden lg:block" />
@@ -153,8 +154,8 @@ export default function About() {
                       aria-label={language === 'es' ? 'Reproducir video' : 'Play video'}
                     >
                       <Image
-                        src="https://img.youtube.com/vi/PmU1yOfB9C8/maxresdefault.jpg"
-                        alt="Video thumbnail"
+                        src="/Voces_ManuelSolis.png"
+                        alt="Voces Manuel Solis"
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 50vw"

@@ -48,18 +48,50 @@ const getImmigrationSchema = (lang: string) => {
     '@context': 'https://schema.org',
     '@type': 'LegalService',
     name: lang === 'es' ? 'Manuel Solís - Abogados de Inmigración' : 'Manuel Solis - Immigration Lawyers',
-    description: lang === 'es' 
-      ? 'Servicios legales de inmigración: Defensa de deportación, Asilo, Visas U y Peticiones Familiares.' 
+    description: lang === 'es'
+      ? 'Servicios legales de inmigración: Defensa de deportación, Asilo, Visas U y Peticiones Familiares.'
       : 'Immigration legal services: Deportation defense, Asylum, U Visas, and Family Petitions.',
     url: `https://www.manuelsolis.com/${lang}/servicios/inmigracion`,
     image: 'https://www.manuelsolis.com/immigration-hero.png',
     priceRange: '$$',
     telephone: '+1-866-979-5146',
-    areaServed: {
-      '@type': 'Country',
-      name: 'US'
+    areaServed: [
+      { '@type': 'State', name: 'Texas' },
+      { '@type': 'State', name: 'California' },
+      { '@type': 'State', name: 'Illinois' },
+      { '@type': 'State', name: 'Colorado' },
+      { '@type': 'State', name: 'Tennessee' },
+    ],
+    provider: {
+      '@type': 'LawFirm',
+      name: 'Manuel Solis Law Firm',
+      url: 'https://www.manuelsolis.com',
+      telephone: '+1-866-979-5146',
+      foundingDate: '1990',
     },
-    serviceType: ['Immigration', 'Deportation Defense', 'Asylum', 'Visa U', 'VAWA']
+    serviceType: [
+      'Immigration Law',
+      'Deportation Defense',
+      'Asylum',
+      'U Visa',
+      'VAWA',
+      'T Visa',
+      'Cancellation of Removal',
+      'Advance Parole',
+      'Family Petitions',
+      'EB-3 Employment-Based Immigration',
+    ],
+    knowsAbout: [
+      'U Nonimmigrant Status',
+      'Violence Against Women Act',
+      'T Nonimmigrant Status',
+      'Immigration and Nationality Act Section 240A(b)',
+      'Bona Fide Determination',
+      'Form I-918',
+      'Form I-360 VAWA Self-Petition',
+      'Humanitarian Visas',
+    ],
+    availableLanguage: ['English', 'Spanish'],
   };
 };
 

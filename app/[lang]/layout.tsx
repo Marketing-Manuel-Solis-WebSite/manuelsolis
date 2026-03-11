@@ -37,7 +37,22 @@ const organizationSchema = {
     'Insurance Claims',
     'Asylum',
     'U Visa',
-    'VAWA'
+    'VAWA',
+    'T Visa',
+    'Cancellation of Removal',
+    'Advance Parole',
+    'Form I-918',
+    'Form I-360 VAWA Self-Petition',
+    'Humanitarian Visas',
+    'Violence Against Women Act',
+    'U Nonimmigrant Status',
+    'T Nonimmigrant Status',
+    'Immigration and Nationality Act Section 240A(b)',
+    'Bona Fide Determination',
+    'Deferred Action for Childhood Arrivals',
+    'Temporary Protected Status',
+    'Immigration Court Proceedings',
+    'E-2 Investor Visa'
   ],
   areaServed: [
     { '@type': 'State', name: 'Texas' },
@@ -82,6 +97,26 @@ const websiteSchema = {
     target: `${SITE_URL}/en?q={search_term_string}`,
     'query-input': 'required name=search_term_string'
   }
+};
+
+const videoSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: 'Testimonio de Cliente: Octavio Varela - Residencia Permanente',
+  description: 'Octavio Varela shares his experience obtaining Permanent Residency with the help of Manuel Solis Law Firm. Over 50,000 cases won in 35+ years.',
+  thumbnailUrl: `${SITE_URL}/testimonials/Residencia_Octavio.png`,
+  uploadDate: '2024-01-15T08:00:00+00:00',
+  contentUrl: 'https://www.youtube.com/watch?v=cTJ9M5PT-S4',
+  embedUrl: 'https://www.youtube.com/embed/cTJ9M5PT-S4',
+  publisher: {
+    '@type': 'LawFirm',
+    name: 'Manuel Solis Law Firm',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/logo-manuel-solis.png`
+    }
+  },
+  inLanguage: 'es'
 };
 
 // NUEVO: Configuración de Viewport separada (Corrige el error de build)
@@ -193,6 +228,13 @@ export default async function LangLayout({ children, params }: Props) {
   return (
     <html lang={htmlLang} suppressHydrationWarning>
       <head>
+        {/* Preconnect to critical third-party origins */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://img.youtube.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
@@ -200,6 +242,10 @@ export default async function LangLayout({ children, params }: Props) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
         />
 
         <Script
@@ -257,12 +303,13 @@ export default async function LangLayout({ children, params }: Props) {
       
       <body suppressHydrationWarning>
         <noscript>
-          <img 
-            height="1" 
-            width="1" 
+          <img
+            height="1"
+            width="1"
             style={{ display: 'none' }}
             src="https://www.facebook.com/tr?id=1679590710105917&ev=PageView&noscript=1"
             alt=""
+            aria-hidden="true"
           />
         </noscript>
 

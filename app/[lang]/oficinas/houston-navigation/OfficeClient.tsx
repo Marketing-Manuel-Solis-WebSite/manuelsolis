@@ -6,10 +6,12 @@ import { MapPin, Clock, User, Quote, Sparkles, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 // --- IMPORTACIONES ---
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import { pushToDataLayer, trackConversion } from '../../../lib/tracking';
 
 // --- OPTIMIZACIÓN: LAZY LOAD DEL FORMULARIO ---
 const ContactForm = dynamic(() => import('../../../components/ContactForm'), {
@@ -30,9 +32,9 @@ const officeData = {
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
   },
   address: '6705 Navigation Blvd, Houston, TX 77011, United States',
-  phone: '+1 (713) 277-7838',
+  phone: '(713) 231-5384',
   email: 'houston@manuelsolis.com',
-  hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
+  hours: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
   mapLink: 'https://share.google/wEP84RY0RqTOqR787',
   image: '/offices/Houston.png',
   
@@ -223,7 +225,7 @@ export default function OfficeClient() {
 
                       <div>
                         <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
-                        <a href={`tel:${officeData.phone.replace(/\D/g,'')}`} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
+                        <a href={`tel:${officeData.phone.replace(/\D/g,'')}`} onClick={() => { pushToDataLayer('phone_click', { event_category: 'conversion', event_label: 'office_page_call' }); trackConversion('phone_click', 'office_page_call'); }} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
                           {officeData.phone}
                         </a>
                       </div>
@@ -303,12 +305,35 @@ export default function OfficeClient() {
                     <h3 className="text-2xl font-thin text-white">{t(uiText.services)}</h3>
                   </div>
                   <div className="flex flex-wrap gap-3">
-                    {officeData.services.map((service, idx) => (
-                      <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 hover:bg-[#B2904D]/20 transition-colors cursor-default flex items-center gap-2">
-                        <Scale size={14} className="text-[#B2904D]" />
-                        {t(service)}
-                      </span>
-                    ))}
+                    {officeData.services.map((service, idx) => {
+                      const serviceLinks: Record<string, string> = {
+                        'Inmigración': '/servicios/inmigracion',
+                        'Immigration': '/servicios/inmigracion',
+                        'Accidentes': '/servicios/accidentes',
+                        'Accidents': '/servicios/accidentes',
+                        'Seguros': '/servicios/seguros',
+                        'Insurance': '/servicios/seguros',
+                        'Defensa Criminal': '/servicios/ley-criminal',
+                        'Criminal Defense': '/servicios/ley-criminal',
+                        'Visa E-2': '/servicios/visa-e2',
+                        'E-2 Visa': '/servicios/visa-e2',
+                        'Familia': '/servicios/familia',
+                        'Family': '/servicios/familia',
+                      };
+                      const label = t(service);
+                      const href = serviceLinks[label];
+                      return href ? (
+                        <Link key={idx} href={`/${lang}/servicios/${href.split('/').pop()}`} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 hover:bg-[#B2904D]/20 hover:border-[#B2904D]/40 transition-colors flex items-center gap-2">
+                          <Scale size={14} className="text-[#B2904D]" />
+                          {label}
+                        </Link>
+                      ) : (
+                        <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-blue-100/90 flex items-center gap-2">
+                          <Scale size={14} className="text-[#B2904D]" />
+                          {label}
+                        </span>
+                      );
+                    })}
                   </div>
                 </motion.div>
 
