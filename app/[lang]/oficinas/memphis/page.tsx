@@ -26,12 +26,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Memphis, TN (Airways Blvd) | Manuel Solís`
-    : `Lawyers in Memphis, TN (Airways Blvd) | Manuel Solis`;
+    ? `Abogados en Memphis, TN | Manuel Solís`
+    : `Lawyers in Memphis, TN | Manuel Solis`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en Memphis (Airways Blvd). Abogados de inmigración, multas y criminal. Abogada Lupita Martínez lista para ayudarle.`
-    : `Manuel Solis Law Office in Memphis (Airways Blvd). Immigration, ticket, and criminal defense attorneys. Attorney Lupita Martinez ready to help you.`;
+    ? `Oficina de Manuel Solís en Memphis. Abogados de inmigración, multas y criminal. Abogada Lupita Martínez lista para ayudarle.`
+    : `Manuel Solis Law Office in Memphis. Immigration, ticket, and criminal defense attorneys. Attorney Lupita Martinez ready to help you.`;
 
   return {
     title,

@@ -32,7 +32,7 @@ const officeData = {
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
   },
   address: '2950 North Loop W, Houston, TX 77092, United States',
-  phone: '+1 832-598-0914',
+  phone: '(713) 429-0237',
   email: 'houston@manuelsolis.com',
   hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
   mapLink: 'https://share.google/aKTPwIvhMmw7JfRcY',

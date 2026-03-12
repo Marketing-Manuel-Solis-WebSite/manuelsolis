@@ -9,47 +9,46 @@ type Props = {
 
 // --- CONFIGURACIÓN SEO ESPECÍFICA DE LA OFICINA ---
 const OFFICE_INFO = {
-  name: "Manuel Solis Law Firm - Houston Navigation",
+  name: "Manuel Solis Law Firm - Houston Accidentes",
   address: "6705 Navigation Blvd",
   city: "Houston",
   state: "TX",
   zip: "77011",
   phone: "+1-713-231-5384",
-  // Coordenadas para 6705 Navigation Blvd (aproximadas para esta dirección específica)
-  latitude: "29.7426", 
+  latitude: "29.7426",
   longitude: "-95.3156",
-  mapUrl: "https://share.google/wEP84RY0RqTOqR787" // URL CORRECTA DE GMB
+  mapUrl: "https://share.google/wEP84RY0RqTOqR787"
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
-  const title = isEs 
-    ? `Abogados en Houston, TX (6705 Navigation Blvd) | Manuel Solís`
-    : `Lawyers in Houston, TX (6705 Navigation Blvd) | Manuel Solis`;
+  const title = isEs
+    ? `Abogados de Accidentes en Houston, TX (6705 Navigation Blvd) | Manuel Solís`
+    : `Accident Lawyers in Houston, TX (6705 Navigation Blvd) | Manuel Solis`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en 6705 Navigation Blvd, Houston. Abogados de inmigración y accidentes listos para defender sus derechos. ¡Llámenos!`
-    : `Manuel Solis Law Office at 6705 Navigation Blvd, Houston. Immigration and accident attorneys ready to defend your rights. Call us!`;
+    ? `Oficina de Manuel Solís en 6705 Navigation Blvd, Houston. Abogados de accidentes e inmigración listos para defender sus derechos. ¡Llámenos!`
+    : `Manuel Solis Law Office at 6705 Navigation Blvd, Houston. Accident and immigration attorneys ready to defend your rights. Call us!`;
 
   return {
     title,
     description,
     alternates: {
-      canonical: `https://www.manuelsolis.com/${lang}/oficinas/houston-navigation`,
+      canonical: `https://www.manuelsolis.com/${lang}/oficinas/houston-accidentes`,
       languages: {
-        'es': `https://www.manuelsolis.com/es/oficinas/houston-navigation`,
-        'en': `https://www.manuelsolis.com/en/oficinas/houston-navigation`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/houston-navigation`,
+        'es': `https://www.manuelsolis.com/es/oficinas/houston-accidentes`,
+        'en': `https://www.manuelsolis.com/en/oficinas/houston-accidentes`,
+        'x-default': `https://www.manuelsolis.com/en/oficinas/houston-accidentes`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `https://www.manuelsolis.com/${lang}/oficinas/houston-navigation`,
-      images: ['/public/offices/Houston.png'],
-      type: 'website', 
+      url: `https://www.manuelsolis.com/${lang}/oficinas/houston-accidentes`,
+      images: ['/offices/Houston.png'],
+      type: 'website',
     }
   };
 }
@@ -59,12 +58,12 @@ const getLocalBusinessSchema = (lang: string) => {
   return {
     '@context': 'https://schema.org',
     '@type': ['LegalService', 'Attorney'],
-    name: 'Manuel Solis Law Firm - Navigation',
-    description: lang === 'es' 
-      ? 'Oficina legal en Houston Navigation especializada en inmigración y accidentes.' 
-      : 'Law office in Houston Navigation specializing in immigration and accidents.',
+    name: 'Manuel Solis Law Firm - Houston Accidentes',
+    description: lang === 'es'
+      ? 'Oficina legal en Houston especializada en accidentes e inmigración.'
+      : 'Law office in Houston specializing in accidents and immigration.',
     image: 'https://www.manuelsolis.com/logo-manuel-solis.png',
-    url: `https://www.manuelsolis.com/${lang}/oficinas/houston-navigation`,
+    url: `https://www.manuelsolis.com/${lang}/oficinas/houston-accidentes`,
     telephone: OFFICE_INFO.phone,
     priceRange: '$$',
     address: {
@@ -96,19 +95,19 @@ const getLocalBusinessSchema = (lang: string) => {
   };
 };
 
-export default async function HoustonNavigationPage({ params }: Props) {
+export default async function HoustonAccidentesPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getLocalBusinessSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Oficinas' : 'Offices', url: `/${lang}/oficinas` },
-    { name: 'Houston Navigation', url: `/${lang}/oficinas/houston-navigation` },
+    { name: 'Houston Accidentes', url: `/${lang}/oficinas/houston-accidentes` },
   ]);
 
   return (
     <>
       <Script
-        id="local-schema-houston-nav"
+        id="local-schema-houston-accidentes"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />

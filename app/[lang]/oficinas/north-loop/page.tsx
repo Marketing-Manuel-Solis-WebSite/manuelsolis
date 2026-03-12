@@ -14,7 +14,7 @@ const OFFICE_INFO = {
   city: "Houston",
   state: "TX",
   zip: "77092",
-  phone: "+1-832-598-0914",
+  phone: "+1-713-429-0237",
   // Coordenadas para 2950 North Loop W
   latitude: "29.8055", 
   longitude: "-95.4527",

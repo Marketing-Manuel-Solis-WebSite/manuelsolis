@@ -20,58 +20,71 @@ const ContactForm = dynamic(() => import('../../../components/ContactForm'), {
 
 // --- CONFIGURACIÓN DE FUENTE ---
 
-// --- DATOS ESPECÍFICOS: AIRWAYS (MEMPHIS) ---
+// --- DATOS ESPECÍFICOS: HOUSTON ACCIDENTES (6705) ---
 const officeData = {
-  id: 'airways',
-  city: 'Memphis',
-  state: 'TN',
-  title: { es: 'Memphis, TN (Airways)', en: 'Memphis, TN (Airways)' },
-  quote: { es: 'Sirviendo a la comunidad de Tennessee con dedicación y excelencia.', en: 'Serving the Tennessee community with dedication and excellence.' },
-  // DESCRIPCIÓN ESTANDARIZADA
+  id: 'houston-accidentes',
+  city: 'Houston',
+  state: 'TX',
+  title: { es: 'Houston Accidentes, TX', en: 'Houston Accidentes, TX' },
+  quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
   description: { 
     es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
   },
-  address: '3385 Airways Blvd Suite 320, Memphis, TN 38116',
-  phone: '(901) 557-8357',
-  email: 'memphis@manuelsolis.com',
-  hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
-  mapLink: 'https://share.google/6RzLU9NgEZtNnQs2a',
-  image: '/offices/ofAirways.png', // IMAGEN ESPECÍFICA
+  address: '6705 Navigation Blvd, Houston, TX 77011, United States',
+  phone: '(713) 231-5384',
+  email: 'houston@manuelsolis.com',
+  hours: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
+  mapLink: 'https://share.google/wEP84RY0RqTOqR787',
+  image: '/offices/Houston.png',
   
-  // --- GERENCIA ---
-  managers: [
-    { name: 'Nombre Gerente', role: { es: 'Gerente de Oficina', en: 'Office Manager' } },
-  ],
-  // --- ABOGADOS (ACTUALIZADO SEGÚN TU LISTA) ---
+  // --- GERENCIA (ELIMINADO) ---
+  managers: [],
+  
+  // --- ABOGADOS ---
   attorneys: [
-    {
-      id: 'lupita-valenzuela-martinez',
-      name: 'Lupita Valenzuela Martinez',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Lupita.png',
-      role: { es: 'Abogada', en: 'Attorney' },
-      quote: { es: "Una defensora impulsada por un propósito.", en: "An advocate driven by purpose." }
+    { 
+      name: 'Juan Solís', 
+      role: { es: 'Abogado', en: 'Attorney' }, 
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Juan%20Solis.png',
+      quote: { es: "Saber no es suficiente; debemos aplicar.", en: "Knowing is not enough; we must apply." }
     },
     {
-      id: 'sara-james',
-      name: 'Sara James',
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Sara%20James.png',
-      role: { es: 'Abogada', en: 'Attorney' },
-      quote: { es: "Apoyarlos a alcanzar su sueño americano es un honor y un privilegio.", en: "Supporting them to achieve their American dream is an honor and a privilege." }
-    },
-    {
-      id: 'roberto-garcia',
-      name: 'Roberto Garcia',
-      image: '/LogoInformacion.png', // Placeholder
+      name: 'Greg Finney',
       role: { es: 'Abogado', en: 'Attorney' },
-      quote: { es: "Compromiso total con la justicia.", en: "Total commitment to justice." }
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gregory%20Finney.png',
+      quote: { es: "Mantente curioso.", en: "Stay curious." }
+    },
+    {
+      name: 'Gabriel Pérez',
+      role: { es: 'Abogado', en: 'Attorney' },
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gabriel%20Perez.png',
+      quote: { es: "No hay excusa para que nadie trabaje más duro que tú.", en: "There's no excuse for anyone to work harder than you." }
+    },
+    {
+      name: 'Austen Gunnels',
+      role: { es: 'Abogado', en: 'Attorney' },
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Austen%20Gunnels.png',
+      quote: { es: "Abogando incansablemente.", en: "Advocating tirelessly." }
+    },
+    {
+      name: 'Maria Armenta',
+      role: { es: 'Abogada', en: 'Attorney' },
+      image: '/LogoInformacion.png', // Placeholder
+      quote: { es: "Representación legal compasiva.", en: "Compassionate legal representation." }
+    },
+    {
+      name: 'Imani Agustina Vithanage',
+      role: { es: 'Abogada', en: 'Attorney' },
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Himani%20Augustina%20Vithanage.png', // Usando la foto encontrada en DB
+      quote: { es: "Una voz firme para quienes más lo necesitan.", en: "A firm voice for those who need it most." }
     }
   ],
-  // --- SERVICIOS (AÑADIDO) ---
+
+  // --- SERVICIOS ---
   services: [
-    { es: 'Inmigración', en: 'Immigration' },
+    { es: 'Inmigración', en: 'Immigration' }, 
     { es: 'Planificación Patrimonial', en: 'Estate Planning' },
-    { es: 'Familiar', en: 'Family Law' },
     { es: 'Seguros', en: 'Insurance' },
     { es: 'Accidentes', en: 'Accidents' },
     { es: 'Ticket', en: 'Traffic Tickets' },
@@ -86,8 +99,8 @@ const uiText = {
   hours: { es: 'Horario', en: 'Hours' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
   team: { es: 'Nuestro Equipo Legal', en: 'Our Legal Team' },
-  managers: { es: 'Nuestra Gerencia', en: 'Our Management Team' },
-  services: { es: 'Servicios Disponibles', en: 'Available Services' } // Nuevo texto
+  managers: { es: 'Gerencia', en: 'Management' },
+  services: { es: 'Servicios Disponibles', en: 'Available Services' }
 };
 
 export default function OfficeClient() {
@@ -95,7 +108,6 @@ export default function OfficeClient() {
   const lang = (params?.lang as 'es' | 'en') || 'es';
   const t = (obj: any) => obj[lang] || obj.es;
   
-  // Optimización: Detectar móvil
   const [isMobile, setIsMobile] = useState(true);
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -149,7 +161,7 @@ export default function OfficeClient() {
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 mb-6">
                   <Sparkles className="text-[#B2904D]" size={14} />
-                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">Memphis, TN</span>
+                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">Houston, Texas</span>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-thin text-white mb-6 leading-tight">
@@ -213,7 +225,7 @@ export default function OfficeClient() {
 
                       <div>
                         <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
-                        <a href={`tel:${officeData.phone}`} onClick={() => { pushToDataLayer('phone_click', { event_category: 'conversion', event_label: 'office_page_call' }); trackConversion('phone_click', 'office_page_call'); }} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
+                        <a href={`tel:${officeData.phone.replace(/\D/g,'')}`} onClick={() => { pushToDataLayer('phone_click', { event_category: 'conversion', event_label: 'office_page_call' }); trackConversion('phone_click', 'office_page_call'); }} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
                           {officeData.phone}
                         </a>
                       </div>
@@ -230,15 +242,15 @@ export default function OfficeClient() {
                  </motion.div>
               </div>
 
-              {/* Grid de Equipo y Servicios */}
+              {/* Grid de Equipo */}
               <div className="lg:col-span-7 space-y-16">
                 
-                {/* --- ABOGADOS --- */}
+                {/* --- SECCIÓN ABOGADOS --- */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
+                  transition={{ delay: 0.3 }}
                 >
                   <div className="flex items-center gap-4 mb-10">
                     <div className="w-1 h-10 bg-[#B2904D] rounded-full" />
@@ -253,7 +265,7 @@ export default function OfficeClient() {
                           <Image 
                             src={person.image} 
                             alt={person.name} 
-                            fill
+                            fill 
                             sizes="(max-width: 768px) 100px, 150px"
                             className="object-cover object-top transition-transform duration-700 group-hover:scale-110" 
                           />
@@ -281,12 +293,12 @@ export default function OfficeClient() {
                   </div>
                 </motion.div>
 
-                {/* --- SERVICIOS AÑADIDOS --- */}
+                {/* --- SECCIÓN SERVICIOS --- */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.4 }}
                 >
                   <div className="flex items-center gap-4 mb-8">
                     <div className="w-1 h-8 bg-blue-400 rounded-full" />
@@ -324,38 +336,6 @@ export default function OfficeClient() {
                     })}
                   </div>
                 </motion.div>
-
-                {/* --- GERENCIA --- */}
-                {officeData.managers.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    <div className="flex items-center gap-4 mb-10">
-                      <div className="w-1 h-8 bg-white/50 rounded-full" />
-                      <h3 className="text-2xl font-thin text-white">{t(uiText.managers)}</h3>
-                    </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {officeData.managers.map((person, idx) => (
-                        <div key={idx} className="group flex flex-col items-center justify-center bg-white/5 rounded-lg p-4 border border-white/5 hover:border-white/20 transition-all duration-300 hover:bg-white/10">
-                          <div className="mb-3 p-2 rounded-full bg-white/5 text-white/20 group-hover:text-[#B2904D] group-hover:bg-[#B2904D]/10 transition-colors">
-                             <User size={18} />
-                          </div>
-                          
-                          <h5 className="font-bold text-white text-sm text-center leading-tight mb-1">
-                            {person.name}
-                          </h5>
-                          <span className="text-[9px] font-medium uppercase tracking-wider text-white/40 text-center">
-                            {t(person.role)}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
 
               </div>
             </div>

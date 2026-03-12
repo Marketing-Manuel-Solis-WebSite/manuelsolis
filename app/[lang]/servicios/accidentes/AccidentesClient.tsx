@@ -75,13 +75,12 @@ const texts = {
         'Bellaire',
         'Los Angeles',
         'Houston Principal',
-        'Houston Navigation',
+        'Houston Accidentes',
         'Houston Main St',
         'Houston NorthLoop',
         'Houston NorthChase',
         'Houston Kirby',
         'Memphis',
-        'Memphis (Airways)',
         'League City, TX'
       ],
       content: {
@@ -104,13 +103,12 @@ const texts = {
         'Bellaire',
         'Los Angeles',
         'Houston Principal',
-        'Houston Navigation',
+        'Houston Accidentes',
         'Houston Main St',
         'Houston NorthLoop',
         'Houston NorthChase',
         'Houston Kirby',
         'Memphis',
-        'Memphis (Airways)',
         'League City, TX'
       ],
       content: {
@@ -140,13 +138,12 @@ const texts = {
         'Bellaire',
         'Los Angeles',
         'Houston Principal',
-        'Houston Navigation',
+        'Houston Accidentes',
         'Houston Main St',
         'Houston NorthLoop',
         'Houston NorthChase',
         'Houston Kirby',
         'Memphis',
-        'Memphis (Airways)',
         'League City, TX'
       ],
       content: {
@@ -169,13 +166,12 @@ const texts = {
         'Bellaire',
         'Los Angeles',
         'Houston Principal',
-        'Houston Navigation',
+        'Houston Accidentes',
         'Houston Main St',
         'Houston NorthLoop',
         'Houston NorthChase',
         'Houston Kirby',
         'Memphis',
-        'Memphis (Airways)',
         'League City, TX'
       ],
       content: {
@@ -198,13 +194,12 @@ const texts = {
         'Bellaire',
         'Los Angeles',
         'Houston Principal',
-        'Houston Navigation',
+        'Houston Accidentes',
         'Houston Main St',
         'Houston NorthLoop',
         'Houston NorthChase',
         'Houston Kirby',
         'Memphis',
-        'Memphis (Airways)',
         'League City, TX'
       ],
       content: {

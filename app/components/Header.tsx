@@ -124,11 +124,13 @@ export default function HeaderProfessional() {
       key: 'offices',
       submenu: [
         { name: 'Houston Principal', href: `/${language}/oficinas/houston-principal` },
+        { name: 'Houston Accidentes', href: `/${language}/oficinas/houston-accidentes` },
         { name: 'Houston Main St', href: `/${language}/oficinas/main-st` },
         { name: 'Houston North Loop', href: `/${language}/oficinas/north-loop` },
         { name: 'Houston Northchase', href: `/${language}/oficinas/northchase` },
         { name: 'Houston Bellaire', href: `/${language}/oficinas/houston-bellaire` },
         { name: 'Houston (Kirby)', href: `/${language}/oficinas/kirby` },
+        { name: 'League City', href: `/${language}/oficinas/league-city` },
         { name: 'Dallas', href: `/${language}/oficinas/dallas` },
         { name: 'El Paso', href: `/${language}/oficinas/el-paso` },
         { name: 'Harlingen', href: `/${language}/oficinas/harlingen` },
@@ -136,9 +138,6 @@ export default function HeaderProfessional() {
         { name: 'Los Angeles', href: `/${language}/oficinas/losangeles` },
         { name: 'Arvada (Denver)', href: `/${language}/oficinas/arvada` },
         { name: 'Memphis', href: `/${language}/oficinas/memphis` },
-        { name: 'Memphis Airways', href: `/${language}/oficinas/airways` },
-        { name: 'League City', href: `/${language}/oficinas/league-city` },
-        { name: 'Houston Navigation', href: `/${language}/oficinas/houston-navigation` },
       ]
     },
     {
@@ -253,7 +252,7 @@ export default function HeaderProfessional() {
             </Link>
 
             <div className="hidden lg:flex items-center">
-              <nav aria-label="Main navigation" className="flex items-center gap-3 xl:gap-6">
+              <nav aria-label="Main navigation" className="flex items-center gap-4 xl:gap-7">
                 {menuItems.map((item) => (
                   <div key={item.name} className="relative group">
                     <div className="flex items-center gap-1 cursor-pointer py-3">
@@ -278,16 +277,41 @@ export default function HeaderProfessional() {
                     
                     <span className="absolute bottom-1 left-0 w-0 h-[0.5px] bg-sky-200 transition-all duration-300 ease-out group-hover:w-full" />
 
-                    {item.submenu && (
+                    {item.submenu && item.key === 'offices' && (
+                      <div className="absolute top-full -left-4 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]">
+                        <div className="w-[420px] bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl py-4 px-4 border border-white/10 transform origin-top">
+                          <div className="grid grid-cols-2 gap-x-4">
+                            <div>
+                              <p className="text-[9px] font-bold text-[#B2904D]/70 uppercase tracking-[0.2em] px-3 mb-2">Houston & TX</p>
+                              {item.submenu.filter((_, i) => i < 8).map((subItem) => (
+                                <Link key={subItem.name} href={subItem.href} className="group/item flex items-center px-3 py-2 rounded-lg hover:bg-white/5 transition-colors duration-200">
+                                  <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">{subItem.name}</span>
+                                </Link>
+                              ))}
+                            </div>
+                            <div>
+                              <p className="text-[9px] font-bold text-[#B2904D]/70 uppercase tracking-[0.2em] px-3 mb-2">Texas & USA</p>
+                              {item.submenu.filter((_, i) => i >= 8).map((subItem) => (
+                                <Link key={subItem.name} href={subItem.href} className="group/item flex items-center px-3 py-2 rounded-lg hover:bg-white/5 transition-colors duration-200">
+                                  <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">{subItem.name}</span>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {item.submenu && item.key !== 'offices' && (
                       <div className="absolute top-full left-0 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]">
-                        <div className="min-w-[260px] bg-[#0b1c33]/90 backdrop-blur-md rounded-xl shadow-xl py-4 px-2 border border-white/10 transform origin-top max-h-[80vh] overflow-y-auto scrollbar-hide">
+                        <div className="min-w-[240px] bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl py-3 px-2 border border-white/10 transform origin-top">
                           {item.submenu.map((subItem) => (
                             <Link
                               key={subItem.name}
                               href={subItem.href}
-                              className="group/item flex items-center px-4 py-3 rounded-lg hover:bg-white/5 transition-colors duration-200"
+                              className="group/item flex items-center px-4 py-2.5 rounded-lg hover:bg-white/5 transition-colors duration-200"
                             >
-                              <span className="text-[12px] font-light text-gray-200 group-hover/item:text-white uppercase tracking-[0.15em] transition-colors duration-200">
+                              <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">
                                 {subItem.name}
                               </span>
                             </Link>

@@ -27,7 +27,7 @@ const routes: SitemapEntry[] = [
   { route: '/oficinas/northchase', priority: 0.8, changeFrequency: 'monthly' },
   { route: '/oficinas/houston-bellaire', priority: 0.8, changeFrequency: 'monthly' },
   { route: '/oficinas/kirby', priority: 0.8, changeFrequency: 'monthly' },
-  { route: '/oficinas/houston-navigation', priority: 0.8, changeFrequency: 'monthly' },
+  { route: '/oficinas/houston-accidentes', priority: 0.8, changeFrequency: 'monthly' },
   { route: '/oficinas/dallas', priority: 0.8, changeFrequency: 'monthly' },
   { route: '/oficinas/el-paso', priority: 0.8, changeFrequency: 'monthly' },
   { route: '/oficinas/harlingen', priority: 0.8, changeFrequency: 'monthly' },
@@ -35,7 +35,6 @@ const routes: SitemapEntry[] = [
   { route: '/oficinas/losangeles', priority: 0.8, changeFrequency: 'monthly' },
   { route: '/oficinas/arvada', priority: 0.8, changeFrequency: 'monthly' },
   { route: '/oficinas/memphis', priority: 0.8, changeFrequency: 'monthly' },
-  { route: '/oficinas/airways', priority: 0.8, changeFrequency: 'monthly' },
   { route: '/oficinas/league-city', priority: 0.8, changeFrequency: 'monthly' },
 
   // Blog posts

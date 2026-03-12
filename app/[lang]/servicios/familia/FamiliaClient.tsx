@@ -56,8 +56,7 @@ const texts = {
       icon: FileText,
       offices: [
         'Chicago',
-        'Memphis',
-        'Memphis (Airways)'
+        'Memphis'
       ],
       content: {
         intro: { es: "¿Necesita un buen abogado de divorcio?", en: "Do you need a good divorce attorney?" },
@@ -72,8 +71,7 @@ const texts = {
       icon: MessageSquare,
       offices: [
         'Chicago',
-        'Memphis',
-        'Memphis (Airways)'
+        'Memphis'
       ],
       content: {
         intro: { es: "Permítanos apoyarle en las disputas por la custodia de sus hijos.", en: "Allow us to support you in child custody disputes." },
@@ -94,8 +92,7 @@ const texts = {
       icon: HandCoins,
       offices: [
         'Chicago',
-        'Memphis',
-        'Memphis (Airways)'
+        'Memphis'
       ],
       content: {
         intro: { es: "La manutención infantil es un aspecto clave del derecho de familia.", en: "Child support is a key aspect of family law." },

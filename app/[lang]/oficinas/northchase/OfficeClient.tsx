@@ -32,7 +32,7 @@ const officeData = {
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
   },
   address: '16510 Northchase Dr, Houston, TX 77060, United States',
-  phone: '+1 346-522-4848',
+  phone: '(346) 522-4848',
   email: 'houston@manuelsolis.com',
   hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
   mapLink: 'https://share.google/your_map_link_here', // Placeholder if not provided, assuming standard format or need to find real link. Using generic or previous pattern. I will use the one from existing file if available, or a placeholder if I don't have it. I'll use a generic Google Maps search for the address to be safe.
