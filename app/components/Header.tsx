@@ -281,22 +281,11 @@ export default function HeaderProfessional() {
                       <div className="absolute top-full -left-4 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]">
                         <div className="w-[420px] bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl py-4 px-4 border border-white/10 transform origin-top">
                           <div className="grid grid-cols-2 gap-x-4">
-                            <div>
-                              <p className="text-[9px] font-bold text-[#B2904D]/70 uppercase tracking-[0.2em] px-3 mb-2">Houston & TX</p>
-                              {item.submenu.filter((_, i) => i < 8).map((subItem) => (
-                                <Link key={subItem.name} href={subItem.href} className="group/item flex items-center px-3 py-2 rounded-lg hover:bg-white/5 transition-colors duration-200">
-                                  <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">{subItem.name}</span>
-                                </Link>
-                              ))}
-                            </div>
-                            <div>
-                              <p className="text-[9px] font-bold text-[#B2904D]/70 uppercase tracking-[0.2em] px-3 mb-2">Texas & USA</p>
-                              {item.submenu.filter((_, i) => i >= 8).map((subItem) => (
-                                <Link key={subItem.name} href={subItem.href} className="group/item flex items-center px-3 py-2 rounded-lg hover:bg-white/5 transition-colors duration-200">
-                                  <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">{subItem.name}</span>
-                                </Link>
-                              ))}
-                            </div>
+                            {item.submenu.map((subItem) => (
+                              <Link key={subItem.name} href={subItem.href} className="group/item flex items-center px-3 py-2 rounded-lg hover:bg-white/5 transition-colors duration-200">
+                                <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">{subItem.name}</span>
+                              </Link>
+                            ))}
                           </div>
                         </div>
                       </div>
