@@ -156,8 +156,8 @@ const governmentResourcesData: ResourceItemBilingual[] = [
       en: 'Immigration Court Case Status (EOIR)' 
     },
     content: { 
-      es: 'Si su ser querido ya está en procedimientos de remoción, el caso es manejado por la Oficina Ejecutiva para la Revisión de Inmigración (EOIR).<br /><br />**Herramientas:**<br />- [Sistema Automatizado (teléfono)](tel:18008987180) (Debe tener el Número A-number).<br />- [Directorio de Cortes de Inmigración](https://www.justice.gov/eoir/eoir-office-locations)<br />- [Estatus de Caso de USCIS](https://egov.uscis.gov/casestatus/landing.do)', 
-      en: 'If your loved one is already in removal proceedings, the case is handled by the Executive Office for Immigration Review (EOIR).<br /><br />**Tools:**<br />- [Automated System (phone)](tel:18008987180) (Must have the A-number).<br />- [Immigration Court Directory](https://www.justice.gov/eoir/eoir-office-locations)<br />- [USCIS Case Status](https://egov.uscis.gov/casestatus/landing.do)', 
+      es: 'Si su ser querido ya está en procedimientos de remoción, el caso es manejado por la Oficina Ejecutiva para la Revisión de Inmigración (EOIR).<br /><br />**Herramientas:**<br />- [Sistema Automatizado (teléfono)](tel:+18008987180) (Debe tener el Número A-number).<br />- [Directorio de Cortes de Inmigración](https://www.justice.gov/eoir/eoir-office-locations)<br />- [Estatus de Caso de USCIS](https://egov.uscis.gov/casestatus/landing.do)', 
+      en: 'If your loved one is already in removal proceedings, the case is handled by the Executive Office for Immigration Review (EOIR).<br /><br />**Tools:**<br />- [Automated System (phone)](tel:+18008987180) (Must have the A-number).<br />- [Immigration Court Directory](https://www.justice.gov/eoir/eoir-office-locations)<br />- [USCIS Case Status](https://egov.uscis.gov/casestatus/landing.do)', 
     }
   },
   {
@@ -297,7 +297,7 @@ export default function RecursosPage() {
                         href="tel:+18669795146" 
                         className="text-3xl lg:text-4xl font-black text-white hover:text-[#B2904D] transition-colors"
                     >
-                        866-979-5146
+                        +1 866-979-5146
                     </a>
                     <p className="text-xs text-white/40 mt-4 uppercase tracking-widest">
                         {lang === 'es' ? 'Atención Inmediata' : 'Immediate Attention'}

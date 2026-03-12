@@ -11,7 +11,7 @@ TU OBJETIVO: Atender al cliente con profesionalismo, identificar su necesidad y 
 DATOS CLAVE DEL DESPACHO:
 - Experiencia: Más de 35 años y más de 50,000 casos ganados.
 - Eslogan: "Nuestra pasión es ayudarle."
-- Teléfono Principal: 1-888-676-1238(Siempre ofrécelo, este es EL UNICO NUMERO QUE HAY, NO MAS)
+- Teléfono Principal: +1-888-676-1238(Siempre ofrécelo, este es EL UNICO NUMERO QUE HAY, NO MAS)
 - Abogado Principal: Manuel Solís.
 - Oficinas Principales: Houston, Dallas, Los Ángeles, Chicago.
 
@@ -30,15 +30,15 @@ REGLAS DE RESPUESTA (CRÍTICO):
 4. RESTRICCIONES:
     - NUNCA des consejo legal específico ("Usted califica para X"). Di: "Un abogado debe evaluar su caso específico".
     - NO inventes precios. Di: "Las consultas son gratuitas o de bajo costo dependiendo del caso".
-5. CIERRE: Siempre termina invitando a la acción de manera profesional: llamar para una consulta o usar el formulario de contacto, ofreciendo el número (832) 598-0914 o (866) 979-5146. EXCEPCIÓN: Si el tema es Visa E-2 o inversión, ofrece el (888) 676-1238.
+5. CIERRE: Siempre termina invitando a la acción de manera profesional: llamar para una consulta o usar el formulario de contacto, ofreciendo el número +1 (832) 598-0914 o +1 (866) 979-5146. EXCEPCIÓN: Si el tema es Visa E-2 o inversión, ofrece el +1 (888) 676-1238.
 
 EJEMPLOS DE INTERACCIÓN (Ahora sin enlaces):
 
 Usuario: "¿Quién es Manuel Solís?"
-IA: El Abogado Manuel Solís es el Fundador de las Oficinas Legales de Manuel Solís. Es un experto legal con más de 34 años de experiencia. Su despacho ha ganado más de 50,000 casos en áreas clave como Inmigración y Accidentes. Si desea conocer más, puede ver el perfil completo en la sección de Abogados de nuestro sitio web. Si tiene un caso, le recomiendo llamar al (832) 598-0914 para que su equipo revise su situación.
+IA: El Abogado Manuel Solís es el Fundador de las Oficinas Legales de Manuel Solís. Es un experto legal con más de 34 años de experiencia. Su despacho ha ganado más de 50,000 casos en áreas clave como Inmigración y Accidentes. Si desea conocer más, puede ver el perfil completo en la sección de Abogados de nuestro sitio web. Si tiene un caso, le recomiendo llamar al +1 (832) 598-0914 para que su equipo revise su situación.
 
 Usuario: "Necesito un abogado de inmigración"
-IA: Entiendo su necesidad. En las Oficinas de Manuel Solís somos especialistas en casos de inmigración, incluyendo asilo, defensa contra la deportación y visas. Contamos con más de 34 años de experiencia ayudando a familias a arreglar su estatus. Lo mejor es que un abogado revise su historial para ver qué opción es segura para usted. Por favor, llámenos al (832) 598-0914 para una evaluación confidencial.
+IA: Entiendo su necesidad. En las Oficinas de Manuel Solís somos especialistas en casos de inmigración, incluyendo asilo, defensa contra la deportación y visas. Contamos con más de 34 años de experiencia ayudando a familias a arreglar su estatus. Lo mejor es que un abogado revise su historial para ver qué opción es segura para usted. Por favor, llámenos al +1 (832) 598-0914 para una evaluación confidencial.
 `;
 
 // --- MAPEO DE ENLACES ELIMINADO ---
@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
             { 
                 success: false, 
                 // NÚMERO DE TELÉFONO ACTUALIZADO EN EL FALLBACK
-                error: 'Lo siento, hubo un problema de conexión. Por favor llámanos al (832) 598-0914.' 
+                error: 'Lo siento, hubo un problema de conexión. Por favor llámanos al +1 (832) 598-0914.' 
             },
             { status: 500 }
         );

@@ -171,7 +171,7 @@ const interfaceTexts = {
     ],
     contact: { es: 'Para ejercer sus derechos, contáctenos en:', en: 'To exercise your rights, contact us at:' },
     email: 'support@manuelsolis.com',
-    phone: '713-844-2700'
+    phone: '+1-713-844-2700'
   },
 
   // 8. Enlaces de Terceros
@@ -196,7 +196,7 @@ const interfaceTexts = {
   section11: {
     title: { es: '11. Contáctenos', en: '11. Contact Us' },
     intro: { es: 'Si tiene preguntas sobre esta Política de Privacidad o nuestras prácticas de datos, puede contactarnos en:', en: 'If you have questions about this Privacy Policy or our data practices, you may contact us at:' },
-    phone: '713-844-2700',
+    phone: '+1-713-844-2700',
     email: 'support@manuelsolis.com',
     address: '6657 Navigation Blvd Houston, Texas 77011',
   }

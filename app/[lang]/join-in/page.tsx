@@ -95,7 +95,7 @@ function FormContent({ formData, isSubmitting, submitStatus, handleSubmit, handl
                         >
                           <XCircle size={80} className="text-red-400 mb-6 drop-shadow-[0_0_15px_rgba(252,165,165,0.5)]" />
                           <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('Error de Envío', 'Submission Error')}</h3>
-                          <p className="text-red-200">{t('Hubo un problema. Intente de nuevo o llame al (713) 701-1731.', 'There was an issue. Please try again or call (713) 701-1731.')}</p>
+                          <p className="text-red-200">{t('Hubo un problema. Intente de nuevo o llame al +1 (713) 701-1731.', 'There was an issue. Please try again or call +1 (713) 701-1731.')}</p>
                         </motion.div>
                       )}
                   </motion.div>

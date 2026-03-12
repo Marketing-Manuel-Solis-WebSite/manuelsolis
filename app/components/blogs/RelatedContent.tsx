@@ -92,7 +92,7 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
               <ArrowRight size={16} />
             </Link>
             <a
-              href="tel:+18329980914"
+              href="tel:+18325980914"
               onClick={() => {
                 pushToDataLayer('phone_click', {
                   event_category: 'conversion',
