@@ -44,7 +44,7 @@ const interfaceTexts = {
       es: "Si tiene problemas con el programa de mensajería, responda con la palabra clave **HELP** para obtener más ayuda. También puede contactar a nuestro equipo de soporte directamente en:",
       en: "If you are experiencing issues with the messaging program, reply with the keyword **HELP** for more assistance. You may also contact our support team directly at:"
     },
-    phone: { es: '+1-713-844-2700', en: '+1-713-844-2700' },
+    phone: { es: '713-844-2700', en: '713-844-2700' },
     email: { es: 'support@manuelsolis.com', en: 'support@manuelsolis.com' }
   },
   section4: {
@@ -103,7 +103,7 @@ const interfaceTexts = {
   },
   contactInfo: {
     title: { es: '9. Información de Contacto', en: '9. Contact Information' },
-    phone: { es: '+1-713-844-2700', en: '+1-713-844-2700' },
+    phone: { es: '713-844-2700', en: '713-844-2700' },
     email: { es: 'support@manuelsolis.com', en: 'support@manuelsolis.com' }
   }
 };

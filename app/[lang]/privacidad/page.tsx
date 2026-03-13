@@ -171,7 +171,7 @@ const interfaceTexts = {
     ],
     contact: { es: 'Para ejercer sus derechos, contáctenos en:', en: 'To exercise your rights, contact us at:' },
     email: 'support@manuelsolis.com',
-    phone: '+1-713-844-2700'
+    phone: '713-844-2700'
   },
 
   // 8. Enlaces de Terceros
@@ -196,7 +196,7 @@ const interfaceTexts = {
   section11: {
     title: { es: '11. Contáctenos', en: '11. Contact Us' },
     intro: { es: 'Si tiene preguntas sobre esta Política de Privacidad o nuestras prácticas de datos, puede contactarnos en:', en: 'If you have questions about this Privacy Policy or our data practices, you may contact us at:' },
-    phone: '+1-713-844-2700',
+    phone: '713-844-2700',
     email: 'support@manuelsolis.com',
     address: '6657 Navigation Blvd Houston, Texas 77011',
   }
@@ -562,7 +562,7 @@ export default function PrivacidadPage() {
                         </div>
                         <div className="flex items-center gap-2 text-[#B2904D]">
                             <Phone size={16} />
-                            <a href={`tel:${interfaceTexts.section7.phone}`} className="hover:text-sky-300 transition">
+                            <a href={`tel:+1${interfaceTexts.section7.phone.replace(/\D/g, '')}`} className="hover:text-sky-300 transition">
                               {interfaceTexts.section7.phone}
                             </a>
                         </div>
@@ -611,7 +611,7 @@ export default function PrivacidadPage() {
                         </div>
                         <div className="flex items-center gap-3 text-white/90">
                             <Phone size={18} className="text-sky-400" /> 
-                            <a href={`tel:${interfaceTexts.section11.phone}`} className="hover:text-[#B2904D] transition">
+                            <a href={`tel:+1${interfaceTexts.section11.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
                               {interfaceTexts.section11.phone}
                             </a>
                         </div>

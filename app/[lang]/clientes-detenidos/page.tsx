@@ -297,7 +297,7 @@ export default function RecursosPage() {
                         href="tel:+18669795146" 
                         className="text-3xl lg:text-4xl font-black text-white hover:text-[#B2904D] transition-colors"
                     >
-                        +1 866-979-5146
+                        866-979-5146
                     </a>
                     <p className="text-xs text-white/40 mt-4 uppercase tracking-widest">
                         {lang === 'es' ? 'Atención Inmediata' : 'Immediate Attention'}

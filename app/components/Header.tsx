@@ -47,7 +47,7 @@ export default function HeaderProfessional() {
       const phone = officesPhoneMap[officeSlug];
       return {
         phoneNumber: phone,
-        phoneLink: `tel:${phone.replace(/\D/g, '')}`
+        phoneLink: `tel:+1${phone.replace(/\D/g, '')}`
       };
     }
     

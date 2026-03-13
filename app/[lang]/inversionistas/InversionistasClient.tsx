@@ -153,7 +153,7 @@ const ui = {
   footerCopyright: { es: 'Todos los derechos reservados.', en: 'All rights reserved.' },
 };
 
-const PHONE_NUMBER = '+1 (888) 676-1238';
+const PHONE_NUMBER = '(888) 676-1238';
 const PHONE_LINK = 'tel:+18886761238';
 
 // ============================================================
