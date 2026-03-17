@@ -408,7 +408,7 @@ export default function VisaE2Page() {
         <div className="max-w-7xl mx-auto relative z-10">
           
           {/* TABS HEADER */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-16">
             {texts.infoTabs.map((tab, index) => (
               <motion.button
                 key={tab.id}
@@ -452,7 +452,7 @@ export default function VisaE2Page() {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className="max-w-5xl mx-auto"
             >
-              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
                 
                 {/* Decorative glow inside card */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#B2904D]/10 rounded-full blur-[80px] pointer-events-none"></div>
@@ -563,11 +563,11 @@ export default function VisaE2Page() {
               <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">{gT(texts.interface.processMethod)}</span>
             </motion.div>
             
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-6">{gT(texts.interface.processTitle)}</h2>
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-black text-white mb-6">{gT(texts.interface.processTitle)}</h2>
             <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full shadow-[0_0_15px_#B2904D]" />
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12 relative">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12 relative">
             
             {/* Connecting Line (Desktop) */}
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" />
@@ -702,9 +702,6 @@ export default function VisaE2Page() {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
-                  <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-widest text-[#B2904D] bg-[#001540]/80 backdrop-blur-sm px-2 py-1 rounded">
-                    {article.category[lang as 'es' | 'en'] || article.category.es}
-                  </span>
                 </div>
                 <div className="p-4">
                   <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">
@@ -728,7 +725,7 @@ export default function VisaE2Page() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative z-10 p-8 md:p-12 bg-white/5 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/10 overflow-hidden"
+            className="relative z-10 p-5 sm:p-8 md:p-12 bg-white/5 backdrop-blur-2xl rounded-2xl sm:rounded-[3rem] shadow-2xl border border-white/10 overflow-hidden"
           >
               <div className="absolute top-0 right-0 w-96 h-96 bg-[#B2904D]/20 rounded-full blur-[100px] pointer-events-none -mr-20 -mt-20"></div>
               

@@ -219,7 +219,7 @@ function ContactFormContent() {
 
       <div className="container mx-auto px-4 relative z-20 max-w-5xl">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight drop-shadow-sm">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight drop-shadow-sm">
             {t('Solicite su', 'Request Your')}{' '}
             <span className="font-medium text-[#B2904D]">
               {t('Consulta', 'Consultation')}
@@ -232,7 +232,7 @@ function ContactFormContent() {
 
         <motion.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
           // Optimización: Opacidad aumentada, blur reducido
-          className="relative bg-[#001026]/95 backdrop-blur-md rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-white/10 overflow-hidden"
+          className="relative bg-[#001026]/95 backdrop-blur-md rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 shadow-2xl border border-white/10 overflow-hidden"
         >
             <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
 
@@ -314,7 +314,7 @@ function ContactFormContent() {
                 <button
                   type="submit"
                   disabled={isSubmitting || !formData.acceptedTerms}
-                  className={`group relative w-full h-16 overflow-hidden rounded-xl font-bold tracking-widest uppercase text-base transition-all shadow-lg
+                  className={`group relative w-full h-14 sm:h-16 overflow-hidden rounded-xl font-bold tracking-wider sm:tracking-widest uppercase text-sm sm:text-base transition-all shadow-lg
                     ${!formData.acceptedTerms 
                       ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5' 
                       : 'bg-[#B2904D] text-[#001026] hover:bg-[#cbb06d] cursor-pointer transform hover:-translate-y-1'

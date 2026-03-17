@@ -59,12 +59,6 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
             {/* Overlay sutil */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#000F24] to-transparent opacity-60" />
             
-            {/* Badge de Categoría */}
-            <div className="absolute top-4 left-4 px-3 py-1 rounded-md bg-[#001540]/90 backdrop-blur-sm border border-white/10 shadow-lg z-10">
-              <span className="text-[#B2904D] text-[10px] font-bold uppercase tracking-widest">
-                {t(post.category)}
-              </span>
-            </div>
           </div>
 
           {/* Contenido */}

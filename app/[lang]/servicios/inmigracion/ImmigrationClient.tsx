@@ -336,7 +336,7 @@ export default function ImmigrationClient() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
-                className="lg:col-span-5 relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex items-center justify-center"
+                className="lg:col-span-5 relative h-[300px] sm:h-[400px] md:h-[600px] lg:h-[700px] flex items-center justify-center order-2 lg:order-1"
               >
                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
                  
@@ -369,7 +369,7 @@ export default function ImmigrationClient() {
                  </motion.div>
               </motion.div>
 
-              <div className="lg:col-span-7 space-y-6 md:space-y-8 pl-0 lg:pl-12 relative z-20">
+              <div className="lg:col-span-7 space-y-6 md:space-y-8 pl-0 lg:pl-12 relative z-20 order-1 lg:order-2">
                  <motion.div 
                    initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.5 }}
                    className="absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-[#B2904D]/50 to-transparent origin-top hidden lg:block" 
@@ -454,7 +454,7 @@ export default function ImmigrationClient() {
           </motion.div>
 
           {/* TABS - Títulos horizontales */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12">
             {mainCasesData.map((service, index) => (
               <motion.button
                 key={service.id}
@@ -498,7 +498,7 @@ export default function ImmigrationClient() {
               transition={{ duration: 0.5 }}
               className="max-w-5xl mx-auto"
             >
-              <div className="bg-white/5 backdrop-blur-md rounded-[3rem] p-8 md:p-12 border border-white/10 shadow-2xl">
+              <div className="bg-white/5 backdrop-blur-md rounded-2xl sm:rounded-[3rem] p-5 sm:p-8 md:p-12 border border-white/10 shadow-2xl">
                 
                 {/* Header del contenido */}
                 <div className="flex items-start gap-6 mb-8 pb-8 border-b border-white/10">
@@ -601,7 +601,7 @@ export default function ImmigrationClient() {
                       href="#contacto"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="group w-full py-5 bg-[#B2904D] text-[#001540] rounded-2xl font-black flex items-center justify-center gap-3 shadow-lg hover:bg-white transition-all text-lg"
+                      className="group w-full py-4 sm:py-5 bg-[#B2904D] text-[#001540] rounded-2xl font-black flex items-center justify-center gap-2 sm:gap-3 shadow-lg hover:bg-white transition-all text-sm sm:text-base md:text-lg"
                     >
                       <PhoneCall size={24}/>
                       <span>{t('requestEvaluation')}</span>
@@ -637,7 +637,7 @@ export default function ImmigrationClient() {
               <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">{t('processMethod')}</span>
             </motion.div>
             
-            <h2 className="text-4xl font-black text-white mb-6">{t('processTitle')}</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-6">{t('processTitle')}</h2>
             <motion.div 
               initial={{ width: 0 }}
               whileInView={{ width: 80 }}
@@ -647,7 +647,7 @@ export default function ImmigrationClient() {
             />
           </motion.div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {processStepsData.map((step, index) => (
               <motion.div
                 key={step.id}
@@ -779,9 +779,6 @@ export default function ImmigrationClient() {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
-                  <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-widest text-[#B2904D] bg-[#001540]/80 backdrop-blur-sm px-2 py-1 rounded">
-                    {article.category[lang as 'es' | 'en'] || article.category.es}
-                  </span>
                 </div>
                 <div className="p-4">
                   <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">
@@ -807,10 +804,10 @@ export default function ImmigrationClient() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative z-10 p-8 md:p-12 bg-white/5 backdrop-blur-md rounded-[2rem] shadow-2xl border border-white/10" 
+            className="relative z-10 p-5 sm:p-8 md:p-12 bg-white/5 backdrop-blur-md rounded-2xl sm:rounded-[2rem] shadow-2xl border border-white/10" 
           >
              <div className="text-white"> 
-                <h2 className="text-3xl font-black mb-6">{t('requestEvaluation')}</h2>
+                <h2 className="text-2xl sm:text-3xl font-black mb-6">{t('requestEvaluation')}</h2>
                 <p className="text-white/70 mb-8">{t('heroDescription')}</p>
                 <ContactForm /> 
              </div>

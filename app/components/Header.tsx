@@ -461,10 +461,13 @@ export default function HeaderProfessional() {
                       {language === 'es' ? 'INICIAR CONSULTA' : 'START CONSULTATION'}
                     </Link>
 
-                    <div className="flex gap-4">
-                      <button onClick={() => toggleLang('es')} className={`text-xs tracking-widest ${language === 'es' ? 'text-white font-medium' : 'text-gray-500'}`}>ES</button>
-                      <div className="w-[1px] h-4 bg-white/20"></div>
-                      <button onClick={() => toggleLang('en')} className={`text-xs tracking-widest ${language === 'en' ? 'text-white font-medium' : 'text-gray-500'}`}>EN</button>
+                    <div className="flex gap-2">
+                      <button onClick={() => toggleLang('es')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm tracking-widest transition-all ${language === 'es' ? 'text-white font-bold bg-white/10 border border-white/20' : 'text-gray-400 font-medium bg-white/5 border border-transparent'}`}>
+                        <FlagES /> ESP
+                      </button>
+                      <button onClick={() => toggleLang('en')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm tracking-widest transition-all ${language === 'en' ? 'text-white font-bold bg-white/10 border border-white/20' : 'text-gray-400 font-medium bg-white/5 border border-transparent'}`}>
+                        <FlagUS /> ENG
+                      </button>
                     </div>
                 </div>
 

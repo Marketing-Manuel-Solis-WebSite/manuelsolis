@@ -151,7 +151,7 @@ export default function Services() {
           </motion.div>
 
         <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 items-stretch"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -163,7 +163,7 @@ export default function Services() {
                 <TiltCard
                   href={service.href}
                   ariaLabel={`${t.services.learnMore} - ${service.title}`}
-                  className="relative h-full p-8 rounded-[2rem] bg-[#000a20]/60 border border-white/10 backdrop-blur-sm
+                  className="relative h-full p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-[#000a20]/60 border border-white/10 backdrop-blur-sm
                                   group cursor-pointer
                                   flex flex-col justify-between overflow-hidden
                                   shadow-lg hover:shadow-[0_20px_40px_-10px_rgba(178,144,77,0.15)]
@@ -178,7 +178,7 @@ export default function Services() {
                       <div className="flex items-center mb-6 pb-4 border-b border-white/10 group-hover:border-[#B2904D]/30 transition-colors duration-500">
                           <div className="w-1 h-8 bg-[#B2904D] rounded-full mr-5 group-hover:h-12 group-hover:shadow-[0_0_10px_rgba(178,144,77,0.6)] transition-all duration-500"></div>
 
-                          <h3 className="text-2xl sm:text-3xl font-light text-white group-hover:text-white transition-all duration-300">
+                          <h3 className="text-xl sm:text-2xl md:text-3xl font-light text-white group-hover:text-white transition-all duration-300 break-words">
                               {service.title}
                           </h3>
                       </div>
@@ -197,8 +197,8 @@ export default function Services() {
                       </div>
                   </div>
 
-                  <div className="relative z-10 mt-8 pt-4 border-t border-transparent group-hover:border-white/10 transition-colors duration-500">
-                      <span className="text-sm font-medium text-[#B2904D] tracking-wide flex items-center gap-2 opacity-80 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500">
+                  <div className="relative z-10 mt-6 sm:mt-8 pt-4 border-t border-transparent group-hover:border-white/10 transition-colors duration-500">
+                      <span className="text-xs sm:text-sm font-medium text-[#B2904D] tracking-wide flex items-center gap-2 opacity-80 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500">
                            {t.services.learnMore}
                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                       </span>

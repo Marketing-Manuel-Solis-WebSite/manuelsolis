@@ -61,7 +61,7 @@ export default function About() {
             className="lg:col-span-6 space-y-10"
           >
             <motion.div variants={fadeInUp} className="relative">
-              <h2 className="text-5xl md:text-6xl lg:text-[5rem] font-thin text-white leading-[0.9] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-[5rem] font-thin text-white leading-[0.9] tracking-tight">
                 {language === 'es' ? 'Nuestra pasión es' : 'Our passion is'} <br />
                 <span className="font-normal relative inline-block">
                   <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#ffeebb] to-[#B2904D]">
@@ -125,7 +125,7 @@ export default function About() {
           </motion.div>
 
           {/* Right Column: YouTube with Voces overlay */}
-          <div className="lg:col-span-6 relative h-[350px] md:h-[500px] lg:h-[450px] xl:h-[500px] w-full mt-32 mb-24 lg:mt-0 lg:mb-0">
+          <div className="lg:col-span-6 relative h-[300px] sm:h-[350px] md:h-[500px] lg:h-[450px] xl:h-[500px] w-full mt-12 sm:mt-16 mb-12 sm:mb-16 lg:mt-0 lg:mb-0">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-blue-600/20 blur-[80px] rounded-full -z-10" />
               <div className="absolute top-4 -right-4 w-full h-full border border-[#B2904D]/20 rounded-[2rem] z-0 hidden lg:block" />
 
