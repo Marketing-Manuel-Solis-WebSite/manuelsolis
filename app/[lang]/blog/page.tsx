@@ -17,6 +17,126 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`;
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 const BLOG_DATA = {
   posts: [
+    // --- BLOG 20 - NUEVO ---
+    {
+      id: 'asilo_frontera_2026_puerto_entrada_vs_cruce',
+      slug: 'asilo_frontera_2026_puerto_entrada_vs_cruce',
+      title: {
+        es: 'Asilo en la frontera 2026: diferencias entre entregarse, presentarse en un puerto de entrada y otros procesos vigentes',
+        en: 'Asylum at the Border 2026: Differences Between Surrendering, Presenting at a Port of Entry, and Other Current Processes'
+      },
+      excerpt: {
+        es: 'Las reglas de asilo en la frontera cambian constantemente. Conoce las diferencias entre cruzar sin autorización y presentarte en un puerto de entrada, el concepto de miedo creíble y los riesgos de la deportación expedita.',
+        en: 'Asylum rules at the border change constantly. Learn the differences between unauthorized crossing and presenting at a port of entry, the concept of credible fear, and the risks of expedited removal.'
+      },
+      categoryId: 'visa-humanitaria',
+      category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+      author: 'Manuel Solís',
+      date: '2025-04-04',
+      readTime: '11 min',
+      image: '/blog/blog_20/BLOG10_CR1.png',
+      featured: true
+    },
+    // --- BLOG 19 - NUEVO ---
+    {
+      id: 'entrevista_matrimonio_uscis_senales_alerta',
+      slug: 'entrevista_matrimonio_uscis_senales_alerta',
+      title: {
+        es: 'Entrevista de matrimonio: señales de alerta que hacen sospechar a USCIS',
+        en: 'Marriage Interview: Red Flags That Make USCIS Suspicious'
+      },
+      excerpt: {
+        es: 'La entrevista de residencia por matrimonio es uno de los momentos más importantes del proceso. Conoce qué evidencia busca USCIS, qué señales podrían generar sospechas y qué ocurre en una entrevista Stokes.',
+        en: 'The marriage-based residency interview is one of the most important moments in the process. Learn what evidence USCIS looks for, what red flags could raise suspicion, and what happens in a Stokes interview.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-04-01',
+      readTime: '10 min',
+      image: '/blog/blog_19/BLOG09_CR1.png',
+      featured: false
+    },
+    // --- BLOG 18 - NUEVO ---
+    {
+      id: 'ciudadania_en_espanol_reglas_50_20_55_15',
+      slug: 'ciudadania_en_espanol_reglas_50_20_55_15',
+      title: {
+        es: 'Ciudadanía (N-400) en español: ¿quiénes califican por edad y tiempo?',
+        en: 'Citizenship (N-400) in Spanish: Who Qualifies by Age and Time?'
+      },
+      excerpt: {
+        es: 'Para muchos residentes permanentes, el idioma inglés es el mayor obstáculo para la ciudadanía. Descubre las reglas 50/20, 55/15 y la exención médica N-648 que podrían permitirte presentar el examen en español.',
+        en: 'For many permanent residents, English is the biggest obstacle to citizenship. Discover the 50/20, 55/15 rules and the N-648 medical exemption that could allow you to take the exam in Spanish.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-03-28',
+      readTime: '9 min',
+      image: '/blog/blog_18/BLOG08_CR1.png',
+      featured: false
+    },
+    // --- BLOG 17 - NUEVO ---
+    {
+      id: 'marihuana_dui_buen_caracter_moral_inmigracion',
+      slug: 'marihuana_dui_buen_caracter_moral_inmigracion',
+      title: {
+        es: 'Legal en mi estado, delito para Inmigración: marihuana, DUI y buen carácter moral',
+        en: 'Legal in My State, a Crime for Immigration: Marijuana, DUI and Good Moral Character'
+      },
+      excerpt: {
+        es: 'Con la legalización de la marihuana en muchos estados, muchos inmigrantes asumen que no tiene consecuencias migratorias. Descubre cómo la marihuana, un DUI y el buen carácter moral podrían afectar tu Green Card o ciudadanía.',
+        en: 'With marijuana legalization in many states, many immigrants assume it has no immigration consequences. Learn how marijuana, a DUI, and good moral character could affect your Green Card or citizenship.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-03-24',
+      readTime: '10 min',
+      image: '/blog/blog_17/BLOG07_CR1.png',
+      featured: false
+    },
+    // --- BLOG 16 - NUEVO ---
+    {
+      id: 'perdon_i601a_arreglar_papeles_entrada_ilegal',
+      slug: 'perdon_i601a_arreglar_papeles_entrada_ilegal',
+      title: {
+        es: 'Me casé con ciudadano pero entré "por el cerro": el Perdón I-601A explicado',
+        en: 'I Married a Citizen but Entered Illegally: The I-601A Waiver Explained'
+      },
+      excerpt: {
+        es: 'Casarse con un ciudadano no otorga residencia automática si entraste sin inspección. Descubre cómo el Perdón I-601A permite obtener la residencia evitando el castigo de los 10 años.',
+        en: 'Marrying a citizen doesn\'t grant automatic residency if you entered without inspection. Discover how the I-601A Waiver helps obtain residency while avoiding the 10-year bar.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-03-20',
+      readTime: '11 min',
+      image: '/blog/blog_16/BLOG06_CR1.png',
+      featured: false
+    },
+    // --- BLOG 15 - NUEVO ---
+    {
+      id: 'estatus_juvenil_sijs_residencia_jovenes_abandonados',
+      slug: 'estatus_juvenil_sijs_residencia_jovenes_abandonados',
+      title: {
+        es: 'Estatus Juvenil (SIJS): papeles para jóvenes abandonados por un solo padre',
+        en: 'Juvenile Status (SIJS): Papers for Youth Abandoned by One Parent'
+      },
+      excerpt: {
+        es: 'Muchos jóvenes que viven con su madre u otro familiar podrían calificar para el SIJS, incluso si sólo uno de sus padres estuvo ausente. Conoce qué es el SIJS y cómo podría abrir un camino a la residencia juvenil.',
+        en: 'Many youth living with their mother or another relative could qualify for SIJS, even if only one parent was absent. Learn what SIJS is and how it could open a path to juvenile residency.'
+      },
+      categoryId: 'visa-humanitaria',
+      category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+      author: 'Manuel Solís',
+      date: '2025-03-17',
+      readTime: '10 min',
+      image: '/blog/blog_15/BLOG05_CR1.png',
+      featured: false
+    },
     // --- BLOG 14 - NUEVO ---
     {
       id: 'foia_migratoria_pedir_record_antes_de_aplicar',

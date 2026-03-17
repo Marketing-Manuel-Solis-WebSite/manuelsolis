@@ -52,6 +52,12 @@ const routes: SitemapEntry[] = [
   { route: '/blog/advance_parole_2026_viajar_con_daca_tps_visa_u', priority: 0.7, changeFrequency: 'monthly' },
   { route: '/blog/residencia_laboral_eb3_ley_245i_entrada_indocumentada', priority: 0.7, changeFrequency: 'monthly' },
   { route: '/blog/foia_migratoria_pedir_record_antes_de_aplicar', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/perdon_i601a_arreglar_papeles_entrada_ilegal', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/marihuana_dui_buen_caracter_moral_inmigracion', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/ciudadania_en_espanol_reglas_50_20_55_15', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/entrevista_matrimonio_uscis_senales_alerta', priority: 0.7, changeFrequency: 'monthly' },
+  { route: '/blog/asilo_frontera_2026_puerto_entrada_vs_cruce', priority: 0.7, changeFrequency: 'monthly' },
 
   // Key pages
   { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly' },

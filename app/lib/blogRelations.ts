@@ -87,6 +87,42 @@ const allArticles: Record<string, RelatedArticle> = {
     image: '/blog/visa-u.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
+  estatus_juvenil_sijs_residencia_jovenes_abandonados: {
+    title: { es: 'Estatus Juvenil SIJS: residencia para jóvenes abandonados', en: 'SIJS Juvenile Status: Residency for Abandoned Youth' },
+    slug: 'estatus_juvenil_sijs_residencia_jovenes_abandonados',
+    image: '/blog/blog_15/BLOG05_CR1.png',
+    category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+  },
+  perdon_i601a_arreglar_papeles_entrada_ilegal: {
+    title: { es: 'Perdón I-601A: arreglar papeles si entraste ilegalmente', en: 'I-601A Waiver: Fix Papers After Illegal Entry' },
+    slug: 'perdon_i601a_arreglar_papeles_entrada_ilegal',
+    image: '/blog/blog_16/BLOG06_CR1.png',
+    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
+  },
+  marihuana_dui_buen_caracter_moral_inmigracion: {
+    title: { es: 'Marihuana, DUI y buen carácter moral en inmigración', en: 'Marijuana, DUI and Good Moral Character in Immigration' },
+    slug: 'marihuana_dui_buen_caracter_moral_inmigracion',
+    image: '/blog/blog_17/BLOG07_CR1.png',
+    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
+  },
+  ciudadania_en_espanol_reglas_50_20_55_15: {
+    title: { es: 'Ciudadanía en español: reglas 50/20 y 55/15', en: 'Citizenship in Spanish: 50/20 and 55/15 Rules' },
+    slug: 'ciudadania_en_espanol_reglas_50_20_55_15',
+    image: '/blog/blog_18/BLOG08_CR1.png',
+    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
+  },
+  entrevista_matrimonio_uscis_senales_alerta: {
+    title: { es: 'Entrevista de matrimonio USCIS: señales de alerta', en: 'USCIS Marriage Interview: Red Flags' },
+    slug: 'entrevista_matrimonio_uscis_senales_alerta',
+    image: '/blog/blog_19/BLOG09_CR1.png',
+    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
+  },
+  asilo_frontera_2026_puerto_entrada_vs_cruce: {
+    title: { es: 'Asilo en la frontera 2026: puerto de entrada vs cruce irregular', en: 'Asylum at the Border 2026: Port of Entry vs Unauthorized Crossing' },
+    slug: 'asilo_frontera_2026_puerto_entrada_vs_cruce',
+    image: '/blog/blog_20/BLOG10_CR1.png',
+    category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+  },
 };
 
 // Topical clusters for cross-linking
@@ -107,18 +143,34 @@ const clusters: Record<string, string[]> = {
     'ley_de_los_10_anos_cancelacion_de_deportacion',
     'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
     'advance_parole_2026_viajar_con_daca_tps_visa_u',
+    'marihuana_dui_buen_caracter_moral_inmigracion',
   ],
   process: [
     'Formulario_G28_Cambiar_Abogado_Inmigracion',
     'residencia_laboral_eb3_ley_245i_entrada_indocumentada',
     'foia_migratoria_pedir_record_antes_de_aplicar',
     'advance_parole_2026_viajar_con_daca_tps_visa_u',
+    'perdon_i601a_arreglar_papeles_entrada_ilegal',
+    'ciudadania_en_espanol_reglas_50_20_55_15',
+    'entrevista_matrimonio_uscis_senales_alerta',
   ],
   humanitarian: [
     'Visa_T_trabajo_forzado_por_deuda_con_coyote',
     'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
     'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
     'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
+    'estatus_juvenil_sijs_residencia_jovenes_abandonados',
+    'asilo_frontera_2026_puerto_entrada_vs_cruce',
+  ],
+  family_marriage: [
+    'entrevista_matrimonio_uscis_senales_alerta',
+    'perdon_i601a_arreglar_papeles_entrada_ilegal',
+    'ciudadania_en_espanol_reglas_50_20_55_15',
+  ],
+  juvenile_asylum: [
+    'estatus_juvenil_sijs_residencia_jovenes_abandonados',
+    'asilo_frontera_2026_puerto_entrada_vs_cruce',
+    'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
   ],
 };
 
