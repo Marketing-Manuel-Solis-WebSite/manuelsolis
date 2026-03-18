@@ -108,9 +108,9 @@ export default function Footer() {
         {/* --- TEXTO LEGAL SMS (NUEVO) --- */}
         <div className="max-w-4xl mx-auto text-center mb-12 opacity-60">
             <p className="text-[10px] md:text-xs leading-relaxed font-light tracking-wide text-blue-100">
-                {language === 'es' 
-                    ? "Acepto recibir mensajes de texto de marketing y otros mensajes del Law Office of Manuel Solis al número proporcionado. Pueden aplicarse tarifas de mensajes y datos. El consentimiento no es una condición para recibir servicios. Para más información, por favor revise nuestra Política de Privacidad."
-                    : "I agree to receive marketing text messages and other messages from the Law Office of Manuel Solis at the number provided. Message and data rates may apply. Consent is not a condition of receiving services. For more information, please review our Privacy Policy."
+                {language === 'es'
+                    ? "Al proporcionar voluntariamente su número de teléfono y optar explícitamente por recibir mensajes de texto, usted consiente recibir comunicaciones SMS del Law Office of Manuel Solis relacionadas con responder a consultas sobre servicios de inmigración, programar consultas, enviar recordatorios de citas, solicitar documentos y proporcionar actualizaciones de casos. La frecuencia de los mensajes puede variar. Pueden aplicarse tarifas estándar de mensajes y datos. Su consentimiento para recibir mensajes SMS no es una condición para adquirir ningún servicio. Puede cancelar en cualquier momento respondiendo \"STOP\" a cualquier mensaje, y puede solicitar ayuda adicional respondiendo \"HELP\"."
+                    : "By voluntarily providing your phone number and explicitly opting in to text messages, you consent to receive SMS communications from Law Office of Manuel Solis regarding respond to immigration service inquiries, schedule consultations, send appointment reminders, request documents, and provide case updates. Message frequency may vary. Standard messaging and data rates may apply. Your consent to receive SMS messages is not a condition of purchasing any service. You may opt out at any time by replying \"STOP\" to any message, and you may request additional assistance by replying \"HELP\"."
                 }
             </p>
         </div>
@@ -120,6 +120,14 @@ export default function Footer() {
           
           {/* Categorías (Links secundarios) */}
           <div className="flex flex-wrap justify-center gap-4">
+             <Link href={`/${language}/privacidad`} className="hover:text-[#B2904D] transition-colors">
+               {language === 'es' ? 'Política de Privacidad' : 'Privacy Policy'}
+             </Link>
+             <span>|</span>
+             <Link href={`/${language}/sms-terminos`} className="hover:text-[#B2904D] transition-colors">
+               {language === 'es' ? 'Términos de Servicio SMS' : 'SMS Terms of Service'}
+             </Link>
+             <span>|</span>
              <Link href={`/${language}/category/proteccion-legal-para-migrantes`} className="hover:text-[#B2904D] transition-colors">
                {language === 'es' ? 'Protección legal' : 'Legal Protection'}
              </Link>

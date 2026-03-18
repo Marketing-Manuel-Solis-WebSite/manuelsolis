@@ -285,6 +285,19 @@ function ContactFormContent() {
               </motion.div>
 
               <div className="space-y-4">
+                  {/* SMS Disclaimer */}
+                  <motion.div variants={itemVar} className="p-5 rounded-xl bg-[#000814]/50 border border-white/10">
+                    <p className="text-xs text-blue-200/80 leading-relaxed">
+                      {t(
+                        'Al proporcionar voluntariamente su número de teléfono y optar explícitamente por recibir mensajes de texto, usted consiente recibir comunicaciones SMS del Law Office of Manuel Solis relacionadas con responder a consultas sobre servicios de inmigración, programar consultas, enviar recordatorios de citas, solicitar documentos y proporcionar actualizaciones de casos. La frecuencia de los mensajes puede variar. Pueden aplicarse tarifas estándar de mensajes y datos. Su consentimiento para recibir mensajes SMS no es una condición para adquirir ningún servicio. Puede cancelar en cualquier momento respondiendo "STOP" a cualquier mensaje, y puede solicitar ayuda adicional respondiendo "HELP". Para más detalles, por favor visite nuestra',
+                        'By voluntarily providing your phone number and explicitly opting in to text messages, you consent to receive SMS communications from Law Office of Manuel Solis regarding respond to immigration service inquiries, schedule consultations, send appointment reminders, request documents, and provide case updates. Message frequency may vary. Standard messaging and data rates may apply. Your consent to receive SMS messages is not a condition of purchasing any service. You may opt out at any time by replying "STOP" to any message, and you may request additional assistance by replying "HELP." For more details, please visit our'
+                      )}{' '}
+                      <a href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('política de privacidad', 'privacy policy')}</a>{' '}
+                      {t('y', 'and')}{' '}
+                      <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('términos de servicio SMS', 'SMS terms of service')}</a>.
+                    </p>
+                  </motion.div>
+
                   <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                     <div className="relative flex items-center pt-1">
                       <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-7 w-7 sm:h-6 sm:w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400" />
@@ -292,9 +305,9 @@ function ContactFormContent() {
                     </div>
                     <label htmlFor="acceptedTerms" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
                       {t('Acepto los', 'I accept the')}{' '}
-                      <a href="/sms-terminos" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio', 'Terms of Service')}</a>{' '}
+                      <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio', 'Terms of Service')}</a>{' '}
                       {t('y he leído la', 'and have read the')}{' '}
-                      <a href="/privacidad" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Statement')}</a>.
+                      <a href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Statement')}</a>.
                     </label>
                   </motion.div>
 
@@ -304,8 +317,8 @@ function ContactFormContent() {
                       <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
                     </div>
                     <label htmlFor="marketingConsent" className="text-xs text-blue-200/80 leading-relaxed cursor-pointer select-none group-hover:text-blue-100 transition-colors">
-                      {t('Me gustaría recibir actualizaciones del Law Office of Manuel Solís al número de teléfono proporcionado. Pueden aplicar tarifas de mensajes y datos. Responda STOP para cancelar, HELP para ayuda.', 'I would like to receive updates from the Law Office of Manuel Solís at the phone number provided. Message and data rates may apply. Reply STOP to cancel, HELP for help.')}{' '}
-                      <a href="/sms-terminos" className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio SMS', 'Law Office of Manuel Solís SMS Terms of Service')}</a>
+                      {t('Me gustaría recibir comunicaciones SMS del Law Office of Manuel Solís al número de teléfono proporcionado relacionadas con consultas sobre servicios de inmigración, programación de consultas, recordatorios de citas, solicitud de documentos y actualizaciones de casos. Pueden aplicar tarifas de mensajes y datos. La frecuencia de los mensajes puede variar. Responda STOP para cancelar, HELP para ayuda.', 'I would like to receive SMS communications from the Law Office of Manuel Solís at the phone number provided regarding immigration service inquiries, scheduling consultations, appointment reminders, document requests, and case updates. Message and data rates may apply. Message frequency may vary. Reply STOP to cancel, HELP for help.')}{' '}
+                      <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio SMS', 'SMS Terms of Service')}</a>
                     </label>
                   </motion.div>
               </div>

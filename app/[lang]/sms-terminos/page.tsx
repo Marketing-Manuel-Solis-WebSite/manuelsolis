@@ -23,8 +23,8 @@ const interfaceTexts = {
   section1: {
     title: { es: '1. Descripción del Programa', en: '1. Program Description' },
     content: {
-      es: "La Oficina Legal de Manuel Solís ofrece un programa de mensajería de texto que proporciona actualizaciones relacionadas con su caso, recordatorios de citas, notificaciones importantes y otras comunicaciones relevantes a los servicios proporcionados por nuestra oficina legal. Al optar por participar, usted acepta recibir mensajes SMS recurrentes de la Oficina Legal de Manuel Solís.",
-      en: "The Law Office of Manuel Solís offers a text messaging program that provides updates related to your case, appointment reminders, important notifications, and other communications relevant to services provided by our law office. By opting in, you agree to receive recurring SMS messages from the Law Office of Manuel Solís."
+      es: "La Oficina Legal de Manuel Solís ofrece un programa de mensajería de texto para responder a consultas sobre servicios de inmigración, programar consultas, enviar recordatorios de citas, solicitar documentos y proporcionar actualizaciones de casos. Al optar por participar, usted acepta recibir mensajes SMS recurrentes de la Oficina Legal de Manuel Solís.",
+      en: "The Law Office of Manuel Solís offers a text messaging program to respond to immigration service inquiries, schedule consultations, send appointment reminders, request documents, and provide case updates. By opting in, you agree to receive recurring SMS messages from the Law Office of Manuel Solís."
     }
   },
   section2: {
@@ -65,9 +65,11 @@ const interfaceTexts = {
       en: "Message frequency varies based on your case status and office communications, but generally includes:"
     },
     items: [
-      { es: "Actualizaciones de casos", en: "Case updates" },
-      { es: "Recordatorios de citas", en: "Appointment reminders" },
-      { es: "Alertas de servicio importantes", en: "Important service alerts" },
+      { es: "Responder a consultas sobre servicios de inmigración", en: "Respond to immigration service inquiries" },
+      { es: "Programar consultas", en: "Schedule consultations" },
+      { es: "Enviar recordatorios de citas", en: "Send appointment reminders" },
+      { es: "Solicitar documentos", en: "Request documents" },
+      { es: "Proporcionar actualizaciones de casos", en: "Provide case updates" },
     ],
     note: {
       es: "Si tiene preguntas sobre su plan de texto o plan de datos, comuníquese con su proveedor de telefonía móvil.",

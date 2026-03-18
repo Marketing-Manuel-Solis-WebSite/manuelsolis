@@ -68,10 +68,11 @@ const interfaceTexts = {
     title: { es: '2. Cómo Usamos Su Información', en: '2. How We Use Your Information' },
     intro: { es: 'Utilizamos la información que recopilamos para:', en: 'We use the information we collect for:' },
     items: [
-      { es: 'Comunicar actualizaciones relacionadas con su caso', en: 'Communicating updates related to your case' },
+      { es: 'Responder a consultas sobre servicios de inmigración', en: 'Responding to immigration service inquiries' },
+      { es: 'Programar consultas', en: 'Scheduling consultations' },
       { es: 'Enviar recordatorios de citas', en: 'Sending appointment reminders' },
-      { es: 'Proporcionar anuncios de la oficina o notificaciones relacionadas con el servicio', en: 'Providing office announcements or service-related notifications' },
-      { es: 'Responder a consultas y brindar soporte al cliente', en: 'Responding to inquiries and providing customer support' },
+      { es: 'Solicitar documentos', en: 'Requesting documents' },
+      { es: 'Proporcionar actualizaciones de casos', en: 'Providing case updates' },
       { es: 'Operar y mejorar nuestro sitio web', en: 'Operating and improving our website' },
       { es: 'Cumplir con obligaciones legales y éticas', en: 'Complying with legal and ethical obligations' },
       { es: 'Mantener una comunicación segura con el cliente', en: 'Maintaining secure client communication' },
@@ -86,9 +87,11 @@ const interfaceTexts = {
     A: {
       title: { es: 'A. Propósito del Mensaje', en: 'A. Message Purpose' },
       items: [
-        { es: 'Actualizaciones de casos', en: 'Case updates' },
-        { es: 'Recordatorios de citas', en: 'Appointment reminders' },
-        { es: 'Alertas importantes de la oficina', en: 'Important office alerts' },
+        { es: 'Responder a consultas sobre servicios de inmigración', en: 'Respond to immigration service inquiries' },
+        { es: 'Programar consultas', en: 'Schedule consultations' },
+        { es: 'Enviar recordatorios de citas', en: 'Send appointment reminders' },
+        { es: 'Solicitar documentos', en: 'Request documents' },
+        { es: 'Proporcionar actualizaciones de casos', en: 'Provide case updates' },
       ]
     },
     B: {
