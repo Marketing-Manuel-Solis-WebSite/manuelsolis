@@ -21,6 +21,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -34,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Ley de los 10 a\u00f1os en inmigraci\u00f3n: mitos y realidad legal | Manuel Sol\u00eds',
+    metaTitle: 'Ley de los 10 a\u00f1os en inmigraci\u00f3n: mitos y realidad legal',
     metaDesc: '\u00bfCrees que calificas por tener 10 a\u00f1os en EE. UU.? Conoce la verdad sobre la Cancelaci\u00f3n de Deportaci\u00f3n y por qu\u00e9 no es autom\u00e1tica.',
     ui: {
       back: 'Volver al blog',
@@ -152,7 +153,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: '10 Year Rule in Immigration: Myths and Legal Reality | Manuel Sol\u00eds',
+    metaTitle: '10 Year Rule in Immigration: Myths and Legal Reality',
     metaDesc: 'Think you qualify just by living 10 years in the U.S.? Learn the truth about Cancellation of Removal and why it is not automatic.',
     ui: {
       back: 'Back to blog',
@@ -280,7 +281,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -311,7 +311,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/ley_de_los_10_anos_cancelacion_de_deportacion`,
         'en': `${SITE_URL}/en/blog/ley_de_los_10_anos_cancelacion_de_deportacion`,
-        'x-default': `${SITE_URL}/en/blog/ley_de_los_10_anos_cancelacion_de_deportacion`,
+        'x-default': `${SITE_URL}/es/blog/ley_de_los_10_anos_cancelacion_de_deportacion`,
       },
     },
   };
@@ -321,32 +321,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Sol\u00eds",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-03-02",
-    "dateModified": "2025-03-02",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/ley_de_los_10_anos_cancelacion_de_deportacion`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -356,12 +331,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="ley_de_los_10_anos_cancelacion_de_deportacion"
+        date="2025-03-02"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="10"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -727,4 +705,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

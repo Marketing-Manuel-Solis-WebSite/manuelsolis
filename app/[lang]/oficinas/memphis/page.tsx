@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Memphis, TN | Manuel Solís`
-    : `Lawyers in Memphis, TN | Manuel Solis`;
+    ? `Abogados en Memphis, TN`
+    : `Lawyers in Memphis, TN`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Memphis. Abogados de inmigración, multas y criminal. Abogada Lupita Martínez lista para ayudarle.`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/memphis`,
         'en': `https://www.manuelsolis.com/en/oficinas/memphis`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/memphis`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/memphis`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/memphis`,
-      images: ['/public/offices/ofAirways.png'],
+      images: ['/offices/ofAirways.png'],
       type: 'website', 
     }
   };
@@ -125,4 +125,8 @@ export default async function MemphisPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

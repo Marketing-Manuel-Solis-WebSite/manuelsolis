@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Derecho Familiar e Inmigración | Manuel Solís'
-    : 'Family Law & Immigration Attorneys | Manuel Solis';
+    ? 'Abogados de Derecho Familiar e Inmigración'
+    : 'Family Law & Immigration Attorneys';
 
   const description = isEs
     ? 'Abogados expertos en derecho familiar: peticiones familiares, reunificación, custodia y más. Más de 30 años protegiendo a las familias inmigrantes.'
@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `${SITE_URL}/es/servicios/familia`,
         'en': `${SITE_URL}/en/servicios/familia`,
-        'x-default': `${SITE_URL}/en/servicios/familia`,
+        'x-default': `${SITE_URL}/es/servicios/familia`,
       },
     },
     openGraph: {
       title,
       description,
       url: `${SITE_URL}/${lang}/servicios/familia`,
-      images: ['/og-image.jpg'],
+      images: ['/home-image.jpg'],
     },
   };
 }
@@ -79,7 +79,7 @@ export default async function FamiliaPage({ params }: Props) {
   const schemaData = getLegalServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
-    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/#servicios` },
+    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
     { name: lang === 'es' ? 'Familia' : 'Family', url: `/${lang}/servicios/familia` },
   ]);
 
@@ -96,4 +96,8 @@ export default async function FamiliaPage({ params }: Props) {
       <FamiliaClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

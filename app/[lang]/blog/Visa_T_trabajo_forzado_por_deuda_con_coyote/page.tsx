@@ -20,6 +20,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -32,7 +33,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Visa T: papeles si trabajaste para pagar deuda a un coyote | Manuel Solís',
+    metaTitle: 'Visa T: papeles si trabajaste para pagar deuda a un coyote',
     metaDesc: '¿Te obligaron a trabajar para pagarle a un coyote bajo amenazas? Descubre cómo la Visa T puede protegerte como víctima de trata laboral y ayudarte a arreglar papeles legalmente.',
     ui: {
       back: 'Volver al blog',
@@ -138,7 +139,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'T Visa: Immigration Relief for Forced Labor by Smuggling Debt | Manuel Solis',
+    metaTitle: 'T Visa: Immigration Relief for Forced Labor by Smuggling Debt',
     metaDesc: 'Were you forced to work to repay a smuggler under threats? Learn how the T Visa may protect victims of labor trafficking and help you obtain legal status in the U.S.',
     ui: {
       back: 'Back to blog',
@@ -254,7 +255,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -285,7 +285,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/Visa_T_trabajo_forzado_por_deuda_con_coyote`,
         'en': `${SITE_URL}/en/blog/Visa_T_trabajo_forzado_por_deuda_con_coyote`,
-        'x-default': `${SITE_URL}/en/blog/Visa_T_trabajo_forzado_por_deuda_con_coyote`,
+        'x-default': `${SITE_URL}/es/blog/Visa_T_trabajo_forzado_por_deuda_con_coyote`,
       },
     },
   };
@@ -295,32 +295,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-02-03",
-    "dateModified": "2025-02-03",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/Visa_T_trabajo_forzado_por_deuda_con_coyote`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -353,12 +328,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="Visa_T_trabajo_forzado_por_deuda_con_coyote"
+        date="2025-02-03"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="9"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -662,4 +640,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

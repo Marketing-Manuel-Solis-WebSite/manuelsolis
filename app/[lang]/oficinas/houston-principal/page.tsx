@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Houston, TX (Navigation Blvd) | Manuel Solís`
-    : `Lawyers in Houston, TX (Navigation Blvd) | Manuel Solis`;
+    ? `Abogados en Houston, TX (Navigation Blvd)`
+    : `Lawyers in Houston, TX (Navigation Blvd)`;
 
   const description = isEs
     ? `Oficina principal de Manuel Solís en Houston (Navigation Blvd). Abogados de inmigración y accidentes sirviendo a la comunidad hispana desde hace 30 años.`
@@ -40,14 +40,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/houston-principal`,
         'en': `https://www.manuelsolis.com/en/oficinas/houston-principal`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/houston-principal`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/houston-principal`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/houston-principal`,
-      images: ['/public/offices/houston.png'],
+      images: ['/offices/Houston.png'],
       type: 'website', // CORREGIDO: 'business.business' -> 'website' para evitar error TS
     }
   };
@@ -124,4 +124,8 @@ export default async function HoustonPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Defensa Criminal | Manuel Solís'
-    : 'Criminal Defense Attorneys | Manuel Solis';
+    ? 'Abogados de Defensa Criminal'
+    : 'Criminal Defense Attorneys';
 
   const description = isEs
     ? 'Abogados expertos en defensa criminal: DUI/DWI, delitos menores y graves, y consecuencias migratorias de cargos criminales. ¡Consulta Gratis!'
@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `${SITE_URL}/es/servicios/ley-criminal`,
         'en': `${SITE_URL}/en/servicios/ley-criminal`,
-        'x-default': `${SITE_URL}/en/servicios/ley-criminal`,
+        'x-default': `${SITE_URL}/es/servicios/ley-criminal`,
       },
     },
     openGraph: {
       title,
       description,
       url: `${SITE_URL}/${lang}/servicios/ley-criminal`,
-      images: ['/og-image.jpg'],
+      images: ['/home-image.jpg'],
     },
   };
 }
@@ -78,7 +78,7 @@ export default async function LeyCriminalPage({ params }: Props) {
   const schemaData = getLegalServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
-    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/#servicios` },
+    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
     { name: lang === 'es' ? 'Ley Criminal' : 'Criminal Law', url: `/${lang}/servicios/ley-criminal` },
   ]);
 
@@ -95,4 +95,8 @@ export default async function LeyCriminalPage({ params }: Props) {
       <LeyCriminalClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

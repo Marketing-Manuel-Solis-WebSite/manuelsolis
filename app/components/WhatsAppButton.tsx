@@ -54,7 +54,8 @@ export default function WhatsAppButton() {
   return (
     <>
       {/* Botón flotante de WhatsApp */}
-      <div className="fixed bottom-24 right-6 sm:bottom-6 sm:right-24 z-50">
+      {/* Hidden on mobile (replaced by MobileStickyBar), visible on sm+ */}
+      <div className="fixed bottom-6 right-24 z-50 hidden sm:block">
         
         {/* Tooltip */}
         {showTooltip && (

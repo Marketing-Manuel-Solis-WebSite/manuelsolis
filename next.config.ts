@@ -31,9 +31,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Root / is handled by middleware (language detection + crawler logic)
       {
-        source: '/',
-        destination: '/es',
+        source: '/:lang/informacion/nosotros',
+        destination: '/:lang/nosotros',
         permanent: true,
       },
     ];

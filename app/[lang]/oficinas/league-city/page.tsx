@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en League City, TX (South Shore Blvd) | Manuel Solís`
-    : `Lawyers in League City, TX (South Shore Blvd) | Manuel Solis`;
+    ? `Abogados en League City, TX (South Shore Blvd)`
+    : `Lawyers in League City, TX (South Shore Blvd)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en League City (South Shore Blvd). Abogados de inmigración, familia y accidentes sirviendo a la comunidad 24 horas.`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/league-city`,
         'en': `https://www.manuelsolis.com/en/oficinas/league-city`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/league-city`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/league-city`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/league-city`,
-      images: ['/public/offices/League.png'],
+      images: ['/offices/League.png'],
       type: 'website', 
     }
   };
@@ -120,4 +120,8 @@ export default async function LeagueCityPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

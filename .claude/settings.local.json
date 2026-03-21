@@ -8,7 +8,14 @@
       "Bash(find app:*)",
       "Bash(rm:*)",
       "Bash(taskkill:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(for dir:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/Carlos Anaya Ruiz/manuelsolis/app/[lang]/blog/$dir/**)",
+      "Bash(done)",
+      "WebFetch(domain:www.manuelsolis.com)",
+      "Bash(curl:*)",
+      "Bash(for url:*)"
     ]
   }
 }

@@ -423,16 +423,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const isEs = lang === 'es';
 
-  const title = isEs 
-    ? 'Blog de Inmigración y Noticias Legales | Manuel Solís Law Firm' 
-    : 'Immigration Blog & Legal News | Manuel Solis Law Firm';
+  const title = isEs
+    ? 'Blog de Inmigración y Noticias Legales'
+    : 'Immigration Blog & Legal News';
   
   const description = isEs
     ? 'Manténgase informado con las últimas noticias de inmigración, cambios en la Visa U, consejos para la residencia y guías legales del Abogado Manuel Solís.'
     : 'Stay informed with the latest immigration news, U Visa updates, residency tips, and legal guides from Attorney Manuel Solis.';
 
   return {
-    metadataBase: new URL(SITE_URL),
     title,
     description,
     alternates: {
@@ -440,7 +439,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'en': `${SITE_URL}/en/blog`,
         'es': `${SITE_URL}/es/blog`,
-        'x-default': `${SITE_URL}/en/blog`,
+        'x-default': `${SITE_URL}/es/blog`,
       },
     },
     openGraph: {
@@ -537,4 +536,8 @@ export default async function BlogPageIndex({ params }: { params: Promise<{ lang
       <Footer />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

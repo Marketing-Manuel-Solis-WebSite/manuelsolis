@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? `Abogados de Accidentes en Houston, TX (6705 Navigation Blvd) | Manuel Solís`
-    : `Accident Lawyers in Houston, TX (6705 Navigation Blvd) | Manuel Solis`;
+    ? `Abogados de Accidentes en Houston, TX (6705 Navigation Blvd)`
+    : `Accident Lawyers in Houston, TX (6705 Navigation Blvd)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en 6705 Navigation Blvd, Houston. Abogados de accidentes e inmigración listos para defender sus derechos. ¡Llámenos!`
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/houston-accidentes`,
         'en': `https://www.manuelsolis.com/en/oficinas/houston-accidentes`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/houston-accidentes`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/houston-accidentes`,
       },
     },
     openGraph: {
@@ -118,4 +118,8 @@ export default async function HoustonAccidentesPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

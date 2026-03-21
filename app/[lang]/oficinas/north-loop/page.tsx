@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Houston, TX (North Loop) | Manuel Solís`
-    : `Lawyers in Houston, TX (North Loop) | Manuel Solis`;
+    ? `Abogados en Houston, TX (North Loop)`
+    : `Lawyers in Houston, TX (North Loop)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en North Loop W, Houston. Abogados de inmigración, criminal y familia sirviendo a la comunidad 24 horas.`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/north-loop`,
         'en': `https://www.manuelsolis.com/en/oficinas/north-loop`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/north-loop`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/north-loop`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/north-loop`,
-      images: ['/public/offices/ofLoop.png'],
+      images: ['/offices/ofLoop.png'],
       type: 'website', 
     }
   };
@@ -120,4 +120,8 @@ export default async function NorthLoopPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

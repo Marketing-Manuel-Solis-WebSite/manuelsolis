@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         es: `${SITE_URL}/es/inversionistas`,
         en: `${SITE_URL}/en/inversionistas`,
-        'x-default': `${SITE_URL}/en/inversionistas`,
+        'x-default': `${SITE_URL}/es/inversionistas`,
       },
     },
     openGraph: {
       title,
       description,
       url: `${SITE_URL}/${lang}/inversionistas`,
-      images: ['/og-image.jpg'],
+      images: ['/home-image.jpg'],
     },
   };
 }
@@ -88,4 +88,8 @@ export default async function InversionistasPage({ params }: Props) {
       <InversionistasClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

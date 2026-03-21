@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Houston Bellaire, TX (Servicio en Chino) | Manuel Solís`
-    : `Lawyers in Houston Bellaire, TX (Chinese Service) | Manuel Solis`;
+    ? `Abogados en Houston Bellaire, TX (Servicio en Chino)`
+    : `Lawyers in Houston Bellaire, TX (Chinese Service)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Bellaire Blvd, Houston. Abogada Ni Yan ofrece servicios de inmigración en chino, español e inglés. ¡Consulta Gratis!`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/houston-bellaire`,
         'en': `https://www.manuelsolis.com/en/oficinas/houston-bellaire`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/houston-bellaire`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/houston-bellaire`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/houston-bellaire`,
-      images: ['/public/offices/Houston.png'],
+      images: ['/offices/Houston.png'],
       type: 'website', 
     }
   };
@@ -127,4 +127,8 @@ export default async function BellairePage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

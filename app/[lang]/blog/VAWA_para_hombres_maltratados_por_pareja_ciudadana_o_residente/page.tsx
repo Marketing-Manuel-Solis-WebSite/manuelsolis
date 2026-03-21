@@ -20,6 +20,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -32,7 +33,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'VAWA para hombres: abuso de pareja ciudadana o residente | Manuel Solís',
+    metaTitle: 'VAWA para hombres: abuso de pareja ciudadana o residente',
     metaDesc: '¿Eres hombre y sufres maltrato por tu esposa ciudadana o residente permanente? Descubre cómo VAWA puede protegerte y ayudarte a obtener la residencia sin depender de tu agresora.',
     ui: {
       back: 'Volver al blog',
@@ -137,7 +138,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'VAWA for Men: Abuse by U.S. Citizen or Resident Spouse | Manuel Solis',
+    metaTitle: 'VAWA for Men: Abuse by U.S. Citizen or Resident Spouse',
     metaDesc: 'Are you a man being abused by your U.S. citizen or permanent resident spouse? Learn how VAWA may protect you and help you obtain legal residency without relying on your abuser.',
     ui: {
       back: 'Back to blog',
@@ -252,7 +253,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -289,7 +289,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente`,
         'en': `${SITE_URL}/en/blog/VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente`,
-        'x-default': `${SITE_URL}/en/blog/VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente`,
+        'x-default': `${SITE_URL}/es/blog/VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente`,
       },
     },
   };
@@ -299,32 +299,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-01-30",
-    "dateModified": "2025-01-30",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -357,12 +332,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente"
+        date="2025-01-30"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="8"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -666,4 +644,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

@@ -21,6 +21,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -34,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Visa U y VAWA: Incluir hijos y cónyuges derivados | Manuel Solís',
+    metaTitle: 'Visa U y VAWA: Incluir hijos y cónyuges derivados',
     metaDesc: '¿Tienes una Visa U o VAWA en trámite? Descubre cómo incluir a hijos o pareja como derivados y proteger a tu familia legalmente.',
     ui: {
       back: 'Volver al blog',
@@ -143,7 +144,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'U Visa & VAWA: Including Children and Spouses as Derivatives | Manuel Solís',
+    metaTitle: 'U Visa & VAWA: Including Children and Spouses as Derivatives',
     metaDesc: 'Do you have a pending U Visa or VAWA? Learn how to include children or a spouse as derivatives and legally protect your family.',
     ui: {
       back: 'Back to blog',
@@ -262,7 +263,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -293,7 +293,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados`,
         'en': `${SITE_URL}/en/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados`,
-        'x-default': `${SITE_URL}/en/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados`,
+        'x-default': `${SITE_URL}/es/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados`,
       },
     },
   };
@@ -303,32 +303,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-02-16",
-    "dateModified": "2025-02-16",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -338,12 +313,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados"
+        date="2025-02-16"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="8"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -708,4 +686,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

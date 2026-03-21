@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en El Paso, TX (Admiral St) | Manuel Solís`
-    : `Lawyers in El Paso, TX (Admiral St) | Manuel Solis`;
+    ? `Abogados en El Paso, TX (Admiral St)`
+    : `Lawyers in El Paso, TX (Admiral St)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en El Paso (Admiral ST). Abogados de inmigración y accidentes en la frontera sirviendo a la comunidad hispana. ¡Llámenos!`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/el-paso`,
         'en': `https://www.manuelsolis.com/en/oficinas/el-paso`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/el-paso`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/el-paso`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/el-paso`,
-      images: ['/public/offices/El paso.png'],
+      images: ['/offices/El paso.png'],
       type: 'website', 
     }
   };
@@ -125,4 +125,8 @@ export default async function ElPasoPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Arvada, CO (Denver) | Manuel Solís`
-    : `Lawyers in Arvada, CO (Denver Area) | Manuel Solis`;
+    ? `Abogados en Arvada, CO (Denver)`
+    : `Lawyers in Arvada, CO (Denver Area)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Arvada, CO (Área de Denver). Abogados de inmigración sirviendo a la comunidad de Colorado. ¡Consulta Gratis!`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/arvada`,
         'en': `https://www.manuelsolis.com/en/oficinas/arvada`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/arvada`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/arvada`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/arvada`,
-      images: ['/public/offices/Denver.png'],
+      images: ['/offices/Denver.png'],
       type: 'website', 
     }
   };
@@ -125,4 +125,8 @@ export default async function ArvadaPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

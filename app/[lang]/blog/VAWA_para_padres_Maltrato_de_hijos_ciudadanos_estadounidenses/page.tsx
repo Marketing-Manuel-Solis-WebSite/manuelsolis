@@ -20,6 +20,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -32,7 +33,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'VAWA para padres: hijo ciudadano maltrata a sus padres | Manuel Solís',
+    metaTitle: 'VAWA para padres: hijo ciudadano maltrata a sus padres',
     metaDesc: '¿Tu hijo ciudadano estadounidense te maltrata? Descubre cómo la ley VAWA podría protegerte y permitirte obtener la residencia legal sin depender del hijo abusivo.',
     ui: {
       back: 'Volver al blog',
@@ -137,7 +138,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'VAWA for Parents: Abuse by U.S. Citizen Children | Manuel Solis',
+    metaTitle: 'VAWA for Parents: Abuse by U.S. Citizen Children',
     metaDesc: 'Is your U.S. citizen child abusing you? Learn how VAWA may protect parents and help you obtain legal residency without relying on the abusive child.',
     ui: {
       back: 'Back to blog',
@@ -252,7 +253,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -283,7 +283,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses`,
         'en': `${SITE_URL}/en/blog/VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses`,
-        'x-default': `${SITE_URL}/en/blog/VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses`,
+        'x-default': `${SITE_URL}/es/blog/VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses`,
       },
     },
   };
@@ -293,32 +293,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-01-20",
-    "dateModified": "2025-01-20",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -351,12 +326,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses"
+        date="2025-01-28"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="10"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -660,4 +638,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

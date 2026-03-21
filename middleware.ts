@@ -53,12 +53,18 @@ export function middleware(request: NextRequest) {
   );
 
   if (pathnameHasLocale) {
-    const response = NextResponse.next();
-    // Agregar Content-Language header para señalar idioma a Google
     const localePart = pathname.split('/')[1];
-    if (localePart === 'es' || localePart === 'en') {
-      response.headers.set('Content-Language', localePart);
-    }
+    const locale = (localePart === 'es' || localePart === 'en') ? localePart : 'es';
+
+    // Forward locale as request header so RootLayout can set <html lang> dynamically
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-locale', locale);
+
+    const response = NextResponse.next({
+      request: { headers: requestHeaders },
+    });
+    // Agregar Content-Language header para señalar idioma a Google
+    response.headers.set('Content-Language', locale);
     return response;
   }
 

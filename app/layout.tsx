@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
-import { LanguageProvider } from "./context/LanguageContext";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -10,24 +9,21 @@ const outfit = Outfit({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Manuel Solis Law Firm | Abogados de Inmigración y Accidentes",
-  description: "Law Offices of Manuel Solis — 35+ years defending immigrant rights. Immigration, accidents, criminal defense, family law & insurance across Texas, California, Illinois, Colorado & Tennessee.",
-};
+// Metadata and LanguageProvider are in app/[lang]/layout.tsx
+// Root layout reads x-locale header (set by middleware) to render correct <html lang>.
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const defaultLanguage = "es";
+  const headersList = await headers();
+  const lang = headersList.get("x-locale") || "es";
 
   return (
-    <html lang={defaultLanguage} className={outfit.variable} suppressHydrationWarning>
+    <html lang={lang} className={outfit.variable}>
       <body className={outfit.className}>
-        <LanguageProvider initialLanguage={defaultLanguage}>
-          {children}
-        </LanguageProvider>
+        {children}
       </body>
     </html>
   );

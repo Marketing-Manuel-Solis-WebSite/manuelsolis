@@ -1,7 +1,11 @@
-'use client'
+import { redirect } from 'next/navigation';
 
-import TermsOfService from '../../components/TermsOfService'
+// /terms is a duplicate of /terminos — redirect to canonical URL
+export default async function TermsRedirect({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  redirect(`/${lang}/terminos`);
+}
 
-export default function TermsPage() {
-  return <TermsOfService />
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

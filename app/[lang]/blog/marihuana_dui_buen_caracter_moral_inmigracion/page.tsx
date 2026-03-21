@@ -21,6 +21,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -34,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Marihuana, DUI y buen carácter moral en inmigración | Manuel Solís',
+    metaTitle: 'Marihuana, DUI y buen carácter moral en inmigración',
     metaDesc: '¿Marihuana legal o DUI? Descubre cómo estas situaciones podrían afectar tu Green Card o ciudadanía aunque sean legales en tu estado.',
     ui: {
       back: 'Volver al blog',
@@ -213,7 +214,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Marijuana, DUI and Good Moral Character in Immigration | Manuel Solís',
+    metaTitle: 'Marijuana, DUI and Good Moral Character in Immigration',
     metaDesc: 'Legal marijuana or DUI? Discover how these situations could affect your Green Card or citizenship even if they\'re legal in your state.',
     ui: {
       back: 'Back to blog',
@@ -402,7 +403,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -433,7 +433,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/marihuana_dui_buen_caracter_moral_inmigracion`,
         'en': `${SITE_URL}/en/blog/marihuana_dui_buen_caracter_moral_inmigracion`,
-        'x-default': `${SITE_URL}/en/blog/marihuana_dui_buen_caracter_moral_inmigracion`,
+        'x-default': `${SITE_URL}/es/blog/marihuana_dui_buen_caracter_moral_inmigracion`,
       },
     },
   };
@@ -443,32 +443,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-03-24",
-    "dateModified": "2025-03-24",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/marihuana_dui_buen_caracter_moral_inmigracion`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -478,12 +453,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="marihuana_dui_buen_caracter_moral_inmigracion"
+        date="2025-03-24"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="10"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -939,4 +917,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

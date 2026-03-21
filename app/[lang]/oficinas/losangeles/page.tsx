@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Los Ángeles, CA (Pico Rivera) | Manuel Solís`
-    : `Lawyers in Los Angeles, CA (Pico Rivera) | Manuel Solis`;
+    ? `Abogados en Los Ángeles, CA (Pico Rivera)`
+    : `Lawyers in Los Angeles, CA (Pico Rivera)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Los Ángeles (Pico Rivera). Abogados expertos en inmigración sirviendo a la comunidad de California. ¡Consulta Gratis!`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/losangeles`,
         'en': `https://www.manuelsolis.com/en/oficinas/losangeles`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/losangeles`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/losangeles`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/losangeles`,
-      images: ['/public/offices/Los Angeles.png'],
+      images: ['/offices/Los Angeles.png'],
       type: 'website', 
     }
   };
@@ -125,4 +125,8 @@ export default async function LosAngelesPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

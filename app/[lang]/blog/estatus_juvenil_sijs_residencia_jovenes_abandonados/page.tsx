@@ -21,6 +21,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -34,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Estatus Juvenil SIJS: residencia para jovenes abandonados | Manuel Solis',
+    metaTitle: 'Estatus Juvenil SIJS: residencia para jovenes abandonados',
     metaDesc: 'Menor de 21 anos y uno de tus padres te abandono? Conoce que es el SIJS y como podria abrir un camino a la residencia juvenil.',
     ui: {
       back: 'Volver al blog',
@@ -178,7 +179,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'SIJS Juvenile Status: Residency for Abandoned Youth | Manuel Solis',
+    metaTitle: 'SIJS Juvenile Status: Residency for Abandoned Youth',
     metaDesc: 'Under 21 and one parent abandoned you? Learn what SIJS is and how it could open a path to juvenile residency.',
     ui: {
       back: 'Back to blog',
@@ -332,7 +333,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -363,7 +363,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados`,
         'en': `${SITE_URL}/en/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados`,
-        'x-default': `${SITE_URL}/en/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados`,
+        'x-default': `${SITE_URL}/es/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados`,
       },
     },
   };
@@ -373,32 +373,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solis",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-03-17",
-    "dateModified": "2025-03-17",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -408,12 +383,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="estatus_juvenil_sijs_residencia_jovenes_abandonados"
+        date="2025-03-17"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="10"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -795,4 +773,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

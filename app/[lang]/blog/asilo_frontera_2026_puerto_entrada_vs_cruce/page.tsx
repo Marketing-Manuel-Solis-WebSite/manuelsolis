@@ -21,6 +21,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -34,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Asilo en la frontera 2026: ingresar vs cruzar sin autorizaci\u00f3n | Manuel Sol\u00eds',
+    metaTitle: 'Asilo en la frontera 2026: ingresar vs cruzar sin autorizaci\u00f3n',
     metaDesc: 'Gu\u00eda informativa sobre asilo en la frontera 2026. Conoce las diferencias entre cruzar sin autorizaci\u00f3n y presentarte en un puerto de entrada.',
     ui: {
       back: 'Volver al blog',
@@ -179,7 +180,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Asylum at the Border 2026: Port of Entry vs Unauthorized Crossing | Manuel Sol\u00eds',
+    metaTitle: 'Asylum at the Border 2026: Port of Entry vs Unauthorized Crossing',
     metaDesc: '2026 border asylum guide. Learn the differences between unauthorized crossing and presenting at a port of entry.',
     ui: {
       back: 'Back to blog',
@@ -334,7 +335,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -365,7 +365,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/asilo_frontera_2026_puerto_entrada_vs_cruce`,
         'en': `${SITE_URL}/en/blog/asilo_frontera_2026_puerto_entrada_vs_cruce`,
-        'x-default': `${SITE_URL}/en/blog/asilo_frontera_2026_puerto_entrada_vs_cruce`,
+        'x-default': `${SITE_URL}/es/blog/asilo_frontera_2026_puerto_entrada_vs_cruce`,
       },
     },
   };
@@ -375,32 +375,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Sol\u00eds",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-04-04",
-    "dateModified": "2025-04-04",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/asilo_frontera_2026_puerto_entrada_vs_cruce`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -410,12 +385,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="asilo_frontera_2026_puerto_entrada_vs_cruce"
+        date="2025-04-04"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="11"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -813,4 +791,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

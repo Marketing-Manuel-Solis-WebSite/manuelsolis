@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Houston, TX (Main St) | Manuel Solís`
-    : `Lawyers in Houston, TX (Main St) | Manuel Solis`;
+    ? `Abogados en Houston, TX (Main St)`
+    : `Lawyers in Houston, TX (Main St)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en 708 Main St, Houston. Abogados de inmigración, familia y accidentes sirviendo a la comunidad 24 horas.`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/main-st`,
         'en': `https://www.manuelsolis.com/en/oficinas/main-st`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/main-st`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/main-st`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/main-st`,
-      images: ['/public/offices/main.png'],
+      images: ['/offices/main.png'],
       type: 'website', 
     }
   };
@@ -120,4 +120,8 @@ export default async function MainStPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

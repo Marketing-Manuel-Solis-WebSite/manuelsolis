@@ -1,8 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
 Crawl-delay: 1
 
-# Googlebot ignores Crawl-delay but we signal intent
 User-agent: Googlebot
 Allow: /
 
@@ -10,7 +12,6 @@ User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
-# Allow SEO audit tools
 User-agent: Sitebulb
 Allow: /
 Crawl-delay: 2
@@ -19,10 +20,4 @@ User-agent: Screaming Frog SEO Spider
 Allow: /
 Crawl-delay: 1
 
-# Block private and internal routes to save crawl budget
-Disallow: /api/
-Disallow: /_next/
-Disallow: /private/
-
-# Sitemap location
 Sitemap: https://www.manuelsolis.com/sitemap.xml

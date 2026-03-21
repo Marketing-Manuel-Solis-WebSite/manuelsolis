@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Visa E-2 para Inversionistas | Manuel Solís'
-    : 'E-2 Investor Visa | Manuel Solis';
+    ? 'Visa E-2 para Inversionistas'
+    : 'E-2 Investor Visa';
 
   const description = isEs
     ? 'Abogados expertos en Visa E-2 para inversionistas. Asesoría completa para invertir y vivir en Estados Unidos legalmente.'
@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `${SITE_URL}/es/servicios/visa-e2`,
         'en': `${SITE_URL}/en/servicios/visa-e2`,
-        'x-default': `${SITE_URL}/en/servicios/visa-e2`,
+        'x-default': `${SITE_URL}/es/servicios/visa-e2`,
       },
     },
     openGraph: {
       title,
       description,
       url: `${SITE_URL}/${lang}/servicios/visa-e2`,
-      images: ['/og-image.jpg'],
+      images: ['/home-image.jpg'],
     },
   };
 }
@@ -78,7 +78,7 @@ export default async function VisaE2Page({ params }: Props) {
   const schemaData = getLegalServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
-    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/#servicios` },
+    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
     { name: lang === 'es' ? 'Visa E-2' : 'E-2 Visa', url: `/${lang}/servicios/visa-e2` },
   ]);
 
@@ -95,4 +95,8 @@ export default async function VisaE2Page({ params }: Props) {
       <VisaE2Client />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

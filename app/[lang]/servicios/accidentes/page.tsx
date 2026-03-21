@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Accidentes de Auto y Lesiones Personales | Manuel Solís'
-    : 'Car Accident & Personal Injury Lawyers | Manuel Solis';
+    ? 'Abogados de Accidentes de Auto y Lesiones Personales'
+    : 'Car Accident & Personal Injury Lawyers';
 
   const description = isEs
     ? 'Abogados expertos en accidentes de auto, camión y lesiones personales. Más de 30 años de experiencia luchando por la compensación que merece. ¡Consulta Gratis!'
@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `${SITE_URL}/es/servicios/accidentes`,
         'en': `${SITE_URL}/en/servicios/accidentes`,
-        'x-default': `${SITE_URL}/en/servicios/accidentes`,
+        'x-default': `${SITE_URL}/es/servicios/accidentes`,
       },
     },
     openGraph: {
       title,
       description,
       url: `${SITE_URL}/${lang}/servicios/accidentes`,
-      images: ['/og-image.jpg'],
+      images: ['/home-image.jpg'],
     },
   };
 }
@@ -79,7 +79,7 @@ export default async function AccidentesPage({ params }: Props) {
   const schemaData = getLegalServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
-    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/#servicios` },
+    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
     { name: lang === 'es' ? 'Accidentes' : 'Accidents', url: `/${lang}/servicios/accidentes` },
   ]);
 
@@ -96,4 +96,8 @@ export default async function AccidentesPage({ params }: Props) {
       <AccidentesClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

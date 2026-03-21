@@ -20,6 +20,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -32,7 +33,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Parar deportación urgente: Stay of Removal con Visa U o VAWA pendiente | Manuel Solís',
+    metaTitle: 'Parar deportación urgente: Stay of Removal con Visa U o VAWA pendiente',
     metaDesc: '¿Tienes una deportación inminente? Descubre cómo frenar la expulsión con una Visa U o VAWA pendiente y solicitar un Stay of Removal (I-246) ante ICE a tiempo.',
     ui: {
       back: 'Volver al blog',
@@ -140,7 +141,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Stop an Urgent Deportation: Stay of Removal with a Pending U Visa or VAWA | Manuel Solís',
+    metaTitle: 'Stop an Urgent Deportation: Stay of Removal with a Pending U Visa or VAWA',
     metaDesc: 'Facing an imminent deportation? Learn how a pending U Visa or VAWA petition may help pause removal through a Stay of Removal (I-246) with ICE.',
     ui: {
       back: 'Back to blog',
@@ -258,7 +259,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -289,7 +289,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria`,
         'en': `${SITE_URL}/en/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria`,
-        'x-default': `${SITE_URL}/en/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria`,
+        'x-default': `${SITE_URL}/es/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria`,
       },
     },
   };
@@ -299,32 +299,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-02-10",
-    "dateModified": "2025-02-10",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -357,12 +332,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria"
+        date="2025-02-10"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="9"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -666,4 +644,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

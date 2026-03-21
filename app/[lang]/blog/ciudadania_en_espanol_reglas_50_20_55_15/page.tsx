@@ -21,6 +21,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -34,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Ciudadanía en español: reglas 50/20 y 55/15 | Manuel Solís',
+    metaTitle: 'Ciudadanía en español: reglas 50/20 y 55/15',
     metaDesc: '¿Miedo al inglés? Descubre si podrías hacer el examen de ciudadanía en español por edad, tiempo como residente o exención médica.',
     ui: {
       back: 'Volver al blog',
@@ -181,7 +182,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Citizenship in Spanish: Rules 50/20 and 55/15 | Manuel Solís',
+    metaTitle: 'Citizenship in Spanish: Rules 50/20 and 55/15',
     metaDesc: 'Afraid of English? Find out if you could take the citizenship exam in Spanish based on age, residency time, or medical exemption.',
     ui: {
       back: 'Back to blog',
@@ -338,7 +339,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -369,7 +369,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/ciudadania_en_espanol_reglas_50_20_55_15`,
         'en': `${SITE_URL}/en/blog/ciudadania_en_espanol_reglas_50_20_55_15`,
-        'x-default': `${SITE_URL}/en/blog/ciudadania_en_espanol_reglas_50_20_55_15`,
+        'x-default': `${SITE_URL}/es/blog/ciudadania_en_espanol_reglas_50_20_55_15`,
       },
     },
   };
@@ -379,32 +379,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-03-28",
-    "dateModified": "2025-03-28",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/ciudadania_en_espanol_reglas_50_20_55_15`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -414,12 +389,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="ciudadania_en_espanol_reglas_50_20_55_15"
+        date="2025-03-28"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="9"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -836,4 +814,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Houston, TX (Northchase Dr) | Manuel Solís`
-    : `Lawyers in Houston, TX (Northchase Dr) | Manuel Solis`;
+    ? `Abogados en Houston, TX (Northchase Dr)`
+    : `Lawyers in Houston, TX (Northchase Dr)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Northchase Dr, Houston. Abogados de inmigración, criminal y familia sirviendo a la comunidad 24 horas.`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/northchase`,
         'en': `https://www.manuelsolis.com/en/oficinas/northchase`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/northchase`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/northchase`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/northchase`,
-      images: ['/public/offices/ofNorth.png'],
+      images: ['/offices/ofNorth.png'],
       type: 'website', 
     }
   };
@@ -120,4 +120,8 @@ export default async function NorthchasePage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

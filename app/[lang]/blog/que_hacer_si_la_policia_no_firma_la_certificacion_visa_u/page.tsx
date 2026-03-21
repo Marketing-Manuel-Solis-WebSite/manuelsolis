@@ -20,6 +20,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -32,7 +33,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Firma policía Visa U negada: alternativas legales | Manuel Solís',
+    metaTitle: 'Firma policía Visa U negada: alternativas legales',
     metaDesc: '¿La policía negó tu certificación Visa U? Descubre qué hacer, quién más podría firmar el suplemento B y cómo seguir adelante con tu caso.',
     ui: {
       back: 'Volver al blog',
@@ -137,7 +138,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Police Denied U Visa Signature: Legal Alternatives | Manuel Solis',
+    metaTitle: 'Police Denied U Visa Signature: Legal Alternatives',
     metaDesc: 'Did the police refuse your U Visa certification? Discover what to do, who else could sign Supplement B, and how to move forward with your case.',
     ui: {
       back: 'Back to blog',
@@ -252,7 +253,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -283,7 +283,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`,
         'en': `${SITE_URL}/en/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`,
-        'x-default': `${SITE_URL}/en/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`,
+        'x-default': `${SITE_URL}/es/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`,
       },
     },
   };
@@ -293,32 +293,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-01-20",
-    "dateModified": "2025-01-20",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -351,12 +326,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="que_hacer_si_la_policia_no_firma_la_certificacion_visa_u"
+        date="2025-01-20"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="6"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -660,4 +638,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

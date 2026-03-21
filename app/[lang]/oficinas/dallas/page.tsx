@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Dallas, TX (Empire Central) | Manuel Solís`
-    : `Lawyers in Dallas, TX (Empire Central) | Manuel Solis`;
+    ? `Abogados en Dallas, TX (Empire Central)`
+    : `Lawyers in Dallas, TX (Empire Central)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Dallas (Empire Central PL). Abogados de inmigración y accidentes listos para defender sus derechos. ¡Consulta Gratis!`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/dallas`,
         'en': `https://www.manuelsolis.com/en/oficinas/dallas`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/dallas`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/dallas`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/dallas`,
-      images: ['/public/offices/Dallas.png'],
+      images: ['/offices/Dallas.png'],
       type: 'website', 
     }
   };
@@ -125,4 +125,8 @@ export default async function DallasPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

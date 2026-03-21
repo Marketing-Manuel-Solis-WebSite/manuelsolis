@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: isEs 
-      ? 'Abogados de Inmigración y Defensa de Deportación | Manuel Solís' 
-      : 'Immigration Lawyers & Deportation Defense | Manuel Solis',
+      ? 'Abogados de Inmigración y Defensa de Deportación'
+      : 'Immigration Lawyers & Deportation Defense',
     description: isEs
       ? 'Abogados de inmigración con más de 30 años de experiencia. Expertos en defensa de deportación, asilo, Visa U, VAWA y peticiones familiares. ¡Consulta Gratis!'
       : 'Experienced immigration lawyers fighting for your rights. Experts in deportation defense, asylum, U Visa, VAWA, and family petitions. Free Consultation!',
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `${SITE_URL}/es/servicios/inmigracion`,
         'en': `${SITE_URL}/en/servicios/inmigracion`,
-        'x-default': `${SITE_URL}/en/servicios/inmigracion`,
+        'x-default': `${SITE_URL}/es/servicios/inmigracion`,
       },
     },
     openGraph: {
@@ -100,7 +100,7 @@ export default async function ImmigrationPage({ params }: Props) {
   const schemaData = getImmigrationSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
-    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/#servicios` },
+    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
     { name: lang === 'es' ? 'Inmigración' : 'Immigration', url: `/${lang}/servicios/inmigracion` },
   ]);
 
@@ -118,4 +118,8 @@ export default async function ImmigrationPage({ params }: Props) {
       <ImmigrationClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

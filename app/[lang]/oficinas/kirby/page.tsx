@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Houston, TX (Kirby Dr) | Manuel Solís`
-    : `Lawyers in Houston, TX (Kirby Dr) | Manuel Solis`;
+    ? `Abogados en Houston, TX (Kirby Dr)`
+    : `Lawyers in Houston, TX (Kirby Dr)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en 3730 Kirby Dr, Houston. Abogados de inmigración, familia y accidentes sirviendo a la comunidad las 24 horas.`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/kirby`,
         'en': `https://www.manuelsolis.com/en/oficinas/kirby`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/kirby`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/kirby`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/kirby`,
-      images: ['/public/offices/ofhouston.png'],
+      images: ['/offices/ofhouston.png'],
       type: 'website', 
     }
   };
@@ -120,4 +120,8 @@ export default async function KirbyPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Harlingen, TX (Jackson St) | Manuel Solís`
-    : `Lawyers in Harlingen, TX (Jackson St) | Manuel Solis`;
+    ? `Abogados en Harlingen, TX (Jackson St)`
+    : `Lawyers in Harlingen, TX (Jackson St)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Harlingen (E Jackson St). Abogados de inmigración en el Valle del Río Grande listos para ayudarle. ¡Consulta Gratis!`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/harlingen`,
         'en': `https://www.manuelsolis.com/en/oficinas/harlingen`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/harlingen`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/harlingen`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/harlingen`,
-      images: ['/public/offices/Harlingen.png'],
+      images: ['/offices/Harlingen.png'],
       type: 'website', 
     }
   };
@@ -119,4 +119,8 @@ export default async function HarlingenPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

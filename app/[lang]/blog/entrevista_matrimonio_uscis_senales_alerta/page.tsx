@@ -21,6 +21,7 @@ import BlogTracker from '../../../components/blogs/BlogTracker';
 import ReadingProgress from '../../../components/blogs/ReadingProgress';
 import RelatedContent from '../../../components/blogs/RelatedContent';
 import { getRelatedArticles } from '../../../lib/blogRelations';
+import BlogSchema from '../../../components/blogs/BlogSchema';
 
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -34,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Entrevista de matrimonio USCIS: señales de alerta | Manuel Solís',
+    metaTitle: 'Entrevista de matrimonio USCIS: señales de alerta',
     metaDesc: 'Prepárate para tu entrevista de residencia por matrimonio. Conoce qué evidencia busca USCIS y qué señales podrían generar sospechas.',
     ui: {
       back: 'Volver al blog',
@@ -195,7 +196,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'USCIS Marriage Interview: Red Flags to Avoid | Manuel Solís',
+    metaTitle: 'USCIS Marriage Interview: Red Flags to Avoid',
     metaDesc: 'Prepare for your marriage-based residency interview. Learn what evidence USCIS looks for and what red flags could raise suspicion.',
     ui: {
       back: 'Back to blog',
@@ -366,7 +367,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    metadataBase: new URL(SITE_URL),
     openGraph: {
       title: t.title,
       description: t.metaDesc,
@@ -397,7 +397,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       languages: {
         'es': `${SITE_URL}/es/blog/entrevista_matrimonio_uscis_senales_alerta`,
         'en': `${SITE_URL}/en/blog/entrevista_matrimonio_uscis_senales_alerta`,
-        'x-default': `${SITE_URL}/en/blog/entrevista_matrimonio_uscis_senales_alerta`,
+        'x-default': `${SITE_URL}/es/blog/entrevista_matrimonio_uscis_senales_alerta`,
       },
     },
   };
@@ -407,32 +407,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": t.title,
-    "image": `${SITE_URL}${IMAGES.article}`,
-    "author": {
-      "@type": "Person",
-      "name": "Manuel Solís",
-      "url": `${SITE_URL}/abogados`
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
-    "datePublished": "2025-04-01",
-    "dateModified": "2025-04-01",
-    "description": t.metaDesc,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${SITE_URL}/${lang}/blog/entrevista_matrimonio_uscis_senales_alerta`
-    }
-  };
+
 
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
@@ -442,12 +417,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <Script
-        id="article-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <BlogSchema
+        title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
+        description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
+        slug="entrevista_matrimonio_uscis_senales_alerta"
+        date="2025-04-01"
+        image={IMAGES.article}
+        lang={lang as string}
+        readTime="10"
       />
-
       <Script
         id="breadcrumb-schema"
         type="application/ld+json"
@@ -869,4 +847,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
       </div>
     </>
   );
+}
+
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

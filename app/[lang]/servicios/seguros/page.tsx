@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Reclamos de Seguros | Manuel Solís'
-    : 'Insurance Claims Attorneys | Manuel Solis';
+    ? 'Abogados de Reclamos de Seguros'
+    : 'Insurance Claims Attorneys';
 
   const description = isEs
     ? 'Abogados expertos en reclamos de seguros: seguros de auto, propiedad, vida y más. Luchamos contra las aseguradoras por la compensación justa.'
@@ -28,14 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `${SITE_URL}/es/servicios/seguros`,
         'en': `${SITE_URL}/en/servicios/seguros`,
-        'x-default': `${SITE_URL}/en/servicios/seguros`,
+        'x-default': `${SITE_URL}/es/servicios/seguros`,
       },
     },
     openGraph: {
       title,
       description,
       url: `${SITE_URL}/${lang}/servicios/seguros`,
-      images: ['/og-image.jpg'],
+      images: ['/home-image.jpg'],
     },
   };
 }
@@ -78,7 +78,7 @@ export default async function SegurosPage({ params }: Props) {
   const schemaData = getLegalServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
-    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/#servicios` },
+    { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
     { name: lang === 'es' ? 'Seguros' : 'Insurance', url: `/${lang}/servicios/seguros` },
   ]);
 
@@ -95,4 +95,8 @@ export default async function SegurosPage({ params }: Props) {
       <SegurosClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }

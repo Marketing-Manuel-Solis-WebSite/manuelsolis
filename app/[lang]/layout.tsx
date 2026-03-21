@@ -2,14 +2,12 @@ import type { Metadata, Viewport } from 'next';
 import { LanguageProvider } from '../context/LanguageContext';
 import WhatsAppButton from '../components/WhatsAppButton';
 import AIChatButton from '../components/AIChatButton';
-import { translations, Language } from '../lib/translations';
+import MobileStickyBar from '../components/MobileStickyBar';
+import type { Language } from '../lib/translations';
 import Script from 'next/script';
+import { LangSetter } from '../components/LangSetter';
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
-interface LayoutParams {
-  lang: Language; 
-}
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -20,12 +18,13 @@ const SITE_URL = 'https://www.manuelsolis.com';
 
 const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LawFirm',
+  '@type': ['LegalService', 'LawFirm'],
+  '@id': `${SITE_URL}/#organization`,
   name: 'Manuel Solis Law Firm',
   alternateName: ['Abogados Manuel Solis', 'Law Offices of Manuel Solis'],
   url: SITE_URL,
   logo: `${SITE_URL}/logo-manuel-solis.png`,
-  image: `${SITE_URL}/og-image.jpg`,
+  image: `${SITE_URL}/home-image.jpg`,
   foundingDate: '1990',
   slogan: 'Defending immigrant rights for over 35 years',
   knowsAbout: [
@@ -90,34 +89,13 @@ const websiteSchema = {
   inLanguage: ['en', 'es'],
   publisher: {
     '@type': 'LawFirm',
+    '@id': `${SITE_URL}/#organization`,
     name: 'Manuel Solis Law Firm'
-  },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: `${SITE_URL}/en?q={search_term_string}`,
-    'query-input': 'required name=search_term_string'
   }
 };
 
-const videoSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'VideoObject',
-  name: 'Testimonio de Cliente: Octavio Varela - Residencia Permanente',
-  description: 'Octavio Varela shares his experience obtaining Permanent Residency with the help of Manuel Solis Law Firm. Over 50,000 cases won in 35+ years.',
-  thumbnailUrl: `${SITE_URL}/testimonials/Residencia_Octavio.png`,
-  uploadDate: '2024-01-15T08:00:00+00:00',
-  contentUrl: 'https://www.youtube.com/watch?v=cTJ9M5PT-S4',
-  embedUrl: 'https://www.youtube.com/embed/cTJ9M5PT-S4',
-  publisher: {
-    '@type': 'LawFirm',
-    name: 'Manuel Solis Law Firm',
-    logo: {
-      '@type': 'ImageObject',
-      url: `${SITE_URL}/logo-manuel-solis.png`
-    }
-  },
-  inLanguage: 'es'
-};
+// VideoObject schema moved to /Testimonios page where the video lives.
+// Having it in the layout made it appear on every page incorrectly.
 
 // NUEVO: Configuración de Viewport separada (Corrige el error de build)
 export const viewport: Viewport = {
@@ -128,31 +106,25 @@ export const viewport: Viewport = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'en';
-  const t = translations[currentLang] || translations['en'];
-  
-  const ogLocale = currentLang === 'es' ? 'es_US' : 'en_US';
-
-  const keywordList = t.seo?.home?.keywords 
-    ? (typeof t.seo.home.keywords === 'string' 
-        ? t.seo.home.keywords.split(',').map(k => k.trim()) 
-        : t.seo.home.keywords)
-    : ["Immigration Lawyer", "Accident Attorney"];
+  const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
+  const isEs = currentLang === 'es';
 
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: t.seo?.home?.title || 'Manuel Solis Law Firm',
-      template: `%s | Manuel Solis Law Firm`
+      default: isEs
+        ? 'Manuel Solís — Abogados de Inmigración y Accidentes'
+        : 'Manuel Solis — Immigration & Accident Attorneys',
+      template: isEs
+        ? '%s | Manuel Solís — Abogados'
+        : '%s | Manuel Solis — Attorneys',
     },
-    description: t.seo?.home?.description || 'Expert immigration and accident attorneys with 35+ years of experience serving the US.',
-    keywords: [
-      ...keywordList,
-      "Abogado de Inmigración USA",
-      "Immigration Lawyer USA",
-      "Defensa Criminal",
-      "Accidentes de Auto"
-    ],
+    description: isEs
+      ? 'Oficinas Legales de Manuel Solís. 35+ años, 50,000+ casos ganados. Inmigración, accidentes, ley criminal y familia.'
+      : 'Law Offices of Manuel Solis. 35+ years, 50,000+ cases won. Immigration, accidents, criminal defense and family law.',
+    keywords: isEs
+      ? ['abogado de inmigración', 'abogado de accidentes', 'Manuel Solís', 'abogado hispano', 'defensa deportación']
+      : ['immigration lawyer', 'accident attorney', 'Manuel Solis', 'Hispanic lawyer', 'deportation defense'],
     authors: [{ name: 'Manuel Solis Law Firm' }],
     creator: 'Manuel Solis',
     publisher: 'Manuel Solis Law Firm',
@@ -172,28 +144,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Eliminado themeColor de aquí (movido a export const viewport)
     
     openGraph: {
-      title: t.seo?.home?.title,
-      description: t.seo?.home?.description,
-      url: `${SITE_URL}/${currentLang}`,
       siteName: 'Manuel Solis Law Firm',
-      locale: ogLocale,
+      locale: isEs ? 'es_US' : 'en_US',
       type: 'website',
       images: [
         {
-          url: `/og-image.jpg`,
+          url: '/home-image.jpg',
           width: 1200,
           height: 630,
-          alt: 'Manuel Solis Law Firm - Immigration & Accident Attorneys',
+          alt: 'Manuel Solis Law Firm',
         },
       ],
     },
-    
+
     twitter: {
       card: 'summary_large_image',
-      title: t.seo?.home?.title,
-      description: t.seo?.home?.description,
-      creator: '@manuelsolis',
-      images: [`/og-image.jpg`],
+      creator: '@AbogadoMSolis',
+      images: ['/home-image.jpg'],
     },
     
     robots: {
@@ -208,23 +175,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     
-    alternates: {
-      canonical: `${SITE_URL}/${currentLang}`,
-      languages: {
-        'es': `${SITE_URL}/es`,
-        'en': `${SITE_URL}/en`,
-        'x-default': `${SITE_URL}/en`,
-      },
-    },
+    // alternates (canonical + hreflang) are set per-page, not in layout,
+    // to avoid child pages inheriting the wrong canonical URL.
   };
 }
 
 export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params;
-  const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'en';
+  const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
 
   return (
     <>
+      <LangSetter lang={currentLang} />
+
       {/* Preconnect to critical third-party origins — hoisted to <head> by Next.js */}
       <link rel="preconnect" href="https://www.googletagmanager.com" />
       <link rel="preconnect" href="https://www.youtube.com" />
@@ -239,10 +202,6 @@ export default async function LangLayout({ children, params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
       />
 
       <Script
@@ -312,6 +271,7 @@ export default async function LangLayout({ children, params }: Props) {
         {children}
         <WhatsAppButton />
         <AIChatButton />
+        <MobileStickyBar />
 
         <Analytics />
         <SpeedInsights />

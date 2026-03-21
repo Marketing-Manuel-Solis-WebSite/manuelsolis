@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs 
-    ? `Abogados en Chicago, IL (Cicero) | Manuel Solís`
-    : `Lawyers in Chicago, IL (Cicero) | Manuel Solis`;
+    ? `Abogados en Chicago, IL (Cicero)`
+    : `Lawyers in Chicago, IL (Cicero)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Chicago (Cicero, IL). Abogados de inmigración, familia y accidentes sirviendo a la comunidad hispana. ¡Consulta Gratis!`
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'es': `https://www.manuelsolis.com/es/oficinas/chicago`,
         'en': `https://www.manuelsolis.com/en/oficinas/chicago`,
-        'x-default': `https://www.manuelsolis.com/en/oficinas/chicago`,
+        'x-default': `https://www.manuelsolis.com/es/oficinas/chicago`,
       },
     },
     openGraph: {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/chicago`,
-      images: ['/public/offices/Chicago.png'],
+      images: ['/offices/Chicago.png'],
       type: 'website', 
     }
   };
@@ -125,4 +125,8 @@ export default async function ChicagoPage({ params }: Props) {
       <OfficeClient />
     </>
   );
+}
+
+export function generateStaticParams() {
+  return [{ lang: 'en' }, { lang: 'es' }];
 }
