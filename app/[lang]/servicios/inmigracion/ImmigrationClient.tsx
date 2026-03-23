@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 // --- IMPORTACIONES DE COMPONENTES ---
 import Header from '../../../components/Header';
@@ -613,6 +614,74 @@ export default function ImmigrationClient() {
               </div>
             </motion.div>
           </AnimatePresence>
+        </div>
+      </section>
+
+      {/* --- SERVICIOS ESPECIALIZADOS DE INMIGRACIÓN --- */}
+      <section className="py-20 relative z-10 bg-[#001540]">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              {language === 'es' ? 'Servicios Especializados de Inmigración' : 'Specialized Immigration Services'}
+            </h2>
+            <p className="text-blue-100/60 max-w-2xl mx-auto">
+              {language === 'es'
+                ? 'Áreas de práctica con enfoque específico para resolver su caso con mayor precisión.'
+                : 'Focused practice areas to resolve your case with greater precision.'}
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                href: `/${language}/servicios/visa-u`,
+                title: language === 'es' ? 'Visa U' : 'U Visa',
+                desc: language === 'es' ? 'Protección para víctimas de crímenes' : 'Protection for crime victims',
+              },
+              {
+                href: `/${language}/servicios/vawa`,
+                title: 'VAWA',
+                desc: language === 'es' ? 'Víctimas de violencia doméstica' : 'Domestic violence victims',
+              },
+              {
+                href: `/${language}/servicios/defensa-deportacion`,
+                title: language === 'es' ? 'Defensa de Deportación' : 'Deportation Defense',
+                desc: language === 'es' ? 'Cancelación de remoción y fianzas' : 'Cancellation of removal & bonds',
+              },
+              {
+                href: `/${language}/servicios/asilo`,
+                title: language === 'es' ? 'Asilo Político' : 'Political Asylum',
+                desc: language === 'es' ? 'Protección por persecución' : 'Protection from persecution',
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Link
+                  href={item.href}
+                  className="group block p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-[#B2904D]/40 hover:bg-white/10 transition-all duration-300"
+                >
+                  <h3 className="text-lg font-bold text-white group-hover:text-[#B2904D] transition-colors mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-blue-100/50 mb-3">{item.desc}</p>
+                  <span className="text-xs text-[#B2904D] flex items-center gap-1 font-medium">
+                    {language === 'es' ? 'Ver más' : 'Learn more'}
+                    <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 

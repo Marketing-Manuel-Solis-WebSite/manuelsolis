@@ -15,10 +15,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
-  const title = isEs ? 'Sobre Nosotros' : 'About Us';
+  const title = isEs
+    ? '35+ Años Defendiendo los Derechos de Inmigrantes'
+    : '35+ Years Defending Immigrant Rights';
   const description = isEs
-    ? 'Conozca la historia y misión de las Oficinas Legales de Manuel Solís. 35+ años defendiendo los derechos de inmigrantes.'
-    : 'Learn about the history and mission of the Law Offices of Manuel Solis. 35+ years defending immigrant rights.';
+    ? 'Conozca la historia de Manuel Solís. Desde 1990 defendiendo a la comunidad inmigrante con más de 50,000 casos ganados. 15 oficinas en 5 estados.'
+    : 'Learn about Manuel Solis. Since 1990 defending the immigrant community with over 50,000 cases won. 15 offices in 5 states.';
 
   return {
     title,

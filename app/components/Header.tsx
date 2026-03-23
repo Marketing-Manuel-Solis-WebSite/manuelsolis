@@ -97,19 +97,27 @@ export default function HeaderProfessional() {
       submenu: language === 'es'
         ? [
             { name: 'Inmigración', href: `/${language}/servicios/inmigracion` },
+            { name: '— Visa U', href: `/${language}/servicios/visa-u` },
+            { name: '— VAWA', href: `/${language}/servicios/vawa` },
+            { name: '— Defensa Deportación', href: `/${language}/servicios/defensa-deportacion` },
+            { name: '— Asilo', href: `/${language}/servicios/asilo` },
             { name: 'Accidentes', href: `/${language}/servicios/accidentes` },
             { name: 'Seguros', href: `/${language}/servicios/seguros` },
             { name: 'Ley Criminal', href: `/${language}/servicios/ley-criminal` },
             { name: 'Familia', href: `/${language}/servicios/familia` },
-            { name: 'Inversionistas', href: `/${language}/servicios/visa-e2` }, // Agregado Inversionistas
+            { name: 'Inversionistas', href: `/${language}/servicios/visa-e2` },
           ]
         : [
             { name: 'Immigration', href: `/${language}/servicios/inmigracion` },
+            { name: '— U Visa', href: `/${language}/servicios/visa-u` },
+            { name: '— VAWA', href: `/${language}/servicios/vawa` },
+            { name: '— Deportation Defense', href: `/${language}/servicios/defensa-deportacion` },
+            { name: '— Asylum', href: `/${language}/servicios/asilo` },
             { name: 'Accidents', href: `/${language}/servicios/accidentes` },
             { name: 'Insurance', href: `/${language}/servicios/seguros` },
             { name: 'Criminal Law', href: `/${language}/servicios/ley-criminal` },
             { name: 'Family', href: `/${language}/servicios/familia` },
-            { name: 'Investors', href: `/${language}/servicios/visa-e2` }, // Added Investors
+            { name: 'Investors', href: `/${language}/servicios/visa-e2` },
           ]
     },
     {

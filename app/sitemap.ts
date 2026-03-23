@@ -25,6 +25,12 @@ const routes: SitemapEntry[] = [
   { route: '/servicios/seguros', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
   { route: '/servicios/visa-e2', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
 
+  // Immigration sub-services — high priority
+  { route: '/servicios/visa-u', priority: 0.85, changeFrequency: 'monthly', lastModified: '2026-03-23' },
+  { route: '/servicios/vawa', priority: 0.85, changeFrequency: 'monthly', lastModified: '2026-03-23' },
+  { route: '/servicios/defensa-deportacion', priority: 0.85, changeFrequency: 'monthly', lastModified: '2026-03-23' },
+  { route: '/servicios/asilo', priority: 0.85, changeFrequency: 'monthly', lastModified: '2026-03-23' },
+
   // Offices — high priority
   { route: '/oficinas/houston-principal', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
   { route: '/oficinas/main-st', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },

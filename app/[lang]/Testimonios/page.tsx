@@ -15,10 +15,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
-  const title = isEs ? 'Testimonios de Clientes' : 'Client Testimonials';
+  const title = isEs
+    ? 'Testimonios: Casos Reales de Inmigración, Visa U y Accidentes'
+    : 'Testimonials: Real Immigration, U Visa & Accident Cases';
   const description = isEs
-    ? 'Historias reales de clientes que confiaron en Manuel Solís. Más de 50,000 casos ganados.'
-    : 'Real stories from clients who trusted Manuel Solis. Over 50,000 cases won.';
+    ? 'Historias reales de clientes que confiaron en Manuel Solís para casos de inmigración, Visa U, VAWA, accidentes y más. Más de 50,000 casos ganados.'
+    : 'Real stories from clients who trusted Manuel Solis for immigration, U Visa, VAWA, accident cases and more. Over 50,000 cases won.';
 
   return {
     title,

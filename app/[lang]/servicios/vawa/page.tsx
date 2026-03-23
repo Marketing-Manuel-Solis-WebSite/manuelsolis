@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import SegurosClient from './SegurosClient';
+import VawaClient from './VawaClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -13,28 +13,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Reclamos de Seguros'
-    : 'Insurance Claims Attorneys';
+    ? 'Abogados VAWA: Protección para Víctimas de Violencia Doméstica'
+    : 'VAWA Lawyers: Protection for Domestic Violence Victims';
 
   const description = isEs
-    ? 'Abogados de reclamos de seguros en Houston y Texas. Luchamos contra aseguradoras que niegan o reducen su compensación: seguros de auto, propiedad, salud y vida. Consulta gratis.'
-    : 'Insurance claims lawyers in Houston and Texas. We fight insurance companies that deny or reduce your compensation: auto, property, health and life insurance. Free consultation.';
+    ? 'Abogados expertos en VAWA. Ayudamos a víctimas de abuso por cónyuges, padres o hijos ciudadanos o residentes a obtener residencia sin depender del agresor. Consulta gratis.'
+    : 'Expert VAWA attorneys. We help abuse victims of citizen or resident spouses, parents, or children obtain residency without depending on the abuser. Free consultation.';
 
   return {
     title,
     description,
     alternates: {
-      canonical: `${SITE_URL}/${lang}/servicios/seguros`,
+      canonical: `${SITE_URL}/${lang}/servicios/vawa`,
       languages: {
-        'es': `${SITE_URL}/es/servicios/seguros`,
-        'en': `${SITE_URL}/en/servicios/seguros`,
-        'x-default': `${SITE_URL}/es/servicios/seguros`,
+        'es': `${SITE_URL}/es/servicios/vawa`,
+        'en': `${SITE_URL}/en/servicios/vawa`,
+        'x-default': `${SITE_URL}/es/servicios/vawa`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/${lang}/servicios/seguros`,
+      url: `${SITE_URL}/${lang}/servicios/vawa`,
       images: ['/home-image.jpg'],
     },
   };
@@ -43,11 +43,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const getLegalServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
   '@type': 'LegalService',
-  name: lang === 'es' ? 'Manuel Solís - Reclamos de Seguros' : 'Manuel Solis - Insurance Claims',
+  name: lang === 'es' ? 'Manuel Solis - Abogados VAWA' : 'Manuel Solis - VAWA Attorneys',
   description: lang === 'es'
-    ? 'Servicios legales de reclamos de seguros: auto, propiedad, vida y más.'
-    : 'Insurance claims legal services: auto, property, life and more.',
-  url: `${SITE_URL}/${lang}/servicios/seguros`,
+    ? 'Servicios legales VAWA: protección migratoria para víctimas de violencia doméstica por cónyuges, padres o hijos ciudadanos o residentes.'
+    : 'VAWA legal services: immigration protection for domestic violence victims abused by citizen or resident spouses, parents, or children.',
+  url: `${SITE_URL}/${lang}/servicios/vawa`,
   priceRange: '$$',
   telephone: '+1-866-979-5146',
   areaServed: [
@@ -59,27 +59,30 @@ const getLegalServiceSchema = (lang: string) => ({
   ],
   provider: {
     '@type': 'LawFirm',
+    '@id': `${SITE_URL}/#organization`,
     name: 'Manuel Solis Law Firm',
     url: 'https://www.manuelsolis.com',
     telephone: '+1-866-979-5146',
   },
   serviceType: [
-    'Insurance Claims',
-    'Auto Insurance Claims',
-    'Property Insurance Claims',
-    'Life Insurance Claims',
-    'Insurance Dispute Resolution',
+    'VAWA Self-Petition',
+    'Violence Against Women Act',
+    'Form I-360',
+    'Domestic Violence Immigration Relief',
+    'Abused Spouse Immigration',
+    'Abused Parent Immigration',
   ],
   availableLanguage: ['English', 'Spanish'],
 });
 
-export default async function SegurosPage({ params }: Props) {
+export default async function VawaPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getLegalServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
-    { name: lang === 'es' ? 'Seguros' : 'Insurance', url: `/${lang}/servicios/seguros` },
+    { name: lang === 'es' ? 'Inmigración' : 'Immigration', url: `/${lang}/servicios/inmigracion` },
+    { name: 'VAWA', url: `/${lang}/servicios/vawa` },
   ]);
 
   return (
@@ -92,7 +95,7 @@ export default async function SegurosPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <SegurosClient />
+      <VawaClient />
     </>
   );
 }

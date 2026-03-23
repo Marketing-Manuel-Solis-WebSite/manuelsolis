@@ -1,6 +1,50 @@
 // Cross-linking map for blog posts — defines related articles for each post
 // This improves internal linking and topical authority signals
 
+// --- Service link mapping: connects each blog post to its relevant service page ---
+export interface ServiceLink {
+  path: string;
+  label: { es: string; en: string };
+}
+
+const blogServiceMap: Record<string, ServiceLink> = {
+  // Visa U cluster → /servicios/visa-u
+  permiso_de_trabajo_visa_u: { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
+  que_hacer_si_la_policia_no_firma_la_certificacion_visa_u: { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
+  perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas: { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
+  Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados: { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U y VAWA', en: 'U Visa & VAWA Services' } },
+  // VAWA cluster → /servicios/vawa
+  VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente: { path: '/servicios/vawa', label: { es: 'Servicios VAWA', en: 'VAWA Services' } },
+  VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses: { path: '/servicios/vawa', label: { es: 'Servicios VAWA', en: 'VAWA Services' } },
+  // Deportation cluster → /servicios/defensa-deportacion
+  Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria: { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  ley_de_los_10_anos_cancelacion_de_deportacion: { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  // Humanitarian (general)
+  Visa_T_trabajo_forzado_por_deuda_con_coyote: { path: '/servicios/inmigracion', label: { es: 'Alivio Humanitario e Inmigración', en: 'Humanitarian Relief & Immigration' } },
+  // Asylum cluster → /servicios/asilo
+  asilo_frontera_2026_puerto_entrada_vs_cruce: { path: '/servicios/asilo', label: { es: 'Servicios de Asilo', en: 'Asylum Services' } },
+  estatus_juvenil_sijs_residencia_jovenes_abandonados: { path: '/servicios/asilo', label: { es: 'Asilo y Estatus Juvenil', en: 'Asylum & Juvenile Status' } },
+  // Process cluster
+  advance_parole_2026_viajar_con_daca_tps_visa_u: { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  Formulario_G28_Cambiar_Abogado_Inmigracion: { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  residencia_laboral_eb3_ley_245i_entrada_indocumentada: { path: '/servicios/inmigracion', label: { es: 'Residencia y Visas de Trabajo', en: 'Residency & Work Visas' } },
+  foia_migratoria_pedir_record_antes_de_aplicar: { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  perdon_i601a_arreglar_papeles_entrada_ilegal: { path: '/servicios/inmigracion', label: { es: 'Perdones Migratorios', en: 'Immigration Waivers' } },
+  marihuana_dui_buen_caracter_moral_inmigracion: { path: '/servicios/ley-criminal', label: { es: 'Defensa Criminal e Inmigración', en: 'Criminal Defense & Immigration' } },
+  ciudadania_en_espanol_reglas_50_20_55_15: { path: '/servicios/inmigracion', label: { es: 'Servicios de Ciudadanía', en: 'Citizenship Services' } },
+  entrevista_matrimonio_uscis_senales_alerta: { path: '/servicios/familia', label: { es: 'Derecho Familiar e Inmigración', en: 'Family Law & Immigration' } },
+};
+
+const defaultServiceLink: ServiceLink = {
+  path: '/servicios/inmigracion',
+  label: { es: 'Servicios de Inmigración', en: 'Immigration Services' },
+};
+
+/** Get the service page link for a given blog post slug */
+export function getServiceLink(slug: string): ServiceLink {
+  return blogServiceMap[slug] || defaultServiceLink;
+}
+
 export interface RelatedArticle {
   title: { es: string; en: string };
   slug: string;

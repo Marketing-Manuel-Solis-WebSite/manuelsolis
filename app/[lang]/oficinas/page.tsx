@@ -198,8 +198,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Nuestras Oficinas | Abogado Manuel Solis'
-    : 'Our Offices | Attorney Manuel Solis';
+    ? 'Oficinas en Texas, California, Illinois, Colorado y Tennessee'
+    : 'Offices in Texas, California, Illinois, Colorado & Tennessee';
 
   const description = isEs
     ? 'Encuentre la oficina del Abogado Manuel Solis mas cercana. 15 oficinas en Texas, California, Illinois, Colorado y Tennessee. Abogados de inmigracion y accidentes.'

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import SegurosClient from './SegurosClient';
+import AsiloClient from './AsiloClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -13,28 +13,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Reclamos de Seguros'
-    : 'Insurance Claims Attorneys';
+    ? 'Abogados de Asilo Político en Estados Unidos'
+    : 'Political Asylum Lawyers in the United States';
 
   const description = isEs
-    ? 'Abogados de reclamos de seguros en Houston y Texas. Luchamos contra aseguradoras que niegan o reducen su compensación: seguros de auto, propiedad, salud y vida. Consulta gratis.'
-    : 'Insurance claims lawyers in Houston and Texas. We fight insurance companies that deny or reduce your compensation: auto, property, health and life insurance. Free consultation.';
+    ? 'Abogados de asilo con experiencia en persecución por raza, religión, grupo social y opinión política. Representación en entrevistas de miedo creíble y corte de inmigración.'
+    : 'Asylum attorneys experienced in persecution by race, religion, social group, and political opinion. Representation at credible fear interviews and immigration court.';
 
   return {
     title,
     description,
     alternates: {
-      canonical: `${SITE_URL}/${lang}/servicios/seguros`,
+      canonical: `${SITE_URL}/${lang}/servicios/asilo`,
       languages: {
-        'es': `${SITE_URL}/es/servicios/seguros`,
-        'en': `${SITE_URL}/en/servicios/seguros`,
-        'x-default': `${SITE_URL}/es/servicios/seguros`,
+        'es': `${SITE_URL}/es/servicios/asilo`,
+        'en': `${SITE_URL}/en/servicios/asilo`,
+        'x-default': `${SITE_URL}/es/servicios/asilo`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/${lang}/servicios/seguros`,
+      url: `${SITE_URL}/${lang}/servicios/asilo`,
       images: ['/home-image.jpg'],
     },
   };
@@ -43,11 +43,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const getLegalServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
   '@type': 'LegalService',
-  name: lang === 'es' ? 'Manuel Solís - Reclamos de Seguros' : 'Manuel Solis - Insurance Claims',
+  name: lang === 'es'
+    ? 'Manuel Solís - Abogados de Asilo Político'
+    : 'Manuel Solis - Political Asylum Lawyers',
   description: lang === 'es'
-    ? 'Servicios legales de reclamos de seguros: auto, propiedad, vida y más.'
-    : 'Insurance claims legal services: auto, property, life and more.',
-  url: `${SITE_URL}/${lang}/servicios/seguros`,
+    ? 'Servicios legales de asilo político: solicitudes de asilo afirmativo y defensivo, entrevistas de miedo creíble, Convención Contra la Tortura y restricción de remoción.'
+    : 'Political asylum legal services: affirmative and defensive asylum applications, credible fear interviews, Convention Against Torture, and withholding of removal.',
+  url: `${SITE_URL}/${lang}/servicios/asilo`,
   priceRange: '$$',
   telephone: '+1-866-979-5146',
   areaServed: [
@@ -59,27 +61,30 @@ const getLegalServiceSchema = (lang: string) => ({
   ],
   provider: {
     '@type': 'LawFirm',
+    '@id': `${SITE_URL}/#organization`,
     name: 'Manuel Solis Law Firm',
-    url: 'https://www.manuelsolis.com',
+    url: SITE_URL,
     telephone: '+1-866-979-5146',
   },
   serviceType: [
-    'Insurance Claims',
-    'Auto Insurance Claims',
-    'Property Insurance Claims',
-    'Life Insurance Claims',
-    'Insurance Dispute Resolution',
+    'Political Asylum',
+    'Asylum Applications',
+    'Withholding of Removal',
+    'Convention Against Torture',
+    'Credible Fear Interviews',
+    'Immigration Court Asylum Hearings',
   ],
   availableLanguage: ['English', 'Spanish'],
 });
 
-export default async function SegurosPage({ params }: Props) {
+export default async function AsiloPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getLegalServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
-    { name: lang === 'es' ? 'Seguros' : 'Insurance', url: `/${lang}/servicios/seguros` },
+    { name: lang === 'es' ? 'Inmigración' : 'Immigration', url: `/${lang}/servicios/inmigracion` },
+    { name: lang === 'es' ? 'Asilo' : 'Asylum', url: `/${lang}/servicios/asilo` },
   ]);
 
   return (
@@ -92,7 +97,7 @@ export default async function SegurosPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <SegurosClient />
+      <AsiloClient />
     </>
   );
 }

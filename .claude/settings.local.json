@@ -15,7 +15,9 @@
       "Bash(done)",
       "WebFetch(domain:www.manuelsolis.com)",
       "Bash(curl:*)",
-      "Bash(for url:*)"
+      "Bash(for url:*)",
+      "Bash(mkdir -p \"C:/Users/Carlos Anaya Ruiz/manuelsolis/app/[lang]/servicios/defensa-deportacion\")",
+      "Bash(mkdir -p \"C:/Users/Carlos Anaya Ruiz/manuelsolis/app/[lang]/servicios/asilo\")"
     ]
   }
 }

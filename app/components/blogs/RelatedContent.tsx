@@ -23,9 +23,46 @@ interface RelatedContentProps {
 export default function RelatedContent({ articles, lang, servicePath, serviceLabel }: RelatedContentProps) {
   return (
     <section className="mt-16 mb-8">
+      {/* Service CTA — placed above related articles for better visibility */}
+      {servicePath && (
+        <div className="rounded-2xl glass-gold p-8 text-center">
+          <h3 className="text-xl font-light text-white mb-3">
+            {lang === 'es' ? '¿Necesita Ayuda Legal?' : 'Need Legal Help?'}
+          </h3>
+          <p className="text-blue-100/60 text-sm mb-6 max-w-md mx-auto">
+            {lang === 'es'
+              ? 'Nuestro equipo de expertos puede evaluar su caso de forma gratuita y confidencial.'
+              : 'Our team of experts can evaluate your case for free and confidentially.'}
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href={`/${lang}${servicePath}`}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#B2904D] text-white text-sm font-medium hover:bg-[#96773E] transition-colors"
+            >
+              {serviceLabel || (lang === 'es' ? 'Ver Servicios' : 'View Services')}
+              <ArrowRight size={16} />
+            </Link>
+            <a
+              href="tel:+18325980914"
+              onClick={() => {
+                pushToDataLayer('phone_click', {
+                  event_category: 'conversion',
+                  event_label: 'blog_cta_call',
+                });
+                trackConversion('phone_click', 'blog_cta_call');
+              }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white/5 transition-colors"
+            >
+              <Phone size={16} className="text-[#B2904D]" />
+              {lang === 'es' ? 'Llamar Ahora' : 'Call Now'}
+            </a>
+          </div>
+        </div>
+      )}
+
       {/* Related Articles */}
       {articles.length > 0 && (
-        <div className="mb-12">
+        <div className="mt-12">
           <h3 className="text-2xl font-light text-white mb-6 flex items-center gap-3">
             <span className="h-[2px] w-8 bg-[#B2904D]" />
             {lang === 'es' ? 'Articulos Relacionados' : 'Related Articles'}
@@ -68,43 +105,6 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
                 </Link>
               </motion.div>
             ))}
-          </div>
-        </div>
-      )}
-
-      {/* Service CTA */}
-      {servicePath && (
-        <div className="rounded-2xl glass-gold p-8 text-center">
-          <h3 className="text-xl font-light text-white mb-3">
-            {lang === 'es' ? '¿Necesita Ayuda Legal?' : 'Need Legal Help?'}
-          </h3>
-          <p className="text-blue-100/60 text-sm mb-6 max-w-md mx-auto">
-            {lang === 'es'
-              ? 'Nuestro equipo de expertos puede evaluar su caso de forma gratuita y confidencial.'
-              : 'Our team of experts can evaluate your case for free and confidentially.'}
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href={`/${lang}${servicePath}`}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#B2904D] text-white text-sm font-medium hover:bg-[#96773E] transition-colors"
-            >
-              {serviceLabel || (lang === 'es' ? 'Ver Servicios' : 'View Services')}
-              <ArrowRight size={16} />
-            </Link>
-            <a
-              href="tel:+18325980914"
-              onClick={() => {
-                pushToDataLayer('phone_click', {
-                  event_category: 'conversion',
-                  event_label: 'blog_cta_call',
-                });
-                trackConversion('phone_click', 'blog_cta_call');
-              }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white/5 transition-colors"
-            >
-              <Phone size={16} className="text-[#B2904D]" />
-              {lang === 'es' ? 'Llamar Ahora' : 'Call Now'}
-            </a>
           </div>
         </div>
       )}

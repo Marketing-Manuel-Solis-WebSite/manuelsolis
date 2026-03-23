@@ -306,7 +306,7 @@ export default function CriminalLawPage() {
                     <div className="relative w-full h-full">
                        <Image
                          src="/criminal-hero.png"
-                         alt="Abogado de Ley Criminal"
+                         alt="Abogado de defensa criminal y consecuencias migratorias en Houston, Texas"
                          fill
                          className="object-contain object-center drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]"
                          priority

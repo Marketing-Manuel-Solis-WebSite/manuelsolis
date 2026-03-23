@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import SegurosClient from './SegurosClient';
+import DeportacionClient from './DeportacionClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -13,28 +13,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Reclamos de Seguros'
-    : 'Insurance Claims Attorneys';
+    ? 'Defensa contra Deportación y Cancelación de Remoción'
+    : 'Deportation Defense & Cancellation of Removal';
 
   const description = isEs
-    ? 'Abogados de reclamos de seguros en Houston y Texas. Luchamos contra aseguradoras que niegan o reducen su compensación: seguros de auto, propiedad, salud y vida. Consulta gratis.'
-    : 'Insurance claims lawyers in Houston and Texas. We fight insurance companies that deny or reduce your compensation: auto, property, health and life insurance. Free consultation.';
+    ? 'Abogados de defensa de deportación con 35+ años y 50,000+ casos. Cancelación de remoción, fianzas, representación en corte. Emergencia 24/7: 866-979-5146.'
+    : 'Deportation defense attorneys with 35+ years, 50,000+ cases. Cancellation of removal, bonds, court representation. 24/7 emergency: 866-979-5146.';
 
   return {
     title,
     description,
     alternates: {
-      canonical: `${SITE_URL}/${lang}/servicios/seguros`,
+      canonical: `${SITE_URL}/${lang}/servicios/defensa-deportacion`,
       languages: {
-        'es': `${SITE_URL}/es/servicios/seguros`,
-        'en': `${SITE_URL}/en/servicios/seguros`,
-        'x-default': `${SITE_URL}/es/servicios/seguros`,
+        'es': `${SITE_URL}/es/servicios/defensa-deportacion`,
+        'en': `${SITE_URL}/en/servicios/defensa-deportacion`,
+        'x-default': `${SITE_URL}/es/servicios/defensa-deportacion`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/${lang}/servicios/seguros`,
+      url: `${SITE_URL}/${lang}/servicios/defensa-deportacion`,
       images: ['/home-image.jpg'],
     },
   };
@@ -43,11 +43,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const getLegalServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
   '@type': 'LegalService',
-  name: lang === 'es' ? 'Manuel Solís - Reclamos de Seguros' : 'Manuel Solis - Insurance Claims',
+  name: lang === 'es'
+    ? 'Manuel Solís - Defensa contra Deportación'
+    : 'Manuel Solis - Deportation Defense',
   description: lang === 'es'
-    ? 'Servicios legales de reclamos de seguros: auto, propiedad, vida y más.'
-    : 'Insurance claims legal services: auto, property, life and more.',
-  url: `${SITE_URL}/${lang}/servicios/seguros`,
+    ? 'Servicios legales de defensa contra deportación: cancelación de remoción, fianzas de inmigración, representación en corte y apelaciones ante el BIA.'
+    : 'Deportation defense legal services: cancellation of removal, immigration bonds, court representation, and BIA appeals.',
+  url: `${SITE_URL}/${lang}/servicios/defensa-deportacion`,
   priceRange: '$$',
   telephone: '+1-866-979-5146',
   areaServed: [
@@ -59,27 +61,31 @@ const getLegalServiceSchema = (lang: string) => ({
   ],
   provider: {
     '@type': 'LawFirm',
+    '@id': `${SITE_URL}/#organization`,
     name: 'Manuel Solis Law Firm',
-    url: 'https://www.manuelsolis.com',
+    url: SITE_URL,
     telephone: '+1-866-979-5146',
   },
   serviceType: [
-    'Insurance Claims',
-    'Auto Insurance Claims',
-    'Property Insurance Claims',
-    'Life Insurance Claims',
-    'Insurance Dispute Resolution',
+    'Deportation Defense',
+    'Cancellation of Removal',
+    'Immigration Court Representation',
+    'Immigration Bonds',
+    'ICE Detention Defense',
+    'Removal Proceedings',
+    'Immigration Appeals',
   ],
   availableLanguage: ['English', 'Spanish'],
 });
 
-export default async function SegurosPage({ params }: Props) {
+export default async function DeportacionPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getLegalServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
-    { name: lang === 'es' ? 'Seguros' : 'Insurance', url: `/${lang}/servicios/seguros` },
+    { name: lang === 'es' ? 'Inmigración' : 'Immigration', url: `/${lang}/servicios/inmigracion` },
+    { name: lang === 'es' ? 'Defensa de Deportación' : 'Deportation Defense', url: `/${lang}/servicios/defensa-deportacion` },
   ]);
 
   return (
@@ -92,7 +98,7 @@ export default async function SegurosPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <SegurosClient />
+      <DeportacionClient />
     </>
   );
 }

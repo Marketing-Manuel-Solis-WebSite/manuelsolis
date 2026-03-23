@@ -77,8 +77,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Nuestros Servicios Legales | Manuel Solís Law Firm'
-    : 'Our Legal Services | Manuel Solis Law Firm';
+    ? 'Servicios Legales: Inmigración, Accidentes, Familia y Más'
+    : 'Legal Services: Immigration, Accidents, Family & More';
 
   const description = isEs
     ? 'Conozca todos los servicios legales de Manuel Solís: inmigración, accidentes, defensa criminal, derecho de familia, seguros y Visa E-2. Consulta gratis.'

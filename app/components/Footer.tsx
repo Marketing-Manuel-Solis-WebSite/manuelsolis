@@ -12,7 +12,10 @@ export default function Footer() {
 
   // --- DATOS ---
   const footerLinks = [
-    { name: language === 'es' ? 'INICIO' : 'HOME', href: `/${language}` },    { name: language === 'es' ? 'TESTIMONIALES' : 'TESTIMONIALS', href: `/${language}/Testimonios` },
+    { name: language === 'es' ? 'INICIO' : 'HOME', href: `/${language}` },
+    { name: language === 'es' ? 'SERVICIOS' : 'SERVICES', href: `/${language}/servicios` },
+    { name: language === 'es' ? 'DETENIDOS' : 'DETAINED', href: `/${language}/clientes-detenidos` },
+    { name: language === 'es' ? 'TESTIMONIALES' : 'TESTIMONIALS', href: `/${language}/Testimonios` },
     { name: language === 'es' ? 'ABOGADOS' : 'ATTORNEYS', href: `/${language}/abogados` },
     { name: language === 'es' ? 'OFICINAS' : 'OFFICES', href: `/${language}/oficinas` },
     { name: language === 'es' ? 'INFORMACIÓN' : 'INFORMATION', href: `/${language}/nosotros` },
@@ -138,6 +141,10 @@ export default function Footer() {
              <span>|</span>
              <Link href={`/${language}/category/derechos-de-migrantes`} className="hover:text-[#B2904D] transition-colors">
                {language === 'es' ? 'Derechos de migrantes' : 'Migrant Rights'}
+             </Link>
+             <span>|</span>
+             <Link href={`/${language}/politica-editorial`} className="hover:text-[#B2904D] transition-colors">
+               {language === 'es' ? 'Política Editorial' : 'Editorial Policy'}
              </Link>
           </div>
 

@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Visa E-2 para Inversionistas | Abogados Manuel Solis'
-    : 'E-2 Investor Visa | Manuel Solis Attorneys';
+    ? 'Visa E-2 para Inversionistas: Requisitos, Proceso y Evaluación'
+    : 'E-2 Investor Visa: Requirements, Process & Evaluation';
 
   const description = isEs
     ? 'Invierta y viva legalmente en EE.UU. con la Visa E-2. Abogados con mas de 35 anos de experiencia en visas de inversion. Evaluacion sin costo.'
