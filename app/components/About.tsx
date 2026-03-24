@@ -50,6 +50,23 @@ export default function About() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#000a20] to-transparent z-10 opacity-50 pointer-events-none" />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
+
+        {/* Título full-width arriba del grid */}
+        <motion.div
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="mb-16 text-center"
+        >
+          <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight">
+            {language === 'es' ? 'Caso real de ' : 'Real case of '}
+            <span className="font-normal text-gradient-gold-subtle">
+              {language === 'es' ? 'reunificación familiar' : 'family reunification'}
+            </span>
+          </h2>
+        </motion.div>
+
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
           {/* Left Column: Text */}
@@ -60,28 +77,11 @@ export default function About() {
             viewport={{ once: true, margin: "-50px" }}
             className="lg:col-span-6 space-y-10"
           >
-            <motion.div variants={fadeInUp} className="relative">
-              <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-[5rem] font-thin text-white leading-[0.9] tracking-tight">
-                {language === 'es' ? 'Nuestra pasión es' : 'Our passion is'} <br />
-                <span className="font-normal relative inline-block">
-                  <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#ffeebb] to-[#B2904D]">
-                    {language === 'es' ? 'ayudarle.' : 'helping you.'}
-                  </span>
-                </span>
-              </h2>
-            </motion.div>
-
             <motion.div variants={fadeInUp} className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
               <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
                 {language === 'es'
-                  ? <>Para nosotros, <strong className="text-white font-medium">&quot;50,000 casos&quot;</strong> no es solo una cifra. Cada número representa a una familia real que enfrentó obstáculos que parecían imposibles.</>
-                  : <>For us, <strong className="text-white font-medium">&quot;50,000 cases&quot;</strong> is not just a number. Each number represents a real family that faced obstacles that seemed impossible.</>
-                }
-              </p>
-              <p className="pl-6 text-base text-blue-200/70">
-                {language === 'es'
-                  ? 'Nuestro equipo de expertos no descansa hasta agotar cada recurso legal disponible para luchar por sus derechos.'
-                  : 'Our team of experts does not rest until every legal resource available has been exhausted to fight for your rights.'
+                  ? <>En este documental, el <strong className="text-white font-medium">Abogado Manuel Solís</strong> presenta un caso real de reunificación familiar tras <strong className="text-white font-medium">18 años de separación</strong>. Una historia que refleja nuestro compromiso y resultados.</>
+                  : <>In this documentary, <strong className="text-white font-medium">Attorney Manuel Solís</strong> presents a real case of family reunification after <strong className="text-white font-medium">18 years of separation</strong>. A story that reflects our commitment and results.</>
                 }
               </p>
             </motion.div>
@@ -141,7 +141,7 @@ export default function About() {
                       width="100%"
                       height="100%"
                       src="https://www.youtube.com/embed/PmU1yOfB9C8?rel=0&controls=1&autoplay=1"
-                      title="YouTube video player"
+                      title={language === 'es' ? 'Documental: Caso real de reunificación familiar - Abogado Manuel Solís' : 'Documentary: Real family reunification case - Attorney Manuel Solis'}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen

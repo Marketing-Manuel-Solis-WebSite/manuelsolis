@@ -43,9 +43,9 @@ const ORIGINAL_DESC = {
 const officesData: OfficeData[] = [
   {
     id: 'houston-principal',
-    city: 'Accidentes',
+    city: 'Houston Principal',
     state: 'TX',
-    title: { es: 'Houston Accidentes', en: 'Houston Accidentes' },
+    title: { es: 'Houston Principal', en: 'Houston Principal' },
     description: ORIGINAL_DESC,
     address: '6705 Navigation Blvd, Houston, TX 77011, United States',
     phone: '(713) 231-5384',
@@ -359,6 +359,15 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
     );
 };
 
+// --- AGRUPACIÓN POR ESTADO → CIUDAD ---
+const HOUSTON_IDS = ['houston-principal', 'houston-bellaire', 'houston-kirby', 'league-city', 'houston-main', 'houston-north-loop', 'houston-northchase'];
+const OTHER_STATES = [
+  { code: 'IL', label: 'Illinois' },
+  { code: 'TN', label: 'Tennessee' },
+  { code: 'CO', label: 'Colorado' },
+  { code: 'CA', label: 'California' },
+];
+
 // --- COMPONENTE PRINCIPAL ---
 export default function FuturisticOffices() {
   const { language } = useLanguage(); 
@@ -405,12 +414,12 @@ export default function FuturisticOffices() {
   return (
     <section 
       id="oficinas"
-      className={`relative py-32 lg:py-40 w-full min-h-screen bg-[${PRIMARY_COLOR_DARK}] overflow-hidden selection:bg-[${ACCENT_COLOR_GOLD}] selection:text-[${PRIMARY_COLOR_DARK}]`}
+      className={`relative py-32 lg:py-40 w-full min-h-screen bg-[#001540] overflow-hidden selection:bg-[#B2904D] selection:text-[#001540]`}
     >
       {/* 1. FONDO ATMOSFÉRICO ACTIVO */}
       <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
         {/* Gradiente de profundidad */}
-        <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/50 via-[${PRIMARY_COLOR_DARK}] to-[#000a20]`} />
+        <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/50 via-[#001540] to-[#000a20]`} />
         
         {/* Orbes flotantes */}
         <motion.div 
@@ -423,7 +432,7 @@ export default function FuturisticOffices() {
           animate={isDesktop ? { x: [0, -30, 0], y: [0, 30, 0], opacity: [0.2, 0.4, 0.2] } : { opacity: 0.2 }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
-          className={`absolute bottom-0 left-0 w-[600px] h-[600px] bg-[${ACCENT_COLOR_GOLD}]/5 rounded-full ${isDesktop ? 'blur-[150px]' : 'blur-[70px]'} mix-blend-screen`}
+          className={`absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#B2904D]/5 rounded-full ${isDesktop ? 'blur-[150px]' : 'blur-[70px]'} mix-blend-screen`}
         />
         {/* Textura de ruido */}
         <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
@@ -439,58 +448,123 @@ export default function FuturisticOffices() {
         {/* HEADER: TÍTULO */}
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-7xl font-thin text-white tracking-tight leading-none">
-            {language === 'es' ? 'Oficinas ubicadas' : 'Offices'} <span className={`font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-[${ACCENT_COLOR_GOLD}] to-white`}>{language === 'es' ? 'En Estados Unidos' : 'In United States'}</span>
+            {language === 'es' ? 'Oficinas ubicadas' : 'Offices'} <span className={`font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-[#B2904D] to-white`}>{language === 'es' ? 'En Estados Unidos' : 'In United States'}</span>
           </h2>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 min-h-[700px]">
           
-          {/* --- LATERAL: MENÚ HOLOGRÁFICO (COL 3) --- */}
-          <div className="lg:col-span-3 flex flex-col gap-4">
-            <div className="text-xs font-bold text-blue-300/50 uppercase tracking-widest pl-2 mb-2 flex items-center gap-2">
-              <Navigation size={12} /> {language === 'es' ? 'Acceso Rápido' : 'Quick Access'}
+          {/* --- MÓVIL: SELECTOR HORIZONTAL --- */}
+          <div className="lg:hidden col-span-full overflow-x-auto pb-4 -mx-4 px-4 scrollbar-none">
+            <div className="flex gap-2 min-w-max">
+              {/* Texas offices */}
+              <span className="self-center text-[10px] font-bold text-[#B2904D] uppercase tracking-wider px-2.5 py-1 bg-[#B2904D]/10 rounded-lg flex-shrink-0 border border-[#B2904D]/20">TX</span>
+              {officesData.filter(o => o.state === 'TX').map(office => (
+                <button key={office.id} onClick={() => setActiveId(office.id)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-300 border ${
+                    activeId === office.id
+                      ? 'bg-[#B2904D] text-[#001540] border-[#B2904D] shadow-lg shadow-[#B2904D]/20'
+                      : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  {office.city}
+                </button>
+              ))}
+              {/* Other states */}
+              {OTHER_STATES.map(s => {
+                const offices = officesData.filter(o => o.state === s.code);
+                if (offices.length === 0) return null;
+                return (
+                  <div key={s.code} className="flex items-center gap-2 contents">
+                    <span className="self-center text-[10px] font-bold text-[#B2904D] uppercase tracking-wider px-2.5 py-1 bg-[#B2904D]/10 rounded-lg flex-shrink-0 border border-[#B2904D]/20 ml-2">{s.code}</span>
+                    {offices.map(office => (
+                      <button key={office.id} onClick={() => setActiveId(office.id)}
+                        className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-300 border ${
+                          activeId === office.id
+                            ? 'bg-[#B2904D] text-[#001540] border-[#B2904D] shadow-lg shadow-[#B2904D]/20'
+                            : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white'
+                        }`}
+                      >
+                        {office.city}
+                      </button>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
-            
-            <div className="flex flex-col gap-2 relative">
-               {/* Línea decorativa vertical */}
-               <div className="absolute left-[18px] top-4 bottom-4 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent hidden lg:block" />
+          </div>
 
-               {officesData.map((office) => {
-                 const isActive = activeId === office.id;
-                 const stateCode = office.state;
+          {/* --- DESKTOP: MENÚ VERTICAL AGRUPADO (COL 3) --- */}
+          <div className="hidden lg:flex lg:col-span-3 flex-col gap-2 lg:max-h-[700px] lg:overflow-y-auto lg:pr-2">
+            <div className="text-sm font-bold text-blue-200/60 uppercase tracking-widest pl-2 mb-3 flex items-center gap-2">
+              <Navigation size={14} /> {language === 'es' ? 'Acceso Rápido' : 'Quick Access'}
+            </div>
 
+            <div className="flex flex-col gap-0 relative">
+               <div className="absolute left-[18px] top-4 bottom-4 w-[1px] bg-gradient-to-b from-transparent via-white/15 to-transparent" />
+
+               {/* TEXAS */}
+               <div className="mb-5">
+                 <div className="text-sm font-bold text-[#B2904D] uppercase tracking-[0.2em] px-2 py-2 mb-2 border-b border-[#B2904D]/25">Texas</div>
+
+                 {/* Houston sub-group */}
+                 <div className="mb-3 ml-1 mt-2">
+                   <div className="text-xs font-semibold text-white/50 uppercase tracking-wider pl-9 py-1.5 mb-1">Houston</div>
+                   {officesData.filter(o => HOUSTON_IDS.includes(o.id)).map((office) => {
+                     const isActive = activeId === office.id;
+                     return (
+                       <motion.button key={office.id} onClick={() => setActiveId(office.id)}
+                         className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
+                         whileHover={{ x: isActive ? 0 : 5 }}
+                       >
+                         {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                         {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
+                         <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
+                       </motion.button>
+                     );
+                   })}
+                 </div>
+
+                 {/* Otras ciudades de Texas */}
+                 <div className="mt-3 pt-2 border-t border-white/8">
+                   {officesData.filter(o => o.state === 'TX' && !HOUSTON_IDS.includes(o.id)).map((office) => {
+                     const isActive = activeId === office.id;
+                     return (
+                       <motion.button key={office.id} onClick={() => setActiveId(office.id)}
+                         className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
+                         whileHover={{ x: isActive ? 0 : 5 }}
+                       >
+                         {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                         {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
+                         <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
+                       </motion.button>
+                     );
+                   })}
+                 </div>
+               </div>
+
+               {/* OTROS ESTADOS */}
+               {OTHER_STATES.map(stateInfo => {
+                 const stateOffices = officesData.filter(o => o.state === stateInfo.code);
+                 if (stateOffices.length === 0) return null;
                  return (
-                   <motion.button
-                     key={office.id}
-                     onClick={() => setActiveId(office.id)}
-                     className={`group relative pl-10 pr-6 py-4 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center
-                       ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}
-                     `}
-                     whileHover={{ x: isActive ? 0 : 5 }}
-                   >
-                     {/* Marcador activo animado */}
-                     {isActive && (
-                       <motion.div 
-                         layoutId="activeGlow"
-                         className={`absolute left-0 top-0 bottom-0 w-1 bg-[${ACCENT_COLOR_GOLD}] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full`}
-                       />
-                     )}
-
-                     {/* Dot inactivo */}
-                     {!isActive && (
-                        <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />
-                     )}
-                     
-                     <div className="relative z-10">
-                       <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-200/50 group-hover:text-blue-100'}`}>
-                         {office.city}
-                       </span>
-                     </div>
-                     
-                     <span className={`text-[9px] tracking-widest uppercase font-bold px-2 py-0.5 rounded-full ${isActive ? `bg-[${ACCENT_COLOR_GOLD}] text-[${PRIMARY_COLOR_DARK}]` : 'bg-blue-900/40 text-blue-300/60'}`}>
-                        {stateCode}
-                     </span>
-                   </motion.button>
+                   <div key={stateInfo.code} className="mb-5">
+                     <div className="text-sm font-bold text-[#B2904D] uppercase tracking-[0.2em] px-2 py-2 mb-2 border-b border-[#B2904D]/25">{stateInfo.label}</div>
+                     {stateOffices.map((office) => {
+                       const isActive = activeId === office.id;
+                       return (
+                         <motion.button key={office.id} onClick={() => setActiveId(office.id)}
+                           className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
+                           whileHover={{ x: isActive ? 0 : 5 }}
+                         >
+                           {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                           {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
+                           <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
+                           <span className={`text-[10px] tracking-widest uppercase font-bold px-2.5 py-1 rounded-full ${isActive ? 'bg-[#B2904D] text-[#001540]' : 'bg-blue-900/50 text-blue-200/60'}`}>{office.state}</span>
+                         </motion.button>
+                       );
+                     })}
+                   </div>
                  );
                })}
             </div>
@@ -537,7 +611,7 @@ export default function FuturisticOffices() {
                             <motion.span 
                                 animate={{ opacity: [0.5, 1, 0.5] }} 
                                 transition={{ duration: 1.5, repeat: Infinity }}
-                                className={`text-[${LIGHT_BLUE_ACCENT}]`}
+                                className={`text-sky-400`}
                             >
                                 [ {activeOffice.state} ]
                             </motion.span>
@@ -558,7 +632,7 @@ export default function FuturisticOffices() {
                    
                    {/* DESCRIPTION */}
                    <div className="w-full">
-                       <h4 className="text-xl font-thin text-white mb-3">{language === 'es' ? 'Sobre nuestra experiencia legal' : 'About Our Legal Experience'}</h4>
+                       <h3 className="text-xl font-thin text-white mb-3">{language === 'es' ? 'Sobre nuestra experiencia legal' : 'About Our Legal Experience'}</h3>
                        <p className="text-blue-100/70 text-base leading-relaxed text-justify border-l-2 border-white/10 pl-4">
                          {gT(activeOffice.description)}
                        </p>
@@ -567,10 +641,10 @@ export default function FuturisticOffices() {
                    {/* SOLO SERVICIOS (Abogados removidos) */}
                    <div className="border-y border-white/10 py-8">
                       <div>
-                          <h5 className="text-sm font-bold text-blue-300/50 uppercase tracking-widest mb-4 flex items-center gap-2">
+                          <h4 className="text-sm font-bold text-blue-300/50 uppercase tracking-widest mb-4 flex items-center gap-2">
                              <Scale size={14} className="text-[#fffff]" />
                              {language === 'es' ? 'Servicios Disponibles' : 'Available Services'}
-                          </h5>
+                          </h4>
                           <div className="flex flex-wrap gap-2">
                             {activeOffice.services.map((service, idx) => (
                               <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 hover:border-[#B2904D]/30 transition-all duration-300 rounded-full text-xs text-blue-100 font-medium tracking-wide">
@@ -583,14 +657,14 @@ export default function FuturisticOffices() {
                    
                    {/* CONTACT ACTIONS GRID (The HUD) */}
                    <div className="space-y-6">
-                     <h4 className="text-xl font-thin text-white mb-4 flex items-center gap-3">
+                     <h3 className="text-xl font-thin text-white mb-4 flex items-center gap-3">
                          <motion.div 
                            animate={{ rotate: [0, 360] }}
                            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                           className={`w-4 h-4 rounded-full border border-dashed border-[${ACCENT_COLOR_GOLD}]`}
+                           className={`w-4 h-4 rounded-full border border-dashed border-[#B2904D]`}
                          />
-                         <span className={`text-[${ACCENT_COLOR_GOLD}] font-medium`}>{language === 'es' ? 'Datos' : 'Contact'}</span> {language === 'es' ? 'de contacto' : 'Information'}
-                      </h4>
+                         <span className={`text-[#B2904D] font-medium`}>{language === 'es' ? 'Datos' : 'Contact'}</span> {language === 'es' ? 'de contacto' : 'Information'}
+                      </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                          <ActionHUD label={language === 'es' ? 'Ubicación' : 'Location Grid'} value={activeOffice.address} icon={MapPin} href={activeOffice.mapLink} />
                          <ActionHUD label={language === 'es' ? 'Línea Directa' : 'Direct Line'} value={activeOffice.phone} icon={Phone} href={`tel:+1${activeOffice.phone.replace(/[^0-9]/g, '')}`} />

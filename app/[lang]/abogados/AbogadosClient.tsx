@@ -565,6 +565,18 @@ export default function AbogadosClient() {
     }
   }), []);
 
+  // Agrupación de abogados por ubicación (Estado → Ciudad)
+  const locationGroups: { label: { es: string; en: string }; ids: string[] }[] = [
+    { label: { es: 'Houston, Texas', en: 'Houston, Texas' }, ids: ['manuel-solis', 'manuel-solis-iii', 'juan-solis', 'gregory-finney', 'alejandro-manzano', 'austen-gunnels', 'gabriel-perez', 'alexis-alvarez', 'himani-augustina-vithanage'] },
+    { label: { es: 'Bellaire, Texas', en: 'Bellaire, Texas' }, ids: ['ni-yan'] },
+    { label: { es: 'Dallas, Texas', en: 'Dallas, Texas' }, ids: ['mark-mcbroom', 'stephanie-l-garcia-vidal'] },
+    { label: { es: 'El Paso, Texas', en: 'El Paso, Texas' }, ids: ['victor-rojas'] },
+    { label: { es: 'Chicago, Illinois', en: 'Chicago, Illinois' }, ids: ['andrew-fink', 'ana-patricia-rueda', 'eduardo-garcia'] },
+    { label: { es: 'Memphis, Tennessee', en: 'Memphis, Tennessee' }, ids: ['sara-james', 'lupita-valenzuela-martinez'] },
+    { label: { es: 'Arvada, Colorado', en: 'Arvada, Colorado' }, ids: ['edwin-zavala'] },
+    { label: { es: 'Los Ángeles, California', en: 'Los Angeles, California' }, ids: ['edward-s-reisman'] },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-[#001529] text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
 
@@ -640,57 +652,75 @@ export default function AbogadosClient() {
         </div>
       </section>
 
-      {/* GRID DE ABOGADOS */}
+      {/* GRID DE ABOGADOS AGRUPADOS POR UBICACIÓN */}
       <section className="px-4 pb-32 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-
-            {attorneys.map((attorney, index) => (
-              <motion.div
-                key={attorney.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.05, duration: 0.5 }}
-                onClick={() => setSelectedAttorney(attorney)}
-                className="group relative h-[450px] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#001540]/60 backdrop-blur-md hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] transition-all duration-500"
-                style={{ willChange: 'transform' }}
-              >
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-                  <Image
-                    src={attorney.image}
-                    alt={attorney.name}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    className={attorney.id === 'lupita-valenzuela-martinez'
-                      ? "object-cover object-[center_20%]"
-                      : "object-cover object-top"}
-                    loading={index < 8 ? "eager" : "lazy"}
-                    priority={index < 4}
-                  />
+        <div className="max-w-7xl mx-auto space-y-16">
+          {locationGroups.map((group) => {
+            const groupAttorneys = group.ids
+              .map(id => attorneys.find(a => a.id === id))
+              .filter((a): a is typeof attorneys[number] => a !== undefined);
+            if (groupAttorneys.length === 0) return null;
+            return (
+              <div key={group.label.en}>
+                {/* Location Header */}
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="h-px flex-1 bg-gradient-to-r from-[#B2904D]/40 to-transparent" />
+                  <h2 className="text-lg sm:text-xl font-semibold text-[#B2904D] uppercase tracking-widest whitespace-nowrap">
+                    {group.label[language]}
+                  </h2>
+                  <div className="h-px flex-1 bg-gradient-to-l from-[#B2904D]/40 to-transparent" />
                 </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                  {groupAttorneys.map((attorney, index) => (
+                    <motion.div
+                      key={attorney.id}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ delay: index * 0.05, duration: 0.5 }}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setSelectedAttorney(attorney)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedAttorney(attorney); } }}
+                      className="group relative h-[450px] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#001540]/60 backdrop-blur-md hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] focus-visible:ring-2 focus-visible:ring-[#B2904D] focus-visible:outline-none transition-all duration-500"
+                      style={{ willChange: 'transform' }}
+                    >
+                      <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+                        <Image
+                          src={attorney.image}
+                          alt={attorney.name}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                          className={attorney.id === 'lupita-valenzuela-martinez'
+                            ? "object-cover object-[center_20%]"
+                            : "object-cover object-top"}
+                          loading="lazy"
+                        />
+                      </div>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001540]/90 via-[#001540]/50 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#001540]/90 via-[#001540]/50 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-500" />
 
-                <div className="absolute bottom-0 left-0 w-full p-6 transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0">
-                  <div className="w-12 h-1 bg-[#B2904D] mb-3 rounded-full group-hover:w-24 transition-all duration-500 shadow-[0_0_15px_#B2904D]"></div>
+                      <div className="absolute bottom-0 left-0 w-full p-6 transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0">
+                        <div className="w-12 h-1 bg-[#B2904D] mb-3 rounded-full group-hover:w-24 transition-all duration-500 shadow-[0_0_15px_#B2904D]"></div>
 
-                  <h3 className="text-2xl font-bold text-white leading-none mb-2 drop-shadow-lg">
-                    {attorney.name}
-                  </h3>
+                        <h3 className="text-2xl font-bold text-white leading-none mb-2 drop-shadow-lg">
+                          {attorney.name}
+                        </h3>
 
-                  <p className="text-[#B2904D] text-xs font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
-                    <ShieldCheck size={14} /> {getText(attorney.role)}
-                  </p>
+                        <p className="text-[#B2904D] text-xs font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                          <ShieldCheck size={14} /> {getText(attorney.role)}
+                        </p>
 
-                  <div className="flex items-center gap-2 text-white text-sm font-medium opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 delay-75">
-                    {texts.card.viewProfile[language]} <ChevronRight size={16} className="text-[#B2904D]" />
-                  </div>
+                        <div className="flex items-center gap-2 text-white text-sm font-medium opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 delay-75">
+                          {texts.card.viewProfile[language]} <ChevronRight size={16} className="text-[#B2904D]" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-              </motion.div>
-            ))}
-
-          </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -715,7 +745,7 @@ export default function AbogadosClient() {
               <button
                 onClick={() => setSelectedAttorney(null)}
                 className="absolute top-4 right-4 z-50 bg-black/40 hover:bg-[#B2904D] text-white p-2 rounded-full transition-all border border-white/10 group"
-                aria-label="Cerrar"
+                aria-label={language === 'es' ? 'Cerrar' : 'Close'}
               >
                 <CloseIcon size={24} className="group-hover:rotate-90 transition-transform" />
               </button>

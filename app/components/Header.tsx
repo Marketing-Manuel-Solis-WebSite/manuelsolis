@@ -31,6 +31,8 @@ export default function HeaderProfessional() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [openMobileState, setOpenMobileState] = useState<string | null>(null);
+  const [openMobileCity, setOpenMobileCity] = useState<string | null>(null);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   
   const { scrollY } = useScroll();
@@ -88,6 +90,47 @@ export default function HeaderProfessional() {
     }
   });
 
+  // Estructura de oficinas agrupadas por Estado → Ciudad
+  const officeNav: { state: string; cities: { name: string; href: string; subOffices?: { name: string; href: string }[] }[] }[] = [
+    {
+      state: 'Texas',
+      cities: [
+        {
+          name: 'Houston',
+          href: `/${language}/oficinas/houston-principal`,
+          subOffices: [
+            { name: 'Houston Principal', href: `/${language}/oficinas/houston-principal` },
+            { name: 'Bellaire', href: `/${language}/oficinas/houston-bellaire` },
+            { name: 'Kirby', href: `/${language}/oficinas/kirby` },
+            { name: 'League City', href: `/${language}/oficinas/league-city` },
+            { name: 'Main St', href: `/${language}/oficinas/main-st` },
+            { name: 'North Loop', href: `/${language}/oficinas/north-loop` },
+            { name: 'Northchase', href: `/${language}/oficinas/northchase` },
+          ],
+        },
+        { name: 'Dallas', href: `/${language}/oficinas/dallas` },
+        { name: 'El Paso', href: `/${language}/oficinas/el-paso` },
+        { name: 'Harlingen', href: `/${language}/oficinas/harlingen` },
+      ],
+    },
+    {
+      state: 'California',
+      cities: [{ name: 'Los Angeles', href: `/${language}/oficinas/losangeles` }],
+    },
+    {
+      state: 'Illinois',
+      cities: [{ name: 'Chicago', href: `/${language}/oficinas/chicago` }],
+    },
+    {
+      state: 'Colorado',
+      cities: [{ name: 'Arvada (Denver)', href: `/${language}/oficinas/arvada` }],
+    },
+    {
+      state: 'Tennessee',
+      cities: [{ name: 'Memphis', href: `/${language}/oficinas/memphis` }],
+    },
+  ];
+
   const menuItems = [
     { 
       name: language === 'es' ? 'Servicios' : 'Services',
@@ -125,28 +168,12 @@ export default function HeaderProfessional() {
       href: `/${language}/clientes-detenidos`,
       type: 'link'
     },
-    { 
+    {
       name: language === 'es' ? 'Oficinas' : 'Offices',
-      href: `/${language}/oficinas`, 
+      href: `/${language}/oficinas`,
       type: 'dropdown',
       key: 'offices',
-      submenu: [
-        { name: 'Houston Principal', href: `/${language}/oficinas/houston-principal` },
-        { name: 'Houston Accidentes', href: `/${language}/oficinas/houston-accidentes` },
-        { name: 'Houston Main St', href: `/${language}/oficinas/main-st` },
-        { name: 'Houston North Loop', href: `/${language}/oficinas/north-loop` },
-        { name: 'Houston Northchase', href: `/${language}/oficinas/northchase` },
-        { name: 'Houston Bellaire', href: `/${language}/oficinas/houston-bellaire` },
-        { name: 'Houston (Kirby)', href: `/${language}/oficinas/kirby` },
-        { name: 'League City', href: `/${language}/oficinas/league-city` },
-        { name: 'Dallas', href: `/${language}/oficinas/dallas` },
-        { name: 'El Paso', href: `/${language}/oficinas/el-paso` },
-        { name: 'Harlingen', href: `/${language}/oficinas/harlingen` },
-        { name: 'Chicago', href: `/${language}/oficinas/chicago` },
-        { name: 'Los Angeles', href: `/${language}/oficinas/losangeles` },
-        { name: 'Arvada (Denver)', href: `/${language}/oficinas/arvada` },
-        { name: 'Memphis', href: `/${language}/oficinas/memphis` },
-      ]
+      submenu: [{ name: 'offices-marker', href: `/${language}/oficinas` }]
     },
     {
       name: language === 'es' ? 'Testimonios' : 'Testimonials',
@@ -176,7 +203,7 @@ export default function HeaderProfessional() {
           ]
     },
     { 
-      name: language === 'es' ? 'Acceso a clientes' : 'Client access',
+      name: language === 'es' ? 'Acceso Clientes' : 'Client Access',
       href: 'https://solislawfirm.com',
       type: 'external' 
     },
@@ -238,7 +265,7 @@ export default function HeaderProfessional() {
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <div 
-          className="w-full transition-all duration-300 relative z-[60]"
+          className="w-full transition-all duration-300 relative z-50"
           style={{ 
             paddingTop: isScrolled ? '0.5rem' : '0.75rem', 
             paddingBottom: isScrolled ? '0.5rem' : '0.75rem' 
@@ -286,14 +313,58 @@ export default function HeaderProfessional() {
                     <span className="absolute bottom-1 left-0 w-0 h-[0.5px] bg-sky-200 transition-all duration-300 ease-out group-hover:w-full" />
 
                     {item.submenu && item.key === 'offices' && (
-                      <div className="absolute top-full -left-4 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]">
-                        <div className="w-[420px] bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl py-4 px-4 border border-white/10 transform origin-top">
-                          <div className="grid grid-cols-2 gap-x-4">
-                            {item.submenu.map((subItem) => (
-                              <Link key={subItem.name} href={subItem.href} className="group/item flex items-center px-3 py-2 rounded-lg hover:bg-white/5 transition-colors duration-200">
-                                <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">{subItem.name}</span>
-                              </Link>
-                            ))}
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]">
+                        <div className="w-[640px] bg-[#0b1c33]/95 backdrop-blur-md rounded-2xl shadow-2xl shadow-black/40 py-6 px-8 border border-white/10">
+                          <div className="flex gap-8">
+                            {/* Texas - columna izquierda */}
+                            <div className="flex-1 min-w-0 pl-2">
+                              <h4 className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-4 pb-2 border-b border-[#B2904D]/20">Texas</h4>
+                              {/* Houston group */}
+                              <div className="mb-4">
+                                <span className="block text-xs font-semibold text-white/80 uppercase tracking-[0.15em] px-4 py-2 bg-white/5 rounded-lg mb-2">Houston</span>
+                                <div className="ml-4 pl-4 border-l-2 border-[#B2904D]/25 space-y-0.5">
+                                  {officeNav[0].cities[0].subOffices?.map((sub) => (
+                                    <Link key={sub.name} href={sub.href} className="group/item flex items-center px-4 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                      <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{sub.name}</span>
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                              {/* Otras ciudades de Texas */}
+                              <div className="space-y-0.5 pt-2 border-t border-white/5">
+                                {officeNav[0].cities.slice(1).map((city) => (
+                                  <Link key={city.name} href={city.href} className="group/item flex items-center px-4 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                    <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{city.name}</span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Separador */}
+                            <div className="w-px bg-white/10 self-stretch" />
+
+                            {/* Otros estados - columna derecha */}
+                            <div className="w-[190px] space-y-5 flex-shrink-0">
+                              {officeNav.slice(1).map((stateGroup) => (
+                                <div key={stateGroup.state}>
+                                  <h4 className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-2 pb-1.5 border-b border-[#B2904D]/20">{stateGroup.state}</h4>
+                                  {stateGroup.cities.map((city) => (
+                                    <Link key={city.name} href={city.href} className="group/item flex items-center px-3 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                      <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{city.name}</span>
+                                    </Link>
+                                  ))}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Ver todas las oficinas */}
+                          <div className="mt-5 pt-4 border-t border-white/10">
+                            <Link href={`/${language}/oficinas`} className="group/item flex items-center justify-center px-4 py-2.5 rounded-xl hover:bg-[#B2904D]/10 transition-colors duration-200">
+                              <span className="text-xs font-semibold text-[#B2904D] group-hover/item:text-white uppercase tracking-[0.15em] transition-colors duration-200">
+                                {language === 'es' ? 'Ver todas las oficinas' : 'View all offices'} →
+                              </span>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -384,7 +455,7 @@ export default function HeaderProfessional() {
         </div>
 
         {/* --- 4. BARRA SUPERIOR ESCRITORIO CON CLICK --- */}
-        <div className="hidden lg:flex justify-center w-full relative z-50">
+        <div className="hidden lg:flex justify-center w-full relative z-40">
           <div className="px-16 py-1.5 relative overflow-hidden group border-b-[2px] border-[#009b3a]">
             {/* ✅ AQUÍ AÑADÍ EL EVENTO DE CLICK PARA ESCRITORIO */}
             <a 
@@ -444,16 +515,69 @@ export default function HeaderProfessional() {
                           exit={{ height: 0, opacity: 0 }}
                           className="overflow-hidden mt-3 ml-2 border-l-[0.5px] border-white/10 pl-5 space-y-3 pt-2"
                         >
-                          {item.submenu.map(sub => (
-                            <Link 
-                              key={sub.name} 
-                              href={sub.href} 
-                              onClick={() => setIsMenuOpen(false)}
-                              className="block text-xs text-gray-400 font-light uppercase tracking-[0.15em] hover:text-white transition-colors"
-                            >
-                              {sub.name}
-                            </Link>
-                          ))}
+                          {item.key === 'offices' ? (
+                            <>
+                              <Link href={`/${language}/oficinas`} onClick={() => setIsMenuOpen(false)} className="block text-xs text-[#B2904D] font-medium uppercase tracking-[0.15em] hover:text-white transition-colors mb-2">
+                                {language === 'es' ? 'Ver todas las oficinas' : 'View all offices'}
+                              </Link>
+                              {officeNav.map(stateGroup => (
+                                <div key={stateGroup.state} className="mb-1">
+                                  <button
+                                    onClick={() => setOpenMobileState(openMobileState === stateGroup.state ? null : stateGroup.state)}
+                                    className="flex justify-between items-center w-full text-xs text-[#B2904D] font-bold uppercase tracking-[0.15em] py-1.5"
+                                  >
+                                    {stateGroup.state}
+                                    <ChevronDown className={`w-2.5 h-2.5 transition-transform duration-300 ${openMobileState === stateGroup.state ? 'rotate-180' : 'opacity-50'}`} />
+                                  </button>
+                                  <AnimatePresence>
+                                    {openMobileState === stateGroup.state && (
+                                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden ml-3 border-l border-white/5 pl-3 space-y-1 py-1">
+                                        {stateGroup.cities.map(city =>
+                                          city.subOffices ? (
+                                            <div key={city.name}>
+                                              <button
+                                                onClick={() => setOpenMobileCity(openMobileCity === city.name ? null : city.name)}
+                                                className="flex justify-between items-center w-full text-xs text-gray-300 font-medium uppercase tracking-[0.12em] py-1 hover:text-white transition-colors"
+                                              >
+                                                {city.name}
+                                                <ChevronDown className={`w-2 h-2 transition-transform duration-300 ${openMobileCity === city.name ? 'rotate-180' : 'opacity-50'}`} />
+                                              </button>
+                                              <AnimatePresence>
+                                                {openMobileCity === city.name && (
+                                                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden ml-3 border-l border-white/5 pl-3 space-y-1 py-1">
+                                                    {city.subOffices.map(sub => (
+                                                      <Link key={sub.name} href={sub.href} onClick={() => setIsMenuOpen(false)} className="block text-[11px] text-gray-400 font-light uppercase tracking-[0.12em] hover:text-white transition-colors py-0.5">
+                                                        {sub.name}
+                                                      </Link>
+                                                    ))}
+                                                  </motion.div>
+                                                )}
+                                              </AnimatePresence>
+                                            </div>
+                                          ) : (
+                                            <Link key={city.name} href={city.href} onClick={() => setIsMenuOpen(false)} className="block text-xs text-gray-400 font-light uppercase tracking-[0.12em] hover:text-white transition-colors py-1">
+                                              {city.name}
+                                            </Link>
+                                          )
+                                        )}
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+                              ))}
+                            </>
+                          ) : (
+                            item.submenu.map(sub => (
+                              <Link
+                                key={sub.name}
+                                href={sub.href}
+                                onClick={() => setIsMenuOpen(false)}
+                                className="block text-xs text-gray-400 font-light uppercase tracking-[0.15em] hover:text-white transition-colors"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))
+                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>

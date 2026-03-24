@@ -163,7 +163,7 @@ export default function HeroProfessional() {
                   <div
                     className="relative text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[10rem] font-black tracking-tighter leading-none flex items-center justify-center lg:justify-start w-full"
                     style={{
-                      background: 'linear-gradient(135deg, #ffffff 0%, #B2904D 30%, #FFD700 50%, #ffffff 70%, #B2904D 100%)',
+                      background: 'linear-gradient(135deg, #B2904D 0%, #D4A853 25%, #B2904D 50%, #8B6914 75%, #B2904D 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
