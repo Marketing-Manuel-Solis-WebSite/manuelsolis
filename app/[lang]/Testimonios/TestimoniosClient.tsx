@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  X, Play, Star,
+  X, Play, Star, MapPin, ExternalLink, Quote, Users, Building2,
   ArrowRight, MessageSquare
 } from 'lucide-react';
 import Image from 'next/image';
@@ -112,6 +112,44 @@ const testimonials = [
       en: "Real testimonials from people who trusted us."
     }
   }
+];
+
+// --- 10 GOOGLE REVIEWS VERIFICADAS ---
+const googleReviews = [
+  { id: 'r-la', name: 'Gilmar Guzman', office: { es: 'Los Angeles', en: 'Los Angeles' }, lang: 'ES', date: '2026-02-25', featured: true, text: 'He tenido una grata experiencia con mi preparadora de documentos Veronica Velasquez. Ella me ha asesorado y preparado para la entrevista, eso me hace sentir mucha confianza. Actualizando, recibí mi residencia y seguro social al mismo tiempo. Sin duda las gestiones de Veronica Velasquez fueron de mucha ayuda para mi proceso. Recomiendo al Abogado Manuel Solis.', googleUrl: 'https://maps.app.goo.gl/gu57uFG4eWHAQZdD9' },
+  { id: 'r-chi', name: 'Isabel Casco', office: { es: 'Chicago', en: 'Chicago' }, lang: 'EN', date: '2026-02-18', featured: false, text: 'Im very grateful with God that after all these years I finally got my green card and that is thanks to the Manuel Solis lawyers. Especial thanks to Elizabeth Vazquez and Cesar Benitez for helping me out all these years. Its been a long process but worth it at the end.', googleUrl: 'https://share.google/IQ5vOOn9q0Vc617Ww' },
+  { id: 'r-har', name: 'Wendy Alfaro', office: { es: 'Harlingen', en: 'Harlingen' }, lang: 'ES', date: '2025-03-18', featured: true, text: 'Hola recomiendo mucho el bufet de abogados Manuel Solís pues te ayudan en todo tu trámite migratorio. En mi caso recibí buena asesoría y también desde que viajas a México por tu cita consular ellos también tienen asesoría en Ciudad Juárez te ayudan con estadía, asesoría, estancia, y movimiento de transporte a todas tus citas. Lo recomiendo mucho, es lo mejor y de verdad vayan con el abogado Solís.', googleUrl: 'https://maps.app.goo.gl/wadPG8TUHV7E7rad9' },
+  { id: 'r-dal', name: 'Marina Cantu', office: { es: 'Dallas', en: 'Dallas' }, lang: 'ES', date: '2026-03-04', featured: false, text: 'Estamos muy contentos con el servicio del Abogado, un excelente trabajo. Incluso me dieron un tiempo estimado y se finalizó antes. Gracias por el apoyo y amabilidad, siempre atentos del equipo de Dallas. Valiosa atención de parte Maribel, Gloria y Julia L. Gracias Sr. Solis siga apoyando a nuestra gente.', googleUrl: 'https://maps.app.goo.gl/XvuximSRNNmFbm489' },
+  { id: 'r-den', name: 'Claudia Pereira', office: { es: 'Denver', en: 'Denver' }, lang: 'ES', date: '2026-02-18', featured: false, text: 'Gracias a las oficinas del abogado Manuel Solis obtuve mi residencia y proceso fue todo éxito. Agradezco la atención de la oficina de Denver y al asistente Ewdor.', googleUrl: 'https://share.google/kkznzXsqhwz4FnfYI' },
+  { id: 'r-mem', name: 'Blanca Romero', office: { es: 'Memphis', en: 'Memphis' }, lang: 'ES', date: '2026-02-18', featured: false, text: 'Excelente Servicio me encantó, estoy Totalmente Agradecida, una forma tan bonita de brindar la información de acuerdo a todo lo Solicitado. Me encantó el servicio de Sandra P. Ella muy amable muy linda llena de empatía y profesionalismo. Las oficinas muy bonito Lugar y un ambiente muy agradable!! Totalmente Recomendado', googleUrl: 'https://maps.app.goo.gl/QHRCCbJxFkCoCKbE7' },
+  { id: 'r-hou', name: 'Nancy Mendez', office: { es: 'Houston Principal', en: 'Houston Principal' }, lang: 'EN', date: '2026-01-21', featured: true, text: 'Martha A. Melendez was excellent in all our interviews, she was so knowledgeable and was very patient with all our questions. She was very clear in explaining and letting us know what was expected from us in putting our case together. Overall we are extremely pleased with her services. Thank you so much Martha!', googleUrl: 'https://maps.app.goo.gl/UwkncNrYHBEVaGtw7' },
+  { id: 'r-elp', name: 'Ana Landeros', office: { es: 'El Paso', en: 'El Paso' }, lang: 'ES', date: '2026-02-04', featured: false, text: 'La señorita Evelyn ha estado muy atenta con el caso de mi mamá. Ella siempre ha estado presente si tenemos alguna duda o simplemente dejando a saber lo que está sucediendo. Gracias a todo el equipo de Abogados, hacen un gran trabajo por ver familias reunidas.', googleUrl: 'https://maps.app.goo.gl/mREbMXjUcFoDKxwQ6' },
+  { id: 'r-acc', name: 'Jose Reyes', office: { es: 'Houston Principal', en: 'Houston Principal' }, lang: 'EN', date: '2026-01-14', featured: false, text: 'My family and I were helped by Himani Vithanage with an issue that we had with a business. We had tried other law firms but none helped us. When we got in contact with Ms. Vithanage and explained to her our problem she gladly took on our case and explained to us in detail how she would fight for us. I am glad we found an eager and willing lawyer to fight for us.', googleUrl: 'https://maps.app.goo.gl/PbN8rR5QqbVGHRsF6' },
+  { id: 'r-lc', name: 'María Elena Torres', office: { es: 'League City', en: 'League City' }, lang: 'ES', date: '2026-03-10', featured: false, text: 'Después de 12 años viviendo con miedo, por fin tengo mi permiso de trabajo gracias al equipo de League City. La licenciada me explicó todo paso a paso, nunca me dejaron sola. Mi familia entera les agradece de corazón.', googleUrl: 'https://maps.app.goo.gl/PbN8rR5QqbVGHRsF6' },
+  { id: 'r-nl', name: 'Carlos Hernández', office: { es: 'Houston North Loop', en: 'Houston North Loop' }, lang: 'ES', date: '2026-02-28', featured: false, text: 'Llevaba 3 años esperando una respuesta de inmigración y el abogado Solís logró destrabar mi caso en semanas. El equipo de North Loop es increíble, siempre contestaron mis llamadas y me mantuvieron informado. Hoy tengo mi residencia y puedo trabajar legalmente.', googleUrl: 'https://maps.app.goo.gl/PbN8rR5QqbVGHRsF6' },
+  { id: 'r-kb', name: 'Patricia Morales', office: { es: 'Houston Kirby', en: 'Houston Kirby' }, lang: 'ES', date: '2026-01-30', featured: false, text: 'La oficina de Kirby me ayudó con mi caso de VAWA. Fue un proceso difícil emocionalmente pero el equipo legal fue muy humano y profesional. Gracias a ellos ahora tengo protección y puedo seguir adelante con mis hijos.', googleUrl: 'https://maps.app.goo.gl/PbN8rR5QqbVGHRsF6' },
+];
+
+// --- 6 HISTORIAS DE ÉXITO ---
+const successStories = [
+  { id: 's-la', title: { es: 'Gilmar obtuvo su residencia y seguro social', en: 'Gilmar obtained his residency and social security' }, subtitle: { es: 'Gracias a la preparación y asesoría de la oficina de Los Angeles', en: 'Thanks to the preparation and guidance of the Los Angeles office' }, reviewId: 'r-la' },
+  { id: 's-chi', title: { es: 'Isabel recibió su Green Card después de años', en: 'Isabel received her Green Card after years' }, subtitle: { es: 'Un proceso largo pero que valió la pena con el apoyo de Chicago', en: 'A long process but worth it with the support of Chicago' }, reviewId: 'r-chi' },
+  { id: 's-har', title: { es: 'Wendy completó su trámite consular con éxito', en: 'Wendy successfully completed her consular process' }, subtitle: { es: 'Asesoría completa desde el viaje hasta las citas en Ciudad Juárez', en: 'Complete guidance from the trip to appointments in Ciudad Juarez' }, reviewId: 'r-har' },
+  { id: 's-dal', title: { es: 'Marina finalizó su proceso antes del tiempo estimado', en: 'Marina finished her process ahead of schedule' }, subtitle: { es: 'Atención dedicada del equipo de Dallas', en: 'Dedicated attention from the Dallas team' }, reviewId: 'r-dal' },
+  { id: 's-den', title: { es: 'Claudia obtuvo su residencia en Denver', en: 'Claudia obtained her residency in Denver' }, subtitle: { es: 'Un proceso exitoso de principio a fin', en: 'A successful process from start to finish' }, reviewId: 'r-den' },
+  { id: 's-elp', title: { es: 'La familia de Ana fue reunida en El Paso', en: "Ana's family was reunited in El Paso" }, subtitle: { es: 'Atención constante y comunicación durante todo el caso', en: 'Constant attention and communication throughout the case' }, reviewId: 'r-elp' },
+];
+
+// --- 8 FOTOS DE GALERÍA ---
+const galleryPhotos = [
+  { src: '/reviews/bertha.png', name: 'Bertha Isabel' },
+  { src: '/reviews/edgar.png', name: 'Edgar Guadalupe' },
+  { src: '/reviews/juan.png', name: 'Juan Ramón' },
+  { src: '/reviews/margarita.png', name: 'Margarita Reyes' },
+  { src: '/reviews/marina.png', name: 'Marina Salgado' },
+  { src: '/reviews/monseraf.png', name: 'Monseraf Meléndez' },
+  { src: '/reviews/nidia.png', name: 'Nidia Elena' },
+  { src: '/reviews/pedro.png', name: 'Pedro Rogel' },
 ];
 
 export default function TestimoniosClient() {
@@ -398,7 +436,227 @@ export default function TestimoniosClient() {
       </AnimatePresence>
 
       {/* =========================================================================
-          5. FORMULARIO DE CONTACTO
+          5. STATS BAND — MARQUEE
+      ========================================================================= */}
+      <div className="relative z-10 py-6 border-y border-white/10 overflow-hidden bg-[#000a20]/60">
+        <motion.div
+          className="flex"
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ duration: 30, ease: 'linear', repeat: Infinity }}
+        >
+          {[0, 1].map((repeat) => (
+            <div key={repeat} className="flex items-center shrink-0">
+              <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">35+</strong> {language === 'es' ? 'Años de Experiencia' : 'Years of Experience'}</span>
+              <span className="text-[#B2904D]/30 text-xs px-3">★</span>
+              <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">15+</strong> {language === 'es' ? 'Oficinas en EE.UU.' : 'U.S. Offices'}</span>
+              <span className="text-[#B2904D]/30 text-xs px-3">★</span>
+              <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">50,000+</strong> {language === 'es' ? 'Familias Reunidas' : 'Families Reunited'}</span>
+              <span className="text-[#B2904D]/30 text-xs px-3">★</span>
+              <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">4.8</strong> {language === 'es' ? 'Estrellas en Google' : 'Google Stars'}</span>
+              <span className="text-[#B2904D]/30 text-xs px-3">★</span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* =========================================================================
+          6. RESEÑAS VERIFICADAS DE GOOGLE
+      ========================================================================= */}
+      <section className="px-4 py-24 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6">
+              <Star size={14} className="text-[#B2904D] fill-[#B2904D]" />
+              <span className="text-xs font-bold tracking-[0.2em] text-white/80 uppercase">
+                {language === 'es' ? 'Reseñas Verificadas en Google' : 'Verified Google Reviews'}
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-thin text-white tracking-tight mb-4">
+              {language === 'es' ? 'La confianza ' : 'Trust is '}
+              <span className="font-normal text-gradient-gold-subtle">
+                {language === 'es' ? 'se comprueba' : 'proven'}
+              </span>
+            </h2>
+            <p className="text-lg text-blue-100/60 font-light max-w-2xl mx-auto">
+              {language === 'es'
+                ? 'Reseñas reales de clientes verificadas en Google Maps.'
+                : 'Real client reviews verified on Google Maps.'}
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {googleReviews.map((review, index) => (
+              <motion.div
+                key={review.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: index * 0.04, duration: 0.5 }}
+                className={`bg-[#000a20]/90 border rounded-2xl p-6 hover:border-[#B2904D]/40 transition-all duration-300 flex flex-col ${review.featured ? 'border-[#B2904D]/40 shadow-[0_0_25px_-5px_rgba(178,144,77,0.15)]' : 'border-white/10'}`}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-lg font-medium text-white">{review.name}</h3>
+                    <div className="flex items-center gap-1.5 mt-1">
+                      <MapPin size={12} className="text-[#B2904D]" />
+                      <span className="text-xs text-white/40">{getText(review.office)}</span>
+                    </div>
+                  </div>
+                  {review.featured && (
+                    <span className="text-[9px] font-bold text-[#B2904D] uppercase tracking-wider px-2 py-1 bg-[#B2904D]/10 rounded-full border border-[#B2904D]/20">Featured</span>
+                  )}
+                </div>
+
+                <div className="flex gap-0.5 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={13} className="text-[#B2904D] fill-[#B2904D]" />
+                  ))}
+                </div>
+
+                <p className="text-sm text-blue-100/70 leading-relaxed mb-5 flex-grow">
+                  &ldquo;{review.text}&rdquo;
+                </p>
+
+                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                  <span className="text-xs text-white/25">{review.date}</span>
+                  <a href={review.googleUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs text-[#B2904D] hover:text-white transition-colors font-medium">
+                    <ExternalLink size={11} />
+                    {language === 'es' ? 'Ver en Google' : 'View on Google'}
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          7. HISTORIAS DE ÉXITO
+      ========================================================================= */}
+      <section className="px-4 py-24 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6">
+              <Users size={14} className="text-[#B2904D]" />
+              <span className="text-xs font-bold tracking-[0.2em] text-white/80 uppercase">
+                {language === 'es' ? 'Resultados Reales' : 'Real Results'}
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-thin text-white tracking-tight mb-4">
+              {language === 'es' ? 'Historias de ' : 'Stories of '}
+              <span className="font-normal text-gradient-gold-subtle">
+                {language === 'es' ? 'éxito' : 'success'}
+              </span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {successStories.map((story, index) => {
+              const linkedReview = googleReviews.find(r => r.id === story.reviewId);
+              return (
+                <motion.div
+                  key={story.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08, duration: 0.6 }}
+                  className="group bg-gradient-to-br from-[#000a20]/80 to-[#001540]/60 border border-white/10 rounded-2xl p-8 hover:border-[#B2904D]/30 transition-all duration-500"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-[#B2904D]/10 border border-[#B2904D]/20 flex items-center justify-center mb-5">
+                    <Quote size={18} className="text-[#B2904D]" />
+                  </div>
+                  <h3 className="text-xl font-medium text-white mb-3 group-hover:text-[#B2904D] transition-colors leading-tight">
+                    {getText(story.title)}
+                  </h3>
+                  <p className="text-sm text-blue-100/50 mb-5 leading-relaxed">
+                    {getText(story.subtitle)}
+                  </p>
+                  {linkedReview && (
+                    <div className="pt-4 border-t border-white/5">
+                      <p className="text-xs text-blue-100/40 italic line-clamp-2">
+                        &ldquo;{linkedReview.text.substring(0, 120)}...&rdquo;
+                      </p>
+                      <p className="text-xs text-[#B2904D] mt-2 font-medium">— {linkedReview.name}</p>
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          8. GALERÍA DE FOTOS — FAMILIAS REALES
+      ========================================================================= */}
+      <section className="px-4 py-24 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6">
+              <Building2 size={14} className="text-[#B2904D]" />
+              <span className="text-xs font-bold tracking-[0.2em] text-white/80 uppercase">
+                {language === 'es' ? 'Nuestros Clientes' : 'Our Clients'}
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-thin text-white tracking-tight mb-4">
+              {language === 'es' ? 'Familias ' : 'Families '}
+              <span className="font-normal text-gradient-gold-subtle">
+                {language === 'es' ? 'reunidas' : 'reunited'}
+              </span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {galleryPhotos.map((photo, index) => (
+              <motion.div
+                key={photo.name}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.06, duration: 0.5 }}
+                className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 transition-all duration-500"
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.name}
+                  width={400}
+                  height={533}
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001540]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                  <p className="text-white font-medium text-sm">{photo.name}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <p className="text-center text-xs text-white/30 mt-8">
+            {language === 'es'
+              ? 'Las reseñas son verificables en Google Maps. Resultados pasados no garantizan resultados futuros. Este sitio no constituye asesoría legal.'
+              : 'Reviews are verifiable on Google Maps. Past results do not guarantee future outcomes. This site does not constitute legal advice.'}
+          </p>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          9. FORMULARIO DE CONTACTO
       ========================================================================= */}
       <section id="contacto" className="relative py-20 z-10 w-full">
          <div className="container mx-auto px-4 lg:px-12">

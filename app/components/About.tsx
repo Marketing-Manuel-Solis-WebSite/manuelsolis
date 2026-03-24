@@ -124,17 +124,17 @@ export default function About() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: YouTube with Voces overlay */}
-          <div className="lg:col-span-6 relative h-[300px] sm:h-[350px] md:h-[500px] lg:h-[450px] xl:h-[500px] w-full mt-12 sm:mt-16 mb-12 sm:mb-16 lg:mt-0 lg:mb-0">
+          {/* Right Column: YouTube with thumbnail */}
+          <div className="lg:col-span-6 relative w-full mt-8 lg:mt-0">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-blue-600/20 blur-[80px] rounded-full -z-10" />
-              <div className="absolute top-4 -right-4 w-full h-full border border-[#B2904D]/20 rounded-[2rem] z-0 hidden lg:block" />
+              <div className="absolute top-3 -right-3 w-full h-full border border-[#B2904D]/20 rounded-2xl z-0 hidden lg:block" />
 
               <motion.div
                initial={{ opacity: 0, scale: 0.95 }}
                whileInView={{ opacity: 1, scale: 1 }}
                viewport={{ once: true }}
                transition={{ duration: 1.2, ease: "easeOut" }}
-               className="relative z-10 w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border border-white/5 bg-black"
+               className="relative z-10 w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 bg-black"
               >
                   {showVideo ? (
                     <iframe
@@ -145,7 +145,7 @@ export default function About() {
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                       allowFullScreen
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full"
                     />
                   ) : (
                     <button
@@ -154,23 +154,23 @@ export default function About() {
                       aria-label={language === 'es' ? 'Reproducir video' : 'Play video'}
                     >
                       <Image
-                        src="/Voces_ManuelSolis.png"
-                        alt="Voces Manuel Solis"
+                        src="/UniendoFamilias_ManuelSolis.png"
+                        alt="Caso real de reunificación familiar - Abogado Manuel Solís"
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-contain transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 50vw"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300" />
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-20 h-20 bg-[#B2904D] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(178,144,77,0.4)] group-hover:scale-110 transition-transform duration-300 border-2 border-white/20">
-                          <Play className="w-8 h-8 text-[#001540] ml-1 fill-[#001540]" />
+                        <div className="w-14 h-14 bg-[#B2904D]/90 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(178,144,77,0.3)] group-hover:scale-110 group-hover:bg-[#B2904D] transition-all duration-300 border border-white/20">
+                          <Play className="w-6 h-6 text-[#001540] ml-0.5 fill-[#001540]" />
                         </div>
                       </div>
                     </button>
                   )}
 
-                  <div className="absolute inset-0 border border-white/10 rounded-[2rem] pointer-events-none" />
+                  <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
               </motion.div>
           </div>
 

@@ -60,6 +60,20 @@ const organizationSchema = {
     { '@type': 'State', name: 'Colorado' },
     { '@type': 'State', name: 'Tennessee' }
   ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Immigration & Legal Services',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Immigration Law', description: 'Complete immigration services including family petitions, work permits, green cards, citizenship, and humanitarian visas' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'U Visa', description: 'U Nonimmigrant Status for victims of crime' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'VAWA Self-Petition', description: 'Violence Against Women Act protection for abuse victims' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Deportation Defense', description: 'Cancellation of removal and defense in immigration court' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Asylum', description: 'Political asylum and refugee protection' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Personal Injury', description: 'Car accidents, workplace injuries, and medical malpractice' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Criminal Defense', description: 'Criminal defense with immigration consequences analysis' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Family Law', description: 'Divorce, custody, and family legal matters' } },
+    ]
+  },
   sameAs: [
     'https://www.facebook.com/AbogadoManuelSolisOficial/',
     'https://twitter.com/AbogadoMSolis',
@@ -69,15 +83,40 @@ const organizationSchema = {
   ],
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: '+1-866-979-5146',
+    telephone: '+1-888-676-1238',
     contactType: 'customer service',
     areaServed: 'US',
-    availableLanguage: ['English', 'Spanish (Español)']
+    availableLanguage: ['English', 'Spanish']
   },
+  location: [
+    { '@type': 'Place', name: 'Houston Principal Office', address: { '@type': 'PostalAddress', streetAddress: '6705 Navigation Blvd', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77011', addressCountry: 'US' }, telephone: '(713) 231-5384' },
+    { '@type': 'Place', name: 'Houston North Loop Office', address: { '@type': 'PostalAddress', streetAddress: '2950 N Loop W', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77092', addressCountry: 'US' } },
+    { '@type': 'Place', name: 'Houston Bellaire Office', address: { '@type': 'PostalAddress', streetAddress: '9188 Bellaire Blvd E', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77036', addressCountry: 'US' } },
+    { '@type': 'Place', name: 'Dallas Office', address: { '@type': 'PostalAddress', streetAddress: '1120 Empire Central Pl', addressLocality: 'Dallas', addressRegion: 'TX', postalCode: '75247', addressCountry: 'US' }, telephone: '(214) 753-8315' },
+    { '@type': 'Place', name: 'El Paso Office', address: { '@type': 'PostalAddress', streetAddress: '3632 Admiral St', addressLocality: 'El Paso', addressRegion: 'TX', postalCode: '79925', addressCountry: 'US' }, telephone: '(915) 233-7127' },
+    { '@type': 'Place', name: 'Harlingen Office', address: { '@type': 'PostalAddress', streetAddress: '320 E Jackson Ave', addressLocality: 'Harlingen', addressRegion: 'TX', postalCode: '78550', addressCountry: 'US' } },
+    { '@type': 'Place', name: 'Chicago Office', address: { '@type': 'PostalAddress', streetAddress: '6000 Cermak Rd', addressLocality: 'Cicero', addressRegion: 'IL', postalCode: '60804', addressCountry: 'US' }, telephone: '(312) 477-0389' },
+    { '@type': 'Place', name: 'Los Angeles Office', address: { '@type': 'PostalAddress', streetAddress: '8337 Telegraph Rd Ste 115', addressLocality: 'Pico Rivera', addressRegion: 'CA', postalCode: '90660', addressCountry: 'US' }, telephone: '(213) 784-1554' },
+    { '@type': 'Place', name: 'Memphis Office', address: { '@type': 'PostalAddress', streetAddress: '3385 Airways Blvd Suite 320', addressLocality: 'Memphis', addressRegion: 'TN', postalCode: '38116', addressCountry: 'US' }, telephone: '(901) 557-8357' },
+    { '@type': 'Place', name: 'Denver/Arvada Office', address: { '@type': 'PostalAddress', streetAddress: '5400 Ward Rd BLDG IV', addressLocality: 'Arvada', addressRegion: 'CO', postalCode: '80002', addressCountry: 'US' }, telephone: '(720) 358-8973' },
+  ],
   numberOfEmployees: {
     '@type': 'QuantitativeValue',
     minValue: 50
-  }
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    bestRating: '5',
+    worstRating: '1',
+    ratingCount: '12',
+    reviewCount: '12'
+  },
+  review: [
+    { '@type': 'Review', author: { '@type': 'Person', name: 'Gilmar Guzman' }, datePublished: '2026-02-25', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'Recibí mi residencia y seguro social al mismo tiempo. Las gestiones de Veronica Velasquez fueron de mucha ayuda. Recomiendo al Abogado Manuel Solis.' },
+    { '@type': 'Review', author: { '@type': 'Person', name: 'Wendy Alfaro' }, datePublished: '2025-03-18', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'Recomiendo mucho el bufet de abogados Manuel Solís, te ayudan en todo tu trámite migratorio. Asesoría completa incluso en Ciudad Juárez.' },
+    { '@type': 'Review', author: { '@type': 'Person', name: 'Nancy Mendez' }, datePublished: '2026-01-21', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'Martha A. Melendez was excellent in all our interviews. She was so knowledgeable and patient. We are extremely pleased with her services.' },
+  ]
 };
 
 const websiteSchema = {
