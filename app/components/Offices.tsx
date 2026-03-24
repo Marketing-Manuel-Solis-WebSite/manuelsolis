@@ -52,11 +52,30 @@ const officesData: OfficeData[] = [
     hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
     mapLink: generateMapUrl('6705 Navigation Blvd, Houston, TX 77011, United States'),
     image: '/offices/Houston.png',
-    services: [ 
-        { es: 'Inmigración', en: 'Immigration' }, 
+    services: [
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Seguros', en: 'Insurance' },
         { es: 'Accidentes', en: 'Accidents' },
+        { es: 'Ticket', en: 'Traffic Tickets' },
+        { es: 'Detenidos', en: 'Detained' }
+    ],
+  },
+  {
+    id: 'houston-accidentes',
+    city: 'Accidentes',
+    state: 'TX',
+    title: { es: 'Houston Accidentes', en: 'Houston Accidents' },
+    description: ORIGINAL_DESC,
+    address: '6705 Navigation Blvd, Houston, TX 77011, United States',
+    phone: '(713) 231-5384',
+    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    mapLink: generateMapUrl('6705 Navigation Blvd, Houston, TX 77011, United States'),
+    image: '/offices/Houston.png',
+    services: [
+        { es: 'Accidentes', en: 'Accidents' },
+        { es: 'Inmigración', en: 'Immigration' },
+        { es: 'Seguros', en: 'Insurance' },
         { es: 'Ticket', en: 'Traffic Tickets' },
         { es: 'Detenidos', en: 'Detained' }
     ],
@@ -312,7 +331,11 @@ const officesData: OfficeData[] = [
         { es: 'Detenidos', en: 'Detained' }
     ],
   },
-].sort((a, b) => a.city.localeCompare(b.city)).map(office => ({
+].sort((a, b) => {
+  if (a.id === 'houston-principal') return -1;
+  if (b.id === 'houston-principal') return 1;
+  return a.city.localeCompare(b.city);
+}).map(office => ({
     ...office,
     id: office.id || office.city.toLowerCase().replace(/\s/g, '-')
 }));
@@ -360,7 +383,7 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
 };
 
 // --- AGRUPACIÓN POR ESTADO → CIUDAD ---
-const HOUSTON_IDS = ['houston-principal', 'houston-bellaire', 'houston-kirby', 'league-city', 'houston-main', 'houston-north-loop', 'houston-northchase'];
+const HOUSTON_IDS = ['houston-principal', 'houston-accidentes', 'houston-bellaire', 'houston-kirby', 'league-city', 'houston-main', 'houston-north-loop', 'houston-northchase'];
 const OTHER_STATES = [
   { code: 'IL', label: 'Illinois' },
   { code: 'TN', label: 'Tennessee' },

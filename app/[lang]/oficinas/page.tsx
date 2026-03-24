@@ -57,6 +57,15 @@ const OFFICE_GROUPS: StateGroup[] = [
             phone: '(713) 701-1731',
           },
           {
+            name: { es: 'Houston Accidentes', en: 'Houston Accidents' },
+            slug: 'houston-accidentes',
+            address: '6705 Navigation Blvd',
+            city: 'Houston',
+            state: 'TX',
+            zip: '77011',
+            phone: '(713) 231-5384',
+          },
+          {
             name: { es: 'Bellaire', en: 'Bellaire' },
             slug: 'houston-bellaire',
             address: '6220 Westpark Dr Suite 100',

@@ -190,47 +190,6 @@ export default function ClientesDetenidosClient() {
       <Header />
 
       {/* =========================================================================
-          EMERGENCY BANNER — Above the fold, highest visibility
-      ========================================================================= */}
-      <section className="relative z-20 bg-gradient-to-r from-red-900/90 to-red-800/90 border-b border-red-500/30">
-        <div className="container mx-auto px-4 py-5 max-w-5xl">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3 text-center md:text-left">
-              <AlertTriangle className="w-8 h-8 text-yellow-400 flex-shrink-0 animate-pulse" />
-              <div>
-                <p className="text-white font-bold text-lg md:text-xl">
-                  {lang === 'es' ? '¿Su familiar fue detenido por ICE?' : 'Was your family member detained by ICE?'}
-                </p>
-                <p className="text-white/80 text-sm">
-                  {lang === 'es' ? 'No firme nada. Llame primero.' : "Don't sign anything. Call first."}
-                </p>
-              </div>
-            </div>
-            <a
-              href="tel:+18669795146"
-              className="flex items-center gap-3 bg-white text-red-900 font-black text-xl md:text-2xl px-6 py-3 rounded-xl hover:bg-yellow-400 transition-colors whitespace-nowrap shadow-lg"
-            >
-              <Phone className="w-6 h-6" />
-              866-979-5146
-            </a>
-          </div>
-
-          {/* Quick checklist */}
-          <div className="mt-4 pt-4 border-t border-red-500/30">
-            <p className="text-white/90 text-xs font-semibold uppercase tracking-wider mb-2">
-              {lang === 'es' ? 'Tenga lista esta información al llamar:' : 'Have this information ready when you call:'}
-            </p>
-            <div className="flex flex-wrap gap-x-6 gap-y-1 text-white/70 text-xs">
-              <span className="flex items-center gap-1"><span className="text-yellow-400">1.</span> {lang === 'es' ? 'Nombre completo del detenido' : 'Detainee full name'}</span>
-              <span className="flex items-center gap-1"><span className="text-yellow-400">2.</span> {lang === 'es' ? 'Número A (si lo tiene)' : 'A-Number (if available)'}</span>
-              <span className="flex items-center gap-1"><span className="text-yellow-400">3.</span> {lang === 'es' ? 'Fecha y lugar de detención' : 'Date and place of detention'}</span>
-              <span className="flex items-center gap-1"><span className="text-yellow-400">4.</span> {lang === 'es' ? 'Parentesco con el detenido' : 'Relationship to detainee'}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
           FONDO ATMOSFÉRICO (OPTIMIZADO)
       ========================================================================= */}
       <div className="fixed inset-0 z-0 pointer-events-none w-full h-full transform-gpu">
@@ -274,6 +233,45 @@ export default function ClientesDetenidosClient() {
                 transition={{ duration: 1, delay: 0.3 }}
                 className="w-32 h-1 bg-gradient-to-r from-transparent via-[#B2904D] to-transparent mx-auto mb-12"
             />
+        </div>
+      </section>
+
+      {/* =========================================================================
+          EMERGENCY BANNER — Below hero
+      ========================================================================= */}
+      <section className="relative z-10 bg-gradient-to-r from-red-900/90 to-red-800/90 border-y border-red-500/30">
+        <div className="container mx-auto px-4 py-5 max-w-5xl">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-center md:text-left">
+              <AlertTriangle className="w-8 h-8 text-yellow-400 flex-shrink-0 animate-pulse" />
+              <div>
+                <p className="text-white font-bold text-lg md:text-xl">
+                  {lang === 'es' ? '¿Su familiar fue detenido por ICE?' : 'Was your family member detained by ICE?'}
+                </p>
+                <p className="text-white/80 text-sm">
+                  {lang === 'es' ? 'No firme nada. Llame primero.' : "Don't sign anything. Call first."}
+                </p>
+              </div>
+            </div>
+            <a
+              href="tel:+18669795146"
+              className="flex items-center gap-3 bg-white text-red-900 font-black text-xl md:text-2xl px-6 py-3 rounded-xl hover:bg-yellow-400 transition-colors whitespace-nowrap shadow-lg"
+            >
+              <Phone className="w-6 h-6" />
+              866-979-5146
+            </a>
+          </div>
+          <div className="mt-4 pt-4 border-t border-red-500/30">
+            <p className="text-white/90 text-xs font-semibold uppercase tracking-wider mb-2">
+              {lang === 'es' ? 'Tenga lista esta información al llamar:' : 'Have this information ready when you call:'}
+            </p>
+            <div className="flex flex-wrap gap-x-6 gap-y-1 text-white/70 text-xs">
+              <span className="flex items-center gap-1"><span className="text-yellow-400">1.</span> {lang === 'es' ? 'Nombre completo del detenido' : 'Detainee full name'}</span>
+              <span className="flex items-center gap-1"><span className="text-yellow-400">2.</span> {lang === 'es' ? 'Número A (si lo tiene)' : 'A-Number (if available)'}</span>
+              <span className="flex items-center gap-1"><span className="text-yellow-400">3.</span> {lang === 'es' ? 'Fecha y lugar de detención' : 'Date and place of detention'}</span>
+              <span className="flex items-center gap-1"><span className="text-yellow-400">4.</span> {lang === 'es' ? 'Parentesco con el detenido' : 'Relationship to detainee'}</span>
+            </div>
+          </div>
         </div>
       </section>
 

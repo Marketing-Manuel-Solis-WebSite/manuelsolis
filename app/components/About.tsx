@@ -60,9 +60,9 @@ export default function About() {
           className="mb-16 text-center"
         >
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight">
-            {language === 'es' ? 'Caso real de ' : 'Real case of '}
+            {language === 'es' ? 'Caso Real de ' : 'Real Case of '}
             <span className="font-normal text-gradient-gold-subtle">
-              {language === 'es' ? 'reunificación familiar' : 'family reunification'}
+              {language === 'es' ? 'Reunificación Familiar' : 'Family Reunification'}
             </span>
           </h2>
         </motion.div>

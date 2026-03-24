@@ -100,6 +100,7 @@ export default function HeaderProfessional() {
           href: `/${language}/oficinas/houston-principal`,
           subOffices: [
             { name: 'Houston Principal', href: `/${language}/oficinas/houston-principal` },
+            { name: 'Houston Accidentes', href: `/${language}/oficinas/houston-accidentes` },
             { name: 'Bellaire', href: `/${language}/oficinas/houston-bellaire` },
             { name: 'Kirby', href: `/${language}/oficinas/kirby` },
             { name: 'League City', href: `/${language}/oficinas/league-city` },
