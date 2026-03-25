@@ -38,8 +38,8 @@ export default function MobileStickyBar() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden">
-      <div className="flex border-t border-[#B2904D]/30 bg-[#001540]/95 backdrop-blur-md">
+    <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-[#001540]/95 backdrop-blur-md border-t border-[#B2904D]/30" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+      <div className="flex">
         {/* Call Button */}
         <a
           href={`tel:+${PHONE_NUMBER}`}
@@ -64,9 +64,6 @@ export default function MobileStickyBar() {
           <span>WhatsApp</span>
         </button>
       </div>
-
-      {/* Safe area padding for notched phones */}
-      <div className="bg-[#001540]/95 backdrop-blur-md" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }} />
     </div>
   );
 }

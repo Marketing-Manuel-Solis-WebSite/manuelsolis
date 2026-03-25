@@ -425,17 +425,15 @@ export default function HeaderProfessional() {
             </div>
 
             {/* --- 3. BOTÓN MÓVIL CON CLICK --- */}
-            <div className="lg:hidden flex items-center gap-4 ml-auto">
-              {/* ✅ AQUÍ AÑADÍ EL EVENTO DE CLICK PARA MÓVIL */}
-              <a 
-                href={phoneLink}
-                onClick={handleCallClick} 
-                className="flex items-center gap-2 text-sky-300 hover:text-white transition-colors"
-                aria-label="Call us"
+            <div className="lg:hidden flex items-center gap-3 ml-auto">
+              {/* Language toggle for mobile */}
+              <button
+                onClick={() => toggleLang(language === 'es' ? 'en' : 'es')}
+                className="flex items-center gap-1.5 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.15em] transition-colors duration-200 px-2 py-1.5 rounded-lg border border-white/10 active:bg-white/10"
               >
-                <Phone size={16} />
-                <span className="text-xs font-medium tracking-wider">{phoneNumber}</span>
-              </a>
+                {language === 'es' ? <FlagUS /> : <FlagES />}
+                <span>{language === 'es' ? 'EN' : 'ES'}</span>
+              </button>
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
