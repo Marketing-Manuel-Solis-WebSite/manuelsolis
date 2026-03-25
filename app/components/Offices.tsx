@@ -334,7 +334,9 @@ const officesData: OfficeData[] = [
 ].sort((a, b) => {
   if (a.id === 'houston-principal') return -1;
   if (b.id === 'houston-principal') return 1;
-  return a.city.localeCompare(b.city);
+  if (a.city < b.city) return -1;
+  if (a.city > b.city) return 1;
+  return 0;
 }).map(office => ({
     ...office,
     id: office.id || office.city.toLowerCase().replace(/\s/g, '-')

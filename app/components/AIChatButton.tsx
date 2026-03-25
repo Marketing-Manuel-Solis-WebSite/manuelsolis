@@ -109,7 +109,7 @@ export default function AIChatButton() {
       {/* --- BOTÓN FLOTANTE "AI" --- */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center group outline-none"
+        className="fixed bottom-20 sm:bottom-6 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center group outline-none"
         aria-label={isOpen ? (language === 'es' ? 'Cerrar asistente legal' : 'Close legal assistant') : (language === 'es' ? 'Abrir asistente legal IA' : 'Open AI legal assistant')}
         aria-expanded={isOpen}
         style={{
@@ -164,7 +164,7 @@ export default function AIChatButton() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed bottom-28 right-3 sm:right-6 z-50 w-[94vw] sm:w-[90vw] md:w-[400px] h-[70vh] sm:h-[600px] max-h-[75vh] flex flex-col overflow-hidden rounded-[30px] border border-white/10 shadow-2xl"
+            className="fixed bottom-40 sm:bottom-28 right-3 sm:right-6 z-50 w-[94vw] sm:w-[90vw] md:w-[400px] h-[60vh] sm:h-[600px] max-h-[70vh] flex flex-col overflow-hidden rounded-[30px] border border-white/10 shadow-2xl"
             style={{
               // OPTIMIZACIÓN CRÍTICA:
               // 1. Aumentamos opacidad del fondo (0.92)
