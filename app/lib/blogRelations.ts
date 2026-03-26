@@ -9,30 +9,30 @@ export interface ServiceLink {
 
 const blogServiceMap: Record<string, ServiceLink> = {
   // Visa U cluster → /servicios/visa-u
-  permiso_de_trabajo_visa_u: { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
-  que_hacer_si_la_policia_no_firma_la_certificacion_visa_u: { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
-  perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas: { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
-  Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados: { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U y VAWA', en: 'U Visa & VAWA Services' } },
+  'permiso-de-trabajo-visa-u': { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
+  'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u': { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
+  'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas': { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
+  'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados': { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U y VAWA', en: 'U Visa & VAWA Services' } },
   // VAWA cluster → /servicios/vawa
-  VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente: { path: '/servicios/vawa', label: { es: 'Servicios VAWA', en: 'VAWA Services' } },
-  VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses: { path: '/servicios/vawa', label: { es: 'Servicios VAWA', en: 'VAWA Services' } },
+  'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente': { path: '/servicios/vawa', label: { es: 'Servicios VAWA', en: 'VAWA Services' } },
+  'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses': { path: '/servicios/vawa', label: { es: 'Servicios VAWA', en: 'VAWA Services' } },
   // Deportation cluster → /servicios/defensa-deportacion
-  Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria: { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
-  ley_de_los_10_anos_cancelacion_de_deportacion: { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'ley-de-los-10-anos-cancelacion-de-deportacion': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
   // Humanitarian (general)
-  Visa_T_trabajo_forzado_por_deuda_con_coyote: { path: '/servicios/inmigracion', label: { es: 'Alivio Humanitario e Inmigración', en: 'Humanitarian Relief & Immigration' } },
+  'visa-t-trabajo-forzado-por-deuda-con-coyote': { path: '/servicios/inmigracion', label: { es: 'Alivio Humanitario e Inmigración', en: 'Humanitarian Relief & Immigration' } },
   // Asylum cluster → /servicios/asilo
-  asilo_frontera_2026_puerto_entrada_vs_cruce: { path: '/servicios/asilo', label: { es: 'Servicios de Asilo', en: 'Asylum Services' } },
-  estatus_juvenil_sijs_residencia_jovenes_abandonados: { path: '/servicios/asilo', label: { es: 'Asilo y Estatus Juvenil', en: 'Asylum & Juvenile Status' } },
+  'asilo-frontera-2026-puerto-entrada-vs-cruce': { path: '/servicios/asilo', label: { es: 'Servicios de Asilo', en: 'Asylum Services' } },
+  'estatus-juvenil-sijs-residencia-jovenes-abandonados': { path: '/servicios/asilo', label: { es: 'Asilo y Estatus Juvenil', en: 'Asylum & Juvenile Status' } },
   // Process cluster
-  advance_parole_2026_viajar_con_daca_tps_visa_u: { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
-  Formulario_G28_Cambiar_Abogado_Inmigracion: { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
-  residencia_laboral_eb3_ley_245i_entrada_indocumentada: { path: '/servicios/inmigracion', label: { es: 'Residencia y Visas de Trabajo', en: 'Residency & Work Visas' } },
-  foia_migratoria_pedir_record_antes_de_aplicar: { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
-  perdon_i601a_arreglar_papeles_entrada_ilegal: { path: '/servicios/inmigracion', label: { es: 'Perdones Migratorios', en: 'Immigration Waivers' } },
-  marihuana_dui_buen_caracter_moral_inmigracion: { path: '/servicios/ley-criminal', label: { es: 'Defensa Criminal e Inmigración', en: 'Criminal Defense & Immigration' } },
-  ciudadania_en_espanol_reglas_50_20_55_15: { path: '/servicios/inmigracion', label: { es: 'Servicios de Ciudadanía', en: 'Citizenship Services' } },
-  entrevista_matrimonio_uscis_senales_alerta: { path: '/servicios/familia', label: { es: 'Derecho Familiar e Inmigración', en: 'Family Law & Immigration' } },
+  'advance-parole-2026-viajar-con-daca-tps-visa-u': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'formulario-g28-cambiar-abogado-inmigracion': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'residencia-laboral-eb3-ley-245i-entrada-indocumentada': { path: '/servicios/inmigracion', label: { es: 'Residencia y Visas de Trabajo', en: 'Residency & Work Visas' } },
+  'foia-migratoria-pedir-record-antes-de-aplicar': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'perdon-i601a-arreglar-papeles-entrada-ilegal': { path: '/servicios/inmigracion', label: { es: 'Perdones Migratorios', en: 'Immigration Waivers' } },
+  'marihuana-dui-buen-caracter-moral-inmigracion': { path: '/servicios/ley-criminal', label: { es: 'Defensa Criminal e Inmigración', en: 'Criminal Defense & Immigration' } },
+  'ciudadania-en-espanol-reglas-50-20-55-15': { path: '/servicios/inmigracion', label: { es: 'Servicios de Ciudadanía', en: 'Citizenship Services' } },
+  'entrevista-matrimonio-uscis-senales-alerta': { path: '/servicios/familia', label: { es: 'Derecho Familiar e Inmigración', en: 'Family Law & Immigration' } },
 };
 
 const defaultServiceLink: ServiceLink = {
@@ -52,118 +52,160 @@ export interface RelatedArticle {
   category: { es: string; en: string };
 }
 
+// Maps attorney IDs to blog post slugs they authored
+export const authorArticleMap: Record<string, string[]> = {
+  'manuel-solis': [
+    'asilo-frontera-2026-puerto-entrada-vs-cruce',
+    'entrevista-matrimonio-uscis-senales-alerta',
+    'ciudadania-en-espanol-reglas-50-20-55-15',
+    'marihuana-dui-buen-caracter-moral-inmigracion',
+    'perdon-i601a-arreglar-papeles-entrada-ilegal',
+    'estatus-juvenil-sijs-residencia-jovenes-abandonados',
+    'foia-migratoria-pedir-record-antes-de-aplicar',
+    'residencia-laboral-eb3-ley-245i-entrada-indocumentada',
+    'advance-parole-2026-viajar-con-daca-tps-visa-u',
+    'ley-de-los-10-anos-cancelacion-de-deportacion',
+    'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
+    'formulario-g28-cambiar-abogado-inmigracion',
+    'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
+    'visa-t-trabajo-forzado-por-deuda-con-coyote',
+    'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente',
+    'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses',
+    'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas',
+    'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u',
+    'permiso-de-trabajo-visa-u',
+  ],
+};
+
+/** Get articles authored by a specific attorney (by attorney ID) */
+export function getArticlesByAuthor(attorneyId: string, lang: 'es' | 'en'): { title: string; slug: string; image: string; category: string }[] {
+  const slugs = authorArticleMap[attorneyId];
+  if (!slugs) return [];
+  return slugs
+    .filter(slug => allArticles[slug])
+    .map(slug => {
+      const article = allArticles[slug];
+      return {
+        title: article.title[lang],
+        slug: article.slug,
+        image: article.image,
+        category: article.category[lang],
+      };
+    });
+}
+
 const allArticles: Record<string, RelatedArticle> = {
-  permiso_de_trabajo_visa_u: {
+  'permiso-de-trabajo-visa-u': {
     title: { es: 'Permiso de Trabajo con Visa U (Bona Fide)', en: 'U Visa Work Permit (Bona Fide)' },
-    slug: 'permiso_de_trabajo_visa_u',
+    slug: 'permiso-de-trabajo-visa-u',
     image: '/blog/visa-u.png',
     category: { es: 'Visa U', en: 'U Visa' },
   },
-  que_hacer_si_la_policia_no_firma_la_certificacion_visa_u: {
+  'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u': {
     title: { es: 'Qué hacer si la policía no firma la certificación Visa U', en: 'What to Do if Police Won\'t Sign U Visa Certification' },
-    slug: 'que_hacer_si_la_policia_no_firma_la_certificacion_visa_u',
+    slug: 'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u',
     image: '/blog/visa-u.png',
     category: { es: 'Visa U', en: 'U Visa' },
   },
-  perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas: {
+  'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas': {
     title: { es: 'Perdón I-192: cómo arreglar con la Visa U si tienes deportaciones', en: 'I-192 Waiver: How to Fix Your Case with U Visa After Deportation' },
-    slug: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
+    slug: 'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas',
     image: '/blog/visa-u.png',
     category: { es: 'Visa U', en: 'U Visa' },
   },
-  Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados: {
+  'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados': {
     title: { es: 'Visa U y VAWA: incluir hijos y nuevos esposos derivados', en: 'U Visa & VAWA: Including Children and New Spouse Derivatives' },
-    slug: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
+    slug: 'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
     image: '/blog/visa-u.png',
     category: { es: 'Visa U', en: 'U Visa' },
   },
-  Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria: {
+  'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria': {
     title: { es: 'Frenar deportación inminente con solicitud de Visa Humanitaria', en: 'Stop Imminent Deportation with Humanitarian Visa Request' },
-    slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
+    slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
     image: '/blog/visa-u.png',
     category: { es: 'Alivio Humanitario', en: 'Humanitarian Relief' },
   },
-  VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente: {
+  'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente': {
     title: { es: 'VAWA para hombres maltratados por pareja ciudadana o residente', en: 'VAWA for Men Abused by Citizen or Resident Partner' },
-    slug: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
+    slug: 'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente',
     image: '/blog/visa-u.png',
     category: { es: 'VAWA', en: 'VAWA' },
   },
-  VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses: {
+  'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses': {
     title: { es: 'VAWA para padres: maltrato de hijos ciudadanos estadounidenses', en: 'VAWA for Parents: Abuse by U.S. Citizen Children' },
-    slug: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
+    slug: 'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses',
     image: '/blog/visa-u.png',
     category: { es: 'VAWA', en: 'VAWA' },
   },
-  Visa_T_trabajo_forzado_por_deuda_con_coyote: {
+  'visa-t-trabajo-forzado-por-deuda-con-coyote': {
     title: { es: 'Visa T: trabajo forzado por deuda con coyote', en: 'T Visa: Forced Labor Due to Smuggler Debt' },
-    slug: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
+    slug: 'visa-t-trabajo-forzado-por-deuda-con-coyote',
     image: '/blog/visa-u.png',
     category: { es: 'Visa T', en: 'T Visa' },
   },
-  ley_de_los_10_anos_cancelacion_de_deportacion: {
+  'ley-de-los-10-anos-cancelacion-de-deportacion': {
     title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' },
-    slug: 'ley_de_los_10_anos_cancelacion_de_deportacion',
+    slug: 'ley-de-los-10-anos-cancelacion-de-deportacion',
     image: '/blog/blog_11/BLOG01_CR1.png',
     category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
   },
-  advance_parole_2026_viajar_con_daca_tps_visa_u: {
+  'advance-parole-2026-viajar-con-daca-tps-visa-u': {
     title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' },
-    slug: 'advance_parole_2026_viajar_con_daca_tps_visa_u',
+    slug: 'advance-parole-2026-viajar-con-daca-tps-visa-u',
     image: '/blog/visa-u.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
-  Formulario_G28_Cambiar_Abogado_Inmigracion: {
+  'formulario-g28-cambiar-abogado-inmigracion': {
     title: { es: 'Formulario G-28: cómo cambiar de abogado de inmigración', en: 'Form G-28: How to Change Immigration Attorney' },
-    slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion',
+    slug: 'formulario-g28-cambiar-abogado-inmigracion',
     image: '/blog/visa-u.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
-  residencia_laboral_eb3_ley_245i_entrada_indocumentada: {
+  'residencia-laboral-eb3-ley-245i-entrada-indocumentada': {
     title: { es: 'Residencia laboral EB-3 y Ley 245(i): entrada indocumentada', en: 'EB-3 Work Residency & Section 245(i): Undocumented Entry' },
-    slug: 'residencia_laboral_eb3_ley_245i_entrada_indocumentada',
+    slug: 'residencia-laboral-eb3-ley-245i-entrada-indocumentada',
     image: '/blog/visa-u.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
-  foia_migratoria_pedir_record_antes_de_aplicar: {
+  'foia-migratoria-pedir-record-antes-de-aplicar': {
     title: { es: 'FOIA migratoria: pedir record antes de aplicar', en: 'Immigration FOIA: Request Records Before Applying' },
-    slug: 'foia_migratoria_pedir_record_antes_de_aplicar',
+    slug: 'foia-migratoria-pedir-record-antes-de-aplicar',
     image: '/blog/visa-u.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
-  estatus_juvenil_sijs_residencia_jovenes_abandonados: {
+  'estatus-juvenil-sijs-residencia-jovenes-abandonados': {
     title: { es: 'Estatus Juvenil SIJS: residencia para jóvenes abandonados', en: 'SIJS Juvenile Status: Residency for Abandoned Youth' },
-    slug: 'estatus_juvenil_sijs_residencia_jovenes_abandonados',
+    slug: 'estatus-juvenil-sijs-residencia-jovenes-abandonados',
     image: '/blog/blog_15/BLOG05_CR1.png',
     category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
   },
-  perdon_i601a_arreglar_papeles_entrada_ilegal: {
+  'perdon-i601a-arreglar-papeles-entrada-ilegal': {
     title: { es: 'Perdón I-601A: arreglar papeles si entraste ilegalmente', en: 'I-601A Waiver: Fix Papers After Illegal Entry' },
-    slug: 'perdon_i601a_arreglar_papeles_entrada_ilegal',
+    slug: 'perdon-i601a-arreglar-papeles-entrada-ilegal',
     image: '/blog/blog_16/BLOG06_CR1.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
-  marihuana_dui_buen_caracter_moral_inmigracion: {
+  'marihuana-dui-buen-caracter-moral-inmigracion': {
     title: { es: 'Marihuana, DUI y buen carácter moral en inmigración', en: 'Marijuana, DUI and Good Moral Character in Immigration' },
-    slug: 'marihuana_dui_buen_caracter_moral_inmigracion',
+    slug: 'marihuana-dui-buen-caracter-moral-inmigracion',
     image: '/blog/blog_17/BLOG07_CR1.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
-  ciudadania_en_espanol_reglas_50_20_55_15: {
+  'ciudadania-en-espanol-reglas-50-20-55-15': {
     title: { es: 'Ciudadanía en español: reglas 50/20 y 55/15', en: 'Citizenship in Spanish: 50/20 and 55/15 Rules' },
-    slug: 'ciudadania_en_espanol_reglas_50_20_55_15',
+    slug: 'ciudadania-en-espanol-reglas-50-20-55-15',
     image: '/blog/blog_18/BLOG08_CR1.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
-  entrevista_matrimonio_uscis_senales_alerta: {
+  'entrevista-matrimonio-uscis-senales-alerta': {
     title: { es: 'Entrevista de matrimonio USCIS: señales de alerta', en: 'USCIS Marriage Interview: Red Flags' },
-    slug: 'entrevista_matrimonio_uscis_senales_alerta',
+    slug: 'entrevista-matrimonio-uscis-senales-alerta',
     image: '/blog/blog_19/BLOG09_CR1.png',
     category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
   },
-  asilo_frontera_2026_puerto_entrada_vs_cruce: {
+  'asilo-frontera-2026-puerto-entrada-vs-cruce': {
     title: { es: 'Asilo en la frontera 2026: puerto de entrada vs cruce irregular', en: 'Asylum at the Border 2026: Port of Entry vs Unauthorized Crossing' },
-    slug: 'asilo_frontera_2026_puerto_entrada_vs_cruce',
+    slug: 'asilo-frontera-2026-puerto-entrada-vs-cruce',
     image: '/blog/blog_20/BLOG10_CR1.png',
     category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
   },
@@ -172,49 +214,49 @@ const allArticles: Record<string, RelatedArticle> = {
 // Topical clusters for cross-linking
 const clusters: Record<string, string[]> = {
   visa_u: [
-    'permiso_de_trabajo_visa_u',
-    'que_hacer_si_la_policia_no_firma_la_certificacion_visa_u',
-    'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
-    'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
-    'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
+    'permiso-de-trabajo-visa-u',
+    'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u',
+    'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas',
+    'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
+    'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
   ],
   vawa: [
-    'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
-    'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
-    'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
+    'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente',
+    'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses',
+    'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
   ],
   deportation: [
-    'ley_de_los_10_anos_cancelacion_de_deportacion',
-    'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
-    'advance_parole_2026_viajar_con_daca_tps_visa_u',
-    'marihuana_dui_buen_caracter_moral_inmigracion',
+    'ley-de-los-10-anos-cancelacion-de-deportacion',
+    'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
+    'advance-parole-2026-viajar-con-daca-tps-visa-u',
+    'marihuana-dui-buen-caracter-moral-inmigracion',
   ],
   process: [
-    'Formulario_G28_Cambiar_Abogado_Inmigracion',
-    'residencia_laboral_eb3_ley_245i_entrada_indocumentada',
-    'foia_migratoria_pedir_record_antes_de_aplicar',
-    'advance_parole_2026_viajar_con_daca_tps_visa_u',
-    'perdon_i601a_arreglar_papeles_entrada_ilegal',
-    'ciudadania_en_espanol_reglas_50_20_55_15',
-    'entrevista_matrimonio_uscis_senales_alerta',
+    'formulario-g28-cambiar-abogado-inmigracion',
+    'residencia-laboral-eb3-ley-245i-entrada-indocumentada',
+    'foia-migratoria-pedir-record-antes-de-aplicar',
+    'advance-parole-2026-viajar-con-daca-tps-visa-u',
+    'perdon-i601a-arreglar-papeles-entrada-ilegal',
+    'ciudadania-en-espanol-reglas-50-20-55-15',
+    'entrevista-matrimonio-uscis-senales-alerta',
   ],
   humanitarian: [
-    'Visa_T_trabajo_forzado_por_deuda_con_coyote',
-    'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
-    'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
-    'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
-    'estatus_juvenil_sijs_residencia_jovenes_abandonados',
-    'asilo_frontera_2026_puerto_entrada_vs_cruce',
+    'visa-t-trabajo-forzado-por-deuda-con-coyote',
+    'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
+    'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente',
+    'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses',
+    'estatus-juvenil-sijs-residencia-jovenes-abandonados',
+    'asilo-frontera-2026-puerto-entrada-vs-cruce',
   ],
   family_marriage: [
-    'entrevista_matrimonio_uscis_senales_alerta',
-    'perdon_i601a_arreglar_papeles_entrada_ilegal',
-    'ciudadania_en_espanol_reglas_50_20_55_15',
+    'entrevista-matrimonio-uscis-senales-alerta',
+    'perdon-i601a-arreglar-papeles-entrada-ilegal',
+    'ciudadania-en-espanol-reglas-50-20-55-15',
   ],
   juvenile_asylum: [
-    'estatus_juvenil_sijs_residencia_jovenes_abandonados',
-    'asilo_frontera_2026_puerto_entrada_vs_cruce',
-    'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
+    'estatus-juvenil-sijs-residencia-jovenes-abandonados',
+    'asilo-frontera-2026-puerto-entrada-vs-cruce',
+    'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
   ],
 };
 

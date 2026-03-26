@@ -107,7 +107,7 @@ export default function About() {
 
             <motion.div variants={fadeInUp} className="pt-6 pl-2">
                 <Link
-                  href={`/${language}/Testimonios`}
+                  href={`/${language}/testimonios`}
                   className="group relative inline-flex items-center justify-center px-10 py-4
                              bg-white/5 text-white font-medium tracking-wide overflow-hidden
                              rounded-full shadow-lg hover:shadow-[#B2904D]/20 transition-all duration-500

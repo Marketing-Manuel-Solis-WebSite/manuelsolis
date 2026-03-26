@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next'
+import { attorneys } from './lib/attorneyData'
+import { LANDING_PAGES } from './lib/cityServiceData'
 
 const BASE_URL = 'https://www.manuelsolis.com'
 
@@ -50,30 +52,30 @@ const routes: SitemapEntry[] = [
 
   // Blog posts — dates match publication dates
   { route: '/blog', priority: 0.7, changeFrequency: 'weekly', lastModified: '2025-04-04' },
-  { route: '/blog/asilo_frontera_2026_puerto_entrada_vs_cruce', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-04' },
-  { route: '/blog/entrevista_matrimonio_uscis_senales_alerta', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-01' },
-  { route: '/blog/ciudadania_en_espanol_reglas_50_20_55_15', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-28' },
-  { route: '/blog/marihuana_dui_buen_caracter_moral_inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-24' },
-  { route: '/blog/perdon_i601a_arreglar_papeles_entrada_ilegal', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-20' },
-  { route: '/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-17' },
-  { route: '/blog/foia_migratoria_pedir_record_antes_de_aplicar', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-12' },
-  { route: '/blog/residencia_laboral_eb3_ley_245i_entrada_indocumentada', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-08' },
-  { route: '/blog/advance_parole_2026_viajar_con_daca_tps_visa_u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-05' },
-  { route: '/blog/ley_de_los_10_anos_cancelacion_de_deportacion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-02' },
-  { route: '/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-16' },
-  { route: '/blog/Formulario_G28_Cambiar_Abogado_Inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-12' },
-  { route: '/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-10' },
-  { route: '/blog/Visa_T_trabajo_forzado_por_deuda_con_coyote', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-03' },
-  { route: '/blog/VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-30' },
-  { route: '/blog/VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-28' },
-  { route: '/blog/perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-23' },
-  { route: '/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-20' },
-  { route: '/blog/permiso_de_trabajo_visa_u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-16' },
+  { route: '/blog/asilo-frontera-2026-puerto-entrada-vs-cruce', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-04' },
+  { route: '/blog/entrevista-matrimonio-uscis-senales-alerta', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-01' },
+  { route: '/blog/ciudadania-en-espanol-reglas-50-20-55-15', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-28' },
+  { route: '/blog/marihuana-dui-buen-caracter-moral-inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-24' },
+  { route: '/blog/perdon-i601a-arreglar-papeles-entrada-ilegal', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-20' },
+  { route: '/blog/estatus-juvenil-sijs-residencia-jovenes-abandonados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-17' },
+  { route: '/blog/foia-migratoria-pedir-record-antes-de-aplicar', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-12' },
+  { route: '/blog/residencia-laboral-eb3-ley-245i-entrada-indocumentada', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-08' },
+  { route: '/blog/advance-parole-2026-viajar-con-daca-tps-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-05' },
+  { route: '/blog/ley-de-los-10-anos-cancelacion-de-deportacion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-02' },
+  { route: '/blog/visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-16' },
+  { route: '/blog/formulario-g28-cambiar-abogado-inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-12' },
+  { route: '/blog/frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-10' },
+  { route: '/blog/visa-t-trabajo-forzado-por-deuda-con-coyote', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-03' },
+  { route: '/blog/vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-30' },
+  { route: '/blog/vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-28' },
+  { route: '/blog/perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-23' },
+  { route: '/blog/que-hacer-si-la-policia-no-firma-la-certificacion-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-20' },
+  { route: '/blog/permiso-de-trabajo-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-16' },
 
   // Key pages
   { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
   { route: '/abogados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/Testimonios', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
+  { route: '/testimonios', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
   { route: '/clientes', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
   { route: '/clientes-detenidos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
   { route: '/join-in', priority: 0.6, changeFrequency: 'monthly', lastModified: '2025-03-01' },
@@ -99,11 +101,11 @@ const routes: SitemapEntry[] = [
 const languages = ['en', 'es'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.flatMap((entry) =>
+  const staticEntries = routes.flatMap((entry) =>
     languages.map((lang) => ({
       url: `${BASE_URL}/${lang}${entry.route}`,
       lastModified: entry.lastModified ? new Date(entry.lastModified) : new Date('2025-03-01'),
-      changeFrequency: entry.changeFrequency,
+      changeFrequency: entry.changeFrequency as MetadataRoute.Sitemap[number]['changeFrequency'],
       priority: entry.priority,
       alternates: {
         languages: Object.fromEntries(
@@ -112,4 +114,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     }))
   );
+
+  // City × Service landing pages (25 pages × 2 languages = 50 entries)
+  const cityServiceEntries = LANDING_PAGES.flatMap((page) =>
+    languages.map((lang) => ({
+      url: `${BASE_URL}/${lang}/${page.slug}`,
+      lastModified: new Date('2026-03-25'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
+      alternates: {
+        languages: Object.fromEntries(
+          languages.map((l) => [l, `${BASE_URL}/${l}/${page.slug}`])
+        ),
+      },
+    }))
+  );
+
+  // Individual attorney profile pages (20 attorneys × 2 languages = 40 entries)
+  const attorneyEntries = attorneys.flatMap((attorney) =>
+    languages.map((lang) => ({
+      url: `${BASE_URL}/${lang}/abogados/${attorney.id}`,
+      lastModified: new Date('2026-03-25'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+      alternates: {
+        languages: Object.fromEntries(
+          languages.map((l) => [l, `${BASE_URL}/${l}/abogados/${attorney.id}`])
+        ),
+      },
+    }))
+  );
+
+  return [...staticEntries, ...cityServiceEntries, ...attorneyEntries];
 }

@@ -192,22 +192,11 @@ export default function ClientesDetenidosClient() {
       {/* =========================================================================
           FONDO ATMOSFÉRICO (OPTIMIZADO)
       ========================================================================= */}
-      <div className="fixed inset-0 z-0 pointer-events-none w-full h-full transform-gpu">
+      <div className="fixed inset-0 z-0 pointer-events-none w-full h-full">
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
-         <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
-
-         <motion.div 
-           animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-           style={{ willChange: "transform, opacity" }}
-           className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] bg-blue-600/10 rounded-full blur-[80px]" 
-         />
-         <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            style={{ willChange: "transform, opacity" }}
-            className="absolute bottom-[-10%] left-[-5%] w-[70vw] h-[70vw] bg-sky-800/10 rounded-full blur-[90px]" 
-         />
+         <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+         <div className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] bg-blue-600/10 rounded-full blur-[80px] opacity-30" />
+         <div className="absolute bottom-[-10%] left-[-5%] w-[70vw] h-[70vw] bg-sky-800/10 rounded-full blur-[90px] opacity-20" />
       </div>
 
       {/* =========================================================================
@@ -278,7 +267,7 @@ export default function ClientesDetenidosClient() {
       {/* =========================================================================
           INFO GRID (Locating, Hotline, Asylum)
       ========================================================================= */}
-      <section className="relative z-10 px-6 lg:px-12 pb-24">
+      <section className="relative z-10 px-6 lg:px-12 pt-16 pb-24">
         <div className="container mx-auto max-w-7xl">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 

@@ -1,0 +1,745 @@
+// ============================================================
+// City × Service Landing Page Data
+// All real data from Manuel Solis Law Firm
+// ============================================================
+
+export const SITE_URL = 'https://www.manuelsolis.com';
+export const MAIN_PHONE = '1-866-979-5146';
+
+// ---------- OFFICE DATA ----------
+export interface OfficeInfo {
+  city: string;
+  citySlug: string;
+  state: string;
+  stateCode: string;
+  address: string;
+  phone: string;
+  zip: string;
+  coordinates: { lat: number; lng: number };
+  additionalOffices?: { name: string; address: string; phone: string }[];
+}
+
+export const OFFICES: Record<string, OfficeInfo> = {
+  houston: {
+    city: 'Houston',
+    citySlug: 'houston',
+    state: 'Texas',
+    stateCode: 'TX',
+    address: '6705 Navigation Blvd, Houston, TX 77011',
+    phone: '(713) 231-5384',
+    zip: '77011',
+    coordinates: { lat: 29.7281, lng: -95.3025 },
+    additionalOffices: [
+      { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(832) 598-0914' },
+      { name: 'Houston North Loop', address: '2950 N Loop W, Houston, TX 77092', phone: '(713) 429-0237' },
+    ],
+  },
+  dallas: {
+    city: 'Dallas',
+    citySlug: 'dallas',
+    state: 'Texas',
+    stateCode: 'TX',
+    address: '1120 Empire Central Pl, Dallas, TX 75247',
+    phone: '(214) 753-8315',
+    zip: '75247',
+    coordinates: { lat: 32.8140, lng: -96.8591 },
+  },
+  chicago: {
+    city: 'Chicago',
+    citySlug: 'chicago',
+    state: 'Illinois',
+    stateCode: 'IL',
+    address: '6000 W Cermak Rd, Cicero, IL 60804',
+    phone: '(312) 477-0389',
+    zip: '60804',
+    coordinates: { lat: 41.8517, lng: -87.7445 },
+  },
+  'los-angeles': {
+    city: 'Los Angeles',
+    citySlug: 'los-angeles',
+    state: 'California',
+    stateCode: 'CA',
+    address: '8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660',
+    phone: '(213) 784-1554',
+    zip: '90660',
+    coordinates: { lat: 33.9900, lng: -118.0739 },
+  },
+  'el-paso': {
+    city: 'El Paso',
+    citySlug: 'el-paso',
+    state: 'Texas',
+    stateCode: 'TX',
+    address: '3632 Admiral St, El Paso, TX 79925',
+    phone: '(915) 233-7127',
+    zip: '79925',
+    coordinates: { lat: 31.7700, lng: -106.3801 },
+  },
+  memphis: {
+    city: 'Memphis',
+    citySlug: 'memphis',
+    state: 'Tennessee',
+    stateCode: 'TN',
+    address: '3385 Airways Blvd Suite 320, Memphis, TN 38116',
+    phone: '(901) 557-8357',
+    zip: '38116',
+    coordinates: { lat: 35.0726, lng: -89.9848 },
+  },
+  denver: {
+    city: 'Denver',
+    citySlug: 'denver',
+    state: 'Colorado',
+    stateCode: 'CO',
+    address: '5400 Ward Rd BLDG IV, Arvada, CO 80002',
+    phone: '(720) 358-8973',
+    zip: '80002',
+    coordinates: { lat: 39.8097, lng: -105.0997 },
+  },
+  harlingen: {
+    city: 'Harlingen',
+    citySlug: 'harlingen',
+    state: 'Texas',
+    stateCode: 'TX',
+    address: '320 E Jackson Ave, Harlingen, TX 78550',
+    phone: '(956) 597-7090',
+    zip: '78550',
+    coordinates: { lat: 26.1906, lng: -97.6961 },
+  },
+};
+
+// ---------- SERVICE DATA ----------
+export interface ServiceInfo {
+  serviceKey: string;
+  serviceSlug: string;
+  title: { es: string; en: string };
+  shortTitle: { es: string; en: string };
+  description: { es: string; en: string };
+  keywords: { es: string[]; en: string[] };
+  relatedServices: { es: string[]; en: string[] };
+}
+
+export const SERVICES: Record<string, ServiceInfo> = {
+  inmigracion: {
+    serviceKey: 'inmigracion',
+    serviceSlug: 'inmigracion',
+    title: { es: 'Inmigración y Defensa de Deportación', en: 'Immigration & Deportation Defense' },
+    shortTitle: { es: 'Inmigración', en: 'Immigration' },
+    description: {
+      es: 'Servicios completos de inmigración que incluyen residencia permanente, ciudadanía, permisos de trabajo, peticiones familiares, visas humanitarias y defensa contra deportación.',
+      en: 'Comprehensive immigration services including permanent residency, citizenship, work permits, family petitions, humanitarian visas, and deportation defense.',
+    },
+    keywords: {
+      es: ['abogado de inmigración', 'abogado migratorio', 'residencia', 'ciudadanía', 'green card', 'permiso de trabajo'],
+      en: ['immigration lawyer', 'immigration attorney', 'green card', 'citizenship', 'work permit', 'family petition'],
+    },
+    relatedServices: {
+      es: ['Residencia permanente (Green Card)', 'Ciudadanía y naturalización', 'Permisos de trabajo', 'Peticiones familiares', 'Visa U para víctimas de crimen', 'VAWA para víctimas de violencia doméstica', 'Asilo político', 'Defensa contra deportación', 'DACA y TPS', 'Visa de inversionista E-2'],
+      en: ['Permanent residency (Green Card)', 'Citizenship & naturalization', 'Work permits', 'Family petitions', 'U Visa for crime victims', 'VAWA for domestic violence victims', 'Political asylum', 'Deportation defense', 'DACA & TPS', 'E-2 investor visa'],
+    },
+  },
+  accidentes: {
+    serviceKey: 'accidentes',
+    serviceSlug: 'accidentes',
+    title: { es: 'Accidentes y Lesiones Personales', en: 'Accidents & Personal Injury' },
+    shortTitle: { es: 'Accidentes', en: 'Accidents' },
+    description: {
+      es: 'Representación legal en casos de accidentes automovilísticos, accidentes de camión, accidentes laborales y negligencia médica. Luchamos por la compensación máxima para nuestros clientes.',
+      en: 'Legal representation in car accidents, truck accidents, workplace injuries, and medical negligence cases. We fight for maximum compensation for our clients.',
+    },
+    keywords: {
+      es: ['abogado de accidentes', 'accidente de auto', 'lesiones personales', 'compensación', 'abogado de choques'],
+      en: ['accident lawyer', 'car accident attorney', 'personal injury', 'compensation', 'truck accident lawyer'],
+    },
+    relatedServices: {
+      es: ['Accidentes automovilísticos', 'Accidentes de camión (18 ruedas)', 'Accidentes laborales', 'Negligencia médica', 'Accidentes de motocicleta', 'Atropellamiento de peatones', 'Reclamos de seguros', 'Muerte por negligencia'],
+      en: ['Car accidents', 'Truck accidents (18-wheeler)', 'Workplace injuries', 'Medical negligence', 'Motorcycle accidents', 'Pedestrian accidents', 'Insurance claims', 'Wrongful death'],
+    },
+  },
+  'defensa-deportacion': {
+    serviceKey: 'defensa-deportacion',
+    serviceSlug: 'defensa-deportacion',
+    title: { es: 'Defensa Contra Deportación', en: 'Deportation Defense' },
+    shortTitle: { es: 'Defensa de Deportación', en: 'Deportation Defense' },
+    description: {
+      es: 'Defensa legal experta en corte de inmigración contra órdenes de deportación. Incluye cancelación de deportación, apelaciones ante la BIA y representación ante jueces de inmigración.',
+      en: 'Expert legal defense in immigration court against deportation orders. Includes cancellation of removal, BIA appeals, and representation before immigration judges.',
+    },
+    keywords: {
+      es: ['defensa deportación', 'cancelación de deportación', 'corte de inmigración', 'orden de deportación', 'abogado deportación'],
+      en: ['deportation defense', 'cancellation of removal', 'immigration court', 'removal order', 'deportation lawyer'],
+    },
+    relatedServices: {
+      es: ['Cancelación de deportación', 'Apelaciones ante la BIA', 'Representación en corte de inmigración', 'Fianzas de inmigración', 'Reapertura de casos', 'Suspensión de deportación', 'Asilo defensivo', 'Ajuste de estatus'],
+      en: ['Cancellation of removal', 'BIA appeals', 'Immigration court representation', 'Immigration bonds', 'Motion to reopen', 'Withholding of removal', 'Defensive asylum', 'Adjustment of status'],
+    },
+  },
+  'visa-u': {
+    serviceKey: 'visa-u',
+    serviceSlug: 'visa-u',
+    title: { es: 'Visa U para Víctimas de Crimen', en: 'U Visa for Crime Victims' },
+    shortTitle: { es: 'Visa U', en: 'U Visa' },
+    description: {
+      es: 'La Visa U protege a víctimas de crímenes graves que han cooperado con las autoridades. Otorga estatus legal, permiso de trabajo y un camino hacia la residencia permanente.',
+      en: 'The U Visa protects victims of serious crimes who have cooperated with law enforcement. It grants legal status, work authorization, and a path to permanent residency.',
+    },
+    keywords: {
+      es: ['visa u', 'víctima de crimen', 'visa u requisitos', 'formulario I-918', 'abogado visa u'],
+      en: ['u visa', 'crime victim visa', 'u visa requirements', 'form I-918', 'u visa lawyer'],
+    },
+    relatedServices: {
+      es: ['Solicitud de Visa U (Formulario I-918)', 'Certificación policial', 'Determinación de buena fe (Bona Fide)', 'Permiso de trabajo', 'Ajuste de estatus a residente', 'Peticiones para familiares', 'Visa T para víctimas de trata', 'Exenciones de inadmisibilidad'],
+      en: ['U Visa application (Form I-918)', 'Law enforcement certification', 'Bona Fide Determination', 'Work authorization', 'Adjustment to permanent resident', 'Family member petitions', 'T Visa for trafficking victims', 'Waivers of inadmissibility'],
+    },
+  },
+  asilo: {
+    serviceKey: 'asilo',
+    serviceSlug: 'asilo',
+    title: { es: 'Asilo Político', en: 'Political Asylum' },
+    shortTitle: { es: 'Asilo', en: 'Asylum' },
+    description: {
+      es: 'Representación legal para solicitudes de asilo político basadas en persecución por raza, religión, nacionalidad, opinión política o pertenencia a un grupo social.',
+      en: 'Legal representation for political asylum applications based on persecution due to race, religion, nationality, political opinion, or membership in a social group.',
+    },
+    keywords: {
+      es: ['asilo político', 'solicitud de asilo', 'persecución', 'refugiado', 'abogado de asilo'],
+      en: ['political asylum', 'asylum application', 'persecution', 'refugee', 'asylum lawyer'],
+    },
+    relatedServices: {
+      es: ['Asilo afirmativo', 'Asilo defensivo (en corte)', 'Entrevista de miedo creíble', 'Suspensión de deportación', 'Protección bajo la Convención contra la Tortura (CAT)', 'Permiso de trabajo para asilados', 'Residencia para asilados', 'Reunificación familiar'],
+      en: ['Affirmative asylum', 'Defensive asylum (in court)', 'Credible fear interview', 'Withholding of removal', 'Convention Against Torture (CAT) protection', 'Asylum work authorization', 'Asylee permanent residency', 'Family reunification'],
+    },
+  },
+  vawa: {
+    serviceKey: 'vawa',
+    serviceSlug: 'vawa',
+    title: { es: 'VAWA para Víctimas de Violencia Doméstica', en: 'VAWA for Domestic Violence Victims' },
+    shortTitle: { es: 'VAWA', en: 'VAWA' },
+    description: {
+      es: 'La ley VAWA (Violence Against Women Act) permite a víctimas de violencia doméstica solicitar estatus legal de manera independiente, sin depender de su abusador para obtener residencia.',
+      en: 'VAWA (Violence Against Women Act) allows domestic violence victims to independently petition for legal status without depending on their abuser for residency.',
+    },
+    keywords: {
+      es: ['vawa', 'violencia doméstica inmigración', 'auto-petición vawa', 'abogado vawa', 'formulario I-360'],
+      en: ['vawa', 'domestic violence immigration', 'vawa self-petition', 'vawa lawyer', 'form I-360'],
+    },
+    relatedServices: {
+      es: ['Auto-petición VAWA (Formulario I-360)', 'Permiso de trabajo', 'Determinación prima facie', 'Ajuste de estatus', 'Exenciones de inadmisibilidad', 'Beneficios públicos para víctimas', 'Orden de protección', 'Residencia permanente'],
+      en: ['VAWA Self-Petition (Form I-360)', 'Work authorization', 'Prima facie determination', 'Adjustment of status', 'Waivers of inadmissibility', 'Public benefits for victims', 'Protection order', 'Permanent residency'],
+    },
+  },
+};
+
+// ---------- PAGE CONFIGURATIONS ----------
+export interface LandingPageConfig {
+  slug: string;
+  officeKey: string;
+  serviceKey: string;
+  h1: { es: string; en: string };
+  metaTitle: { es: string; en: string };
+  metaDescription: { es: string; en: string };
+  intro: { es: string; en: string };
+  whyChooseUs: { es: string[]; en: string[] };
+}
+
+export const LANDING_PAGES: LandingPageConfig[] = [
+  // === IMMIGRATION (8 cities) ===
+  {
+    slug: 'abogado-inmigracion-houston',
+    officeKey: 'houston',
+    serviceKey: 'inmigracion',
+    h1: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
+    metaTitle: { es: 'Abogado de Inmigración en Houston, TX — Consulta Gratis', en: 'Immigration Lawyer in Houston, TX — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de inmigración en Houston con 35+ años de experiencia. Residencia, ciudadanía, deportación, Visa U, VAWA y asilo. 3 oficinas en Houston. Llame: (713) 231-5384.',
+      en: 'Immigration lawyers in Houston with 35+ years of experience. Residency, citizenship, deportation, U Visa, VAWA and asylum. 3 offices in Houston. Call: (713) 231-5384.',
+    },
+    intro: {
+      es: 'Houston es el hogar de una de las comunidades inmigrantes más grandes de Estados Unidos. En Manuel Solís, hemos representado a miles de familias del área metropolitana de Houston desde 1990. Con tres oficinas estratégicamente ubicadas en Navigation Blvd, Bellaire y North Loop, estamos cerca de usted para ofrecer asesoría legal migratoria personalizada. Nuestro equipo bilingüe entiende los desafíos únicos que enfrentan los inmigrantes en el área de Houston y trabaja incansablemente para proteger sus derechos.',
+      en: 'Houston is home to one of the largest immigrant communities in the United States. At Manuel Solis, we have represented thousands of families in the Houston metropolitan area since 1990. With three strategically located offices on Navigation Blvd, Bellaire, and North Loop, we are close to you to provide personalized immigration legal advice. Our bilingual team understands the unique challenges immigrants face in the Houston area and works tirelessly to protect their rights.',
+    },
+    whyChooseUs: {
+      es: ['3 oficinas en Houston para su conveniencia', 'Equipo bilingüe con experiencia en cortes de inmigración de Houston', 'Historial comprobado: miles de casos de inmigración ganados en el área', 'Relaciones establecidas con agencias locales y consulados', 'Asesoría gratuita y sin compromiso'],
+      en: ['3 offices in Houston for your convenience', 'Bilingual team experienced in Houston immigration courts', 'Proven track record: thousands of immigration cases won in the area', 'Established relationships with local agencies and consulates', 'Free consultation with no obligation'],
+    },
+  },
+  {
+    slug: 'abogado-inmigracion-dallas',
+    officeKey: 'dallas',
+    serviceKey: 'inmigracion',
+    h1: { es: 'Abogado de Inmigración en Dallas, TX', en: 'Immigration Lawyer in Dallas, TX' },
+    metaTitle: { es: 'Abogado de Inmigración en Dallas, TX — Consulta Gratis', en: 'Immigration Lawyer in Dallas, TX — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de inmigración en Dallas con 35+ años de experiencia. Residencia, ciudadanía, deportación, asilo y más. Oficina en Empire Central. Llame: (214) 753-8315.',
+      en: 'Immigration lawyers in Dallas with 35+ years of experience. Residency, citizenship, deportation, asylum and more. Office on Empire Central. Call: (214) 753-8315.',
+    },
+    intro: {
+      es: 'Dallas y el área de DFW albergan una comunidad latina vibrante y en crecimiento. Nuestra oficina de Dallas, ubicada en Empire Central, atiende a familias inmigrantes del norte de Texas incluyendo Fort Worth, Arlington, Irving y Plano. Con décadas de experiencia ante la corte de inmigración de Dallas, nuestros abogados conocen a fondo los procedimientos locales y luchan agresivamente para proteger a nuestros clientes contra la deportación y asegurar sus beneficios migratorios.',
+      en: 'Dallas and the DFW area are home to a vibrant and growing Latino community. Our Dallas office, located on Empire Central, serves immigrant families across North Texas including Fort Worth, Arlington, Irving, and Plano. With decades of experience before the Dallas immigration court, our attorneys thoroughly understand local procedures and fight aggressively to protect our clients against deportation and secure their immigration benefits.',
+    },
+    whyChooseUs: {
+      es: ['Experiencia directa en la corte de inmigración de Dallas', 'Atención a todo el norte de Texas incluyendo Fort Worth y Arlington', 'Ubicación accesible en Empire Central Place', 'Abogados que hablan español con fluidez', 'Más de 50,000 casos ganados a nivel nacional'],
+      en: ['Direct experience in Dallas immigration court', 'Serving all of North Texas including Fort Worth and Arlington', 'Accessible location on Empire Central Place', 'Fluent Spanish-speaking attorneys', 'Over 50,000 cases won nationwide'],
+    },
+  },
+  {
+    slug: 'abogado-inmigracion-chicago',
+    officeKey: 'chicago',
+    serviceKey: 'inmigracion',
+    h1: { es: 'Abogado de Inmigración en Chicago, IL', en: 'Immigration Lawyer in Chicago, IL' },
+    metaTitle: { es: 'Abogado de Inmigración en Chicago, IL — Consulta Gratis', en: 'Immigration Lawyer in Chicago, IL — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de inmigración en Chicago con 35+ años de experiencia. Residencia, ciudadanía, asilo, Visa U y VAWA. Oficina en Cicero. Llame: (312) 477-0389.',
+      en: 'Immigration lawyers in Chicago with 35+ years of experience. Residency, citizenship, asylum, U Visa and VAWA. Office in Cicero. Call: (312) 477-0389.',
+    },
+    intro: {
+      es: 'Chicago tiene una de las comunidades mexicanas y centroamericanas más grandes fuera de la frontera sur. Nuestra oficina en Cicero, sobre Cermak Road, está en el corazón de la comunidad latina del área metropolitana. Atendemos a familias inmigrantes de Chicago, Cicero, Berwyn, Aurora y todos los suburbios del área. Nuestros abogados están familiarizados con la corte de inmigración de Chicago y trabajamos de cerca con organizaciones comunitarias locales para servir mejor a nuestros clientes.',
+      en: 'Chicago has one of the largest Mexican and Central American communities outside the southern border. Our office in Cicero, on Cermak Road, is in the heart of the metropolitan area\'s Latino community. We serve immigrant families from Chicago, Cicero, Berwyn, Aurora, and all surrounding suburbs. Our attorneys are familiar with the Chicago immigration court and work closely with local community organizations to better serve our clients.',
+    },
+    whyChooseUs: {
+      es: ['Oficina en el corazón de la comunidad latina de Cicero', 'Experiencia ante la corte de inmigración de Chicago', 'Colaboración con organizaciones comunitarias del área', 'Atención bilingüe dedicada para la comunidad del Midwest', 'Firma nacional con recursos locales'],
+      en: ['Office in the heart of Cicero\'s Latino community', 'Experience before the Chicago immigration court', 'Collaboration with area community organizations', 'Dedicated bilingual service for the Midwest community', 'National firm with local resources'],
+    },
+  },
+  {
+    slug: 'abogado-inmigracion-los-angeles',
+    officeKey: 'los-angeles',
+    serviceKey: 'inmigracion',
+    h1: { es: 'Abogado de Inmigración en Los Ángeles, CA', en: 'Immigration Lawyer in Los Angeles, CA' },
+    metaTitle: { es: 'Abogado de Inmigración en Los Ángeles, CA — Consulta Gratis', en: 'Immigration Lawyer in Los Angeles, CA — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de inmigración en Los Ángeles con 35+ años de experiencia. Residencia, ciudadanía, asilo, Visa U y VAWA. Oficina en Pico Rivera. Llame: (213) 784-1554.',
+      en: 'Immigration lawyers in Los Angeles with 35+ years of experience. Residency, citizenship, asylum, U Visa and VAWA. Office in Pico Rivera. Call: (213) 784-1554.',
+    },
+    intro: {
+      es: 'Los Ángeles y el sur de California son hogar de millones de inmigrantes que necesitan representación legal confiable. Nuestra oficina en Pico Rivera, sobre Telegraph Road, atiende a clientes de todo el condado de Los Ángeles, incluyendo East LA, Downey, Whittier, Montebello y el Valle de San Gabriel. California tiene leyes que protegen a los inmigrantes de manera especial, y nuestros abogados están preparados para aprovechar cada recurso legal disponible para su caso.',
+      en: 'Los Angeles and Southern California are home to millions of immigrants who need reliable legal representation. Our office in Pico Rivera, on Telegraph Road, serves clients throughout Los Angeles County, including East LA, Downey, Whittier, Montebello, and the San Gabriel Valley. California has laws that specially protect immigrants, and our attorneys are prepared to leverage every available legal resource for your case.',
+    },
+    whyChooseUs: {
+      es: ['Experiencia ante la corte de inmigración de Los Ángeles', 'Oficina accesible en Pico Rivera con servicio a todo el condado de LA', 'Conocimiento de las leyes de protección al inmigrante de California', 'Equipo que entiende la diversidad de la comunidad angelina', 'Consulta gratuita y confidencial'],
+      en: ['Experience before the Los Angeles immigration court', 'Accessible office in Pico Rivera serving all of LA County', 'Knowledge of California\'s immigrant protection laws', 'Team that understands the diversity of the LA community', 'Free and confidential consultation'],
+    },
+  },
+  {
+    slug: 'abogado-inmigracion-el-paso',
+    officeKey: 'el-paso',
+    serviceKey: 'inmigracion',
+    h1: { es: 'Abogado de Inmigración en El Paso, TX', en: 'Immigration Lawyer in El Paso, TX' },
+    metaTitle: { es: 'Abogado de Inmigración en El Paso, TX — Consulta Gratis', en: 'Immigration Lawyer in El Paso, TX — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de inmigración en El Paso con 35+ años de experiencia. Deportación, asilo, residencia y cruce de frontera. Oficina en Admiral St. Llame: (915) 233-7127.',
+      en: 'Immigration lawyers in El Paso with 35+ years of experience. Deportation, asylum, residency and border crossing. Office on Admiral St. Call: (915) 233-7127.',
+    },
+    intro: {
+      es: 'El Paso es una ciudad fronteriza donde los asuntos migratorios son parte de la vida diaria de miles de familias. Nuestra oficina en Admiral Street atiende a residentes de El Paso, Las Cruces, y familias que enfrentan procedimientos en la corte de inmigración de El Paso, una de las más activas del país. Entendemos la realidad única de vivir en la frontera y la complejidad de los casos que involucran cruces fronterizos, detenciones y procedimientos acelerados de deportación.',
+      en: 'El Paso is a border city where immigration matters are part of daily life for thousands of families. Our office on Admiral Street serves residents of El Paso, Las Cruces, and families facing proceedings in the El Paso immigration court, one of the most active in the country. We understand the unique reality of living on the border and the complexity of cases involving border crossings, detentions, and expedited removal proceedings.',
+    },
+    whyChooseUs: {
+      es: ['Conocimiento profundo de los procedimientos fronterizos', 'Experiencia en la corte de inmigración de El Paso', 'Atención a detenidos en centros de detención cercanos', 'Manejo de casos de asilo y miedo creíble en la frontera', 'Oficina accesible con horarios flexibles'],
+      en: ['Deep knowledge of border procedures', 'Experience in El Paso immigration court', 'Assistance to detainees in nearby detention centers', 'Handling asylum and credible fear cases at the border', 'Accessible office with flexible hours'],
+    },
+  },
+  {
+    slug: 'abogado-inmigracion-memphis',
+    officeKey: 'memphis',
+    serviceKey: 'inmigracion',
+    h1: { es: 'Abogado de Inmigración en Memphis, TN', en: 'Immigration Lawyer in Memphis, TN' },
+    metaTitle: { es: 'Abogado de Inmigración en Memphis, TN — Consulta Gratis', en: 'Immigration Lawyer in Memphis, TN — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de inmigración en Memphis con 35+ años de experiencia. Residencia, ciudadanía, deportación y Visa U. Oficina en Airways Blvd. Llame: (901) 557-8357.',
+      en: 'Immigration lawyers in Memphis with 35+ years of experience. Residency, citizenship, deportation and U Visa. Office on Airways Blvd. Call: (901) 557-8357.',
+    },
+    intro: {
+      es: 'Memphis y el área del medio sur están experimentando un crecimiento significativo de la comunidad latina. Nuestra oficina en Airways Boulevard atiende a familias inmigrantes de Memphis, Nashville, y todo el estado de Tennessee, así como áreas cercanas de Mississippi y Arkansas. Siendo una de las pocas firmas de inmigración con presencia en Memphis, ofrecemos representación legal accesible en una región donde los recursos legales en español son limitados.',
+      en: 'Memphis and the Mid-South area are experiencing significant growth in the Latino community. Our office on Airways Boulevard serves immigrant families from Memphis, Nashville, and all of Tennessee, as well as nearby areas of Mississippi and Arkansas. As one of the few immigration firms with a presence in Memphis, we offer accessible legal representation in a region where Spanish-language legal resources are limited.',
+    },
+    whyChooseUs: {
+      es: ['Una de las pocas firmas de inmigración con oficina en Memphis', 'Atención a comunidades de Tennessee, Mississippi y Arkansas', 'Respaldo de una firma nacional con 35+ años de experiencia', 'Equipo bilingüe dedicado a la comunidad del medio sur', 'Consulta gratuita y planes de pago accesibles'],
+      en: ['One of the few immigration firms with a Memphis office', 'Serving communities in Tennessee, Mississippi and Arkansas', 'Backed by a national firm with 35+ years of experience', 'Bilingual team dedicated to the Mid-South community', 'Free consultation and accessible payment plans'],
+    },
+  },
+  {
+    slug: 'abogado-inmigracion-denver',
+    officeKey: 'denver',
+    serviceKey: 'inmigracion',
+    h1: { es: 'Abogado de Inmigración en Denver, CO', en: 'Immigration Lawyer in Denver, CO' },
+    metaTitle: { es: 'Abogado de Inmigración en Denver, CO — Consulta Gratis', en: 'Immigration Lawyer in Denver, CO — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de inmigración en Denver con 35+ años de experiencia. Residencia, ciudadanía, deportación, asilo y VAWA. Oficina en Arvada. Llame: (720) 358-8973.',
+      en: 'Immigration lawyers in Denver with 35+ years of experience. Residency, citizenship, deportation, asylum and VAWA. Office in Arvada. Call: (720) 358-8973.',
+    },
+    intro: {
+      es: 'Denver y el área metropolitana de Colorado están viendo un crecimiento acelerado de la comunidad latina. Nuestra oficina en Arvada, sobre Ward Road, atiende a familias inmigrantes de todo el Front Range incluyendo Denver, Aurora, Lakewood, Boulder y Colorado Springs. Colorado ofrece ciertas protecciones a los inmigrantes, y nuestros abogados conocen tanto la legislación estatal como los procedimientos ante la corte de inmigración de Denver para brindarle la mejor defensa posible.',
+      en: 'Denver and the Colorado metropolitan area are seeing accelerated growth in the Latino community. Our office in Arvada, on Ward Road, serves immigrant families throughout the Front Range including Denver, Aurora, Lakewood, Boulder, and Colorado Springs. Colorado offers certain protections to immigrants, and our attorneys are versed in both state legislation and Denver immigration court procedures to provide you with the best possible defense.',
+    },
+    whyChooseUs: {
+      es: ['Atención al Front Range de Colorado: Denver, Aurora, Boulder y más', 'Conocimiento de las leyes de protección al inmigrante de Colorado', 'Experiencia ante la corte de inmigración de Denver', 'Oficina accesible en Arvada con amplio estacionamiento', 'Parte de una firma nacional con más de 50,000 casos ganados'],
+      en: ['Serving Colorado\'s Front Range: Denver, Aurora, Boulder and more', 'Knowledge of Colorado\'s immigrant protection laws', 'Experience before the Denver immigration court', 'Accessible office in Arvada with ample parking', 'Part of a national firm with over 50,000 cases won'],
+    },
+  },
+  {
+    slug: 'abogado-inmigracion-harlingen',
+    officeKey: 'harlingen',
+    serviceKey: 'inmigracion',
+    h1: { es: 'Abogado de Inmigración en Harlingen, TX', en: 'Immigration Lawyer in Harlingen, TX' },
+    metaTitle: { es: 'Abogado de Inmigración en Harlingen, TX — Consulta Gratis', en: 'Immigration Lawyer in Harlingen, TX — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de inmigración en Harlingen, Valle del Río Grande, con 35+ años de experiencia. Deportación, asilo, residencia y más. Llame: (956) 597-7090.',
+      en: 'Immigration lawyers in Harlingen, Rio Grande Valley, with 35+ years of experience. Deportation, asylum, residency and more. Call: (956) 597-7090.',
+    },
+    intro: {
+      es: 'El Valle del Río Grande es una región donde la inmigración impacta a casi todas las familias. Nuestra oficina en Harlingen, sobre Jackson Avenue, sirve a las comunidades de Brownsville, McAllen, Edinburg, Mission y todo el sur de Texas. Con la cercanía de la frontera y la alta actividad de la corte de inmigración de Harlingen, nuestros abogados manejan casos complejos que incluyen detenciones fronterizas, asilo y reunificación familiar en una de las zonas más afectadas por las políticas migratorias del país.',
+      en: 'The Rio Grande Valley is a region where immigration impacts nearly every family. Our office in Harlingen, on Jackson Avenue, serves the communities of Brownsville, McAllen, Edinburg, Mission, and all of South Texas. With the proximity of the border and the high activity of the Harlingen immigration court, our attorneys handle complex cases including border detentions, asylum, and family reunification in one of the areas most affected by the country\'s immigration policies.',
+    },
+    whyChooseUs: {
+      es: ['Presencia local en el Valle del Río Grande', 'Experiencia en la corte de inmigración de Harlingen', 'Manejo de casos de detención fronteriza y asilo', 'Servicio a Brownsville, McAllen, Edinburg y todo el sur de Texas', 'Atención personalizada en español'],
+      en: ['Local presence in the Rio Grande Valley', 'Experience in the Harlingen immigration court', 'Handling border detention and asylum cases', 'Serving Brownsville, McAllen, Edinburg and all of South Texas', 'Personalized service in Spanish'],
+    },
+  },
+
+  // === ACCIDENTS (2 cities) ===
+  {
+    slug: 'abogado-accidentes-houston',
+    officeKey: 'houston',
+    serviceKey: 'accidentes',
+    h1: { es: 'Abogado de Accidentes en Houston, TX', en: 'Accident Lawyer in Houston, TX' },
+    metaTitle: { es: 'Abogado de Accidentes en Houston, TX — Consulta Gratis', en: 'Accident Lawyer in Houston, TX — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de accidentes en Houston con 35+ años de experiencia. Choques de auto, camión, accidentes de trabajo y negligencia médica. Llame: (713) 231-5384.',
+      en: 'Accident lawyers in Houston with 35+ years of experience. Car, truck, workplace accidents and medical negligence. Call: (713) 231-5384.',
+    },
+    intro: {
+      es: 'Houston es una de las ciudades con más accidentes de tránsito en Texas debido a su extenso sistema de autopistas y el alto volumen de tráfico de camiones comerciales. Si usted o un ser querido ha sido víctima de un accidente en el área de Houston, nuestro equipo legal está listo para luchar por la compensación que merece. No cobramos a menos que ganemos su caso. Con tres oficinas en Houston, estamos cerca de usted cuando más nos necesita.',
+      en: 'Houston is one of the cities with the most traffic accidents in Texas due to its extensive highway system and high volume of commercial truck traffic. If you or a loved one has been a victim of an accident in the Houston area, our legal team is ready to fight for the compensation you deserve. We don\'t charge unless we win your case. With three offices in Houston, we are close to you when you need us most.',
+    },
+    whyChooseUs: {
+      es: ['No cobramos a menos que ganemos su caso', 'Experiencia en accidentes de auto, camión y trabajo en Houston', 'Luchamos por la compensación máxima para nuestros clientes', 'Atención médica inmediata coordinada sin costo inicial', 'Equipo bilingüe que lo acompaña en cada paso del proceso'],
+      en: ['We don\'t charge unless we win your case', 'Experience in car, truck and workplace accidents in Houston', 'We fight for maximum compensation for our clients', 'Immediate medical care coordinated at no upfront cost', 'Bilingual team that accompanies you every step of the way'],
+    },
+  },
+  {
+    slug: 'abogado-accidentes-dallas',
+    officeKey: 'dallas',
+    serviceKey: 'accidentes',
+    h1: { es: 'Abogado de Accidentes en Dallas, TX', en: 'Accident Lawyer in Dallas, TX' },
+    metaTitle: { es: 'Abogado de Accidentes en Dallas, TX — Consulta Gratis', en: 'Accident Lawyer in Dallas, TX — Free Consultation' },
+    metaDescription: {
+      es: 'Abogados de accidentes en Dallas con 35+ años de experiencia. Choques de auto, camión, lesiones laborales. Sin cobro si no ganamos. Llame: (214) 753-8315.',
+      en: 'Accident lawyers in Dallas with 35+ years of experience. Car, truck accidents, workplace injuries. No charge if we don\'t win. Call: (214) 753-8315.',
+    },
+    intro: {
+      es: 'El área de Dallas-Fort Worth es una de las zonas metropolitanas con mayor número de accidentes vehiculares en Texas, especialmente en las autopistas I-35, I-30 y la I-635 (LBJ Freeway). Nuestros abogados de accidentes en Dallas tienen amplia experiencia representando a víctimas de choques automovilísticos, accidentes de camión y lesiones laborales en todo el norte de Texas. Trabajamos bajo el principio de que usted no paga a menos que obtengamos resultados.',
+      en: 'The Dallas-Fort Worth area is one of the metropolitan zones with the highest number of vehicle accidents in Texas, especially on I-35, I-30, and I-635 (LBJ Freeway). Our accident lawyers in Dallas have extensive experience representing victims of car crashes, truck accidents, and workplace injuries throughout North Texas. We work on the principle that you don\'t pay unless we get results.',
+    },
+    whyChooseUs: {
+      es: ['Sin cobro si no ganamos su caso — cero riesgo para usted', 'Conocimiento de las autopistas y puntos de accidentes del área DFW', 'Manejo de casos contra compañías de seguros grandes', 'Atención inmediata las 24 horas para emergencias', 'Coordinación con médicos especializados en lesiones'],
+      en: ['No charge if we don\'t win — zero risk for you', 'Knowledge of DFW area highways and accident hotspots', 'Handling cases against major insurance companies', 'Immediate 24-hour assistance for emergencies', 'Coordination with physicians specialized in injuries'],
+    },
+  },
+
+  // === DEPORTATION DEFENSE (5 cities) ===
+  {
+    slug: 'defensa-deportacion-houston',
+    officeKey: 'houston',
+    serviceKey: 'defensa-deportacion',
+    h1: { es: 'Defensa Contra Deportación en Houston, TX', en: 'Deportation Defense in Houston, TX' },
+    metaTitle: { es: 'Defensa Contra Deportación en Houston, TX — Abogados Expertos', en: 'Deportation Defense in Houston, TX — Expert Attorneys' },
+    metaDescription: {
+      es: 'Abogados de defensa contra deportación en Houston. Cancelación de deportación, apelaciones, fianzas de inmigración. 35+ años de experiencia. Llame: (713) 231-5384.',
+      en: 'Deportation defense attorneys in Houston. Cancellation of removal, appeals, immigration bonds. 35+ years of experience. Call: (713) 231-5384.',
+    },
+    intro: {
+      es: 'Houston alberga una de las cortes de inmigración más ocupadas del país. Si usted o un familiar enfrenta una orden de deportación, cada día cuenta. Nuestros abogados tienen décadas de experiencia defendiendo a familias en la corte de inmigración de Houston, logrando cancelaciones de deportación, fianzas para detenidos y apelaciones exitosas ante la BIA. Con tres oficinas en Houston, respondemos rápidamente a emergencias de deportación.',
+      en: 'Houston houses one of the busiest immigration courts in the country. If you or a family member faces a deportation order, every day counts. Our attorneys have decades of experience defending families in Houston immigration court, achieving cancellations of removal, bonds for detainees, and successful appeals before the BIA. With three offices in Houston, we respond quickly to deportation emergencies.',
+    },
+    whyChooseUs: {
+      es: ['Décadas de experiencia en la corte de inmigración de Houston', 'Respuesta inmediata en emergencias de deportación', 'Experiencia en cancelación de deportación y apelaciones ante la BIA', 'Asistencia a detenidos en centros de detención de Texas', 'Historial de resultados positivos en casos complejos'],
+      en: ['Decades of experience in Houston immigration court', 'Immediate response to deportation emergencies', 'Experience in cancellation of removal and BIA appeals', 'Assistance to detainees in Texas detention centers', 'Track record of positive results in complex cases'],
+    },
+  },
+  {
+    slug: 'defensa-deportacion-dallas',
+    officeKey: 'dallas',
+    serviceKey: 'defensa-deportacion',
+    h1: { es: 'Defensa Contra Deportación en Dallas, TX', en: 'Deportation Defense in Dallas, TX' },
+    metaTitle: { es: 'Defensa Contra Deportación en Dallas, TX — Abogados Expertos', en: 'Deportation Defense in Dallas, TX — Expert Attorneys' },
+    metaDescription: {
+      es: 'Defensa contra deportación en Dallas. Cancelación de deportación, fianzas, apelaciones. 35+ años protegiendo familias inmigrantes. Llame: (214) 753-8315.',
+      en: 'Deportation defense in Dallas. Cancellation of removal, bonds, appeals. 35+ years protecting immigrant families. Call: (214) 753-8315.',
+    },
+    intro: {
+      es: 'La corte de inmigración de Dallas maneja miles de casos de deportación cada año. Si enfrenta un proceso de remoción, necesita un abogado con experiencia real ante los jueces de inmigración de Dallas. Nuestro equipo ha representado a cientos de familias en procedimientos de deportación en el norte de Texas, incluyendo personas detenidas en centros de ICE. Conocemos las estrategias que funcionan y actuamos con la urgencia que su caso requiere.',
+      en: 'The Dallas immigration court handles thousands of deportation cases every year. If you face removal proceedings, you need an attorney with real experience before Dallas immigration judges. Our team has represented hundreds of families in deportation proceedings in North Texas, including individuals detained in ICE facilities. We know the strategies that work and act with the urgency your case requires.',
+    },
+    whyChooseUs: {
+      es: ['Experiencia real ante los jueces de inmigración de Dallas', 'Manejo de casos de personas detenidas por ICE', 'Estrategias agresivas de cancelación de deportación', 'Atención urgente disponible para situaciones de emergencia', 'Conocimiento profundo de los recursos legales en Texas'],
+      en: ['Real experience before Dallas immigration judges', 'Handling cases of individuals detained by ICE', 'Aggressive cancellation of removal strategies', 'Urgent attention available for emergency situations', 'Deep knowledge of legal resources in Texas'],
+    },
+  },
+  {
+    slug: 'defensa-deportacion-chicago',
+    officeKey: 'chicago',
+    serviceKey: 'defensa-deportacion',
+    h1: { es: 'Defensa Contra Deportación en Chicago, IL', en: 'Deportation Defense in Chicago, IL' },
+    metaTitle: { es: 'Defensa Contra Deportación en Chicago, IL — Abogados Expertos', en: 'Deportation Defense in Chicago, IL — Expert Attorneys' },
+    metaDescription: {
+      es: 'Abogados de defensa contra deportación en Chicago. Cancelación de deportación, apelaciones y fianzas. Illinois es estado santuario. Llame: (312) 477-0389.',
+      en: 'Deportation defense attorneys in Chicago. Cancellation of removal, appeals and bonds. Illinois is a sanctuary state. Call: (312) 477-0389.',
+    },
+    intro: {
+      es: 'Illinois tiene políticas de estado santuario que ofrecen protecciones adicionales a los inmigrantes. Sin embargo, el gobierno federal continúa procesando casos de deportación en la corte de inmigración de Chicago. Nuestros abogados están capacitados para usar tanto las protecciones estatales de Illinois como las defensas federales disponibles para detener la deportación de nuestros clientes. Desde nuestra oficina en Cicero, atendemos a familias de todo el área metropolitana de Chicago.',
+      en: 'Illinois has sanctuary state policies that offer additional protections to immigrants. However, the federal government continues to process deportation cases in Chicago immigration court. Our attorneys are equipped to use both Illinois state protections and available federal defenses to stop the deportation of our clients. From our office in Cicero, we serve families throughout the Chicago metropolitan area.',
+    },
+    whyChooseUs: {
+      es: ['Conocimiento de las protecciones de estado santuario de Illinois', 'Experiencia ante la corte de inmigración de Chicago', 'Servicio a toda el área metropolitana desde nuestra oficina en Cicero', 'Capacidad para manejar casos complejos con antecedentes penales', 'Red de apoyo con organizaciones comunitarias en Chicago'],
+      en: ['Knowledge of Illinois sanctuary state protections', 'Experience before Chicago immigration court', 'Serving the entire metropolitan area from our Cicero office', 'Ability to handle complex cases with criminal records', 'Support network with community organizations in Chicago'],
+    },
+  },
+  {
+    slug: 'defensa-deportacion-los-angeles',
+    officeKey: 'los-angeles',
+    serviceKey: 'defensa-deportacion',
+    h1: { es: 'Defensa Contra Deportación en Los Ángeles, CA', en: 'Deportation Defense in Los Angeles, CA' },
+    metaTitle: { es: 'Defensa Contra Deportación en Los Ángeles, CA — Abogados Expertos', en: 'Deportation Defense in Los Angeles, CA — Expert Attorneys' },
+    metaDescription: {
+      es: 'Defensa contra deportación en Los Ángeles. California es estado santuario. Cancelación de deportación, asilo, apelaciones. Llame: (213) 784-1554.',
+      en: 'Deportation defense in Los Angeles. California is a sanctuary state. Cancellation of removal, asylum, appeals. Call: (213) 784-1554.',
+    },
+    intro: {
+      es: 'California ofrece algunas de las protecciones más fuertes del país para los inmigrantes, incluyendo leyes como la SB 54 (California Values Act) que limitan la cooperación entre policía local e ICE. Los Ángeles es hogar de una enorme comunidad inmigrante que necesita abogados que conozcan tanto las protecciones estatales como las defensas federales. Nuestra oficina en Pico Rivera atiende casos de deportación para familias de todo el condado de Los Ángeles y el sur de California.',
+      en: 'California offers some of the strongest immigrant protections in the country, including laws like SB 54 (California Values Act) that limit cooperation between local police and ICE. Los Angeles is home to a massive immigrant community that needs attorneys who know both state protections and federal defenses. Our office in Pico Rivera handles deportation cases for families throughout Los Angeles County and Southern California.',
+    },
+    whyChooseUs: {
+      es: ['Conocimiento de las leyes de protección al inmigrante de California', 'Experiencia ante la corte de inmigración de Los Ángeles', 'Uso estratégico de la SB 54 y otras leyes californianas', 'Servicio a todo el condado de LA y sur de California', 'Equipo experimentado en casos de deportación complejos'],
+      en: ['Knowledge of California\'s immigrant protection laws', 'Experience before the Los Angeles immigration court', 'Strategic use of SB 54 and other California laws', 'Serving all of LA County and Southern California', 'Team experienced in complex deportation cases'],
+    },
+  },
+  {
+    slug: 'defensa-deportacion-el-paso',
+    officeKey: 'el-paso',
+    serviceKey: 'defensa-deportacion',
+    h1: { es: 'Defensa Contra Deportación en El Paso, TX', en: 'Deportation Defense in El Paso, TX' },
+    metaTitle: { es: 'Defensa Contra Deportación en El Paso, TX — Abogados Expertos', en: 'Deportation Defense in El Paso, TX — Expert Attorneys' },
+    metaDescription: {
+      es: 'Defensa contra deportación en El Paso, ciudad fronteriza. Cancelación de deportación, asilo, fianzas. Experiencia en casos fronterizos. Llame: (915) 233-7127.',
+      en: 'Deportation defense in El Paso, border city. Cancellation of removal, asylum, bonds. Experience in border cases. Call: (915) 233-7127.',
+    },
+    intro: {
+      es: 'El Paso es una ciudad fronteriza donde los casos de deportación tienen características únicas. La corte de inmigración de El Paso maneja un alto volumen de casos que incluyen deportaciones aceleradas, cruces fronterizos y detenciones. Nuestros abogados tienen experiencia específica en los procedimientos de la frontera entre Texas y México, incluyendo representación de personas detenidas en centros cercanos a El Paso. Entendemos la urgencia que requieren estos casos y actuamos de inmediato.',
+      en: 'El Paso is a border city where deportation cases have unique characteristics. The El Paso immigration court handles a high volume of cases including expedited removals, border crossings, and detentions. Our attorneys have specific experience in Texas-Mexico border proceedings, including representation of individuals detained in facilities near El Paso. We understand the urgency these cases require and act immediately.',
+    },
+    whyChooseUs: {
+      es: ['Experiencia específica en procedimientos fronterizos de El Paso', 'Representación de detenidos en centros de detención de la frontera', 'Manejo de deportaciones aceleradas y reingresos', 'Conocimiento de la corte de inmigración de El Paso', 'Respuesta inmediata en emergencias de detención'],
+      en: ['Specific experience in El Paso border proceedings', 'Representation of detainees in border detention centers', 'Handling expedited removals and re-entries', 'Knowledge of El Paso immigration court', 'Immediate response to detention emergencies'],
+    },
+  },
+
+  // === U VISA (4 cities) ===
+  {
+    slug: 'visa-u-houston',
+    officeKey: 'houston',
+    serviceKey: 'visa-u',
+    h1: { es: 'Visa U en Houston, TX — Abogados para Víctimas de Crimen', en: 'U Visa in Houston, TX — Attorneys for Crime Victims' },
+    metaTitle: { es: 'Visa U en Houston, TX — Abogados para Víctimas de Crimen', en: 'U Visa in Houston, TX — Attorneys for Crime Victims' },
+    metaDescription: {
+      es: 'Abogados de Visa U en Houston. Ayudamos a víctimas de crímenes a obtener estatus legal, permiso de trabajo y residencia permanente. Llame: (713) 231-5384.',
+      en: 'U Visa attorneys in Houston. We help crime victims obtain legal status, work authorization and permanent residency. Call: (713) 231-5384.',
+    },
+    intro: {
+      es: 'Si usted ha sido víctima de un crimen en el área de Houston y ha cooperado con las autoridades, puede calificar para la Visa U. Este beneficio migratorio le otorga estatus legal, permiso de trabajo y un camino hacia la residencia permanente. Nuestros abogados en Houston han ayudado a cientos de víctimas a obtener la Visa U, trabajando de cerca con la policía de Houston, el sheriff del condado de Harris y la fiscalía del distrito para obtener las certificaciones necesarias.',
+      en: 'If you have been a victim of a crime in the Houston area and have cooperated with authorities, you may qualify for the U Visa. This immigration benefit grants legal status, work authorization, and a path to permanent residency. Our attorneys in Houston have helped hundreds of victims obtain the U Visa, working closely with the Houston police, Harris County Sheriff, and the district attorney to obtain the necessary certifications.',
+    },
+    whyChooseUs: {
+      es: ['Cientos de casos de Visa U aprobados en Houston', 'Relaciones establecidas con la policía de Houston y la fiscalía', 'Manejo completo del proceso: desde la certificación hasta la residencia', 'Confidencialidad absoluta para proteger a las víctimas', 'Experiencia en obtener determinaciones de buena fe (Bona Fide)'],
+      en: ['Hundreds of approved U Visa cases in Houston', 'Established relationships with Houston police and district attorney', 'Complete process management: from certification to residency', 'Absolute confidentiality to protect victims', 'Experience obtaining Bona Fide Determinations'],
+    },
+  },
+  {
+    slug: 'visa-u-chicago',
+    officeKey: 'chicago',
+    serviceKey: 'visa-u',
+    h1: { es: 'Visa U en Chicago, IL — Abogados para Víctimas de Crimen', en: 'U Visa in Chicago, IL — Attorneys for Crime Victims' },
+    metaTitle: { es: 'Visa U en Chicago, IL — Abogados para Víctimas de Crimen', en: 'U Visa in Chicago, IL — Attorneys for Crime Victims' },
+    metaDescription: {
+      es: 'Abogados de Visa U en Chicago. Protección para víctimas de crímenes. Estatus legal y permiso de trabajo. Illinois estado santuario. Llame: (312) 477-0389.',
+      en: 'U Visa attorneys in Chicago. Protection for crime victims. Legal status and work authorization. Illinois sanctuary state. Call: (312) 477-0389.',
+    },
+    intro: {
+      es: 'Chicago y el estado de Illinois ofrecen un entorno favorable para las víctimas de crímenes que buscan protección migratoria a través de la Visa U. Como estado santuario, Illinois tiene políticas que facilitan la cooperación entre las víctimas y las autoridades sin temor a consecuencias migratorias. Nuestros abogados en Chicago trabajan con el departamento de policía de Chicago y las autoridades del condado de Cook para asegurar las certificaciones necesarias y guiar a las víctimas a través de todo el proceso.',
+      en: 'Chicago and the state of Illinois offer a favorable environment for crime victims seeking immigration protection through the U Visa. As a sanctuary state, Illinois has policies that facilitate cooperation between victims and authorities without fear of immigration consequences. Our attorneys in Chicago work with the Chicago Police Department and Cook County authorities to secure necessary certifications and guide victims through the entire process.',
+    },
+    whyChooseUs: {
+      es: ['Illinois como estado santuario facilita el proceso de Visa U', 'Trabajo coordinado con la policía de Chicago y autoridades de Cook County', 'Experiencia en proteger los derechos de víctimas inmigrantes', 'Proceso confidencial y seguro para todas las víctimas', 'Oficina accesible en el corazón de la comunidad latina'],
+      en: ['Illinois as a sanctuary state facilitates the U Visa process', 'Coordinated work with Chicago police and Cook County authorities', 'Experience protecting the rights of immigrant victims', 'Confidential and safe process for all victims', 'Accessible office in the heart of the Latino community'],
+    },
+  },
+  {
+    slug: 'visa-u-los-angeles',
+    officeKey: 'los-angeles',
+    serviceKey: 'visa-u',
+    h1: { es: 'Visa U en Los Ángeles, CA — Abogados para Víctimas de Crimen', en: 'U Visa in Los Angeles, CA — Attorneys for Crime Victims' },
+    metaTitle: { es: 'Visa U en Los Ángeles, CA — Abogados para Víctimas de Crimen', en: 'U Visa in Los Angeles, CA — Attorneys for Crime Victims' },
+    metaDescription: {
+      es: 'Abogados de Visa U en Los Ángeles. California protege a víctimas de crimen inmigrantes. Estatus legal y residencia permanente. Llame: (213) 784-1554.',
+      en: 'U Visa attorneys in Los Angeles. California protects immigrant crime victims. Legal status and permanent residency. Call: (213) 784-1554.',
+    },
+    intro: {
+      es: 'California tiene leyes especialmente favorables para víctimas de crímenes que solicitan la Visa U. La ley estatal requiere que las agencias policiales respondan a solicitudes de certificación dentro de plazos específicos, lo que agiliza el proceso. Nuestros abogados en Los Ángeles aprovechan estas protecciones californianas para maximizar las posibilidades de aprobación de Visa U para nuestros clientes en todo el condado de Los Ángeles, desde East LA hasta el Valle de San Fernando.',
+      en: 'California has laws that are especially favorable for crime victims applying for the U Visa. State law requires law enforcement agencies to respond to certification requests within specific timeframes, which streamlines the process. Our attorneys in Los Angeles leverage these California protections to maximize U Visa approval chances for our clients throughout Los Angeles County, from East LA to the San Fernando Valley.',
+    },
+    whyChooseUs: {
+      es: ['Aprovechamos las leyes favorables de California para víctimas', 'Experiencia con el LAPD y agencias policiales del condado de LA', 'Proceso acelerado gracias a las protecciones californianas', 'Atención a todo el condado de Los Ángeles y sur de California', 'Equipo con historial de aprobaciones exitosas de Visa U'],
+      en: ['We leverage California\'s favorable laws for victims', 'Experience with LAPD and LA County law enforcement agencies', 'Accelerated process thanks to California protections', 'Serving all of Los Angeles County and Southern California', 'Team with a track record of successful U Visa approvals'],
+    },
+  },
+  {
+    slug: 'visa-u-dallas',
+    officeKey: 'dallas',
+    serviceKey: 'visa-u',
+    h1: { es: 'Visa U en Dallas, TX — Abogados para Víctimas de Crimen', en: 'U Visa in Dallas, TX — Attorneys for Crime Victims' },
+    metaTitle: { es: 'Visa U en Dallas, TX — Abogados para Víctimas de Crimen', en: 'U Visa in Dallas, TX — Attorneys for Crime Victims' },
+    metaDescription: {
+      es: 'Abogados de Visa U en Dallas. Ayudamos a víctimas de crímenes a obtener estatus legal y protección. 35+ años de experiencia. Llame: (214) 753-8315.',
+      en: 'U Visa attorneys in Dallas. We help crime victims obtain legal status and protection. 35+ years of experience. Call: (214) 753-8315.',
+    },
+    intro: {
+      es: 'Dallas es una ciudad grande donde lamentablemente muchos inmigrantes son víctimas de crímenes y no denuncian por miedo a las consecuencias migratorias. La Visa U fue creada para proteger a estas víctimas y animarlas a colaborar con la justicia. Nuestros abogados en Dallas trabajan con el departamento de policía de Dallas, la policía de Fort Worth y las autoridades del condado de Dallas para obtener las certificaciones y presentar solicitudes sólidas ante USCIS.',
+      en: 'Dallas is a large city where unfortunately many immigrants are crime victims and don\'t report out of fear of immigration consequences. The U Visa was created to protect these victims and encourage them to cooperate with law enforcement. Our attorneys in Dallas work with the Dallas Police Department, Fort Worth Police, and Dallas County authorities to obtain certifications and file strong applications with USCIS.',
+    },
+    whyChooseUs: {
+      es: ['Experiencia con las autoridades policiales de Dallas y Fort Worth', 'Manejo de casos de Visa U en todo el norte de Texas', 'Proceso confidencial que protege la seguridad de la víctima', 'Coordinación completa: certificación, solicitud y seguimiento', 'Asesoría gratuita para evaluar su elegibilidad'],
+      en: ['Experience with Dallas and Fort Worth law enforcement', 'Handling U Visa cases throughout North Texas', 'Confidential process that protects victim safety', 'Complete coordination: certification, application and follow-up', 'Free consultation to evaluate your eligibility'],
+    },
+  },
+
+  // === ASYLUM (3 cities) ===
+  {
+    slug: 'asilo-politico-houston',
+    officeKey: 'houston',
+    serviceKey: 'asilo',
+    h1: { es: 'Asilo Político en Houston, TX', en: 'Political Asylum in Houston, TX' },
+    metaTitle: { es: 'Asilo Político en Houston, TX — Abogados de Asilo', en: 'Political Asylum in Houston, TX — Asylum Attorneys' },
+    metaDescription: {
+      es: 'Abogados de asilo político en Houston. Asilo afirmativo, defensivo, miedo creíble y protección contra la tortura. 35+ años de experiencia. Llame: (713) 231-5384.',
+      en: 'Political asylum attorneys in Houston. Affirmative, defensive asylum, credible fear and torture protection. 35+ years of experience. Call: (713) 231-5384.',
+    },
+    intro: {
+      es: 'Houston recibe a miles de personas cada año que huyen de la persecución en sus países de origen. Como la ciudad más grande de Texas y un destino principal para refugiados y solicitantes de asilo, Houston tiene una de las cortes de inmigración con mayor carga de casos de asilo. Nuestros abogados tienen amplia experiencia preparando casos de asilo tanto afirmativo (ante USCIS) como defensivo (ante la corte de inmigración), incluyendo entrevistas de miedo creíble para personas recién llegadas.',
+      en: 'Houston receives thousands of people every year who are fleeing persecution in their home countries. As the largest city in Texas and a primary destination for refugees and asylum seekers, Houston has one of the immigration courts with the highest asylum caseload. Our attorneys have extensive experience preparing both affirmative asylum cases (before USCIS) and defensive asylum (before immigration court), including credible fear interviews for newly arrived individuals.',
+    },
+    whyChooseUs: {
+      es: ['Amplia experiencia en casos de asilo en la corte de Houston', 'Preparación exhaustiva de declaraciones y evidencia de persecución', 'Manejo de entrevistas de miedo creíble y miedo razonable', 'Conocimiento de las condiciones en países de origen', 'Coordinación con expertos en derechos humanos cuando es necesario'],
+      en: ['Extensive experience in asylum cases in Houston court', 'Thorough preparation of statements and persecution evidence', 'Handling credible fear and reasonable fear interviews', 'Knowledge of conditions in countries of origin', 'Coordination with human rights experts when needed'],
+    },
+  },
+  {
+    slug: 'asilo-politico-chicago',
+    officeKey: 'chicago',
+    serviceKey: 'asilo',
+    h1: { es: 'Asilo Político en Chicago, IL', en: 'Political Asylum in Chicago, IL' },
+    metaTitle: { es: 'Asilo Político en Chicago, IL — Abogados de Asilo', en: 'Political Asylum in Chicago, IL — Asylum Attorneys' },
+    metaDescription: {
+      es: 'Abogados de asilo político en Chicago, Illinois. Asilo afirmativo y defensivo. Illinois ofrece protecciones adicionales como estado santuario. Llame: (312) 477-0389.',
+      en: 'Political asylum attorneys in Chicago, Illinois. Affirmative and defensive asylum. Illinois offers additional protections as a sanctuary state. Call: (312) 477-0389.',
+    },
+    intro: {
+      es: 'Chicago ha sido históricamente una ciudad de acogida para inmigrantes y refugiados de todo el mundo. Illinois, como estado santuario, brinda protecciones adicionales a los solicitantes de asilo. Nuestra oficina en Cicero atiende a personas que huyen de la persecución en Centroamérica, Sudamérica, y otras regiones. Preparamos casos sólidos que documentan la persecución sufrida y presentamos argumentos convincentes ante los oficiales de asilo y los jueces de inmigración de Chicago.',
+      en: 'Chicago has historically been a welcoming city for immigrants and refugees from around the world. Illinois, as a sanctuary state, provides additional protections for asylum seekers. Our office in Cicero serves people fleeing persecution from Central America, South America, and other regions. We prepare strong cases documenting the persecution suffered and present compelling arguments before asylum officers and Chicago immigration judges.',
+    },
+    whyChooseUs: {
+      es: ['Chicago como ciudad de acogida con ambiente favorable para solicitantes de asilo', 'Protecciones adicionales de Illinois como estado santuario', 'Preparación detallada de casos con documentación exhaustiva', 'Experiencia con solicitantes de asilo de diversas regiones', 'Colaboración con organizaciones de refugiados en el área'],
+      en: ['Chicago as a welcoming city with a favorable environment for asylum seekers', 'Additional protections from Illinois as a sanctuary state', 'Detailed case preparation with exhaustive documentation', 'Experience with asylum seekers from diverse regions', 'Collaboration with refugee organizations in the area'],
+    },
+  },
+  {
+    slug: 'asilo-politico-los-angeles',
+    officeKey: 'los-angeles',
+    serviceKey: 'asilo',
+    h1: { es: 'Asilo Político en Los Ángeles, CA', en: 'Political Asylum in Los Angeles, CA' },
+    metaTitle: { es: 'Asilo Político en Los Ángeles, CA — Abogados de Asilo', en: 'Political Asylum in Los Angeles, CA — Asylum Attorneys' },
+    metaDescription: {
+      es: 'Abogados de asilo político en Los Ángeles. California ofrece protecciones fuertes para solicitantes de asilo. Asilo afirmativo y defensivo. Llame: (213) 784-1554.',
+      en: 'Political asylum attorneys in Los Angeles. California offers strong protections for asylum seekers. Affirmative and defensive asylum. Call: (213) 784-1554.',
+    },
+    intro: {
+      es: 'Los Ángeles es uno de los principales destinos para solicitantes de asilo en Estados Unidos, con una comunidad diversa de personas que han huido de la persecución en México, Centroamérica, Sudamérica y otras regiones. California ofrece protecciones robustas para solicitantes de asilo, incluyendo acceso a servicios sociales y protecciones laborales. Nuestros abogados en Pico Rivera manejan casos de asilo afirmativo ante la oficina de asilo de Los Ángeles y casos defensivos ante la corte de inmigración.',
+      en: 'Los Angeles is one of the top destinations for asylum seekers in the United States, with a diverse community of people who have fled persecution from Mexico, Central America, South America, and other regions. California offers robust protections for asylum seekers, including access to social services and labor protections. Our attorneys in Pico Rivera handle affirmative asylum cases before the Los Angeles Asylum Office and defensive cases before immigration court.',
+    },
+    whyChooseUs: {
+      es: ['Experiencia ante la oficina de asilo de Los Ángeles', 'Conocimiento de las protecciones californianas para solicitantes de asilo', 'Manejo de casos de diversas nacionalidades y tipos de persecución', 'Red de apoyo con organizaciones de derechos humanos en LA', 'Preparación completa incluyendo declaraciones, evidencia y testigos'],
+      en: ['Experience before the Los Angeles Asylum Office', 'Knowledge of California protections for asylum seekers', 'Handling cases from diverse nationalities and persecution types', 'Support network with human rights organizations in LA', 'Complete preparation including statements, evidence and witnesses'],
+    },
+  },
+
+  // === VAWA (3 cities) ===
+  {
+    slug: 'vawa-houston',
+    officeKey: 'houston',
+    serviceKey: 'vawa',
+    h1: { es: 'VAWA en Houston, TX — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Houston, TX — Protection for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Houston, TX — Abogados para Víctimas de Violencia Doméstica', en: 'VAWA in Houston, TX — Attorneys for Domestic Violence Victims' },
+    metaDescription: {
+      es: 'Abogados de VAWA en Houston. Auto-petición independiente para víctimas de violencia doméstica. Estatus legal sin depender del abusador. Llame: (713) 231-5384.',
+      en: 'VAWA attorneys in Houston. Independent self-petition for domestic violence victims. Legal status without depending on the abuser. Call: (713) 231-5384.',
+    },
+    intro: {
+      es: 'En Houston, demasiadas víctimas de violencia doméstica permanecen en situaciones peligrosas porque creen que su estatus migratorio depende de su abusador. La ley VAWA le permite solicitar residencia de manera independiente, sin que su abusador lo sepa. Nuestros abogados en Houston han ayudado a cientos de víctimas a liberarse del ciclo de abuso obteniendo estatus legal propio. Su caso es completamente confidencial y trabajamos con refugios y organizaciones de apoyo en el área de Houston.',
+      en: 'In Houston, too many domestic violence victims remain in dangerous situations because they believe their immigration status depends on their abuser. VAWA allows you to petition for residency independently, without your abuser knowing. Our attorneys in Houston have helped hundreds of victims break free from the cycle of abuse by obtaining their own legal status. Your case is completely confidential and we work with shelters and support organizations in the Houston area.',
+    },
+    whyChooseUs: {
+      es: ['Proceso completamente confidencial — su abusador no será notificado', 'Cientos de casos VAWA aprobados en Houston', 'Coordinación con refugios y organizaciones de apoyo para víctimas', 'Auto-petición independiente: no necesita la cooperación del abusador', 'Permiso de trabajo y acceso a beneficios durante el proceso'],
+      en: ['Completely confidential process — your abuser will not be notified', 'Hundreds of approved VAWA cases in Houston', 'Coordination with shelters and victim support organizations', 'Independent self-petition: no abuser cooperation needed', 'Work permit and access to benefits during the process'],
+    },
+  },
+  {
+    slug: 'vawa-chicago',
+    officeKey: 'chicago',
+    serviceKey: 'vawa',
+    h1: { es: 'VAWA en Chicago, IL — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Chicago, IL — Protection for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Chicago, IL — Abogados para Víctimas de Violencia Doméstica', en: 'VAWA in Chicago, IL — Attorneys for Domestic Violence Victims' },
+    metaDescription: {
+      es: 'Abogados de VAWA en Chicago. Illinois ofrece protecciones fuertes para víctimas de violencia doméstica. Auto-petición confidencial. Llame: (312) 477-0389.',
+      en: 'VAWA attorneys in Chicago. Illinois offers strong protections for domestic violence victims. Confidential self-petition. Call: (312) 477-0389.',
+    },
+    intro: {
+      es: 'Illinois tiene algunas de las leyes más protectoras del país para víctimas de violencia doméstica, complementando las protecciones federales de VAWA. En Chicago, nuestros abogados combinan las protecciones de la ley estatal de Illinois con la auto-petición federal VAWA para brindar la máxima protección a nuestros clientes. Trabajamos de cerca con el Departamento de Servicios a la Familia del condado de Cook y organizaciones de apoyo como la Red Nacional de Violencia Doméstica para asegurar que nuestros clientes estén seguros durante todo el proceso.',
+      en: 'Illinois has some of the most protective laws in the country for domestic violence victims, complementing federal VAWA protections. In Chicago, our attorneys combine Illinois state law protections with the federal VAWA self-petition to provide maximum protection for our clients. We work closely with Cook County Family Services and support organizations like the National Domestic Violence Hotline to ensure our clients are safe throughout the process.',
+    },
+    whyChooseUs: {
+      es: ['Protecciones combinadas de Illinois y la ley federal VAWA', 'Trabajo con servicios de protección del condado de Cook', 'Proceso 100% confidencial y seguro para la víctima', 'Acceso a servicios de apoyo y refugios en el área de Chicago', 'Determinación prima facie que le da acceso inmediato a beneficios'],
+      en: ['Combined protections from Illinois and federal VAWA law', 'Working with Cook County protective services', '100% confidential and safe process for the victim', 'Access to support services and shelters in the Chicago area', 'Prima facie determination giving immediate access to benefits'],
+    },
+  },
+  {
+    slug: 'vawa-dallas',
+    officeKey: 'dallas',
+    serviceKey: 'vawa',
+    h1: { es: 'VAWA en Dallas, TX — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Dallas, TX — Protection for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Dallas, TX — Abogados para Víctimas de Violencia Doméstica', en: 'VAWA in Dallas, TX — Attorneys for Domestic Violence Victims' },
+    metaDescription: {
+      es: 'Abogados de VAWA en Dallas. Auto-petición para víctimas de violencia doméstica. Estatus legal independiente del abusador. Confidencial. Llame: (214) 753-8315.',
+      en: 'VAWA attorneys in Dallas. Self-petition for domestic violence victims. Legal status independent from the abuser. Confidential. Call: (214) 753-8315.',
+    },
+    intro: {
+      es: 'Dallas tiene una población inmigrante significativa donde muchas víctimas de violencia doméstica desconocen que pueden obtener estatus legal de manera independiente bajo la ley VAWA. Usted no necesita que su pareja abusiva patrocine su caso de inmigración. Nuestros abogados en Dallas preparan auto-peticiones VAWA completas que documentan el abuso sufrido y demuestran su elegibilidad ante USCIS. Todo el proceso es confidencial — su abusador no recibirá ninguna notificación.',
+      en: 'Dallas has a significant immigrant population where many domestic violence victims are unaware they can obtain legal status independently under VAWA. You do not need your abusive partner to sponsor your immigration case. Our attorneys in Dallas prepare complete VAWA self-petitions that document the abuse suffered and demonstrate your eligibility to USCIS. The entire process is confidential — your abuser will not receive any notification.',
+    },
+    whyChooseUs: {
+      es: ['Auto-petición que no requiere la participación ni conocimiento del abusador', 'Documentación completa del caso con evidencia de abuso', 'Trabajo con centros de crisis y refugios del área de Dallas', 'Permiso de trabajo obtenido durante el proceso', 'Camino claro hacia la residencia permanente para víctimas'],
+      en: ['Self-petition that does not require abuser\'s participation or knowledge', 'Complete case documentation with evidence of abuse', 'Working with crisis centers and shelters in the Dallas area', 'Work permit obtained during the process', 'Clear path to permanent residency for victims'],
+    },
+  },
+];
+
+// Helper to find page config by slug
+export function getPageConfig(slug: string): LandingPageConfig | undefined {
+  return LANDING_PAGES.find(p => p.slug === slug);
+}
+
+// Helper to get office + service for a page
+export function getPageData(slug: string) {
+  const config = getPageConfig(slug);
+  if (!config) return null;
+  const office = OFFICES[config.officeKey];
+  const service = SERVICES[config.serviceKey];
+  if (!office || !service) return null;
+  return { config, office, service };
+}

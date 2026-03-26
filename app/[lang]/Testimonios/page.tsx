@@ -27,17 +27,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: `${SITE_URL}/${lang}/Testimonios`,
+      canonical: `${SITE_URL}/${lang}/testimonios`,
       languages: {
-        es: `${SITE_URL}/es/Testimonios`,
-        en: `${SITE_URL}/en/Testimonios`,
-        'x-default': `${SITE_URL}/es/Testimonios`,
+        es: `${SITE_URL}/es/testimonios`,
+        en: `${SITE_URL}/en/testimonios`,
+        'x-default': `${SITE_URL}/es/testimonios`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/${lang}/Testimonios`,
+      url: `${SITE_URL}/${lang}/testimonios`,
       type: 'website',
       siteName: 'Manuel Solis Law Firm',
       locale: isEs ? 'es_US' : 'en_US',

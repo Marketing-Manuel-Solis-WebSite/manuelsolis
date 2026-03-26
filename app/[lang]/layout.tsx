@@ -133,7 +133,7 @@ const websiteSchema = {
   }
 };
 
-// VideoObject schema moved to /Testimonios page where the video lives.
+// VideoObject schema moved to /testimonios page where the video lives.
 // Having it in the layout made it appear on every page incorrectly.
 
 // NUEVO: Configuración de Viewport separada (Corrige el error de build)
@@ -152,15 +152,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(SITE_URL),
     title: {
       default: isEs
-        ? 'Manuel Solís — Abogados de Inmigración y Accidentes'
-        : 'Manuel Solis — Immigration & Accident Attorneys',
+        ? 'Abogados de Inmigración | Manuel Solís — 35+ Años, 50,000+ Casos'
+        : 'Immigration Lawyers | Manuel Solis — 35+ Years, 50,000+ Cases Won',
       template: isEs
-        ? '%s | Manuel Solís — Abogados'
-        : '%s | Manuel Solis — Attorneys',
+        ? '%s | Manuel Solís — Abogados de Inmigración'
+        : '%s | Manuel Solis — Immigration Lawyers',
     },
     description: isEs
-      ? 'Oficinas Legales de Manuel Solís. 35+ años, 50,000+ casos ganados. Inmigración, accidentes, ley criminal y familia.'
-      : 'Law Offices of Manuel Solis. 35+ years, 50,000+ cases won. Immigration, accidents, criminal defense and family law.',
+      ? 'Abogados de inmigración con 35+ años de experiencia y 50,000+ casos ganados. Oficinas en Houston, Dallas, Chicago, Los Angeles y más. Consulta gratis.'
+      : 'Immigration lawyers with 35+ years of experience and 50,000+ cases won. Offices in Houston, Dallas, Chicago, Los Angeles and more. Free consultation.',
     keywords: isEs
       ? ['abogado de inmigración', 'abogado de accidentes', 'Manuel Solís', 'abogado hispano', 'defensa deportación']
       : ['immigration lawyer', 'accident attorney', 'Manuel Solis', 'Hispanic lawyer', 'deportation defense'],

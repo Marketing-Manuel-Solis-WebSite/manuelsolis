@@ -170,7 +170,7 @@ export default function HeaderProfessional() {
     },
     {
       name: language === 'es' ? 'Testimonios' : 'Testimonials',
-      href: `/${language}/Testimonios`,
+      href: `/${language}/testimonios`,
       type: 'link'
     },
     {
@@ -279,7 +279,7 @@ export default function HeaderProfessional() {
               </div>
             </Link>
 
-            <div className="hidden lg:flex items-center">
+            <div className="hidden lg:flex items-center flex-1 min-w-0">
               <nav aria-label="Main navigation" className="flex items-center gap-4 xl:gap-7">
                 {menuItems.map((item) => (
                   <div key={item.name} className="relative group">
@@ -385,7 +385,7 @@ export default function HeaderProfessional() {
               </nav>
             </div>
 
-            <div className="hidden lg:flex items-center gap-6 ml-auto">
+            <div className="hidden lg:flex items-center gap-6 ml-auto flex-shrink-0">
               <div className="h-6 w-[0.5px] bg-white/20" />
 
               <div className="relative group">
