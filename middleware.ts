@@ -56,6 +56,13 @@ export function middleware(request: NextRequest) {
     const localePart = pathname.split('/')[1];
     const locale = (localePart === 'es' || localePart === 'en') ? localePart : 'es';
 
+    // 301 redirect for old /Testimonios URL (case-sensitive check to avoid loop)
+    if (pathname.includes('/Testimonios')) {
+      const newUrl = new URL(pathname.replace('/Testimonios', '/testimonios'), request.url);
+      newUrl.search = request.nextUrl.search;
+      return NextResponse.redirect(newUrl, 301);
+    }
+
     // Forward locale as request header so RootLayout can set <html lang> dynamically
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-locale', locale);

@@ -132,12 +132,6 @@ const nextConfig: NextConfig = {
         destination: '/:lang/blog/permiso-de-trabajo-visa-u',
         permanent: true,
       },
-      // Testimonios case redirect
-      {
-        source: '/:lang/Testimonios',
-        destination: '/:lang/testimonios',
-        permanent: true,
-      },
     ];
   },
   async headers() {
