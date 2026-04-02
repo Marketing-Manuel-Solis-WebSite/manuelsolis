@@ -338,7 +338,7 @@ export default async function OficinasPage({ params }: Props) {
                             </div>
                           </Link>
                           <a
-                            href={`tel:${office.phone.replace(/[^0-9]/g, '')}`}
+                            href={`tel:+1${office.phone.replace(/[^0-9]/g, '')}`}
                             className="flex items-center gap-3 text-white/70 hover:text-[#B2904D] transition-colors"
                           >
                             <Phone className="w-5 h-5 text-[#B2904D] flex-shrink-0" />
@@ -370,7 +370,7 @@ export default async function OficinasPage({ params }: Props) {
                           </div>
                         </Link>
                         <a
-                          href={`tel:${office.phone.replace(/[^0-9]/g, '')}`}
+                          href={`tel:+1${office.phone.replace(/[^0-9]/g, '')}`}
                           className="flex items-center gap-3 text-white/70 hover:text-[#B2904D] transition-colors"
                         >
                           <Phone className="w-5 h-5 text-[#B2904D] flex-shrink-0" />

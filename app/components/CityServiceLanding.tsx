@@ -27,7 +27,7 @@ export default function CityServiceLanding({ config, office, service }: CityServ
   const isEs = language === 'es'
   const lang = language
 
-  const phoneClean = office.phone.replace(/[^0-9+]/g, '')
+  const phoneClean = `+1${office.phone.replace(/\D/g, '')}`
 
   return (
     <>
@@ -243,7 +243,7 @@ export default function CityServiceLanding({ config, office, service }: CityServ
                           <div className="flex items-center gap-2">
                             <Phone className="h-4 w-4 text-slate-400 flex-shrink-0" />
                             <a
-                              href={`tel:${addOffice.phone.replace(/[^0-9+]/g, '')}`}
+                              href={`tel:+1${addOffice.phone.replace(/\D/g, '')}`}
                               className="text-slate-300 text-sm hover:text-[#B2904D] transition-colors"
                             >
                               {addOffice.phone}
