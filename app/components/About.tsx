@@ -80,8 +80,8 @@ export default function About() {
             <motion.div variants={fadeInUp} className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
               <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
                 {language === 'es'
-                  ? <>En este documental, el <strong className="text-white font-medium">Abogado Manuel Solís</strong> presenta un caso real de reunificación familiar tras <strong className="text-white font-medium">18 años de separación</strong>. Una historia que refleja nuestro compromiso y resultados.</>
-                  : <>In this documentary, <strong className="text-white font-medium">Attorney Manuel Solís</strong> presents a real case of family reunification after <strong className="text-white font-medium">18 years of separation</strong>. A story that reflects our commitment and results.</>
+                  ? <>En este documental, el <strong className="text-white font-medium">Abogado Manuel Solís</strong> comparte la conmovedora historia de <strong className="text-white font-medium">Eva</strong>, una madre que soñó durante <strong className="text-white font-medium">más de 25 años</strong> con volver a abrazar a su familia. Tras décadas de distancia, lágrimas y esperanza, finalmente lo logró. Un testimonio real que demuestra que nunca es tarde para reunirse con quienes más amamos.</>
+                  : <>In this documentary, <strong className="text-white font-medium">Attorney Manuel Solís</strong> shares the moving story of <strong className="text-white font-medium">Eva</strong>, a mother who dreamed for <strong className="text-white font-medium">over 25 years</strong> of embracing her family again. After decades of distance, tears, and hope, she finally made it. A real testimony that proves it is never too late to reunite with those we love most.</>
                 }
               </p>
             </motion.div>
