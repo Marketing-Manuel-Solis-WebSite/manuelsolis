@@ -29,6 +29,7 @@ import Image from 'next/image';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ContactForm from '../../../components/ContactForm';
+import Breadcrumbs from '../../../components/Breadcrumbs';
 import { useLanguage } from '../../../context/LanguageContext';
 
 const getText = (obj: any, lang: 'es' | 'en'): string => {
@@ -326,8 +327,19 @@ export default function VawaClient() {
         </div>
       </div>
 
+      {/* --- BREADCRUMBS --- */}
+      <div className="relative z-10 pt-24 md:pt-28 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <Breadcrumbs items={[
+            { label: { es: 'Inicio', en: 'Home' }, href: `/${language}` },
+            { label: { es: 'Servicios', en: 'Services' }, href: `/${language}/servicios` },
+            { label: { es: 'VAWA', en: 'VAWA' }, href: `/${language}/servicios/vawa` },
+          ]} />
+        </div>
+      </div>
+
       {/* --- HERO SECTION --- */}
-      <section className="relative pt-32 md:pt-40 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
+      <section className="relative pt-8 md:pt-12 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 

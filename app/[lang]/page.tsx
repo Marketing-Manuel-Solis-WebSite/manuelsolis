@@ -86,7 +86,7 @@ const ContactForm = dynamic(() => import('../components/ContactForm'), {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#001540] grain">
+    <main id="main-content" className="min-h-screen bg-[#001540] grain">
       <Hero />
       <Header />
       <div className="content-auto">

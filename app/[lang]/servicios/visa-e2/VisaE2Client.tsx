@@ -32,6 +32,7 @@ import Image from 'next/image';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ContactForm from '../../../components/ContactForm';
+import Breadcrumbs from '../../../components/Breadcrumbs';
 import { useLanguage } from '../../../context/LanguageContext';
 
 
@@ -218,9 +219,19 @@ export default function VisaE2Page() {
          </div>
       </div>
 
+      {/* --- BREADCRUMBS --- */}
+      <div className="relative z-10 pt-24 md:pt-28 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <Breadcrumbs items={[
+            { label: { es: 'Inicio', en: 'Home' }, href: `/${language}` },
+            { label: { es: 'Servicios', en: 'Services' }, href: `/${language}/servicios` },
+            { label: { es: 'Visa E-2', en: 'E-2 Visa' }, href: `/${language}/servicios/visa-e2` },
+          ]} />
+        </div>
+      </div>
+
       {/* --- HERO SECTION --- */}
-      {/* Ajustado padding top/bottom y height para centrar más el contenido */}
-      <section className="relative pt-32 md:pt-40 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
+      <section className="relative pt-8 md:pt-12 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
              

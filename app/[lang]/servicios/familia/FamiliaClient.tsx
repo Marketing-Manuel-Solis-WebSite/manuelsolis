@@ -19,6 +19,7 @@ import Image from 'next/image';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ContactForm from '../../../components/ContactForm';
+import Breadcrumbs from '../../../components/Breadcrumbs';
 import { useLanguage } from '../../../context/LanguageContext';
 
 
@@ -214,8 +215,19 @@ export default function FamilyLawPage() {
       </div>
       
       
+      {/* --- BREADCRUMBS --- */}
+      <div className="relative z-10 pt-24 md:pt-28 px-4">
+        <div className="container mx-auto max-w-7xl">
+          <Breadcrumbs items={[
+            { label: { es: 'Inicio', en: 'Home' }, href: `/${language}` },
+            { label: { es: 'Servicios', en: 'Services' }, href: `/${language}/servicios` },
+            { label: { es: 'Familia', en: 'Family' }, href: `/${language}/servicios/familia` },
+          ]} />
+        </div>
+      </div>
+
       {/* --- HERO SECTION --- */}
-      <section className="relative pt-32 md:pt-40 pb-16 md:pb-24 px-4 z-10 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center">
+      <section className="relative pt-8 md:pt-12 pb-16 md:pb-24 px-4 z-10 min-h-[85vh] md:min-h-[90vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-center">
               
