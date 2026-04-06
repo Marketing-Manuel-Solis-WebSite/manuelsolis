@@ -17,6 +17,206 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`;
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 const BLOG_DATA = {
   posts: [
+    // --- BLOG 30 - TPS 2026 ---
+    {
+      id: 'tps_2026_paises_elegibles_renovacion',
+      slug: 'tps-2026-paises-elegibles-renovacion',
+      title: {
+        es: 'TPS 2026: países elegibles, cómo renovar y qué pasa si se cancela',
+        en: 'TPS 2026: Eligible Countries, How to Renew, and What Happens If It Is Canceled'
+      },
+      excerpt: {
+        es: 'Guía actualizada sobre el Estatus de Protección Temporal en 2026: países vigentes, terminados y en litigio. Qué hacer con tu EAD y tus opciones si pierdes TPS.',
+        en: 'Updated guide on Temporary Protected Status in 2026: active countries, terminated and in litigation. What to do with your EAD and your options if you lose TPS.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-04-10',
+      readTime: '12 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 29 - CRÍMENES DEPORTACIÓN ---
+    {
+      id: 'crimenes_deportacion_vileza_moral',
+      slug: 'crimenes-deportacion-vileza-moral',
+      title: {
+        es: 'Crímenes que causan deportación: la guía más útil sobre delitos de vileza moral',
+        en: 'Crimes That Cause Deportation: The Most Useful Guide on Crimes of Moral Turpitude'
+      },
+      excerpt: {
+        es: 'Conoce cómo afectan los delitos a tu caso migratorio: vileza moral, excepciones, drogas, DUI y por qué el análisis depende del estatuto penal exacto.',
+        en: 'Learn how crimes affect your immigration case: moral turpitude, exceptions, drugs, DUI, and why the analysis depends on the exact penal statute.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2025-04-14',
+      readTime: '11 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 28 - RFE ---
+    {
+      id: 'rfe_responder_evidencia_uscis',
+      slug: 'rfe-responder-evidencia-uscis',
+      title: {
+        es: 'Request for Evidence (RFE): cómo responder sin que te nieguen el caso',
+        en: 'Request for Evidence (RFE): How to Respond Without Getting Your Case Denied'
+      },
+      excerpt: {
+        es: 'Recibiste un RFE de USCIS y no sabes qué hacer. Aprende cómo armar una respuesta completa, los errores que hunden casos y cuándo necesitas estrategia legal.',
+        en: 'You received an RFE from USCIS and don\'t know what to do. Learn how to build a complete response, mistakes that sink cases, and when you need legal strategy.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-04-18',
+      readTime: '10 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 27 - BARRAS 3 Y 10 AÑOS ---
+    {
+      id: 'barras_3_10_anos_presencia_ilegal',
+      slug: 'barras-3-10-anos-presencia-ilegal',
+      title: {
+        es: 'Barras de 3 y 10 años: ¿puedo regresar a EE.UU. si me fui o me deportaron?',
+        en: '3 and 10 Year Bars: Can I Return to the U.S. If I Left or Was Deported?'
+      },
+      excerpt: {
+        es: 'Entiende las barras de 3 años, 10 años y la barra permanente por presencia ilegal. Conoce cuándo aplica el perdón I-601A y cuándo necesitas un I-212.',
+        en: 'Understand the 3-year, 10-year, and permanent bars for unlawful presence. Learn when the I-601A waiver applies and when you need an I-212.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-04-22',
+      readTime: '11 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 26 - ACCIDENTE INDOCUMENTADO ---
+    {
+      id: 'accidente_auto_indocumentado_derechos',
+      slug: 'accidente-auto-indocumentado-derechos',
+      title: {
+        es: 'Tuve un accidente de auto siendo indocumentado: ¿tengo derechos?',
+        en: 'I Had a Car Accident While Undocumented: Do I Have Rights?'
+      },
+      excerpt: {
+        es: 'Sí, tienes derechos después de un accidente sin importar tu estatus migratorio. Conoce qué hacer, qué NO hacer y cómo proteger tu caso y tu salud.',
+        en: 'Yes, you have rights after an accident regardless of your immigration status. Learn what to do, what NOT to do, and how to protect your case and your health.'
+      },
+      categoryId: 'accidentes',
+      category: { es: 'Accidentes', en: 'Accidents' },
+      author: 'Manuel Solís',
+      date: '2025-04-26',
+      readTime: '10 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 25 - I-864 ---
+    {
+      id: 'i_864_patrocinador_ingreso_minimo',
+      slug: 'i-864-patrocinador-ingreso-minimo',
+      title: {
+        es: 'Formulario I-864: quién puede ser patrocinador y cuánto ingreso necesita',
+        en: 'Form I-864: Who Can Be a Sponsor and How Much Income Is Needed'
+      },
+      excerpt: {
+        es: 'Guía completa del Affidavit of Support: quién firma, tabla de ingreso mínimo 2025, joint sponsors, errores comunes y la diferencia con el I-134.',
+        en: 'Complete Affidavit of Support guide: who signs, 2025 minimum income table, joint sponsors, common errors, and the difference with the I-134.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-04-30',
+      readTime: '10 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 24 - VISA K-1 ---
+    {
+      id: 'visa_k1_prometido_requisitos',
+      slug: 'visa-k1-prometido-requisitos',
+      title: {
+        es: 'Visa K-1 de prometido: requisitos, tiempos y errores que la retrasan',
+        en: 'K-1 Fiancé Visa: Requirements, Timelines, and Mistakes That Delay It'
+      },
+      excerpt: {
+        es: 'Todo sobre la visa de prometido K-1: quién puede pedirla, el proceso paso a paso, documentos para entrevista y cuándo conviene más casarse afuera.',
+        en: 'Everything about the K-1 fiancé visa: who can petition, step-by-step process, interview documents, and when it\'s better to marry abroad.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-05-04',
+      readTime: '11 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 23 - ENTREVISTA ERRORES ---
+    {
+      id: 'entrevista_inmigracion_errores_evitar',
+      slug: 'entrevista-inmigracion-errores-evitar',
+      title: {
+        es: 'Cómo prepararte para tu entrevista de inmigración: 10 errores que debes evitar',
+        en: 'How to Prepare for Your Immigration Interview: 10 Mistakes to Avoid'
+      },
+      excerpt: {
+        es: 'Consejos prácticos para entrevistas de inmigración: documentos, originales, traducciones, consistencia, intérprete y los 10 errores más comunes.',
+        en: 'Practical tips for immigration interviews: documents, originals, translations, consistency, interpreter, and the 10 most common mistakes.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-05-08',
+      readTime: '10 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 22 - FAMILIAS ESTATUS MIXTO ---
+    {
+      id: 'familias_estatus_mixto_opciones',
+      slug: 'familias-estatus-mixto-opciones',
+      title: {
+        es: 'Familias de estatus mixto: opciones legales cuando unos tienen papeles y otros no',
+        en: 'Mixed-Status Families: Legal Options When Some Have Papers and Others Don\'t'
+      },
+      excerpt: {
+        es: 'Guía para familias donde unos tienen papeles y otros no: peticiones, mitos sobre hijos ciudadanos, preparación ante emergencias y protecciones como VAWA.',
+        en: 'Guide for families where some have papers and others don\'t: petitions, myths about citizen children, emergency preparation, and protections like VAWA.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-05-12',
+      readTime: '11 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
+    // --- BLOG 21 - FRAUDE NOTARIOS ---
+    {
+      id: 'fraude_notarios_inmigracion',
+      slug: 'fraude-notarios-inmigracion',
+      title: {
+        es: 'Fraude de notarios: cómo saber si tu "abogado" es falso y qué hacer si te estafaron',
+        en: 'Notary Fraud: How to Tell If Your "Lawyer" Is Fake and What to Do If You Were Scammed'
+      },
+      excerpt: {
+        es: 'Un notario en EE.UU. no es abogado. Conoce las señales de fraude, cómo verificar credenciales y qué hacer si tu caso fue dañado por un consultor no autorizado.',
+        en: 'A notary in the U.S. is not a lawyer. Learn the signs of fraud, how to verify credentials, and what to do if your case was damaged by an unauthorized consultant.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2025-05-16',
+      readTime: '9 min',
+      image: '/home-image.jpg',
+      featured: false
+    },
     // --- BLOG 20 - NUEVO ---
     {
       id: 'asilo_frontera_2026_puerto_entrada_vs_cruce',
@@ -404,7 +604,8 @@ const BLOG_DATA = {
     { id: 'defensa-deportacion', es: 'Defensa contra Deportación', en: 'Deportation Defense' },
     { id: 'visa-humanitaria', es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
     { id: 'visa-T', es: 'Visa T', en: 'T Visa' },
-    { id: 'visa-VAWA', es: 'Visa VAWA', en: 'VAWA Visa' }
+    { id: 'visa-VAWA', es: 'Visa VAWA', en: 'VAWA Visa' },
+    { id: 'accidentes', es: 'Accidentes', en: 'Accidents' }
   ],
   uiText: {
     hero: {

@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'Deportation Defense & Cancellation of Removal';
 
   const description = isEs
-    ? 'Abogados de defensa de deportación con 35+ años y 50,000+ casos. Cancelación de remoción, fianzas, representación en corte. Emergencia 24/7: 866-979-5146.'
-    : 'Deportation defense attorneys with 35+ years, 50,000+ cases. Cancellation of removal, bonds, court representation. 24/7 emergency: 866-979-5146.';
+    ? 'Abogados de defensa de deportación con 35+ años y 50,000+ casos. Cancelación de remoción, fianzas, representación en corte. Emergencia 24/7: 832-598-0914.'
+    : 'Deportation defense attorneys with 35+ years, 50,000+ cases. Cancellation of removal, bonds, court representation. 24/7 emergency: 832-598-0914.';
 
   return {
     title,
@@ -51,7 +51,7 @@ const getLegalServiceSchema = (lang: string) => ({
     : 'Deportation defense legal services: cancellation of removal, immigration bonds, court representation, and BIA appeals.',
   url: `${SITE_URL}/${lang}/servicios/defensa-deportacion`,
   priceRange: '$$',
-  telephone: '+1-866-979-5146',
+  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -64,7 +64,7 @@ const getLegalServiceSchema = (lang: string) => ({
     '@id': `${SITE_URL}/#organization`,
     name: 'Manuel Solis Law Firm',
     url: SITE_URL,
-    telephone: '+1-866-979-5146',
+    telephone: '+1-832-598-0914',
   },
   serviceType: [
     'Deportation Defense',

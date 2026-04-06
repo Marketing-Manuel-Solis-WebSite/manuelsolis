@@ -53,7 +53,7 @@ const getLegalServiceSchema = (lang: string) => ({
       : 'Specialized E-2 visa legal services for investors seeking to establish themselves in the U.S.',
   url: `${SITE_URL}/${lang}/inversionistas`,
   priceRange: '$$',
-  telephone: '+1-866-979-5146',
+  telephone: '+1-832-598-0914',
   areaServed: { '@type': 'Country', name: 'US' },
   serviceType: ['E-2 Visa', 'Investor Visa', 'Business Immigration'],
   provider: {

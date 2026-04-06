@@ -50,7 +50,7 @@ const getLegalServiceSchema = (lang: string) => ({
     : 'Legal services for car accidents, truck accidents, and personal injury.',
   url: `${SITE_URL}/${lang}/servicios/accidentes`,
   priceRange: '$$',
-  telephone: '+1-866-979-5146',
+  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -62,7 +62,7 @@ const getLegalServiceSchema = (lang: string) => ({
     '@type': 'LawFirm',
     name: 'Manuel Solis Law Firm',
     url: 'https://www.manuelsolis.com',
-    telephone: '+1-866-979-5146',
+    telephone: '+1-832-598-0914',
   },
   serviceType: [
     'Personal Injury',

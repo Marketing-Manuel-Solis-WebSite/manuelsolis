@@ -209,10 +209,10 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href="tel:+18669795146"
+                href="tel:+18325980914"
                 className="inline-flex items-center justify-center rounded-full bg-white text-blue-900 font-bold text-lg px-8 py-4 transition-transform hover:scale-105 shadow-lg"
               >
-                {isEs ? 'Llamar Ahora: ' : 'Call Now: '}1-866-979-5146
+                {isEs ? 'Llamar Ahora: ' : 'Call Now: '}(832) 598-0914
               </a>
               <Link
                 href={`/${currentLang}/informacion/nosotros`}

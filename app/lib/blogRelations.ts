@@ -33,6 +33,17 @@ const blogServiceMap: Record<string, ServiceLink> = {
   'marihuana-dui-buen-caracter-moral-inmigracion': { path: '/servicios/ley-criminal', label: { es: 'Defensa Criminal e Inmigración', en: 'Criminal Defense & Immigration' } },
   'ciudadania-en-espanol-reglas-50-20-55-15': { path: '/servicios/inmigracion', label: { es: 'Servicios de Ciudadanía', en: 'Citizenship Services' } },
   'entrevista-matrimonio-uscis-senales-alerta': { path: '/servicios/familia', label: { es: 'Derecho Familiar e Inmigración', en: 'Family Law & Immigration' } },
+  // New blogs
+  'tps-2026-paises-elegibles-renovacion': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'crimenes-deportacion-vileza-moral': { path: '/servicios/ley-criminal', label: { es: 'Defensa Criminal e Inmigración', en: 'Criminal Defense & Immigration' } },
+  'rfe-responder-evidencia-uscis': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'barras-3-10-anos-presencia-ilegal': { path: '/servicios/inmigracion', label: { es: 'Perdones Migratorios', en: 'Immigration Waivers' } },
+  'accidente-auto-indocumentado-derechos': { path: '/servicios/accidentes', label: { es: 'Accidentes y Lesiones', en: 'Accidents & Injuries' } },
+  'i-864-patrocinador-ingreso-minimo': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'visa-k1-prometido-requisitos': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'entrevista-inmigracion-errores-evitar': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'familias-estatus-mixto-opciones': { path: '/servicios/familia', label: { es: 'Derecho Familiar e Inmigración', en: 'Family Law & Immigration' } },
+  'fraude-notarios-inmigracion': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
 };
 
 const defaultServiceLink: ServiceLink = {
@@ -55,6 +66,16 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'tps-2026-paises-elegibles-renovacion',
+    'crimenes-deportacion-vileza-moral',
+    'rfe-responder-evidencia-uscis',
+    'barras-3-10-anos-presencia-ilegal',
+    'accidente-auto-indocumentado-derechos',
+    'i-864-patrocinador-ingreso-minimo',
+    'visa-k1-prometido-requisitos',
+    'entrevista-inmigracion-errores-evitar',
+    'familias-estatus-mixto-opciones',
+    'fraude-notarios-inmigracion',
     'asilo-frontera-2026-puerto-entrada-vs-cruce',
     'entrevista-matrimonio-uscis-senales-alerta',
     'ciudadania-en-espanol-reglas-50-20-55-15',
@@ -95,6 +116,66 @@ export function getArticlesByAuthor(attorneyId: string, lang: 'es' | 'en'): { ti
 }
 
 const allArticles: Record<string, RelatedArticle> = {
+  'tps-2026-paises-elegibles-renovacion': {
+    title: { es: 'TPS 2026: países elegibles, cómo renovar y qué pasa si se cancela', en: 'TPS 2026: Eligible Countries, Renewal, and What If Canceled' },
+    slug: 'tps-2026-paises-elegibles-renovacion',
+    image: '/home-image.jpg',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
+  'crimenes-deportacion-vileza-moral': {
+    title: { es: 'Crímenes que causan deportación: vileza moral', en: 'Crimes That Cause Deportation: Moral Turpitude' },
+    slug: 'crimenes-deportacion-vileza-moral',
+    image: '/home-image.jpg',
+    category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+  },
+  'rfe-responder-evidencia-uscis': {
+    title: { es: 'RFE: cómo responder sin que te nieguen el caso', en: 'RFE: How to Respond Without Getting Denied' },
+    slug: 'rfe-responder-evidencia-uscis',
+    image: '/home-image.jpg',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
+  'barras-3-10-anos-presencia-ilegal': {
+    title: { es: 'Barras de 3 y 10 años: presencia ilegal', en: '3 and 10 Year Bars: Unlawful Presence' },
+    slug: 'barras-3-10-anos-presencia-ilegal',
+    image: '/home-image.jpg',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
+  'accidente-auto-indocumentado-derechos': {
+    title: { es: 'Accidente de auto siendo indocumentado: tus derechos', en: 'Car Accident While Undocumented: Your Rights' },
+    slug: 'accidente-auto-indocumentado-derechos',
+    image: '/home-image.jpg',
+    category: { es: 'Accidentes', en: 'Accidents' },
+  },
+  'i-864-patrocinador-ingreso-minimo': {
+    title: { es: 'I-864: quién puede patrocinar y cuánto ingreso necesita', en: 'I-864: Who Can Sponsor and Income Requirements' },
+    slug: 'i-864-patrocinador-ingreso-minimo',
+    image: '/home-image.jpg',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
+  'visa-k1-prometido-requisitos': {
+    title: { es: 'Visa K-1 de prometido: requisitos y proceso', en: 'K-1 Fiancé Visa: Requirements and Process' },
+    slug: 'visa-k1-prometido-requisitos',
+    image: '/home-image.jpg',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
+  'entrevista-inmigracion-errores-evitar': {
+    title: { es: 'Entrevista de inmigración: 10 errores que evitar', en: 'Immigration Interview: 10 Mistakes to Avoid' },
+    slug: 'entrevista-inmigracion-errores-evitar',
+    image: '/home-image.jpg',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
+  'familias-estatus-mixto-opciones': {
+    title: { es: 'Familias de estatus mixto: opciones legales', en: 'Mixed-Status Families: Legal Options' },
+    slug: 'familias-estatus-mixto-opciones',
+    image: '/home-image.jpg',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
+  'fraude-notarios-inmigracion': {
+    title: { es: 'Fraude de notarios en inmigración', en: 'Notary Fraud in Immigration' },
+    slug: 'fraude-notarios-inmigracion',
+    image: '/home-image.jpg',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
   'permiso-de-trabajo-visa-u': {
     title: { es: 'Permiso de Trabajo con Visa U (Bona Fide)', en: 'U Visa Work Permit (Bona Fide)' },
     slug: 'permiso-de-trabajo-visa-u',
@@ -230,6 +311,8 @@ const clusters: Record<string, string[]> = {
     'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
     'advance-parole-2026-viajar-con-daca-tps-visa-u',
     'marihuana-dui-buen-caracter-moral-inmigracion',
+    'crimenes-deportacion-vileza-moral',
+    'barras-3-10-anos-presencia-ilegal',
   ],
   process: [
     'formulario-g28-cambiar-abogado-inmigracion',
@@ -239,6 +322,12 @@ const clusters: Record<string, string[]> = {
     'perdon-i601a-arreglar-papeles-entrada-ilegal',
     'ciudadania-en-espanol-reglas-50-20-55-15',
     'entrevista-matrimonio-uscis-senales-alerta',
+    'tps-2026-paises-elegibles-renovacion',
+    'rfe-responder-evidencia-uscis',
+    'i-864-patrocinador-ingreso-minimo',
+    'visa-k1-prometido-requisitos',
+    'entrevista-inmigracion-errores-evitar',
+    'fraude-notarios-inmigracion',
   ],
   humanitarian: [
     'visa-t-trabajo-forzado-por-deuda-con-coyote',
@@ -247,11 +336,19 @@ const clusters: Record<string, string[]> = {
     'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses',
     'estatus-juvenil-sijs-residencia-jovenes-abandonados',
     'asilo-frontera-2026-puerto-entrada-vs-cruce',
+    'tps-2026-paises-elegibles-renovacion',
   ],
   family_marriage: [
     'entrevista-matrimonio-uscis-senales-alerta',
     'perdon-i601a-arreglar-papeles-entrada-ilegal',
     'ciudadania-en-espanol-reglas-50-20-55-15',
+    'i-864-patrocinador-ingreso-minimo',
+    'visa-k1-prometido-requisitos',
+    'familias-estatus-mixto-opciones',
+    'entrevista-inmigracion-errores-evitar',
+  ],
+  accidents: [
+    'accidente-auto-indocumentado-derechos',
   ],
   juvenile_asylum: [
     'estatus-juvenil-sijs-residencia-jovenes-abandonados',

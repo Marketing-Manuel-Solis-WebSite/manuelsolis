@@ -49,7 +49,7 @@ const getLegalServiceSchema = (lang: string) => ({
     : 'VAWA legal services: immigration protection for domestic violence victims abused by citizen or resident spouses, parents, or children.',
   url: `${SITE_URL}/${lang}/servicios/vawa`,
   priceRange: '$$',
-  telephone: '+1-866-979-5146',
+  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -62,7 +62,7 @@ const getLegalServiceSchema = (lang: string) => ({
     '@id': `${SITE_URL}/#organization`,
     name: 'Manuel Solis Law Firm',
     url: 'https://www.manuelsolis.com',
-    telephone: '+1-866-979-5146',
+    telephone: '+1-832-598-0914',
   },
   serviceType: [
     'VAWA Self-Petition',

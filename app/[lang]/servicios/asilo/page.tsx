@@ -51,7 +51,7 @@ const getLegalServiceSchema = (lang: string) => ({
     : 'Political asylum legal services: affirmative and defensive asylum applications, credible fear interviews, Convention Against Torture, and withholding of removal.',
   url: `${SITE_URL}/${lang}/servicios/asilo`,
   priceRange: '$$',
-  telephone: '+1-866-979-5146',
+  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -64,7 +64,7 @@ const getLegalServiceSchema = (lang: string) => ({
     '@id': `${SITE_URL}/#organization`,
     name: 'Manuel Solis Law Firm',
     url: SITE_URL,
-    telephone: '+1-866-979-5146',
+    telephone: '+1-832-598-0914',
   },
   serviceType: [
     'Political Asylum',

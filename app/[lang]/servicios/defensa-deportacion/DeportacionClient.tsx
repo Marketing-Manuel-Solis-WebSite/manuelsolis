@@ -156,7 +156,7 @@ const texts = {
           { es: "NO firme ningún documento de ICE sin hablar primero con un abogado de inmigración. Muchos documentos son renuncias de derechos.", en: "DO NOT sign any ICE documents without first speaking with an immigration attorney. Many documents are waivers of rights." },
           { es: "Localice al detenido usando el sistema Online Detainee Locator de ICE o llamando al 1-888-351-4024.", en: "Locate the detainee using ICE's Online Detainee Locator system or by calling 1-888-351-4024." },
           { es: "Reúna documentos importantes: identificaciones, pruebas de presencia en EE.UU., certificados de nacimiento de hijos ciudadanos.", en: "Gather important documents: IDs, proof of presence in the U.S., birth certificates of citizen children." },
-          { es: "Llame a nuestro equipo de emergencia al 866-979-5146 para iniciar la representación legal de inmediato.", en: "Call our emergency team at 866-979-5146 to begin legal representation immediately." },
+          { es: "Llame a nuestro equipo de emergencia al 832-598-0914 para iniciar la representación legal de inmediato.", en: "Call our emergency team at 832-598-0914 to begin legal representation immediately." },
           { es: "Toda persona detenida tiene derecho a un abogado, a no ser interrogada sin representación, y a una audiencia de fianza ante un juez.", en: "Every detained person has the right to an attorney, to not be interrogated without representation, and to a bond hearing before a judge." }
         ],
         solution: {
@@ -263,7 +263,7 @@ const texts = {
       es: "Con más de 35 años de experiencia y 50,000+ casos, nuestros abogados luchan agresivamente para proteger su derecho a permanecer en Estados Unidos. Cancelación de remoción, fianzas, representación en corte y apelaciones.",
       en: "With over 35 years of experience and 50,000+ cases, our attorneys fight aggressively to protect your right to remain in the United States. Cancellation of removal, bonds, court representation, and appeals."
     },
-    emergencyPhone: '866-979-5146',
+    emergencyPhone: '832-598-0914',
     ctaConsultation: { es: "Evaluación de Emergencia", en: "Emergency Evaluation" },
     ctaCall: { es: "Emergencia 24/7", en: "24/7 Emergency" },
     processMethod: { es: "Nuestro Proceso", en: "Our Process" },
@@ -379,7 +379,7 @@ export default function DeportacionClient() {
             >
               {/* Emergency Phone Card */}
               <motion.a
-                href="tel:+18669795146"
+                href="tel:+18325980914"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
@@ -467,7 +467,7 @@ export default function DeportacionClient() {
                   {gT(texts.interface.ctaConsultation)}
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>
-                <a href="tel:+18669795146" className="px-8 py-4 border-2 border-red-500/50 hover:border-red-400 text-white font-bold rounded-xl transition-all hover:-translate-y-1 flex items-center gap-3 group text-base bg-red-500/10 hover:bg-red-500/20">
+                <a href="tel:+18325980914" className="px-8 py-4 border-2 border-red-500/50 hover:border-red-400 text-white font-bold rounded-xl transition-all hover:-translate-y-1 flex items-center gap-3 group text-base bg-red-500/10 hover:bg-red-500/20">
                   <PhoneCall size={20} className="text-red-400" />
                   {gT(texts.interface.ctaCall)}
                 </a>
@@ -861,7 +861,7 @@ export default function DeportacionClient() {
             </p>
           </div>
           <a
-            href="tel:+18669795146"
+            href="tel:+18325980914"
             className="flex items-center gap-3 px-8 py-4 bg-[#001540] text-white font-bold rounded-xl hover:bg-[#002868] transition-colors shadow-lg group"
           >
             <PhoneCall size={22} className="group-hover:animate-pulse" />

@@ -64,7 +64,7 @@ const content = {
       },
       {
         heading: 'Correcciones y feedback',
-        text: 'Si encuentra información que considere incorrecta, desactualizada o incompleta en nuestro sitio, le pedimos que nos contacte. Nos comprometemos a revisar y corregir cualquier error verificado en un plazo razonable. Puede comunicarse con nosotros llamando al 1-866-979-5146 o a través de nuestro formulario de contacto.',
+        text: 'Si encuentra información que considere incorrecta, desactualizada o incompleta en nuestro sitio, le pedimos que nos contacte. Nos comprometemos a revisar y corregir cualquier error verificado en un plazo razonable. Puede comunicarse con nosotros llamando al (832) 598-0914 o a través de nuestro formulario de contacto.',
       },
     ],
   },
@@ -94,7 +94,7 @@ const content = {
       },
       {
         heading: 'Corrections and feedback',
-        text: 'If you find information that you believe is incorrect, outdated or incomplete on our site, please contact us. We are committed to reviewing and correcting any verified errors within a reasonable timeframe. You can reach us by calling 1-866-979-5146 or through our contact form.',
+        text: 'If you find information that you believe is incorrect, outdated or incomplete on our site, please contact us. We are committed to reviewing and correcting any verified errors within a reasonable timeframe. You can reach us by calling (832) 598-0914 or through our contact form.',
       },
     ],
   },

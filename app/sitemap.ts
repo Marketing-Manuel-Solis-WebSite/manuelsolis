@@ -52,6 +52,16 @@ const routes: SitemapEntry[] = [
 
   // Blog posts — dates match publication dates
   { route: '/blog', priority: 0.7, changeFrequency: 'weekly', lastModified: '2025-04-04' },
+  { route: '/blog/tps-2026-paises-elegibles-renovacion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-10' },
+  { route: '/blog/crimenes-deportacion-vileza-moral', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-14' },
+  { route: '/blog/rfe-responder-evidencia-uscis', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-18' },
+  { route: '/blog/barras-3-10-anos-presencia-ilegal', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-22' },
+  { route: '/blog/accidente-auto-indocumentado-derechos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-26' },
+  { route: '/blog/i-864-patrocinador-ingreso-minimo', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-30' },
+  { route: '/blog/visa-k1-prometido-requisitos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-05-04' },
+  { route: '/blog/entrevista-inmigracion-errores-evitar', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-05-08' },
+  { route: '/blog/familias-estatus-mixto-opciones', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-05-12' },
+  { route: '/blog/fraude-notarios-inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-05-16' },
   { route: '/blog/asilo-frontera-2026-puerto-entrada-vs-cruce', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-04' },
   { route: '/blog/entrevista-matrimonio-uscis-senales-alerta', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-01' },
   { route: '/blog/ciudadania-en-espanol-reglas-50-20-55-15', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-28' },

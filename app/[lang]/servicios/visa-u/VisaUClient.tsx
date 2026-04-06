@@ -376,7 +376,7 @@ export default function VisaUClient() {
                       {gT(texts.interface.ctaConsultation)}
                       <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform"/>
                    </a>
-                   <a href="tel:+18669795146" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl transition-all border border-white/20 hover:border-[#B2904D]/50 flex items-center gap-3 group text-base backdrop-blur-sm">
+                   <a href="tel:+18325980914" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl transition-all border border-white/20 hover:border-[#B2904D]/50 flex items-center gap-3 group text-base backdrop-blur-sm">
                       <PhoneCall size={20} className="text-[#B2904D]" />
                       {gT(texts.interface.ctaCall)}
                    </a>
@@ -815,11 +815,11 @@ export default function VisaUClient() {
                 : 'Call now for a free and confidential consultation with our U Visa attorneys.'}
             </p>
             <a
-              href="tel:+18669795146"
+              href="tel:+18325980914"
               className="inline-flex items-center gap-3 px-10 py-5 bg-[#B2904D] hover:bg-[#d4af37] text-[#001540] font-black rounded-2xl transition-all shadow-[0_0_40px_rgba(178,144,77,0.3)] hover:shadow-[0_0_60px_rgba(178,144,77,0.5)] hover:-translate-y-1 text-xl group"
             >
               <PhoneCall size={24} className="group-hover:animate-pulse" />
-              (866) 979-5146
+              (832) 598-0914
             </a>
           </motion.div>
         </div>

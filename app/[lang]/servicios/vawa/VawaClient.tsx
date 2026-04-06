@@ -427,9 +427,9 @@ export default function VawaClient() {
                   {gT(texts.interface.ctaConsultation)}
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>
-                <a href="tel:+18669795146" className="px-8 py-4 border-2 border-white/20 hover:border-[#B2904D]/50 text-white font-bold rounded-xl transition-all hover:-translate-y-1 flex items-center gap-3 group text-base backdrop-blur-sm">
+                <a href="tel:+18325980914" className="px-8 py-4 border-2 border-white/20 hover:border-[#B2904D]/50 text-white font-bold rounded-xl transition-all hover:-translate-y-1 flex items-center gap-3 group text-base backdrop-blur-sm">
                   <PhoneCall size={20} className="text-[#B2904D]" />
-                  <span className="hidden sm:inline">(866) 979-5146</span>
+                  <span className="hidden sm:inline">(832) 598-0914</span>
                   <span className="sm:hidden">{lang === 'es' ? 'Llamar' : 'Call'}</span>
                 </a>
               </motion.div>
@@ -762,12 +762,12 @@ export default function VawaClient() {
             className="text-center"
           >
             <a
-              href="tel:+18669795146"
+              href="tel:+18325980914"
               className="inline-flex items-center gap-4 px-10 py-6 bg-gradient-to-r from-[#B2904D] to-[#D4AF37] text-[#001540] font-black text-xl rounded-2xl transition-all hover:shadow-[0_0_50px_rgba(178,144,77,0.4)] hover:-translate-y-1 group"
             >
               <PhoneCall size={28} className="group-hover:animate-pulse" />
               <span>{gT(texts.interface.phoneCta)}</span>
-              <span className="text-2xl">(866) 979-5146</span>
+              <span className="text-2xl">(832) 598-0914</span>
             </a>
           </motion.div>
         </div>

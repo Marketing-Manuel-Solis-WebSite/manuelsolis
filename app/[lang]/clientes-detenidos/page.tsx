@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'Legal Help for ICE Detainees — 24/7 Emergency';
 
   const description = isEs
-    ? '¿Su familiar fue detenido por ICE? Actuamos inmediatamente. Localización de detenidos, fianzas de inmigración, defensa en corte. 35+ años de experiencia. Llame ahora: 866-979-5146.'
-    : 'Was your family member detained by ICE? We act immediately. Detainee location, immigration bonds, court defense. 35+ years of experience. Call now: 866-979-5146.';
+    ? '¿Su familiar fue detenido por ICE? Actuamos inmediatamente. Localización de detenidos, fianzas de inmigración, defensa en corte. 35+ años de experiencia. Llame ahora: 832-598-0914.'
+    : 'Was your family member detained by ICE? We act immediately. Detainee location, immigration bonds, court defense. 35+ years of experience. Call now: 832-598-0914.';
 
   return {
     title,
@@ -61,7 +61,7 @@ const getEmergencySchema = (lang: string) => ({
     ? 'Asistencia legal de emergencia para personas detenidas por inmigración. Localización, fianzas, defensa en corte.'
     : 'Emergency legal assistance for immigration detainees. Location, bonds, court defense.',
   url: `${SITE_URL}/${lang}/clientes-detenidos`,
-  telephone: '+1-866-979-5146',
+  telephone: '+1-832-598-0914',
   priceRange: '$$',
   availableLanguage: ['Spanish', 'English'],
   provider: {

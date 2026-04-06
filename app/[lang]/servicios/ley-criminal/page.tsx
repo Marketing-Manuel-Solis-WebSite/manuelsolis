@@ -50,7 +50,7 @@ const getLegalServiceSchema = (lang: string) => ({
     : 'Criminal defense legal services: DUI/DWI, felonies, and immigration consequences.',
   url: `${SITE_URL}/${lang}/servicios/ley-criminal`,
   priceRange: '$$',
-  telephone: '+1-866-979-5146',
+  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -62,7 +62,7 @@ const getLegalServiceSchema = (lang: string) => ({
     '@type': 'LawFirm',
     name: 'Manuel Solis Law Firm',
     url: 'https://www.manuelsolis.com',
-    telephone: '+1-866-979-5146',
+    telephone: '+1-832-598-0914',
   },
   serviceType: [
     'Criminal Defense',

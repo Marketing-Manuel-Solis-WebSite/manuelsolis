@@ -278,18 +278,6 @@ export default function CityServiceLanding({ config, office, service }: CityServ
                   </>
                 )}
 
-                {/* National phone */}
-                <div className="mt-6 p-4 rounded-xl bg-white/5 border border-white/10">
-                  <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">
-                    {isEs ? 'Línea Nacional Gratuita' : 'National Toll-Free Line'}
-                  </p>
-                  <a
-                    href="tel:+18669795146"
-                    className="text-xl font-bold text-[#B2904D] hover:text-white transition-colors"
-                  >
-                    {MAIN_PHONE}
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -386,12 +374,6 @@ export default function CityServiceLanding({ config, office, service }: CityServ
               >
                 <Phone className="h-5 w-5" />
                 {office.phone}
-              </a>
-              <a
-                href="tel:+18669795146"
-                className="inline-flex items-center justify-center rounded-full border-2 border-white text-white font-semibold text-lg px-8 py-4 transition-colors hover:bg-white/10"
-              >
-                {isEs ? 'Línea Gratuita: ' : 'Toll-Free: '}{MAIN_PHONE}
               </a>
             </div>
           </div>
