@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { attorneys } from './lib/attorneyData'
 import { LANDING_PAGES } from './lib/cityServiceData'
+import { newsletters } from './lib/newsletterData'
 
 const BASE_URL = 'https://www.manuelsolis.com'
 
@@ -155,5 +156,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...staticEntries, ...cityServiceEntries, ...attorneyEntries];
+  // Newsletter archive pages (hub + editions × 2 languages)
+  const newsletterEntries = [
+    // Newsletter hub
+    ...languages.map((lang) => ({
+      url: `${BASE_URL}/${lang}/newsletter`,
+      lastModified: new Date('2026-04-01'),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+      alternates: {
+        languages: Object.fromEntries(
+          languages.map((l) => [l, `${BASE_URL}/${l}/newsletter`])
+        ),
+      },
+    })),
+    // Individual newsletter editions
+    ...newsletters.flatMap((nl) =>
+      languages.map((lang) => ({
+        url: `${BASE_URL}/${lang}/newsletter/${nl.slug}`,
+        lastModified: new Date(nl.date),
+        changeFrequency: 'monthly' as const,
+        priority: 0.65,
+        alternates: {
+          languages: Object.fromEntries(
+            languages.map((l) => [l, `${BASE_URL}/${l}/newsletter/${nl.slug}`])
+          ),
+        },
+      }))
+    ),
+  ];
+
+  return [...staticEntries, ...cityServiceEntries, ...attorneyEntries, ...newsletterEntries];
 }

@@ -9,6 +9,7 @@ import FeaturedPost from './FeaturedPost';
 import CategoryFilter from './CategoryFilter';
 import SearchBar from './SearchBar';
 import BlogBackground from './BlogBackground';
+import NewsletterSignup from '../NewsletterSignup';
 
 interface BlogFeedProps {
   initialPosts: any[];
@@ -120,7 +121,15 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
                 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredPosts.map((post, idx) => (
-                    <BlogCard key={post.id} post={post} lang={lang} delay={idx * 0.1} />
+                    <React.Fragment key={post.id}>
+                      <BlogCard post={post} lang={lang} delay={idx * 0.1} />
+                      {/* Insert newsletter CTA after 3rd post */}
+                      {idx === 2 && filteredPosts.length > 3 && (
+                        <div className="md:col-span-2 lg:col-span-3">
+                          <NewsletterSignup variant="banner" />
+                        </div>
+                      )}
+                    </React.Fragment>
                   ))}
                 </div>
               </motion.div>

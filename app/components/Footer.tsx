@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowUp } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { motion } from 'framer-motion'
+import NewsletterSignup from './NewsletterSignup'
 
 export default function Footer() {
   const { language } = useLanguage();
@@ -20,6 +21,7 @@ export default function Footer() {
     { name: language === 'es' ? 'OFICINAS' : 'OFFICES', href: `/${language}/oficinas` },
     { name: language === 'es' ? 'INFORMACIÓN' : 'INFORMATION', href: `/${language}/nosotros` },
     { name: language === 'es' ? 'BLOG' : 'BLOG', href: `/${language}/blog` },
+    { name: 'NEWSLETTER', href: `/${language}/newsletter` },
   ]
 
   const socialLinks = [
@@ -88,6 +90,11 @@ export default function Footer() {
               )
             })}
           </div>
+        </div>
+
+        {/* NEWSLETTER SIGNUP */}
+        <div className="mb-16 border-t border-white/10 pt-12">
+          <NewsletterSignup variant="footer" />
         </div>
 
         {/* NAVIGATION LINKS (GRID) */}

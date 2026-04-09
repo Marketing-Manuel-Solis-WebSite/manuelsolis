@@ -102,7 +102,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Excluir API, internos de Next, internos de Vercel y archivos estáticos
-    '/((?!api|_next/static|_next/image|_vercel|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|webmanifest)$).*)',
+    // Excluir API, RSS, internos de Next, internos de Vercel y archivos estáticos
+    '/((?!api|rss|_next/static|_next/image|_vercel|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|webmanifest)$).*)',
   ],
 };

@@ -234,6 +234,9 @@ export default async function LangLayout({ children, params }: Props) {
       <link rel="dns-prefetch" href="https://connect.facebook.net" />
       <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
 
+      {/* RSS Feed for newsletter (SEO + feed readers) */}
+      <link rel="alternate" type="application/rss+xml" title="Newsletter - Manuel Solis Law" href={`${SITE_URL}/rss/newsletter`} />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
