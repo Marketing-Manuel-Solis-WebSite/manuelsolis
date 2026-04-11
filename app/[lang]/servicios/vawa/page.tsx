@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados VAWA: Protección para Víctimas de Violencia Doméstica'
-    : 'VAWA Lawyers: Protection for Domestic Violence Victims';
+    ? 'VAWA: Protección para Víctimas de Violencia'
+    : 'VAWA: Protection for Domestic Violence';
 
   const description = isEs
     ? 'Abogados expertos en VAWA. Ayudamos a víctimas de abuso por cónyuges, padres o hijos ciudadanos o residentes a obtener residencia sin depender del agresor. Consulta gratis.'

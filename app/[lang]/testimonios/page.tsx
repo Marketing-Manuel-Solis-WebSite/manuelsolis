@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Testimonios y Reseñas ★4.8 | Abogados Manuel Solís — Casos Reales de Inmigración'
-    : 'Testimonials & Reviews ★4.8 | Manuel Solis Attorneys — Real Immigration Cases';
+    ? 'Testimonios de Clientes ★4.8 — Casos Reales'
+    : 'Client Testimonials ★4.8 — Real Cases';
   const description = isEs
     ? 'Reseñas verificadas de Google ★4.8 estrellas. Más de 50,000 familias reunidas. Historias reales de clientes en Houston, Dallas, Chicago, Los Angeles, Memphis, Denver y El Paso. Casos de inmigración, Visa U, VAWA y accidentes.'
     : 'Verified Google reviews ★4.8 stars. Over 50,000 families reunited. Real client stories in Houston, Dallas, Chicago, Los Angeles, Memphis, Denver & El Paso. Immigration, U Visa, VAWA & accident cases.';

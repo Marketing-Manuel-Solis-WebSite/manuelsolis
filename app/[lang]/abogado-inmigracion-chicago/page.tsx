@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
-import { getPageData, SITE_URL } from '../../lib/cityServiceData';
+import { getPageData, getSiblingCities, SITE_URL } from '../../lib/cityServiceData';
 import CityServiceLanding from '../../components/CityServiceLanding';
 
 const PAGE_SLUG = 'abogado-inmigracion-chicago';
@@ -127,7 +127,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }}
       />
-      <CityServiceLanding config={config} office={office} service={service} />
+      <CityServiceLanding config={config} office={office} service={service} siblingCities={getSiblingCities(PAGE_SLUG)} />
     </>
   );
 }

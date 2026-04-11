@@ -337,7 +337,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const imageUrl = `${SITE_URL}${IMAGES.article}`;
 
   return {
-    title: t.metaTitle,
+    title: { absolute: t.metaTitle },
     description: t.metaDesc,
     openGraph: {
       title: t.title,

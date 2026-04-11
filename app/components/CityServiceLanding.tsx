@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import type { LandingPageConfig, OfficeInfo, ServiceInfo } from '../lib/cityServiceData'
 import { MAIN_PHONE } from '../lib/cityServiceData'
+import Link from 'next/link'
 
 const ContactForm = dynamic(() => import('./ContactForm'), {
   loading: () => <div className="h-[600px] w-full bg-white/5 animate-pulse rounded-2xl border border-white/10" />
@@ -20,9 +21,10 @@ interface CityServiceLandingProps {
   config: LandingPageConfig
   office: OfficeInfo
   service: ServiceInfo
+  siblingCities?: { slug: string; city: string; stateCode: string }[]
 }
 
-export default function CityServiceLanding({ config, office, service }: CityServiceLandingProps) {
+export default function CityServiceLanding({ config, office, service, siblingCities = [] }: CityServiceLandingProps) {
   const { language } = useLanguage()
   const isEs = language === 'es'
   const lang = language
@@ -351,6 +353,36 @@ export default function CityServiceLanding({ config, office, service }: CityServ
             <ContactForm />
           </div>
         </section>
+
+        {/* ===== OTHER CITIES ===== */}
+        {siblingCities.length > 0 && (
+          <section className="py-16 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  {isEs
+                    ? `${service.shortTitle.es} en Otras Ciudades`
+                    : `${service.shortTitle.en} in Other Cities`
+                  }
+                </h2>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                {siblingCities.map((sc) => (
+                  <Link
+                    key={sc.slug}
+                    href={`/${lang}/${sc.slug}`}
+                    className="flex items-center gap-2 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-[#B2904D]/10 hover:border-[#B2904D]/30 transition-all group"
+                  >
+                    <MapPin className="h-4 w-4 text-[#B2904D] flex-shrink-0" />
+                    <span className="text-white text-sm font-medium group-hover:text-[#B2904D] transition-colors">
+                      {sc.city}, {sc.stateCode}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ===== FINAL CTA ===== */}
         <section className="pb-20 px-4 sm:px-6 lg:px-8">

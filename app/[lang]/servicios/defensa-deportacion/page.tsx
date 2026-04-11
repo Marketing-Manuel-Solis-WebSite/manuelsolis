@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Defensa contra Deportación y Cancelación de Remoción'
-    : 'Deportation Defense & Cancellation of Removal';
+    ? 'Defensa Deportación y Cancelación de Remoción'
+    : 'Deportation Defense & Removal Cancellation';
 
   const description = isEs
     ? 'Abogados de defensa de deportación con 35+ años y 50,000+ casos. Cancelación de remoción, fianzas, representación en corte. Emergencia 24/7: 832-598-0914.'

@@ -114,16 +114,16 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
                 </span>
               </div>
 
-              {/* Name */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                {attorney.name}
+              {/* Name + Role in H1 for SEO */}
+              <h1 className="mb-3 leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-white">
+                  {attorney.name}
+                </span>
+                <span className="block text-[#B2904D] text-lg md:text-xl font-medium mt-2 flex items-center gap-2">
+                  <Scale size={18} />
+                  {attorney.role[language]}
+                </span>
               </h1>
-
-              {/* Role */}
-              <p className="text-[#B2904D] text-lg md:text-xl font-medium mb-2 flex items-center gap-2">
-                <Scale size={18} />
-                {attorney.role[language]}
-              </p>
 
               {/* Location */}
               {location && (

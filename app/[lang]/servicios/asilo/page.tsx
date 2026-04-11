@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Asilo Político en Estados Unidos'
-    : 'Political Asylum Lawyers in the United States';
+    ? 'Abogados de Asilo Político en EE.UU.'
+    : 'Political Asylum Lawyers in the U.S.';
 
   const description = isEs
     ? 'Abogados de asilo con experiencia en persecución por raza, religión, grupo social y opinión política. Representación en entrevistas de miedo creíble y corte de inmigración.'

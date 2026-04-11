@@ -152,11 +152,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(SITE_URL),
     title: {
       default: isEs
-        ? 'Abogados de Inmigración | Manuel Solís — 35+ Años, 50,000+ Casos'
-        : 'Immigration Lawyers | Manuel Solis — 35+ Years, 50,000+ Cases Won',
+        ? 'Abogados de Inmigración | Manuel Solís'
+        : 'Immigration Lawyers | Manuel Solis',
       template: isEs
-        ? '%s | Manuel Solís — Abogados de Inmigración'
-        : '%s | Manuel Solis — Immigration Lawyers',
+        ? '%s | Manuel Solís'
+        : '%s | Manuel Solis',
     },
     description: isEs
       ? 'Abogados de inmigración con 35+ años de experiencia y 50,000+ casos ganados. Oficinas en Houston, Dallas, Chicago, Los Angeles y más. Consulta gratis.'

@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Inmigración y Accidentes con 35+ Años de Experiencia'
-    : 'Immigration & Accident Attorneys with 35+ Years of Experience';
+    ? 'Nuestro Equipo de Abogados — 35+ Años'
+    : 'Our Attorney Team — 35+ Years';
   const description = isEs
     ? 'Conozca al equipo legal de Manuel Solís. Abogados bilingües especializados en inmigración, accidentes, defensa criminal y derecho de familia. Más de 50,000 casos ganados.'
     : 'Meet the Manuel Solis legal team. Bilingual attorneys specializing in immigration, accidents, criminal defense and family law. Over 50,000 cases won.';

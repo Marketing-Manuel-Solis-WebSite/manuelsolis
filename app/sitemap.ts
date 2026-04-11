@@ -17,16 +17,16 @@ const routes: SitemapEntry[] = [
   { route: '', priority: 1.0, changeFrequency: 'weekly', lastModified: '2025-04-04' },
 
   // Hub pages
-  { route: '/servicios', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
+  { route: '/servicios', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
 
   // Services — high priority
-  { route: '/servicios/inmigracion', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/servicios/accidentes', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/servicios/ley-criminal', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/servicios/familia', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/servicios/seguros', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/servicios/visa-e2', priority: 0.9, changeFrequency: 'monthly', lastModified: '2025-03-01' },
+  { route: '/servicios/inmigracion', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/servicios/accidentes', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/servicios/ley-criminal', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/servicios/familia', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/servicios/seguros', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/servicios/visa-e2', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-11' },
 
   // Immigration sub-services — high priority
   { route: '/servicios/visa-u', priority: 0.85, changeFrequency: 'monthly', lastModified: '2026-03-23' },
@@ -35,21 +35,21 @@ const routes: SitemapEntry[] = [
   { route: '/servicios/asilo', priority: 0.85, changeFrequency: 'monthly', lastModified: '2026-03-23' },
 
   // Offices — high priority
-  { route: '/oficinas/houston-principal', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/main-st', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/north-loop', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/northchase', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/houston-bellaire', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/kirby', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/houston-accidentes', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/dallas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/el-paso', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/harlingen', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/chicago', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/losangeles', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/arvada', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/memphis', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/oficinas/league-city', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
+  { route: '/oficinas/houston-principal', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/main-st', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/north-loop', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/northchase', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/houston-bellaire', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/kirby', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/houston-accidentes', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/dallas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/el-paso', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/harlingen', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/chicago', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/losangeles', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/arvada', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/memphis', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/oficinas/league-city', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
 
   // Blog posts — dates match publication dates
   { route: '/blog', priority: 0.7, changeFrequency: 'weekly', lastModified: '2025-04-04' },
@@ -84,45 +84,44 @@ const routes: SitemapEntry[] = [
   { route: '/blog/permiso-de-trabajo-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-16' },
 
   // Key pages
-  { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/abogados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/testimonios', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/clientes', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/clientes-detenidos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/join-in', priority: 0.6, changeFrequency: 'monthly', lastModified: '2025-03-01' },
+  { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/abogados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/testimonios', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/clientes', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/clientes-detenidos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/join-in', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-04-11' },
 
   // Landing pages
-  { route: '/inversionistas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2025-03-01' },
+  { route: '/inversionistas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
 
   // Trust / Compliance
   { route: '/politica-editorial', priority: 0.4, changeFrequency: 'yearly', lastModified: '2025-03-20' },
 
   // Info / Legal — lower priority
-  { route: '/informacion/faq', priority: 0.5, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/informacion/recursos', priority: 0.5, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/informacion/noticias', priority: 0.5, changeFrequency: 'monthly', lastModified: '2025-03-01' },
+  { route: '/informacion/faq', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/informacion/recursos', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/informacion/noticias', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
   { route: '/privacidad', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
+  { route: '/terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
   { route: '/sms-terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
 
   // Categories
-  { route: '/category/derechos-de-migrantes', priority: 0.5, changeFrequency: 'monthly', lastModified: '2025-03-01' },
-  { route: '/category/proteccion-legal-para-migrantes', priority: 0.5, changeFrequency: 'monthly', lastModified: '2025-03-01' },
+  { route: '/category/derechos-de-migrantes', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  { route: '/category/proteccion-legal-para-migrantes', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
 ];
 
 const languages = ['en', 'es'] as const;
+
+// Hreflang is handled exclusively via HTML <link> tags in each page's generateMetadata().
+// Removed alternates.languages from sitemap to avoid dual-method hreflang (Sitebulb flag).
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries = routes.flatMap((entry) =>
     languages.map((lang) => ({
       url: `${BASE_URL}/${lang}${entry.route}`,
-      lastModified: entry.lastModified ? new Date(entry.lastModified) : new Date('2025-03-01'),
+      lastModified: entry.lastModified ? new Date(entry.lastModified) : new Date('2026-04-11'),
       changeFrequency: entry.changeFrequency as MetadataRoute.Sitemap[number]['changeFrequency'],
       priority: entry.priority,
-      alternates: {
-        languages: Object.fromEntries(
-          languages.map((l) => [l, `${BASE_URL}/${l}${entry.route}`])
-        ),
-      },
     }))
   );
 
@@ -133,11 +132,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date('2026-03-25'),
       changeFrequency: 'monthly' as const,
       priority: 0.85,
-      alternates: {
-        languages: Object.fromEntries(
-          languages.map((l) => [l, `${BASE_URL}/${l}/${page.slug}`])
-        ),
-      },
     }))
   );
 
@@ -148,11 +142,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date('2026-03-25'),
       changeFrequency: 'monthly' as const,
       priority: 0.75,
-      alternates: {
-        languages: Object.fromEntries(
-          languages.map((l) => [l, `${BASE_URL}/${l}/abogados/${attorney.id}`])
-        ),
-      },
     }))
   );
 
@@ -164,11 +153,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date('2026-04-01'),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
-      alternates: {
-        languages: Object.fromEntries(
-          languages.map((l) => [l, `${BASE_URL}/${l}/newsletter`])
-        ),
-      },
     })),
     // Individual newsletter editions
     ...newsletters.flatMap((nl) =>
@@ -177,11 +161,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(nl.date),
         changeFrequency: 'monthly' as const,
         priority: 0.65,
-        alternates: {
-          languages: Object.fromEntries(
-            languages.map((l) => [l, `${BASE_URL}/${l}/newsletter/${nl.slug}`])
-          ),
-        },
       }))
     ),
   ];

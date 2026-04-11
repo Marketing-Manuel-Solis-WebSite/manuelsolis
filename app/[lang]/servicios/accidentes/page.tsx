@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Abogados de Accidentes de Auto y Lesiones Personales'
-    : 'Car Accident & Personal Injury Lawyers';
+    ? 'Abogados de Accidentes y Lesiones Personales'
+    : 'Accident & Personal Injury Lawyers';
 
   const description = isEs
     ? 'Abogados expertos en accidentes de auto, camión y lesiones personales. Más de 30 años de experiencia luchando por la compensación que merece. ¡Consulta Gratis!'

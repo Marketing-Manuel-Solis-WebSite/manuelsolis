@@ -344,8 +344,9 @@ const officesData: OfficeData[] = [
 
 // --- MINI COMPONENTE: ACCIÓN HUD ---
 const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: string, icon: React.ElementType, href: string }) => {
-    const isExternal = href.startsWith('http') || href.startsWith('tel');
-    const isTel = href.startsWith('tel');
+    const isLink = href && href !== '#';
+    const isExternal = isLink && (href.startsWith('http') || href.startsWith('tel'));
+    const isTel = isLink && href.startsWith('tel');
 
     const handleClick = () => {
       if (isTel) {
@@ -358,6 +359,26 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
       }
     };
 
+    const inner = (
+      <div className="flex justify-between items-start relative z-10">
+        <div>
+          <p className="text-[10px] text-blue-300/60 font-bold uppercase tracking-widest mb-1 group-hover:text-[#B2904D] transition-colors">
+            {label}
+          </p>
+          <p className={`text-white ${isTel ? 'font-bold' : 'font-medium'} text-sm group-hover:text-white transition-colors`}>{value}</p>
+        </div>
+        <Icon size={18} className="text-[#B2904D] group-hover:text-white transition-colors" />
+      </div>
+    );
+
+    if (!isLink) {
+      return (
+        <div className="block p-4 rounded-xl bg-white/5 border border-white/10 group relative overflow-hidden">
+          {inner}
+        </div>
+      );
+    }
+
     return (
       <a
         href={href}
@@ -367,19 +388,7 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
         className="block p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 transition-all duration-300 group relative overflow-hidden"
         style={{ transitionProperty: 'background-color, transform' }}
       >
-        <div className="flex justify-between items-start relative z-10">
-          <div>
-            <p className="text-[10px] text-blue-300/60 font-bold uppercase tracking-widest mb-1 group-hover:text-[#B2904D] transition-colors">
-              {label}
-            </p>
-            {['tel'].some(prefix => href.startsWith(prefix)) ? (
-                <p className="text-white font-bold text-sm group-hover:text-white transition-colors">{value}</p>
-            ) : (
-                <p className="text-white font-medium text-sm group-hover:text-white transition-colors">{value}</p>
-            )}
-          </div>
-          <Icon size={18} className="text-[#B2904D] group-hover:text-white transition-colors" />
-        </div>
+        {inner}
       </a>
     );
 };

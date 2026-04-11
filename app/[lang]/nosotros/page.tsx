@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? '35+ Años Defendiendo los Derechos de Inmigrantes'
-    : '35+ Years Defending Immigrant Rights';
+    ? '35+ Años Defendiendo Inmigrantes'
+    : '35+ Years Defending Immigrants';
   const description = isEs
     ? 'Conozca la historia de Manuel Solís. Desde 1990 defendiendo a la comunidad inmigrante con más de 50,000 casos ganados. 15 oficinas en 5 estados.'
     : 'Learn about Manuel Solis. Since 1990 defending the immigrant community with over 50,000 cases won. 15 offices in 5 states.';

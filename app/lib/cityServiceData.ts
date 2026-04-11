@@ -247,7 +247,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'houston',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
-    metaTitle: { es: 'Abogado de Inmigración en Houston, TX — Consulta Gratis', en: 'Immigration Lawyer in Houston, TX — Free Consultation' },
+    metaTitle: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
     metaDescription: {
       es: 'Abogados de inmigración en Houston con 35+ años de experiencia. Residencia, ciudadanía, deportación, Visa U, VAWA y asilo. 3 oficinas en Houston. Llame: (713) 231-5384.',
       en: 'Immigration lawyers in Houston with 35+ years of experience. Residency, citizenship, deportation, U Visa, VAWA and asylum. 3 offices in Houston. Call: (713) 231-5384.',
@@ -266,7 +266,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'dallas',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en Dallas, TX', en: 'Immigration Lawyer in Dallas, TX' },
-    metaTitle: { es: 'Abogado de Inmigración en Dallas, TX — Consulta Gratis', en: 'Immigration Lawyer in Dallas, TX — Free Consultation' },
+    metaTitle: { es: 'Abogado de Inmigración en Dallas, TX', en: 'Immigration Lawyer in Dallas, TX' },
     metaDescription: {
       es: 'Abogados de inmigración en Dallas con 35+ años de experiencia. Residencia, ciudadanía, deportación, asilo y más. Oficina en Empire Central. Llame: (214) 753-8315.',
       en: 'Immigration lawyers in Dallas with 35+ years of experience. Residency, citizenship, deportation, asylum and more. Office on Empire Central. Call: (214) 753-8315.',
@@ -285,7 +285,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'chicago',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en Chicago, IL', en: 'Immigration Lawyer in Chicago, IL' },
-    metaTitle: { es: 'Abogado de Inmigración en Chicago, IL — Consulta Gratis', en: 'Immigration Lawyer in Chicago, IL — Free Consultation' },
+    metaTitle: { es: 'Abogado de Inmigración en Chicago, IL', en: 'Immigration Lawyer in Chicago, IL' },
     metaDescription: {
       es: 'Abogados de inmigración en Chicago con 35+ años de experiencia. Residencia, ciudadanía, asilo, Visa U y VAWA. Oficina en Cicero. Llame: (312) 477-0389.',
       en: 'Immigration lawyers in Chicago with 35+ years of experience. Residency, citizenship, asylum, U Visa and VAWA. Office in Cicero. Call: (312) 477-0389.',
@@ -304,7 +304,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'los-angeles',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en Los Ángeles, CA', en: 'Immigration Lawyer in Los Angeles, CA' },
-    metaTitle: { es: 'Abogado de Inmigración en Los Ángeles, CA — Consulta Gratis', en: 'Immigration Lawyer in Los Angeles, CA — Free Consultation' },
+    metaTitle: { es: 'Abogado de Inmigración en Los Ángeles, CA', en: 'Immigration Lawyer in Los Angeles, CA' },
     metaDescription: {
       es: 'Abogados de inmigración en Los Ángeles con 35+ años de experiencia. Residencia, ciudadanía, asilo, Visa U y VAWA. Oficina en Pico Rivera. Llame: (213) 784-1554.',
       en: 'Immigration lawyers in Los Angeles with 35+ years of experience. Residency, citizenship, asylum, U Visa and VAWA. Office in Pico Rivera. Call: (213) 784-1554.',
@@ -323,7 +323,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'el-paso',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en El Paso, TX', en: 'Immigration Lawyer in El Paso, TX' },
-    metaTitle: { es: 'Abogado de Inmigración en El Paso, TX — Consulta Gratis', en: 'Immigration Lawyer in El Paso, TX — Free Consultation' },
+    metaTitle: { es: 'Abogado de Inmigración en El Paso, TX', en: 'Immigration Lawyer in El Paso, TX' },
     metaDescription: {
       es: 'Abogados de inmigración en El Paso con 35+ años de experiencia. Deportación, asilo, residencia y cruce de frontera. Oficina en Admiral St. Llame: (915) 233-7127.',
       en: 'Immigration lawyers in El Paso with 35+ years of experience. Deportation, asylum, residency and border crossing. Office on Admiral St. Call: (915) 233-7127.',
@@ -342,7 +342,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'memphis',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en Memphis, TN', en: 'Immigration Lawyer in Memphis, TN' },
-    metaTitle: { es: 'Abogado de Inmigración en Memphis, TN — Consulta Gratis', en: 'Immigration Lawyer in Memphis, TN — Free Consultation' },
+    metaTitle: { es: 'Abogado de Inmigración en Memphis, TN', en: 'Immigration Lawyer in Memphis, TN' },
     metaDescription: {
       es: 'Abogados de inmigración en Memphis con 35+ años de experiencia. Residencia, ciudadanía, deportación y Visa U. Oficina en Airways Blvd. Llame: (901) 557-8357.',
       en: 'Immigration lawyers in Memphis with 35+ years of experience. Residency, citizenship, deportation and U Visa. Office on Airways Blvd. Call: (901) 557-8357.',
@@ -361,7 +361,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'denver',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en Denver, CO', en: 'Immigration Lawyer in Denver, CO' },
-    metaTitle: { es: 'Abogado de Inmigración en Denver, CO — Consulta Gratis', en: 'Immigration Lawyer in Denver, CO — Free Consultation' },
+    metaTitle: { es: 'Abogado de Inmigración en Denver, CO', en: 'Immigration Lawyer in Denver, CO' },
     metaDescription: {
       es: 'Abogados de inmigración en Denver con 35+ años de experiencia. Residencia, ciudadanía, deportación, asilo y VAWA. Oficina en Arvada. Llame: (720) 358-8973.',
       en: 'Immigration lawyers in Denver with 35+ years of experience. Residency, citizenship, deportation, asylum and VAWA. Office in Arvada. Call: (720) 358-8973.',
@@ -380,7 +380,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'harlingen',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en Harlingen, TX', en: 'Immigration Lawyer in Harlingen, TX' },
-    metaTitle: { es: 'Abogado de Inmigración en Harlingen, TX — Consulta Gratis', en: 'Immigration Lawyer in Harlingen, TX — Free Consultation' },
+    metaTitle: { es: 'Abogado de Inmigración en Harlingen, TX', en: 'Immigration Lawyer in Harlingen, TX' },
     metaDescription: {
       es: 'Abogados de inmigración en Harlingen, Valle del Río Grande, con 35+ años de experiencia. Deportación, asilo, residencia y más. Llame: (956) 597-7090.',
       en: 'Immigration lawyers in Harlingen, Rio Grande Valley, with 35+ years of experience. Deportation, asylum, residency and more. Call: (956) 597-7090.',
@@ -401,7 +401,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'houston',
     serviceKey: 'accidentes',
     h1: { es: 'Abogado de Accidentes en Houston, TX', en: 'Accident Lawyer in Houston, TX' },
-    metaTitle: { es: 'Abogado de Accidentes en Houston, TX — Consulta Gratis', en: 'Accident Lawyer in Houston, TX — Free Consultation' },
+    metaTitle: { es: 'Abogado de Accidentes en Houston, TX', en: 'Accident Lawyer in Houston, TX' },
     metaDescription: {
       es: 'Abogados de accidentes en Houston con 35+ años de experiencia. Choques de auto, camión, accidentes de trabajo y negligencia médica. Llame: (713) 231-5384.',
       en: 'Accident lawyers in Houston with 35+ years of experience. Car, truck, workplace accidents and medical negligence. Call: (713) 231-5384.',
@@ -420,7 +420,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'dallas',
     serviceKey: 'accidentes',
     h1: { es: 'Abogado de Accidentes en Dallas, TX', en: 'Accident Lawyer in Dallas, TX' },
-    metaTitle: { es: 'Abogado de Accidentes en Dallas, TX — Consulta Gratis', en: 'Accident Lawyer in Dallas, TX — Free Consultation' },
+    metaTitle: { es: 'Abogado de Accidentes en Dallas, TX', en: 'Accident Lawyer in Dallas, TX' },
     metaDescription: {
       es: 'Abogados de accidentes en Dallas con 35+ años de experiencia. Choques de auto, camión, lesiones laborales. Sin cobro si no ganamos. Llame: (214) 753-8315.',
       en: 'Accident lawyers in Dallas with 35+ years of experience. Car, truck accidents, workplace injuries. No charge if we don\'t win. Call: (214) 753-8315.',
@@ -441,7 +441,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'houston',
     serviceKey: 'defensa-deportacion',
     h1: { es: 'Defensa Contra Deportación en Houston, TX', en: 'Deportation Defense in Houston, TX' },
-    metaTitle: { es: 'Defensa Contra Deportación en Houston, TX — Abogados Expertos', en: 'Deportation Defense in Houston, TX — Expert Attorneys' },
+    metaTitle: { es: 'Defensa Contra Deportación en Houston, TX', en: 'Deportation Defense in Houston, TX' },
     metaDescription: {
       es: 'Abogados de defensa contra deportación en Houston. Cancelación de deportación, apelaciones, fianzas de inmigración. 35+ años de experiencia. Llame: (713) 231-5384.',
       en: 'Deportation defense attorneys in Houston. Cancellation of removal, appeals, immigration bonds. 35+ years of experience. Call: (713) 231-5384.',
@@ -460,7 +460,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'dallas',
     serviceKey: 'defensa-deportacion',
     h1: { es: 'Defensa Contra Deportación en Dallas, TX', en: 'Deportation Defense in Dallas, TX' },
-    metaTitle: { es: 'Defensa Contra Deportación en Dallas, TX — Abogados Expertos', en: 'Deportation Defense in Dallas, TX — Expert Attorneys' },
+    metaTitle: { es: 'Defensa Contra Deportación en Dallas, TX', en: 'Deportation Defense in Dallas, TX' },
     metaDescription: {
       es: 'Defensa contra deportación en Dallas. Cancelación de deportación, fianzas, apelaciones. 35+ años protegiendo familias inmigrantes. Llame: (214) 753-8315.',
       en: 'Deportation defense in Dallas. Cancellation of removal, bonds, appeals. 35+ years protecting immigrant families. Call: (214) 753-8315.',
@@ -479,7 +479,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'chicago',
     serviceKey: 'defensa-deportacion',
     h1: { es: 'Defensa Contra Deportación en Chicago, IL', en: 'Deportation Defense in Chicago, IL' },
-    metaTitle: { es: 'Defensa Contra Deportación en Chicago, IL — Abogados Expertos', en: 'Deportation Defense in Chicago, IL — Expert Attorneys' },
+    metaTitle: { es: 'Defensa Contra Deportación en Chicago, IL', en: 'Deportation Defense in Chicago, IL' },
     metaDescription: {
       es: 'Abogados de defensa contra deportación en Chicago. Cancelación de deportación, apelaciones y fianzas. Illinois es estado santuario. Llame: (312) 477-0389.',
       en: 'Deportation defense attorneys in Chicago. Cancellation of removal, appeals and bonds. Illinois is a sanctuary state. Call: (312) 477-0389.',
@@ -498,7 +498,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'los-angeles',
     serviceKey: 'defensa-deportacion',
     h1: { es: 'Defensa Contra Deportación en Los Ángeles, CA', en: 'Deportation Defense in Los Angeles, CA' },
-    metaTitle: { es: 'Defensa Contra Deportación en Los Ángeles, CA — Abogados Expertos', en: 'Deportation Defense in Los Angeles, CA — Expert Attorneys' },
+    metaTitle: { es: 'Defensa Deportación en Los Ángeles, CA', en: 'Deportation Defense in Los Angeles, CA' },
     metaDescription: {
       es: 'Defensa contra deportación en Los Ángeles. California es estado santuario. Cancelación de deportación, asilo, apelaciones. Llame: (213) 784-1554.',
       en: 'Deportation defense in Los Angeles. California is a sanctuary state. Cancellation of removal, asylum, appeals. Call: (213) 784-1554.',
@@ -517,7 +517,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'el-paso',
     serviceKey: 'defensa-deportacion',
     h1: { es: 'Defensa Contra Deportación en El Paso, TX', en: 'Deportation Defense in El Paso, TX' },
-    metaTitle: { es: 'Defensa Contra Deportación en El Paso, TX — Abogados Expertos', en: 'Deportation Defense in El Paso, TX — Expert Attorneys' },
+    metaTitle: { es: 'Defensa Contra Deportación en El Paso, TX', en: 'Deportation Defense in El Paso, TX' },
     metaDescription: {
       es: 'Defensa contra deportación en El Paso, ciudad fronteriza. Cancelación de deportación, asilo, fianzas. Experiencia en casos fronterizos. Llame: (915) 233-7127.',
       en: 'Deportation defense in El Paso, border city. Cancellation of removal, asylum, bonds. Experience in border cases. Call: (915) 233-7127.',
@@ -537,8 +537,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     slug: 'visa-u-houston',
     officeKey: 'houston',
     serviceKey: 'visa-u',
-    h1: { es: 'Visa U en Houston, TX — Abogados para Víctimas de Crimen', en: 'U Visa in Houston, TX — Attorneys for Crime Victims' },
-    metaTitle: { es: 'Visa U en Houston, TX — Abogados para Víctimas de Crimen', en: 'U Visa in Houston, TX — Attorneys for Crime Victims' },
+    h1: { es: 'Visa U en Houston, TX', en: 'U Visa in Houston, TX' },
+    metaTitle: { es: 'Visa U en Houston, TX', en: 'U Visa in Houston, TX' },
     metaDescription: {
       es: 'Abogados de Visa U en Houston. Ayudamos a víctimas de crímenes a obtener estatus legal, permiso de trabajo y residencia permanente. Llame: (713) 231-5384.',
       en: 'U Visa attorneys in Houston. We help crime victims obtain legal status, work authorization and permanent residency. Call: (713) 231-5384.',
@@ -556,8 +556,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     slug: 'visa-u-chicago',
     officeKey: 'chicago',
     serviceKey: 'visa-u',
-    h1: { es: 'Visa U en Chicago, IL — Abogados para Víctimas de Crimen', en: 'U Visa in Chicago, IL — Attorneys for Crime Victims' },
-    metaTitle: { es: 'Visa U en Chicago, IL — Abogados para Víctimas de Crimen', en: 'U Visa in Chicago, IL — Attorneys for Crime Victims' },
+    h1: { es: 'Visa U en Chicago, IL', en: 'U Visa in Chicago, IL' },
+    metaTitle: { es: 'Visa U en Chicago, IL', en: 'U Visa in Chicago, IL' },
     metaDescription: {
       es: 'Abogados de Visa U en Chicago. Protección para víctimas de crímenes. Estatus legal y permiso de trabajo. Illinois estado santuario. Llame: (312) 477-0389.',
       en: 'U Visa attorneys in Chicago. Protection for crime victims. Legal status and work authorization. Illinois sanctuary state. Call: (312) 477-0389.',
@@ -575,8 +575,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     slug: 'visa-u-los-angeles',
     officeKey: 'los-angeles',
     serviceKey: 'visa-u',
-    h1: { es: 'Visa U en Los Ángeles, CA — Abogados para Víctimas de Crimen', en: 'U Visa in Los Angeles, CA — Attorneys for Crime Victims' },
-    metaTitle: { es: 'Visa U en Los Ángeles, CA — Abogados para Víctimas de Crimen', en: 'U Visa in Los Angeles, CA — Attorneys for Crime Victims' },
+    h1: { es: 'Visa U en Los Ángeles, CA', en: 'U Visa in Los Angeles, CA' },
+    metaTitle: { es: 'Visa U en Los Ángeles, CA', en: 'U Visa in Los Angeles, CA' },
     metaDescription: {
       es: 'Abogados de Visa U en Los Ángeles. California protege a víctimas de crimen inmigrantes. Estatus legal y residencia permanente. Llame: (213) 784-1554.',
       en: 'U Visa attorneys in Los Angeles. California protects immigrant crime victims. Legal status and permanent residency. Call: (213) 784-1554.',
@@ -594,8 +594,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     slug: 'visa-u-dallas',
     officeKey: 'dallas',
     serviceKey: 'visa-u',
-    h1: { es: 'Visa U en Dallas, TX — Abogados para Víctimas de Crimen', en: 'U Visa in Dallas, TX — Attorneys for Crime Victims' },
-    metaTitle: { es: 'Visa U en Dallas, TX — Abogados para Víctimas de Crimen', en: 'U Visa in Dallas, TX — Attorneys for Crime Victims' },
+    h1: { es: 'Visa U en Dallas, TX', en: 'U Visa in Dallas, TX' },
+    metaTitle: { es: 'Visa U en Dallas, TX', en: 'U Visa in Dallas, TX' },
     metaDescription: {
       es: 'Abogados de Visa U en Dallas. Ayudamos a víctimas de crímenes a obtener estatus legal y protección. 35+ años de experiencia. Llame: (214) 753-8315.',
       en: 'U Visa attorneys in Dallas. We help crime victims obtain legal status and protection. 35+ years of experience. Call: (214) 753-8315.',
@@ -616,7 +616,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'houston',
     serviceKey: 'asilo',
     h1: { es: 'Asilo Político en Houston, TX', en: 'Political Asylum in Houston, TX' },
-    metaTitle: { es: 'Asilo Político en Houston, TX — Abogados de Asilo', en: 'Political Asylum in Houston, TX — Asylum Attorneys' },
+    metaTitle: { es: 'Asilo Político en Houston, TX', en: 'Political Asylum in Houston, TX' },
     metaDescription: {
       es: 'Abogados de asilo político en Houston. Asilo afirmativo, defensivo, miedo creíble y protección contra la tortura. 35+ años de experiencia. Llame: (713) 231-5384.',
       en: 'Political asylum attorneys in Houston. Affirmative, defensive asylum, credible fear and torture protection. 35+ years of experience. Call: (713) 231-5384.',
@@ -635,7 +635,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'chicago',
     serviceKey: 'asilo',
     h1: { es: 'Asilo Político en Chicago, IL', en: 'Political Asylum in Chicago, IL' },
-    metaTitle: { es: 'Asilo Político en Chicago, IL — Abogados de Asilo', en: 'Political Asylum in Chicago, IL — Asylum Attorneys' },
+    metaTitle: { es: 'Asilo Político en Chicago, IL', en: 'Political Asylum in Chicago, IL' },
     metaDescription: {
       es: 'Abogados de asilo político en Chicago, Illinois. Asilo afirmativo y defensivo. Illinois ofrece protecciones adicionales como estado santuario. Llame: (312) 477-0389.',
       en: 'Political asylum attorneys in Chicago, Illinois. Affirmative and defensive asylum. Illinois offers additional protections as a sanctuary state. Call: (312) 477-0389.',
@@ -654,7 +654,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'los-angeles',
     serviceKey: 'asilo',
     h1: { es: 'Asilo Político en Los Ángeles, CA', en: 'Political Asylum in Los Angeles, CA' },
-    metaTitle: { es: 'Asilo Político en Los Ángeles, CA — Abogados de Asilo', en: 'Political Asylum in Los Angeles, CA — Asylum Attorneys' },
+    metaTitle: { es: 'Asilo Político en Los Ángeles, CA', en: 'Political Asylum in Los Angeles, CA' },
     metaDescription: {
       es: 'Abogados de asilo político en Los Ángeles. California ofrece protecciones fuertes para solicitantes de asilo. Asilo afirmativo y defensivo. Llame: (213) 784-1554.',
       en: 'Political asylum attorneys in Los Angeles. California offers strong protections for asylum seekers. Affirmative and defensive asylum. Call: (213) 784-1554.',
@@ -675,7 +675,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'houston',
     serviceKey: 'vawa',
     h1: { es: 'VAWA en Houston, TX — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Houston, TX — Protection for Domestic Violence Victims' },
-    metaTitle: { es: 'VAWA en Houston, TX — Abogados para Víctimas de Violencia Doméstica', en: 'VAWA in Houston, TX — Attorneys for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Houston, TX', en: 'VAWA in Houston, TX' },
     metaDescription: {
       es: 'Abogados de VAWA en Houston. Auto-petición independiente para víctimas de violencia doméstica. Estatus legal sin depender del abusador. Llame: (713) 231-5384.',
       en: 'VAWA attorneys in Houston. Independent self-petition for domestic violence victims. Legal status without depending on the abuser. Call: (713) 231-5384.',
@@ -694,7 +694,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'chicago',
     serviceKey: 'vawa',
     h1: { es: 'VAWA en Chicago, IL — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Chicago, IL — Protection for Domestic Violence Victims' },
-    metaTitle: { es: 'VAWA en Chicago, IL — Abogados para Víctimas de Violencia Doméstica', en: 'VAWA in Chicago, IL — Attorneys for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Chicago, IL', en: 'VAWA in Chicago, IL' },
     metaDescription: {
       es: 'Abogados de VAWA en Chicago. Illinois ofrece protecciones fuertes para víctimas de violencia doméstica. Auto-petición confidencial. Llame: (312) 477-0389.',
       en: 'VAWA attorneys in Chicago. Illinois offers strong protections for domestic violence victims. Confidential self-petition. Call: (312) 477-0389.',
@@ -713,7 +713,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     officeKey: 'dallas',
     serviceKey: 'vawa',
     h1: { es: 'VAWA en Dallas, TX — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Dallas, TX — Protection for Domestic Violence Victims' },
-    metaTitle: { es: 'VAWA en Dallas, TX — Abogados para Víctimas de Violencia Doméstica', en: 'VAWA in Dallas, TX — Attorneys for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Dallas, TX', en: 'VAWA in Dallas, TX' },
     metaDescription: {
       es: 'Abogados de VAWA en Dallas. Auto-petición para víctimas de violencia doméstica. Estatus legal independiente del abusador. Confidencial. Llame: (214) 753-8315.',
       en: 'VAWA attorneys in Dallas. Self-petition for domestic violence victims. Legal status independent from the abuser. Confidential. Call: (214) 753-8315.',
@@ -742,4 +742,15 @@ export function getPageData(slug: string) {
   const service = SERVICES[config.serviceKey];
   if (!office || !service) return null;
   return { config, office, service };
+}
+
+export function getSiblingCities(slug: string): { slug: string; city: string; stateCode: string }[] {
+  const config = getPageConfig(slug);
+  if (!config) return [];
+  return LANDING_PAGES
+    .filter((p) => p.serviceKey === config.serviceKey && p.slug !== slug)
+    .map((p) => {
+      const office = OFFICES[p.officeKey];
+      return { slug: p.slug, city: office.city, stateCode: office.stateCode };
+    });
 }

@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: isEs
-      ? 'Newsletter de Inmigración | Oficinas Legales de Manuel Solis'
-      : 'Immigration Newsletter | Manuel Solis Law Offices',
+      ? 'Newsletter de Inmigración'
+      : 'Immigration Newsletter',
     description: isEs
       ? 'Suscríbete a nuestro newsletter gratuito de inmigración. Recibe actualizaciones sobre TPS, DACA, VAWA, cambios de política migratoria y consejos legales de nuestros abogados.'
       : 'Subscribe to our free immigration newsletter. Get updates on TPS, DACA, VAWA, immigration policy changes, and legal tips from our attorneys.',

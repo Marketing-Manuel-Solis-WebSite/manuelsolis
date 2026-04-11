@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   experimental: {
     cpus: 4,
   },
@@ -132,6 +133,49 @@ const nextConfig: NextConfig = {
         destination: '/:lang/blog/permiso-de-trabajo-visa-u',
         permanent: true,
       },
+
+      // --- WordPress legacy URL patterns ---
+      // WordPress admin, login, and internal paths → homepage
+      { source: '/wp-admin/:path*', destination: '/', permanent: true },
+      { source: '/wp-login.php', destination: '/', permanent: true },
+      { source: '/wp-content/:path*', destination: '/', permanent: true },
+      { source: '/wp-includes/:path*', destination: '/', permanent: true },
+      { source: '/wp-json/:path*', destination: '/', permanent: true },
+      { source: '/xmlrpc.php', destination: '/', permanent: true },
+
+      // WordPress feeds → homepage
+      { source: '/feed', destination: '/', permanent: true },
+      { source: '/feed/:path*', destination: '/', permanent: true },
+      { source: '/comments/feed', destination: '/', permanent: true },
+      { source: '/:lang/feed', destination: '/:lang', permanent: true },
+      { source: '/:lang/feed/:path*', destination: '/:lang', permanent: true },
+      { source: '/:lang/comments/feed', destination: '/:lang', permanent: true },
+
+      // WordPress author pages → attorney directory
+      { source: '/author/:slug', destination: '/es/abogados', permanent: true },
+      { source: '/:lang/author/:slug', destination: '/:lang/abogados', permanent: true },
+
+      // WordPress pagination → parent page
+      { source: '/:lang/blog/page/:page', destination: '/:lang/blog', permanent: true },
+      { source: '/:lang/page/:page', destination: '/:lang', permanent: true },
+      { source: '/blog/page/:page', destination: '/es/blog', permanent: true },
+      { source: '/page/:page', destination: '/es', permanent: true },
+
+      // WordPress tag pages → blog
+      { source: '/:lang/tag/:slug', destination: '/:lang/blog', permanent: true },
+      { source: '/tag/:slug', destination: '/es/blog', permanent: true },
+
+      // English path aliases → Spanish equivalents
+      { source: '/:lang/about', destination: '/:lang/nosotros', permanent: true },
+      { source: '/:lang/about-us', destination: '/:lang/nosotros', permanent: true },
+      { source: '/:lang/contact', destination: '/:lang/nosotros', permanent: true },
+      { source: '/:lang/services', destination: '/:lang/servicios', permanent: true },
+      { source: '/:lang/offices', destination: '/:lang/oficinas', permanent: true },
+      { source: '/:lang/attorneys', destination: '/:lang/abogados', permanent: true },
+      { source: '/:lang/lawyers', destination: '/:lang/abogados', permanent: true },
+      { source: '/:lang/testimonials', destination: '/:lang/testimonios', permanent: true },
+      { source: '/:lang/privacy', destination: '/:lang/privacidad', permanent: true },
+      { source: '/:lang/privacy-policy', destination: '/:lang/privacidad', permanent: true },
     ];
   },
   async headers() {
@@ -196,11 +240,19 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin'
+            value: 'strict-origin-when-cross-origin'
           },
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block'
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https: http:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://generativelanguage.googleapis.com; frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com; media-src 'self' https:; worker-src 'self' blob:;"
           },
         ],
       },

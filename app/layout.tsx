@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
@@ -9,8 +10,13 @@ const outfit = Outfit({
   display: "swap",
 });
 
-// Metadata and LanguageProvider are in app/[lang]/layout.tsx
-// Root layout reads x-locale header (set by middleware) to render correct <html lang>.
+// Root metadata — serves as fallback for pages outside [lang] (e.g., 404).
+// Pages under [lang]/ override this via their own layout generateMetadata.
+export const metadata: Metadata = {
+  title: 'Manuel Solís — Abogados de Inmigración',
+  description: 'Abogados de inmigración con 35+ años de experiencia. Oficinas en Houston, Dallas, Chicago, Los Angeles y más.',
+  robots: { index: false },
+};
 
 export default async function RootLayout({
   children,

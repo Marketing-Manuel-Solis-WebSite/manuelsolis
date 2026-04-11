@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const locales = ['en', 'es'];
-const defaultLocale = 'en';
+const defaultLocale = 'es';
 
 function getLocale(request: NextRequest): string {
   // 1. Verificar cookie
@@ -47,6 +47,24 @@ export function middleware(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || '';
   const isSEOCrawler = SEO_CRAWLER_REGEX.test(userAgent);
 
+  // --- NORMALIZE UPPERCASE URLs → lowercase (301) ---
+  // Catches /es/Testimonios, /en/Servicios, etc. and normalizes them
+  if (/[A-Z]/.test(pathname)) {
+    const lowercasePath = pathname.toLowerCase();
+    if (lowercasePath !== pathname) {
+      const newUrl = new URL(lowercasePath, request.url);
+      newUrl.search = request.nextUrl.search;
+      return NextResponse.redirect(newUrl, 301);
+    }
+  }
+
+  // --- STRIP TRAILING SLASHES (except root /) ---
+  if (pathname.length > 1 && pathname.endsWith('/')) {
+    const newUrl = new URL(pathname.slice(0, -1), request.url);
+    newUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(newUrl, 301);
+  }
+
   // Si ya tiene locale, dejar pasar (fast path para crawlers)
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
@@ -55,13 +73,6 @@ export function middleware(request: NextRequest) {
   if (pathnameHasLocale) {
     const localePart = pathname.split('/')[1];
     const locale = (localePart === 'es' || localePart === 'en') ? localePart : 'es';
-
-    // 301 redirect for old /Testimonios URL (case-sensitive check to avoid loop)
-    if (pathname.includes('/Testimonios')) {
-      const newUrl = new URL(pathname.replace('/Testimonios', '/testimonios'), request.url);
-      newUrl.search = request.nextUrl.search;
-      return NextResponse.redirect(newUrl, 301);
-    }
 
     // Forward locale as request header so RootLayout can set <html lang> dynamically
     const requestHeaders = new Headers(request.headers);
