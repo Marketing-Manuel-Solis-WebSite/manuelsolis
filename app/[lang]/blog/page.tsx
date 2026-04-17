@@ -220,7 +220,7 @@ const BLOG_DATA = {
     // --- BLOG 20 - NUEVO ---
     {
       id: 'asilo_frontera_2026_puerto_entrada_vs_cruce',
-      slug: 'asilo_frontera_2026_puerto_entrada_vs_cruce',
+      slug: 'asilo-frontera-2026-puerto-entrada-vs-cruce',
       title: {
         es: 'Asilo en la frontera 2026: diferencias entre entregarse, presentarse en un puerto de entrada y otros procesos vigentes',
         en: 'Asylum at the Border 2026: Differences Between Surrendering, Presenting at a Port of Entry, and Other Current Processes'
@@ -240,7 +240,7 @@ const BLOG_DATA = {
     // --- BLOG 19 - NUEVO ---
     {
       id: 'entrevista_matrimonio_uscis_senales_alerta',
-      slug: 'entrevista_matrimonio_uscis_senales_alerta',
+      slug: 'entrevista-matrimonio-uscis-senales-alerta',
       title: {
         es: 'Entrevista de matrimonio: señales de alerta que hacen sospechar a USCIS',
         en: 'Marriage Interview: Red Flags That Make USCIS Suspicious'
@@ -260,7 +260,7 @@ const BLOG_DATA = {
     // --- BLOG 18 - NUEVO ---
     {
       id: 'ciudadania_en_espanol_reglas_50_20_55_15',
-      slug: 'ciudadania_en_espanol_reglas_50_20_55_15',
+      slug: 'ciudadania-en-espanol-reglas-50-20-55-15',
       title: {
         es: 'Ciudadanía (N-400) en español: ¿quiénes califican por edad y tiempo?',
         en: 'Citizenship (N-400) in Spanish: Who Qualifies by Age and Time?'
@@ -280,7 +280,7 @@ const BLOG_DATA = {
     // --- BLOG 17 - NUEVO ---
     {
       id: 'marihuana_dui_buen_caracter_moral_inmigracion',
-      slug: 'marihuana_dui_buen_caracter_moral_inmigracion',
+      slug: 'marihuana-dui-buen-caracter-moral-inmigracion',
       title: {
         es: 'Legal en mi estado, delito para Inmigración: marihuana, DUI y buen carácter moral',
         en: 'Legal in My State, a Crime for Immigration: Marijuana, DUI and Good Moral Character'
@@ -300,7 +300,7 @@ const BLOG_DATA = {
     // --- BLOG 16 - NUEVO ---
     {
       id: 'perdon_i601a_arreglar_papeles_entrada_ilegal',
-      slug: 'perdon_i601a_arreglar_papeles_entrada_ilegal',
+      slug: 'perdon-i601a-arreglar-papeles-entrada-ilegal',
       title: {
         es: 'Me casé con ciudadano pero entré "por el cerro": el Perdón I-601A explicado',
         en: 'I Married a Citizen but Entered Illegally: The I-601A Waiver Explained'
@@ -320,7 +320,7 @@ const BLOG_DATA = {
     // --- BLOG 15 - NUEVO ---
     {
       id: 'estatus_juvenil_sijs_residencia_jovenes_abandonados',
-      slug: 'estatus_juvenil_sijs_residencia_jovenes_abandonados',
+      slug: 'estatus-juvenil-sijs-residencia-jovenes-abandonados',
       title: {
         es: 'Estatus Juvenil (SIJS): papeles para jóvenes abandonados por un solo padre',
         en: 'Juvenile Status (SIJS): Papers for Youth Abandoned by One Parent'
@@ -340,7 +340,7 @@ const BLOG_DATA = {
     // --- BLOG 14 - NUEVO ---
     {
       id: 'foia_migratoria_pedir_record_antes_de_aplicar',
-      slug: 'foia_migratoria_pedir_record_antes_de_aplicar',
+      slug: 'foia-migratoria-pedir-record-antes-de-aplicar',
       title: {
         es: 'No apliques a ciegas: por qué pedir tu récord (FOIA) podría salvar tu caso',
         en: 'Don\'t Apply Blind: Why Requesting Your Record (FOIA) Could Save Your Case'
@@ -360,7 +360,7 @@ const BLOG_DATA = {
     // --- BLOG 13 - NUEVO ---
     {
       id: 'residencia_laboral_eb3_ley_245i_entrada_indocumentada',
-      slug: 'residencia_laboral_eb3_ley_245i_entrada_indocumentada',
+      slug: 'residencia-laboral-eb3-ley-245i-entrada-indocumentada',
       title: {
         es: '¿Puede mi patrón pedirme la residencia si entré indocumentado? Visas EB-3 y la Ley 245(i)',
         en: 'Can My Employer Sponsor My Residency If I Entered Undocumented? EB-3 Visas and Section 245(i)'
@@ -380,7 +380,7 @@ const BLOG_DATA = {
     // --- BLOG 12 - NUEVO ---
     {
       id: 'advance_parole_2026_viajar_con_daca_tps_visa_u',
-      slug: 'advance_parole_2026_viajar_con_daca_tps_visa_u',
+      slug: 'advance-parole-2026-viajar-con-daca-tps-visa-u',
       title: {
         es: 'Advance Parole 2026: ¿Es seguro viajar a mi país con DACA, TPS o Visa U pendiente?',
         en: 'Advance Parole 2026: Is It Safe to Travel with DACA, TPS, or a Pending U Visa?'
@@ -400,7 +400,7 @@ const BLOG_DATA = {
     // --- BLOG 11 - NUEVO ---
     {
       id: 'ley_de_los_10_anos_cancelacion_de_deportacion',
-      slug: 'ley_de_los_10_anos_cancelacion_de_deportacion',
+      slug: 'ley-de-los-10-anos-cancelacion-de-deportacion',
       title: {
         es: '¿Califico para la "Ley de los 10 años" solo por vivir aquí? Mitos de la Cancelación de Deportación',
         en: 'Do I Qualify for the "10-Year Rule" Just by Living Here? Myths of Cancellation of Removal'
@@ -420,7 +420,7 @@ const BLOG_DATA = {
     // --- BLOG 10 ---
     {
       id: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
-      slug: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados',
+      slug: 'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
       title: { 
         es: 'Visa U y VAWA: Incluir a hijos y nuevos esposos (Derivados)', 
         en: 'U Visa & VAWA: Including Children and New Spouses (Derivatives)' 
@@ -440,7 +440,7 @@ const BLOG_DATA = {
     // --- BLOG 08 ---
     {
       id: 'Formulario_G28_Cambiar_Abogado_Inmigracion',
-      slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion',
+      slug: 'formulario-g28-cambiar-abogado-inmigracion',
       title: { 
         es: 'Cambiar de abogado en inmigración: cómo usar el Formulario G-28 sin dañar tu caso', 
         en: 'Changing Immigration Attorneys: How to Use Form G-28 Without Hurting Your Case' 
@@ -459,7 +459,7 @@ const BLOG_DATA = {
     },
     {
       id: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
-      slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
+      slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
       title: { 
         es: 'Parar deportación urgente: cómo frenarla con Visa U o VAWA pendiente (Stay of Removal)', 
         en: 'Stop an Urgent Deportation: How a Pending U Visa or VAWA Can Help (Stay of Removal)' 
@@ -479,7 +479,7 @@ const BLOG_DATA = {
     // --- BLOG 07 ---
     {
       id: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
-      slug: 'Visa_T_trabajo_forzado_por_deuda_con_coyote',
+      slug: 'visa-t-trabajo-forzado-por-deuda-con-coyote',
       title: { 
         es: 'Visa T: papeles para víctimas de coyotes y trabajo forzado por deuda', 
         en: 'T Visa: Immigration Relief for Victims of Forced Labor and Smuggling Debt' 
@@ -499,7 +499,7 @@ const BLOG_DATA = {
     // --- BLOG 06 ---
     {
       id: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
-      slug: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente',
+      slug: 'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente',
       title: { 
         es: 'VAWA para hombres: protección migratoria por abuso de pareja ciudadana o residente', 
         en: 'VAWA for Men: Immigration Protection from Abuse by a Citizen or Resident Spouse' 
@@ -519,7 +519,7 @@ const BLOG_DATA = {
     // --- BLOG 05 ---
     {
       id: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
-      slug: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses',
+      slug: 'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses',
       title: { 
         es: 'VAWA para padres: maltrato de hijos ciudadanos estadounidenses', 
         en: 'VAWA for Parents: Abuse by U.S. Citizen Children' 
@@ -539,7 +539,7 @@ const BLOG_DATA = {
     // --- BLOG 03 ---
     {
       id: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
-      slug: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas',
+      slug: 'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas',
       title: { 
         es: 'Perdón I-192: cómo arreglar con la Visa U si tienes deportaciones previas', 
         en: 'I-192 Waiver: How to Fix Your U Visa Case with Prior Deportations' 
@@ -559,7 +559,7 @@ const BLOG_DATA = {
     // --- BLOG 02 ---
     {
       id: 'que-hacer-si-la-policia-no-firma',
-      slug: 'que_hacer_si_la_policia_no_firma_la_certificacion_visa_u',
+      slug: 'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u',
       title: { 
         es: '¿Qué hacer si la policía no firma la certificación Visa U?', 
         en: 'What to do if the police refuse to sign the U Visa certification?' 
@@ -579,7 +579,7 @@ const BLOG_DATA = {
     // --- BLOG 01 ---
     {
       id: 'permiso_de_trabajo_visa_u',
-      slug: 'permiso_de_trabajo_visa_u',
+      slug: 'permiso-de-trabajo-visa-u',
       title: { 
         es: 'Permiso de trabajo Visa U (Bona Fide) antes de la aprobación final', 
         en: 'U Visa Work Permit (Bona Fide) Before Final Approval' 

@@ -44,7 +44,7 @@ const texts = {
       id: 12015,
       title: { es: "Derechos Migratorios: Qué hacer si son transgredidos", en: "Immigration Rights: What to do if they are violated" },
       url: "/derechos-de-migrantes/derechos-migratorios-que-hacer-si-son-transgredidos",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 29, 2024", en: "November 29, 2024" },
       isoDate: "2024-11-29",
       excerpt: {
@@ -56,7 +56,7 @@ const texts = {
       id: 11960,
       title: { es: "Asesoría Legal para Migrantes: Asegura tus Derechos", en: "Legal Advice for Migrants: Secure Your Rights" },
       url: "/derechos-de-migrantes/asesoria-legal-para-migrantes-asegura-tus-derechos",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 28, 2024", en: "November 28, 2024" },
       isoDate: "2024-11-28",
       excerpt: {
@@ -68,7 +68,7 @@ const texts = {
       id: 11883,
       title: { es: "Derechos Migratorios para Víctimas de Crimen en EE.UU.", en: "Immigration Rights for Crime Victims in the U.S." },
       url: "/derechos-de-migrantes/derechos-migratorios-para-victimas-de-crimen",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 28, 2024", en: "November 28, 2024" },
       isoDate: "2024-11-28",
       excerpt: {
@@ -80,7 +80,7 @@ const texts = {
       id: 11799,
       title: { es: "Protección de Derechos Migratorios Durante el Proceso", en: "Protection of Immigration Rights During the Process" },
       url: "/derechos-de-migrantes/proteccion-de-derechos-migratorios",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 27, 2024", en: "November 27, 2024" },
       isoDate: "2024-11-27",
       excerpt: {
@@ -92,7 +92,7 @@ const texts = {
       id: 11529,
       title: { es: "Derechos fundamentales de Migrantes en EE.UU.", en: "Fundamental Rights of Migrants in the U.S." },
       url: "/derechos-de-migrantes/derechos-fundamentales-de-migrantes-en-ee-uu",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 26, 2024", en: "November 26, 2024" },
       isoDate: "2024-11-26",
       excerpt: {
@@ -104,7 +104,7 @@ const texts = {
       id: 11319,
       title: { es: "Protección Legal para Migrantes Víctimas de Abuso o Crimen", en: "Legal Protection for Migrants Who Are Victims of Abuse or Crime" },
       url: "/derechos-de-migrantes/proteccion-legal-para-migrantes",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 25, 2024", en: "November 25, 2024" },
       isoDate: "2024-11-25",
       excerpt: {

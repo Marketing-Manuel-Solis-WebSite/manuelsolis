@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
-import { Scale, Car, ShieldCheck, Heart, FileText, TrendingUp } from 'lucide-react';
+import { Scale, Car, ShieldCheck, Heart, FileText, TrendingUp, MapPin } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { LANDING_PAGES, OFFICES, SERVICES as CITY_SERVICES } from '../../lib/cityServiceData';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -191,6 +192,56 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
                     </svg>
                   </span>
                 </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Locations × Services (SEO internal linking) */}
+        <section className="pb-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="inline-block mb-3 px-4 py-1.5 rounded-full bg-[#B2904D]/15 text-xs font-semibold tracking-widest text-[#B2904D] uppercase">
+                {isEs ? 'Cobertura local' : 'Local coverage'}
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                {isEs ? 'Abogados por Ciudad y Servicio' : 'Attorneys by City and Service'}
+              </h2>
+              <p className="mt-3 text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
+                {isEs
+                  ? 'Atención legal especializada en cada una de nuestras oficinas. Elija su ciudad para ver el servicio que necesita.'
+                  : 'Specialized legal help from each of our offices. Pick your city to see the service you need.'}
+              </p>
+            </div>
+
+            {Object.entries(CITY_SERVICES).map(([serviceKey, svc]) => {
+              const pagesForService = LANDING_PAGES.filter(p => p.serviceKey === serviceKey);
+              if (pagesForService.length === 0) return null;
+              return (
+                <div key={serviceKey} className="mb-10">
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <span className="inline-block w-1.5 h-5 bg-[#B2904D] rounded-full" />
+                    {svc.title[isEs ? 'es' : 'en']}
+                  </h3>
+                  <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {pagesForService.map(p => {
+                      const office = OFFICES[p.officeKey];
+                      return (
+                        <li key={p.slug}>
+                          <Link
+                            href={`/${currentLang}/${p.slug}`}
+                            className="flex items-center gap-2 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-[#B2904D]/10 hover:border-[#B2904D]/30 transition-all group"
+                          >
+                            <MapPin className="h-4 w-4 text-[#B2904D] flex-shrink-0" />
+                            <span className="text-white text-sm font-medium group-hover:text-[#B2904D] transition-colors truncate">
+                              {svc.shortTitle[isEs ? 'es' : 'en']} — {office.city}, {office.stateCode}
+                            </span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               );
             })}
           </div>

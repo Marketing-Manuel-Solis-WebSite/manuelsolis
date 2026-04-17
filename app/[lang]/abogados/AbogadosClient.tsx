@@ -118,13 +118,16 @@ export default function AbogadosClient() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
                   {groupAttorneys.map((attorney, index) => (
-                    <div
+                    <Link
                       key={attorney.id}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => setSelectedAttorney(attorney)}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedAttorney(attorney); } }}
-                      className="group relative h-[450px] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#001540]/60 hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] focus-visible:ring-2 focus-visible:ring-[#B2904D] focus-visible:outline-none transition-all duration-500"
+                      href={`/${language}/abogados/${attorney.id}`}
+                      prefetch={false}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedAttorney(attorney);
+                      }}
+                      className="group relative h-[450px] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#001540]/60 hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] focus-visible:ring-2 focus-visible:ring-[#B2904D] focus-visible:outline-none transition-all duration-500 block"
+                      aria-label={`${attorney.name} — ${texts.card.viewProfile[language]}`}
                     >
                       <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                         <Image
@@ -156,7 +159,7 @@ export default function AbogadosClient() {
                           {texts.card.viewProfile[language]} <ChevronRight size={16} className="text-[#B2904D]" />
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>

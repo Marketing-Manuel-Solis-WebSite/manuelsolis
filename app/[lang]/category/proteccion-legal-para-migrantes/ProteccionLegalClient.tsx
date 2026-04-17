@@ -55,7 +55,7 @@ const texts = {
       id: 12340,
       title: { es: "Solicitar Asilo En EE.UU.: Conoce los Requisitos", en: "Applying for Asylum in the U.S.: Know the Requirements" },
       url: "/proteccion-legal-para-migrantes/solicitar-asilo-en-ee-uu-conoce-los-requisitos",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "diciembre 3, 2024", en: "December 3, 2024" },
       isoDate: "2024-12-03",
       excerpt: {
@@ -67,7 +67,7 @@ const texts = {
       id: 12084,
       title: { es: "Visa U: Requisitos Básicos para Solicitarla", en: "U Visa: Basic Requirements for Application" },
       url: "/proteccion-legal-para-migrantes/requisitos-basicos-para-solicitar-la-visa-u",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 29, 2024", en: "November 29, 2024" },
       isoDate: "2024-11-29",
       excerpt: {
@@ -79,7 +79,7 @@ const texts = {
       id: 11467,
       title: { es: "Protección Legal Urgente para Migrantes en EE.UU.: Qué Hacer si la Necesitas", en: "Urgent Legal Protection for Migrants in the U.S.: What to Do if You Need It" },
       url: "/proteccion-legal-para-migrantes/que-hacer-si-necesitas-proteccion-legal-urgente-en-ee-uu",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 26, 2024", en: "November 26, 2024" },
       isoDate: "2024-11-26",
       excerpt: {
@@ -91,7 +91,7 @@ const texts = {
       id: 11336,
       title: { es: "Opciones Legales para Migrantes en Proceso de Deportación", en: "Legal Options for Migrants in Deportation Proceedings" },
       url: "/proteccion-legal-para-migrantes/opciones-legales-para-migrantes-en-proceso-de-deportacion",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 25, 2024", en: "November 25, 2024" },
       isoDate: "2024-11-25",
       excerpt: {
@@ -103,7 +103,7 @@ const texts = {
       id: 11227,
       title: { es: "Servicios Legales para Migrantes en Situaciones de Riesgo", en: "Legal Services for Migrants in At-Risk Situations" },
       url: "/proteccion-legal-para-migrantes/servicios-legales-para-migrantes",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 23, 2024", en: "November 23, 2024" },
       isoDate: "2024-11-23",
       excerpt: {
@@ -115,7 +115,7 @@ const texts = {
       id: 11130,
       title: { es: "Protección legal para migrantes: Obtenla en Estados Unidos", en: "Legal Protection for Migrants: Obtain It in the United States" },
       url: "/proteccion-legal-para-migrantes/proteccion-legal-para-migrantes-obtenla-en-estados-unidos",
-      author: "Julio César Sánchez",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 22, 2024", en: "November 22, 2024" },
       isoDate: "2024-11-22",
       excerpt: {
@@ -127,7 +127,7 @@ const texts = {
       id: 9858,
       title: { es: "Nombre del Puesto: Analista de sistemas informáticos", en: "Job Title: Computer Systems Analyst" },
       url: "/proteccion-legal-para-migrantes/titulo-profesional-analista-de-sistemas-informaticos",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "agosto 16, 2024", en: "August 16, 2024" },
       isoDate: "2024-08-16",
       excerpt: {
@@ -139,7 +139,7 @@ const texts = {
       id: 6555,
       title: { es: "Negligencia Medica", en: "Medical Malpractice" },
       url: "/proteccion-legal-para-migrantes/malpractica-medica",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 13, 2021", en: "November 13, 2021" },
       isoDate: "2021-11-13",
       excerpt: {
@@ -151,7 +151,7 @@ const texts = {
       id: 5439,
       title: { es: "Accidentes", en: "Accidents" },
       url: "/proteccion-legal-para-migrantes/los-accidentes-son-definidos-como-sucesos-imprevistos-que-alteran-el-orden-normal-o-previsto-de-las-cosas-especialmente-si-causan-danos-a-una-persona-o-cosa",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 7, 2021", en: "November 7, 2021" },
       isoDate: "2021-11-07",
       excerpt: {
@@ -163,7 +163,7 @@ const texts = {
       id: 5483,
       title: { es: "ACCIDENTES DE CAMIONES DE CARGA", en: "COMMERCIAL TRUCK ACCIDENTS" },
       url: "/proteccion-legal-para-migrantes/accidentes-de-camiones-de-carga",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "octubre 16, 2021", en: "October 16, 2021" },
       isoDate: "2021-10-16",
       excerpt: {
@@ -175,7 +175,7 @@ const texts = {
       id: 5489,
       title: { es: "NUEVAS ESPERANZAS PARA ALGUNOS DEPORTADOS Y SUS FAMILIAS EN LOS ESTADOS UNIDOS", en: "NEW HOPE FOR SOME DEPORTEES AND THEIR FAMILIES IN THE UNITED STATES" },
       url: "/proteccion-legal-para-migrantes/nuevas-esperanzas-para-algunos-deportados-y-sus-familias-en-los-estados-unidos",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "septiembre 3, 2021", en: "September 3, 2021" },
       isoDate: "2021-09-03",
       excerpt: {
@@ -187,7 +187,7 @@ const texts = {
       id: 5925,
       title: { es: "LA USICS PRESIDE UN NUEVO GRUPO DE TRABAJO A FAVOR DE LOS MIGRANTES", en: "USICS HEADS UP A NEW WORKING GROUP FOR MIGRANTS" },
       url: "/proteccion-legal-para-migrantes/la-usics-preside-un-nuevo-grupo-de-trabajo-a-favor-de-los-migrantes",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "agosto 13, 2021", en: "August 13, 2021" },
       isoDate: "2021-08-13",
       excerpt: {
@@ -199,7 +199,7 @@ const texts = {
       id: 5931,
       title: { es: "CAMBIOS IMPORTANTES EN LAS POLÍTICAS DE INMIGRACIÓN EN LOS PRIMEROS 100 DÍAS DE BIDEN COMO PRESIDENTE", en: "IMPORTANT CHANGES IN IMMIGRATION POLICIES DURING BIDEN'S FIRST 100 DAYS AS PRESIDENT" },
       url: "/proteccion-legal-para-migrantes/cambios-importantes-en-las-politicas-de-inmigracion-en-los-primeros-100-dias-de-biden-como-presidente",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "mayo 25, 2021", en: "May 25, 2021" },
       isoDate: "2021-05-25",
       excerpt: {
@@ -211,7 +211,7 @@ const texts = {
       id: 6011,
       title: { es: "¿SUFRIÓ DAÑOS Y PÉRDIDAS DESPUÉS DE LA GRAN TORMENTA INVERNAL?", en: "DID YOU SUFFER DAMAGES AND LOSSES AFTER THE GREAT WINTER STORM?" },
       url: "/proteccion-legal-para-migrantes/sufrio-danos-y-perdidas-despues-de-la-gran-tormenta-invernal",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 2, 2021", en: "March 2, 2021" },
       isoDate: "2021-03-02",
       excerpt: {
@@ -223,7 +223,7 @@ const texts = {
       id: 6122,
       title: { es: "QUE HACER CUANDO SU TUBERIA SE DAÑA DEBIDO AL FRIO", en: "WHAT TO DO WHEN YOUR PIPES ARE DAMAGED DUE TO THE COLD" },
       url: "/proteccion-legal-para-migrantes/que-hacer-cuando-su-tuberia-se-dana-debe-al-frio",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "febrero 20, 2021", en: "February 20, 2021" },
       isoDate: "2021-02-20",
       excerpt: {
@@ -235,7 +235,7 @@ const texts = {
       id: 6132,
       title: { es: "PLAN DE INMIGRACIÓN DE BIDEN PARA INMIGRANTES INDOCUMENTADOS", en: "BIDEN'S IMMIGRATION PLAN FOR UNDOCUMENTED IMMIGRANTS" },
       url: "/proteccion-legal-para-migrantes/plan-de-inmigracion-de-biden-para-inmigrantes-indocumentados",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "enero 22, 2021", en: "January 22, 2021" },
       isoDate: "2021-01-22",
       excerpt: {
@@ -247,7 +247,7 @@ const texts = {
       id: 6158,
       title: { es: "ALGUNAS BUENAS NOTICIAS PARA INMIGRANTES", en: "SOME GOOD NEWS FOR IMMIGRANTS" },
       url: "/proteccion-legal-para-migrantes/algunas-buenas-noticias-para-inmigrantes",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "diciembre 24, 2020", en: "December 24, 2020" },
       isoDate: "2020-12-24",
       excerpt: {
@@ -259,7 +259,7 @@ const texts = {
       id: 6166,
       title: { es: "BUENAS NOTICIAS PARA LOS QUE CALIFICAN PARA DACA", en: "GOOD NEWS FOR THOSE WHO QUALIFY FOR DACA" },
       url: "/proteccion-legal-para-migrantes/buenas-noticias-para-los-que-califican-para-daca",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "diciembre 12, 2020", en: "December 12, 2020" },
       isoDate: "2020-12-12",
       excerpt: {
@@ -271,7 +271,7 @@ const texts = {
       id: 6172,
       title: { es: "POSIBLES CAMBIOS Y NUEVAS POLÍTICAS BAJO LA PRESIDENCIA DE BIDEN", en: "POSSIBLE CHANGES AND NEW POLICIES UNDER THE BIDEN PRESIDENCY" },
       url: "/proteccion-legal-para-migrantes/posibles-cambios-y-nuevas-politicas-bajo-la-presidencia-de-biden",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "diciembre 4, 2020", en: "December 4, 2020" },
       isoDate: "2020-12-04",
       excerpt: {
@@ -283,7 +283,7 @@ const texts = {
       id: 6179,
       title: { es: "EL PODER DEL VOTO HISPANO EN LAS ELECCIONES 2020", en: "THE POWER OF THE HISPANIC VOTE IN THE 2020 ELECTIONS" },
       url: "/proteccion-legal-para-migrantes/el-poder-del-voto-hispano-en-las-elecciones-2020",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "noviembre 14, 2020", en: "November 14, 2020" },
       isoDate: "2020-11-14",
       excerpt: {
@@ -295,7 +295,7 @@ const texts = {
       id: 6185,
       title: { es: "LAS POLÍTICAS DE INMIGRACIÓN DE TRUMP Y BIDEN", en: "THE IMMIGRATION POLICIES OF TRUMP AND BIDEN" },
       url: "/proteccion-legal-para-migrantes/las-politicas-de-inmigracion-de-trump-y-biden",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "octubre 30, 2020", en: "October 30, 2020" },
       isoDate: "2020-10-30",
       excerpt: {
@@ -307,7 +307,7 @@ const texts = {
       id: 6191,
       title: { es: "¡EJERZA SU DERECHO!", en: "EXERCISE YOUR RIGHT!" },
       url: "/proteccion-legal-para-migrantes/ejerza-su-derecho",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "octubre 17, 2020", en: "October 17, 2020" },
       isoDate: "2020-10-17",
       excerpt: {
@@ -319,7 +319,7 @@ const texts = {
       id: 6200,
       title: { es: "¡OBTENER LA CIUDADANÍA OFRECE BENEFICIOS IMPORTANTES!", en: "OBTAINING CITIZENSHIP OFFERS IMPORTANT BENEFITS!" },
       url: "/proteccion-legal-para-migrantes/obtener-la-ciudadania-ofrece-beneficios-importantes",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "octubre 2, 2020", en: "October 2, 2020" },
       isoDate: "2020-10-02",
       excerpt: {
@@ -331,7 +331,7 @@ const texts = {
       id: 6206,
       title: { es: "EL 2 DE OCTUBRE EL GOBIERNO AUMENTA TARIFAS PARA SERVICIOS DE INMIGRACIÓN", en: "ON OCTOBER 2ND, GOVERNMENT INCREASES FEES FOR IMMIGRATION SERVICES" },
       url: "/proteccion-legal-para-migrantes/el-2-de-octubre-el-gobierno-aumenta-tarifas-para-servicios-de-inmigracion",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "septiembre 18, 2020", en: "September 18, 2020" },
       isoDate: "2020-09-18",
       excerpt: {
@@ -343,7 +343,7 @@ const texts = {
       id: 6212,
       title: { es: "AUMENTO EN LAS TARIFAS Y LARGOS RETRASOS EN LOS SERVICIOS DE INMIGRACIÓN", en: "FEE INCREASE AND LONG DELAYS IN IMMIGRATION SERVICES" },
       url: "/proteccion-legal-para-migrantes/aumento-en-las-tarifas-y-largos-retrasos-en-los-servicios-de-inmigracion-2",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "agosto 14, 2020", en: "August 14, 2020" },
       isoDate: "2020-08-14",
       excerpt: {
@@ -355,7 +355,7 @@ const texts = {
       id: 6218,
       title: { es: "EL COSTO PARA SOLICITAR LA CIUDADANÍA AMERICANA AUMENTARÁ DRÁSTICAMENTE", en: "THE COST TO APPLY FOR AMERICAN CITIZENSHIP WILL INCREASE DRAMATICALLY" },
       url: "/proteccion-legal-para-migrantes/el-costo-para-solicitar-la-ciudadania-americana-aumentara-drasticamente",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "agosto 7, 2020", en: "August 7, 2020" },
       isoDate: "2020-08-07",
       excerpt: {
@@ -367,7 +367,7 @@ const texts = {
       id: 6225,
       title: { es: "DACA – ÚLTIMAS NOTICIAS Y RECOMENDACIONES", en: "DACA – LATEST NEWS AND RECOMMENDATIONS" },
       url: "/proteccion-legal-para-migrantes/daca-ultimas-noticias-y-recomendaciones",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "julio 31, 2020", en: "July 31, 2020" },
       isoDate: "2020-07-31",
       excerpt: {
@@ -379,7 +379,7 @@ const texts = {
       id: 6232,
       title: { es: "EL GOBIERNO DEBE COMENZAR A ACEPTAR NUEVAS PETICIONES PARA DACA", en: "THE GOVERNMENT MUST BEGIN ACCEPTING NEW PETITIONS FOR DACA" },
       url: "/proteccion-legal-para-migrantes/el-gobierno-debe-comenzar-a-aceptar-nuevas-peticiones-para-daca",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "julio 24, 2020", en: "July 24, 2020" },
       isoDate: "2020-07-24",
       excerpt: {
@@ -391,7 +391,7 @@ const texts = {
       id: 6238,
       title: { es: "UN SERIO DÉFICIT DEL USCIS AMENAZA FRENAR LOS SERVICIOS DE INMIGRACIÓN", en: "A SERIOUS USCIS DEFICIT THREATENS TO SLOW DOWN IMMIGRATION SERVICES" },
       url: "/proteccion-legal-para-migrantes/un-serio-deficit-del-uscis-amenaza-frenar-los-servicios-de-inmigracion",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "julio 10, 2020", en: "July 10, 2020" },
       isoDate: "2020-07-10",
       excerpt: {
@@ -403,7 +403,7 @@ const texts = {
       id: 6244,
       title: { es: "¿USTED CALIFICA PARA DACA?", en: "DO YOU QUALIFY FOR DACA?" },
       url: "/proteccion-legal-para-migrantes/si-usted-califica-para-daca-podria-calificar-para-un-permiso-de-trabajar",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "junio 26, 2020", en: "June 26, 2020" },
       isoDate: "2020-06-26",
       excerpt: {
@@ -415,7 +415,7 @@ const texts = {
       id: 6250,
       title: { es: "¿PROTESTAR O NO? UNA ELECCIÓN DIFÍCIL PARA LOS INMIGRANTES", en: "TO PROTEST OR NOT TO PROTEST? A DIFFICULT CHOICE FOR IMMIGRANTS" },
       url: "/proteccion-legal-para-migrantes/protestar-o-no-una-eleccion-dificil-para-los-inmigrantes",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "junio 17, 2020", en: "June 17, 2020" },
       isoDate: "2020-06-17",
       excerpt: {
@@ -427,7 +427,7 @@ const texts = {
       id: 6256,
       title: { es: "700,000 PARTICIPANTES DEL PROGRAMA DACA ESPERAN ANSIOSAMENTE LA DECISIÓN DE LA CORTE SUPREMA", en: "700,000 DACA PROGRAM PARTICIPANTS ANXIOUSLY AWAIT SUPREME COURT DECISION" },
       url: "/proteccion-legal-para-migrantes/700-000-participantes-del-programa-daca-esperan-ansiosamente-la-decision-de-la-corte-suprema",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "junio 6, 2020", en: "June 6, 2020" },
       isoDate: "2020-06-06",
       excerpt: {
@@ -439,7 +439,7 @@ const texts = {
       id: 6262,
       title: { es: "POR QUÉ TEMEN LOS INMIGRANTES LEGALES SOLICITAR LA PRESTACIÓN POR DESEMPLEO", en: "WHY LEGAL IMMIGRANTS FEAR APPLYING FOR UNEMPLOYMENT BENEFITS" },
       url: "/proteccion-legal-para-migrantes/por-que-temen-los-inmigrantes-legales-solicitar-la-prestacion-por-desempleo",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "mayo 28, 2020", en: "May 28, 2020" },
       isoDate: "2020-05-28",
       excerpt: {
@@ -451,7 +451,7 @@ const texts = {
       id: 6345,
       title: { es: "SUEÑO Y PROMESA PODRÍA SER EL CAMINO A LA LEGALIZACIÓN DEFINITIVA DE LOS DACA", en: "DREAM AND PROMISE COULD BE THE PATH TO DEFINITIVE LEGALIZATION FOR DACA RECIPIENTS" },
       url: "/proteccion-legal-para-migrantes/sueno-y-promesa-podria-ser-el-camino-a-la-legalizacion-definitiva-de-los-daca",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -463,7 +463,7 @@ const texts = {
       id: 6339,
       title: { es: "REDADA DE ICE EN ALLEN, TEXAS", en: "ICE RAID IN ALLEN, TEXAS" },
       url: "/proteccion-legal-para-migrantes/redada-de-ice-en-allen-texas",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -475,7 +475,7 @@ const texts = {
       id: 6319,
       title: { es: "LAS NUEVAS REGLAS PARA OBTENER LA GREEN CARD NO SON LO QUE PARECE", en: "THE NEW RULES FOR OBTAINING THE GREEN CARD ARE NOT WHAT THEY SEEM" },
       url: "/proteccion-legal-para-migrantes/las-nuevas-reglas-para-obtener-la-green-card-no-son-lo-que-parece",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -487,7 +487,7 @@ const texts = {
       id: 6312,
       title: { es: "MÁS DE 800 INMIGRANTES CON ÓRDENES DE DEPORTACIÓN OBTIENEN CIUDADANÍA POR FALLA DE SEGURIDAD", en: "MORE THAN 800 IMMIGRANTS WITH DEPORTATION ORDERS OBTAIN CITIZENSHIP DUE TO SECURITY FAILURE" },
       url: "/proteccion-legal-para-migrantes/mas-de-800-inmigrantes-con-ordenes-de-deportacion-obtienen-ciudadania-por-falla-de-seguridad",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -499,7 +499,7 @@ const texts = {
       id: 6305,
       title: { es: "EL HURACÁN FLORENCIA CAUSA LA PEOR INUNDACIÓN EN LA HISTORIA DE LA COSTA ESTE", en: "HURRICANE FLORENCE CAUSES WORST FLOODING IN EAST COAST HISTORY" },
       url: "/proteccion-legal-para-migrantes/el-huracan-florencia-causa-la-peor-inundacion-en-la-historia-de-la-costa-este",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -511,7 +511,7 @@ const texts = {
       id: 6298,
       title: { es: "ESTADO ACTUAL INMIGRATORIO EN DENVER", en: "CURRENT IMMIGRATION STATUS IN DENVER" },
       url: "/proteccion-legal-para-migrantes/estado-actual-inmigratorio-en-denver",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -523,7 +523,7 @@ const texts = {
       id: 6292,
       title: { es: "LA NUEVA PROPUESTA DE TRUMP PODRÍA HACER IMPOSIBLE A LOS SOLICITANTES DE ASILO VIVIR EN LOS EEUU", en: "TRUMP'S NEW PROPOSAL COULD MAKE IT IMPOSSIBLE FOR ASYLUM SEEKERS TO LIVE IN THE U.S." },
       url: "/proteccion-legal-para-migrantes/la-nueva-propuesta-de-trump-podria-hacer-imposible-a-los-solicitantes-de-asilo-vivir-en-los-eeuu",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -535,7 +535,7 @@ const texts = {
       id: 6286,
       title: { es: "VARIOS ESTADOS PERMITEN A LOS INMIGRANTES SIN PAPELES SACARSE LA LICENCIA DE MANEJO", en: "SEVERAL STATES ALLOW UNDOCUMENTED IMMIGRANTS TO GET DRIVER'S LICENSES" },
       url: "/proteccion-legal-para-migrantes/varios-estados-permiten-a-los-inmigrantes-sin-papeles-sacarse-la-licencia-de-manejo",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -547,7 +547,7 @@ const texts = {
       id: 6277,
       title: { es: "TERMINAL INTERCONTINENTAL DE LA COMPAÑIA (ITC) INCIDENTE DE PLANTA EN DEER PARK", en: "INTERCONTINENTAL TERMINAL COMPANY (ITC) PLANT INCIDENT IN DEER PARK" },
       url: "/proteccion-legal-para-migrantes/terminal-intercontinental-de-la-compania-itc-incidente-de-planta-en-deer-park",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -559,7 +559,7 @@ const texts = {
       id: 6271,
       title: { es: "4 DE ABRIL DE 2019 CVE TECH RAID EN ALLEN, TEXAS", en: "APRIL 4, 2019 CVE TECH RAID IN ALLEN, TEXAS" },
       url: "/proteccion-legal-para-migrantes/4-de-abril-de-2019-cve-tech-raid-en-allen-texas",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -571,7 +571,7 @@ const texts = {
       id: 6148,
       title: { es: "LOS MEXICANOS EN ESTADOS UNIDOS, EL GRUPO QUE MÁS TARDA EN COMENZAR EL PROCESO PARA OBTENER LA CIUDADANÍA", en: "MEXICANS IN THE UNITED STATES, THE GROUP THAT TAKES THE LONGEST TO START THE CITIZENSHIP PROCESS" },
       url: "/proteccion-legal-para-migrantes/los-mexicanos-en-estados-unidos-el-grupo-que-mas-tarda-en-comenzar-el-proceso-para-obtener-la-ciudadania-estadounidense",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {
@@ -583,7 +583,7 @@ const texts = {
       id: 6387,
       title: { es: "LOS PROPIETARIOS DE VIVIENDAS AFECTADOS POR LA EXPLOSIÓN DE LA PLANTA EN EL NOROESTE DE HOUSTON", en: "HOMEOWNERS AFFECTED BY THE PLANT EXPLOSION IN NORTHWEST HOUSTON" },
       url: "/proteccion-legal-para-migrantes/los-propietarios-de-viviendas-afectados-por-la-explosion-de-la-planta-en-el-noroeste-de-houston-podrian-obtener-una-indemnizacion-por-danos",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 14, 2020", en: "March 14, 2020" },
       isoDate: "2020-03-14",
       excerpt: {
@@ -595,7 +595,7 @@ const texts = {
       id: 6380,
       title: { es: "ADHARA, UNA INMIGRANTE MEXICANA CON UN COEFICIENTE INTELECTUAL JAMÁS VISTO", en: "ADHARA, A MEXICAN IMMIGRANT WITH AN UNPRECEDENTED INTELLECTUAL QUOTIENT" },
       url: "/proteccion-legal-para-migrantes/adhara-una-inmigrante-mexicana-con-un-coeficiente-intelectual-jamas-visto",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 14, 2020", en: "March 14, 2020" },
       isoDate: "2020-03-14",
       excerpt: {
@@ -607,7 +607,7 @@ const texts = {
       id: 6373,
       title: { es: "CHICAGO VOTADA LA CIUDAD MÁS AMIGABLE PARA LOS INMIGRANTES DE LOS ESTADOS UNIDOS", en: "CHICAGO VOTED MOST IMMIGRANT-FRIENDLY CITY IN THE UNITED STATES" },
       url: "/proteccion-legal-para-migrantes/chicago-votada-la-ciudad-mas-amigable-para-los-inmigrantes-de-los-estados-unidos",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 14, 2020", en: "March 14, 2020" },
       isoDate: "2020-03-14",
       excerpt: {
@@ -619,7 +619,7 @@ const texts = {
       id: 6366,
       title: { es: "EL BUEN CARÁCTER MORAL SE CONVIERTE EN CLAVE PARA OBTENER LA CIUDADANÍA", en: "GOOD MORAL CHARACTER BECOMES KEY TO OBTAINING CITIZENSHIP" },
       url: "/proteccion-legal-para-migrantes/el-buen-caracter-moral-se-convierte-en-clave-para-obtener-la-ciudadania",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 14, 2020", en: "March 14, 2020" },
       isoDate: "2020-03-14",
       excerpt: {
@@ -631,7 +631,7 @@ const texts = {
       id: 6359,
       title: { es: "EL PROGRAMA GLOBAL ENTRY DEJARÁ DE SER PARA LOS NEOYORQUINOS COMO CASTIGO POR LA LEY DE LUZ VERDE", en: "GLOBAL ENTRY PROGRAM WILL BE TERMINATED FOR NEW YORKERS AS PUNISHMENT FOR THE GREEN LIGHT LAW" },
       url: "/proteccion-legal-para-migrantes/el-programa-global-entry-dejara-de-ser-para-los-neoyorquinos-como-castigo-por-la-ley-de-luz-verde",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 14, 2020", en: "March 14, 2020" },
       isoDate: "2020-03-14",
       excerpt: {
@@ -643,7 +643,7 @@ const texts = {
       id: 6352,
       title: { es: "LA CIUDADANÍA SE PODRÍA VOLVER MÁS CARA EN BREVE", en: "CITIZENSHIP COULD BECOME MORE EXPENSIVE SHORTLY" },
       url: "/proteccion-legal-para-migrantes/la-ciudadania-se-podria-volver-mas-cara-en-breve",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 14, 2020", en: "March 14, 2020" },
       isoDate: "2020-03-14",
       excerpt: {
@@ -655,7 +655,7 @@ const texts = {
       id: 6332,
       title: { es: "¿QUE ES EL PROCESO CONSULAR?", en: "WHAT IS THE CONSULAR PROCESS?" },
       url: "/proteccion-legal-para-migrantes/que-es-el-proceso-consular",
-      author: "Raul Zepeda",
+      author: "Carlos Anaya Ruiz",
       date: { es: "marzo 17, 2020", en: "March 17, 2020" },
       isoDate: "2020-03-17",
       excerpt: {

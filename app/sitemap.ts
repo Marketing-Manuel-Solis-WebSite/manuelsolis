@@ -77,8 +77,8 @@ const routes: SitemapEntry[] = [
   { route: '/blog/formulario-g28-cambiar-abogado-inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-12' },
   { route: '/blog/frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-10' },
   { route: '/blog/visa-t-trabajo-forzado-por-deuda-con-coyote', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-02-03' },
-  { route: '/blog/vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-30' },
-  { route: '/blog/vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-28' },
+  { route: '/blog/vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', priority: 0.75, changeFrequency: 'monthly', lastModified: '2026-04-17' },
+  { route: '/blog/vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses', priority: 0.75, changeFrequency: 'monthly', lastModified: '2026-04-17' },
   { route: '/blog/perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-23' },
   { route: '/blog/que-hacer-si-la-policia-no-firma-la-certificacion-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-20' },
   { route: '/blog/permiso-de-trabajo-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-01-16' },
@@ -100,7 +100,7 @@ const routes: SitemapEntry[] = [
   // Info / Legal — lower priority
   { route: '/informacion/faq', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
   { route: '/informacion/recursos', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
-  { route: '/informacion/noticias', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+  // /informacion/noticias intentionally excluded — noindex (coming soon).
   { route: '/privacidad', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
   { route: '/terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
   { route: '/sms-terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
