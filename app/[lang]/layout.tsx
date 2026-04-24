@@ -382,7 +382,7 @@ export default async function LangLayout({ children, params }: Props) {
 
       <LanguageProvider initialLanguage={currentLang}>
         {children}
-        <WhatsAppButton />
+        {/* <WhatsAppButton /> temporalmente oculto */}
         <AIChatButton />
         <MobileStickyBar />
 

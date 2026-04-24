@@ -51,18 +51,7 @@ export default function MobileStickyBar() {
           <span>{isEs ? 'Llamar Ahora' : 'Call Now'}</span>
         </a>
 
-        {/* Divider */}
-        <div className="w-px bg-[#B2904D]/30 my-2" />
-
-        {/* WhatsApp Button */}
-        <button
-          onClick={handleWhatsAppClick}
-          className="flex-1 flex items-center justify-center gap-2 py-3.5 text-white font-semibold text-sm active:bg-[#002868] transition-colors"
-          aria-label="WhatsApp"
-        >
-          <MessageCircle className="w-5 h-5 text-[#25D366]" />
-          <span>WhatsApp</span>
-        </button>
+        {/* WhatsApp button temporalmente oculto */}
       </div>
     </div>
   );
