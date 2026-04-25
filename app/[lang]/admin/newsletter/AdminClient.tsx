@@ -1,12 +1,35 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Mail,
+  Send,
+  Users,
+  FlaskConical,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle2,
+  LogOut,
+  Calendar,
+  Languages,
+  ChevronDown,
+  ChevronUp,
+  Loader2,
+  Eye,
+  X,
+} from 'lucide-react';
+import { logoutAction } from './actions';
 
 type Edition = {
   slug: string;
   titleEs: string;
   titleEn: string;
   date: string;
+  descriptionEs: string;
+  descriptionEn: string;
+  sectionsCountEs: number;
+  sectionsCountEn: number;
 };
 
 type ProgressEvent = {
@@ -20,12 +43,19 @@ type ProgressEvent = {
   message?: string;
 };
 
-export default function AdminClient({ editions }: { editions: Edition[] }) {
+type Mode = 'production' | 'test';
+
+export default function AdminClient({
+  lang,
+  editions,
+}: {
+  lang: 'es' | 'en';
+  editions: Edition[];
+}) {
   const [slug, setSlug] = useState(editions[0]?.slug ?? '');
   const [language, setLanguage] = useState<'es' | 'en'>('es');
-  const [token, setToken] = useState('');
+  const [mode, setMode] = useState<Mode>('production');
   const [dryRun, setDryRun] = useState(true);
-  const [testMode, setTestMode] = useState(false);
   const [testEmailsText, setTestEmailsText] = useState('');
   const [confirmStep, setConfirmStep] = useState(false);
   const [running, setRunning] = useState(false);
@@ -38,6 +68,18 @@ export default function AdminClient({ editions }: { editions: Edition[] }) {
   const latest = events.at(-1);
   const progressPct =
     latest && latest.total > 0 ? Math.round((latest.processed / latest.total) * 100) : 0;
+  const selectedEdition = editions.find((e) => e.slug === slug);
+  const errorEvents = events.filter((e) => e.type === 'progress' && e.message);
+
+  const testEmails = testEmailsText
+    .split(/[\n,]/)
+    .map((e) => e.trim())
+    .filter(Boolean);
+
+  const canStart =
+    !running &&
+    Boolean(slug) &&
+    (mode === 'production' || testEmails.length > 0);
 
   async function startBlast() {
     setEvents([]);
@@ -49,34 +91,23 @@ export default function AdminClient({ editions }: { editions: Edition[] }) {
     const controller = new AbortController();
     abortRef.current = controller;
 
-    const testEmails = testMode
-      ? testEmailsText
-          .split(/[\n,]/)
-          .map((e) => e.trim())
-          .filter(Boolean)
-      : null;
-
     try {
       const response = await fetch('/api/newsletter/blast', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           slug,
           language,
           dryRun,
-          testEmails: testEmails && testEmails.length > 0 ? testEmails : undefined,
+          testEmails: mode === 'test' ? testEmails : undefined,
         }),
         signal: controller.signal,
       });
 
       if (!response.ok || !response.body) {
         const text = await response.text().catch(() => '');
-        setFatalError(
-          `Request failed (${response.status}): ${text || response.statusText}`,
-        );
+        setFatalError(`Request failed (${response.status}): ${text || response.statusText}`);
         setRunning(false);
         return;
       }
@@ -104,7 +135,7 @@ export default function AdminClient({ editions }: { editions: Edition[] }) {
             if (evt.type === 'summary') setSummary(evt);
             if (evt.type === 'error') setFatalError(evt.message ?? 'Unknown error');
           } catch {
-            // ignore malformed event
+            // ignore malformed
           }
         }
       }
@@ -122,203 +153,484 @@ export default function AdminClient({ editions }: { editions: Edition[] }) {
     setRunning(false);
   }
 
-  const selectedEdition = editions.find((e) => e.slug === slug);
-
   return (
-    <div style={styles.page}>
-      <div style={styles.card}>
-        <header style={styles.header}>
-          <h1 style={styles.h1}>Newsletter Blast</h1>
-          <p style={styles.sub}>
-            Panel interno · Uso autorizado exclusivamente por el equipo de
-            Marketing Digital.
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-4">
+      <div className="max-w-3xl mx-auto">
+        <header className="mb-8">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#001540] text-white text-xs font-bold tracking-wider uppercase mb-3">
+                <Mail className="w-3.5 h-3.5" />
+                Admin
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-[#001540] tracking-tight">
+                Newsletter Blast
+              </h1>
+              <p className="text-sm text-gray-600 mt-2">
+                Envío segmentado contra BOS · Manuel Solis Law
+              </p>
+            </div>
+            <form action={logoutAction}>
+              <input type="hidden" name="lang" value={lang} />
+              <button
+                type="submit"
+                className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#001540] hover:bg-white px-3 py-2 rounded-lg transition"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                Salir
+              </button>
+            </form>
+          </div>
+          <div className="h-[3px] w-20 bg-[#B2904D] mt-4 rounded-full" />
         </header>
 
-        <section style={styles.section}>
-          <label style={styles.label}>Edición</label>
-          <select
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
-            disabled={running}
-            style={styles.input}
-          >
+        <Card>
+          <SectionTitle icon={Calendar} step={1} title="Edición a enviar" />
+          <div className="mt-4 space-y-2">
             {editions.map((ed) => (
-              <option key={ed.slug} value={ed.slug}>
-                {ed.date} · {ed.titleEs}
-              </option>
+              <button
+                key={ed.slug}
+                type="button"
+                onClick={() => setSlug(ed.slug)}
+                disabled={running}
+                className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                  slug === ed.slug
+                    ? 'border-[#B2904D] bg-[#fbf7ef]'
+                    : 'border-gray-200 hover:border-gray-300 bg-white'
+                } ${running ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+              >
+                <div className="flex items-start gap-3">
+                  <div
+                    className={`mt-1 w-4 h-4 rounded-full border-2 flex-shrink-0 ${
+                      slug === ed.slug
+                        ? 'border-[#B2904D] bg-[#B2904D]'
+                        : 'border-gray-300'
+                    }`}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {new Date(ed.date).toLocaleDateString(lang === 'es' ? 'es-MX' : 'en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </div>
+                    <div className="font-semibold text-[#001540] text-sm md:text-base">
+                      {language === 'es' ? ed.titleEs : ed.titleEn}
+                    </div>
+                    <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                      {language === 'es' ? ed.descriptionEs : ed.descriptionEn}
+                    </p>
+                  </div>
+                </div>
+              </button>
             ))}
-          </select>
-          {selectedEdition && (
-            <div style={styles.hint}>
-              ES: {selectedEdition.titleEs}
-              <br />
-              EN: {selectedEdition.titleEn}
-            </div>
-          )}
-        </section>
-
-        <section style={styles.section}>
-          <label style={styles.label}>Idioma</label>
-          <div style={styles.row}>
-            <label style={styles.radio}>
-              <input
-                type="radio"
-                name="lang"
-                value="es"
-                checked={language === 'es'}
-                onChange={() => setLanguage('es')}
-                disabled={running}
-              />{' '}
-              Español
-            </label>
-            <label style={styles.radio}>
-              <input
-                type="radio"
-                name="lang"
-                value="en"
-                checked={language === 'en'}
-                onChange={() => setLanguage('en')}
-                disabled={running}
-              />{' '}
-              English
-            </label>
           </div>
-        </section>
+        </Card>
 
-        <section style={styles.section}>
-          <label style={styles.label}>Token de autorización</label>
-          <input
-            type="password"
-            autoComplete="off"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-            placeholder="NEWSLETTER_BLAST_SECRET"
-            disabled={running}
-            style={styles.input}
-          />
-          <div style={styles.hint}>
-            Se envía como <code>Authorization: Bearer …</code>. No se guarda en
-            el navegador.
+        <Card>
+          <SectionTitle icon={Languages} step={2} title="Idioma del envío" />
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            {(['es', 'en'] as const).map((l) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setLanguage(l)}
+                disabled={running}
+                className={`py-3 px-4 rounded-xl border-2 font-semibold text-sm transition-all ${
+                  language === l
+                    ? 'border-[#001540] bg-[#001540] text-white'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                } ${running ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+              >
+                {l === 'es' ? '🇲🇽 Español' : '🇺🇸 English'}
+              </button>
+            ))}
           </div>
-        </section>
+        </Card>
 
-        <section style={styles.section}>
-          <label style={styles.checkbox}>
-            <input
-              type="checkbox"
-              checked={dryRun}
-              onChange={(e) => setDryRun(e.target.checked)}
+        <Card>
+          <SectionTitle icon={Users} step={3} title="¿A quién enviar?" />
+          <div className="mt-4 space-y-3">
+            <ModeOption
+              active={mode === 'production'}
               disabled={running}
-            />{' '}
-            <strong>Dry run</strong> — clasifica suscriptores contra BOS pero{' '}
-            <em>no envía</em> ningún correo.
-          </label>
-          <label style={styles.checkbox}>
-            <input
-              type="checkbox"
-              checked={testMode}
-              onChange={(e) => setTestMode(e.target.checked)}
-              disabled={running}
-            />{' '}
-            <strong>Modo prueba</strong> — usa una lista manual de emails en
-            lugar de la audiencia de Resend.
-          </label>
-          {testMode && (
-            <textarea
-              value={testEmailsText}
-              onChange={(e) => setTestEmailsText(e.target.value)}
-              placeholder={'email1@ejemplo.com\nemail2@ejemplo.com'}
-              disabled={running}
-              rows={4}
-              style={{ ...styles.input, fontFamily: 'monospace' }}
+              onClick={() => setMode('production')}
+              icon={Users}
+              title="Toda la audiencia activa"
+              description="Trae automáticamente todos los suscriptores activos desde Resend, los clasifica contra BOS y envía a cada uno."
+              badge="Producción"
+              badgeColor="navy"
             />
-          )}
-        </section>
+            <ModeOption
+              active={mode === 'test'}
+              disabled={running}
+              onClick={() => setMode('test')}
+              icon={FlaskConical}
+              title="Lista manual de prueba"
+              description="Solo envía a los emails que pegues abajo. Útil para QA antes de un envío real."
+              badge="Avanzado"
+              badgeColor="gold"
+            />
+          </div>
+          <AnimatePresence initial={false}>
+            {mode === 'test' && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4 pl-1">
+                  <label className="block text-xs font-semibold text-gray-700 mb-2">
+                    Emails de prueba (uno por línea o separados por coma)
+                  </label>
+                  <textarea
+                    value={testEmailsText}
+                    onChange={(e) => setTestEmailsText(e.target.value)}
+                    placeholder={'email1@ejemplo.com\nemail2@ejemplo.com'}
+                    disabled={running}
+                    rows={4}
+                    className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#B2904D] focus:border-transparent"
+                  />
+                  <p className="text-xs text-gray-500 mt-2">
+                    {testEmails.length} email{testEmails.length === 1 ? '' : 's'} válidos detectados.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Card>
 
-        <section style={styles.section}>
-          {!running && !confirmStep && (
+        <Card>
+          <SectionTitle icon={Send} step={4} title="Acción" />
+          <div className="mt-4 space-y-3">
+            <label
+              className={`flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                dryRun
+                  ? 'border-emerald-400 bg-emerald-50'
+                  : 'border-gray-200 bg-white hover:border-gray-300'
+              } ${running ? 'opacity-60 cursor-not-allowed' : ''}`}
+            >
+              <input
+                type="checkbox"
+                checked={dryRun}
+                onChange={(e) => setDryRun(e.target.checked)}
+                disabled={running}
+                className="mt-1 w-4 h-4 accent-emerald-500"
+              />
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <Eye className="w-4 h-4 text-emerald-700" />
+                  <span className="font-semibold text-sm text-emerald-900">
+                    Dry run — solo previsualiza
+                  </span>
+                </div>
+                <p className="text-xs text-emerald-800/80 mt-1">
+                  Clasifica todos los suscriptores contra BOS pero <strong>no envía</strong> ningún correo. Recomendado antes del envío real.
+                </p>
+              </div>
+            </label>
+          </div>
+
+          {!confirmStep && !running && (
             <button
               type="button"
               onClick={() => setConfirmStep(true)}
-              disabled={!token || !slug}
-              style={styles.primaryButton}
+              disabled={!canStart}
+              className={`mt-5 w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all ${
+                canStart
+                  ? dryRun
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                    : 'bg-[#B2904D] hover:bg-[#9a7c40] text-white'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
             >
-              Preparar envío
+              {dryRun ? (
+                <>
+                  <Eye className="w-4 h-4" />
+                  Preparar dry run
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Preparar envío real
+                </>
+              )}
             </button>
           )}
-          {!running && confirmStep && (
-            <div style={styles.confirmBox}>
-              <p style={{ margin: 0, fontWeight: 600 }}>
-                {dryRun
-                  ? 'Ejecutarás un DRY RUN (sin enviar correos reales).'
-                  : 'Se enviarán correos REALES a los suscriptores.'}
-              </p>
-              <div style={styles.row}>
-                <button type="button" onClick={startBlast} style={styles.primaryButton}>
-                  {dryRun ? 'Ejecutar dry run' : 'Confirmar y enviar'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setConfirmStep(false)}
-                  style={styles.secondaryButton}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          )}
+
+          <AnimatePresence>
+            {confirmStep && !running && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className={`mt-5 p-5 rounded-xl border-2 ${
+                  dryRun ? 'border-emerald-200 bg-emerald-50' : 'border-amber-300 bg-amber-50'
+                }`}
+              >
+                <div className="flex items-start gap-3 mb-4">
+                  {dryRun ? (
+                    <Eye className="w-5 h-5 text-emerald-700 flex-shrink-0 mt-0.5" />
+                  ) : (
+                    <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                  )}
+                  <div>
+                    <p className="font-semibold text-sm text-gray-900">
+                      {dryRun
+                        ? 'Vas a ejecutar un DRY RUN.'
+                        : 'Vas a enviar correos REALES.'}
+                    </p>
+                    <ul className="text-xs text-gray-700 mt-2 space-y-1">
+                      <li>· Edición: <strong>{selectedEdition && (language === 'es' ? selectedEdition.titleEs : selectedEdition.titleEn)}</strong></li>
+                      <li>· Idioma: <strong>{language === 'es' ? 'Español' : 'English'}</strong></li>
+                      <li>· Audiencia: <strong>{mode === 'production' ? 'Toda la lista activa de Resend' : `${testEmails.length} emails de prueba`}</strong></li>
+                      <li>· Modo: <strong>{dryRun ? 'Sin enviar (preview)' : 'Envío real'}</strong></li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={startBlast}
+                    className={`flex-1 py-2.5 px-4 rounded-lg font-semibold text-sm text-white transition-colors ${
+                      dryRun
+                        ? 'bg-emerald-600 hover:bg-emerald-700'
+                        : 'bg-amber-600 hover:bg-amber-700'
+                    }`}
+                  >
+                    {dryRun ? 'Ejecutar dry run' : 'Sí, enviar ahora'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmStep(false)}
+                    className="px-4 py-2.5 rounded-lg font-semibold text-sm text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {running && (
-            <button type="button" onClick={cancel} style={styles.secondaryButton}>
+            <button
+              type="button"
+              onClick={cancel}
+              className="mt-5 w-full py-3 px-4 rounded-xl font-semibold text-sm text-red-700 bg-white border-2 border-red-300 hover:bg-red-50 flex items-center justify-center gap-2"
+            >
+              <X className="w-4 h-4" />
               Cancelar proceso
             </button>
           )}
-        </section>
+        </Card>
 
-        {(running || events.length > 0) && (
-          <section style={styles.progressSection}>
-            <div style={styles.progressBarWrap}>
-              <div
-                style={{
-                  ...styles.progressBarFill,
-                  width: `${progressPct}%`,
-                }}
-              />
-            </div>
-            <div style={styles.metricsRow}>
-              <Metric label="Procesados" value={latest?.processed ?? 0} />
-              <Metric label="Total" value={latest?.total ?? 0} />
-              <Metric label="Con CTA" value={latest?.withCta ?? 0} />
-              <Metric label="Sin CTA" value={latest?.withoutCta ?? 0} />
-              <Metric label="Errores" value={latest?.errors ?? 0} tone="error" />
-            </div>
-            {latest?.currentEmail && (
-              <div style={styles.currentEmail}>→ {latest.currentEmail}</div>
-            )}
-          </section>
-        )}
+        <AnimatePresence>
+          {(running || events.length > 0) && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6"
+            >
+              <Card>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    {running ? (
+                      <Loader2 className="w-5 h-5 text-[#B2904D] animate-spin" />
+                    ) : (
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                    )}
+                    <h2 className="font-semibold text-[#001540]">
+                      {running ? 'Procesando...' : 'Proceso completado'}
+                    </h2>
+                  </div>
+                  <span className="text-sm text-gray-500 font-mono">
+                    {progressPct}%
+                  </span>
+                </div>
 
-        {summary && (
-          <section style={styles.summaryBox}>
-            <h2 style={styles.h2}>Resumen</h2>
-            <ul style={styles.summaryList}>
-              <li>Procesados: {summary.processed} / {summary.total}</li>
-              <li>Con CTA: {summary.withCta}</li>
-              <li>Sin CTA: {summary.withoutCta}</li>
-              <li>Errores: {summary.errors}</li>
-            </ul>
-            {summary.message && <p style={styles.hint}>{summary.message}</p>}
-          </section>
-        )}
+                <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden mb-5">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-[#B2904D] to-[#d4a85f]"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progressPct}%` }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
 
-        {fatalError && (
-          <section style={styles.errorBox}>
-            <strong>Error</strong>
-            <div>{fatalError}</div>
-          </section>
-        )}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-4">
+                  <Metric label="Procesados" value={latest?.processed ?? 0} />
+                  <Metric label="Total" value={latest?.total ?? 0} />
+                  <Metric label="Con CTA" value={latest?.withCta ?? 0} tone="cta" />
+                  <Metric label="Sin CTA" value={latest?.withoutCta ?? 0} tone="no-cta" />
+                  <Metric label="Errores" value={latest?.errors ?? 0} tone="error" />
+                </div>
+
+                {latest?.currentEmail && running && (
+                  <div className="text-xs text-gray-500 font-mono px-3 py-2 bg-gray-50 rounded-lg">
+                    → {latest.currentEmail}
+                  </div>
+                )}
+
+                {errorEvents.length > 0 && (
+                  <details className="mt-4 group">
+                    <summary className="flex items-center justify-between cursor-pointer text-xs font-semibold text-red-700 hover:text-red-800">
+                      <span className="flex items-center gap-1.5">
+                        <AlertTriangle className="w-3.5 h-3.5" />
+                        {errorEvents.length} evento{errorEvents.length === 1 ? '' : 's'} con mensaje
+                      </span>
+                      <ChevronDown className="w-3.5 h-3.5 group-open:hidden" />
+                      <ChevronUp className="w-3.5 h-3.5 hidden group-open:block" />
+                    </summary>
+                    <div className="mt-3 max-h-48 overflow-y-auto bg-red-50 border border-red-200 rounded-lg divide-y divide-red-100">
+                      {errorEvents.slice(-30).map((e, i) => (
+                        <div key={i} className="px-3 py-2 text-xs font-mono">
+                          <span className="text-gray-500">{e.currentEmail}</span>
+                          <span className="text-red-700 ml-2 break-all">{e.message}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </details>
+                )}
+              </Card>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {summary && !running && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6"
+            >
+              <div className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <ShieldCheck className="w-5 h-5 text-emerald-700" />
+                  <h2 className="font-bold text-emerald-900">Resumen final</h2>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <SummaryStat label="Procesados" value={`${summary.processed} / ${summary.total}`} />
+                  <SummaryStat label="Con CTA" value={summary.withCta} />
+                  <SummaryStat label="Sin CTA" value={summary.withoutCta} />
+                  <SummaryStat label="Errores" value={summary.errors} highlight={summary.errors > 0} />
+                </div>
+                {summary.message && (
+                  <p className="text-xs text-emerald-700 mt-4">{summary.message}</p>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {fatalError && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 bg-red-50 border-2 border-red-200 rounded-2xl p-5"
+            >
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-red-900">Error</p>
+                  <p className="text-sm text-red-800 mt-1 break-words">{fatalError}</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+function Card({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-5">
+      {children}
+    </div>
+  );
+}
+
+function SectionTitle({
+  icon: Icon,
+  step,
+  title,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  step: number;
+  title: string;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#001540] text-white text-xs font-bold">
+        {step}
+      </div>
+      <div className="flex items-center gap-2">
+        <Icon className="w-4 h-4 text-[#B2904D]" />
+        <h2 className="font-semibold text-[#001540]">{title}</h2>
+      </div>
+    </div>
+  );
+}
+
+function ModeOption({
+  active,
+  disabled,
+  onClick,
+  icon: Icon,
+  title,
+  description,
+  badge,
+  badgeColor,
+}: {
+  active: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  badge: string;
+  badgeColor: 'navy' | 'gold';
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+        active
+          ? 'border-[#001540] bg-blue-50/30'
+          : 'border-gray-200 hover:border-gray-300 bg-white'
+      } ${disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+    >
+      <div className="flex items-start gap-3">
+        <div
+          className={`mt-0.5 w-4 h-4 rounded-full border-2 flex-shrink-0 ${
+            active ? 'border-[#001540] bg-[#001540]' : 'border-gray-300'
+          }`}
+        />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <Icon className="w-4 h-4 text-gray-600" />
+            <span className="font-semibold text-sm text-[#001540]">{title}</span>
+            <span
+              className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full ${
+                badgeColor === 'navy'
+                  ? 'bg-[#001540] text-white'
+                  : 'bg-[#B2904D] text-white'
+              }`}
+            >
+              {badge}
+            </span>
+          </div>
+          <p className="text-xs text-gray-600 mt-1.5">{description}</p>
+        </div>
+      </div>
+    </button>
   );
 }
 
@@ -329,139 +641,47 @@ function Metric({
 }: {
   label: string;
   value: number;
-  tone?: 'error';
+  tone?: 'error' | 'cta' | 'no-cta';
+}) {
+  const toneClass =
+    tone === 'error' && value > 0
+      ? 'text-red-600'
+      : tone === 'cta'
+      ? 'text-[#B2904D]'
+      : tone === 'no-cta'
+      ? 'text-emerald-600'
+      : 'text-[#001540]';
+  return (
+    <div className="bg-white border border-gray-100 rounded-lg px-3 py-2.5 text-center">
+      <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">
+        {label}
+      </div>
+      <div className={`text-lg md:text-xl font-bold tabular-nums ${toneClass}`}>{value}</div>
+    </div>
+  );
+}
+
+function SummaryStat({
+  label,
+  value,
+  highlight,
+}: {
+  label: string;
+  value: string | number;
+  highlight?: boolean;
 }) {
   return (
-    <div style={styles.metric}>
-      <div style={styles.metricLabel}>{label}</div>
-      <div
-        style={{
-          ...styles.metricValue,
-          color: tone === 'error' && value > 0 ? '#b91c1c' : '#001540',
-        }}
-      >
+    <div
+      className={`p-3 rounded-lg ${
+        highlight ? 'bg-red-100 border border-red-200' : 'bg-white border border-emerald-100'
+      }`}
+    >
+      <div className="text-[10px] uppercase tracking-wider font-semibold text-gray-500">
+        {label}
+      </div>
+      <div className={`text-lg font-bold ${highlight ? 'text-red-700' : 'text-emerald-900'}`}>
         {value}
       </div>
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  page: {
-    minHeight: '100vh',
-    background: '#f6f9fc',
-    padding: '48px 16px',
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif',
-    color: '#111827',
-  },
-  card: {
-    maxWidth: 720,
-    margin: '0 auto',
-    background: '#fff',
-    borderRadius: 12,
-    boxShadow: '0 8px 24px rgba(0,0,0,0.06)',
-    padding: 32,
-  },
-  header: { borderBottom: '3px solid #B2904D', paddingBottom: 16, marginBottom: 24 },
-  h1: { margin: 0, fontSize: 24, color: '#001540', fontWeight: 700 },
-  h2: { margin: '0 0 12px 0', fontSize: 18, color: '#001540' },
-  sub: { margin: '4px 0 0 0', color: '#6b7280', fontSize: 13 },
-  section: { marginBottom: 20 },
-  label: {
-    display: 'block',
-    fontSize: 13,
-    fontWeight: 600,
-    color: '#001540',
-    marginBottom: 6,
-  },
-  input: {
-    width: '100%',
-    padding: '10px 12px',
-    border: '1px solid #d1d5db',
-    borderRadius: 6,
-    fontSize: 14,
-    background: '#fff',
-    color: '#111827',
-    boxSizing: 'border-box' as const,
-  },
-  hint: { fontSize: 12, color: '#6b7280', marginTop: 6 },
-  row: { display: 'flex', gap: 12, flexWrap: 'wrap' as const },
-  radio: { fontSize: 14, cursor: 'pointer' },
-  checkbox: { display: 'block', fontSize: 14, marginBottom: 8, cursor: 'pointer' },
-  primaryButton: {
-    background: '#001540',
-    color: '#fff',
-    border: 'none',
-    borderRadius: 6,
-    padding: '10px 20px',
-    fontSize: 14,
-    fontWeight: 600,
-    cursor: 'pointer',
-  },
-  secondaryButton: {
-    background: '#fff',
-    color: '#001540',
-    border: '1px solid #001540',
-    borderRadius: 6,
-    padding: '10px 20px',
-    fontSize: 14,
-    fontWeight: 600,
-    cursor: 'pointer',
-  },
-  confirmBox: {
-    background: '#fffbeb',
-    border: '1px solid #fcd34d',
-    borderRadius: 6,
-    padding: 16,
-  },
-  progressSection: {
-    background: '#f9fafb',
-    borderRadius: 8,
-    padding: 16,
-    marginTop: 20,
-  },
-  progressBarWrap: {
-    height: 10,
-    background: '#e5e7eb',
-    borderRadius: 999,
-    overflow: 'hidden',
-    marginBottom: 12,
-  },
-  progressBarFill: {
-    height: '100%',
-    background: '#B2904D',
-    transition: 'width 200ms ease',
-  },
-  metricsRow: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(5, 1fr)',
-    gap: 8,
-  },
-  metric: {
-    background: '#fff',
-    padding: '8px 10px',
-    borderRadius: 6,
-    textAlign: 'center' as const,
-  },
-  metricLabel: { fontSize: 11, color: '#6b7280', textTransform: 'uppercase' as const },
-  metricValue: { fontSize: 18, fontWeight: 700 },
-  currentEmail: { fontSize: 12, color: '#6b7280', marginTop: 12, fontFamily: 'monospace' },
-  summaryBox: {
-    background: '#ecfdf5',
-    border: '1px solid #6ee7b7',
-    borderRadius: 6,
-    padding: 16,
-    marginTop: 20,
-  },
-  summaryList: { margin: 0, paddingLeft: 20, fontSize: 14, color: '#065f46' },
-  errorBox: {
-    background: '#fef2f2',
-    border: '1px solid #fca5a5',
-    borderRadius: 6,
-    padding: 16,
-    marginTop: 20,
-    color: '#991b1b',
-    fontSize: 14,
-  },
-};

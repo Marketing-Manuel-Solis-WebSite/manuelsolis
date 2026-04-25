@@ -1,6 +1,12 @@
 import { NextRequest } from 'next/server';
 import { newsletters } from '../../../lib/newsletterData';
-import { extractBearer, verifyBlastSecret } from '../../../lib/newsletter/auth';
+import {
+  ADMIN_COOKIE_NAME,
+  extractBearer,
+  isSameOriginRequest,
+  verifyBlastSecret,
+  verifySessionToken,
+} from '../../../lib/newsletter/auth';
 import {
   BosRateLimiter,
   lookupPersonByEmail,
@@ -26,8 +32,12 @@ export const runtime = 'nodejs';
 export const maxDuration = 300;
 export const dynamic = 'force-dynamic';
 
-const FROM_ADDRESS = 'Manuel Solis Law <newsletter@manuelsolis.com>';
+const DEFAULT_FROM_ADDRESS = 'Manuel Solis Law <newsletter@manuelsolis.com>';
 const DEFAULT_MAX_PER_RUN = 250;
+
+function getFromAddress(): string {
+  return process.env.NEWSLETTER_FROM_ADDRESS || DEFAULT_FROM_ADDRESS;
+}
 
 let activeBlast = false;
 
@@ -39,12 +49,27 @@ interface BlastRequestBody {
 }
 
 export async function POST(request: NextRequest) {
-  const token = extractBearer(request.headers.get('authorization'));
-  if (!verifyBlastSecret(token)) {
+  const bearer = extractBearer(request.headers.get('authorization'));
+  const cookieToken = request.cookies.get(ADMIN_COOKIE_NAME)?.value ?? null;
+  const bearerOk = verifyBlastSecret(bearer);
+  const cookieOk = verifySessionToken(cookieToken);
+
+  if (!bearerOk && !cookieOk) {
     return new Response(
       JSON.stringify({ ok: false, error: 'Unauthorized' }),
       { status: 401, headers: { 'Content-Type': 'application/json' } },
     );
+  }
+
+  if (cookieOk && !bearerOk) {
+    const origin = request.headers.get('origin');
+    const host = request.headers.get('host');
+    if (!isSameOriginRequest(origin, host)) {
+      return new Response(
+        JSON.stringify({ ok: false, error: 'Cross-origin requests are not allowed for cookie auth' }),
+        { status: 403, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
   }
 
   if (activeBlast) {
@@ -167,6 +192,7 @@ export async function POST(request: NextRequest) {
           if (variant === 'cta') counters.withCta += 1;
           else counters.withoutCta += 1;
 
+          let sendErrorMessage: string | null = null;
           try {
             if (!dryRun && resend) {
               const subject = buildSubject(edition.title[language], language);
@@ -182,8 +208,8 @@ export async function POST(request: NextRequest) {
                 })),
               });
 
-              await resend.emails.send({
-                from: FROM_ADDRESS,
+              const result = await resend.emails.send({
+                from: getFromAddress(),
                 to: subscriber.email,
                 subject,
                 react,
@@ -194,18 +220,35 @@ export async function POST(request: NextRequest) {
                   'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
                 },
               });
+
+              if (result?.error) {
+                const err = result.error as { name?: string; message?: string };
+                sendErrorMessage = `Resend ${err.name ?? 'error'}: ${err.message ?? JSON.stringify(result.error)}`;
+              }
             }
-          } catch {
+          } catch (sendErr) {
+            sendErrorMessage =
+              sendErr instanceof Error ? sendErr.message : 'Unknown send error';
+          }
+
+          if (sendErrorMessage) {
             counters.errors += 1;
             if (variant === 'cta') counters.withCta -= 1;
             else counters.withoutCta -= 1;
+            console.error(
+              `[blast] send failed for ${subscriber.email}: ${sendErrorMessage}`,
+            );
           }
+
+          const progressMessage =
+            sendErrorMessage ??
+            (lookupFailed ? 'BOS lookup failed, defaulted to CTA' : undefined);
 
           send({
             type: 'progress',
             ...counters,
             currentEmail: maskEmail(subscriber.email),
-            message: lookupFailed ? 'BOS lookup failed, defaulted to CTA' : undefined,
+            message: progressMessage,
           });
         }
 
