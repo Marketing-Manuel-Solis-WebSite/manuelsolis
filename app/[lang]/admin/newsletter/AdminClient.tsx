@@ -18,6 +18,8 @@ import {
   Loader2,
   Eye,
   X,
+  Newspaper,
+  FileText,
 } from 'lucide-react';
 import { logoutAction } from './actions';
 
@@ -32,6 +34,20 @@ type Edition = {
   sectionsCountEn: number;
 };
 
+type Blog = {
+  slug: string;
+  titleEs: string;
+  titleEn: string;
+  excerptEs: string;
+  excerptEn: string;
+  categoryEs: string;
+  categoryEn: string;
+  author: string;
+  date: string;
+  readTime: string;
+  image: string;
+};
+
 type ProgressEvent = {
   type: 'progress' | 'summary' | 'error' | 'started';
   processed: number;
@@ -44,15 +60,21 @@ type ProgressEvent = {
 };
 
 type Mode = 'production' | 'test';
+type ContentType = 'edition' | 'blog';
 
 export default function AdminClient({
   lang,
   editions,
+  blogs,
 }: {
   lang: 'es' | 'en';
   editions: Edition[];
+  blogs: Blog[];
 }) {
-  const [slug, setSlug] = useState(editions[0]?.slug ?? '');
+  const [contentType, setContentType] = useState<ContentType>('blog');
+  const [editionSlug, setEditionSlug] = useState(editions[0]?.slug ?? '');
+  const [blogSlug, setBlogSlug] = useState(blogs[0]?.slug ?? '');
+  const slug = contentType === 'edition' ? editionSlug : blogSlug;
   const [language, setLanguage] = useState<'es' | 'en'>('es');
   const [mode, setMode] = useState<Mode>('production');
   const [dryRun, setDryRun] = useState(true);
@@ -68,7 +90,12 @@ export default function AdminClient({
   const latest = events.at(-1);
   const progressPct =
     latest && latest.total > 0 ? Math.round((latest.processed / latest.total) * 100) : 0;
-  const selectedEdition = editions.find((e) => e.slug === slug);
+  const selectedEdition = editions.find((e) => e.slug === editionSlug);
+  const selectedBlog = blogs.find((b) => b.slug === blogSlug);
+  const selectedTitle =
+    contentType === 'blog'
+      ? selectedBlog && (language === 'es' ? selectedBlog.titleEs : selectedBlog.titleEn)
+      : selectedEdition && (language === 'es' ? selectedEdition.titleEs : selectedEdition.titleEn);
   const errorEvents = events.filter((e) => e.type === 'progress' && e.message);
 
   const testEmails = testEmailsText
@@ -100,6 +127,7 @@ export default function AdminClient({
           slug,
           language,
           dryRun,
+          contentType,
           testEmails: mode === 'test' ? testEmails : undefined,
         }),
         signal: controller.signal,
@@ -185,47 +213,117 @@ export default function AdminClient({
         </header>
 
         <Card>
-          <SectionTitle icon={Calendar} step={1} title="Edición a enviar" />
-          <div className="mt-4 space-y-2">
-            {editions.map((ed) => (
-              <button
-                key={ed.slug}
-                type="button"
-                onClick={() => setSlug(ed.slug)}
-                disabled={running}
-                className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-                  slug === ed.slug
-                    ? 'border-[#B2904D] bg-[#fbf7ef]'
-                    : 'border-gray-200 hover:border-gray-300 bg-white'
-                } ${running ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
-              >
-                <div className="flex items-start gap-3">
-                  <div
-                    className={`mt-1 w-4 h-4 rounded-full border-2 flex-shrink-0 ${
-                      slug === ed.slug
-                        ? 'border-[#B2904D] bg-[#B2904D]'
-                        : 'border-gray-300'
-                    }`}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {new Date(ed.date).toLocaleDateString(lang === 'es' ? 'es-MX' : 'en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}
-                    </div>
-                    <div className="font-semibold text-[#001540] text-sm md:text-base">
-                      {language === 'es' ? ed.titleEs : ed.titleEn}
-                    </div>
-                    <p className="text-xs text-gray-600 mt-1 line-clamp-2">
-                      {language === 'es' ? ed.descriptionEs : ed.descriptionEn}
-                    </p>
-                  </div>
-                </div>
-              </button>
-            ))}
+          <SectionTitle icon={FileText} step={1} title="Tipo de envío" />
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            <TypeTab
+              active={contentType === 'blog'}
+              disabled={running}
+              onClick={() => setContentType('blog')}
+              icon={FileText}
+              title="Blog post"
+              caption={`${blogs.length} disponibles`}
+            />
+            <TypeTab
+              active={contentType === 'edition'}
+              disabled={running}
+              onClick={() => setContentType('edition')}
+              icon={Newspaper}
+              title="Edición de newsletter"
+              caption={`${editions.length} disponibles`}
+            />
+          </div>
+
+          <div className="mt-5">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
+              {contentType === 'blog' ? 'Elige el blog' : 'Elige la edición'}
+            </h3>
+            <div className="space-y-2 max-h-[460px] overflow-y-auto pr-1">
+              {contentType === 'blog'
+                ? blogs.map((b) => (
+                    <button
+                      key={b.slug}
+                      type="button"
+                      onClick={() => setBlogSlug(b.slug)}
+                      disabled={running}
+                      className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+                        blogSlug === b.slug
+                          ? 'border-[#B2904D] bg-[#fbf7ef]'
+                          : 'border-gray-200 hover:border-gray-300 bg-white'
+                      } ${running ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`mt-1 w-4 h-4 rounded-full border-2 flex-shrink-0 ${
+                            blogSlug === b.slug
+                              ? 'border-[#B2904D] bg-[#B2904D]'
+                              : 'border-gray-300'
+                          }`}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap text-xs text-gray-500 mb-1">
+                            <span className="px-2 py-0.5 rounded-full bg-[#001540] text-white text-[10px] font-bold uppercase tracking-wide">
+                              {language === 'es' ? b.categoryEs : b.categoryEn}
+                            </span>
+                            <span className="inline-flex items-center gap-1">
+                              <Calendar className="w-3 h-3" />
+                              {new Date(b.date).toLocaleDateString(lang === 'es' ? 'es-MX' : 'en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                              })}
+                            </span>
+                            <span>· {b.readTime}</span>
+                          </div>
+                          <div className="font-semibold text-[#001540] text-sm leading-snug">
+                            {language === 'es' ? b.titleEs : b.titleEn}
+                          </div>
+                          <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                            {language === 'es' ? b.excerptEs : b.excerptEn}
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+                  ))
+                : editions.map((ed) => (
+                    <button
+                      key={ed.slug}
+                      type="button"
+                      onClick={() => setEditionSlug(ed.slug)}
+                      disabled={running}
+                      className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+                        editionSlug === ed.slug
+                          ? 'border-[#B2904D] bg-[#fbf7ef]'
+                          : 'border-gray-200 hover:border-gray-300 bg-white'
+                      } ${running ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`mt-1 w-4 h-4 rounded-full border-2 flex-shrink-0 ${
+                            editionSlug === ed.slug
+                              ? 'border-[#B2904D] bg-[#B2904D]'
+                              : 'border-gray-300'
+                          }`}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
+                            <Calendar className="w-3.5 h-3.5" />
+                            {new Date(ed.date).toLocaleDateString(lang === 'es' ? 'es-MX' : 'en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            })}
+                          </div>
+                          <div className="font-semibold text-[#001540] text-sm md:text-base">
+                            {language === 'es' ? ed.titleEs : ed.titleEn}
+                          </div>
+                          <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                            {language === 'es' ? ed.descriptionEs : ed.descriptionEn}
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+            </div>
           </div>
         </Card>
 
@@ -384,7 +482,8 @@ export default function AdminClient({
                         : 'Vas a enviar correos REALES.'}
                     </p>
                     <ul className="text-xs text-gray-700 mt-2 space-y-1">
-                      <li>· Edición: <strong>{selectedEdition && (language === 'es' ? selectedEdition.titleEs : selectedEdition.titleEn)}</strong></li>
+                      <li>· Tipo: <strong>{contentType === 'blog' ? 'Blog post' : 'Edición de newsletter'}</strong></li>
+                      <li>· Contenido: <strong>{selectedTitle}</strong></li>
                       <li>· Idioma: <strong>{language === 'es' ? 'Español' : 'English'}</strong></li>
                       <li>· Audiencia: <strong>{mode === 'production' ? 'Toda la lista activa de Resend' : `${testEmails.length} emails de prueba`}</strong></li>
                       <li>· Modo: <strong>{dryRun ? 'Sin enviar (preview)' : 'Envío real'}</strong></li>
@@ -574,6 +673,43 @@ function SectionTitle({
         <h2 className="font-semibold text-[#001540]">{title}</h2>
       </div>
     </div>
+  );
+}
+
+function TypeTab({
+  active,
+  disabled,
+  onClick,
+  icon: Icon,
+  title,
+  caption,
+}: {
+  active: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  caption: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={`p-4 rounded-xl border-2 text-left transition-all ${
+        active
+          ? 'border-[#001540] bg-[#001540] text-white'
+          : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+      } ${disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+    >
+      <div className="flex items-center gap-2 mb-1">
+        <Icon className={`w-4 h-4 ${active ? 'text-[#B2904D]' : 'text-gray-500'}`} />
+        <span className="font-bold text-sm">{title}</span>
+      </div>
+      <div className={`text-xs ${active ? 'text-blue-100/80' : 'text-gray-500'}`}>
+        {caption}
+      </div>
+    </button>
   );
 }
 

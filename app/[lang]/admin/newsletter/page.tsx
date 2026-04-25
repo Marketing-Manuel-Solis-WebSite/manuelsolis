@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { newsletters } from '../../../lib/newsletterData';
+import { getAllBlogPosts } from '../../../lib/newsletter/blogIndex';
 import {
   ADMIN_COOKIE_NAME,
   verifySessionToken,
@@ -55,5 +56,22 @@ export default async function AdminNewsletterPage({ params, searchParams }: Prop
     sectionsCountEn: n.content.en.length,
   }));
 
-  return <AdminClient lang={lang} editions={editions} />;
+  const blogs = getAllBlogPosts()
+    .slice()
+    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .map((p) => ({
+      slug: p.slug,
+      titleEs: p.title.es,
+      titleEn: p.title.en,
+      excerptEs: p.excerpt.es,
+      excerptEn: p.excerpt.en,
+      categoryEs: p.category.es,
+      categoryEn: p.category.en,
+      author: p.author,
+      date: p.date,
+      readTime: p.readTime,
+      image: p.image,
+    }));
+
+  return <AdminClient lang={lang} editions={editions} blogs={blogs} />;
 }

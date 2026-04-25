@@ -27,6 +27,12 @@ import type {
 } from '../../../lib/newsletter/types';
 import { NewsletterCtaEmail } from '../../../../emails/newsletterCta';
 import { NewsletterNoCtaEmail } from '../../../../emails/newsletterNoCta';
+import { NewsletterBlogCtaEmail } from '../../../../emails/newsletterBlogCta';
+import { NewsletterBlogNoCtaEmail } from '../../../../emails/newsletterBlogNoCta';
+import {
+  getBlogPostBySlug,
+  type BlogPostMeta,
+} from '../../../lib/newsletter/blogIndex';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -41,12 +47,35 @@ function getFromAddress(): string {
 
 let activeBlast = false;
 
+type ContentType = 'edition' | 'blog';
+
 interface BlastRequestBody {
   slug?: string;
   language?: Language;
   dryRun?: boolean;
   testEmails?: string[];
+  contentType?: ContentType;
 }
+
+type ResolvedContent =
+  | {
+      kind: 'edition';
+      slug: string;
+      title: string;
+      description: string;
+      sections: Array<{ heading: string; body: string }>;
+    }
+  | {
+      kind: 'blog';
+      slug: string;
+      title: string;
+      excerpt: string;
+      image: string;
+      category: string;
+      author: string;
+      date: string;
+      readTime: string;
+    };
 
 export async function POST(request: NextRequest) {
   const bearer = extractBearer(request.headers.get('authorization'));
@@ -92,6 +121,7 @@ export async function POST(request: NextRequest) {
   const slug = body.slug?.trim();
   const language: Language = body.language === 'en' ? 'en' : 'es';
   const dryRun = Boolean(body.dryRun);
+  const contentType: ContentType = body.contentType === 'blog' ? 'blog' : 'edition';
   const testEmails = Array.isArray(body.testEmails)
     ? body.testEmails.map((e) => String(e).trim().toLowerCase()).filter(Boolean)
     : null;
@@ -103,12 +133,34 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const edition = newsletters.find((n) => n.slug === slug);
-  if (!edition) {
-    return new Response(
-      JSON.stringify({ ok: false, error: `Edition not found: ${slug}` }),
-      { status: 404, headers: { 'Content-Type': 'application/json' } },
-    );
+  let content: ResolvedContent;
+  if (contentType === 'blog') {
+    const blog = getBlogPostBySlug(slug);
+    if (!blog) {
+      return new Response(
+        JSON.stringify({ ok: false, error: `Blog post not found: ${slug}` }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
+    content = blogToContent(blog, language);
+  } else {
+    const edition = newsletters.find((n) => n.slug === slug);
+    if (!edition) {
+      return new Response(
+        JSON.stringify({ ok: false, error: `Edition not found: ${slug}` }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
+    content = {
+      kind: 'edition',
+      slug: edition.slug,
+      title: edition.title[language],
+      description: edition.description[language],
+      sections: edition.content[language].map((s) => ({
+        heading: s.heading,
+        body: s.body,
+      })),
+    };
   }
 
   activeBlast = true;
@@ -195,18 +247,13 @@ export async function POST(request: NextRequest) {
           let sendErrorMessage: string | null = null;
           try {
             if (!dryRun && resend) {
-              const subject = buildSubject(edition.title[language], language);
-              const react = renderVariant(variant, {
-                firstName: prettyName(subscriber.first_name || ''),
+              const subject = buildSubject(content.title, language, content.kind);
+              const react = renderEmail(
+                variant,
+                content,
+                prettyName(subscriber.first_name || ''),
                 language,
-                editionTitle: edition.title[language],
-                editionDescription: edition.description[language],
-                editionSlug: edition.slug,
-                sections: edition.content[language].map((s) => ({
-                  heading: s.heading,
-                  body: s.body,
-                })),
-              });
+              );
 
               const result = await resend.emails.send({
                 from: getFromAddress(),
@@ -278,26 +325,62 @@ export async function POST(request: NextRequest) {
   });
 }
 
-function buildSubject(title: string, language: Language): string {
-  const prefix = language === 'es' ? 'Newsletter · ' : 'Newsletter · ';
-  return `${prefix}${title}`;
+function buildSubject(title: string, language: Language, kind: 'edition' | 'blog'): string {
+  if (kind === 'blog') {
+    return language === 'es' ? `Nuevo en el blog · ${title}` : `New on the blog · ${title}`;
+  }
+  return `Newsletter · ${title}`;
 }
 
-function renderVariant(
+function renderEmail(
   variant: BlastVariant,
-  props: {
-    firstName: string;
-    language: Language;
-    editionTitle: string;
-    editionDescription: string;
-    editionSlug: string;
-    sections: Array<{ heading: string; body: string }>;
-  },
+  content: ResolvedContent,
+  firstName: string,
+  language: Language,
 ): React.ReactElement {
-  if (variant === 'no-cta') {
-    return NewsletterNoCtaEmail(props);
+  if (content.kind === 'blog') {
+    const props = {
+      firstName,
+      language,
+      blogTitle: content.title,
+      blogExcerpt: content.excerpt,
+      blogSlug: content.slug,
+      blogImage: content.image,
+      blogCategory: content.category,
+      blogAuthor: content.author,
+      blogDate: content.date,
+      blogReadTime: content.readTime,
+    };
+    return variant === 'no-cta'
+      ? NewsletterBlogNoCtaEmail(props)
+      : NewsletterBlogCtaEmail(props);
   }
-  return NewsletterCtaEmail(props);
+
+  const props = {
+    firstName,
+    language,
+    editionTitle: content.title,
+    editionDescription: content.description,
+    editionSlug: content.slug,
+    sections: content.sections,
+  };
+  return variant === 'no-cta'
+    ? NewsletterNoCtaEmail(props)
+    : NewsletterCtaEmail(props);
+}
+
+function blogToContent(blog: BlogPostMeta, language: Language): ResolvedContent {
+  return {
+    kind: 'blog',
+    slug: blog.slug,
+    title: blog.title[language],
+    excerpt: blog.excerpt[language],
+    image: blog.image,
+    category: blog.category[language],
+    author: blog.author,
+    date: blog.date,
+    readTime: blog.readTime,
+  };
 }
 
 function prettyName(raw: string): string {

@@ -15,7 +15,7 @@ const SITE_URL = 'https://www.manuelsolis.com';
 const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`; 
 
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
-const BLOG_DATA = {
+export const BLOG_DATA = {
   posts: [
     // --- BLOG 30 - TPS 2026 ---
     {
