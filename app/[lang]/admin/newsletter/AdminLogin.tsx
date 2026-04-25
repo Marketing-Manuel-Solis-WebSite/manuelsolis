@@ -8,10 +8,12 @@ export default function AdminLogin({
   lang,
   hasError,
   errorKind,
+  next,
 }: {
   lang: 'es' | 'en';
   hasError: boolean;
   errorKind?: 'invalid' | 'server';
+  next?: string;
 }) {
   const errorMessage =
     errorKind === 'server'
@@ -42,6 +44,7 @@ export default function AdminLogin({
 
           <form action={loginAction} className="px-8 py-8 space-y-5">
             <input type="hidden" name="lang" value={lang} />
+            {next && <input type="hidden" name="next" value={next} />}
 
             <div>
               <label

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import {
   Mail,
   Send,
@@ -20,6 +21,7 @@ import {
   X,
   Newspaper,
   FileText,
+  ArrowLeft,
 } from 'lucide-react';
 import { logoutAction } from './actions';
 
@@ -185,11 +187,18 @@ export default function AdminClient({
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-4">
       <div className="max-w-3xl mx-auto">
         <header className="mb-8">
+          <Link
+            href={`/${lang}/admin`}
+            className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#001540] mb-4 transition"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Volver al panel
+          </Link>
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#001540] text-white text-xs font-bold tracking-wider uppercase mb-3">
                 <Mail className="w-3.5 h-3.5" />
-                Admin
+                Admin · Newsletter
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-[#001540] tracking-tight">
                 Newsletter Blast

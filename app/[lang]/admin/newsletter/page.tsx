@@ -41,6 +41,7 @@ export default async function AdminNewsletterPage({ params, searchParams }: Prop
         lang={lang}
         hasError={Boolean(error)}
         errorKind={error === 'server' ? 'server' : 'invalid'}
+        next={`/${lang}/admin/newsletter`}
       />
     );
   }

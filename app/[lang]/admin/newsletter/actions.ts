@@ -10,17 +10,29 @@ import {
 
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 4;
 
+function safeNext(raw: string, lang: 'es' | 'en'): string {
+  const fallback = `/${lang}/admin`;
+  if (!raw) return fallback;
+  if (!raw.startsWith('/')) return fallback;
+  if (raw.startsWith('//')) return fallback;
+  if (!raw.startsWith(`/${lang}/admin`)) return fallback;
+  return raw;
+}
+
 export async function loginAction(formData: FormData) {
   const password = String(formData.get('password') || '');
-  const lang = String(formData.get('lang') || 'es');
+  const langRaw = String(formData.get('lang') || 'es');
+  const lang: 'es' | 'en' = langRaw === 'en' ? 'en' : 'es';
+  const nextRaw = String(formData.get('next') || '');
+  const next = safeNext(nextRaw, lang);
 
   if (!verifyBlastSecret(password)) {
-    redirect(`/${lang === 'en' ? 'en' : 'es'}/admin/newsletter?error=invalid`);
+    redirect(`${next}?error=invalid`);
   }
 
   const token = buildSessionToken();
   if (!token) {
-    redirect(`/${lang === 'en' ? 'en' : 'es'}/admin/newsletter?error=server`);
+    redirect(`${next}?error=server`);
   }
 
   const cookieStore = await cookies();
@@ -34,12 +46,13 @@ export async function loginAction(formData: FormData) {
     maxAge: COOKIE_MAX_AGE_SECONDS,
   });
 
-  redirect(`/${lang === 'en' ? 'en' : 'es'}/admin/newsletter`);
+  redirect(next);
 }
 
 export async function logoutAction(formData: FormData) {
-  const lang = String(formData.get('lang') || 'es');
+  const langRaw = String(formData.get('lang') || 'es');
+  const lang: 'es' | 'en' = langRaw === 'en' ? 'en' : 'es';
   const cookieStore = await cookies();
   cookieStore.delete(ADMIN_COOKIE_NAME);
-  redirect(`/${lang === 'en' ? 'en' : 'es'}/admin/newsletter`);
+  redirect(`/${lang}/admin`);
 }
