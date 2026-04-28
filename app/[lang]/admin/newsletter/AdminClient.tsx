@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
@@ -22,6 +22,10 @@ import {
   Newspaper,
   FileText,
   ArrowLeft,
+  Monitor,
+  Smartphone,
+  ExternalLink,
+  Sparkles,
 } from 'lucide-react';
 import { logoutAction } from './actions';
 
@@ -78,6 +82,7 @@ export default function AdminClient({
   const [blogSlug, setBlogSlug] = useState(blogs[0]?.slug ?? '');
   const slug = contentType === 'edition' ? editionSlug : blogSlug;
   const [language, setLanguage] = useState<'es' | 'en'>('es');
+  const [variant, setVariant] = useState<'cta' | 'no-cta'>('cta');
   const [mode, setMode] = useState<Mode>('production');
   const [dryRun, setDryRun] = useState(true);
   const [testEmailsText, setTestEmailsText] = useState('');
@@ -86,6 +91,7 @@ export default function AdminClient({
   const [events, setEvents] = useState<ProgressEvent[]>([]);
   const [summary, setSummary] = useState<ProgressEvent | null>(null);
   const [fatalError, setFatalError] = useState<string | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   const abortRef = useRef<AbortController | null>(null);
 
@@ -130,6 +136,7 @@ export default function AdminClient({
           language,
           dryRun,
           contentType,
+          variant,
           testEmails: mode === 'test' ? testEmails : undefined,
         }),
         signal: controller.signal,
@@ -204,7 +211,7 @@ export default function AdminClient({
                 Newsletter Blast
               </h1>
               <p className="text-sm text-gray-600 mt-2">
-                Envío segmentado contra BOS · Manuel Solis Law
+                Envío directo a la lista de Resend · Manuel Solis Law
               </p>
             </div>
             <form action={logoutAction}>
@@ -366,7 +373,7 @@ export default function AdminClient({
               onClick={() => setMode('production')}
               icon={Users}
               title="Toda la audiencia activa"
-              description="Trae automáticamente todos los suscriptores activos desde Resend, los clasifica contra BOS y envía a cada uno."
+              description="Envía a todos los suscriptores activos del newsletter (lista de Resend, sin filtros adicionales). Los unsubscribed se excluyen automáticamente."
               badge="Producción"
               badgeColor="navy"
             />
@@ -375,9 +382,9 @@ export default function AdminClient({
               disabled={running}
               onClick={() => setMode('test')}
               icon={FlaskConical}
-              title="Lista manual de prueba"
-              description="Solo envía a los emails que pegues abajo. Útil para QA antes de un envío real."
-              badge="Avanzado"
+              title="Lista manual"
+              description="Sólo envía a los emails que pegues abajo. Útil para QA o para envíos puntuales sin tocar la lista del newsletter."
+              badge="Manual"
               badgeColor="gold"
             />
           </div>
@@ -411,7 +418,55 @@ export default function AdminClient({
         </Card>
 
         <Card>
-          <SectionTitle icon={Send} step={4} title="Acción" />
+          <SectionTitle icon={Sparkles} step={4} title="Variante del correo" />
+          <p className="mt-3 text-xs text-gray-600">
+            Toda la audiencia recibe la misma versión. Elige la variante que aplica para este envío.
+          </p>
+          <div className="mt-4 grid sm:grid-cols-2 gap-3">
+            <VariantOption
+              active={variant === 'cta'}
+              disabled={running}
+              onClick={() => setVariant('cta')}
+              title="Con CTA"
+              description="Incluye el bloque “Agenda tu consulta gratuita” al final. Recomendado para newsletter público y nurture frío."
+              tone="gold"
+            />
+            <VariantOption
+              active={variant === 'no-cta'}
+              disabled={running}
+              onClick={() => setVariant('no-cta')}
+              title="Sin CTA"
+              description="Solo informativo, con nota suave para clientes existentes (sin botón de booking). Útil para audiencias ya cliente."
+              tone="emerald"
+            />
+          </div>
+        </Card>
+
+        <Card>
+          <SectionTitle icon={Eye} step={5} title="Vista previa del correo" />
+          <p className="mt-3 text-xs text-gray-600">
+            Abre una previsualización fiel al correo que se va a enviar. Puedes cambiar entre variante <strong>Con CTA</strong> y <strong>Sin CTA</strong>, idioma, ancho desktop/móvil, y ver el subject.
+          </p>
+          <button
+            type="button"
+            onClick={() => setPreviewOpen(true)}
+            disabled={!slug || running}
+            className={`mt-4 w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all border-2 ${
+              !slug || running
+                ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                : 'bg-white text-[#001540] border-[#001540] hover:bg-[#001540] hover:text-white'
+            }`}
+          >
+            <Eye className="w-4 h-4" />
+            Abrir vista previa
+          </button>
+          <p className="mt-2 text-[11px] text-gray-500">
+            Se renderiza la plantilla real de Resend (mismo HTML que se enviará). El nombre se muestra como &quot;Carlos&quot; para ilustrar el saludo personalizado.
+          </p>
+        </Card>
+
+        <Card>
+          <SectionTitle icon={Send} step={6} title="Acción" />
           <div className="mt-4 space-y-3">
             <label
               className={`flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
@@ -435,7 +490,7 @@ export default function AdminClient({
                   </span>
                 </div>
                 <p className="text-xs text-emerald-800/80 mt-1">
-                  Clasifica todos los suscriptores contra BOS pero <strong>no envía</strong> ningún correo. Recomendado antes del envío real.
+                  Cuenta los suscriptores que recibirían el correo pero <strong>no envía</strong> nada. Recomendado antes del envío real.
                 </p>
               </div>
             </label>
@@ -494,7 +549,8 @@ export default function AdminClient({
                       <li>· Tipo: <strong>{contentType === 'blog' ? 'Blog post' : 'Edición de newsletter'}</strong></li>
                       <li>· Contenido: <strong>{selectedTitle}</strong></li>
                       <li>· Idioma: <strong>{language === 'es' ? 'Español' : 'English'}</strong></li>
-                      <li>· Audiencia: <strong>{mode === 'production' ? 'Toda la lista activa de Resend' : `${testEmails.length} emails de prueba`}</strong></li>
+                      <li>· Variante: <strong>{variant === 'cta' ? 'Con CTA' : 'Sin CTA'}</strong></li>
+                      <li>· Audiencia: <strong>{mode === 'production' ? 'Toda la lista activa del newsletter (Resend)' : `${testEmails.length} email${testEmails.length === 1 ? '' : 's'} manual${testEmails.length === 1 ? '' : 'es'}`}</strong></li>
                       <li>· Modo: <strong>{dryRun ? 'Sin enviar (preview)' : 'Envío real'}</strong></li>
                     </ul>
                   </div>
@@ -568,11 +624,14 @@ export default function AdminClient({
                   />
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
                   <Metric label="Procesados" value={latest?.processed ?? 0} />
                   <Metric label="Total" value={latest?.total ?? 0} />
-                  <Metric label="Con CTA" value={latest?.withCta ?? 0} tone="cta" />
-                  <Metric label="Sin CTA" value={latest?.withoutCta ?? 0} tone="no-cta" />
+                  <Metric
+                    label={dryRun ? 'Listos para envío' : 'Enviados'}
+                    value={latest?.withCta ?? 0}
+                    tone="ok"
+                  />
                   <Metric label="Errores" value={latest?.errors ?? 0} tone="error" />
                 </div>
 
@@ -619,10 +678,12 @@ export default function AdminClient({
                   <ShieldCheck className="w-5 h-5 text-emerald-700" />
                   <h2 className="font-bold text-emerald-900">Resumen final</h2>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   <SummaryStat label="Procesados" value={`${summary.processed} / ${summary.total}`} />
-                  <SummaryStat label="Con CTA" value={summary.withCta} />
-                  <SummaryStat label="Sin CTA" value={summary.withoutCta} />
+                  <SummaryStat
+                    label={dryRun ? 'Listos para envío' : 'Enviados'}
+                    value={summary.withCta}
+                  />
                   <SummaryStat label="Errores" value={summary.errors} highlight={summary.errors > 0} />
                 </div>
                 {summary.message && (
@@ -651,6 +712,17 @@ export default function AdminClient({
           )}
         </AnimatePresence>
       </div>
+
+      <AnimatePresence>
+        {previewOpen && slug && (
+          <EmailPreviewModal
+            slug={slug}
+            language={language}
+            contentType={contentType}
+            onClose={() => setPreviewOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -779,6 +851,50 @@ function ModeOption({
   );
 }
 
+function VariantOption({
+  active,
+  disabled,
+  onClick,
+  title,
+  description,
+  tone,
+}: {
+  active: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+  title: string;
+  description: string;
+  tone: 'gold' | 'emerald';
+}) {
+  const accent =
+    tone === 'gold'
+      ? { ring: 'border-[#B2904D] bg-[#fbf7ef]', dot: 'border-[#B2904D] bg-[#B2904D]' }
+      : { ring: 'border-emerald-500 bg-emerald-50', dot: 'border-emerald-500 bg-emerald-500' };
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
+        active ? accent.ring : 'border-gray-200 hover:border-gray-300 bg-white'
+      } ${disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+    >
+      <div className="flex items-start gap-3">
+        <div
+          className={`mt-1 w-4 h-4 rounded-full border-2 flex-shrink-0 ${
+            active ? accent.dot : 'border-gray-300'
+          }`}
+        />
+        <div className="flex-1 min-w-0">
+          <span className="font-semibold text-sm text-[#001540]">{title}</span>
+          <p className="text-xs text-gray-600 mt-1.5 leading-relaxed">{description}</p>
+        </div>
+      </div>
+    </button>
+  );
+}
+
 function Metric({
   label,
   value,
@@ -786,14 +902,12 @@ function Metric({
 }: {
   label: string;
   value: number;
-  tone?: 'error' | 'cta' | 'no-cta';
+  tone?: 'error' | 'ok';
 }) {
   const toneClass =
     tone === 'error' && value > 0
       ? 'text-red-600'
-      : tone === 'cta'
-      ? 'text-[#B2904D]'
-      : tone === 'no-cta'
+      : tone === 'ok'
       ? 'text-emerald-600'
       : 'text-[#001540]';
   return (
@@ -826,6 +940,282 @@ function SummaryStat({
       </div>
       <div className={`text-lg font-bold ${highlight ? 'text-red-700' : 'text-emerald-900'}`}>
         {value}
+      </div>
+    </div>
+  );
+}
+
+function EmailPreviewModal({
+  slug,
+  language: initialLanguage,
+  contentType,
+  onClose,
+}: {
+  slug: string;
+  language: 'es' | 'en';
+  contentType: ContentType;
+  onClose: () => void;
+}) {
+  const [variant, setVariant] = useState<'cta' | 'no-cta'>('cta');
+  const [previewLanguage, setPreviewLanguage] = useState<'es' | 'en'>(initialLanguage);
+  const [width, setWidth] = useState<'desktop' | 'mobile'>('desktop');
+  const [firstName, setFirstName] = useState('Carlos');
+  const [html, setHtml] = useState<string | null>(null);
+  const [subject, setSubject] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const controller = new AbortController();
+
+    async function load() {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams({
+          slug,
+          contentType,
+          language: previewLanguage,
+          variant,
+          firstName,
+          format: 'json',
+        });
+        const res = await fetch(`/api/newsletter/preview?${params.toString()}`, {
+          credentials: 'include',
+          signal: controller.signal,
+        });
+        if (!res.ok) {
+          const text = await res.text().catch(() => '');
+          throw new Error(`Preview failed (${res.status}): ${text || res.statusText}`);
+        }
+        const data = (await res.json()) as { ok: boolean; html?: string; subject?: string; error?: string };
+        if (!data.ok || !data.html) {
+          throw new Error(data.error || 'No HTML returned');
+        }
+        if (cancelled) return;
+        setHtml(data.html);
+        setSubject(data.subject || '');
+      } catch (err) {
+        if ((err as Error).name === 'AbortError') return;
+        if (!cancelled) setError((err as Error).message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [slug, contentType, previewLanguage, variant, firstName]);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    window.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  const frameWidth = width === 'mobile' ? 380 : 680;
+
+  function openInNewTab() {
+    const params = new URLSearchParams({
+      slug,
+      contentType,
+      language: previewLanguage,
+      variant,
+      firstName,
+    });
+    window.open(`/api/newsletter/preview?${params.toString()}`, '_blank', 'noopener');
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 10 }}
+        transition={{ duration: 0.18 }}
+        className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-gray-200 bg-[#f9fafb]">
+          <div className="flex items-center gap-2 min-w-0">
+            <Eye className="w-4 h-4 text-[#B2904D] flex-shrink-0" />
+            <h3 className="font-bold text-[#001540] text-sm truncate">Vista previa del correo</h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={openInNewTab}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-700 bg-white border border-gray-200 hover:border-gray-300 rounded-lg transition"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              Abrir en pestaña
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Cerrar"
+              className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="px-5 py-3 border-b border-gray-100 bg-white space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <ToggleGroup
+              label="Variante"
+              value={variant}
+              onChange={(v) => setVariant(v as 'cta' | 'no-cta')}
+              options={[
+                { value: 'cta', label: 'Con CTA', tone: 'gold' },
+                { value: 'no-cta', label: 'Sin CTA', tone: 'emerald' },
+              ]}
+            />
+            <ToggleGroup
+              label="Idioma"
+              value={previewLanguage}
+              onChange={(v) => setPreviewLanguage(v as 'es' | 'en')}
+              options={[
+                { value: 'es', label: 'ES' },
+                { value: 'en', label: 'EN' },
+              ]}
+            />
+            <ToggleGroup
+              label="Ancho"
+              value={width}
+              onChange={(v) => setWidth(v as 'desktop' | 'mobile')}
+              options={[
+                { value: 'desktop', label: 'Desktop', icon: Monitor },
+                { value: 'mobile', label: 'Móvil', icon: Smartphone },
+              ]}
+            />
+            <label className="inline-flex items-center gap-2 ml-auto">
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-gray-500">
+                Nombre demo
+              </span>
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="Carlos"
+                maxLength={40}
+                className="px-2.5 py-1 text-xs font-mono border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#B2904D] focus:border-transparent w-28"
+              />
+            </label>
+          </div>
+          {subject && (
+            <div className="flex items-baseline gap-2 text-xs">
+              <span className="font-bold uppercase tracking-wider text-[10px] text-gray-500 flex-shrink-0">
+                Subject
+              </span>
+              <span className="font-mono text-gray-800 truncate">{subject}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="flex-1 min-h-0 overflow-y-auto bg-[#e9ecf3] p-4">
+          {loading && (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="w-6 h-6 text-[#B2904D] animate-spin" />
+            </div>
+          )}
+          {!loading && error && (
+            <div className="max-w-md mx-auto bg-red-50 border-2 border-red-200 rounded-xl p-5">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-red-900 text-sm">No se pudo cargar la preview</p>
+                  <p className="text-xs text-red-800 mt-1 break-words">{error}</p>
+                </div>
+              </div>
+            </div>
+          )}
+          {!loading && !error && html && (
+            <div className="mx-auto bg-white rounded-lg shadow-lg overflow-hidden" style={{ width: frameWidth, maxWidth: '100%' }}>
+              <iframe
+                title="Email preview"
+                srcDoc={html}
+                sandbox="allow-same-origin"
+                className="block w-full"
+                style={{ height: '70vh', border: 'none' }}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="px-5 py-3 border-t border-gray-100 bg-[#f9fafb] text-[11px] text-gray-500 flex flex-wrap items-center gap-3">
+          <span>
+            <strong className="text-gray-700">Tip:</strong> los enlaces dentro del iframe están deshabilitados (sandbox sin <code className="px-1 bg-white border border-gray-200 rounded">allow-top-navigation</code>). Usa &quot;Abrir en pestaña&quot; si quieres clic real.
+          </span>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function ToggleGroup({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: Array<{
+    value: string;
+    label: string;
+    tone?: 'gold' | 'emerald';
+    icon?: React.ComponentType<{ className?: string }>;
+  }>;
+}) {
+  return (
+    <div className="inline-flex items-center gap-1.5">
+      <span className="text-[10px] uppercase tracking-wider font-semibold text-gray-500">
+        {label}
+      </span>
+      <div className="inline-flex rounded-lg border border-gray-200 bg-white p-0.5">
+        {options.map((opt) => {
+          const active = value === opt.value;
+          const Icon = opt.icon;
+          const activeTone =
+            opt.tone === 'gold'
+              ? 'bg-[#B2904D] text-white'
+              : opt.tone === 'emerald'
+              ? 'bg-emerald-600 text-white'
+              : 'bg-[#001540] text-white';
+          return (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => onChange(opt.value)}
+              className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md transition ${
+                active ? activeTone : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {Icon && <Icon className="w-3 h-3" />}
+              {opt.label}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

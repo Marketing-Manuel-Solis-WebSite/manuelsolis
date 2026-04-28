@@ -8,14 +8,6 @@ import {
   verifySessionToken,
 } from '../../../lib/newsletter/auth';
 import {
-  BosRateLimiter,
-  lookupPersonByEmail,
-} from '../../../lib/newsletter/bosClient';
-import {
-  bosLookupFailedFallback,
-  classify,
-} from '../../../lib/newsletter/classify';
-import {
   fetchActiveSubscribers,
   getResend,
 } from '../../../lib/newsletter/resendAudience';
@@ -39,7 +31,8 @@ export const maxDuration = 300;
 export const dynamic = 'force-dynamic';
 
 const DEFAULT_FROM_ADDRESS = 'Manuel Solis Law <newsletter@manuelsolis.com>';
-const DEFAULT_MAX_PER_RUN = 250;
+const DEFAULT_MAX_PER_RUN = 1000;
+const DEFAULT_SEND_DELAY_MS = 120;
 
 function getFromAddress(): string {
   return process.env.NEWSLETTER_FROM_ADDRESS || DEFAULT_FROM_ADDRESS;
@@ -55,6 +48,7 @@ interface BlastRequestBody {
   dryRun?: boolean;
   testEmails?: string[];
   contentType?: ContentType;
+  variant?: BlastVariant;
 }
 
 type ResolvedContent =
@@ -122,6 +116,7 @@ export async function POST(request: NextRequest) {
   const language: Language = body.language === 'en' ? 'en' : 'es';
   const dryRun = Boolean(body.dryRun);
   const contentType: ContentType = body.contentType === 'blog' ? 'blog' : 'edition';
+  const variant: BlastVariant = body.variant === 'no-cta' ? 'no-cta' : 'cta';
   const testEmails = Array.isArray(body.testEmails)
     ? body.testEmails.map((e) => String(e).trim().toLowerCase()).filter(Boolean)
     : null;
@@ -174,8 +169,18 @@ export async function POST(request: NextRequest) {
         );
       };
 
-      const counters = { processed: 0, total: 0, withCta: 0, withoutCta: 0, errors: 0 };
+      const counters = {
+        processed: 0,
+        total: 0,
+        sent: 0,
+        errors: 0,
+        // Legacy fields kept in BlastProgressEvent for backward-compat with the
+        // SSE consumer; we leave them at 0 since BOS classification is gone.
+        withCta: 0,
+        withoutCta: 0,
+      };
       const maxPerRun = Number(process.env.BLAST_MAX_PER_RUN || DEFAULT_MAX_PER_RUN);
+      const sendDelayMs = Number(process.env.BLAST_SEND_DELAY_MS || DEFAULT_SEND_DELAY_MS);
 
       try {
         let subscribers: ResendContact[];
@@ -194,7 +199,15 @@ export async function POST(request: NextRequest) {
 
         if (subscribers.length === 0) {
           counters.total = 0;
-          send({ type: 'summary', ...counters, message: 'No active subscribers' });
+          send({
+            type: 'summary',
+            processed: 0,
+            total: 0,
+            withCta: 0,
+            withoutCta: 0,
+            errors: 0,
+            message: 'No active subscribers',
+          });
           controller.close();
           return;
         }
@@ -202,7 +215,11 @@ export async function POST(request: NextRequest) {
         if (subscribers.length > maxPerRun) {
           send({
             type: 'error',
-            ...counters,
+            processed: 0,
+            total: subscribers.length,
+            withCta: 0,
+            withoutCta: 0,
+            errors: 0,
             message: `Audience (${subscribers.length}) exceeds BLAST_MAX_PER_RUN (${maxPerRun}). Increase the env var or migrate to chunked mode.`,
           });
           controller.close();
@@ -212,37 +229,18 @@ export async function POST(request: NextRequest) {
         counters.total = subscribers.length;
         send({
           type: 'started',
-          ...counters,
+          processed: counters.processed,
+          total: counters.total,
+          withCta: 0,
+          withoutCta: 0,
+          errors: counters.errors,
           message: dryRun ? 'Dry run started' : 'Blast started',
         });
 
         const resend = dryRun ? null : getResend();
-        const limiter = new BosRateLimiter(55, 60_000);
 
         for (const subscriber of subscribers) {
           counters.processed += 1;
-
-          let variant: BlastVariant;
-          let lookupFailed = false;
-
-          try {
-            await limiter.acquire();
-            const result = await lookupPersonByEmail(subscriber.email);
-            lookupFailed = result.failed;
-            variant = lookupFailed
-              ? bosLookupFailedFallback()
-              : classify(result.person);
-
-            if (!subscriber.first_name && result.person?.first_name) {
-              subscriber.first_name = prettyName(result.person.first_name);
-            }
-          } catch {
-            lookupFailed = true;
-            variant = bosLookupFailedFallback();
-          }
-
-          if (variant === 'cta') counters.withCta += 1;
-          else counters.withoutCta += 1;
 
           let sendErrorMessage: string | null = null;
           try {
@@ -280,33 +278,51 @@ export async function POST(request: NextRequest) {
 
           if (sendErrorMessage) {
             counters.errors += 1;
-            if (variant === 'cta') counters.withCta -= 1;
-            else counters.withoutCta -= 1;
             console.error(
               `[blast] send failed for ${subscriber.email}: ${sendErrorMessage}`,
             );
+          } else {
+            counters.sent += 1;
           }
-
-          const progressMessage =
-            sendErrorMessage ??
-            (lookupFailed ? 'BOS lookup failed, defaulted to CTA' : undefined);
 
           send({
             type: 'progress',
-            ...counters,
+            processed: counters.processed,
+            total: counters.total,
+            withCta: counters.sent,
+            withoutCta: 0,
+            errors: counters.errors,
             currentEmail: maskEmail(subscriber.email),
-            message: progressMessage,
+            message: sendErrorMessage ?? undefined,
           });
+
+          // Small pause between sends to stay under Resend's per-second rate
+          // limit. Skipped on dry-run so previews are instant.
+          if (!dryRun && sendDelayMs > 0) {
+            await sleep(sendDelayMs);
+          }
         }
 
         send({
           type: 'summary',
-          ...counters,
+          processed: counters.processed,
+          total: counters.total,
+          withCta: counters.sent,
+          withoutCta: 0,
+          errors: counters.errors,
           message: dryRun ? 'Dry run finished' : 'Blast finished',
         });
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Unknown error';
-        send({ type: 'error', ...counters, message });
+        send({
+          type: 'error',
+          processed: counters.processed,
+          total: counters.total,
+          withCta: counters.sent,
+          withoutCta: 0,
+          errors: counters.errors,
+          message,
+        });
       } finally {
         activeBlast = false;
         controller.close();
@@ -394,4 +410,8 @@ function maskEmail(email: string): string {
   if (!domain) return email;
   const masked = user.length <= 2 ? user[0] + '*' : user[0] + '***' + user[user.length - 1];
   return `${masked}@${domain}`;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

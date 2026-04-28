@@ -46,7 +46,7 @@ export default function AdminHome({ lang }: { lang: 'es' | 'en' }) {
               href={`/${lang}/admin/newsletter`}
               icon={Mail}
               title="Newsletter Blast"
-              description="Envía una edición o un blog a toda la audiencia activa, segmentado contra BOS."
+              description="Envía una edición o un blog a toda la audiencia del newsletter o a una lista manual, sin restricciones."
               status="Operativo"
               statusColor="emerald"
             />
@@ -407,13 +407,14 @@ const newsletterTutorial: TutorialStep[] = [
   {
     number: 3,
     icon: LanguagesIcon,
-    title: 'Idioma + audiencia',
+    title: 'Idioma, variante y audiencia',
     body: (
       <>
         <ul className="space-y-1.5 text-sm text-gray-700">
           <li>· <strong>Idioma</strong>: ES o EN. El correo se manda en ese idioma a TODA la lista (no segmenta por idioma del suscriptor).</li>
-          <li>· <strong>Toda la audiencia activa</strong> (default) — trae todos los suscriptores activos de Resend automáticamente y los clasifica contra BOS.</li>
-          <li>· <strong>Lista manual de prueba</strong> — solo manda a los emails que pegues (útil para QA antes del envío real).</li>
+          <li>· <strong>Variante</strong>: <em>Con CTA</em> (default — incluye botón de booking) o <em>Sin CTA</em> (solo informativo, para audiencias ya cliente).</li>
+          <li>· <strong>Toda la audiencia activa</strong> (default) — envía a todos los suscriptores activos de Resend, sin filtros adicionales.</li>
+          <li>· <strong>Lista manual</strong> — envía solo a los emails que pegues. Útil para QA o envíos puntuales sin restricciones.</li>
         </ul>
       </>
     ),
@@ -421,20 +422,19 @@ const newsletterTutorial: TutorialStep[] = [
   {
     number: 4,
     icon: Eye,
-    title: 'Dry run primero (recomendado)',
+    title: 'Vista previa + dry run (recomendado)',
     body: (
       <>
-        <p>
-          Deja <strong>&quot;Dry run&quot;</strong> activado (verde). Pica <strong>&quot;Preparar dry run&quot;</strong> → confirma.
+        <p className="mb-2">
+          Antes de enviar, abre la <strong>Vista previa del correo</strong>: ve exactamente cómo se renderiza el email (subject, hero, CTA, footer) en desktop o móvil, en ambos idiomas y en ambas variantes.
         </p>
         <p className="mt-2 text-sm text-gray-700">
-          Esto trae todos los suscriptores, los clasifica contra BOS, y te muestra el resumen final <strong>sin enviar nada</strong>:
+          Después deja <strong>&quot;Dry run&quot;</strong> activado y pica <strong>&quot;Preparar dry run&quot;</strong>. Esto cuenta los destinatarios <strong>sin enviar nada</strong>:
         </p>
         <ul className="mt-2 space-y-1 text-xs text-gray-600">
           <li>· Procesados / total</li>
-          <li>· Cuántos recibirían el correo CON CTA</li>
-          <li>· Cuántos lo recibirían SIN CTA</li>
-          <li>· Errores (lookup BOS fallidos)</li>
+          <li>· Cuántos están listos para recibir el correo</li>
+          <li>· Errores (si los hay)</li>
         </ul>
         <p className="mt-2 text-xs text-gray-500">
           Si los números cuadran, procedes con el envío real.
@@ -449,10 +449,10 @@ const newsletterTutorial: TutorialStep[] = [
     body: (
       <>
         <p>
-          Destilda <strong>&quot;Dry run&quot;</strong> (el botón se vuelve dorado/CTA real). Pica <strong>&quot;Preparar envío real&quot;</strong> → confirma con el doble paso.
+          Destilda <strong>&quot;Dry run&quot;</strong> (el botón se vuelve dorado). Pica <strong>&quot;Preparar envío real&quot;</strong> → confirma con el doble paso.
         </p>
         <p className="mt-2 text-sm text-gray-700">
-          El sistema procesa la lista respetando el rate limit de 55 req/min de BOS. La barra de progreso se actualiza en vivo. Espera al resumen final con métricas reales de envío.
+          El sistema procesa la lista respetando un pequeño delay entre envíos (~120 ms) para no saturar el rate limit de Resend. La barra de progreso se actualiza en vivo. Espera al resumen final con las métricas reales.
         </p>
         <div className="mt-3 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg">
           <div className="flex items-start gap-2">
@@ -502,10 +502,10 @@ const flowSteps: { actor: string; action: string; detail?: string }[] = [
   { actor: 'Script', action: 'genera page.tsx, parchea BLOG_DATA y sitemap, crea carpeta de imagen.' },
   { actor: 'Tú', action: 'pones la imagen, rellenas el contenido, haces push.' },
   { actor: 'Vercel', action: 'deploya el blog (~2 min). La URL queda viva e indexable.', detail: 'sitemap automáticamente incluye la nueva URL' },
-  { actor: 'Tú', action: 'entras al admin del newsletter, picas el blog en la lista.' },
-  { actor: 'Sistema', action: 'trae todos los suscriptores activos de Resend.', detail: 'filtra unsubscribed=true automáticamente' },
-  { actor: 'Sistema', action: 'consulta BOS por cada email para clasificar (con rate limit 55/min).' },
-  { actor: 'Sistema', action: 'manda template CON CTA si NO existe en BOS, SIN CTA si sí existe.', detail: 'imagen, título, excerpt y categoría salen del BLOG_DATA' },
+  { actor: 'Tú', action: 'entras al admin del newsletter, picas el blog en la lista y eliges variante (Con CTA / Sin CTA).' },
+  { actor: 'Tú', action: 'abres la Vista previa para confirmar cómo se ve el correo final.', detail: 'subject, hero, CTA y footer renderizados en vivo, desktop o móvil' },
+  { actor: 'Sistema', action: 'trae todos los suscriptores activos del newsletter desde Resend.', detail: 'unsubscribed=true se excluye automáticamente' },
+  { actor: 'Sistema', action: 'envía el template elegido a cada suscriptor con un pequeño delay para respetar el rate limit de Resend.' },
   { actor: 'Resend', action: 'entrega los correos. Resumen final con métricas en vivo.' },
 ];
 
@@ -546,33 +546,33 @@ function CheatSheet() {
         </div>
       </CheatCard>
 
-      <CheatCard title="Rate limit del envío" icon={Users}>
+      <CheatCard title="Ritmo del envío" icon={Users}>
         <p className="text-xs text-gray-700">
-          BOS permite 60 req/min. Dejamos margen a 55. Calculadora rápida:
+          Sin restricciones por BOS. Solo agregamos un delay de ~120 ms por envío para no saturar Resend. Calculadora rápida:
         </p>
         <ul className="text-xs text-gray-700 space-y-0.5 mt-2 font-mono">
-          <li>50 subs ≈ 55 segundos</li>
-          <li>100 subs ≈ 2 minutos</li>
-          <li>250 subs ≈ 5 minutos</li>
+          <li>50 subs ≈ 6 segundos</li>
+          <li>100 subs ≈ 12 segundos</li>
+          <li>500 subs ≈ 1 minuto</li>
+          <li>1000 subs ≈ 2 minutos</li>
         </ul>
         <p className="text-xs text-gray-500 mt-2">
-          Tope: 250 subs por blast (default). Configurable con BLAST_MAX_PER_RUN.
+          Tope: 1000 subs por blast (default). Configurable con BLAST_MAX_PER_RUN. Delay configurable con BLAST_SEND_DELAY_MS.
         </p>
       </CheatCard>
 
-      <CheatCard title="Lógica de clasificación" icon={Sparkles}>
+      <CheatCard title="Variantes del correo" icon={Sparkles}>
         <ul className="text-xs text-gray-700 space-y-1.5">
           <li>
-            <span className="px-1.5 py-0.5 bg-[#B2904D] text-white rounded text-[10px] font-bold">CTA</span>
-            <span className="ml-1.5">→ NO existe en BOS (frío)</span>
+            <span className="px-1.5 py-0.5 bg-[#B2904D] text-white rounded text-[10px] font-bold">CON CTA</span>
+            <span className="ml-1.5">→ incluye botón &quot;Agenda tu consulta&quot; (recomendado para nurture).</span>
           </li>
           <li>
             <span className="px-1.5 py-0.5 bg-emerald-600 text-white rounded text-[10px] font-bold">SIN CTA</span>
-            <span className="ml-1.5">→ SÍ existe en BOS (conocido)</span>
+            <span className="ml-1.5">→ solo informativo, con nota suave (audiencias cliente).</span>
           </li>
-          <li>
-            <span className="px-1.5 py-0.5 bg-red-600 text-white rounded text-[10px] font-bold">CTA</span>
-            <span className="ml-1.5">→ BOS lookup falló (fallback seguro)</span>
+          <li className="text-gray-500 italic mt-1">
+            Tú eliges la variante por envío. Toda la lista recibe la misma versión.
           </li>
         </ul>
       </CheatCard>
