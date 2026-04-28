@@ -30,9 +30,12 @@ import { useLanguage } from '../../context/LanguageContext';
 // HELPERS
 // ============================================================
 
-const getText = (obj: any, lang: 'es' | 'en'): string => {
+type Bilingual = string | { es: string; en?: string } | undefined | null;
+
+const getText = (obj: Bilingual, lang: 'es' | 'en'): string => {
+  if (!obj) return '';
   if (typeof obj === 'string') return obj;
-  return obj[lang] || obj.es;
+  return obj[lang] || obj.es || '';
 };
 
 // ============================================================

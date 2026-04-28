@@ -3,6 +3,9 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /private/
+Disallow: /es/admin
+Disallow: /en/admin
+Disallow: /admin
 Crawl-delay: 1
 
 User-agent: Googlebot

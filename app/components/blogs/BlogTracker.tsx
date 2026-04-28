@@ -76,12 +76,12 @@ export default function BlogTracker({ title, author, category }: BlogTrackerProp
         };
 
         // Optimizamos el evento scroll (throttling)
-        let timeoutId: NodeJS.Timeout;
+        let timeoutId: ReturnType<typeof setTimeout> | null = null;
         const throttledScroll = () => {
             if (timeoutId) return;
             timeoutId = setTimeout(() => {
                 handleScroll();
-                timeoutId = undefined as any;
+                timeoutId = null;
             }, 200);
         };
 

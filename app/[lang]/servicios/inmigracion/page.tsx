@@ -31,15 +31,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     openGraph: {
-      title: isEs 
-        ? 'Defensa de Deportación y Visas | Manuel Solís Law Firm' 
+      title: isEs
+        ? 'Defensa de Deportación y Visas | Manuel Solís Law Firm'
         : 'Deportation Defense & Visas | Manuel Solis Law Firm',
       description: isEs
         ? 'Proteja su futuro en EE.UU. con abogados expertos en inmigración.'
         : 'Protect your future in the U.S. with expert immigration attorneys.',
-      url: `https://www.manuelsolis.com/${lang}/servicios/inmigracion`,
-      images: ['/immigration-hero.png'],
-    }
+      url: `${SITE_URL}/${lang}/servicios/inmigracion`,
+      type: 'website',
+      locale: isEs ? 'es_MX' : 'en_US',
+      siteName: 'Manuel Solís Law Firm',
+      images: [
+        {
+          url: `${SITE_URL}/immigration-hero.png`,
+          width: 1200,
+          height: 630,
+          alt: isEs ? 'Abogados de Inmigración Manuel Solís' : 'Manuel Solis Immigration Lawyers',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: isEs
+        ? 'Defensa de Deportación y Visas | Manuel Solís Law Firm'
+        : 'Deportation Defense & Visas | Manuel Solis Law Firm',
+      description: isEs
+        ? 'Proteja su futuro en EE.UU. con abogados expertos en inmigración.'
+        : 'Protect your future in the U.S. with expert immigration attorneys.',
+      images: [`${SITE_URL}/immigration-hero.png`],
+    },
   };
 }
 

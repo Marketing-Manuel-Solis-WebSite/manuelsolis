@@ -4,6 +4,9 @@ import Hero from '../components/Hero';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+// ISR: regenerar cada hora para mantener fresh sin SSR cost
+export const revalidate = 3600;
+
 const SITE_URL = 'https://www.manuelsolis.com';
 
 export async function generateMetadata({

@@ -32,7 +32,7 @@ import { logoutAction } from './newsletter/actions';
 
 export default function AdminHome({ lang }: { lang: 'es' | 'en' }) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-4">
+    <div className="min-h-screen bg-[#f5f6fa] py-10 px-4">
       <div className="max-w-5xl mx-auto">
         <Header lang={lang} />
 

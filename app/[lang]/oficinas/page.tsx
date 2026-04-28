@@ -11,6 +11,9 @@ const ContactForm = dynamic(() => import('../../components/ContactForm'), {
   loading: () => <div className="w-full h-[400px] bg-[#001540]" />
 });
 
+// ISR: contenido prácticamente estático; regenerar cada 24h
+export const revalidate = 86400;
+
 // --- CONFIGURACION DEL SITIO ---
 const SITE_URL = 'https://www.manuelsolis.com';
 

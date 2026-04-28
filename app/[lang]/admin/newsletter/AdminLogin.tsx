@@ -17,7 +17,7 @@ export default function AdminLogin({
 }) {
   const errorMessage =
     errorKind === 'server'
-      ? 'Error de configuración del servidor. Verifica que NEWSLETTER_BLAST_SECRET esté seteado.'
+      ? 'Error de configuración del servidor. Contacta al equipo de desarrollo.'
       : 'Contraseña incorrecta.';
 
   return (
@@ -28,18 +28,17 @@ export default function AdminLogin({
         transition={{ duration: 0.4 }}
         className="w-full max-w-md"
       >
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-br from-[#001540] to-[#002a73] px-8 py-10 text-center">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#B2904D]/20 backdrop-blur mb-4">
-              <Mail className="w-7 h-7 text-[#B2904D]" />
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-white/10">
+          <div className="bg-[#001540] px-8 py-10 text-center border-b-2 border-[#B2904D]">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#B2904D] mb-4">
+              <Mail className="w-7 h-7 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-white tracking-tight">
               Newsletter Blast
             </h1>
-            <p className="text-sm text-blue-100/80 mt-2">
+            <p className="text-sm text-white/70 mt-2">
               Panel interno · Manuel Solis Law
             </p>
-            <div className="h-[3px] w-16 bg-[#B2904D] mx-auto mt-6 rounded-full" />
           </div>
 
           <form action={loginAction} className="px-8 py-8 space-y-5">
@@ -64,9 +63,6 @@ export default function AdminLogin({
                 placeholder="••••••••••••••"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg text-base text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B2904D] focus:border-transparent transition"
               />
-              <p className="text-xs text-gray-500 mt-2">
-                Coincide con la variable de entorno <code className="px-1.5 py-0.5 bg-gray-100 rounded text-[11px] font-mono">NEWSLETTER_BLAST_SECRET</code>.
-              </p>
             </div>
 
             {hasError && (

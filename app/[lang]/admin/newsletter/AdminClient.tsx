@@ -184,7 +184,7 @@ export default function AdminClient({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-4">
+    <div className="min-h-screen bg-[#f5f6fa] py-10 px-4">
       <div className="max-w-3xl mx-auto">
         <header className="mb-8">
           <Link
@@ -561,7 +561,7 @@ export default function AdminClient({
 
                 <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden mb-5">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-[#B2904D] to-[#d4a85f]"
+                    className="h-full bg-[#B2904D]"
                     initial={{ width: 0 }}
                     animate={{ width: `${progressPct}%` }}
                     transition={{ duration: 0.3 }}

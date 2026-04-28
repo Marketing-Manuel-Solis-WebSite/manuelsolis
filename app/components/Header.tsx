@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, ChevronDown, Phone } from 'lucide-react'
+import { Menu, X, ChevronDown, Phone, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { usePathname } from 'next/navigation'
@@ -266,32 +266,49 @@ export default function HeaderProfessional() {
         >
           <div className="container mx-auto px-6 lg:px-12 flex items-center">
             
-            <Link href={`/${language}`} className="relative z-50 mr-6 xl:mr-12">
-              <div className={`relative transition-all duration-500 ease-in-out ${isScrolled ? 'w-[120px] xl:w-[140px]' : 'w-[150px] xl:w-[190px]'}`}>
-                <Image
-                  src="/logo-manuel-solis.png" 
-                  alt="Logo Manuel Solis"
-                  width={200} 
-                  height={65}
-                  className="w-full h-auto object-contain opacity-100" 
-                  priority
-                />
-              </div>
+            <Link href={`/${language}`} className="relative z-50 mr-6 xl:mr-12 block">
+              <Image
+                src="/logo-manuel-solis.png"
+                alt="Logo Manuel Solis"
+                width={200}
+                height={65}
+                className="object-contain transition-all duration-500 ease-in-out"
+                style={{
+                  height: isScrolled ? '40px' : '52px',
+                  width: 'auto',
+                  maxWidth: '100%',
+                }}
+                priority
+              />
             </Link>
 
             <div className="hidden lg:flex items-center flex-1 min-w-0">
               <nav aria-label="Main navigation" className="flex items-center gap-4 xl:gap-7">
                 {menuItems.map((item) => (
+                  item.type === 'external' ? (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-[#B2904D] hover:text-[#D4A94E] transition-colors duration-200"
+                    >
+                      <span className="flex flex-col leading-[1.05] text-[10px] xl:text-[12px] font-medium uppercase tracking-[0.12em] xl:tracking-[0.2em] text-left">
+                        {item.name.split(' ').map((word, i) => (
+                          <span key={i}>{word}</span>
+                        ))}
+                      </span>
+                      <ArrowUpRight className="w-3 h-3 opacity-80" strokeWidth={1.75} />
+                    </a>
+                  ) : (
                   <div key={item.name} className="relative group">
                     <div className="flex items-center gap-1 cursor-pointer py-3">
                       {item.submenu ? (
                         <span className="text-[10px] xl:text-[12px] font-light uppercase tracking-[0.12em] xl:tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200">
                           {item.name}
                         </span>
-                      ) : item.type === 'external' ? (
-                        renderLink(item)
                       ) : (
-                        <Link 
+                        <Link
                           href={item.href}
                           className="text-[10px] xl:text-[12px] font-light uppercase tracking-[0.12em] xl:tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200"
                         >
@@ -302,7 +319,7 @@ export default function HeaderProfessional() {
                         <ChevronDown className="w-2.5 h-2.5 text-white/60 group-hover:text-white transition-transform duration-300 group-hover:rotate-180" />
                       )}
                     </div>
-                    
+
                     <span className="absolute bottom-1 left-0 w-0 h-[0.5px] bg-sky-200 transition-all duration-300 ease-out group-hover:w-full" />
 
                     {item.submenu && item.key === 'offices' && (
@@ -381,6 +398,7 @@ export default function HeaderProfessional() {
                       </div>
                     )}
                   </div>
+                  )
                 ))}
               </nav>
             </div>
@@ -485,8 +503,25 @@ export default function HeaderProfessional() {
             <div className="flex flex-col pt-24 px-8 h-full">
               <nav className="flex flex-col space-y-6 overflow-y-auto max-h-[80vh] pb-10">
                 {menuItems.map((item) => (
+                  item.type === 'external' ? (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center justify-between text-[#B2904D] hover:text-[#D4A94E] transition-colors duration-200 border-b border-white/5 pb-4"
+                    >
+                      <span className="flex flex-col leading-[1.05] text-lg font-thin uppercase tracking-[0.2em]">
+                        {item.name.split(' ').map((word, i) => (
+                          <span key={i}>{word}</span>
+                        ))}
+                      </span>
+                      <ArrowUpRight className="w-4 h-4 opacity-70" strokeWidth={1.5} />
+                    </a>
+                  ) : (
                   <div key={item.name} className="border-b border-white/5 pb-4 group">
-                    <div 
+                    <div
                       className="flex justify-between items-center text-white/90 group-hover:text-white text-lg font-thin uppercase tracking-[0.2em] cursor-pointer"
                       onClick={() => item.submenu && setOpenSubmenu(openSubmenu === item.key ? null : item.key)}
                     >
@@ -573,8 +608,9 @@ export default function HeaderProfessional() {
                       )}
                     </AnimatePresence>
                   </div>
+                  )
                 ))}
-                
+
                 <div className="pt-4 flex flex-col gap-4">
                     <Link 
                       href={`/${language}/join-in`}

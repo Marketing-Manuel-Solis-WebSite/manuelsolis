@@ -86,11 +86,18 @@ export async function POST(request: NextRequest) {
 
 // ─── GET: Reporte de conciliación ───
 export async function GET(request: NextRequest) {
-  // Protección básica con API key (configurable en env)
-  const key = request.nextUrl.searchParams.get('key');
-  const expectedKey = process.env.CONVERSIONS_API_KEY || 'flightcheck2024';
+  // Auth via Authorization header (Bearer token); fallback a query param para retrocompatibilidad pero deprecated
+  const expectedKey = process.env.CONVERSIONS_API_KEY;
+  if (!expectedKey) {
+    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 });
+  }
 
-  if (key !== expectedKey) {
+  const authHeader = request.headers.get('authorization');
+  const bearerKey = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  const queryKey = request.nextUrl.searchParams.get('key');
+  const providedKey = bearerKey || queryKey;
+
+  if (!providedKey || providedKey !== expectedKey) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

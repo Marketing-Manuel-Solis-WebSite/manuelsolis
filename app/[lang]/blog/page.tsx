@@ -10,9 +10,12 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlogFeed from '../../components/blogs/BlogFeed';
 
+// ISR: regenerar la página cada hora para reflejar nuevos blogs sin redeploy
+export const revalidate = 3600;
+
 // --- CONFIGURACIÓN DEL SITIO ---
 const SITE_URL = 'https://www.manuelsolis.com';
-const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`; 
+const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`;
 
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 export const BLOG_DATA = {

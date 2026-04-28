@@ -157,13 +157,11 @@ function ContactFormContent() {
     
     try {
         const payload = {
-            ...formData, 
-            ...utmData, 
+            ...formData,
+            ...utmData,
             uri: uriToSend,
             language: lang
         };
-        
-        console.log("🚀 Enviando Payload con URI forzada:", payload);
 
         const response = await fetch(API_URL, {
             method: 'POST',
