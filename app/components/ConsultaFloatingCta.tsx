@@ -2,9 +2,12 @@
 
 import { CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { track } from '@vercel/analytics/react';
 import { pushToDataLayer, trackConversion } from '../lib/tracking';
+
+const MotionLink = motion(Link);
 
 export default function ConsultaFloatingCta() {
   const { language } = useLanguage();
@@ -22,16 +25,27 @@ export default function ConsultaFloatingCta() {
   };
 
   return (
-    <Link
+    <MotionLink
       href={`/${lang}/consulta`}
       onClick={handleClick}
       aria-label={label}
-      className="group fixed bottom-6 right-[6.5rem] z-50 hidden sm:inline-flex items-center gap-2.5 pl-4 pr-5 py-2.5 rounded-full bg-gradient-to-b from-[#D4AF37] to-[#B2904D] text-[#001540] font-semibold text-sm tracking-wide shadow-[0_6px_20px_-4px_rgba(178,144,77,0.45)] hover:shadow-[0_10px_28px_-4px_rgba(178,144,77,0.65)] hover:-translate-y-0.5 transition-all duration-200 ring-1 ring-inset ring-[#F3E5AB]/50"
+      className="fixed bottom-6 right-[6.5rem] z-50 hidden sm:inline-flex items-center justify-center gap-2.5 h-14 px-6 rounded-full text-[#002342] text-sm font-bold tracking-wide outline-none"
+      style={{
+        background: 'radial-gradient(120% 200% at 30% 0%, #F9E79F 0%, #D4AF37 38%, #997B2F 100%)',
+        boxShadow:
+          '0 10px 25px -5px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.55)',
+        border: '1px solid rgba(255, 255, 255, 0.3)',
+      }}
+      whileHover={{
+        scale: 1.05,
+        boxShadow:
+          '0 15px 30px -5px rgba(0, 0, 0, 0.5), inset 0 4px 6px rgba(255, 255, 255, 0.6)',
+      }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 22 }}
     >
-      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#001540]/15">
-        <CalendarCheck size={15} strokeWidth={2.5} />
-      </span>
-      <span className="whitespace-nowrap">{label}</span>
-    </Link>
+      <CalendarCheck size={17} strokeWidth={2.5} className="drop-shadow-sm shrink-0" />
+      <span className="leading-none drop-shadow-sm whitespace-nowrap">{label}</span>
+    </MotionLink>
   );
 }
