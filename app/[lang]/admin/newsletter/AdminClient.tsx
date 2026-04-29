@@ -92,6 +92,8 @@ export default function AdminClient({
   const [summary, setSummary] = useState<ProgressEvent | null>(null);
   const [fatalError, setFatalError] = useState<string | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [quickTestEmail, setQuickTestEmail] = useState('');
+  const [lastRunWasDryRun, setLastRunWasDryRun] = useState<boolean | null>(null);
 
   const abortRef = useRef<AbortController | null>(null);
 
@@ -116,15 +118,26 @@ export default function AdminClient({
     Boolean(slug) &&
     (mode === 'production' || testEmails.length > 0);
 
-  async function startBlast() {
+  async function runBlast(opts: {
+    dryRun: boolean;
+    overrideTestEmails?: string[];
+  }) {
     setEvents([]);
     setSummary(null);
     setFatalError(null);
     setRunning(true);
     setConfirmStep(false);
+    setLastRunWasDryRun(opts.dryRun);
 
     const controller = new AbortController();
     abortRef.current = controller;
+
+    const useTestEmails =
+      opts.overrideTestEmails !== undefined
+        ? opts.overrideTestEmails
+        : mode === 'test'
+        ? testEmails
+        : undefined;
 
     try {
       const response = await fetch('/api/newsletter/blast', {
@@ -134,10 +147,10 @@ export default function AdminClient({
         body: JSON.stringify({
           slug,
           language,
-          dryRun,
+          dryRun: opts.dryRun,
           contentType,
           variant,
-          testEmails: mode === 'test' ? testEmails : undefined,
+          testEmails: useTestEmails,
         }),
         signal: controller.signal,
       });
@@ -183,6 +196,16 @@ export default function AdminClient({
     } finally {
       setRunning(false);
     }
+  }
+
+  function startBlast() {
+    return runBlast({ dryRun });
+  }
+
+  function quickTestSend() {
+    const email = quickTestEmail.trim();
+    if (!email || !slug) return;
+    runBlast({ dryRun: false, overrideTestEmails: [email] });
   }
 
   function cancel() {
@@ -463,6 +486,47 @@ export default function AdminClient({
           <p className="mt-2 text-[11px] text-gray-500">
             Se renderiza la plantilla real de Resend (mismo HTML que se enviará). El nombre se muestra como &quot;Carlos&quot; para ilustrar el saludo personalizado.
           </p>
+
+          <div className="mt-5 p-4 rounded-xl border-2 border-dashed border-[#B2904D] bg-[#fbf7ef]">
+            <div className="flex items-start gap-2 mb-2">
+              <Send className="w-4 h-4 text-[#B2904D] mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-[#001540]">Prueba rápida — envío real a un email</p>
+                <p className="text-xs text-gray-700 mt-1">
+                  Manda <strong>UN correo real</strong> al instante a la dirección que pongas abajo, sin pasar por dry run ni confirmación. Útil para verificar que el correo está llegando.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2 mt-3">
+              <input
+                type="email"
+                value={quickTestEmail}
+                onChange={(e) => setQuickTestEmail(e.target.value)}
+                placeholder="tu-email@ejemplo.com"
+                disabled={running}
+                className="flex-1 px-3 py-2.5 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#B2904D] focus:border-transparent bg-white"
+              />
+              <button
+                type="button"
+                onClick={quickTestSend}
+                disabled={
+                  running ||
+                  !slug ||
+                  !quickTestEmail.trim() ||
+                  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(quickTestEmail.trim())
+                }
+                className={`px-4 py-2.5 rounded-lg font-semibold text-sm flex items-center justify-center gap-1.5 transition-all whitespace-nowrap ${
+                  running || !slug || !quickTestEmail.trim() ||
+                  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(quickTestEmail.trim())
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-[#B2904D] hover:bg-[#9a7c40] text-white'
+                }`}
+              >
+                <Send className="w-3.5 h-3.5" />
+                Enviar prueba real
+              </button>
+            </div>
+          </div>
         </Card>
 
         <Card>
@@ -673,21 +737,59 @@ export default function AdminClient({
               animate={{ opacity: 1, y: 0 }}
               className="mt-6"
             >
-              <div className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <ShieldCheck className="w-5 h-5 text-emerald-700" />
-                  <h2 className="font-bold text-emerald-900">Resumen final</h2>
+              <div
+                className={`border-2 rounded-2xl p-6 ${
+                  lastRunWasDryRun
+                    ? 'bg-amber-50 border-amber-300'
+                    : 'bg-emerald-50 border-emerald-200'
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  {lastRunWasDryRun ? (
+                    <Eye className="w-5 h-5 text-amber-700" />
+                  ) : (
+                    <ShieldCheck className="w-5 h-5 text-emerald-700" />
+                  )}
+                  <h2 className={`font-bold ${lastRunWasDryRun ? 'text-amber-900' : 'text-emerald-900'}`}>
+                    {lastRunWasDryRun ? 'Dry run completado' : 'Envío real completado'}
+                  </h2>
                 </div>
+                <p className={`text-sm font-semibold mb-4 ${lastRunWasDryRun ? 'text-amber-800' : 'text-emerald-800'}`}>
+                  {lastRunWasDryRun
+                    ? '⚠️ Esto fue una simulación — NO se envió ningún correo real.'
+                    : '✓ Los correos se enviaron a Resend. Revisa tu bandeja en 1–3 minutos (también el spam la primera vez).'}
+                </p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   <SummaryStat label="Procesados" value={`${summary.processed} / ${summary.total}`} />
                   <SummaryStat
-                    label={dryRun ? 'Listos para envío' : 'Enviados'}
+                    label={lastRunWasDryRun ? 'Habrían recibido' : 'Enviados'}
                     value={summary.withCta}
                   />
                   <SummaryStat label="Errores" value={summary.errors} highlight={summary.errors > 0} />
                 </div>
+                {lastRunWasDryRun && (
+                  <p className="text-xs text-amber-700 mt-4 leading-relaxed">
+                    Para enviar de verdad: destilda <strong>&quot;Dry run&quot;</strong> en el paso 6 y vuelve a confirmar. O usa la <strong>Prueba rápida</strong> del paso 5 para mandar un solo correo real al instante.
+                  </p>
+                )}
+                {!lastRunWasDryRun && summary.errors === 0 && (
+                  <p className="text-xs text-emerald-700 mt-4">
+                    Si no llega el correo en pocos minutos: revisa el spam, confirma el dominio en{' '}
+                    <a
+                      href="https://resend.com/emails"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline font-semibold"
+                    >
+                      resend.com/emails
+                    </a>
+                    {' '}(busca el message ID en los logs de Vercel) y verifica que <code>newsletter@manuelsolis.com</code> esté autorizado para enviar.
+                  </p>
+                )}
                 {summary.message && (
-                  <p className="text-xs text-emerald-700 mt-4">{summary.message}</p>
+                  <p className={`text-xs mt-3 ${lastRunWasDryRun ? 'text-amber-700' : 'text-emerald-700'}`}>
+                    {summary.message}
+                  </p>
                 )}
               </div>
             </motion.div>

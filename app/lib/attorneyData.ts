@@ -27,7 +27,7 @@ export const locationGroups: { label: { es: string; en: string }; ids: string[] 
   { label: { es: 'Dallas, Texas', en: 'Dallas, Texas' }, ids: ['mark-mcbroom', 'stephanie-l-garcia-vidal'] },
   { label: { es: 'El Paso, Texas', en: 'El Paso, Texas' }, ids: ['victor-rojas'] },
   { label: { es: 'Chicago, Illinois', en: 'Chicago, Illinois' }, ids: ['andrew-fink', 'ana-patricia-rueda', 'eduardo-garcia'] },
-  { label: { es: 'Memphis, Tennessee', en: 'Memphis, Tennessee' }, ids: ['sara-james', 'lupita-valenzuela-martinez'] },
+  { label: { es: 'Memphis, Tennessee', en: 'Memphis, Tennessee' }, ids: ['sara-james', 'lupita-valenzuela-martinez', 'roberto-garcia'] },
   { label: { es: 'Arvada, Colorado', en: 'Arvada, Colorado' }, ids: ['edwin-zavala'] },
   { label: { es: 'Los Angeles, California', en: 'Los Angeles, California' }, ids: ['edward-s-reisman'] },
 ];
@@ -534,6 +534,30 @@ export const attorneys: Attorney[] = [
       es: "Una defensora impulsada por un propósito.",
       en: "An advocate driven by purpose."
     }
+  },
+  {
+    id: 'roberto-garcia',
+    name: 'Roberto García',
+    image: '/Roberto%20Garcia.png',
+    role: { es: 'Abogado', en: 'Attorney' },
+    bio: {
+      es: [
+        "Roberto García nació y creció en Memphis, Tennessee, en un hogar de inmigrantes. Esa experiencia marcó su vocación legal y lo motivó a dedicar su carrera a las familias que buscan estabilidad y un lugar al cual llamar hogar en Estados Unidos.",
+        "Se graduó de la Cecil C. Humphreys School of Law y comenzó a ejercer la abogacía en 2019. Espera ayudar a tantas personas como sea posible a permanecer donde se sienten seguras y en casa."
+      ],
+      en: [
+        "Roberto García was born and raised in Memphis, Tennessee, in an immigrant household. That experience shaped his calling and led him to dedicate his career to families seeking stability and a place to call home in the United States.",
+        "He graduated from Cecil C. Humphreys School of Law and began practicing law in 2019. He hopes to help as many people as he can to remain where they feel safe and at home."
+      ]
+    },
+    quote: {
+      es: "Es un privilegio acompañarte a alcanzar tu sueño americano.",
+      en: "Happy for the privilege in assisting you achieve your American Dream."
+    },
+    education: ["Cecil C. Humphreys School of Law"],
+    admissions: [
+      { es: "Tennessee", en: "Tennessee" }
+    ]
   },
   {
     id: 'himani-augustina-vithanage',

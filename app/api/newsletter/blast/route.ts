@@ -269,6 +269,11 @@ export async function POST(request: NextRequest) {
               if (result?.error) {
                 const err = result.error as { name?: string; message?: string };
                 sendErrorMessage = `Resend ${err.name ?? 'error'}: ${err.message ?? JSON.stringify(result.error)}`;
+              } else {
+                const id = (result?.data as { id?: string } | undefined)?.id;
+                console.log(
+                  `[blast] sent to ${subscriber.email}` + (id ? ` (resend id=${id})` : ''),
+                );
               }
             }
           } catch (sendErr) {

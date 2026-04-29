@@ -55,11 +55,14 @@ const officeData = {
       image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Sara%20James.png', 
       quote: { es: "Apoyarlos a alcanzar su sueño americano es un honor y un privilegio.", en: "Supporting them to achieve their American dream is an honor and a privilege." }
     },
-    { 
-      name: 'Roberto Garcia', 
-      role: { es: 'Abogado', en: 'Attorney' }, 
-      image: '/LogoInformacion.png', // Placeholder
-      quote: { es: "Compromiso con la justicia.", en: "Commitment to justice." }
+    {
+      name: 'Roberto García',
+      role: { es: 'Abogado', en: 'Attorney' },
+      image: '/Roberto%20Garcia.png',
+      quote: {
+        es: "Es un privilegio acompañarte a alcanzar tu sueño americano.",
+        en: "Happy for the privilege in assisting you achieve your American Dream."
+      }
     }
   ],
 

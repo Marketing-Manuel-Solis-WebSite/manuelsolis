@@ -35,8 +35,8 @@ const placeholderCopy = {
     intro:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Estas son las actualizaciones más recientes en materia migratoria que pueden impactar tu caso o el de tu familia.',
     ctaLead: 'Si tu caso es urgente, no esperes:',
-    ctaButton: 'Agenda tu consulta gratuita',
-    ctaSub: 'Respuesta en menos de 24 horas · Primera consulta sin costo',
+    ctaButton: 'Agenda tu consulta',
+    ctaSub: 'Respuesta en menos de 24 horas · Atención personalizada',
     readMore: 'Ver edición completa',
     footerNote:
       'Recibes este correo porque te suscribiste a nuestro newsletter.',
@@ -49,8 +49,8 @@ const placeholderCopy = {
     intro:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. These are the most recent immigration updates that may impact your case or your family.',
     ctaLead: 'If your case is urgent, do not wait:',
-    ctaButton: 'Book your free consultation',
-    ctaSub: 'Response in under 24 hours · Free first consultation',
+    ctaButton: 'Schedule your consultation',
+    ctaSub: 'Response in under 24 hours · Personalized attention',
     readMore: 'Read the full edition',
     footerNote: 'You are receiving this email because you subscribed to our newsletter.',
     unsubscribe: 'Unsubscribe',
