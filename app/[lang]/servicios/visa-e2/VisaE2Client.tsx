@@ -22,9 +22,7 @@ import {
   DollarSign,
   Target,
   FileCheck,
-  Star,
-  Award,
-  GraduationCap
+  Star
 } from 'lucide-react';
 
 import Image from 'next/image';
@@ -159,15 +157,7 @@ const texts = {
     requestEvaluation: { es: "Solicita tu Evaluación", en: "Request Your Evaluation" },
     faqTitle: { es: "Preguntas Frecuentes", en: "Frequently Asked Questions" },
     faqSubtitle: { es: "Resolvemos tus dudas sobre inversión y migración.", en: "We solve your doubts about investment and migration." },
-    contactTitle: { es: "Comienza Tu Negocio en EE.UU.", en: "Start Your Business in the USA" },
-    
-    // Nueva sección de abogada
-    attorneySectionTitle: { es: "Liderazgo Experto", en: "Expert Leadership" },
-    attorneyName: { es: "Maria Pilar Llusa", en: "Maria Pilar Llusa" },
-    attorneyRole: { es: "Abogada Senior de Inmigración y Negocios", en: "Senior Business Immigration Attorney" },
-    attorneyDesc1: { es: "Nacida en Madrid y graduada tanto en España como en la American University School of Law (Washington, DC), Maria Pilar lidera nuestra práctica de visas de inversión. Con una trayectoria distinguida, ha asesorado a clientes en sectores de tecnología, energía y gas, así como a empresas de Escandinavia, Sudamérica y España.", en: "Born in Madrid and a graduate of both Spanish law school and American University School of Law (Washington, DC), Maria Pilar leads our investment visa practice. With a distinguished career, she has advised clients in technology, energy, and gas sectors, as well as companies from Scandinavia, South America, and Spain." },
-    attorneyDesc2: { es: "Su experiencia incluye roles como Directora de la Cámara de Comercio España-Texas y profesora adjunta en Rice University. Maria Pilar combina un profundo conocimiento legal con una visión de negocios global para asegurar el éxito de tu inversión en EE.UU.", en: "Her experience includes roles such as Director of the Spain-Texas Chamber of Commerce and Adjunct Professor at Rice University. Maria Pilar combines deep legal knowledge with a global business vision to ensure the success of your investment in the U.S." },
-    attorneyBadge: { es: "Experta en Visas E-2", en: "E-2 Visa Expert" }
+    contactTitle: { es: "Comienza Tu Negocio en EE.UU.", en: "Start Your Business in the USA" }
   }
 };
 
@@ -234,49 +224,10 @@ export default function VisaE2Page() {
       <section className="relative pt-8 md:pt-12 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-             
-             {/* IMAGE CONTAINER - AJUSTADO */}
-             <motion.div 
-               initial={{ opacity: 0, x: -50 }}
-               animate={{ opacity: 1, x: 0 }}
-               transition={{ duration: 1.2, ease: "easeOut" }}
-               // Aumentada altura en Desktop y ajustada en móvil. Alineación cambiada para mejor posicionamiento
-               className="lg:col-span-5 relative h-[450px] md:h-[600px] lg:h-[80vh] flex items-end justify-center order-2 lg:order-1"
-             >
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent blur-xl z-10 h-1/4 bottom-0 w-full" />
-                <div className="relative z-0 w-full h-full flex items-end justify-center">
-                   <Image
-                     src="/E-1.png"
-                     alt="María del Pilar Llusa - Abogada experta en Inmigración"
-                     fill
-                     // Actualizado: Scale 110 (un poco mas grande) y translate negativo -280px (bajada tantito)
-                     className="object-contain object-bottom md:scale-105 lg:scale-110 lg:-translate-y-[280px] drop-shadow-[0_0_35px_rgba(178,144,77,0.25)]"
-                     priority
-                     sizes="(max-width: 768px) 100vw, 50vw"
-                   />
-                </div>
-
-                <motion.div
-                   initial={{ opacity: 0, y: 20 }} 
-                   animate={{ opacity: 1, y: 0 }} 
-                   transition={{ delay: 0.8, duration: 0.8 }}
-                   // Subido badge de experiencia MUCHO más arriba (bottom-48 en desktop)
-                   className="absolute bottom-32 lg:bottom-48 -right-4 md:-right-10 z-20 p-6 border border-[#B2904D]/30 rounded-2xl backdrop-blur-xl bg-[#001540]/60 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
-                >
-                   <div className="flex items-center gap-3 mb-1">
-                      <Star className="w-5 h-5 text-[#B2904D] fill-[#B2904D]" />
-                      <span className="text-[#B2904D] font-bold tracking-widest text-xs uppercase">Experiencia</span>
-                   </div>
-                   <div className="flex items-baseline text-white">
-                      <span className="text-4xl md:text-5xl font-black tracking-tighter">35+</span> 
-                      <span className="ml-2 text-sm font-light uppercase tracking-wider opacity-80">Años</span>
-                   </div>
-                </motion.div>
-             </motion.div>
 
              {/* TEXT CONTAINER */}
-             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-8 relative z-20 order-1 lg:order-2 flex flex-col justify-center items-start">
-                 
+             <div className="lg:col-span-12 space-y-8 relative z-20 flex flex-col justify-center items-start max-w-4xl">
+
                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#B2904D]/30 bg-[#B2904D]/10 backdrop-blur-sm shadow-[0_0_15px_rgba(178,144,77,0.1)] self-start">
                    <Briefcase size={16} className="text-[#B2904D]" />
                    <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">{gT(texts.interface.badge)}</span>
@@ -295,122 +246,43 @@ export default function VisaE2Page() {
                    </span>
                  </h1>
 
-                 <motion.div 
-                   initial={{ opacity: 0, x: -20 }} 
-                   animate={{ opacity: 1, x: 0 }} 
+                 <motion.div
+                   initial={{ opacity: 0, x: -20 }}
+                   animate={{ opacity: 1, x: 0 }}
                    transition={{ delay: 0.6 }}
                    className="h-1 w-24 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full"
                  />
 
-                 <motion.p 
+                 <motion.p
                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
                    className="text-lg md:text-xl text-blue-100/70 font-light max-w-xl leading-relaxed"
                  >
                    {gT(texts.interface.heroDescription)}
                  </motion.p>
 
-                 <motion.div 
+                 <motion.div
                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
-                   className="flex flex-wrap gap-4 pt-4"
+                   className="flex flex-wrap items-center gap-4 pt-4"
                  >
                    <a href="#contacto" className="px-8 py-4 bg-[#B2904D] hover:bg-[#d4af37] text-[#001540] font-bold rounded-xl transition-all shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:shadow-[0_0_40px_rgba(178,144,77,0.5)] hover:-translate-y-1 flex items-center gap-3 group text-base">
                       <FileText size={20} />
                       {gT(texts.interface.ctaConsultation)}
                       <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform"/>
                    </a>
+
+                   <div className="inline-flex items-center gap-3 px-5 py-3 border border-[#B2904D]/30 rounded-xl backdrop-blur-xl bg-[#001540]/40">
+                     <Star className="w-5 h-5 text-[#B2904D] fill-[#B2904D]" />
+                     <div className="flex items-baseline text-white">
+                       <span className="text-2xl md:text-3xl font-black tracking-tighter">35+</span>
+                       <span className="ml-2 text-xs font-light uppercase tracking-wider opacity-80">
+                         {lang === 'es' ? 'Años de experiencia' : 'Years of experience'}
+                       </span>
+                     </div>
+                   </div>
                  </motion.div>
              </div>
 
            </div>
-        </div>
-      </section>
-
-      {/* --- NUEVA SECCIÓN: ABOGADA EXPERTA --- */}
-      <section className="py-24 relative overflow-hidden bg-[#001f5f]/30 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
-              {/* Círculo decorativo de fondo */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#B2904D]/20 to-transparent rounded-full blur-3xl transform scale-90"></div>
-              
-              <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl bg-white/5 backdrop-blur-sm aspect-[4/5] lg:aspect-square">
-                <Image
-                  src="/María del Pilar Llusa.png"
-                  alt="Maria Pilar Llusa"
-                  fill
-                  className="object-cover object-top"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-80"></div>
-                
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#B2904D] mb-4 shadow-lg">
-                    <Award size={14} className="text-[#001540]" />
-                    <span className="text-[#001540] text-xs font-bold uppercase tracking-wider">{gT(texts.interface.attorneyBadge)}</span>
-                  </div>
-                  <h3 className="text-3xl font-black text-white mb-1">{gT(texts.interface.attorneyName)}</h3>
-                  <p className="text-white/80 font-light">{gT(texts.interface.attorneyRole)}</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-8"
-            >
-              <div>
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: 60 }}
-                  viewport={{ once: true }}
-                  className="h-1 bg-[#B2904D] rounded-full mb-6"
-                />
-                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-                  {gT(texts.interface.attorneySectionTitle)}
-                </h2>
-              </div>
-
-              <div className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
-                <p>
-                  {gT(texts.interface.attorneyDesc1)}
-                </p>
-                <p>
-                  {gT(texts.interface.attorneyDesc2)}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                <div className="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
-                  <div className="w-10 h-10 rounded-full bg-[#B2904D]/20 flex items-center justify-center text-[#B2904D]">
-                    <Globe size={20} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider font-bold">Experiencia</p>
-                    <p className="text-white font-medium">Global & USA</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
-                  <div className="w-10 h-10 rounded-full bg-[#B2904D]/20 flex items-center justify-center text-[#B2904D]">
-                    <GraduationCap size={20} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider font-bold">Educación</p>
-                    <p className="text-white font-medium">Madrid & Washington DC</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-          </div>
         </div>
       </section>
 

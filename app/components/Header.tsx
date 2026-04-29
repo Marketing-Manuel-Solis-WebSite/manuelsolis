@@ -195,10 +195,10 @@ export default function HeaderProfessional() {
             { name: 'FAQ', href: `/${language}/informacion/faq` },
           ]
     },
-    { 
+    {
       name: language === 'es' ? 'Acceso Clientes' : 'Client Access',
-      href: 'https://solislawfirm.com/login',
-      type: 'external' 
+      href: `/${language}/acceso-clientes`,
+      type: 'link'
     },
   ];
 
