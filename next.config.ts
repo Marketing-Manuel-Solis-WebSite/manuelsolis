@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000,
+    // Restrict generated quality variants — avoids creating useless 100% versions.
+    qualities: [50, 75, 82],
+    // Trim oversized device variants. The widest layout area is ~1600px (max-w-7xl),
+    // so 1920 covers retina; 2048+ generated nothing real users could see.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     remotePatterns: [
       {
         protocol: 'https',

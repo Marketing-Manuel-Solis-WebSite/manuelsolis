@@ -28,9 +28,9 @@ import BlogSchema from '../../../components/blogs/BlogSchema';
 const SITE_URL = 'https://www.manuelsolis.com';
 
 const IMAGES = {
-  article: '/blog/blog_25/B5_CR1.png',
-  inside1: '/blog/blog_25/B5_CR2.png',
-  inside2: '/blog/blog_25/B5_CR2.png',
+  article: '/blog/blog_25/B5_CR1.jpg',
+  inside1: '/blog/blog_25/B5_CR2.jpg',
+  inside2: '/blog/blog_25/B5_CR2.jpg',
   author: '/abogado-manuel-solis.jpg'
 };
 

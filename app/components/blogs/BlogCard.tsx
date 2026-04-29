@@ -47,12 +47,12 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
         <div className="bg-[#000F24] rounded-2xl overflow-hidden border border-white/10 hover:border-[#B2904D]/50 transition-all duration-500 h-full flex flex-col hover:shadow-[0_20px_40px_-10px_rgba(178,144,77,0.15)] group-hover:-translate-y-1 shimmer">
           
           {/* Imagen */}
-          <div className="relative aspect-[16/10] overflow-hidden bg-gray-900">
+          <div className="relative aspect-video overflow-hidden bg-gray-900">
             <Image
               src={post.image || '/placeholder.jpg'}
               alt={t(post.title)}
               fill
-              // Optimización de carga de imagen
+              loading="lazy"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />

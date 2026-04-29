@@ -37,7 +37,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-04-10',
       readTime: '12 min',
-      image: '/blog/blog_21/B1_CR1.png',
+      image: '/blog/blog_21/B1_CR1.jpg',
       featured: false
     },
     // --- BLOG 29 - CRÍMENES DEPORTACIÓN ---
@@ -57,7 +57,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-04-14',
       readTime: '11 min',
-      image: '/blog/blog_22/B2_CR1.png',
+      image: '/blog/blog_22/B2_CR1.jpg',
       featured: false
     },
     // --- BLOG 28 - RFE ---
@@ -77,7 +77,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-04-18',
       readTime: '10 min',
-      image: '/blog/blog_23/B3_CR1.png',
+      image: '/blog/blog_23/B3_CR1.jpg',
       featured: false
     },
     // --- BLOG 27 - BARRAS 3 Y 10 AÑOS ---
@@ -97,7 +97,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-04-22',
       readTime: '11 min',
-      image: '/blog/blog_24/B4_CR1.png',
+      image: '/blog/blog_24/B4_CR1.jpg',
       featured: false
     },
     // --- BLOG 26 - ACCIDENTE INDOCUMENTADO ---
@@ -117,7 +117,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-04-26',
       readTime: '10 min',
-      image: '/blog/blog_25/B5_CR1.png',
+      image: '/blog/blog_25/B5_CR1.jpg',
       featured: false
     },
     // --- BLOG 25 - I-864 ---
@@ -137,7 +137,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-04-30',
       readTime: '10 min',
-      image: '/blog/blog_26/B6_CR1.png',
+      image: '/blog/blog_26/B6_CR1.jpg',
       featured: false
     },
     // --- BLOG 24 - VISA K-1 ---
@@ -157,7 +157,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-05-04',
       readTime: '11 min',
-      image: '/home-image.jpg',
+      image: '/blog/blog_28/B7_CR1.jpg',
       featured: false
     },
     // --- BLOG 23 - ENTREVISTA ERRORES ---
@@ -177,7 +177,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-05-08',
       readTime: '10 min',
-      image: '/blog/blog_27/B8_CR1.png',
+      image: '/blog/blog_27/B8_CR1.jpg',
       featured: false
     },
     // --- BLOG 22 - FAMILIAS ESTATUS MIXTO ---
@@ -197,7 +197,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-05-12',
       readTime: '11 min',
-      image: '/blog/blog_29/B9_CR1.png',
+      image: '/blog/blog_29/B9_CR1.jpg',
       featured: false
     },
     // --- BLOG 21 - FRAUDE NOTARIOS ---
@@ -217,7 +217,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2025-05-16',
       readTime: '9 min',
-      image: '/blog/blog_30/B10_CR1.png',
+      image: '/blog/blog_30/B10_CR1.jpg',
       featured: false
     },
     // --- BLOG 20 - NUEVO ---
