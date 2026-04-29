@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { LanguageProvider } from '../context/LanguageContext';
 import WhatsAppButton from '../components/WhatsAppButton';
+import ConsultaFloatingCta from '../components/ConsultaFloatingCta';
 import AIChatButton from '../components/AIChatButton';
 import MobileStickyBar from '../components/MobileStickyBar';
 import type { Language } from '../lib/translations';
@@ -382,7 +383,8 @@ export default async function LangLayout({ children, params }: Props) {
 
       <LanguageProvider initialLanguage={currentLang}>
         {children}
-        {/* <WhatsAppButton /> temporalmente oculto */}
+        {/* <WhatsAppButton /> temporalmente oculto — reemplazado por ConsultaFloatingCta */}
+        <ConsultaFloatingCta />
         <AIChatButton />
         <MobileStickyBar />
 

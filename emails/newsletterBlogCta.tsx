@@ -91,7 +91,7 @@ export function NewsletterBlogCtaEmail({
 }: NewsletterBlogCtaEmailProps) {
   const t = copy[language] || copy.es;
   const articleUrl = `${SITE_URL}/${language}/blog/${blogSlug}`;
-  const bookUrl = `${SITE_URL}/${language}/nosotros`;
+  const bookUrl = `${SITE_URL}/${language}/consulta`;
   const heroImage = absoluteImage(blogImage);
 
   return (

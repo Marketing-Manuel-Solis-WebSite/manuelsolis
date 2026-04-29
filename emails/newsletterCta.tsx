@@ -67,7 +67,7 @@ export function NewsletterCtaEmail({
 }: NewsletterCtaEmailProps) {
   const t = placeholderCopy[language] || placeholderCopy.es;
   const editionUrl = `${SITE_URL}/${language}/newsletter/${editionSlug}`;
-  const bookUrl = `${SITE_URL}/${language}/nosotros`;
+  const bookUrl = `${SITE_URL}/${language}/consulta`;
 
   return (
     <Html>

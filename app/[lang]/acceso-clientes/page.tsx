@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'Client Access — Manuel Solis Secure Portal';
 
   const description = isEs
-    ? 'Conozca el portal de clientes de Manuel Solis Law Firm: consulte el estado de su caso, comparta documentos, comuníquese con su abogado y realice pagos en línea desde un mismo lugar.'
-    : 'Discover the Manuel Solis Law Firm client portal: check your case status, share documents, communicate with your attorney, and make online payments — all in one place.';
+    ? 'Conozca el portal de clientes de Law Offices of Manuel Solís: consulte el estado de su caso, comparta documentos, comuníquese con su abogado y realice pagos en línea desde un mismo lugar.'
+    : 'Discover the Law Offices of Manuel Solís client portal: check your case status, share documents, communicate with your attorney, and make online payments — all in one place.';
 
   return {
     title,

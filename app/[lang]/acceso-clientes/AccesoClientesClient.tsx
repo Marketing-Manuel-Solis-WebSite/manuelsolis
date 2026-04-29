@@ -37,18 +37,18 @@ const getText = (obj: Bilingual, lang: 'es' | 'en'): string => {
 
 const ui = {
   badge: { es: 'Portal Seguro de Clientes', en: 'Secure Client Portal' },
-  heroTitle1: { es: 'Su caso, siempre', en: 'Your case, always' },
-  heroTitle2: { es: 'a un clic.', en: 'one click away.' },
+  heroTitle1: { es: 'Obtenga avances sobre su caso', en: 'Get updates on your case' },
+  heroTitle2: { es: 'en tan solo un clic.', en: 'in just one click.' },
   heroDescription: {
-    es: 'Bienvenido al nuevo espacio digital de Manuel Solis Law Firm. Aquí podrá dar seguimiento a su caso, compartir documentos con su equipo legal y mantenerse informado de cada avance — desde cualquier lugar y en cualquier momento.',
-    en: 'Welcome to the new digital space of Manuel Solis Law Firm. Here you can track your case, share documents with your legal team, and stay informed of every update — from anywhere, at any time.',
+    es: 'Bienvenido al nuevo portal de clientes de Law Offices of Manuel Solís. Aquí podrá dar seguimiento a su caso y mantenerse informado de cada avance — desde cualquier lugar y en cualquier momento.',
+    en: 'Welcome to the new client portal of the Law Offices of Manuel Solís. Here you can track your case and stay informed of every update — from anywhere, at any time.',
   },
   ctaPrimary: { es: 'Iniciar Sesión', en: 'Sign In' },
   ctaPrimaryHint: { es: 'Acceda con las credenciales que su abogado le entregó', en: 'Use the credentials your attorney provided' },
 
   whatTitle: { es: '¿Qué es el Portal de Clientes?', en: 'What is the Client Portal?' },
   whatDesc: {
-    es: 'Es una plataforma privada y encriptada, diseñada exclusivamente para clientes activos del despacho. Centraliza toda la información de su caso en un mismo lugar para que usted no tenga que hacer llamadas para conocer el siguiente paso. Es la forma más rápida, segura y transparente de mantenerse en contacto con su equipo legal.',
+    es: 'Es una plataforma privada y encriptada, diseñada exclusivamente para clientes activos de la firma. Centraliza toda la información de su caso en un mismo lugar para que usted no tenga que hacer llamadas para conocer el siguiente paso. Es la forma más rápida, segura y transparente de mantenerse en contacto con su equipo legal.',
     en: 'It is a private, encrypted platform designed exclusively for active clients of the firm. It centralizes all your case information in one place so you do not have to make phone calls to learn the next step. It is the fastest, safest, and most transparent way to stay in touch with your legal team.',
   },
 
@@ -501,7 +501,7 @@ export default function AccesoClientesClient() {
                       </p>
                       <p className="text-white text-sm font-light">
                         {lang === 'es'
-                          ? 'Solo clientes activos del despacho'
+                          ? 'Solo clientes activos de la firma'
                           : 'Active firm clients only'}
                       </p>
                     </div>
@@ -666,7 +666,7 @@ export default function AccesoClientesClient() {
               <div className="flex items-center gap-3">
                 <div className="h-px w-12 bg-[#B2904D]" />
                 <span className="text-xs text-[#B2904D] font-bold tracking-[0.25em] uppercase">
-                  {lang === 'es' ? 'Compromiso del Despacho' : 'Firm Commitment'}
+                  {lang === 'es' ? 'Compromiso de la Firma' : 'Firm Commitment'}
                 </span>
               </div>
             </div>

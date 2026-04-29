@@ -7,7 +7,7 @@
  */
 
 // ─── Tipos ───
-export type ConversionType = 'form_submit' | 'phone_click' | 'whatsapp_click' | 'qualified_lead';
+export type ConversionType = 'form_submit' | 'phone_click' | 'whatsapp_click' | 'consulta_click' | 'qualified_lead';
 
 export interface ConversionEvent {
   type: ConversionType;

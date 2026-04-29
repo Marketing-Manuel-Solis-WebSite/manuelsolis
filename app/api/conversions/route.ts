@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
-    const validTypes = ['form_submit', 'phone_click', 'whatsapp_click', 'qualified_lead'];
+    const validTypes = ['form_submit', 'phone_click', 'whatsapp_click', 'consulta_click', 'qualified_lead'];
     if (!body.type || !validTypes.includes(body.type)) {
       return NextResponse.json({ ok: false, error: 'Invalid event type' }, { status: 400 });
     }
