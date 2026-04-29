@@ -16,12 +16,12 @@ import {
   Sparkles,
   Smartphone,
   CheckCircle2,
-  ChevronDown,
   FileCheck2,
   Award,
   Globe,
   Clock3,
 } from 'lucide-react';
+import Image from 'next/image';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useLanguage } from '../../context/LanguageContext';
@@ -258,7 +258,7 @@ export default function AccesoClientesClient() {
         {/* ============================================================ */}
         {/* CONTENT                                                        */}
         {/* ============================================================ */}
-        <div className="relative z-20 w-full max-w-6xl mx-auto text-center pt-32 md:pt-28 pb-20">
+        <div className="relative z-20 w-full max-w-6xl mx-auto text-center pt-48 md:pt-52 lg:pt-56 pb-20">
 
           {/* Top badge with pulsing dot */}
           <motion.div
@@ -281,7 +281,7 @@ export default function AccesoClientesClient() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-[8.5rem] font-thin text-white tracking-tighter leading-[0.95] mb-8"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tighter leading-[1] mb-8"
           >
             <motion.span
               initial={{ y: 60, opacity: 0 }}
@@ -319,28 +319,24 @@ export default function AccesoClientesClient() {
             {gT(ui.heroDescription)}
           </motion.p>
 
-          {/* CENTER MEGA CTA */}
+          {/* CENTER CTA — refined */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="flex flex-col items-center gap-5 mb-16"
+            className="flex flex-col items-center gap-3 mb-14"
           >
             <a
               href={PORTAL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center gap-4 px-10 md:px-12 py-5 md:py-6 bg-gradient-to-r from-[#B2904D] via-[#D4AF37] to-[#B2904D] text-[#001540] font-black rounded-2xl text-base md:text-lg uppercase tracking-[0.2em] shadow-[0_15px_60px_-12px_rgba(178,144,77,0.7)] hover:shadow-[0_25px_80px_-10px_rgba(178,144,77,0.9)] transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+              className="group inline-flex items-center gap-2.5 px-7 py-3 bg-gradient-to-b from-[#D4AF37] to-[#B2904D] hover:from-[#E0C04A] hover:to-[#C99D52] text-[#001540] font-bold rounded-lg text-sm tracking-wide shadow-[0_4px_20px_-2px_rgba(178,144,77,0.45)] hover:shadow-[0_8px_28px_-2px_rgba(178,144,77,0.65)] transition-all duration-200 hover:-translate-y-0.5 ring-1 ring-[#F3E5AB]/40"
             >
-              {/* Outer glow */}
-              <span className="absolute -inset-1 bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] rounded-2xl blur-md opacity-50 group-hover:opacity-80 transition-opacity -z-10" />
-              {/* Shine sweep */}
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-              <LogIn size={22} className="relative z-10" />
-              <span className="relative z-10">{gT(ui.ctaPrimary)}</span>
-              <ArrowUpRight size={20} className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <LogIn size={16} />
+              <span>{gT(ui.ctaPrimary)}</span>
+              <ArrowUpRight size={14} className="opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </a>
-            <span className="text-[10px] md:text-xs text-blue-100/50 font-light tracking-[0.25em] uppercase">
+            <span className="text-[10px] text-blue-100/45 font-light tracking-[0.2em] uppercase">
               {gT(ui.ctaPrimaryHint)}
             </span>
           </motion.div>
@@ -369,39 +365,41 @@ export default function AccesoClientesClient() {
         </div>
 
         {/* ============================================================ */}
-        {/* FLOATING MOCKUP CARDS                                          */}
+        {/* FLOATING MOCKUP CARDS — only at 2xl, contained                 */}
         {/* ============================================================ */}
 
         {/* Left card — Case status */}
         <motion.div
-          initial={{ opacity: 0, x: -80, rotate: -12 }}
-          animate={{ opacity: 1, x: 0, rotate: -8 }}
+          initial={{ opacity: 0, x: -40, rotate: -10 }}
+          animate={{ opacity: 1, x: 0, rotate: -6 }}
           transition={{ delay: 1.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden xl:block absolute left-8 top-[45%] z-30 w-72 pointer-events-none"
+          className="hidden 2xl:block absolute left-[3%] bottom-[12%] z-30 w-60 pointer-events-none"
         >
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -8, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-            className="p-5 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]"
+            className="p-4 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[10px] text-white/50 tracking-widest uppercase font-bold">
+              <span className="text-[9px] text-white/50 tracking-widest uppercase font-bold">
                 {lang === 'es' ? 'Caso Activo' : 'Active Case'}
               </span>
-              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[9px] font-bold tracking-wider uppercase">
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[8px] font-bold tracking-wider uppercase">
                 {lang === 'es' ? 'Aprobado' : 'Approved'}
               </span>
             </div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-[#B2904D]/20 flex items-center justify-center flex-shrink-0">
-                <FileCheck2 size={20} className="text-[#B2904D]" />
+            <div className="flex items-center gap-2.5 mb-3">
+              <div className="w-8 h-8 rounded-lg bg-[#B2904D]/20 flex items-center justify-center flex-shrink-0">
+                <FileCheck2 size={16} className="text-[#B2904D]" />
               </div>
-              <div className="min-w-0">
-                <p className="text-white font-bold text-sm truncate">USCIS-887421</p>
-                <p className="text-white/50 text-[11px]">{lang === 'es' ? 'Visa U — Petición' : 'U Visa — Petition'}</p>
+              <div className="min-w-0 flex-1">
+                <p className="text-white font-bold text-xs truncate">USCIS-887421</p>
+                <p className="text-white/50 text-[10px] truncate">
+                  {lang === 'es' ? 'Visa U — Petición' : 'U Visa — Petition'}
+                </p>
               </div>
             </div>
-            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden mb-2">
+            <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden mb-1.5">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: '92%' }}
@@ -409,7 +407,7 @@ export default function AccesoClientesClient() {
                 className="h-full bg-gradient-to-r from-[#B2904D] to-[#D4AF37]"
               />
             </div>
-            <div className="flex justify-between text-[10px] text-white/40">
+            <div className="flex justify-between text-[9px] text-white/40">
               <span>{lang === 'es' ? 'Progreso' : 'Progress'}</span>
               <span className="text-[#B2904D] font-bold">92%</span>
             </div>
@@ -418,58 +416,45 @@ export default function AccesoClientesClient() {
 
         {/* Right card — Notification */}
         <motion.div
-          initial={{ opacity: 0, x: 80, rotate: 12 }}
-          animate={{ opacity: 1, x: 0, rotate: 7 }}
+          initial={{ opacity: 0, x: 40, rotate: 10 }}
+          animate={{ opacity: 1, x: 0, rotate: 5 }}
           transition={{ delay: 1.6, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="hidden xl:block absolute right-8 top-[42%] z-30 w-72 pointer-events-none"
+          className="hidden 2xl:block absolute right-[3%] bottom-[14%] z-30 w-60 pointer-events-none"
         >
           <motion.div
-            animate={{ y: [0, 12, 0] }}
+            animate={{ y: [0, 10, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="p-5 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]"
+            className="p-4 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]"
           >
-            <div className="flex items-start gap-3 mb-3">
-              <div className="relative w-10 h-10 rounded-xl bg-[#B2904D]/20 flex items-center justify-center flex-shrink-0">
-                <Bell size={20} className="text-[#B2904D]" />
-                <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-red-500 border-2 border-[#001026]" />
+            <div className="flex items-start gap-2.5 mb-2">
+              <div className="relative w-8 h-8 rounded-lg bg-[#B2904D]/20 flex items-center justify-center flex-shrink-0">
+                <Bell size={16} className="text-[#B2904D]" />
+                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-[#001026]" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] text-white/50 tracking-widest uppercase font-bold mb-0.5">
+                <p className="text-[9px] text-white/50 tracking-widest uppercase font-bold mb-0.5">
                   {lang === 'es' ? 'Notificación' : 'Notification'}
                 </p>
-                <p className="text-white font-bold text-sm leading-tight">
-                  {lang === 'es' ? 'Cita biométrica agendada' : 'Biometrics appointment scheduled'}
+                <p className="text-white font-bold text-xs leading-tight">
+                  {lang === 'es' ? 'Cita biométrica' : 'Biometrics appt.'}
                 </p>
               </div>
             </div>
-            <p className="text-white/60 text-[11px] leading-relaxed pl-13">
+            <p className="text-white/60 text-[10px] leading-snug">
               {lang === 'es'
-                ? '15 May 2026, 10:30 AM — USCIS Application Support Center, Houston.'
-                : 'May 15, 2026, 10:30 AM — USCIS Application Support Center, Houston.'}
+                ? '15 May 2026 · 10:30 AM · Houston'
+                : 'May 15, 2026 · 10:30 AM · Houston'}
             </p>
-            <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/5">
-              <div className="flex -space-x-1.5">
-                <div className="w-5 h-5 rounded-full bg-[#B2904D] border border-[#001026]" />
-                <div className="w-5 h-5 rounded-full bg-blue-400 border border-[#001026]" />
+            <div className="flex items-center gap-2 mt-2.5 pt-2.5 border-t border-white/5">
+              <div className="flex -space-x-1">
+                <div className="w-4 h-4 rounded-full bg-[#B2904D] border border-[#001026]" />
+                <div className="w-4 h-4 rounded-full bg-blue-400 border border-[#001026]" />
               </div>
-              <span className="text-[10px] text-white/40">
-                {lang === 'es' ? 'Tu equipo legal está al tanto' : 'Your legal team is on it'}
+              <span className="text-[9px] text-white/40 truncate">
+                {lang === 'es' ? 'Equipo legal al tanto' : 'Legal team on it'}
               </span>
             </div>
           </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{ opacity: { delay: 2, duration: 1 }, y: { duration: 2, repeat: Infinity, delay: 2 } }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 z-20"
-        >
-          <span className="text-[9px] tracking-[0.4em] uppercase">
-            {lang === 'es' ? 'Descubre más' : 'Discover more'}
-          </span>
-          <ChevronDown size={18} />
         </motion.div>
       </section>
 
@@ -485,32 +470,87 @@ export default function AccesoClientesClient() {
       `}</style>
 
       {/* --- WHAT IS IT --- */}
-      <section className="relative py-20 md:py-28 px-4 z-10 bg-[#001026]">
-        <div className="max-w-5xl mx-auto text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight"
-          >
-            {gT(ui.whatTitle)}
-          </motion.h2>
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 96 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="h-1 bg-[#B2904D] rounded-full mx-auto mb-10"
-          />
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-blue-100/80 font-light leading-relaxed max-w-3xl mx-auto"
-          >
-            {gT(ui.whatDesc)}
-          </motion.p>
+      <section className="relative py-20 md:py-28 px-4 z-10 bg-[#001026] overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-[#B2904D]/40 to-transparent" />
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* IMAGE */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9 }}
+              className="relative"
+            >
+              <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
+                <Image
+                  src="/MSTeam.png"
+                  alt={lang === 'es' ? 'Equipo legal de Manuel Solis' : 'Manuel Solis legal team'}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#001026] via-[#001026]/30 to-transparent" />
+                {/* Bottom badge */}
+                <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-[#001026]/80 backdrop-blur-md border border-[#B2904D]/30">
+                  <div className="flex items-center gap-3">
+                    <Shield size={18} className="text-[#B2904D] flex-shrink-0" />
+                    <div>
+                      <p className="text-[10px] text-[#B2904D] font-bold tracking-widest uppercase mb-0.5">
+                        {lang === 'es' ? 'Acceso Privado' : 'Private Access'}
+                      </p>
+                      <p className="text-white text-sm font-light">
+                        {lang === 'es'
+                          ? 'Solo clientes activos del despacho'
+                          : 'Active firm clients only'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Decorative orb */}
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-[#B2904D]/20 rounded-full blur-[60px] pointer-events-none -z-10" />
+            </motion.div>
+
+            {/* TEXT */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6"
+              >
+                <Sparkles size={14} className="text-[#B2904D]" />
+                <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">
+                  {lang === 'es' ? 'La Plataforma' : 'The Platform'}
+                </span>
+              </motion.div>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight"
+              >
+                {gT(ui.whatTitle)}
+              </motion.h2>
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: 64 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="h-1 bg-[#B2904D] rounded-full mb-8"
+              />
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-base md:text-lg text-blue-100/80 font-light leading-relaxed"
+              >
+                {gT(ui.whatDesc)}
+              </motion.p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -561,6 +601,76 @@ export default function AccesoClientesClient() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* --- PROMISE BANNER --- */}
+      <section className="relative py-20 md:py-24 px-4 z-10 overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative grid md:grid-cols-5 gap-8 md:gap-12 items-center bg-gradient-to-br from-[#001540] to-[#001026] rounded-[2.5rem] p-8 md:p-12 border border-white/10 overflow-hidden"
+          >
+            {/* Background image */}
+            <div className="absolute inset-0 opacity-15 pointer-events-none">
+              <Image
+                src="/apretondemanos.png"
+                alt=""
+                fill
+                className="object-cover object-right"
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#001540] via-[#001540]/70 to-transparent" />
+            </div>
+
+            {/* Image side */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="md:col-span-2 relative z-10 hidden md:block"
+            >
+              <div className="relative aspect-square rounded-2xl overflow-hidden border border-[#B2904D]/30 shadow-2xl">
+                <Image
+                  src="/abogado-manuel-solis.jpg"
+                  alt="Manuel Solis"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 0px, 40vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001026]/80 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="text-[10px] text-[#B2904D] font-bold tracking-widest uppercase">
+                    Manuel Solis
+                  </p>
+                  <p className="text-white text-sm font-light">
+                    {lang === 'es' ? 'Abogado fundador' : 'Founding Attorney'}
+                  </p>
+                </div>
+              </div>
+              <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#B2904D]/30 rounded-full blur-2xl pointer-events-none -z-10" />
+            </motion.div>
+
+            {/* Quote text */}
+            <div className="md:col-span-3 relative z-10">
+              <span className="block text-[#B2904D] text-5xl md:text-6xl font-serif leading-none mb-2">“</span>
+              <p className="text-xl md:text-2xl lg:text-3xl text-white font-light leading-tight tracking-tight mb-6">
+                {lang === 'es'
+                  ? 'Más que un portal: es nuestra forma de estar a su lado en cada paso, sin barreras y sin esperas.'
+                  : 'More than a portal — it is our way of being by your side every step of the way, without barriers or waiting.'}
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="h-px w-12 bg-[#B2904D]" />
+                <span className="text-xs text-[#B2904D] font-bold tracking-[0.25em] uppercase">
+                  {lang === 'es' ? 'Compromiso del Despacho' : 'Firm Commitment'}
+                </span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -617,8 +727,20 @@ export default function AccesoClientesClient() {
       </section>
 
       {/* --- FINAL CTA (CENTER BUTTON) --- */}
-      <section className="relative py-28 md:py-36 px-4 z-10">
-        <div className="max-w-4xl mx-auto">
+      <section className="relative py-28 md:py-36 px-4 z-10 overflow-hidden">
+        {/* Backdrop image */}
+        <div className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none">
+          <Image
+            src="/home-image.jpg"
+            alt=""
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#001540] via-[#001540]/60 to-[#001540]" />
+        </div>
+
+        <div className="max-w-4xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -636,9 +758,9 @@ export default function AccesoClientesClient() {
                 whileInView={{ scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
                 transition={{ type: 'spring', stiffness: 180 }}
-                className="w-20 h-20 mx-auto mb-8 rounded-3xl bg-gradient-to-br from-[#B2904D] to-[#D4AF37] flex items-center justify-center shadow-[0_0_40px_rgba(178,144,77,0.4)]"
+                className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#B2904D] to-[#D4AF37] flex items-center justify-center shadow-[0_0_40px_rgba(178,144,77,0.4)]"
               >
-                <LogIn size={36} className="text-[#001540]" />
+                <LogIn size={28} className="text-[#001540]" />
               </motion.div>
 
               <h2 className="text-3xl md:text-5xl font-black text-white mb-5 tracking-tight">
@@ -648,23 +770,23 @@ export default function AccesoClientesClient() {
                 {gT(ui.finalDesc)}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <a
                   href={PORTAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-10 py-5 bg-[#B2904D] hover:bg-[#d4af37] text-[#001540] font-black rounded-xl transition-all shadow-[0_0_30px_rgba(178,144,77,0.4)] hover:shadow-[0_0_50px_rgba(178,144,77,0.6)] hover:-translate-y-1 inline-flex items-center gap-3 group text-lg uppercase tracking-wider"
+                  className="group inline-flex items-center gap-2.5 px-7 py-3 bg-gradient-to-b from-[#D4AF37] to-[#B2904D] hover:from-[#E0C04A] hover:to-[#C99D52] text-[#001540] font-bold rounded-lg text-sm tracking-wide shadow-[0_4px_20px_-2px_rgba(178,144,77,0.45)] hover:shadow-[0_8px_28px_-2px_rgba(178,144,77,0.65)] transition-all duration-200 hover:-translate-y-0.5 ring-1 ring-[#F3E5AB]/40"
                 >
-                  <LogIn size={22} />
-                  {gT(ui.finalCta)}
-                  <ArrowUpRight size={20} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <LogIn size={16} />
+                  <span>{gT(ui.finalCta)}</span>
+                  <ArrowUpRight size={14} className="opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
                 <a
                   href={`/${lang}/contacto`}
-                  className="px-8 py-5 border-2 border-[#B2904D]/40 hover:border-[#B2904D] text-[#B2904D] hover:text-white font-bold rounded-xl transition-all inline-flex items-center gap-3 group text-base"
+                  className="group inline-flex items-center gap-2 px-6 py-3 border border-[#B2904D]/40 hover:border-[#B2904D] hover:bg-[#B2904D]/5 text-[#B2904D] hover:text-white font-medium rounded-lg text-sm tracking-wide transition-all"
                 >
                   {gT(ui.finalSecondary)}
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                 </a>
               </div>
             </div>
