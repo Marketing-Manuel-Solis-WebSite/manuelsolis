@@ -7,10 +7,10 @@ import Footer from './Footer'
 import dynamic from 'next/dynamic'
 import {
   MapPin, Phone, Clock, Shield, Award, Users, Star,
-  Scale, CheckCircle2, ArrowRight, Building2
+  Scale, CheckCircle2, ArrowRight, Building2, HelpCircle, FileText
 } from 'lucide-react'
 import type { LandingPageConfig, OfficeInfo, ServiceInfo } from '../lib/cityServiceData'
-import { MAIN_PHONE } from '../lib/cityServiceData'
+import type { FAQItem, TypicalCase } from '../lib/cityServiceLocalContent'
 import Link from 'next/link'
 
 const ContactForm = dynamic(() => import('./ContactForm'), {
@@ -22,9 +22,20 @@ interface CityServiceLandingProps {
   office: OfficeInfo
   service: ServiceInfo
   siblingCities?: { slug: string; city: string; stateCode: string }[]
+  localFAQ?: FAQItem[]
+  typicalCases?: TypicalCase[]
+  relatedServiceLinks?: { slug: string; title: { es: string; en: string } }[]
 }
 
-export default function CityServiceLanding({ config, office, service, siblingCities = [] }: CityServiceLandingProps) {
+export default function CityServiceLanding({
+  config,
+  office,
+  service,
+  siblingCities = [],
+  localFAQ = [],
+  typicalCases = [],
+  relatedServiceLinks = [],
+}: CityServiceLandingProps) {
   const { language } = useLanguage()
   const isEs = language === 'es'
   const lang = language
@@ -353,6 +364,113 @@ export default function CityServiceLanding({ config, office, service, siblingCit
             <ContactForm />
           </div>
         </section>
+
+        {/* ===== TYPICAL CASES (city-specific scenarios) ===== */}
+        {typicalCases.length > 0 && (
+          <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white/[0.02]">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-10">
+                <span className="inline-block mb-3 px-3 py-1 rounded-full bg-sky-500/10 text-xs font-semibold tracking-widest text-sky-400 uppercase">
+                  {isEs ? 'Casos típicos' : 'Typical Cases'}
+                </span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+                  {isEs
+                    ? `Casos que manejamos en ${office.city}`
+                    : `Cases we handle in ${office.city}`}
+                </h2>
+                <p className="mt-4 text-slate-300 max-w-2xl mx-auto text-sm">
+                  {isEs
+                    ? 'Resúmenes anónimos de casos representativos. Cada situación es única — su consulta es confidencial.'
+                    : 'Anonymized summaries of representative cases. Each situation is unique — your consultation is confidential.'}
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {typicalCases.map((tc, i) => (
+                  <article
+                    key={i}
+                    className="p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400 mb-4">
+                      <FileText className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2">
+                      {tc.title[lang]}
+                    </h3>
+                    <p className="text-slate-300 text-sm leading-relaxed">
+                      {tc.description[lang]}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ===== LOCAL FAQ (city-specific) ===== */}
+        {localFAQ.length > 0 && (
+          <section className="py-16 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-10">
+                <span className="inline-block mb-3 px-3 py-1 rounded-full bg-[#B2904D]/15 text-xs font-semibold tracking-widest text-[#B2904D] uppercase">
+                  {isEs ? 'Preguntas frecuentes' : 'Frequently Asked Questions'}
+                </span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+                  {isEs
+                    ? `Preguntas frecuentes — ${service.shortTitle.es} en ${office.city}`
+                    : `${service.shortTitle.en} FAQ in ${office.city}`}
+                </h2>
+              </div>
+              <div className="space-y-4">
+                {localFAQ.map((item, i) => (
+                  <details
+                    key={i}
+                    className="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.07] transition-colors"
+                  >
+                    <summary className="flex items-start gap-3 p-5 cursor-pointer list-none">
+                      <HelpCircle className="h-5 w-5 text-[#B2904D] mt-0.5 flex-shrink-0" />
+                      <span className="text-white font-semibold text-base sm:text-lg flex-1">
+                        {item.question[lang]}
+                      </span>
+                      <span className="text-[#B2904D] text-2xl leading-none flex-shrink-0 group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <div className="px-5 pb-5 pl-13 text-slate-300 leading-relaxed">
+                      {item.answer[lang]}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ===== RELATED SERVICES (cross-link to other landings in same city) ===== */}
+        {relatedServiceLinks.length > 0 && (
+          <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white/[0.02]">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  {isEs
+                    ? `Otros servicios en ${office.city}`
+                    : `Other services in ${office.city}`}
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {relatedServiceLinks.map((rs) => (
+                  <Link
+                    key={rs.slug}
+                    href={`/${lang}/${rs.slug}`}
+                    className="flex items-center justify-between gap-3 p-5 rounded-xl border border-white/10 bg-white/5 hover:bg-[#B2904D]/10 hover:border-[#B2904D]/30 transition-all group"
+                  >
+                    <span className="text-white font-semibold group-hover:text-[#B2904D] transition-colors">
+                      {rs.title[lang]}
+                    </span>
+                    <ArrowRight className="h-4 w-4 text-[#B2904D] flex-shrink-0" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ===== OTHER CITIES ===== */}
         {siblingCities.length > 0 && (

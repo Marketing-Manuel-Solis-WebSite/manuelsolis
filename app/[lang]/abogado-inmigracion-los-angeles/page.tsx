@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
-import { getPageData, getSiblingCities, SITE_URL } from '../../lib/cityServiceData';
+import { getPageData, getSiblingCities, getRelatedServiceLinks, SITE_URL } from '../../lib/cityServiceData';
+import { getLocalFAQ, getTypicalCases } from '../../lib/cityServiceLocalContent';
 import CityServiceLanding from '../../components/CityServiceLanding';
 
 const PAGE_SLUG = 'abogado-inmigracion-los-angeles';
@@ -115,19 +116,36 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
     },
   };
 
+  const localFAQ = getLocalFAQ(config, office, service);
+  const typicalCases = getTypicalCases(config, office, service);
+  const relatedServiceLinks = getRelatedServiceLinks(PAGE_SLUG);
+
+  const faqPageSchema = localFAQ.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: localFAQ.map((item) => ({
+      '@type': 'Question',
+      name: item.question[currentLang],
+      acceptedAnswer: { '@type': 'Answer', text: item.answer[currentLang] },
+    })),
+  } : null;
+
   return (
     <>
-      <Script
-        id="breadcrumb-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      <Script id="breadcrumb-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
+      <Script id="legal-service-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }} />
+      {faqPageSchema && (
+        <Script id="faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }} />
+      )}
+      <CityServiceLanding
+        config={config}
+        office={office}
+        service={service}
+        siblingCities={getSiblingCities(PAGE_SLUG)}
+        localFAQ={localFAQ}
+        typicalCases={typicalCases}
+        relatedServiceLinks={relatedServiceLinks}
       />
-      <Script
-        id="legal-service-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }}
-      />
-      <CityServiceLanding config={config} office={office} service={service} siblingCities={getSiblingCities(PAGE_SLUG)} />
     </>
   );
 }

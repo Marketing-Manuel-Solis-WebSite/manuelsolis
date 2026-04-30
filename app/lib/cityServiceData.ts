@@ -908,3 +908,12 @@ export function getSiblingCities(slug: string): { slug: string; city: string; st
       return { slug: p.slug, city: office.city, stateCode: office.stateCode };
     });
 }
+
+// Cross-links to other landings for the SAME city (different services)
+export function getRelatedServiceLinks(slug: string): { slug: string; title: { es: string; en: string } }[] {
+  const config = getPageConfig(slug);
+  if (!config) return [];
+  return LANDING_PAGES
+    .filter((p) => p.officeKey === config.officeKey && p.slug !== slug)
+    .map((p) => ({ slug: p.slug, title: p.h1 }));
+}
