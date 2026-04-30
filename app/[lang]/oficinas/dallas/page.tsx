@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Lawyers in Dallas, TX (Empire Central)`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en Dallas (Empire Central PL). Abogados de inmigración y accidentes listos para defender sus derechos. ¡Consulta Gratis!`
-    : `Manuel Solis Law Office in Dallas (Empire Central PL). Immigration and accident attorneys ready to defend your rights. Free Consultation!`;
+    ? `Oficina de Manuel Solís en Dallas (Empire Central PL). Abogados de inmigración y accidentes listos para defender sus derechos.`
+    : `Manuel Solis Law Office in Dallas (Empire Central PL). Immigration and accident attorneys ready to defend your rights.`;
 
   return {
     title,

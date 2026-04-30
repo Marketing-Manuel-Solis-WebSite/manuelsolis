@@ -85,7 +85,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
       '@type': 'City',
       name: office.city,
     },
-    priceRange: isEs ? 'Consulta gratis' : 'Free consultation',
+    priceRange: '$$',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',

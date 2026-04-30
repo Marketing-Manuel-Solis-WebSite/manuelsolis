@@ -48,7 +48,7 @@ export const newsletters: NewsletterEdition[] = [
         {
           heading: 'Consejos para Proteger tu Estatus',
           body: 'En el entorno migratorio actual, es fundamental tomar medidas proactivas: mantenga copias de todos sus documentos migratorios, no viaje sin consultar primero con un abogado, reporte cualquier cambio de dirección a USCIS dentro de 10 días, y evite cualquier contacto con el sistema de justicia penal. Si enfrenta cualquier procedimiento legal, contacte a un abogado de inmigración inmediatamente antes de tomar cualquier decisión.',
-          cta: { text: 'Consulta Gratuita', href: '/es/contacto' },
+          cta: { text: 'Solicitar Consulta', href: '/es/contacto' },
         },
       ],
       en: [
@@ -64,7 +64,7 @@ export const newsletters: NewsletterEdition[] = [
         {
           heading: 'Tips to Protect Your Status',
           body: 'In the current immigration environment, it is essential to take proactive steps: keep copies of all your immigration documents, do not travel without first consulting an attorney, report any change of address to USCIS within 10 days, and avoid any contact with the criminal justice system. If you face any legal proceedings, contact an immigration attorney immediately before making any decisions.',
-          cta: { text: 'Free Consultation', href: '/en/contacto' },
+          cta: { text: 'Request Consultation', href: '/en/contacto' },
         },
       ],
     },

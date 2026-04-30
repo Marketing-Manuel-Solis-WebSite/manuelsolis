@@ -160,8 +160,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : '%s | Manuel Solis',
     },
     description: isEs
-      ? 'Abogados de inmigración con 35+ años de experiencia y 50,000+ casos ganados. Oficinas en Houston, Dallas, Chicago, Los Angeles y más. Consulta gratis.'
-      : 'Immigration lawyers with 35+ years of experience and 50,000+ cases won. Offices in Houston, Dallas, Chicago, Los Angeles and more. Free consultation.',
+      ? 'Abogados de inmigración con 35+ años de experiencia y 50,000+ casos ganados. Oficinas en Houston, Dallas, Chicago, Los Angeles y más.'
+      : 'Immigration lawyers with 35+ years of experience and 50,000+ cases won. Offices in Houston, Dallas, Chicago, Los Angeles and more.',
     keywords: isEs
       ? [
           // Tier 1 — máximo valor comercial / volumen
@@ -171,8 +171,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           'abogado de inmigración en Dallas',
           'abogado de inmigración en Chicago',
           'abogado de inmigración en Los Ángeles',
-          'abogado de inmigración gratis',
-          'consulta gratis inmigración',
           // Tier 2 — intención alta y transaccional
           'abogado de accidentes',
           'abogado de accidentes de auto',
@@ -208,7 +206,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           'immigration lawyer Dallas',
           'immigration lawyer Chicago',
           'immigration lawyer Los Angeles',
-          'free immigration consultation',
           // Tier 2
           'accident attorney',
           'car accident lawyer',

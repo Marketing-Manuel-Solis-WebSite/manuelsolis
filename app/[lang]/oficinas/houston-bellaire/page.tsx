@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Lawyers in Houston Bellaire, TX (Chinese Service)`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en Bellaire Blvd, Houston. Abogada Ni Yan ofrece servicios de inmigración en chino, español e inglés. ¡Consulta Gratis!`
-    : `Manuel Solis Law Office on Bellaire Blvd, Houston. Attorney Ni Yan offers immigration services in Chinese, Spanish, and English. Free Consultation!`;
+    ? `Oficina de Manuel Solís en Bellaire Blvd, Houston. Abogada Ni Yan ofrece servicios de inmigración en chino, español e inglés.`
+    : `Manuel Solis Law Office on Bellaire Blvd, Houston. Attorney Ni Yan offers immigration services in Chinese, Spanish, and English.`;
 
   return {
     title,

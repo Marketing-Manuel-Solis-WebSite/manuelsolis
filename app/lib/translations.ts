@@ -148,7 +148,7 @@ export const translations = {
     // Contact Form
     contact: {
       title: 'Contáctenos',
-      heading: 'Solicite su Consulta Gratuita Hoy',
+      heading: 'Solicite su Consulta Hoy',
       description: 'Estamos listos para ayudarle a resolver sus problemas legales. Complete el formulario a continuación y uno de nuestros expertos se comunicará con usted a la brevedad posible.',
       form: {
         name: 'Nombre Completo',
@@ -161,7 +161,7 @@ export const translations = {
         servicePlaceholder: 'Seleccione un servicio legal',
         message: 'Detalles del Caso',
         messagePlaceholder: 'Por favor, cuéntenos brevemente sobre su situación legal...',
-        submit: 'Enviar Consulta Gratuita',
+        submit: 'Enviar Consulta',
         submitting: 'Enviando información...',
         success: '¡Su mensaje ha sido enviado exitosamente!',
         error: 'Hubo un error al enviar. Por favor intente nuevamente.',
@@ -207,8 +207,8 @@ export const translations = {
     seo: {
       home: {
         title: 'Abogados de Inmigración y Accidentes', // Shortened to fix duplication
-        description: 'Expertos abogados de inmigración, accidentes y derecho de familia. Más de 50,000 casos ganados. Consulta gratuita. Oficinas en Houston, Dallas, Chicago y todo EE.UU.',
-        keywords: 'abogados de inmigración, abogados de accidentes, Manuel Solis, abogados hispanos, ayuda legal, consulta gratis, defensa deportación, visa u, residencia',
+        description: 'Expertos abogados de inmigración, accidentes y derecho de familia. Más de 50,000 casos ganados. Oficinas en Houston, Dallas, Chicago y todo EE.UU.',
+        keywords: 'abogados de inmigración, abogados de accidentes, Manuel Solis, abogados hispanos, ayuda legal, defensa deportación, visa u, residencia',
       },
     },
   },
@@ -360,7 +360,7 @@ export const translations = {
     // Contact Form
     contact: {
       title: 'Contact Us',
-      heading: 'Request Your Free Consultation Today',
+      heading: 'Request Your Consultation Today',
       description: 'We are ready to help you resolve your legal problems. Fill out the form below and one of our experts will contact you as soon as possible.',
       form: {
         name: 'Full Name',
@@ -373,7 +373,7 @@ export const translations = {
         servicePlaceholder: 'Select a legal service',
         message: 'Case Details',
         messagePlaceholder: 'Please tell us briefly about your legal situation...',
-        submit: 'Send Free Inquiry',
+        submit: 'Send Inquiry',
         submitting: 'Sending information...',
         success: 'Message sent successfully!',
         error: 'Error sending. Please try again.',
@@ -419,8 +419,8 @@ export const translations = {
     seo: {
       home: {
         title: 'Immigration & Accident Attorneys', // Shortened
-        description: 'Expert immigration, accident and family law attorneys. Over 50,000 cases won. Free consultation. Offices across the USA.',
-        keywords: 'immigration lawyers, accident attorneys, Manuel Solis, Hispanic lawyers, legal help, free consultation',
+        description: 'Expert immigration, accident and family law attorneys. Over 50,000 cases won. Offices across the USA.',
+        keywords: 'immigration lawyers, accident attorneys, Manuel Solis, Hispanic lawyers, legal help',
       },
     },
   },

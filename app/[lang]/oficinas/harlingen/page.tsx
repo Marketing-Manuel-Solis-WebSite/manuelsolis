@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Lawyers in Harlingen, TX (Jackson St)`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en Harlingen (E Jackson St). Abogados de inmigración en el Valle del Río Grande listos para ayudarle. ¡Consulta Gratis!`
-    : `Manuel Solis Law Office in Harlingen (E Jackson St). Immigration attorneys in the Rio Grande Valley ready to help you. Free Consultation!`;
+    ? `Oficina de Manuel Solís en Harlingen (E Jackson St). Abogados de inmigración en el Valle del Río Grande listos para ayudarle.`
+    : `Manuel Solis Law Office in Harlingen (E Jackson St). Immigration attorneys in the Rio Grande Valley ready to help you.`;
 
   return {
     title,

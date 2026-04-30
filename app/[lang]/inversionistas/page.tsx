@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'E-2 Investor Visa: Requirements, Process & Evaluation';
 
   const description = isEs
-    ? 'Invierta y viva legalmente en EE.UU. con la Visa E-2. Abogados con mas de 35 anos de experiencia en visas de inversion. Evaluacion sin costo.'
-    : 'Invest and live legally in the U.S. with the E-2 Visa. Attorneys with 35+ years of experience in investment visas. Free evaluation.';
+    ? 'Invierta y viva legalmente en EE.UU. con la Visa E-2. Abogados con mas de 35 anos de experiencia en visas de inversion.'
+    : 'Invest and live legally in the U.S. with the E-2 Visa. Attorneys with 35+ years of experience in investment visas.';
 
   return {
     title,

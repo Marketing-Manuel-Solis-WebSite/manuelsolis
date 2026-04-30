@@ -31,8 +31,8 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
           </h3>
           <p className="text-blue-100/60 text-sm mb-6 max-w-md mx-auto">
             {lang === 'es'
-              ? 'Nuestro equipo de expertos puede evaluar su caso de forma gratuita y confidencial.'
-              : 'Our team of experts can evaluate your case for free and confidentially.'}
+              ? 'Nuestro equipo de expertos puede evaluar su caso de forma confidencial.'
+              : 'Our team of experts can evaluate your case confidentially.'}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link

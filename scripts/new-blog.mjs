@@ -216,7 +216,7 @@ const blogContent = {
     ],
     cta: {
       title: '¿Necesitas ayuda con tu caso?',
-      body: 'Agenda una consulta gratuita con nuestro equipo legal.',
+      body: 'Agenda una consulta con nuestro equipo legal.',
       button: 'Agendar consulta',
     },
   },
@@ -254,7 +254,7 @@ const blogContent = {
     ],
     cta: {
       title: 'Need help with your case?',
-      body: 'Book a free consultation with our legal team.',
+      body: 'Book a consultation with our legal team.',
       button: 'Book consultation',
     },
   },

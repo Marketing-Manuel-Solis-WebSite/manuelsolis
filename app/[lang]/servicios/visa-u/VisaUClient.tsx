@@ -157,7 +157,7 @@ const texts = {
   ] as TabItem[],
 
   processSteps: [
-    { id: 1, title: { es: "Consulta Gratuita", en: "Free Consultation" }, icon: MessageSquare, desc: { es: "Evaluamos su caso de forma confidencial. Analizamos los hechos del crimen, su situación migratoria actual y determinamos si califica para la Visa U u otro alivio migratorio.", en: "We evaluate your case confidentially. We analyze the facts of the crime, your current immigration situation, and determine if you qualify for the U Visa or other immigration relief." } },
+    { id: 1, title: { es: "Consulta Inicial", en: "Initial Consultation" }, icon: MessageSquare, desc: { es: "Evaluamos su caso de forma confidencial. Analizamos los hechos del crimen, su situación migratoria actual y determinamos si califica para la Visa U u otro alivio migratorio.", en: "We evaluate your case confidentially. We analyze the facts of the crime, your current immigration situation, and determine if you qualify for the U Visa or other immigration relief." } },
     { id: 2, title: { es: "Análisis del Caso", en: "Case Analysis" }, icon: Search, desc: { es: "Revisamos reportes policiales, evidencia del crimen y documentación médica o psicológica. Identificamos la agencia de ley correcta para la certificación y anticipamos posibles obstáculos.", en: "We review police reports, crime evidence, and medical or psychological documentation. We identify the correct law enforcement agency for certification and anticipate possible obstacles." } },
     { id: 3, title: { es: "Estrategia Legal", en: "Legal Strategy" }, icon: Scale, desc: { es: "Desarrollamos una estrategia personalizada: obtenemos la certificación policial, preparamos la declaración personal, y si es necesario, presentamos el perdón I-192 simultáneamente.", en: "We develop a personalized strategy: we obtain the law enforcement certification, prepare the personal statement, and if necessary, file the I-192 waiver simultaneously." } },
     { id: 4, title: { es: "Presentación y Resultado", en: "Filing & Outcome" }, icon: Send, desc: { es: "Presentamos el caso ante USCIS, gestionamos la determinación bona fide para su permiso de trabajo, y le acompañamos hasta la aprobación final de la Visa U y la solicitud de residencia.", en: "We file the case with USCIS, manage the bona fide determination for your work permit, and accompany you through the final U Visa approval and residency application." } },
@@ -211,7 +211,7 @@ const texts = {
     heroTitle1: { es: "Visa U para", en: "U Visa for" },
     heroTitle2: { es: "Víctimas de Crímenes", en: "Crime Victims" },
     heroDescription: { es: "Protección legal, permiso de trabajo y camino a la residencia para víctimas de crímenes que cooperan con las autoridades. Más de 35 años defendiendo a nuestra comunidad.", en: "Legal protection, work authorization, and a path to residency for crime victims who cooperate with law enforcement. Over 35 years defending our community." },
-    ctaConsultation: { es: "Consulta Gratuita", en: "Free Consultation" },
+    ctaConsultation: { es: "Solicitar Consulta", en: "Request Consultation" },
     ctaCall: { es: "Llame Ahora", en: "Call Now" },
     processMethod: { es: "Nuestro Proceso", en: "Our Process" },
     processTitle: { es: "Cómo Protegemos su Caso", en: "How We Protect Your Case" },
@@ -219,7 +219,7 @@ const texts = {
     faqTitle: { es: "Preguntas Frecuentes sobre la Visa U", en: "Frequently Asked Questions about the U Visa" },
     faqSubtitle: { es: "Respuestas claras a las dudas más comunes de víctimas de crímenes.", en: "Clear answers to the most common questions from crime victims." },
     contactTitle: { es: "Proteja sus Derechos Hoy", en: "Protect Your Rights Today" },
-    contactSubtitle: { es: "Si fue víctima de un crimen en Estados Unidos, podemos ayudarle a obtener estatus legal. La consulta es confidencial y gratuita.", en: "If you were a victim of a crime in the United States, we can help you obtain legal status. The consultation is confidential and free." },
+    contactSubtitle: { es: "Si fue víctima de un crimen en Estados Unidos, podemos ayudarle a obtener estatus legal. La consulta es totalmente confidencial.", en: "If you were a victim of a crime in the United States, we can help you obtain legal status. The consultation is fully confidential." },
     officesTitle: { es: "Oficinas a su Servicio", en: "Offices at Your Service" },
     officesSubtitle: { es: "Atendemos víctimas de crímenes en todo el país desde nuestras 15 oficinas.", en: "We serve crime victims nationwide from our 15 offices." },
     blogTitle: { es: "Artículos Relacionados", en: "Related Articles" },
@@ -811,8 +811,8 @@ export default function VisaUClient() {
             </h2>
             <p className="text-blue-100/70 text-lg mb-8 font-light max-w-2xl mx-auto">
               {lang === 'es'
-                ? 'Llame ahora para una consulta confidencial y gratuita con nuestros abogados de Visa U.'
-                : 'Call now for a free and confidential consultation with our U Visa attorneys.'}
+                ? 'Llame ahora para una consulta confidencial con nuestros abogados de Visa U.'
+                : 'Call now for a confidential consultation with our U Visa attorneys.'}
             </p>
             <a
               href="tel:+18325980914"

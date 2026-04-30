@@ -132,7 +132,6 @@ export const SERVICES: Record<string, ServiceInfo> = {
         'abogado de inmigración',
         'abogado de inmigración cerca de mí',
         'abogado migratorio',
-        'consulta gratis inmigración',
         'residencia permanente',
         'green card',
         'ciudadanía americana',
@@ -146,7 +145,6 @@ export const SERVICES: Record<string, ServiceInfo> = {
         'immigration lawyer',
         'immigration attorney near me',
         'immigration attorney',
-        'free immigration consultation',
         'green card lawyer',
         'permanent residency',
         'US citizenship',
@@ -413,8 +411,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
       en: 'Houston is home to one of the largest immigrant communities in the United States. At Manuel Solis, we have represented thousands of families in the Houston metropolitan area since 1990. With three strategically located offices on Navigation Blvd, Bellaire, and North Loop, we are close to you to provide personalized immigration legal advice. Our bilingual team understands the unique challenges immigrants face in the Houston area and works tirelessly to protect their rights.',
     },
     whyChooseUs: {
-      es: ['3 oficinas en Houston para su conveniencia', 'Equipo bilingüe con experiencia en cortes de inmigración de Houston', 'Historial comprobado: miles de casos de inmigración ganados en el área', 'Relaciones establecidas con agencias locales y consulados', 'Asesoría gratuita y sin compromiso'],
-      en: ['3 offices in Houston for your convenience', 'Bilingual team experienced in Houston immigration courts', 'Proven track record: thousands of immigration cases won in the area', 'Established relationships with local agencies and consulates', 'Free consultation with no obligation'],
+      es: ['3 oficinas en Houston para su conveniencia', 'Equipo bilingüe con experiencia en cortes de inmigración de Houston', 'Historial comprobado: miles de casos de inmigración ganados en el área', 'Relaciones establecidas con agencias locales y consulados', 'Atención personalizada y confidencial'],
+      en: ['3 offices in Houston for your convenience', 'Bilingual team experienced in Houston immigration courts', 'Proven track record: thousands of immigration cases won in the area', 'Established relationships with local agencies and consulates', 'Personalized and confidential attention'],
     },
   },
   {
@@ -470,8 +468,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
       en: 'Los Angeles and Southern California are home to millions of immigrants who need reliable legal representation. Our office in Pico Rivera, on Telegraph Road, serves clients throughout Los Angeles County, including East LA, Downey, Whittier, Montebello, and the San Gabriel Valley. California has laws that specially protect immigrants, and our attorneys are prepared to leverage every available legal resource for your case.',
     },
     whyChooseUs: {
-      es: ['Experiencia ante la corte de inmigración de Los Ángeles', 'Oficina accesible en Pico Rivera con servicio a todo el condado de LA', 'Conocimiento de las leyes de protección al inmigrante de California', 'Equipo que entiende la diversidad de la comunidad angelina', 'Consulta gratuita y confidencial'],
-      en: ['Experience before the Los Angeles immigration court', 'Accessible office in Pico Rivera serving all of LA County', 'Knowledge of California\'s immigrant protection laws', 'Team that understands the diversity of the LA community', 'Free and confidential consultation'],
+      es: ['Experiencia ante la corte de inmigración de Los Ángeles', 'Oficina accesible en Pico Rivera con servicio a todo el condado de LA', 'Conocimiento de las leyes de protección al inmigrante de California', 'Equipo que entiende la diversidad de la comunidad angelina', 'Consulta confidencial y personalizada'],
+      en: ['Experience before the Los Angeles immigration court', 'Accessible office in Pico Rivera serving all of LA County', 'Knowledge of California\'s immigrant protection laws', 'Team that understands the diversity of the LA community', 'Confidential and personalized consultation'],
     },
   },
   {
@@ -508,8 +506,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
       en: 'Memphis and the Mid-South area are experiencing significant growth in the Latino community. Our office on Airways Boulevard serves immigrant families from Memphis, Nashville, and all of Tennessee, as well as nearby areas of Mississippi and Arkansas. As one of the few immigration firms with a presence in Memphis, we offer accessible legal representation in a region where Spanish-language legal resources are limited.',
     },
     whyChooseUs: {
-      es: ['Una de las pocas firmas de inmigración con oficina en Memphis', 'Atención a comunidades de Tennessee, Mississippi y Arkansas', 'Respaldo de una firma nacional con 35+ años de experiencia', 'Equipo bilingüe dedicado a la comunidad del medio sur', 'Consulta gratuita y planes de pago accesibles'],
-      en: ['One of the few immigration firms with a Memphis office', 'Serving communities in Tennessee, Mississippi and Arkansas', 'Backed by a national firm with 35+ years of experience', 'Bilingual team dedicated to the Mid-South community', 'Free consultation and accessible payment plans'],
+      es: ['Una de las pocas firmas de inmigración con oficina en Memphis', 'Atención a comunidades de Tennessee, Mississippi y Arkansas', 'Respaldo de una firma nacional con 35+ años de experiencia', 'Equipo bilingüe dedicado a la comunidad del medio sur', 'Planes de pago accesibles'],
+      en: ['One of the few immigration firms with a Memphis office', 'Serving communities in Tennessee, Mississippi and Arkansas', 'Backed by a national firm with 35+ years of experience', 'Bilingual team dedicated to the Mid-South community', 'Accessible payment plans'],
     },
   },
   {
@@ -761,8 +759,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
       en: 'Dallas is a large city where unfortunately many immigrants are crime victims and don\'t report out of fear of immigration consequences. The U Visa was created to protect these victims and encourage them to cooperate with law enforcement. Our attorneys in Dallas work with the Dallas Police Department, Fort Worth Police, and Dallas County authorities to obtain certifications and file strong applications with USCIS.',
     },
     whyChooseUs: {
-      es: ['Experiencia con las autoridades policiales de Dallas y Fort Worth', 'Manejo de casos de Visa U en todo el norte de Texas', 'Proceso confidencial que protege la seguridad de la víctima', 'Coordinación completa: certificación, solicitud y seguimiento', 'Asesoría gratuita para evaluar su elegibilidad'],
-      en: ['Experience with Dallas and Fort Worth law enforcement', 'Handling U Visa cases throughout North Texas', 'Confidential process that protects victim safety', 'Complete coordination: certification, application and follow-up', 'Free consultation to evaluate your eligibility'],
+      es: ['Experiencia con las autoridades policiales de Dallas y Fort Worth', 'Manejo de casos de Visa U en todo el norte de Texas', 'Proceso confidencial que protege la seguridad de la víctima', 'Coordinación completa: certificación, solicitud y seguimiento', 'Evaluación confidencial de su elegibilidad'],
+      en: ['Experience with Dallas and Fort Worth law enforcement', 'Handling U Visa cases throughout North Texas', 'Confidential process that protects victim safety', 'Complete coordination: certification, application and follow-up', 'Confidential eligibility evaluation'],
     },
   },
 

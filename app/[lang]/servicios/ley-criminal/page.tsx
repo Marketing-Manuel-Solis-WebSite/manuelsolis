@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'Criminal Defense Attorneys';
 
   const description = isEs
-    ? 'Abogados expertos en defensa criminal: DUI/DWI, delitos menores y graves, y consecuencias migratorias de cargos criminales. ¡Consulta Gratis!'
-    : 'Expert criminal defense lawyers: DUI/DWI, misdemeanors, felonies, and immigration consequences of criminal charges. Free Consultation!';
+    ? 'Abogados expertos en defensa criminal: DUI/DWI, delitos menores y graves, y consecuencias migratorias de cargos criminales.'
+    : 'Expert criminal defense lawyers: DUI/DWI, misdemeanors, felonies, and immigration consequences of criminal charges.';
 
   return {
     title,

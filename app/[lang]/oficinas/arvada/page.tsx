@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Lawyers in Arvada, CO (Denver Area)`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en Arvada, CO (Área de Denver). Abogados de inmigración sirviendo a la comunidad de Colorado. ¡Consulta Gratis!`
-    : `Manuel Solis Law Office in Arvada, CO (Denver Area). Immigration attorneys serving the Colorado community. Free Consultation!`;
+    ? `Oficina de Manuel Solís en Arvada, CO (Área de Denver). Abogados de inmigración sirviendo a la comunidad de Colorado.`
+    : `Manuel Solis Law Office in Arvada, CO (Denver Area). Immigration attorneys serving the Colorado community.`;
 
   return {
     title,

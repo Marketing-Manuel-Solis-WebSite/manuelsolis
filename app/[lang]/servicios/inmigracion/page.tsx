@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? 'Abogados de Inmigración en Estados Unidos'
       : 'Immigration Lawyers in the United States',
     description: isEs
-      ? 'Abogados de inmigración con 35+ años y 50,000+ casos ganados. Defensa de deportación, asilo, Visa U, VAWA, residencia y ciudadanía. 15 oficinas en 5 estados. Consulta gratis.'
-      : 'Immigration lawyers with 35+ years and 50,000+ cases won. Deportation defense, asylum, U Visa, VAWA, residency and citizenship. 15 offices in 5 states. Free consultation.',
+      ? 'Abogados de inmigración con 35+ años y 50,000+ casos ganados. Defensa de deportación, asilo, Visa U, VAWA, residencia y ciudadanía. 15 oficinas en 5 estados.'
+      : 'Immigration lawyers with 35+ years and 50,000+ cases won. Deportation defense, asylum, U Visa, VAWA, residency and citizenship. 15 offices in 5 states.',
     alternates: {
       canonical: `${SITE_URL}/${lang}/servicios/inmigracion`,
       languages: {

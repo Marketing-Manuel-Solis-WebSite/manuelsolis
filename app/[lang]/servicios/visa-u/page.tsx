@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'U Visa: Protection for Crime Victims';
 
   const description = isEs
-    ? 'Abogados especialistas en Visa U con 35+ años de experiencia. Ayudamos a víctimas de crímenes a obtener estatus legal, permiso de trabajo y residencia. Consulta gratis.'
-    : 'Specialist U Visa attorneys with 35+ years of experience. We help crime victims obtain legal status, work permits, and residency. Free consultation.';
+    ? 'Abogados especialistas en Visa U con 35+ años de experiencia. Ayudamos a víctimas de crímenes a obtener estatus legal, permiso de trabajo y residencia.'
+    : 'Specialist U Visa attorneys with 35+ years of experience. We help crime victims obtain legal status, work permits, and residency.';
 
   return {
     title,

@@ -41,7 +41,7 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
     requestConsultation: { es: 'Solicitar Consulta con', en: 'Request Consultation with' },
     relatedTitle: { es: 'Otros Abogados en', en: 'Other Attorneys in' },
     viewProfile: { es: 'Ver Perfil', en: 'View Profile' },
-    contactTitle: { es: 'Consulta Gratuita', en: 'Free Consultation' },
+    contactTitle: { es: 'Solicitar Consulta', en: 'Request Consultation' },
     contactSubtitle: {
       es: 'Hable directamente con nuestro equipo legal. Estamos aqui para ayudarle.',
       en: 'Speak directly with our legal team. We are here to help you.'

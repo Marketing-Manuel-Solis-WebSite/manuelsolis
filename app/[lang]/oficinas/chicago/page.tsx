@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Lawyers in Chicago, IL (Cicero)`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en Chicago (Cicero, IL). Abogados de inmigración, familia y accidentes sirviendo a la comunidad hispana. ¡Consulta Gratis!`
-    : `Manuel Solis Law Office in Chicago (Cicero, IL). Immigration, family, and accident attorneys serving the community. Free Consultation!`;
+    ? `Oficina de Manuel Solís en Chicago (Cicero, IL). Abogados de inmigración, familia y accidentes sirviendo a la comunidad hispana.`
+    : `Manuel Solis Law Office in Chicago (Cicero, IL). Immigration, family, and accident attorneys serving the community.`;
 
   return {
     title,

@@ -16,11 +16,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Consulta Gratuita — Manuel Solis Law Firm'
-    : 'Free Consultation — Manuel Solis Law Firm';
+    ? 'Consulta Confidencial — Manuel Solis Law Firm'
+    : 'Confidential Consultation — Manuel Solis Law Firm';
   const description = isEs
-    ? 'Solicita tu consulta gratuita y confidencial con un abogado de Manuel Solis Law Firm. Respuesta en menos de 24 horas. Más de 35 años de experiencia.'
-    : 'Request your free, confidential consultation with a Manuel Solis Law Firm attorney. Response within 24 hours. Over 35 years of experience.';
+    ? 'Solicita tu consulta confidencial con un abogado de Manuel Solis Law Firm. Respuesta en menos de 24 horas. Más de 35 años de experiencia.'
+    : 'Request your confidential consultation with a Manuel Solis Law Firm attorney. Response within 24 hours. Over 35 years of experience.';
 
   return {
     title,

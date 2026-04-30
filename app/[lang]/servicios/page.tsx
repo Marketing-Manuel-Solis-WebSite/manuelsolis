@@ -82,8 +82,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     : 'Legal Services: Immigration & More';
 
   const description = isEs
-    ? 'Conozca todos los servicios legales de Manuel Solís: inmigración, accidentes, defensa criminal, derecho de familia, seguros y Visa E-2. Consulta gratis.'
-    : 'Explore all legal services by Manuel Solis: immigration, accidents, criminal defense, family law, insurance claims and E-2 Visa. Free consultation.';
+    ? 'Conozca todos los servicios legales de Manuel Solís: inmigración, accidentes, defensa criminal, derecho de familia, seguros y Visa E-2.'
+    : 'Explore all legal services by Manuel Solis: immigration, accidents, criminal defense, family law, insurance claims and E-2 Visa.';
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -251,12 +251,12 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
         <section className="pb-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto rounded-2xl bg-gradient-to-br from-sky-600 to-blue-800 p-10 sm:p-14 text-center">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
-              {isEs ? 'Consulta Gratis' : 'Free Consultation'}
+              {isEs ? 'Solicite su Consulta' : 'Request a Consultation'}
             </h2>
             <p className="text-lg text-sky-100 max-w-2xl mx-auto mb-8">
               {isEs
-                ? 'Hable hoy con un abogado experimentado. Sin costo y sin compromiso. Estamos listos para ayudarle.'
-                : 'Speak with an experienced attorney today. No cost and no obligation. We are ready to help you.'}
+                ? 'Hable hoy con un abogado experimentado. Atención personalizada y confidencial. Estamos listos para ayudarle.'
+                : 'Speak with an experienced attorney today. Personalized and confidential attention. We are ready to help you.'}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a

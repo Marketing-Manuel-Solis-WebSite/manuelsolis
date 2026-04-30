@@ -22,8 +22,8 @@ export async function generateMetadata({
     : 'Immigration & Accident Attorneys in Houston, TX';
 
   const description = isEs
-    ? 'Más de 35 años defendiendo los derechos de inmigrantes. 50,000+ casos ganados. Inmigración, accidentes, ley criminal y familia. Consulta gratis. Oficinas en Houston, Dallas, Chicago, LA y más.'
-    : 'Over 35 years defending immigrant rights. 50,000+ cases won. Immigration, accidents, criminal defense & family law. Free consultation. Offices in Houston, Dallas, Chicago, LA & more.';
+    ? 'Más de 35 años defendiendo los derechos de inmigrantes. 50,000+ casos ganados. Inmigración, accidentes, ley criminal y familia. Oficinas en Houston, Dallas, Chicago, LA y más.'
+    : 'Over 35 years defending immigrant rights. 50,000+ cases won. Immigration, accidents, criminal defense & family law. Offices in Houston, Dallas, Chicago, LA & more.';
 
   return {
     title: { absolute: isEs

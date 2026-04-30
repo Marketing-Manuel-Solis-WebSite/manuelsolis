@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'ICE Detainee Emergency Legal Help — Bond, Locator, Defense 24/7';
 
   const description = isEs
-    ? '¿Su familiar fue detenido por ICE? Actuamos inmediatamente: localizador ICE, audiencia de fianza, defensa en corte de inmigración. 35+ años de experiencia. Abogados bilingües en Houston, Dallas, Chicago, Los Ángeles, El Paso y más. Consulta gratis 24/7: 832-598-0914.'
-    : 'Family member detained by ICE? We respond immediately: ICE detainee locator, bond hearings, immigration court defense and stays of removal. 35+ years of experience. Bilingual attorneys in Houston, Dallas, Chicago, Los Angeles, El Paso and more. Free 24/7 consultation: 832-598-0914.';
+    ? '¿Su familiar fue detenido por ICE? Actuamos inmediatamente: localizador ICE, audiencia de fianza, defensa en corte de inmigración. 35+ años de experiencia. Abogados bilingües en Houston, Dallas, Chicago, Los Ángeles, El Paso y más. Atención 24/7: 832-598-0914.'
+    : 'Family member detained by ICE? We respond immediately: ICE detainee locator, bond hearings, immigration court defense and stays of removal. 35+ years of experience. Bilingual attorneys in Houston, Dallas, Chicago, Los Angeles, El Paso and more. 24/7 line: 832-598-0914.';
 
   return {
     title,

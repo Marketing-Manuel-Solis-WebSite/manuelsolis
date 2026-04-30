@@ -71,7 +71,7 @@ export default function CityServiceLanding({ config, office, service, siblingCit
                 href="#contacto"
                 className="inline-flex items-center justify-center rounded-full border-2 border-white/30 text-white font-semibold text-lg px-8 py-4 transition-colors hover:bg-white/10 hover:border-white/50"
               >
-                {isEs ? 'Consulta Gratis' : 'Free Consultation'}
+                {isEs ? 'Solicitar Consulta' : 'Request Consultation'}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </div>
@@ -340,12 +340,12 @@ export default function CityServiceLanding({ config, office, service, siblingCit
                 {isEs ? 'Contacto' : 'Contact'}
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-                {isEs ? 'Consulta Gratis y Confidencial' : 'Free & Confidential Consultation'}
+                {isEs ? 'Consulta Confidencial' : 'Confidential Consultation'}
               </h2>
               <p className="mt-4 text-slate-300 max-w-2xl mx-auto">
                 {isEs
-                  ? `Hable con un abogado experimentado de nuestra oficina en ${office.city}. Sin costo y sin compromiso.`
-                  : `Speak with an experienced attorney from our ${office.city} office. No cost and no obligation.`
+                  ? `Hable con un abogado experimentado de nuestra oficina en ${office.city}. Atención personalizada y confidencial.`
+                  : `Speak with an experienced attorney from our ${office.city} office. Personalized and confidential attention.`
                 }
               </p>
             </div>
@@ -395,8 +395,8 @@ export default function CityServiceLanding({ config, office, service, siblingCit
             </h2>
             <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
               {isEs
-                ? 'No enfrente su situación legal solo. Llame ahora para una consulta gratis y sin compromiso con uno de nuestros abogados experimentados.'
-                : 'Don\'t face your legal situation alone. Call now for a free, no-obligation consultation with one of our experienced attorneys.'
+                ? 'No enfrente su situación legal solo. Llame ahora y hable con uno de nuestros abogados experimentados.'
+                : 'Don\'t face your legal situation alone. Call now and speak with one of our experienced attorneys.'
               }
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

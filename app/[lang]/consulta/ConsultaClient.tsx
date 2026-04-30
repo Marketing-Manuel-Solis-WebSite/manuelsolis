@@ -103,7 +103,7 @@ export default function ConsultaClient() {
                 <span className="relative inline-flex w-2 h-2 rounded-full bg-[#B2904D]" />
               </span>
               <span className="text-[#B2904D] text-[11px] font-bold tracking-[0.3em] uppercase">
-                {lang === 'es' ? 'Consulta Gratuita' : 'Free Consultation'}
+                {lang === 'es' ? 'Consulta Confidencial' : 'Confidential Consultation'}
               </span>
             </div>
 

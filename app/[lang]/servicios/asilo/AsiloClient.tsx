@@ -222,14 +222,14 @@ const texts = {
     heroBadge: { es: 'Protección Internacional', en: 'International Protection' },
     heroTitle: { es: 'Abogados de Asilo Político', en: 'Political Asylum Lawyers' },
     heroSubtitle: { es: 'Defendemos tu derecho a vivir libre de persecución. Más de 35 años de experiencia representando solicitantes de asilo en todo Estados Unidos.', en: 'We defend your right to live free from persecution. Over 35 years of experience representing asylum seekers throughout the United States.' },
-    ctaConsulta: { es: 'Consulta Gratuita', en: 'Free Consultation' },
+    ctaConsulta: { es: 'Solicitar Consulta', en: 'Request Consultation' },
     ctaLlamar: { es: 'Llamar Ahora', en: 'Call Now' },
     officeSectionTitle: { es: 'Oficinas Disponibles', en: 'Available Offices' },
     officeSectionSubtitle: { es: 'Representación en asilo en 5 estados', en: 'Asylum representation in 5 states' },
     processTitle: { es: 'Nuestro Proceso', en: 'Our Process' },
     processSubtitle: { es: 'Te acompañamos desde la evaluación hasta la audiencia final', en: 'We accompany you from evaluation to your final hearing' },
     blogTitle: { es: 'Artículos sobre Asilo', en: 'Articles on Asylum' },
-    contactTitle: { es: 'Consulta Gratuita y Confidencial', en: 'Free & Confidential Consultation' },
+    contactTitle: { es: 'Consulta Confidencial', en: 'Confidential Consultation' },
     phoneCta: { es: 'Llámenos Ahora', en: 'Call Us Now' },
   }
 };
@@ -557,7 +557,7 @@ export default function AsiloClient() {
                       whileHover={{ x: 5 }}
                       className="inline-flex items-center gap-2 text-[#B2904D] font-bold uppercase tracking-widest text-sm hover:text-white transition-colors"
                     >
-                      {lang === 'es' ? 'Solicitar Evaluación Gratuita' : 'Request Free Evaluation'}
+                      {lang === 'es' ? 'Solicitar Evaluación' : 'Request Evaluation'}
                       <ArrowRight size={18} />
                     </motion.a>
                   </div>

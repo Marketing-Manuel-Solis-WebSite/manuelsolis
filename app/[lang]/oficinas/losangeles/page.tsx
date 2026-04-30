@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Lawyers in Los Angeles, CA (Pico Rivera)`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en Los Ángeles (Pico Rivera). Abogados expertos en inmigración sirviendo a la comunidad de California. ¡Consulta Gratis!`
-    : `Manuel Solis Law Office in Los Angeles (Pico Rivera). Expert immigration attorneys serving the California community. Free Consultation!`;
+    ? `Oficina de Manuel Solís en Los Ángeles (Pico Rivera). Abogados expertos en inmigración sirviendo a la comunidad de California.`
+    : `Manuel Solis Law Office in Los Angeles (Pico Rivera). Expert immigration attorneys serving the California community.`;
 
   return {
     title,

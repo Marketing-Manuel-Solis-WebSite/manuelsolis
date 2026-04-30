@@ -45,7 +45,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
     address: { '@type': 'PostalAddress', streetAddress: office.address.split(',')[0], addressLocality: office.city, addressRegion: office.stateCode, postalCode: office.zip, addressCountry: 'US' },
     geo: { '@type': 'GeoCoordinates', latitude: office.coordinates.lat, longitude: office.coordinates.lng },
     areaServed: { '@type': 'City', name: office.city },
-    priceRange: isEs ? 'Consulta gratis' : 'Free consultation',
+    priceRange: '$$',
     openingHoursSpecification: [
       { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '18:00' },
       { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '09:00', closes: '13:00' },

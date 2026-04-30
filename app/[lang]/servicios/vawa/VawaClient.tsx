@@ -247,7 +247,7 @@ const texts = {
       es: 'Si usted es víctima de violencia doméstica por parte de un cónyuge, padre o hijo ciudadano o residente permanente, la ley VAWA le permite obtener su residencia sin depender del agresor. Su caso es 100% confidencial.',
       en: 'If you are a victim of domestic violence by a citizen or permanent resident spouse, parent, or child, the VAWA law allows you to obtain your residency without depending on the abuser. Your case is 100% confidential.'
     },
-    ctaConsultation: { es: 'Consulta Confidencial Gratis', en: 'Free Confidential Consultation' },
+    ctaConsultation: { es: 'Consulta Confidencial', en: 'Confidential Consultation' },
     processMethod: { es: 'Nuestro Proceso', en: 'Our Process' },
     processTitle: { es: 'Cómo Manejamos Su Caso VAWA', en: 'How We Handle Your VAWA Case' },
     requestEvaluation: { es: 'Solicitar Evaluación Confidencial', en: 'Request Confidential Evaluation' },
@@ -255,7 +255,7 @@ const texts = {
     officesTitle: { es: 'Oficinas a Su Servicio', en: 'Offices at Your Service' },
     officesSubtitle: { es: 'Atendemos casos VAWA en 15 oficinas en Texas, California, Illinois, Colorado y Tennessee.', en: 'We handle VAWA cases in 15 offices across Texas, California, Illinois, Colorado, and Tennessee.' },
     blogTitle: { es: 'Artículos Relacionados sobre VAWA', en: 'Related VAWA Articles' },
-    phoneCta: { es: 'Llame Ahora: Consulta Gratis', en: 'Call Now: Free Consultation' },
+    phoneCta: { es: 'Llame Ahora', en: 'Call Now' },
   }
 };
 

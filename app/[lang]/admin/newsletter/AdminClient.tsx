@@ -451,7 +451,7 @@ export default function AdminClient({
               disabled={running}
               onClick={() => setVariant('cta')}
               title="Con CTA"
-              description="Incluye el bloque “Agenda tu consulta gratuita” al final. Recomendado para newsletter público y nurture frío."
+              description="Incluye el bloque “Agenda tu consulta” al final. Recomendado para newsletter público y nurture frío."
               tone="gold"
             />
             <VariantOption
