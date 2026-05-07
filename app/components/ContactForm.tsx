@@ -9,10 +9,10 @@ import { track } from '@vercel/analytics/react' // 1. Importamos el tracker de V
 import { pushToDataLayer, trackConversion } from '../lib/tracking'
 
 // --- COLORES ---
-const API_URL = '/api/zapier-contact';
-// Vercel BotID protection for /api/zapier-contact is registered in
+const API_URL = '/api/lead-capture';
+// Vercel BotID protection for /api/lead-capture is registered in
 // instrumentation-client.ts and verified server-side via checkBotId()
-// in app/api/zapier-contact/route.ts. Mode controlled by BOTID_MODE env.
+// in app/api/lead-capture/route.ts. Mode controlled by BOTID_MODE env.
 
 const containerVar: Variants = {
   hidden: { opacity: 0 },
@@ -134,32 +134,46 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // 1. CAPTURA DE DATOS UTM (defaults a centinelas estándar GA4)
-    const rawSource = searchParams.get('utm_source');
-
+    // 1. CAPTURA DE DATOS UTM + click IDs + session.
+    // Server-side (mapFormToPayload) defends with the same sentinels in
+    // case the input arrives via a different path; the client supplies
+    // them up-front so the on-the-wire payload is consistent.
     const utmData = {
-        utm_source: rawSource || '(direct)',
+        utm_source: searchParams.get('utm_source') || '(direct)',
         utm_medium: searchParams.get('utm_medium') || '(none)',
         utm_campaign: searchParams.get('utm_campaign') || '(not set)',
         utm_content: searchParams.get('utm_content') || null,
         utm_term: searchParams.get('utm_term') || null
     };
 
-    let uriToSend = '';
+    const clickIds = {
+        gclid: searchParams.get('gclid') || null,
+        fbclid: searchParams.get('fbclid') || null,
+    };
+
+    let pageUrl = '';
+    let sessionId: string | null = null;
 
     if (typeof window !== 'undefined') {
         const hasParams = searchParams.toString().length > 0;
-        uriToSend = hasParams
+        pageUrl = hasParams
             ? window.location.href
             : `${window.location.origin}${window.location.pathname}`;
+        try {
+            sessionId = window.sessionStorage.getItem('msl_sid');
+        } catch {
+            sessionId = null;
+        }
     }
-    
+
     try {
         const payload = {
             ...formData,
             ...utmData,
-            uri: uriToSend,
-            language: lang
+            ...clickIds,
+            page_url: pageUrl,
+            language: lang,
+            session_id: sessionId,
         };
 
         const response = await fetch(API_URL, {
