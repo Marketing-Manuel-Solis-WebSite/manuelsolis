@@ -6,9 +6,9 @@
 // These redirects preserve link equity and remove 404 noise.
 //
 // Notes:
-// - Next.js evaluates redirects in next.config BEFORE middleware,
+// - Next.js evaluates redirects in next.config BEFORE the proxy,
 //   so unprefixed URLs (e.g. /preguntas-frecuentes) are caught
-//   before middleware injects the locale.
+//   before the proxy injects the locale.
 // - The :lang variants exist for URLs that already had /es or /en.
 // - For multi-segment legacy paths use :slug* (catch-all).
 // - For single-segment use :slug.

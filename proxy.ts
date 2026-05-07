@@ -30,7 +30,7 @@ function getLocale(request: NextRequest): string {
 // Regex para detectar crawlers SEO legítimos
 const SEO_CRAWLER_REGEX = /Googlebot|bingbot|Sitebulb|Screaming Frog|AhrefsBot|SemrushBot|DotBot|rogerbot|YandexBot|Baiduspider/i;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // --- NUEVA PROTECCIÓN: Bloquear indexación en entornos de prueba ---
   const hostname = request.headers.get('host') || '';
 
