@@ -4,8 +4,7 @@ import { CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { track } from '@vercel/analytics/react';
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
+import { fireConversion } from '../lib/conversion';
 
 const MotionLink = motion(Link);
 
@@ -16,12 +15,10 @@ export default function ConsultaFloatingCta() {
   const label = lang === 'es' ? 'Solicitar consulta' : 'Request consultation';
 
   const handleClick = () => {
-    track('Consulta CTA Click', { location: 'floating_button' });
-    pushToDataLayer('consulta_click', {
-      event_category: 'conversion',
-      event_label: 'floating_consulta_cta',
+    fireConversion('consulta_click', 'floating_consulta_cta', {
+      location: 'floating_button',
+      language: lang,
     });
-    trackConversion('consulta_click', 'floating_consulta_cta');
   };
 
   return (
