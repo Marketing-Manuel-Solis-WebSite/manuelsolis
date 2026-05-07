@@ -11,6 +11,8 @@ import Script from 'next/script';
 import { LangSetter } from '../components/LangSetter';
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { getPlaceData } from '../lib/googleReviews';
+import { MAIN_FIRM_PLACE_ID } from '../lib/officesRegistry';
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -113,23 +115,8 @@ const organizationSchema = {
     '@type': 'QuantitativeValue',
     minValue: 50
   },
-  // TODO(Fase 4): replace hardcoded aggregateRating with server-side
-  // sync to Google Places API (cache 24h via unstable_cache).
-  // Carlos will provide Place IDs for the 10 office locations.
-  // See DISCOVERY_v3.md §10.5.
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    bestRating: '5',
-    worstRating: '1',
-    ratingCount: '12',
-    reviewCount: '12'
-  },
-  review: [
-    { '@type': 'Review', author: { '@type': 'Person', name: 'Gilmar Guzman' }, datePublished: '2026-02-25', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'Recibí mi residencia y seguro social al mismo tiempo. Las gestiones de Veronica Velasquez fueron de mucha ayuda. Recomiendo al Abogado Manuel Solis.' },
-    { '@type': 'Review', author: { '@type': 'Person', name: 'Wendy Alfaro' }, datePublished: '2025-03-18', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'Recomiendo mucho el bufet de abogados Manuel Solís, te ayudan en todo tu trámite migratorio. Asesoría completa incluso en Ciudad Juárez.' },
-    { '@type': 'Review', author: { '@type': 'Person', name: 'Nancy Mendez' }, datePublished: '2026-01-21', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'Martha A. Melendez was excellent in all our interviews. She was so knowledgeable and patient. We are extremely pleased with her services.' },
-  ]
+  // aggregateRating and review are populated server-side per request
+  // from Google Places API (MAIN_FIRM_PLACE_ID). See LangLayout body.
 };
 
 const websiteSchema = {
@@ -304,6 +291,39 @@ export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params;
   const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
 
+  // Pull live aggregateRating + top reviews from Google Places (24h
+  // cache). If the API key is missing OR the request fails, mainPlaceData
+  // is null and the rendered schema simply omits aggregateRating and
+  // review — never falls back to hardcoded data so we don't reintroduce
+  // the legal risk we're solving (DISCOVERY_v3 §1.1 #5).
+  const mainPlaceData = await getPlaceData(MAIN_FIRM_PLACE_ID);
+  const finalOrganizationSchema: Record<string, unknown> = {
+    ...organizationSchema,
+    ...(mainPlaceData && mainPlaceData.userRatingCount > 0 && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: mainPlaceData.rating.toFixed(1),
+        bestRating: '5',
+        worstRating: '1',
+        ratingCount: mainPlaceData.userRatingCount,
+        reviewCount: mainPlaceData.userRatingCount,
+      },
+    }),
+    ...(mainPlaceData?.reviews?.length && {
+      review: mainPlaceData.reviews.slice(0, 3).map((r) => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: r.authorName },
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: r.rating,
+          bestRating: 5,
+        },
+        reviewBody: r.text,
+        datePublished: r.publishedAt,
+      })),
+    }),
+  };
+
   return (
     <>
       <LangSetter lang={currentLang} />
@@ -320,7 +340,7 @@ export default async function LangLayout({ children, params }: Props) {
 
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(finalOrganizationSchema) }}
       />
       <script
         type="application/ld+json"

@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildOfficeSchema } from '../../../lib/officeSchema';
+
+const SLUG = 'houston-bellaire';
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -54,59 +57,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// SCHEMA LOCAL BUSINESS
-const getLocalBusinessSchema = (lang: string) => {
-  return {
-    '@context': 'https://schema.org',
-    '@type': ['LegalService', 'Attorney'],
-    name: 'Manuel Solis Law Firm - Bellaire',
-    description: lang === 'es' 
-      ? 'Oficina legal en Houston Bellaire con servicios en chino, especializada en inmigración.' 
-      : 'Law office in Houston Bellaire with services in Chinese, specializing in immigration.',
-    image: 'https://www.manuelsolis.com/logo-manuel-solis.png',
-    url: `https://www.manuelsolis.com/${lang}/oficinas/houston-bellaire`,
-    telephone: OFFICE_INFO.phone,
-    priceRange: '$$',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: OFFICE_INFO.address,
-      addressLocality: OFFICE_INFO.city,
-      addressRegion: OFFICE_INFO.state,
-      postalCode: OFFICE_INFO.zip,
-      addressCountry: 'US'
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: OFFICE_INFO.latitude,
-      longitude: OFFICE_INFO.longitude
-    },
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        opens: '09:00',
-        closes: '19:00'
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: 'Saturday',
-        opens: '08:00',
-        closes: '16:00'
-      }
-    ],
-    // Idiomas disponibles (añadimos chino)
-    knowsLanguage: ['English', 'Spanish', 'Chinese'],
-    sameAs: [
-      'https://www.facebook.com/AbogadoManuelSolisOficial/',
-      'https://twitter.com/AbogadoMSolis',
-      OFFICE_INFO.mapUrl
-    ]
-  };
-};
-
+// LegalService + Attorney schema is built centrally — see app/lib/officeSchema.ts.
+// Bellaire opts into knowsLanguage with Chinese (in addition to English/Spanish).
 export default async function BellairePage({ params }: Props) {
   const { lang } = await params;
-  const schemaData = getLocalBusinessSchema(lang);
+  const localeLang = lang === 'en' ? 'en' : 'es';
+  const schemaData = await buildOfficeSchema(
+    {
+      slug: SLUG,
+      officeInfo: OFFICE_INFO,
+      description: {
+        es: 'Oficina legal en Houston Bellaire con servicios en chino, especializada en inmigración.',
+        en: 'Law office in Houston Bellaire with services in Chinese, specializing in immigration.',
+      },
+      openingHours: [
+        { dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '19:00' },
+        { dayOfWeek: 'Saturday', opens: '08:00', closes: '16:00' },
+      ],
+      knowsLanguage: ['English', 'Spanish', 'Chinese'],
+    },
+    localeLang,
+  );
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Oficinas' : 'Offices', url: `/${lang}/oficinas` },

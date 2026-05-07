@@ -26,7 +26,8 @@
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-email": "^5.2.10",
-    "resend": "^6.10.0"
+    "resend": "^6.10.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.2.4",
