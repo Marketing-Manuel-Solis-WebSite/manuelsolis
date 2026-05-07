@@ -13,7 +13,7 @@ import { initBotId } from 'botid/client/core';
 
 initBotId({
   protect: [
-    { path: '/api/zapier-contact', method: 'POST' },
+    { path: '/api/lead-capture', method: 'POST' },
     { path: '/api/newsletter/subscribe', method: 'POST' },
   ],
 });
