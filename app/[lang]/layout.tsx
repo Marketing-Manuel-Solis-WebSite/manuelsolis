@@ -107,6 +107,10 @@ const organizationSchema = {
     '@type': 'QuantitativeValue',
     minValue: 50
   },
+  // TODO(Fase 4): replace hardcoded aggregateRating with server-side
+  // sync to Google Places API (cache 24h via unstable_cache).
+  // Carlos will provide Place IDs for the 10 office locations.
+  // See DISCOVERY_v3.md §10.5.
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
