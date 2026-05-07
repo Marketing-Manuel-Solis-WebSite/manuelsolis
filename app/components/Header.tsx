@@ -7,9 +7,8 @@ import { Menu, X, ChevronDown, Phone, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-import { track } from '@vercel/analytics/react' // 👈 Importamos track
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
-import { pushToDataLayer, trackConversion } from '../lib/tracking'
+import { fireConversion } from '../lib/conversion'
 
 const FlagES = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-3 w-3 rounded-[1px] flex-shrink-0 opacity-90">
@@ -59,25 +58,12 @@ export default function HeaderProfessional() {
     };
   }, [pathname]);
 
-  // --- ⚡️ EVENTO DE RASTREO DE LLAMADA ⚡️ ---
   const handleCallClick = () => {
-    // Vercel Analytics
-    track('Call Header Click', {
-      phoneNumber: phoneNumber,
+    fireConversion('phone_click', 'header_phone_button', {
+      phone_number: phoneNumber,
       location: 'header_main',
       page: pathname || 'unknown',
-      timestamp: new Date().toISOString()
     });
-
-    // FASE 3: dataLayer push para GTM → GA4
-    pushToDataLayer('phone_click', {
-      event_category: 'conversion',
-      event_label: 'header_phone_button',
-      phone_number: phoneNumber,
-    });
-
-    // FASE 4: Flight Check (tracking propio)
-    trackConversion('phone_click', 'header_phone_button');
   };
 
   const callText = language === 'es' ? 'Llámanos para una consulta:' : 'Call for a consultation:';
