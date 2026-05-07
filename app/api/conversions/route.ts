@@ -1,40 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '../../lib/rateLimit';
+import {
+  pushEvent,
+  filterEvents,
+  type StoredEvent,
+  type StoredEventType,
+} from '../../lib/analyticsStore';
 
 /**
  * FASE 4 — Flight Check API
- * Registra conversiones del lado servidor para conciliar con GA4.
+ * Registra conversiones y page views del lado servidor para conciliar con GA4.
  *
- * POST /api/conversions  → Registra una conversión
- * GET  /api/conversions   → Devuelve el resumen (protegido con ?key=)
+ * POST /api/conversions  → Registra un evento (conversion o page_view)
+ * GET  /api/conversions  → Resumen rápido (compatible con la versión anterior)
+ *
+ * El dashboard rico vive en /api/analytics.
  */
 
-// ─── Almacenamiento en memoria (per-instance) ───
-interface StoredConversion {
-  type: string;
-  source: string;
-  medium: string;
-  campaign?: string;
-  label?: string;
-  domain: string;
-  timestamp: string;
-  ip: string;
+const VALID_TYPES = new Set<StoredEventType>([
+  'form_submit',
+  'phone_click',
+  'whatsapp_click',
+  'consulta_click',
+  'qualified_lead',
+  'page_view',
+]);
+
+function clip(v: unknown, max: number): string | undefined {
+  if (v == null) return undefined;
+  const s = String(v);
+  if (!s) return undefined;
+  return s.slice(0, max);
 }
 
-const conversions: StoredConversion[] = [];
-const MAX_STORED = 10000; // Límite de memoria
-
-// Limpiar registros con más de 30 días
-function cleanup() {
-  const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
-  let i = 0;
-  while (i < conversions.length && new Date(conversions[i].timestamp).getTime() < cutoff) {
-    i++;
-  }
-  if (i > 0) conversions.splice(0, i);
-}
-
-// ─── POST: Registrar conversión ───
+// ─── POST: Registrar evento ───
 export async function POST(request: NextRequest) {
   try {
     const ip =
@@ -42,41 +41,62 @@ export async function POST(request: NextRequest) {
       request.headers.get('x-real-ip') ||
       'anonymous';
 
-    // Rate limit: 30 eventos/minuto por IP (más permisivo que formularios)
-    const { success: rateLimitOk } = rateLimit(`conv:${ip}`, 30, 60000);
+    // Rate limit más permisivo para page_view (90/min) que para conversiones (30/min).
+    // Usamos un solo bucket "trk" pero con tope generoso porque el envío incluye PV.
+    const { success: rateLimitOk } = rateLimit(`trk:${ip}`, 90, 60000);
     if (!rateLimitOk) {
       return NextResponse.json({ ok: false }, { status: 429 });
     }
 
     const body = await request.json();
 
-    const validTypes = ['form_submit', 'phone_click', 'whatsapp_click', 'consulta_click', 'qualified_lead'];
-    if (!body.type || !validTypes.includes(body.type)) {
+    if (!body.type || !VALID_TYPES.has(body.type)) {
       return NextResponse.json({ ok: false, error: 'Invalid event type' }, { status: 400 });
     }
 
-    const entry: StoredConversion = {
-      type: body.type,
-      source: String(body.source || 'direct').slice(0, 100),
-      medium: String(body.medium || 'none').slice(0, 100),
-      campaign: body.campaign ? String(body.campaign).slice(0, 200) : undefined,
-      label: body.label ? String(body.label).slice(0, 200) : undefined,
-      domain: String(body.domain || 'unknown').slice(0, 100),
-      timestamp: body.timestamp || new Date().toISOString(),
+    const userAgent = request.headers.get('user-agent') || undefined;
+    const country =
+      request.headers.get('x-vercel-ip-country') ||
+      request.headers.get('cf-ipcountry') ||
+      undefined;
+
+    const entry: StoredEvent = {
+      type: body.type as StoredEventType,
+      source: clip(body.source, 100) || 'direct',
+      medium: clip(body.medium, 100) || 'none',
+      campaign: clip(body.campaign, 200),
+      content: clip(body.content, 200),
+      term: clip(body.term, 200),
+      label: clip(body.label, 200),
+      domain: clip(body.domain, 100) || 'unknown',
+      path: clip(body.path, 500),
+      referrer: clip(body.referrer, 500),
+      language: clip(body.language, 12),
+      deviceType:
+        body.deviceType === 'mobile' ||
+        body.deviceType === 'tablet' ||
+        body.deviceType === 'desktop'
+          ? body.deviceType
+          : 'unknown',
+      screen: clip(body.screen, 16),
+      sessionId: clip(body.sessionId, 24),
+      timestamp:
+        typeof body.timestamp === 'string' && !Number.isNaN(Date.parse(body.timestamp))
+          ? body.timestamp
+          : new Date().toISOString(),
       ip,
+      userAgent: userAgent ? userAgent.slice(0, 200) : undefined,
+      country: country ? country.slice(0, 4) : undefined,
     };
 
-    // Almacenar
-    cleanup();
-    if (conversions.length >= MAX_STORED) {
-      conversions.splice(0, 1000); // liberar espacio
-    }
-    conversions.push(entry);
+    pushEvent(entry);
 
-    // Log estructurado para Vercel Logs (permite queries posteriores)
-    console.log(
-      `[FLIGHT-CHECK] ${entry.type} | src=${entry.source} | med=${entry.medium} | cmp=${entry.campaign || '-'} | dom=${entry.domain} | lbl=${entry.label || '-'}`
-    );
+    // Solo loggeamos conversions reales (page_view inundaría logs).
+    if (entry.type !== 'page_view') {
+      console.log(
+        `[FLIGHT-CHECK] ${entry.type} | src=${entry.source} | med=${entry.medium} | cmp=${entry.campaign || '-'} | path=${entry.path || '-'} | dev=${entry.deviceType} | lbl=${entry.label || '-'}`,
+      );
+    }
 
     return NextResponse.json({ ok: true });
   } catch {
@@ -84,9 +104,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// ─── GET: Reporte de conciliación ───
+// ─── GET: Reporte simple (compat con versión anterior) ───
 export async function GET(request: NextRequest) {
-  // Auth via Authorization header (Bearer token); fallback a query param para retrocompatibilidad pero deprecated
   const expectedKey = process.env.CONVERSIONS_API_KEY;
   if (!expectedKey) {
     return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 });
@@ -104,18 +123,16 @@ export async function GET(request: NextRequest) {
   const daysBack = parseInt(request.nextUrl.searchParams.get('days') || '7', 10);
   const cutoff = Date.now() - daysBack * 24 * 60 * 60 * 1000;
 
-  const filtered = conversions.filter(
-    (c) => new Date(c.timestamp).getTime() >= cutoff
+  const filtered = filterEvents({ from: cutoff }).filter(
+    (e) => e.type !== 'page_view',
   );
 
-  // Agrupar por dominio y tipo
   const summary: Record<string, Record<string, number>> = {};
   for (const c of filtered) {
     if (!summary[c.domain]) summary[c.domain] = {};
     summary[c.domain][c.type] = (summary[c.domain][c.type] || 0) + 1;
   }
 
-  // Agrupar por fuente
   const bySource: Record<string, number> = {};
   for (const c of filtered) {
     const key = `${c.source}/${c.medium}`;
@@ -127,6 +144,6 @@ export async function GET(request: NextRequest) {
     total_conversions: filtered.length,
     by_domain: summary,
     by_source: bySource,
-    raw: filtered.slice(-200), // últimos 200 para inspección
+    raw: filtered.slice(-200),
   });
 }

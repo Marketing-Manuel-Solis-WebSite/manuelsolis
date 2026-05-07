@@ -27,6 +27,7 @@ import {
   Languages as LanguagesIcon,
   Users,
   Rocket,
+  Activity,
 } from 'lucide-react';
 import { logoutAction } from './newsletter/actions';
 
@@ -41,7 +42,7 @@ export default function AdminHome({ lang }: { lang: 'es' | 'en' }) {
           title="Acceso rápido"
           subtitle="Entra directo a las herramientas del panel."
         >
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             <ToolCard
               href={`/${lang}/admin/newsletter`}
               icon={Mail}
@@ -49,6 +50,14 @@ export default function AdminHome({ lang }: { lang: 'es' | 'en' }) {
               description="Envía una edición o un blog a toda la audiencia del newsletter o a una lista manual, sin restricciones."
               status="Operativo"
               statusColor="emerald"
+            />
+            <ToolCard
+              href={`/${lang}/admin/analytics`}
+              icon={Activity}
+              title="Analytics · Flight Check"
+              description="UTMs, conversiones, page views, sesiones, bounce rate, top URLs, heatmap día/hora y filtros por mes y campaña."
+              status="Live"
+              statusColor="gold"
             />
             <ToolCardDisabled
               icon={FileText}
