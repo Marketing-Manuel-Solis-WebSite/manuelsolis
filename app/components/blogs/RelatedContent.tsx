@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
-import { pushToDataLayer, trackConversion } from '../../lib/tracking';
+import { fireConversion } from '../../lib/conversion';
 
 interface RelatedArticle {
   title: string;
@@ -45,11 +45,7 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
             <a
               href="tel:+18325980914"
               onClick={() => {
-                pushToDataLayer('phone_click', {
-                  event_category: 'conversion',
-                  event_label: 'blog_cta_call',
-                });
-                trackConversion('phone_click', 'blog_cta_call');
+                fireConversion('phone_click', 'blog_cta_call', { language: lang });
               }}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white/5 transition-colors"
             >
