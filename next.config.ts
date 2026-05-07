@@ -1,6 +1,11 @@
 import type { NextConfig } from 'next';
 import { withBotId } from 'botid/next/config';
+import withBundleAnalyzer from '@next/bundle-analyzer';
 import { seoRedirects } from './app/lib/seoRedirects';
+
+const bundleAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -121,4 +126,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBotId(nextConfig);
+export default bundleAnalyzer(withBotId(nextConfig));
