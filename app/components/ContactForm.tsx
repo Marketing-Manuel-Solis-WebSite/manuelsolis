@@ -9,7 +9,10 @@ import { track } from '@vercel/analytics/react' // 1. Importamos el tracker de V
 import { pushToDataLayer, trackConversion } from '../lib/tracking'
 
 // --- COLORES ---
-const API_URL = '/api/zapier-contact'; 
+const API_URL = '/api/zapier-contact';
+// Vercel BotID protection for /api/zapier-contact is registered in
+// instrumentation-client.ts and verified server-side via checkBotId()
+// in app/api/zapier-contact/route.ts. Mode controlled by BOTID_MODE env.
 
 const containerVar: Variants = {
   hidden: { opacity: 0 },
@@ -131,28 +134,24 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // 1. CAPTURA DE DATOS UTM
+    // 1. CAPTURA DE DATOS UTM (defaults a centinelas estándar GA4)
     const rawSource = searchParams.get('utm_source');
-    
+
     const utmData = {
-        utm_source: rawSource || 'SITIO WEB', 
-        utm_medium: searchParams.get('utm_medium') || 'Organico',
-        utm_campaign: searchParams.get('utm_campaign') || 'Directo',
-        utm_content: searchParams.get('utm_content') || '',
-        utm_term: searchParams.get('utm_term') || ''
+        utm_source: rawSource || '(direct)',
+        utm_medium: searchParams.get('utm_medium') || '(none)',
+        utm_campaign: searchParams.get('utm_campaign') || '(not set)',
+        utm_content: searchParams.get('utm_content') || null,
+        utm_term: searchParams.get('utm_term') || null
     };
 
     let uriToSend = '';
-    
+
     if (typeof window !== 'undefined') {
         const hasParams = searchParams.toString().length > 0;
-
-        if (hasParams) {
-            uriToSend = window.location.href;
-        } else {
-            const baseUrl = `${window.location.origin}${window.location.pathname}`;
-            uriToSend = `${baseUrl}?utm_source=SITIO WEB&utm_medium=Organico&utm_campaign=Directo`;
-        }
+        uriToSend = hasParams
+            ? window.location.href
+            : `${window.location.origin}${window.location.pathname}`;
     }
     
     try {

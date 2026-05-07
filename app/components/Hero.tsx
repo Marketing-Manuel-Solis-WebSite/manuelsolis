@@ -22,6 +22,18 @@ export default function HeroProfessional() {
   const [showPopup, setShowPopup] = useState(true);
   const [isDesktop, setIsDesktop] = useState(true);
 
+  // Fire popup_open when the popup is rendered visible (mount or re-show).
+  // Trigger remains as-is per Phase 1 scope; tracking opens a 14-day window
+  // for Phase 5 decision (see DISCOVERY_v3.md §9.3).
+  useEffect(() => {
+    if (showPopup) {
+      pushToDataLayer('popup_open', {
+        popup_id: 'detained_relative',
+        page_url: typeof window !== 'undefined' ? window.location.pathname : '',
+      });
+    }
+  }, [showPopup]);
+
   useEffect(() => {
     const handleResize = () => {
       setIsDesktop(window.innerWidth >= 1024);
@@ -59,6 +71,24 @@ export default function HeroProfessional() {
       event_label: label,
     });
     trackConversion('phone_click', label);
+  };
+
+  const handleDismissPopup = () => {
+    pushToDataLayer('popup_dismiss', {
+      popup_id: 'detained_relative',
+    });
+    setShowPopup(false);
+  };
+
+  const handlePopupCtaClick = (ctaLabel: 'client' | 'non_client') => {
+    pushToDataLayer('popup_cta_click', {
+      popup_id: 'detained_relative',
+      cta_label: ctaLabel,
+    });
+    // Preserve existing phone_click signal (orthogonal channel).
+    handleDetainedCallClick(
+      ctaLabel === 'client' ? 'detained_popup_client' : 'detained_popup_non_client'
+    );
   };
 
   const marqueeItems = [...associations, ...associations, ...associations];
@@ -275,16 +305,16 @@ export default function HeroProfessional() {
                     {language === 'es' ? 'Indica cómo podemos ayudarte:' : 'Tell us how we can help:'}
                 </p>
                 <div className="space-y-2 sm:space-y-3">
-                    <a href="tel:+18886761238" onClick={() => handleDetainedCallClick('detained_popup_client')} className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
+                    <a href="tel:+18886761238" onClick={() => handlePopupCtaClick('client')} className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
                         <span className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-200 text-xs font-bold group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">✓</span>
                         <span className="text-xs sm:text-sm text-white font-light">{language === 'es' ? 'Sí, soy cliente' : 'Yes, I am a client'}</span>
                     </a>
-                    <a href="tel:+18886761238" onClick={() => handleDetainedCallClick('detained_popup_non_client')} className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
+                    <a href="tel:+18886761238" onClick={() => handlePopupCtaClick('non_client')} className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-red-800/40 hover:bg-red-700/60 border border-red-400/20 hover:border-red-400/50 transition-all duration-300 group/btn">
                         <span className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center rounded-full bg-red-500/20 text-red-200 text-xs font-bold group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">✓</span>
                         <span className="text-xs sm:text-sm text-white font-light">{language === 'es' ? 'Sí, pero no soy cliente' : 'Yes, but I am not a client'}</span>
                     </a>
                 </div>
-                <button onClick={() => setShowPopup(false)} className="block w-full text-center mt-3 sm:mt-4 text-xs text-red-200/50 hover:text-white underline decoration-red-200/30 hover:decoration-white transition-all">
+                <button onClick={handleDismissPopup} className="block w-full text-center mt-3 sm:mt-4 text-xs text-red-200/50 hover:text-white underline decoration-red-200/30 hover:decoration-white transition-all">
                     {language === 'es' ? 'Continuar al sitio' : 'Continue to site'}
                 </button>
             </div>
