@@ -302,7 +302,7 @@ function ContactFormContent() {
                     </div>
                     <label htmlFor="acceptedTerms" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
                       {t('Acepto los', 'I accept the')}{' '}
-                      <a href={`/${lang}/${lang === 'en' ? 'terms' : 'terminos'}`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio', 'Terms of Service')}</a>{' '}
+                      <a href={`/${lang}/terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio', 'Terms of Service')}</a>{' '}
                       {t('y he leído la', 'and have read the')}{' '}
                       <a href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Statement')}</a>.
                     </label>
