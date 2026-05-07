@@ -51,6 +51,8 @@ export type BuildOfficeSchemaInput = {
   officeInfo: OfficeInfo;
   description: { es: string; en: string };
   openingHours?: OfficeOpeningHours[];
+  /** Optional override for offices with non-default language support. */
+  knowsLanguage?: string[];
 };
 
 export async function buildOfficeSchema(
@@ -103,6 +105,10 @@ export async function buildOfficeSchema(
       opens: h.opens,
       closes: h.closes,
     }));
+  }
+
+  if (input.knowsLanguage?.length) {
+    schema.knowsLanguage = input.knowsLanguage;
   }
 
   if (placeData && placeData.userRatingCount > 0) {

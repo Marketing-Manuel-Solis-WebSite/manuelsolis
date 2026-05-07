@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildOfficeSchema } from '../../../lib/officeSchema';
+
+const SLUG = 'houston-accidentes';
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -53,51 +56,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// SCHEMA LOCAL BUSINESS
-const getLocalBusinessSchema = (lang: string) => {
-  return {
-    '@context': 'https://schema.org',
-    '@type': ['LegalService', 'Attorney'],
-    name: 'Manuel Solis Law Firm - Houston Accidentes',
-    description: lang === 'es'
-      ? 'Oficina legal en Houston especializada en accidentes e inmigración.'
-      : 'Law office in Houston specializing in accidents and immigration.',
-    image: 'https://www.manuelsolis.com/logo-manuel-solis.png',
-    url: `https://www.manuelsolis.com/${lang}/oficinas/houston-accidentes`,
-    telephone: OFFICE_INFO.phone,
-    priceRange: '$$',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: OFFICE_INFO.address,
-      addressLocality: OFFICE_INFO.city,
-      addressRegion: OFFICE_INFO.state,
-      postalCode: OFFICE_INFO.zip,
-      addressCountry: 'US'
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: OFFICE_INFO.latitude,
-      longitude: OFFICE_INFO.longitude
-    },
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        opens: '00:00',
-        closes: '23:59'
-      }
-    ],
-    sameAs: [
-      'https://www.facebook.com/AbogadoManuelSolisOficial/',
-      'https://twitter.com/AbogadoMSolis',
-      OFFICE_INFO.mapUrl
-    ]
-  };
-};
-
+// LegalService + Attorney schema is built centrally — see app/lib/officeSchema.ts.
+// Open 24/7 for accident emergencies.
 export default async function HoustonAccidentesPage({ params }: Props) {
   const { lang } = await params;
-  const schemaData = getLocalBusinessSchema(lang);
+  const localeLang = lang === 'en' ? 'en' : 'es';
+  const schemaData = await buildOfficeSchema(
+    {
+      slug: SLUG,
+      officeInfo: OFFICE_INFO,
+      description: {
+        es: 'Oficina legal en Houston especializada en accidentes e inmigración.',
+        en: 'Law office in Houston specializing in accidents and immigration.',
+      },
+      openingHours: [
+        { dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
+      ],
+    },
+    localeLang,
+  );
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Oficinas' : 'Offices', url: `/${lang}/oficinas` },
