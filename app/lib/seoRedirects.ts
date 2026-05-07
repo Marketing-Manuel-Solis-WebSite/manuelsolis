@@ -317,8 +317,7 @@ export const seoRedirects: Redirect[] = [
   { source: '/:lang/oficinas/denver', destination: '/:lang/oficinas/arvada', permanent: true },
   { source: '/:lang/oficinas/memphis-office', destination: '/:lang/oficinas/memphis', permanent: true },
   { source: '/:lang/oficinas/abogados-inmigracion-los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
-  // /:lang/offices/* (English alias)
-  { source: '/:lang/offices', destination: '/:lang/oficinas', permanent: true },
+  // /:lang/offices/* (English alias) — see also line 113 above
   { source: '/:lang/offices/houston-principal-office', destination: '/:lang/oficinas/houston-principal', permanent: true },
   { source: '/:lang/offices/houston', destination: '/:lang/oficinas/houston-principal', permanent: true },
   { source: '/:lang/offices/dallas', destination: '/:lang/oficinas/dallas', permanent: true },
@@ -345,7 +344,7 @@ export const seoRedirects: Redirect[] = [
   // ============================================================
   { source: '/testimonios/:slug', destination: '/testimonios', permanent: true },
   { source: '/:lang/testimonios/:slug', destination: '/:lang/testimonios', permanent: true },
-  { source: '/:lang/testimonials/:slug', destination: '/:lang/testimonios', permanent: true },
+  // /:lang/testimonials/:slug — see line 118 above (deduplicated)
 
   // ============================================================
   // PRIVACY POLICY VARIANTS
