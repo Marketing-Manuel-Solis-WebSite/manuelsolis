@@ -5,8 +5,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation' 
 import { motion, AnimatePresence, Variants } from 'framer-motion' 
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
-import { track } from '@vercel/analytics/react' // 1. Importamos el tracker de Vercel
-import { pushToDataLayer, trackConversion } from '../lib/tracking'
+import { fireConversion } from '../lib/conversion'
 
 // --- COLORES ---
 const API_URL = '/api/lead-capture';
@@ -84,35 +83,11 @@ const NeonInput = (props: any) => {
   );
 };
 
-// --- TRACKING ---
-const trackConversionEvents = () => {
-    if (typeof window !== 'undefined') {
-        try {
-            if ((window as any).fbq) (window as any).fbq('track', 'Lead');
-            if ((window as any).ttq) (window as any).ttq.track('CompleteRegistration');
-            if ((window as any).gtag) {
-                (window as any).gtag('event', 'generate_lead', {
-                    'event_category': 'Contact',
-                    'event_label': 'Form_Submission'
-                });
-            }
-
-            // FASE 3: dataLayer push para GTM → GA4 (form_submit)
-            pushToDataLayer('form_submit', {
-                event_category: 'conversion',
-                event_label: 'contact_form',
-                form_type: 'consultation_request',
-            });
-
-            // FASE 3: dataLayer push — qualified_lead (validación pasó + API respondió OK)
-            pushToDataLayer('qualified_lead', {
-                event_category: 'conversion',
-                event_label: 'contact_form_qualified',
-            });
-
-        } catch (e) { console.error("Tracking Error", e); }
-    }
-};
+// Conversion events for a successful submit are fanned out via
+// fireConversion() at the call site below. The previous helper
+// fired five surfaces manually + a duplicate gtag('generate_lead');
+// that duplicate is removed in this migration so GA4 sees a single
+// canonical 'form_submit' event per submission.
 
 function ContactFormContent() {
   const { language } = useLanguage();
@@ -183,18 +158,19 @@ function ContactFormContent() {
         });
 
         if (response.ok) {
-            // Ejecutar tus pixels de conversión existentes (FB, TikTok, GA) + dataLayer pushes
-            trackConversionEvents();
-
-            // 2. VERCEL ANALYTICS TRACKING
-            track('Contact Form Submit', {
+            // Two conversion events on a successful submit:
+            //  - form_submit:   "the form was POSTed and accepted"
+            //  - qualified_lead: "validation + API both succeeded"
+            // Both fan out to the 5 tracking surfaces via fireConversion.
+            fireConversion('form_submit', 'contact_form', {
                 source: 'contact_page',
-                language: lang
+                form_type: 'consultation_request',
+                language: lang,
             });
-
-            // FASE 4: Flight Check — form_submit + qualified_lead
-            trackConversion('form_submit', 'contact_form');
-            trackConversion('qualified_lead', 'contact_form_qualified');
+            fireConversion('qualified_lead', 'contact_form_qualified', {
+                source: 'contact_page',
+                language: lang,
+            });
 
             setSubmitStatus('success');
             setFormData({ 
