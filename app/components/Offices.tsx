@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Clock, Navigation, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
+import { fireConversion } from '../lib/conversion';
 
 // --- COLORES DE LA PALETA ---
 const PRIMARY_COLOR_DARK = '#001540';
@@ -350,12 +350,9 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
 
     const handleClick = () => {
       if (isTel) {
-        pushToDataLayer('phone_click', {
-          event_category: 'conversion',
-          event_label: 'office_phone_button',
+        fireConversion('phone_click', 'office_phone_button', {
           phone_number: value,
         });
-        trackConversion('phone_click', 'office_phone_button');
       }
     };
 
