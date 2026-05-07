@@ -35,6 +35,9 @@ const CONVERSION_TYPES: StoredEventType[] = [
   'whatsapp_click',
   'consulta_click',
   'qualified_lead',
+  'popup_open',
+  'popup_dismiss',
+  'popup_cta_click',
 ];
 
 function isAuthorized(request: NextRequest, sessionCookie: string | null): boolean {
@@ -68,7 +71,11 @@ function parseFiltersFromQuery(req: NextRequest): AnalyticsFilters & {
   const typesRaw = sp.get('type');
   const types = typesRaw
     ? (typesRaw.split(',').filter((t) =>
-        ['form_submit', 'phone_click', 'whatsapp_click', 'consulta_click', 'qualified_lead', 'page_view'].includes(t),
+        [
+          'form_submit', 'phone_click', 'whatsapp_click',
+          'consulta_click', 'qualified_lead', 'page_view',
+          'popup_open', 'popup_dismiss', 'popup_cta_click',
+        ].includes(t),
       ) as StoredEventType[])
     : undefined;
 

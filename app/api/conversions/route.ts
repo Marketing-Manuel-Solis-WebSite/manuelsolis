@@ -24,6 +24,9 @@ const VALID_TYPES = new Set<StoredEventType>([
   'consulta_click',
   'qualified_lead',
   'page_view',
+  'popup_open',
+  'popup_dismiss',
+  'popup_cta_click',
 ]);
 
 function clip(v: unknown, max: number): string | undefined {

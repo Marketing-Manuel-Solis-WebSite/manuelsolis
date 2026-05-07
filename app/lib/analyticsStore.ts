@@ -14,7 +14,10 @@ export type StoredEventType =
   | 'whatsapp_click'
   | 'consulta_click'
   | 'qualified_lead'
-  | 'page_view';
+  | 'page_view'
+  | 'popup_open'
+  | 'popup_dismiss'
+  | 'popup_cta_click';
 
 export interface StoredEvent {
   type: StoredEventType;
