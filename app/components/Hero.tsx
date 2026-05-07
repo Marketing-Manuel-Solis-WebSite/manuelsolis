@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
 import { motion } from 'framer-motion';
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
+import { fireConversion } from '../lib/conversion';
 
 const associations = [
   { name: 'Chicago Bar Association', logo: '/state-bar/Chicago-bar.png' },
@@ -27,7 +27,7 @@ export default function HeroProfessional() {
   // for Phase 5 decision (see DISCOVERY_v3.md §9.3).
   useEffect(() => {
     if (showPopup) {
-      pushToDataLayer('popup_open', {
+      fireConversion('popup_open', 'detained_relative', {
         popup_id: 'detained_relative',
         page_url: typeof window !== 'undefined' ? window.location.pathname : '',
       });
@@ -66,26 +66,25 @@ export default function HeroProfessional() {
   };
 
   const handleDetainedCallClick = (label: string) => {
-    pushToDataLayer('phone_click', {
-      event_category: 'conversion',
-      event_label: label,
+    fireConversion('phone_click', label, {
+      popup_id: 'detained_relative',
     });
-    trackConversion('phone_click', label);
   };
 
   const handleDismissPopup = () => {
-    pushToDataLayer('popup_dismiss', {
+    fireConversion('popup_dismiss', 'detained_relative', {
       popup_id: 'detained_relative',
     });
     setShowPopup(false);
   };
 
   const handlePopupCtaClick = (ctaLabel: 'client' | 'non_client') => {
-    pushToDataLayer('popup_cta_click', {
+    fireConversion('popup_cta_click', ctaLabel, {
       popup_id: 'detained_relative',
       cta_label: ctaLabel,
     });
-    // Preserve existing phone_click signal (orthogonal channel).
+    // Preserve the orthogonal phone_click signal so existing phone-click
+    // dashboards keep counting popup-driven calls without re-mapping.
     handleDetainedCallClick(
       ctaLabel === 'client' ? 'detained_popup_client' : 'detained_popup_non_client'
     );
