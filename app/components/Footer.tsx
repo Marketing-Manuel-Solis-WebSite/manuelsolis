@@ -182,7 +182,7 @@ export default function Footer() {
                {language === 'es' ? 'Política de Privacidad' : 'Privacy Policy'}
              </Link>
              <span>|</span>
-             <Link href={`/${language}/${language === 'en' ? 'terms' : 'terminos'}`} className="hover:text-[#B2904D] transition-colors">
+             <Link href={`/${language}/terminos`} className="hover:text-[#B2904D] transition-colors">
                {language === 'es' ? 'Términos de Servicio' : 'Terms of Service'}
              </Link>
              <span>|</span>
