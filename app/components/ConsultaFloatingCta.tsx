@@ -29,7 +29,7 @@ export default function ConsultaFloatingCta() {
       href={`/${lang}/consulta`}
       onClick={handleClick}
       aria-label={label}
-      className="fixed bottom-6 right-[6.5rem] z-50 hidden sm:inline-flex items-center justify-center gap-2.5 h-14 px-6 rounded-full text-[#002342] text-sm font-bold tracking-wide outline-none"
+      className="fixed bottom-6 right-[12rem] z-50 hidden sm:inline-flex items-center justify-center gap-2.5 h-14 px-6 rounded-full text-[#002342] text-sm font-bold tracking-wide outline-none"
       style={{
         background: 'radial-gradient(120% 200% at 30% 0%, #F9E79F 0%, #D4AF37 38%, #997B2F 100%)',
         boxShadow:

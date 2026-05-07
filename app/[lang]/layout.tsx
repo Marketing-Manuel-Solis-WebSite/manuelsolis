@@ -389,7 +389,7 @@ export default async function LangLayout({ children, params }: Props) {
           <PageViewTracker />
         </Suspense>
         {children}
-        {/* <WhatsAppButton /> temporalmente oculto — reemplazado por ConsultaFloatingCta */}
+        <WhatsAppButton />
         <ConsultaFloatingCta />
         <AIChatButton />
         <MobileStickyBar />
