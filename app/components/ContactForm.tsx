@@ -9,7 +9,10 @@ import { track } from '@vercel/analytics/react' // 1. Importamos el tracker de V
 import { pushToDataLayer, trackConversion } from '../lib/tracking'
 
 // --- COLORES ---
-const API_URL = '/api/zapier-contact'; 
+const API_URL = '/api/zapier-contact';
+// Vercel BotID protection for /api/zapier-contact is registered in
+// instrumentation-client.ts and verified server-side via checkBotId()
+// in app/api/zapier-contact/route.ts. Mode controlled by BOTID_MODE env.
 
 const containerVar: Variants = {
   hidden: { opacity: 0 },

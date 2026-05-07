@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { checkBotId } from 'botid/server';
 import { Resend } from 'resend';
 import { rateLimit } from '../../../lib/rateLimit';
 import { WelcomeEmail } from '../../../../emails/welcome';
@@ -28,6 +29,27 @@ export async function POST(request: NextRequest) {
         { success: false, error: 'Too many requests. Please wait.' },
         { status: 429, headers: { 'Retry-After': '60' } },
       );
+    }
+
+    // Vercel BotID — Basic Detection in report-only mode by default.
+    // Promote to BOTID_MODE=block after 7 days if false-positive rate is OK.
+    const botMode = process.env.BOTID_MODE ?? 'report-only';
+    const verification = await checkBotId();
+    if (verification.isBot) {
+      console.warn(JSON.stringify({
+        event: 'botid_detected',
+        endpoint: '/api/newsletter/subscribe',
+        mode: botMode,
+        timestamp: new Date().toISOString(),
+        ip,
+        ua: request.headers.get('user-agent') ?? null,
+      }));
+      if (botMode === 'block') {
+        return NextResponse.json(
+          { success: false, error: 'Access denied' },
+          { status: 403 },
+        );
+      }
     }
 
     const { email, firstName, language = 'es' } = await request.json();

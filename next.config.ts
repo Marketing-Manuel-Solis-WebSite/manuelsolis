@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { withBotId } from 'botid/next/config';
 import { seoRedirects } from './app/lib/seoRedirects';
 
 const nextConfig: NextConfig = {
@@ -120,4 +121,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBotId(nextConfig);
