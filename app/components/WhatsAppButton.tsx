@@ -3,49 +3,28 @@
 import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { track } from '@vercel/analytics/react'; // 1. Importar track de Vercel
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
+import { fireConversion } from '../lib/conversion';
 
 export default function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
   // Se sigue usando useLanguage para el tooltip y manejo de texto general
   const { t } = useLanguage();
-  
+
   // 📞 NÚMERO DE WHATSAPP (1-713-855-7219)
   const whatsappNumber = '17138557219';
-  
+
   // Mensaje predeterminado con el texto solicitado, codificado para URL
   const rawMessage = 'Website: ¡Hola! Quisiera saber más sobre cómo puedo regularizar mi situación migratoria en EE.UU. ¿Podrían asesorarme?';
   const defaultMessage = encodeURIComponent(rawMessage);
-  
+
   // URL de WhatsApp
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${defaultMessage}`;
-  
+
   const handleClick = () => {
     window.open(whatsappUrl, '_blank');
-
-    // 2. Vercel Analytics Tracking
-    track('Whatsapp Click', {
+    fireConversion('whatsapp_click', 'whatsapp_floating_button', {
       location: 'floating_button',
-      timestamp: new Date().toISOString()
     });
-
-    // 3. Google Analytics Tracking (EXISTENTE)
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'whatsapp_click', {
-        'event_category': 'contact',
-        'event_label': 'whatsapp_button'
-      });
-    }
-
-    // FASE 3: dataLayer push para GTM → GA4
-    pushToDataLayer('whatsapp_click', {
-      event_category: 'conversion',
-      event_label: 'whatsapp_cta',
-    });
-
-    // FASE 4: Flight Check (tracking propio)
-    trackConversion('whatsapp_click', 'whatsapp_floating_button');
   };
 
   // Mensaje del Tooltip: Usamos el mensaje del cliente si existe, si no, uno por defecto
