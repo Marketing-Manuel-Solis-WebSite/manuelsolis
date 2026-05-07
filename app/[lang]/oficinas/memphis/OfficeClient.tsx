@@ -11,7 +11,7 @@ import Link from 'next/link';
 // --- IMPORTACIONES ---
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-import { pushToDataLayer, trackConversion } from '../../../lib/tracking';
+import { fireConversion } from '../../../lib/conversion';
 
 // --- OPTIMIZACIÓN: LAZY LOAD DEL FORMULARIO ---
 const ContactForm = dynamic(() => import('../../../components/ContactForm'), {
@@ -211,7 +211,7 @@ export default function OfficeClient() {
 
                       <div>
                         <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(uiText.phone)}</p>
-                        <a href={`tel:+1${officeData.phone.replace(/\D/g, '')}`} onClick={() => { pushToDataLayer('phone_click', { event_category: 'conversion', event_label: 'office_page_call' }); trackConversion('phone_click', 'office_page_call'); }} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
+                        <a href={`tel:+1${officeData.phone.replace(/\D/g, '')}`} onClick={() => fireConversion('phone_click', 'office_page_call', { office: officeData.id })} className="text-2xl text-white font-thin hover:text-[#B2904D] transition-colors">
                           {officeData.phone}
                         </a>
                       </div>
