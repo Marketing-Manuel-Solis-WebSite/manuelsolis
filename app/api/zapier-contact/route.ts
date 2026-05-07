@@ -37,21 +37,27 @@ export async function POST(request: NextRequest) {
         } = body;
 
         // --- LÓGICA DE FUENTE (SOURCE) ---
-        // 1. Usamos lo que viene (ej: "google").
-        let finalSource = utm_source;
+        // Defaults a centinelas estándar GA4 cuando llegan vacíos / null / undefined.
+        // El cliente ya envía centinelas correctos; esto es defensa adicional para
+        // requests que pudieran venir de otras integraciones.
+        const isMissing = (v: unknown): boolean =>
+            v === undefined || v === null ||
+            (typeof v === 'string' && (v.trim() === '' || v === 'null' || v === 'undefined'));
 
-        // 2. Si llega vacío (Orgánico), le ponemos etiqueta "SITIO WEB".
-        if (!finalSource || finalSource.trim() === '' || finalSource === 'null' || finalSource === 'undefined') {
-            finalSource = 'SITIO WEB';
-        }
-
-        const finalMedium = (utm_medium && utm_medium.trim() !== '') ? utm_medium : 'Organico';
-        const finalCampaign = (utm_campaign && utm_campaign.trim() !== '') ? utm_campaign : 'Directo';
+        const finalSource = isMissing(utm_source) ? '(direct)' : utm_source;
+        const finalMedium = isMissing(utm_medium) ? '(none)' : utm_medium;
+        const finalCampaign = isMissing(utm_campaign) ? '(not set)' : utm_campaign;
 
         // --- LÓGICA DE PREGUNTA ---
+        // Solo agregar suffix "| Fuente: X" cuando el source NO es centinela
+        // (i.e. es UTM real de paid/referral). Evita ensuciar el detalle con
+        // "(direct)" / "(none)" / "(not set)" que no aporta info al equipo legal.
+        const SENTINEL_SOURCES = ['(direct)', '(none)', '(not set)'];
+        const isSentinelSource = SENTINEL_SOURCES.includes(finalSource);
+
         let finalDetail = enquiry_detail || '';
-        if (finalSource !== 'SITIO WEB') {
-             finalDetail = `${finalDetail} | Fuente: ${finalSource}`;
+        if (!isSentinelSource && finalSource) {
+            finalDetail = `${finalDetail} | Fuente: ${finalSource}`;
         }
 
         // --- PAYLOAD ---
