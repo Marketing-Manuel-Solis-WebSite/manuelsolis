@@ -96,11 +96,11 @@ export default function HeroProfessional() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen w-full flex flex-col justify-center bg-[#001540] overflow-hidden pt-24 lg:pt-44 pb-48 lg:pb-72"
+      className="relative min-h-screen w-full flex flex-col justify-center bg-[#0A0A0A] overflow-hidden pt-24 lg:pt-44 pb-48 lg:pb-72"
     >
       {/* Background Effects — Static */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#111111] via-[#0A0A0A] to-[#0A0A0A]" />
 
         {/* Static blur orbs — no animation */}
         <div className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[60px] opacity-40" />
@@ -261,8 +261,8 @@ export default function HeroProfessional() {
       {/* Bar Associations Carousel — CSS animation instead of Framer Motion */}
       <div className="absolute bottom-0 left-0 right-0 z-30 w-full border-t border-white/5 bg-transparent pt-8 sm:pt-12 pb-16 sm:pb-24">
         <div className="relative w-full overflow-hidden mask-linear-fade">
-           <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#001540] to-transparent z-20" />
-           <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#001540] to-transparent z-20" />
+           <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#0A0A0A] to-transparent z-20" />
+           <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#0A0A0A] to-transparent z-20" />
 
            <div className="hero-marquee flex items-center gap-40 sm:gap-80 whitespace-nowrap">
              {marqueeItems.map((assoc, idx) => {

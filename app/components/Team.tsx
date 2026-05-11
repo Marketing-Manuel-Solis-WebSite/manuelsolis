@@ -15,11 +15,11 @@ export default function Team() {
     <section
       id="equipo"
       ref={containerRef}
-      className="relative py-32 lg:py-48 w-full bg-[#001540] overflow-hidden"
+      className="relative py-32 lg:py-48 w-full bg-[#0A0A0A] overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[#001540]" />
+        <div className="absolute inset-0 bg-[#0A0A0A]" />
         <div className="absolute inset-0 gradient-mesh-dark" />
 
         {/* Static orbs */}
@@ -107,7 +107,7 @@ export default function Team() {
              {/* Static glow behind image */}
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] h-[100%] bg-blue-500/20 blur-[60px] rounded-full -z-10 opacity-50" />
 
-             <div className="relative z-10 w-full h-[500px] lg:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 bg-[#001540]">
+             <div className="relative z-10 w-full h-[500px] lg:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 bg-[#0A0A0A]">
                 <Image
                   src="/MSTeam.png"
                   alt="Equipo de abogados Manuel Solis"
@@ -117,7 +117,7 @@ export default function Team() {
                   loading="lazy"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-60" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
              </div>
 

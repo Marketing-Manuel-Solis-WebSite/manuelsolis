@@ -30,12 +30,12 @@ const NeonInput = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
 
   // Optimización: Fondo más sólido, borde más simple
-  const baseClasses = `w-full bg-[#000510]/60 border rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-slate-500 focus:outline-none transition-colors z-10 relative
-    ${isFocused ? 'border-[#B2904D]/50 bg-[#000510]/90' : 'border-white/10 hover:border-white/20'}`;
+  const baseClasses = `w-full bg-[#111111]/80 border rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-[#555] focus:outline-none transition-colors z-10 relative
+    ${isFocused ? 'border-[#C4A265]/50 bg-[#111111]' : 'border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)]'}`;
 
   return (
     <div className="relative group">
-      <div className="absolute left-4 top-4 z-20 pointer-events-none text-[#64748b] group-focus-within:text-[#B2904D] transition-colors">
+      <div className="absolute left-4 top-4 z-20 pointer-events-none text-[#555] group-focus-within:text-[#C4A265] transition-colors">
         <Icon size={20} />
       </div>
 
@@ -77,7 +77,7 @@ const NeonInput = (props: any) => {
            initial={{ x: "-100%" }}
            animate={{ x: isFocused ? "0%" : "-100%" }}
            transition={{ duration: 0.3, ease: "easeOut" }} // Más rápido
-           className="w-full h-full bg-[#B2904D]"
+           className="w-full h-full bg-[#C4A265]"
          />
       </div>
     </div>
@@ -220,44 +220,44 @@ function ContactFormContent() {
   const t = (es: string, en: string) => (lang === 'es' ? es : en);
 
   return (
-    <section className="relative py-32 w-full bg-[#001540] overflow-hidden" id="contacto">
-      {/* FONDO OPTIMIZADO */}
+    <section className="relative py-32 w-full bg-[#0A0A0A] overflow-hidden" id="contacto">
+      {/* FONDO */}
       <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002050] via-[#001540] to-[#000814]" />
-          <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[80px]" />
-          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.05] mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[#0A0A0A]" />
+          <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-[#C4A265]/4 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-[#C4A265]/3 rounded-full blur-[100px]" />
       </div>
 
       <div className="container mx-auto px-4 relative z-20 max-w-5xl">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight drop-shadow-sm">
+          <h2 className="font-[var(--font-playfair)] text-3xl sm:text-4xl md:text-6xl font-light text-white mb-6 tracking-tight">
             {t('Solicite su', 'Request Your')}{' '}
-            <span className="font-medium text-[#B2904D]">
+            <span className="font-semibold text-[#C4A265]">
               {t('Consulta', 'Consultation')}
             </span>
           </h2>
-          <p className="text-lg text-blue-100 max-w-2xl mx-auto font-light leading-relaxed opacity-90">
+          <p className="text-lg text-[#999] max-w-2xl mx-auto font-light leading-relaxed">
             {t('Manténgase informado sobre actualizaciones e información importantes.', 'Stay informed about important updates and information.')}
           </p>
         </motion.div>
 
         <motion.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
           // Optimización: Opacidad aumentada, blur reducido
-          className="relative bg-[#001026]/95 backdrop-blur-md rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 shadow-2xl border border-white/10 overflow-hidden"
+          className="relative bg-[#111111] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 shadow-2xl shadow-black/40 border border-[rgba(255,255,255,0.06)] overflow-hidden"
         >
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#C4A265]/3 rounded-full blur-[100px] pointer-events-none" />
 
             <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
               <AnimatePresence>
                 {submitStatus !== 'idle' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-[2rem]" role="alert" aria-live="assertive">
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#0A0A0A]/98 flex flex-col items-center justify-center text-center rounded-3xl" role="alert" aria-live="assertive">
                       {submitStatus === 'success' ? (
                         <>
                             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
                                 <CheckCircle2 size={80} className="text-green-400 mb-6" />
                             </motion.div>
                             <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('¡Enviado con Éxito!', 'Successfully Sent!')}</h3>
-                            <p className="text-blue-200">{t('Nuestro equipo revisará su caso de inmediato.', 'Our team will review your case immediately.')}</p>
+                            <p className="text-[#999]">{t('Nuestro equipo revisará su caso de inmediato.', 'Our team will review your case immediately.')}</p>
                         </>
                       ) : (
                         <>
@@ -274,7 +274,7 @@ function ContactFormContent() {
 
               <div className="grid md:grid-cols-2 gap-8">
                 <motion.div variants={itemVar}>
-                    <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
+                    <label className="block text-xs font-bold text-[#C4A265] uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
                     <div className="space-y-5">
                         <NeonInput icon={User} name="first_name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
                         <NeonInput icon={User} name="last_name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
@@ -282,7 +282,7 @@ function ContactFormContent() {
                 </motion.div>
 
                 <motion.div variants={itemVar}>
-                    <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
+                    <label className="block text-xs font-bold text-[#C4A265] uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
                     <div className="space-y-5">
                         <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
                         <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
@@ -291,45 +291,45 @@ function ContactFormContent() {
               </div>
 
               <motion.div variants={itemVar}>
-                <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
+                <label className="block text-xs font-bold text-[#C4A265] uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
                 <NeonInput icon={MessageSquare} name="enquiry_detail" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
               </motion.div>
 
               <div className="space-y-4">
                   {/* SMS Disclaimer */}
-                  <motion.div variants={itemVar} className="p-5 rounded-xl bg-[#000814]/50 border border-white/10">
-                    <p className="text-xs text-blue-200/80 leading-relaxed">
+                  <motion.div variants={itemVar} className="p-5 rounded-xl bg-[#0A0A0A]/60 border border-[rgba(255,255,255,0.06)]">
+                    <p className="text-xs text-[#888] leading-relaxed">
                       {t(
                         'Al proporcionar voluntariamente su número de teléfono y optar explícitamente por recibir mensajes de texto, usted consiente recibir comunicaciones SMS del Law Office of Manuel Solis relacionadas con responder a consultas sobre servicios de inmigración, programar consultas, enviar recordatorios de citas, solicitar documentos y proporcionar actualizaciones de casos. La frecuencia de los mensajes puede variar. Pueden aplicarse tarifas estándar de mensajes y datos. Su consentimiento para recibir mensajes SMS no es una condición para adquirir ningún servicio. Puede cancelar en cualquier momento respondiendo "STOP" a cualquier mensaje, y puede solicitar ayuda adicional respondiendo "HELP". Para más detalles, por favor visite nuestra',
                         'By voluntarily providing your phone number and explicitly opting in to text messages, you consent to receive SMS communications from Law Office of Manuel Solis regarding respond to immigration service inquiries, schedule consultations, send appointment reminders, request documents, and provide case updates. Message frequency may vary. Standard messaging and data rates may apply. Your consent to receive SMS messages is not a condition of purchasing any service. You may opt out at any time by replying "STOP" to any message, and you may request additional assistance by replying "HELP." For more details, please visit our'
                       )}{' '}
-                      <a href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('política de privacidad', 'privacy policy')}</a>{' '}
+                      <a href={`/${lang}/privacidad`} className="text-[#C4A265] hover:text-white transition-colors font-bold underline decoration-dotted">{t('política de privacidad', 'privacy policy')}</a>{' '}
                       {t('y', 'and')}{' '}
-                      <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('términos de servicio SMS', 'SMS terms of service')}</a>.
+                      <a href={`/${lang}/sms-terminos`} className="text-[#C4A265] hover:text-white transition-colors font-bold underline decoration-dotted">{t('términos de servicio SMS', 'SMS terms of service')}</a>.
                     </p>
                   </motion.div>
 
-                  <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
+                  <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#0A0A0A]/60 border border-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.12)] transition-colors group">
                     <div className="relative flex items-center pt-1">
-                      <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-7 w-7 sm:h-6 sm:w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400" />
-                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={16} strokeWidth={3} /></div>
+                      <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-7 w-7 sm:h-6 sm:w-6 cursor-pointer appearance-none rounded border-2 border-[#555] bg-transparent transition-all checked:border-[#C4A265] checked:bg-[#C4A265] hover:border-[#777]" />
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#0A0A0A] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={16} strokeWidth={3} /></div>
                     </div>
-                    <label htmlFor="acceptedTerms" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
+                    <label htmlFor="acceptedTerms" className="text-sm text-[#ccc] leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
                       {t('Acepto los', 'I accept the')}{' '}
-                      <a href={`/${lang}/terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio', 'Terms of Service')}</a>{' '}
+                      <a href={`/${lang}/terminos`} className="text-[#C4A265] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio', 'Terms of Service')}</a>{' '}
                       {t('y he leído la', 'and have read the')}{' '}
-                      <a href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Statement')}</a>.
+                      <a href={`/${lang}/privacidad`} className="text-[#C4A265] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Statement')}</a>.
                     </label>
                   </motion.div>
 
-                  <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
+                  <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#0A0A0A]/40 border border-[rgba(255,255,255,0.04)] hover:border-[rgba(255,255,255,0.08)] transition-colors group">
                     <div className="relative flex items-center pt-1">
-                      <input type="checkbox" id="marketingConsent" name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} className="peer h-6 w-6 sm:h-5 sm:w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500" />
-                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
+                      <input type="checkbox" id="marketingConsent" name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} className="peer h-6 w-6 sm:h-5 sm:w-5 cursor-pointer appearance-none rounded border-2 border-[#444] bg-transparent transition-all checked:border-[#C4A265] checked:bg-[#C4A265] hover:border-[#666]" />
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#0A0A0A] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
                     </div>
-                    <label htmlFor="marketingConsent" className="text-xs text-blue-200/80 leading-relaxed cursor-pointer select-none group-hover:text-blue-100 transition-colors">
+                    <label htmlFor="marketingConsent" className="text-xs text-[#888] leading-relaxed cursor-pointer select-none group-hover:text-[#bbb] transition-colors">
                       {t('Me gustaría recibir comunicaciones SMS del Law Office of Manuel Solís al número de teléfono proporcionado relacionadas con consultas sobre servicios de inmigración, programación de consultas, recordatorios de citas, solicitud de documentos y actualizaciones de casos. Pueden aplicar tarifas de mensajes y datos. La frecuencia de los mensajes puede variar. Responda STOP para cancelar, HELP para ayuda.', 'I would like to receive SMS communications from the Law Office of Manuel Solís at the phone number provided regarding immigration service inquiries, scheduling consultations, appointment reminders, document requests, and case updates. Message and data rates may apply. Message frequency may vary. Reply STOP to cancel, HELP for help.')}{' '}
-                      <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio SMS', 'SMS Terms of Service')}</a>
+                      <a href={`/${lang}/sms-terminos`} className="text-[#C4A265] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio SMS', 'SMS Terms of Service')}</a>
                     </label>
                   </motion.div>
               </div>
@@ -340,19 +340,19 @@ function ContactFormContent() {
                   disabled={isSubmitting || !formData.acceptedTerms}
                   className={`group relative w-full h-14 sm:h-16 overflow-hidden rounded-xl font-bold tracking-wider sm:tracking-widest uppercase text-sm sm:text-base transition-all shadow-lg
                     ${!formData.acceptedTerms 
-                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5' 
-                      : 'bg-[#B2904D] text-[#001026] hover:bg-[#cbb06d] cursor-pointer transform hover:-translate-y-1'
+                      ? 'bg-[#222] text-[#555] cursor-not-allowed border border-[rgba(255,255,255,0.05)]' 
+                      : 'bg-[#C4A265] text-[#0A0A0A] hover:bg-[#d4b275] cursor-pointer transform hover:-translate-y-1'
                     }
                   `}
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
-                        <Zap className="animate-spin text-[#001026]" size={20} /> {t('Procesando...', 'Processing...')}
+                        <Zap className="animate-spin text-[#0A0A0A]" size={20} /> {t('Procesando...', 'Processing...')}
                       </span>
                     ) : (
                       <>
-                        <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-slate-500" : "text-[#001026]"} />
+                        <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-[#555]" : "text-[#0A0A0A]"} />
                         {t('Registrarse', 'Register')}
                       </>
                     )}
@@ -371,7 +371,7 @@ function ContactFormContent() {
 
 export default function ContactForm() {
   return (
-    <Suspense fallback={<div className="py-32 w-full bg-[#001540] flex justify-center items-center"><Zap className="animate-spin text-[#B2904D]" size={40} /></div>}>
+    <Suspense fallback={<div className="py-32 w-full bg-[#0A0A0A] flex justify-center items-center"><Zap className="animate-spin text-[#C4A265]" size={40} /></div>}>
       <ContactFormContent />
     </Suspense>
   )

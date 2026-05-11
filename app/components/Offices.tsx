@@ -8,8 +8,8 @@ import { useLanguage } from '../context/LanguageContext';
 import { pushToDataLayer, trackConversion } from '../lib/tracking';
 
 // --- COLORES DE LA PALETA ---
-const PRIMARY_COLOR_DARK = '#001540';
-const ACCENT_COLOR_GOLD = '#B2904D';
+const PRIMARY_COLOR_DARK = '#0A0A0A';
+const ACCENT_COLOR_GOLD = '#C4A265';
 const LIGHT_BLUE_ACCENT = '#38bdf8'; // sky-400
 
 // Función auxiliar para mapas
@@ -362,12 +362,12 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
     const inner = (
       <div className="flex justify-between items-start relative z-10">
         <div>
-          <p className="text-[10px] text-blue-300/60 font-bold uppercase tracking-widest mb-1 group-hover:text-[#B2904D] transition-colors">
+          <p className="text-[10px] text-[#888] font-bold uppercase tracking-widest mb-1 group-hover:text-[#C4A265] transition-colors">
             {label}
           </p>
           <p className={`text-white ${isTel ? 'font-bold' : 'font-medium'} text-sm group-hover:text-white transition-colors`}>{value}</p>
         </div>
-        <Icon size={18} className="text-[#B2904D] group-hover:text-white transition-colors" />
+        <Icon size={18} className="text-[#C4A265] group-hover:text-white transition-colors" />
       </div>
     );
 
@@ -385,7 +385,7 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
         onClick={handleClick}
         target={isExternal && !isTel ? "_blank" : undefined}
         rel={isExternal && !isTel ? "noopener noreferrer" : undefined}
-        className="block p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 transition-all duration-300 group relative overflow-hidden"
+        className="block p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#C4A265]/10 transition-all duration-300 group relative overflow-hidden"
         style={{ transitionProperty: 'background-color, transform' }}
       >
         {inner}
@@ -448,33 +448,33 @@ export default function FuturisticOffices() {
   return (
     <section 
       id="oficinas"
-      className={`relative py-32 lg:py-40 w-full min-h-screen bg-[#001540] overflow-hidden selection:bg-[#B2904D] selection:text-[#001540]`}
+      className={`relative py-32 lg:py-40 w-full min-h-screen bg-[#0A0A0A] overflow-hidden selection:bg-[#C4A265] selection:text-[#0A0A0A]`}
     >
       {/* 1. FONDO ATMOSFÉRICO ACTIVO */}
       <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
         {/* Gradiente de profundidad */}
-        <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/50 via-[#001540] to-[#000a20]`} />
+        <div className="absolute inset-0 bg-[#111111]" />
         
         {/* Orbes flotantes */}
         <motion.div 
           animate={isDesktop ? { x: [0, 50, 0], y: [0, -50, 0], opacity: [0.3, 0.6, 0.3] } : { opacity: 0.3 }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
-          className={`absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full ${isDesktop ? 'blur-[120px]' : 'blur-[60px]'} mix-blend-screen`}
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#C4A265]/4 rounded-full blur-[120px]"
         />
         <motion.div 
           animate={isDesktop ? { x: [0, -30, 0], y: [0, 30, 0], opacity: [0.2, 0.4, 0.2] } : { opacity: 0.2 }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
-          className={`absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#B2904D]/5 rounded-full ${isDesktop ? 'blur-[150px]' : 'blur-[70px]'} mix-blend-screen`}
+          className={`absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C4A265]/5 rounded-full ${isDesktop ? 'blur-[150px]' : 'blur-[70px]'} mix-blend-screen`}
         />
         {/* Textura de ruido */}
         <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
       </div>
 
       {/* --- MÁSCARAS ESTILO ESCALÓN --- */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#000a20] to-transparent z-10 opacity-80 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#000a20] to-transparent z-10 opacity-80 pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#111111] to-transparent z-10 opacity-80 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#111111] to-transparent z-10 opacity-80 pointer-events-none" />
 
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-8 relative z-10">
@@ -482,7 +482,7 @@ export default function FuturisticOffices() {
         {/* HEADER: TÍTULO */}
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-7xl font-thin text-white tracking-tight leading-none">
-            {language === 'es' ? 'Oficinas ubicadas' : 'Offices'} <span className={`font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-[#B2904D] to-white`}>{language === 'es' ? 'En Estados Unidos' : 'In United States'}</span>
+            {language === 'es' ? 'Oficinas ubicadas' : 'Offices'} <span className={`font-medium text-transparent bg-clip-text bg-gradient-to-r from-white via-[#C4A265] to-white`}>{language === 'es' ? 'En Estados Unidos' : 'In United States'}</span>
           </h2>
         </div>
 
@@ -492,12 +492,12 @@ export default function FuturisticOffices() {
           <div className="lg:hidden col-span-full overflow-x-auto pb-4 -mx-4 px-4 scrollbar-none">
             <div className="flex gap-2 min-w-max">
               {/* Texas offices */}
-              <span className="self-center text-[10px] font-bold text-[#B2904D] uppercase tracking-wider px-2.5 py-1 bg-[#B2904D]/10 rounded-lg flex-shrink-0 border border-[#B2904D]/20">TX</span>
+              <span className="self-center text-[10px] font-bold text-[#C4A265] uppercase tracking-wider px-2.5 py-1 bg-[#C4A265]/10 rounded-lg flex-shrink-0 border border-[#C4A265]/20">TX</span>
               {officesData.filter(o => o.state === 'TX').map(office => (
                 <button key={office.id} onClick={() => setActiveId(office.id)}
                   className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-300 border ${
                     activeId === office.id
-                      ? 'bg-[#B2904D] text-[#001540] border-[#B2904D] shadow-lg shadow-[#B2904D]/20'
+                      ? 'bg-[#C4A265] text-[#0A0A0A] border-[#C4A265] shadow-lg shadow-[#C4A265]/20'
                       : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white'
                   }`}
                 >
@@ -510,12 +510,12 @@ export default function FuturisticOffices() {
                 if (offices.length === 0) return null;
                 return (
                   <div key={s.code} className="flex items-center gap-2 contents">
-                    <span className="self-center text-[10px] font-bold text-[#B2904D] uppercase tracking-wider px-2.5 py-1 bg-[#B2904D]/10 rounded-lg flex-shrink-0 border border-[#B2904D]/20 ml-2">{s.code}</span>
+                    <span className="self-center text-[10px] font-bold text-[#C4A265] uppercase tracking-wider px-2.5 py-1 bg-[#C4A265]/10 rounded-lg flex-shrink-0 border border-[#C4A265]/20 ml-2">{s.code}</span>
                     {offices.map(office => (
                       <button key={office.id} onClick={() => setActiveId(office.id)}
                         className={`px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-300 border ${
                           activeId === office.id
-                            ? 'bg-[#B2904D] text-[#001540] border-[#B2904D] shadow-lg shadow-[#B2904D]/20'
+                            ? 'bg-[#C4A265] text-[#0A0A0A] border-[#C4A265] shadow-lg shadow-[#C4A265]/20'
                             : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white'
                         }`}
                       >
@@ -530,7 +530,7 @@ export default function FuturisticOffices() {
 
           {/* --- DESKTOP: MENÚ VERTICAL AGRUPADO (COL 3) --- */}
           <div className="hidden lg:flex lg:col-span-3 flex-col gap-2 lg:max-h-[700px] lg:overflow-y-auto lg:pr-2">
-            <div className="text-sm font-bold text-blue-200/60 uppercase tracking-widest pl-2 mb-3 flex items-center gap-2">
+            <div className="text-sm font-bold text-[#777] uppercase tracking-widest pl-2 mb-3 flex items-center gap-2">
               <Navigation size={14} /> {language === 'es' ? 'Acceso Rápido' : 'Quick Access'}
             </div>
 
@@ -539,7 +539,7 @@ export default function FuturisticOffices() {
 
                {/* TEXAS */}
                <div className="mb-5">
-                 <div className="text-sm font-bold text-[#B2904D] uppercase tracking-[0.2em] px-2 py-2 mb-2 border-b border-[#B2904D]/25">Texas</div>
+                 <div className="text-sm font-bold text-[#C4A265] uppercase tracking-[0.2em] px-2 py-2 mb-2 border-b border-[#C4A265]/25">Texas</div>
 
                  {/* Houston sub-group */}
                  <div className="mb-3 ml-1 mt-2">
@@ -551,9 +551,9 @@ export default function FuturisticOffices() {
                          className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
                          whileHover={{ x: isActive ? 0 : 5 }}
                        >
-                         {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                         {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#C4A265] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
                          {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
-                         <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
+                         <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-[#999] group-hover:text-white/90'}`}>{office.city}</span>
                        </motion.button>
                      );
                    })}
@@ -568,9 +568,9 @@ export default function FuturisticOffices() {
                          className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
                          whileHover={{ x: isActive ? 0 : 5 }}
                        >
-                         {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                         {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#C4A265] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
                          {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
-                         <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
+                         <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-[#999] group-hover:text-white/90'}`}>{office.city}</span>
                        </motion.button>
                      );
                    })}
@@ -583,7 +583,7 @@ export default function FuturisticOffices() {
                  if (stateOffices.length === 0) return null;
                  return (
                    <div key={stateInfo.code} className="mb-5">
-                     <div className="text-sm font-bold text-[#B2904D] uppercase tracking-[0.2em] px-2 py-2 mb-2 border-b border-[#B2904D]/25">{stateInfo.label}</div>
+                     <div className="text-sm font-bold text-[#C4A265] uppercase tracking-[0.2em] px-2 py-2 mb-2 border-b border-[#C4A265]/25">{stateInfo.label}</div>
                      {stateOffices.map((office) => {
                        const isActive = activeId === office.id;
                        return (
@@ -591,10 +591,10 @@ export default function FuturisticOffices() {
                            className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
                            whileHover={{ x: isActive ? 0 : 5 }}
                          >
-                           {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                           {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#C4A265] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
                            {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
-                           <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
-                           <span className={`text-[10px] tracking-widest uppercase font-bold px-2.5 py-1 rounded-full ${isActive ? 'bg-[#B2904D] text-[#001540]' : 'bg-blue-900/50 text-blue-200/60'}`}>{office.state}</span>
+                           <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-[#999] group-hover:text-white/90'}`}>{office.city}</span>
+                           <span className={`text-[10px] tracking-widest uppercase font-bold px-2.5 py-1 rounded-full ${isActive ? 'bg-[#C4A265] text-[#0A0A0A]' : 'bg-white/5 text-[#777]'}`}>{office.state}</span>
                          </motion.button>
                        );
                      })}
@@ -613,7 +613,7 @@ export default function FuturisticOffices() {
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                className={`relative h-full bg-[#000a20]/90 backdrop-blur-xl rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col will-change-transform`}
+                className={`relative h-full bg-[#111111]/90 backdrop-blur-xl rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col will-change-transform`}
               >
                 
                 {/* 1. TOP SECTION (Media + Title) */}
@@ -628,7 +628,7 @@ export default function FuturisticOffices() {
                      sizes="(max-width: 768px) 100vw, 70vw"
                      priority={false}
                    />
-                   <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] via-transparent to-transparent opacity-90" />
+                   <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent opacity-90" />
                    
                    {/* HUD TOP CORNER: STATUS */}
                    <div className="absolute top-6 right-6 z-20 p-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
@@ -667,7 +667,7 @@ export default function FuturisticOffices() {
                    {/* DESCRIPTION */}
                    <div className="w-full">
                        <h3 className="text-xl font-thin text-white mb-3">{language === 'es' ? 'Sobre nuestra experiencia legal' : 'About Our Legal Experience'}</h3>
-                       <p className="text-blue-100/70 text-base leading-relaxed text-justify border-l-2 border-white/10 pl-4">
+                       <p className="text-[#999] text-base leading-relaxed text-justify border-l-2 border-white/10 pl-4">
                          {gT(activeOffice.description)}
                        </p>
                    </div>
@@ -675,13 +675,13 @@ export default function FuturisticOffices() {
                    {/* SOLO SERVICIOS (Abogados removidos) */}
                    <div className="border-y border-white/10 py-8">
                       <div>
-                          <h4 className="text-sm font-bold text-blue-300/50 uppercase tracking-widest mb-4 flex items-center gap-2">
+                          <h4 className="text-sm font-bold text-[#888] uppercase tracking-widest mb-4 flex items-center gap-2">
                              <Scale size={14} className="text-[#fffff]" />
                              {language === 'es' ? 'Servicios Disponibles' : 'Available Services'}
                           </h4>
                           <div className="flex flex-wrap gap-2">
                             {activeOffice.services.map((service, idx) => (
-                              <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 hover:border-[#B2904D]/30 transition-all duration-300 rounded-full text-xs text-blue-100 font-medium tracking-wide">
+                              <span key={idx} className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-[#C4A265]/10 hover:border-[#C4A265]/30 transition-all duration-300 rounded-full text-xs text-[#ccc] font-medium tracking-wide">
                                 {gT(service)}
                               </span>
                             ))}
@@ -695,9 +695,9 @@ export default function FuturisticOffices() {
                          <motion.div 
                            animate={{ rotate: [0, 360] }}
                            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                           className={`w-4 h-4 rounded-full border border-dashed border-[#B2904D]`}
+                           className={`w-4 h-4 rounded-full border border-dashed border-[#C4A265]`}
                          />
-                         <span className={`text-[#B2904D] font-medium`}>{language === 'es' ? 'Datos' : 'Contact'}</span> {language === 'es' ? 'de contacto' : 'Information'}
+                         <span className={`text-[#C4A265] font-medium`}>{language === 'es' ? 'Datos' : 'Contact'}</span> {language === 'es' ? 'de contacto' : 'Information'}
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                          <ActionHUD label={language === 'es' ? 'Ubicación' : 'Location Grid'} value={activeOffice.address} icon={MapPin} href={activeOffice.mapLink} />

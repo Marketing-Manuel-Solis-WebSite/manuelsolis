@@ -76,7 +76,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
     return (
       <div className="w-full max-w-md mx-auto">
         <h3 className="text-lg font-semibold text-white mb-2">{t.title}</h3>
-        <p className="text-sm text-blue-200/60 mb-4">{t.subtitle}</p>
+        <p className="text-sm text-[#888] mb-4">{t.subtitle}</p>
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input
             type="email"
@@ -84,14 +84,14 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t.emailPlaceholder}
             required
-            className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all"
+            className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#C4A265]/50 focus:ring-1 focus:ring-[#C4A265]/30 transition-all"
           />
           <motion.button
             type="submit"
             disabled={status === 'loading' || status === 'success'}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="px-5 py-3 rounded-lg bg-[#B2904D] text-[#001540] font-semibold text-sm hover:bg-[#c9a85e] transition-colors disabled:opacity-50 whitespace-nowrap"
+            className="px-5 py-3 rounded-lg bg-[#C4A265] text-[#0A0A0A] font-semibold text-sm hover:bg-[#c9a85e] transition-colors disabled:opacity-50 whitespace-nowrap"
           >
             {status === 'loading' ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -136,21 +136,21 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
         className="relative w-full my-12 rounded-2xl overflow-hidden"
       >
         {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#001540] via-[#001a4d] to-[#002060]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#111111] to-[#0A0A0A]" />
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url(/noise.png)' }} />
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B2904D] to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C4A265] to-transparent" />
 
         <div className="relative z-10 px-6 py-10 md:px-12 md:py-14 flex flex-col md:flex-row items-center gap-8">
           {/* Left: Text */}
           <div className="flex-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 mb-4">
-              <Sparkles className="w-3.5 h-3.5 text-[#B2904D]" />
-              <span className="text-xs font-medium text-[#B2904D] tracking-wide">{t.badge}</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#C4A265]/10 border border-[#C4A265]/30 mb-4">
+              <Sparkles className="w-3.5 h-3.5 text-[#C4A265]" />
+              <span className="text-xs font-medium text-[#C4A265] tracking-wide">{t.badge}</span>
             </div>
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
               {t.title}
             </h3>
-            <p className="text-blue-200/60 text-sm md:text-base max-w-md">{t.subtitle}</p>
+            <p className="text-[#888] text-sm md:text-base max-w-md">{t.subtitle}</p>
           </div>
 
           {/* Right: Form */}
@@ -179,7 +179,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder={t.namePlaceholder}
-                    className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all backdrop-blur-sm"
+                    className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#C4A265]/50 focus:ring-1 focus:ring-[#C4A265]/30 transition-all backdrop-blur-sm"
                   />
                   <div className="flex gap-2">
                     <input
@@ -188,14 +188,14 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={t.emailPlaceholder}
                       required
-                      className="flex-1 px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all backdrop-blur-sm"
+                      className="flex-1 px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#C4A265]/50 focus:ring-1 focus:ring-[#C4A265]/30 transition-all backdrop-blur-sm"
                     />
                     <motion.button
                       type="submit"
                       disabled={status === 'loading'}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="px-6 py-3.5 rounded-xl bg-[#B2904D] text-[#001540] font-bold text-sm hover:bg-[#c9a85e] transition-all shadow-lg shadow-[#B2904D]/20 disabled:opacity-50 flex items-center gap-2"
+                      className="px-6 py-3.5 rounded-xl bg-[#C4A265] text-[#0A0A0A] font-bold text-sm hover:bg-[#c9a85e] transition-all shadow-lg shadow-[#C4A265]/20 disabled:opacity-50 flex items-center gap-2"
                     >
                       {status === 'loading' ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -208,8 +208,8 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                     </motion.button>
                   </div>
                   <div className="flex items-center gap-2 mt-1">
-                    <Shield className="w-3.5 h-3.5 text-[#B2904D]/50" />
-                    <p className="text-xs text-blue-200/40">{t.privacy}</p>
+                    <Shield className="w-3.5 h-3.5 text-[#C4A265]/50" />
+                    <p className="text-xs text-[#666]">{t.privacy}</p>
                   </div>
                   {status === 'error' && (
                     <motion.p
@@ -238,23 +238,23 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
       transition={{ duration: 0.5 }}
       className="relative rounded-2xl overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-[#001540] to-[#001a4d]" />
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B2904D] to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] to-[#111111]" />
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C4A265] to-transparent" />
 
       <div className="relative z-10 p-6 md:p-8">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-10 h-10 rounded-full bg-[#B2904D]/10 flex items-center justify-center">
-            <Mail className="w-5 h-5 text-[#B2904D]" />
+          <div className="w-10 h-10 rounded-full bg-[#C4A265]/10 flex items-center justify-center">
+            <Mail className="w-5 h-5 text-[#C4A265]" />
           </div>
           <div>
-            <span className="text-xs font-medium text-[#B2904D] tracking-wide uppercase">
+            <span className="text-xs font-medium text-[#C4A265] tracking-wide uppercase">
               {t.badge}
             </span>
           </div>
         </div>
 
         <h3 className="text-xl font-bold text-white mb-2">{t.title}</h3>
-        <p className="text-sm text-blue-200/60 mb-5">{t.subtitle}</p>
+        <p className="text-sm text-[#888] mb-5">{t.subtitle}</p>
 
         <AnimatePresence mode="wait">
           {status === 'success' ? (
@@ -275,14 +275,14 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t.emailPlaceholder}
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#C4A265]/50 focus:ring-1 focus:ring-[#C4A265]/30 transition-all"
               />
               <motion.button
                 type="submit"
                 disabled={status === 'loading'}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full px-6 py-3 rounded-xl bg-[#B2904D] text-[#001540] font-bold text-sm hover:bg-[#c9a85e] transition-all shadow-lg shadow-[#B2904D]/20 disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 rounded-xl bg-[#C4A265] text-[#0A0A0A] font-bold text-sm hover:bg-[#c9a85e] transition-all shadow-lg shadow-[#C4A265]/20 disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {status === 'loading' ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -293,7 +293,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                   </>
                 )}
               </motion.button>
-              <p className="text-xs text-blue-200/40 text-center">{t.privacy}</p>
+              <p className="text-xs text-[#666] text-center">{t.privacy}</p>
               {status === 'error' && (
                 <motion.p
                   initial={{ opacity: 0 }}

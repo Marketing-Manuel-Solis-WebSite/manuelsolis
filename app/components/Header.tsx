@@ -246,23 +246,12 @@ export default function HeaderProfessional() {
 
   return (
     <>
-      <motion.header
+      <header
         role="banner"
-        className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col`}
-        style={{ willChange: "transform, background-color, backdrop-filter" }}
-        initial={{ backgroundColor: 'rgba(0,0,0,0)', backdropFilter: 'blur(0px)' }}
-        animate={{
-          backgroundColor: isScrolled ? 'rgba(5, 15, 30, 0.85)' : 'rgba(0,0,0,0)',
-          backdropFilter: isScrolled ? 'blur(10px)' : 'blur(0px)',
-        }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col transition-all duration-400 ease-out ${isScrolled ? 'bg-[#0A0A0A]/90 backdrop-blur-md' : 'bg-transparent backdrop-blur-none'}`}
       >
         <div 
-          className="w-full transition-all duration-300 relative z-50"
-          style={{ 
-            paddingTop: isScrolled ? '0.5rem' : '0.75rem', 
-            paddingBottom: isScrolled ? '0.5rem' : '0.75rem' 
-          }}
+          className={`w-full transition-all duration-300 relative z-50 ${isScrolled ? 'py-2' : 'py-3'}`}
         >
           <div className="container mx-auto px-6 lg:px-12 flex items-center">
             
@@ -272,12 +261,7 @@ export default function HeaderProfessional() {
                 alt="Logo Manuel Solis"
                 width={200}
                 height={65}
-                className="object-contain transition-all duration-500 ease-in-out"
-                style={{
-                  height: isScrolled ? '40px' : '52px',
-                  width: 'auto',
-                  maxWidth: '100%',
-                }}
+                className={`object-contain transition-all duration-500 ease-in-out w-auto max-w-full ${isScrolled ? 'h-10' : 'h-[52px]'}`}
                 priority
               />
             </Link>
@@ -291,7 +275,7 @@ export default function HeaderProfessional() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-[#B2904D] hover:text-[#D4A94E] transition-colors duration-200"
+                      className="flex items-center gap-1.5 text-[#C4A265] hover:text-[#D4A94E] transition-colors duration-200"
                     >
                       <span className="flex flex-col leading-[1.05] text-[10px] xl:text-[12px] font-medium uppercase tracking-[0.12em] xl:tracking-[0.2em] text-left">
                         {item.name.split(' ').map((word, i) => (
@@ -320,19 +304,19 @@ export default function HeaderProfessional() {
                       )}
                     </div>
 
-                    <span className="absolute bottom-1 left-0 w-0 h-[0.5px] bg-sky-200 transition-all duration-300 ease-out group-hover:w-full" />
+                    <span className="absolute bottom-1 left-0 w-0 h-px bg-[#C4A265]/60 transition-all duration-300 ease-out group-hover:w-full" />
 
                     {item.submenu && item.key === 'offices' && (
                       <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]">
-                        <div className="w-[640px] bg-[#0b1c33]/95 backdrop-blur-md rounded-2xl shadow-2xl shadow-black/40 py-6 px-8 border border-white/10">
+                        <div className="w-[640px] bg-[#1A1A1A]/95 backdrop-blur-md rounded-2xl shadow-2xl shadow-black/40 py-6 px-8 border border-white/10">
                           <div className="flex gap-8">
                             {/* Texas - columna izquierda */}
                             <div className="flex-1 min-w-0 pl-2">
-                              <h4 className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-4 pb-2 border-b border-[#B2904D]/20">Texas</h4>
+                              <h4 className="text-xs font-bold text-[#C4A265] uppercase tracking-[0.2em] mb-4 pb-2 border-b border-[#C4A265]/20">Texas</h4>
                               {/* Houston group */}
                               <div className="mb-4">
                                 <span className="block text-xs font-semibold text-white/80 uppercase tracking-[0.15em] px-4 py-2 bg-white/5 rounded-lg mb-2">Houston</span>
-                                <div className="ml-4 pl-4 border-l-2 border-[#B2904D]/25 space-y-0.5">
+                                <div className="ml-4 pl-4 border-l-2 border-[#C4A265]/25 space-y-0.5">
                                   {officeNav[0].cities[0].subOffices?.map((sub) => (
                                     <Link key={sub.name} href={sub.href} className="group/item flex items-center px-4 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
                                       <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{sub.name}</span>
@@ -357,7 +341,7 @@ export default function HeaderProfessional() {
                             <div className="w-[190px] space-y-5 flex-shrink-0">
                               {officeNav.slice(1).map((stateGroup) => (
                                 <div key={stateGroup.state}>
-                                  <h4 className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-2 pb-1.5 border-b border-[#B2904D]/20">{stateGroup.state}</h4>
+                                  <h4 className="text-xs font-bold text-[#C4A265] uppercase tracking-[0.2em] mb-2 pb-1.5 border-b border-[#C4A265]/20">{stateGroup.state}</h4>
                                   {stateGroup.cities.map((city) => (
                                     <Link key={city.name} href={city.href} className="group/item flex items-center px-3 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
                                       <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{city.name}</span>
@@ -370,8 +354,8 @@ export default function HeaderProfessional() {
 
                           {/* Ver todas las oficinas */}
                           <div className="mt-5 pt-4 border-t border-white/10">
-                            <Link href={`/${language}/oficinas`} className="group/item flex items-center justify-center px-4 py-2.5 rounded-xl hover:bg-[#B2904D]/10 transition-colors duration-200">
-                              <span className="text-xs font-semibold text-[#B2904D] group-hover/item:text-white uppercase tracking-[0.15em] transition-colors duration-200">
+                            <Link href={`/${language}/oficinas`} className="group/item flex items-center justify-center px-4 py-2.5 rounded-xl hover:bg-[#C4A265]/10 transition-colors duration-200">
+                              <span className="text-xs font-semibold text-[#C4A265] group-hover/item:text-white uppercase tracking-[0.15em] transition-colors duration-200">
                                 {language === 'es' ? 'Ver todas las oficinas' : 'View all offices'} →
                               </span>
                             </Link>
@@ -382,7 +366,7 @@ export default function HeaderProfessional() {
 
                     {item.submenu && item.key !== 'offices' && (
                       <div className="absolute top-full left-0 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]">
-                        <div className="min-w-[240px] bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl py-3 px-2 border border-white/10 transform origin-top">
+                        <div className="min-w-[240px] bg-[#1A1A1A]/95 backdrop-blur-md rounded-xl shadow-xl py-3 px-2 border border-white/10 transform origin-top">
                           {item.submenu.map((subItem) => (
                             <Link
                               key={subItem.name}
@@ -421,7 +405,7 @@ export default function HeaderProfessional() {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 top-full mt-4 w-32 bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl border border-white/10 overflow-hidden p-1"
+                      className="absolute right-0 top-full mt-4 w-32 bg-[#1A1A1A]/95 backdrop-blur-md rounded-xl shadow-xl border border-white/10 overflow-hidden p-1"
                     >
                       <button onClick={() => toggleLang('es')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
                         <FlagES /> <span className="text-[10px] font-light text-white tracking-widest">ESP</span>
@@ -436,7 +420,7 @@ export default function HeaderProfessional() {
 
               <Link 
                   href={`/${language}/join-in`}
-                  className="text-[10px] font-medium uppercase tracking-[0.15em] bg-[#B2904D] text-[#001026] px-4 py-2 rounded-lg transition-all duration-200 hover:opacity-90 shadow-sm hover:translate-y-[-1px]"
+                  className="text-[10px] font-medium uppercase tracking-[0.15em] bg-[#C4A265] text-[#0A0A0A] px-4 py-2 rounded-lg transition-all duration-200 hover:opacity-90 shadow-sm hover:translate-y-[-1px]"
               >
                 {joinInText}
               </Link>
@@ -465,7 +449,7 @@ export default function HeaderProfessional() {
 
         {/* --- 4. BARRA SUPERIOR ESCRITORIO CON CLICK --- */}
         <div className="hidden lg:flex justify-center w-full relative z-40">
-          <div className="px-16 py-1.5 relative overflow-hidden group border-b-[2px] border-[#009b3a]">
+          <div className="px-16 py-1.5 relative overflow-hidden group border-b border-[#C4A265]/30">
             {/* ✅ AQUÍ AÑADÍ EL EVENTO DE CLICK PARA ESCRITORIO */}
             <a 
               href={phoneLink}
@@ -489,7 +473,7 @@ export default function HeaderProfessional() {
           </div>
         </div>
 
-      </motion.header>
+      </header>
 
       <AnimatePresence>
         {isMenuOpen && (
@@ -498,7 +482,7 @@ export default function HeaderProfessional() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className={`fixed inset-0 z-40 bg-[#051120]/98 backdrop-blur-md lg:hidden`}
+            className="fixed inset-0 z-40 bg-[#0A0A0A]/98 backdrop-blur-md lg:hidden"
           >
             <div className="flex flex-col pt-24 px-8 h-full">
               <nav className="flex flex-col space-y-6 overflow-y-auto max-h-[80vh] pb-10">
@@ -510,7 +494,7 @@ export default function HeaderProfessional() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center justify-between text-[#B2904D] hover:text-[#D4A94E] transition-colors duration-200 border-b border-white/5 pb-4"
+                      className="flex items-center justify-between text-[#C4A265] hover:text-[#D4A94E] transition-colors duration-200 border-b border-white/5 pb-4"
                     >
                       <span className="flex flex-col leading-[1.05] text-lg font-thin uppercase tracking-[0.2em]">
                         {item.name.split(' ').map((word, i) => (
@@ -543,14 +527,14 @@ export default function HeaderProfessional() {
                         >
                           {item.key === 'offices' ? (
                             <>
-                              <Link href={`/${language}/oficinas`} onClick={() => setIsMenuOpen(false)} className="block text-xs text-[#B2904D] font-medium uppercase tracking-[0.15em] hover:text-white transition-colors mb-2">
+                              <Link href={`/${language}/oficinas`} onClick={() => setIsMenuOpen(false)} className="block text-xs text-[#C4A265] font-medium uppercase tracking-[0.15em] hover:text-white transition-colors mb-2">
                                 {language === 'es' ? 'Ver todas las oficinas' : 'View all offices'}
                               </Link>
                               {officeNav.map(stateGroup => (
                                 <div key={stateGroup.state} className="mb-1">
                                   <button
                                     onClick={() => setOpenMobileState(openMobileState === stateGroup.state ? null : stateGroup.state)}
-                                    className="flex justify-between items-center w-full text-xs text-[#B2904D] font-bold uppercase tracking-[0.15em] py-1.5"
+                                    className="flex justify-between items-center w-full text-xs text-[#C4A265] font-bold uppercase tracking-[0.15em] py-1.5"
                                   >
                                     {stateGroup.state}
                                     <ChevronDown className={`w-2.5 h-2.5 transition-transform duration-300 ${openMobileState === stateGroup.state ? 'rotate-180' : 'opacity-50'}`} />
@@ -615,7 +599,7 @@ export default function HeaderProfessional() {
                     <Link 
                       href={`/${language}/join-in`}
                       onClick={() => setIsMenuOpen(false)}
-                      className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#B2904D] text-[#001026] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-md"
+                      className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#C4A265] text-[#0A0A0A] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-md"
                     >
                       {language === 'es' ? 'INICIAR CONSULTA' : 'START CONSULTATION'}
                     </Link>

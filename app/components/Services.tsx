@@ -112,16 +112,16 @@ export default function Services() {
     <section
         id="servicios"
         ref={containerRef}
-        className="relative pt-24 pb-32 w-full bg-[#001540] overflow-hidden"
+        className="relative pt-24 pb-32 w-full bg-[#0A0A0A] overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#111111] via-[#0A0A0A] to-[#0A0A0A]" />
         <div className="absolute inset-0 gradient-mesh-dark" />
 
         {/* Static orbs */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[90px] translate-x-1/3 -translate-y-1/3 opacity-15" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#B2904D]/10 rounded-full blur-[90px] -translate-x-1/3 translate-y-1/3 opacity-15" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#C4A265]/5 rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#C4A265]/4 rounded-full blur-[100px] -translate-x-1/3 translate-y-1/3" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
@@ -133,19 +133,19 @@ export default function Services() {
             variants={fadeInUp}
             className="mb-16 text-center"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border-white/10 mb-6 shadow-[0_0_10px_rgba(178,144,77,0.1)]">
-              <span className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-blue-200/70 uppercase">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C4A265]/10 border border-[#C4A265]/20 mb-6">
+              <span className="text-[10px] md:text-xs font-bold tracking-[0.25em] text-[#C4A265] uppercase">
                 {language === 'es' ? 'EXPERIENCIA COMPROBADA' : 'PROVEN EXPERIENCE'}
               </span>
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight">
+            <h2 className="font-[var(--font-playfair)] text-4xl md:text-6xl font-light text-white mb-6 tracking-tight">
               {t.services.title}{' '}
               <span className="font-normal text-gradient-gold-subtle">
                 {t.services.heading}
               </span>
             </h2>
-            <p className="text-xl text-blue-100/60 font-light max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-[#888] font-light max-w-2xl mx-auto leading-relaxed">
               {t.services.description}
             </p>
           </motion.div>
@@ -163,20 +163,20 @@ export default function Services() {
                 <TiltCard
                   href={service.href}
                   ariaLabel={`${t.services.learnMore} - ${service.title}`}
-                  className="relative h-full p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] bg-[#000a20]/60 border border-white/10 backdrop-blur-sm
+                  className="relative h-full p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#111111] border border-[rgba(255,255,255,0.06)]
                                   group cursor-pointer
                                   flex flex-col justify-between overflow-hidden
-                                  shadow-lg hover:shadow-[0_20px_40px_-10px_rgba(178,144,77,0.15)]
-                                  hover:border-[#B2904D]/30 shimmer"
+                                  shadow-lg shadow-black/20 hover:shadow-[0_20px_40px_-10px_rgba(196,162,101,0.1)]
+                                  hover:border-[#C4A265]/20 transition-all duration-500"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]" />
 
                   {/* Subtle gold glow on hover */}
-                  <div className="absolute -inset-1 bg-gradient-to-br from-[#B2904D]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl rounded-[2rem] -z-10" />
+                  <div className="absolute -inset-1 bg-gradient-to-br from-[#C4A265]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl rounded-[2rem] -z-10" />
 
                   <div className="relative z-10">
-                      <div className="flex items-center mb-6 pb-4 border-b border-white/10 group-hover:border-[#B2904D]/30 transition-colors duration-500">
-                          <div className="w-1 h-8 bg-[#B2904D] rounded-full mr-5 group-hover:h-12 group-hover:shadow-[0_0_10px_rgba(178,144,77,0.6)] transition-all duration-500"></div>
+                      <div className="flex items-center mb-6 pb-4 border-b border-white/10 group-hover:border-[#C4A265]/30 transition-colors duration-500">
+                          <div className="w-1 h-8 bg-[#C4A265] rounded-full mr-5 group-hover:h-12 group-hover:shadow-[0_0_10px_rgba(178,144,77,0.6)] transition-all duration-500"></div>
 
                           <h3 className="text-xl sm:text-2xl md:text-3xl font-light text-white group-hover:text-white transition-all duration-300 break-words">
                               {service.title}
@@ -186,8 +186,8 @@ export default function Services() {
                       <div>
                           <ul className="space-y-3">
                               {service.items.slice(0, 4).map((item: string, idx: number) => (
-                                  <li key={idx} className="flex items-start text-blue-100/60 group-hover:text-blue-50 transition-colors duration-300">
-                                      <div className="w-1 h-1 bg-[#B2904D]/50 rounded-full mt-2.5 mr-3 flex-shrink-0 group-hover:bg-[#B2904D] group-hover:shadow-[0_0_4px_rgba(178,144,77,0.6)] transition-all duration-300"></div>
+                                      <li key={idx} className="flex items-start text-[#888] group-hover:text-[#ccc] transition-colors duration-300">
+                                      <div className="w-1 h-1 bg-[#C4A265]/50 rounded-full mt-2.5 mr-3 flex-shrink-0 group-hover:bg-[#C4A265] group-hover:shadow-[0_0_4px_rgba(178,144,77,0.6)] transition-all duration-300"></div>
                                       <span className="font-light text-sm leading-relaxed">
                                           {item}
                                       </span>
@@ -198,7 +198,7 @@ export default function Services() {
                   </div>
 
                   <div className="relative z-10 mt-6 sm:mt-8 pt-4 border-t border-transparent group-hover:border-white/10 transition-colors duration-500">
-                      <span className="text-xs sm:text-sm font-medium text-[#B2904D] tracking-wide flex items-center gap-2 opacity-80 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500">
+                      <span className="text-xs sm:text-sm font-medium text-[#C4A265] tracking-wide flex items-center gap-2 opacity-80 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500">
                            {t.services.learnMore}
                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                       </span>

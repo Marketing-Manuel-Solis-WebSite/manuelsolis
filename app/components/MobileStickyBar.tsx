@@ -85,7 +85,7 @@ export default function MobileStickyBar() {
     <nav
       role="navigation"
       aria-label={isEs ? 'Acciones rápidas' : 'Quick actions'}
-      className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-[#001540]/95 backdrop-blur-md border-t border-[#B2904D]/30"
+      className="fixed bottom-0 left-0 right-0 z-50 sm:hidden bg-[#0A0A0A]/95 backdrop-blur-md border-t border-[#C4A265]/30"
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
       <div className="flex divide-x divide-white/10">
@@ -106,7 +106,7 @@ export default function MobileStickyBar() {
         <a
           href={phoneLink}
           onClick={handlePhoneClick}
-          className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#B2904D] text-[#001540] font-bold text-sm active:bg-[#967a3f] transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#C4A265] text-[#0A0A0A] font-bold text-sm active:bg-[#967a3f] transition-colors"
           aria-label={callAriaLabel}
         >
           <Phone className="w-4 h-4" strokeWidth={2.25} />
@@ -117,10 +117,10 @@ export default function MobileStickyBar() {
         <Link
           href={`/${lang}/consulta`}
           onClick={handleConsultaClick}
-          className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-white/5 text-white font-semibold text-sm border-l border-[#B2904D]/30 active:bg-white/10 transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-white/5 text-white font-semibold text-sm border-l border-[#C4A265]/30 active:bg-white/10 transition-colors"
           aria-label={isEs ? 'Solicitar consulta' : 'Request consultation'}
         >
-          <FileText className="w-4 h-4 text-[#B2904D]" strokeWidth={2.25} />
+          <FileText className="w-4 h-4 text-[#C4A265]" strokeWidth={2.25} />
           <span>{isEs ? 'Consulta' : 'Consult'}</span>
         </Link>
       </div>
