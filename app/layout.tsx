@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Playfair_Display } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 
@@ -7,6 +7,13 @@ const outfit = Outfit({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-outfit",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -27,11 +34,11 @@ export default async function RootLayout({
   const lang = headersList.get("x-locale") || "es";
 
   return (
-    <html lang={lang} className={outfit.variable}>
+    <html lang={lang} className={`${outfit.variable} ${playfair.variable} bg-[#0A0A0A]`}>
       <body className={outfit.className}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-6 focus:py-3 focus:bg-[#B2904D] focus:text-white focus:rounded-lg focus:text-sm focus:font-medium focus:shadow-lg focus:outline-none"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-6 focus:py-3 focus:bg-[#C4A265] focus:text-white focus:rounded-lg focus:text-sm focus:font-medium focus:shadow-lg focus:outline-none"
         >
           Saltar al contenido / Skip to content
         </a>
