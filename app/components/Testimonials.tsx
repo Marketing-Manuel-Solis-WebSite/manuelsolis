@@ -82,11 +82,11 @@ export default function Testimonials() {
     <section
         id="testimonios"
         ref={containerRef}
-        className="relative min-h-screen flex flex-col justify-center w-full bg-[#0A0A0A] overflow-hidden py-32 lg:py-0"
+        className="relative min-h-screen flex flex-col justify-center w-full bg-[#001540] overflow-hidden py-32 lg:py-0"
     >
       {/* Static Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[#0A0A0A]" />
+        <div className="absolute inset-0 bg-[#001540]" />
         <div className="absolute top-[-20%] left-[-10%] w-[80vw] h-[80vw] bg-blue-600/10 rounded-full blur-[90px] opacity-25" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[70vw] h-[70vw] bg-[#B2904D]/10 rounded-full blur-[100px] opacity-15" />
       </div>
@@ -125,13 +125,13 @@ export default function Testimonials() {
                             loading="lazy"
                         />
 
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-[#001540]/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
 
                         {/* Play button — static, no pulse waves */}
                         <div className="absolute inset-0 flex items-center justify-center">
                             <div className="relative flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                 <div className="relative w-24 h-24 bg-[#B2904D] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(178,144,77,0.4)] z-10 border-2 border-white/20 backdrop-blur-sm">
-                                    <Play className="w-10 h-10 text-[#0A0A0A] ml-1 fill-[#0A0A0A]" />
+                                    <Play className="w-10 h-10 text-[#001540] ml-1 fill-[#001540]" />
                                 </div>
                             </div>
                         </div>

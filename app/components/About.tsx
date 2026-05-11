@@ -32,11 +32,11 @@ export default function About() {
   return (
     <section
       ref={containerRef}
-      className="relative py-32 lg:py-44 w-full bg-[#0A0A0A] overflow-hidden"
+      className="relative py-32 lg:py-44 w-full bg-[#001540] overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[#0A0A0A]" />
+        <div className="absolute inset-0 bg-[#001540]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002868]/30 via-transparent to-[#000a20]/80" />
         <div className="absolute inset-0 gradient-mesh-dark" />
 
@@ -164,7 +164,7 @@ export default function About() {
                       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-14 h-14 bg-[#B2904D]/90 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(178,144,77,0.3)] group-hover:scale-110 group-hover:bg-[#B2904D] transition-all duration-300 border border-white/20">
-                          <Play className="w-6 h-6 text-[#0A0A0A] ml-0.5 fill-[#0A0A0A]" />
+                          <Play className="w-6 h-6 text-[#001540] ml-0.5 fill-[#001540]" />
                         </div>
                       </div>
                     </button>

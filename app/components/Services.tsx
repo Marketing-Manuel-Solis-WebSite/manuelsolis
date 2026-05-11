@@ -112,11 +112,11 @@ export default function Services() {
     <section
         id="servicios"
         ref={containerRef}
-        className="relative pt-24 pb-32 w-full bg-[#0A0A0A] overflow-hidden"
+        className="relative pt-24 pb-32 w-full bg-[#001540] overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#111111] via-[#0A0A0A] to-[#0A0A0A]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#001026] via-[#001540] to-[#001540]" />
         <div className="absolute inset-0 gradient-mesh-dark" />
 
         {/* Static orbs */}
@@ -163,7 +163,7 @@ export default function Services() {
                 <TiltCard
                   href={service.href}
                   ariaLabel={`${t.services.learnMore} - ${service.title}`}
-                  className="relative h-full p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#111111] border border-[rgba(255,255,255,0.06)]
+                  className="relative h-full p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#001026] border border-[rgba(255,255,255,0.06)]
                                   group cursor-pointer
                                   flex flex-col justify-between overflow-hidden
                                   shadow-lg shadow-black/20 hover:shadow-[0_20px_40px_-10px_rgba(196,162,101,0.1)]

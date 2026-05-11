@@ -248,7 +248,7 @@ export default function HeaderProfessional() {
     <>
       <header
         role="banner"
-        className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col transition-all duration-400 ease-out ${isScrolled ? 'bg-[#0A0A0A]/90 backdrop-blur-md' : 'bg-transparent backdrop-blur-none'}`}
+        className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col transition-all duration-400 ease-out ${isScrolled ? 'bg-[#001540]/90 backdrop-blur-md' : 'bg-transparent backdrop-blur-none'}`}
       >
         <div 
           className={`w-full transition-all duration-300 relative z-50 ${isScrolled ? 'py-2' : 'py-3'}`}
@@ -420,7 +420,7 @@ export default function HeaderProfessional() {
 
               <Link 
                   href={`/${language}/join-in`}
-                  className="text-[10px] font-medium uppercase tracking-[0.15em] bg-[#C4A265] text-[#0A0A0A] px-4 py-2 rounded-lg transition-all duration-200 hover:opacity-90 shadow-sm hover:translate-y-[-1px]"
+                  className="text-[10px] font-medium uppercase tracking-[0.15em] bg-[#C4A265] text-[#001540] px-4 py-2 rounded-lg transition-all duration-200 hover:opacity-90 shadow-sm hover:translate-y-[-1px]"
               >
                 {joinInText}
               </Link>
@@ -482,7 +482,7 @@ export default function HeaderProfessional() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#0A0A0A]/98 backdrop-blur-md lg:hidden"
+            className="fixed inset-0 z-40 bg-[#001540]/98 backdrop-blur-md lg:hidden"
           >
             <div className="flex flex-col pt-24 px-8 h-full">
               <nav className="flex flex-col space-y-6 overflow-y-auto max-h-[80vh] pb-10">
@@ -599,7 +599,7 @@ export default function HeaderProfessional() {
                     <Link 
                       href={`/${language}/join-in`}
                       onClick={() => setIsMenuOpen(false)}
-                      className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#C4A265] text-[#0A0A0A] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-md"
+                      className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#C4A265] text-[#001540] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-md"
                     >
                       {language === 'es' ? 'INICIAR CONSULTA' : 'START CONSULTATION'}
                     </Link>

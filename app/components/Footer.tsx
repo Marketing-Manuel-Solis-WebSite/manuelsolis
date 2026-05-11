@@ -37,7 +37,7 @@ export default function Footer() {
   };
 
   return (
-    <footer role="contentinfo" className="relative bg-[#111111] text-white overflow-hidden">
+    <footer role="contentinfo" className="relative bg-[#001540] text-white overflow-hidden">
       
       {/* 1. DECORACIÓN DE FONDO OPTIMIZADA */}
       
@@ -78,7 +78,7 @@ export default function Footer() {
                   aria-label={social.name}
                   whileHover={{ y: -3, scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-[rgba(255,255,255,0.08)] text-white transition-all duration-300 hover:bg-[#C4A265] hover:border-[#C4A265] hover:text-[#0A0A0A] hover:shadow-[0_0_15px_rgba(196,162,101,0.3)]"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-[rgba(255,255,255,0.08)] text-white transition-all duration-300 hover:bg-[#C4A265] hover:border-[#C4A265] hover:text-[#001540] hover:shadow-[0_0_15px_rgba(196,162,101,0.3)]"
                 >
                   <IconComponent className="w-5 h-5" />
                 </motion.a>
@@ -215,7 +215,7 @@ export default function Footer() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label={language === 'es' ? 'Volver al inicio' : 'Scroll to top'}
-        className="absolute bottom-8 right-8 w-10 h-10 rounded-full bg-[#C4A265]/10 border border-[#C4A265]/30 text-[#C4A265] flex items-center justify-center hover:bg-[#C4A265] hover:text-[#0A0A0A] transition-all duration-300 hidden md:flex"
+        className="absolute bottom-8 right-8 w-10 h-10 rounded-full bg-[#C4A265]/10 border border-[#C4A265]/30 text-[#C4A265] flex items-center justify-center hover:bg-[#C4A265] hover:text-[#001540] transition-all duration-300 hidden md:flex"
       >
         <ArrowUp size={18} />
       </motion.button>

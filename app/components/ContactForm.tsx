@@ -30,8 +30,8 @@ const NeonInput = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
 
   // Optimización: Fondo más sólido, borde más simple
-  const baseClasses = `w-full bg-[#111111]/80 border rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-[#555] focus:outline-none transition-colors z-10 relative
-    ${isFocused ? 'border-[#C4A265]/50 bg-[#111111]' : 'border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)]'}`;
+  const baseClasses = `w-full bg-[#001026]/80 border rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-[#555] focus:outline-none transition-colors z-10 relative
+    ${isFocused ? 'border-[#C4A265]/50 bg-[#001026]' : 'border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)]'}`;
 
   return (
     <div className="relative group">
@@ -220,10 +220,10 @@ function ContactFormContent() {
   const t = (es: string, en: string) => (lang === 'es' ? es : en);
 
   return (
-    <section className="relative py-32 w-full bg-[#0A0A0A] overflow-hidden" id="contacto">
+    <section className="relative py-32 w-full bg-[#001540] overflow-hidden" id="contacto">
       {/* FONDO */}
       <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
-          <div className="absolute inset-0 bg-[#0A0A0A]" />
+          <div className="absolute inset-0 bg-[#001540]" />
           <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-[#C4A265]/4 rounded-full blur-[120px]" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-[#C4A265]/3 rounded-full blur-[100px]" />
       </div>
@@ -243,14 +243,14 @@ function ContactFormContent() {
 
         <motion.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
           // Optimización: Opacidad aumentada, blur reducido
-          className="relative bg-[#111111] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 shadow-2xl shadow-black/40 border border-[rgba(255,255,255,0.06)] overflow-hidden"
+          className="relative bg-[#001026] rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 shadow-2xl shadow-black/40 border border-[rgba(255,255,255,0.06)] overflow-hidden"
         >
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#C4A265]/3 rounded-full blur-[100px] pointer-events-none" />
 
             <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
               <AnimatePresence>
                 {submitStatus !== 'idle' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#0A0A0A]/98 flex flex-col items-center justify-center text-center rounded-3xl" role="alert" aria-live="assertive">
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-3xl" role="alert" aria-live="assertive">
                       {submitStatus === 'success' ? (
                         <>
                             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
@@ -297,7 +297,7 @@ function ContactFormContent() {
 
               <div className="space-y-4">
                   {/* SMS Disclaimer */}
-                  <motion.div variants={itemVar} className="p-5 rounded-xl bg-[#0A0A0A]/60 border border-[rgba(255,255,255,0.06)]">
+                  <motion.div variants={itemVar} className="p-5 rounded-xl bg-[#001540]/60 border border-[rgba(255,255,255,0.06)]">
                     <p className="text-xs text-[#888] leading-relaxed">
                       {t(
                         'Al proporcionar voluntariamente su número de teléfono y optar explícitamente por recibir mensajes de texto, usted consiente recibir comunicaciones SMS del Law Office of Manuel Solis relacionadas con responder a consultas sobre servicios de inmigración, programar consultas, enviar recordatorios de citas, solicitar documentos y proporcionar actualizaciones de casos. La frecuencia de los mensajes puede variar. Pueden aplicarse tarifas estándar de mensajes y datos. Su consentimiento para recibir mensajes SMS no es una condición para adquirir ningún servicio. Puede cancelar en cualquier momento respondiendo "STOP" a cualquier mensaje, y puede solicitar ayuda adicional respondiendo "HELP". Para más detalles, por favor visite nuestra',
@@ -309,10 +309,10 @@ function ContactFormContent() {
                     </p>
                   </motion.div>
 
-                  <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#0A0A0A]/60 border border-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.12)] transition-colors group">
+                  <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#001540]/60 border border-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.12)] transition-colors group">
                     <div className="relative flex items-center pt-1">
                       <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-7 w-7 sm:h-6 sm:w-6 cursor-pointer appearance-none rounded border-2 border-[#555] bg-transparent transition-all checked:border-[#C4A265] checked:bg-[#C4A265] hover:border-[#777]" />
-                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#0A0A0A] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={16} strokeWidth={3} /></div>
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={16} strokeWidth={3} /></div>
                     </div>
                     <label htmlFor="acceptedTerms" className="text-sm text-[#ccc] leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
                       {t('Acepto los', 'I accept the')}{' '}
@@ -322,10 +322,10 @@ function ContactFormContent() {
                     </label>
                   </motion.div>
 
-                  <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#0A0A0A]/40 border border-[rgba(255,255,255,0.04)] hover:border-[rgba(255,255,255,0.08)] transition-colors group">
+                  <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#001540]/40 border border-[rgba(255,255,255,0.04)] hover:border-[rgba(255,255,255,0.08)] transition-colors group">
                     <div className="relative flex items-center pt-1">
                       <input type="checkbox" id="marketingConsent" name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} className="peer h-6 w-6 sm:h-5 sm:w-5 cursor-pointer appearance-none rounded border-2 border-[#444] bg-transparent transition-all checked:border-[#C4A265] checked:bg-[#C4A265] hover:border-[#666]" />
-                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#0A0A0A] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
+                      <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
                     </div>
                     <label htmlFor="marketingConsent" className="text-xs text-[#888] leading-relaxed cursor-pointer select-none group-hover:text-[#bbb] transition-colors">
                       {t('Me gustaría recibir comunicaciones SMS del Law Office of Manuel Solís al número de teléfono proporcionado relacionadas con consultas sobre servicios de inmigración, programación de consultas, recordatorios de citas, solicitud de documentos y actualizaciones de casos. Pueden aplicar tarifas de mensajes y datos. La frecuencia de los mensajes puede variar. Responda STOP para cancelar, HELP para ayuda.', 'I would like to receive SMS communications from the Law Office of Manuel Solís at the phone number provided regarding immigration service inquiries, scheduling consultations, appointment reminders, document requests, and case updates. Message and data rates may apply. Message frequency may vary. Reply STOP to cancel, HELP for help.')}{' '}
@@ -341,18 +341,18 @@ function ContactFormContent() {
                   className={`group relative w-full h-14 sm:h-16 overflow-hidden rounded-xl font-bold tracking-wider sm:tracking-widest uppercase text-sm sm:text-base transition-all shadow-lg
                     ${!formData.acceptedTerms 
                       ? 'bg-[#222] text-[#555] cursor-not-allowed border border-[rgba(255,255,255,0.05)]' 
-                      : 'bg-[#C4A265] text-[#0A0A0A] hover:bg-[#d4b275] cursor-pointer transform hover:-translate-y-1'
+                      : 'bg-[#C4A265] text-[#001540] hover:bg-[#d4b275] cursor-pointer transform hover:-translate-y-1'
                     }
                   `}
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
-                        <Zap className="animate-spin text-[#0A0A0A]" size={20} /> {t('Procesando...', 'Processing...')}
+                        <Zap className="animate-spin text-[#001540]" size={20} /> {t('Procesando...', 'Processing...')}
                       </span>
                     ) : (
                       <>
-                        <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-[#555]" : "text-[#0A0A0A]"} />
+                        <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-[#555]" : "text-[#001540]"} />
                         {t('Registrarse', 'Register')}
                       </>
                     )}
@@ -371,7 +371,7 @@ function ContactFormContent() {
 
 export default function ContactForm() {
   return (
-    <Suspense fallback={<div className="py-32 w-full bg-[#0A0A0A] flex justify-center items-center"><Zap className="animate-spin text-[#C4A265]" size={40} /></div>}>
+    <Suspense fallback={<div className="py-32 w-full bg-[#001540] flex justify-center items-center"><Zap className="animate-spin text-[#C4A265]" size={40} /></div>}>
       <ContactFormContent />
     </Suspense>
   )

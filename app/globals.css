@@ -7,8 +7,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 95%;
+    --background: 222 100% 8%;
+    --foreground: 210 40% 96%;
 
     /* Gold palette */
     --gold-50: #FDF8F0;
@@ -32,8 +32,8 @@
   }
 
   body {
-    background-color: #0A0A0A;
-    color: #f0f0f0;
+    background-color: #001540;
+    color: #e8edf5;
     font-family: var(--font-outfit), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
@@ -115,9 +115,9 @@
 
 .gradient-mesh-dark {
   background:
-    radial-gradient(ellipse at 15% 30%, rgba(17,17,17,0.6) 0%, transparent 50%),
-    radial-gradient(ellipse at 85% 70%, rgba(196,162,101,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 100%, rgba(10,10,10,0.9) 0%, transparent 60%);
+    radial-gradient(ellipse at 15% 30%, rgba(0,40,104,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 70%, rgba(196,162,101,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(0,10,32,0.9) 0%, transparent 60%);
 }
 
 /* ============================================================

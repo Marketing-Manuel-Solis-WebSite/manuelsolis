@@ -34,7 +34,7 @@ export default async function RootLayout({
   const lang = headersList.get("x-locale") || "es";
 
   return (
-    <html lang={lang} className={`${outfit.variable} ${playfair.variable} bg-[#0A0A0A]`}>
+    <html lang={lang} className={`${outfit.variable} ${playfair.variable} bg-[#001540]`}>
       <body className={outfit.className}>
         <a
           href="#main-content"

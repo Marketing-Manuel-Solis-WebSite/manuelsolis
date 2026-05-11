@@ -91,7 +91,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
             disabled={status === 'loading' || status === 'success'}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="px-5 py-3 rounded-lg bg-[#C4A265] text-[#0A0A0A] font-semibold text-sm hover:bg-[#c9a85e] transition-colors disabled:opacity-50 whitespace-nowrap"
+            className="px-5 py-3 rounded-lg bg-[#C4A265] text-[#001540] font-semibold text-sm hover:bg-[#c9a85e] transition-colors disabled:opacity-50 whitespace-nowrap"
           >
             {status === 'loading' ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -136,7 +136,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
         className="relative w-full my-12 rounded-2xl overflow-hidden"
       >
         {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] via-[#111111] to-[#0A0A0A]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#001540] via-[#001a4d] to-[#001540]" />
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url(/noise.png)' }} />
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C4A265] to-transparent" />
 
@@ -195,7 +195,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                       disabled={status === 'loading'}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="px-6 py-3.5 rounded-xl bg-[#C4A265] text-[#0A0A0A] font-bold text-sm hover:bg-[#c9a85e] transition-all shadow-lg shadow-[#C4A265]/20 disabled:opacity-50 flex items-center gap-2"
+                      className="px-6 py-3.5 rounded-xl bg-[#C4A265] text-[#001540] font-bold text-sm hover:bg-[#c9a85e] transition-all shadow-lg shadow-[#C4A265]/20 disabled:opacity-50 flex items-center gap-2"
                     >
                       {status === 'loading' ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -238,7 +238,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
       transition={{ duration: 0.5 }}
       className="relative rounded-2xl overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] to-[#111111]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#001540] to-[#001a4d]" />
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C4A265] to-transparent" />
 
       <div className="relative z-10 p-6 md:p-8">
@@ -282,7 +282,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                 disabled={status === 'loading'}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full px-6 py-3 rounded-xl bg-[#C4A265] text-[#0A0A0A] font-bold text-sm hover:bg-[#c9a85e] transition-all shadow-lg shadow-[#C4A265]/20 disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 rounded-xl bg-[#C4A265] text-[#001540] font-bold text-sm hover:bg-[#c9a85e] transition-all shadow-lg shadow-[#C4A265]/20 disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {status === 'loading' ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
