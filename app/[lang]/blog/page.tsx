@@ -20,6 +20,26 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`;
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 export const BLOG_DATA = {
   posts: [
+    // --- BLOG 31 - DACA 2026 ---
+    {
+      id: 'daca_2026_estado_legal_tribunales',
+      slug: 'daca-2026-estado-legal-tribunales',
+      title: {
+        es: 'DACA 2026: ¿qué pasa con mi caso mientras sigue en los tribunales?',
+        en: 'DACA 2026: What Happens to My Case While It Is Still in the Courts?'
+      },
+      excerpt: {
+        es: 'DACA no está cancelado, pero sigue bajo litigio. Te explicamos qué dicen las cortes, cómo renovar, qué hacer si tu permiso venció y qué alternativas tienen los dreamers en 2026.',
+        en: 'DACA is not canceled but remains in active litigation. Learn what the courts have said, how to renew, what to do if your permit expired, and what alternatives dreamers have in 2026.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-05-13',
+      readTime: '11 min',
+      image: '/blog/blog_31/MAY_B1.png',
+      featured: true
+    },
     // --- BLOG 30 - TPS 2026 ---
     {
       id: 'tps_2026_paises_elegibles_renovacion',

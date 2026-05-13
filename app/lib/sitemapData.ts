@@ -168,7 +168,8 @@ export function getLandingsEntries(): SitemapURL[] {
 // Blog
 export function getBlogEntries(): SitemapURL[] {
   const blog: Entry[] = [
-    { route: '/blog', priority: 0.7, changeFrequency: 'weekly', lastModified: '2025-04-04' },
+    { route: '/blog', priority: 0.7, changeFrequency: 'weekly', lastModified: '2026-05-13' },
+    { route: '/blog/daca-2026-estado-legal-tribunales', priority: 0.8, changeFrequency: 'weekly', lastModified: '2026-05-13' },
     { route: '/blog/tps-2026-paises-elegibles-renovacion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-10' },
     { route: '/blog/crimenes-deportacion-vileza-moral', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-14' },
     { route: '/blog/rfe-responder-evidencia-uscis', priority: 0.7, changeFrequency: 'monthly', lastModified: '2025-04-18' },

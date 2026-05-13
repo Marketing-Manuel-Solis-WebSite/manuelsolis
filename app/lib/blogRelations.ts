@@ -44,6 +44,7 @@ const blogServiceMap: Record<string, ServiceLink> = {
   'entrevista-inmigracion-errores-evitar': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
   'familias-estatus-mixto-opciones': { path: '/servicios/familia', label: { es: 'Derecho Familiar e Inmigración', en: 'Family Law & Immigration' } },
   'fraude-notarios-inmigracion': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'daca-2026-estado-legal-tribunales': { path: '/servicios/inmigracion', label: { es: 'Servicios DACA e Inmigración', en: 'DACA & Immigration Services' } },
 };
 
 const defaultServiceLink: ServiceLink = {
@@ -66,6 +67,7 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'daca-2026-estado-legal-tribunales',
     'tps-2026-paises-elegibles-renovacion',
     'crimenes-deportacion-vileza-moral',
     'rfe-responder-evidencia-uscis',
@@ -116,6 +118,12 @@ export function getArticlesByAuthor(attorneyId: string, lang: 'es' | 'en'): { ti
 }
 
 const allArticles: Record<string, RelatedArticle> = {
+  'daca-2026-estado-legal-tribunales': {
+    title: { es: 'DACA 2026: estado legal en los tribunales', en: 'DACA 2026: Legal Status in the Courts' },
+    slug: 'daca-2026-estado-legal-tribunales',
+    image: '/blog/blog_31/MAY_B1.png',
+    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+  },
   'tps-2026-paises-elegibles-renovacion': {
     title: { es: 'TPS 2026: países elegibles, cómo renovar y qué pasa si se cancela', en: 'TPS 2026: Eligible Countries, Renewal, and What If Canceled' },
     slug: 'tps-2026-paises-elegibles-renovacion',
@@ -313,6 +321,7 @@ const clusters: Record<string, string[]> = {
     'marihuana-dui-buen-caracter-moral-inmigracion',
     'crimenes-deportacion-vileza-moral',
     'barras-3-10-anos-presencia-ilegal',
+    'daca-2026-estado-legal-tribunales',
   ],
   process: [
     'formulario-g28-cambiar-abogado-inmigracion',
@@ -328,6 +337,12 @@ const clusters: Record<string, string[]> = {
     'visa-k1-prometido-requisitos',
     'entrevista-inmigracion-errores-evitar',
     'fraude-notarios-inmigracion',
+    'daca-2026-estado-legal-tribunales',
+  ],
+  daca_tps: [
+    'daca-2026-estado-legal-tribunales',
+    'tps-2026-paises-elegibles-renovacion',
+    'advance-parole-2026-viajar-con-daca-tps-visa-u',
   ],
   humanitarian: [
     'visa-t-trabajo-forzado-por-deuda-con-coyote',
