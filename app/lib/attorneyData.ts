@@ -22,7 +22,7 @@ export function getText(obj: TranslatableString, language: 'es' | 'en'): string 
 
 // Attorney location groups
 export const locationGroups: { label: { es: string; en: string }; ids: string[] }[] = [
-  { label: { es: 'Houston, Texas', en: 'Houston, Texas' }, ids: ['manuel-solis', 'manuel-solis-iii', 'juan-solis', 'gregory-finney', 'alejandro-manzano', 'austen-gunnels', 'gabriel-perez', 'alexis-alvarez', 'himani-augustina-vithanage'] },
+  { label: { es: 'Houston, Texas', en: 'Houston, Texas' }, ids: ['manuel-solis', 'manuel-solis-iii', 'juan-solis', 'gregory-finney', 'alejandro-manzano', 'austen-gunnels', 'gabriel-perez', 'alexis-alvarez'] },
   { label: { es: 'Bellaire, Texas', en: 'Bellaire, Texas' }, ids: ['ni-yan'] },
   { label: { es: 'Dallas, Texas', en: 'Dallas, Texas' }, ids: ['mark-mcbroom', 'stephanie-l-garcia-vidal'] },
   { label: { es: 'El Paso, Texas', en: 'El Paso, Texas' }, ids: ['victor-rojas'] },
@@ -558,27 +558,5 @@ export const attorneys: Attorney[] = [
     admissions: [
       { es: "Tennessee", en: "Tennessee" }
     ]
-  },
-  {
-    id: 'himani-augustina-vithanage',
-    name: 'Himani Augustina Vithanage',
-    image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Himani%20Augustina%20Vithanage.png',
-    role: { es: 'Abogada', en: 'Attorney' },
-    bio: {
-      es: [
-        "Una voz firme para quienes más lo necesitan. Busca empoderar a sus clientes con empatía, conocimiento y pasión.",
-        "Cree firmemente que el Derecho debe ser una herramienta para proteger, orientar y transformar vidas, actuando con la máxima dedicación."
-      ],
-      en: [
-        "A firm voice for those who need it most. She seeks to empower her clients with empathy, knowledge, and passion.",
-        "She firmly believes that the Law should be a tool to protect, guide, and transform lives, acting with the utmost dedication."
-      ]
-    },
-    education: [{ es: "Abogada Titulada", en: "Licensed Attorney" }],
-    admissions: ["Texas"],
-    quote: {
-      es: "Una voz firme para quienes más lo necesitan.",
-      en: "A firm voice for those who need it most."
-    }
   },
 ];

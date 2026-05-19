@@ -72,12 +72,6 @@ const officeData = {
       role: { es: 'Abogada', en: 'Attorney' },
       image: '/LogoInformacion.png', // Placeholder
       quote: { es: "Representación legal compasiva.", en: "Compassionate legal representation." }
-    },
-    {
-      name: 'Imani Agustina Vithanage',
-      role: { es: 'Abogada', en: 'Attorney' },
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Himani%20Augustina%20Vithanage.png', // Usando la foto encontrada en DB
-      quote: { es: "Una voz firme para quienes más lo necesitan.", en: "A firm voice for those who need it most." }
     }
   ],
 
