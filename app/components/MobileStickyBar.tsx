@@ -9,6 +9,9 @@ import { pushToDataLayer, trackConversion } from '../lib/tracking';
 import { track } from '@vercel/analytics/react';
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap';
 
+// TEMP: WhatsApp tab hidden in mobile sticky bar — quitar este flag para reactivar
+const WHATSAPP_HIDDEN = true;
+
 const WHATSAPP_NUMBER = '17138557219';
 
 const WHATSAPP_MESSAGE_ES =
@@ -90,17 +93,19 @@ export default function MobileStickyBar() {
     >
       <div className="flex divide-x divide-white/10">
         {/* WhatsApp — primary */}
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={handleWhatsAppClick}
-          className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#25D366] text-white font-bold text-sm active:bg-[#1da851] transition-colors"
-          aria-label={isEs ? 'Contactar por WhatsApp' : 'Contact via WhatsApp'}
-        >
-          <MessageCircle className="w-4 h-4" strokeWidth={2.25} />
-          <span>WhatsApp</span>
-        </a>
+        {!WHATSAPP_HIDDEN && (
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleWhatsAppClick}
+            className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#25D366] text-white font-bold text-sm active:bg-[#1da851] transition-colors"
+            aria-label={isEs ? 'Contactar por WhatsApp' : 'Contact via WhatsApp'}
+          >
+            <MessageCircle className="w-4 h-4" strokeWidth={2.25} />
+            <span>WhatsApp</span>
+          </a>
+        )}
 
         {/* Call — secondary, office-aware */}
         <a

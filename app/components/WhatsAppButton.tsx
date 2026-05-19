@@ -6,10 +6,15 @@ import { useLanguage } from '../context/LanguageContext';
 import { track } from '@vercel/analytics/react'; // 1. Importar track de Vercel
 import { pushToDataLayer, trackConversion } from '../lib/tracking';
 
+// TEMP: WhatsApp button hidden — quitar este flag para reactivar
+const WHATSAPP_HIDDEN = true;
+
 export default function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
   // Se sigue usando useLanguage para el tooltip y manejo de texto general
   const { t } = useLanguage();
+
+  if (WHATSAPP_HIDDEN) return null;
   
   // 📞 NÚMERO DE WHATSAPP (1-713-855-7219)
   const whatsappNumber = '17138557219';
