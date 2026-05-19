@@ -140,7 +140,7 @@ export default function About() {
                     <iframe
                       width="100%"
                       height="100%"
-                      src="https://www.youtube.com/embed/3Z6BOOCBgas?rel=0&controls=1&autoplay=1"
+                      src="https://www.youtube.com/embed/n8aJSPHdTXg?rel=0&controls=1&autoplay=1"
                       title={language === 'es' ? 'Documental: Caso real de reunificación familiar - Abogado Manuel Solís' : 'Documentary: Real family reunification case - Attorney Manuel Solis'}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -154,10 +154,10 @@ export default function About() {
                       aria-label={language === 'es' ? 'Reproducir video' : 'Play video'}
                     >
                       <Image
-                        src="/Cover_YT.png"
+                        src="https://img.youtube.com/vi/n8aJSPHdTXg/maxresdefault.jpg"
                         alt="Caso real de reunificación familiar - Abogado Manuel Solís"
                         fill
-                        className="object-contain transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, 50vw"
                         loading="lazy"
                       />
