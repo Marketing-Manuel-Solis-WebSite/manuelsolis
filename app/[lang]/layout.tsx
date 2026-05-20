@@ -22,6 +22,13 @@ type Props = {
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
+// ISR: regenerate the [lang] subtree every 24h so the Google Places
+// aggregateRating embedded in the Organization JSON-LD stays fresh in the
+// statically-rendered HTML. Paired with removing headers() from the root
+// layout, this returns the [lang] routes to static/ISR (was ƒ Dynamic).
+// Matches the 24h unstable_cache TTL in lib/googleReviews.ts.
+export const revalidate = 86400;
+
 // Analytics IDs sourced from environment so they can be rotated/disabled
 // without touching code. Each script renders only when its ID is set.
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;

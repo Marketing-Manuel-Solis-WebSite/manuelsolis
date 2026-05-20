@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -18,16 +17,19 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headersList = await headers();
-  const lang = headersList.get("x-locale") || "es";
-
+  // Static lang="es" (default locale). The root layout intentionally avoids
+  // headers() so the whole app stays statically renderable / ISR instead of
+  // being forced dynamic. The existing LangSetter (rendered in
+  // app/[lang]/layout.tsx) corrects <html lang> to "en" on /en routes after
+  // hydration; Content-Language (proxy.ts) + per-page hreflang remain the
+  // primary SEO language signals.
   return (
-    <html lang={lang} className={outfit.variable}>
+    <html lang="es" className={outfit.variable}>
       <body className={outfit.className}>
         <a
           href="#main-content"
