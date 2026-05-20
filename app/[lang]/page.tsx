@@ -87,10 +87,12 @@ const ContactForm = dynamic(() => import('../components/ContactForm'), {
   loading: () => <div className="w-full h-[600px] bg-[#001540]" />
 });
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const currentLang = lang === 'en' ? 'en' : 'es';
   return (
     <main id="main-content" className="min-h-screen bg-[#001540] grain">
-      <Hero />
+      <Hero lang={currentLang} />
       <Header />
       <div className="content-auto">
         <About />
