@@ -1,6 +1,10 @@
 'use client';
 
-import { LazyMotion, domAnimation, MotionConfig } from 'framer-motion';
+import { LazyMotion, MotionConfig } from 'framer-motion';
+
+// Dynamic import: the domAnimation feature bundle is fetched in a separate
+// async chunk after hydration (NOT part of First Load). See ./features.ts.
+const loadFeatures = () => import('./features').then((mod) => mod.default);
 
 /**
  * Lazy-loads framer-motion's animation feature set on the client so that
@@ -24,7 +28,7 @@ import { LazyMotion, domAnimation, MotionConfig } from 'framer-motion';
  */
 export default function MotionProvider({ children }: { children: React.ReactNode }) {
   return (
-    <LazyMotion features={domAnimation} strict>
+    <LazyMotion features={loadFeatures} strict>
       <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </LazyMotion>
   );
