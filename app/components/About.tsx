@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
-import { motion, Variants } from 'framer-motion';
+import { m, Variants } from 'framer-motion';
 import { Play } from 'lucide-react';
 
 export default function About() {
@@ -52,7 +52,7 @@ export default function About() {
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
 
         {/* Título full-width arriba del grid */}
-        <motion.div
+        <m.div
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
@@ -65,28 +65,28 @@ export default function About() {
               {language === 'es' ? 'Reunificación Familiar' : 'Family Reunification'}
             </span>
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
           {/* Left Column: Text */}
-          <motion.div
+          <m.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             className="lg:col-span-6 space-y-10"
           >
-            <motion.div variants={fadeInUp} className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
+            <m.div variants={fadeInUp} className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
               <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
                 {language === 'es'
                   ? <>En este documental, el <strong className="text-white font-medium">Abogado Manuel Solís</strong> comparte la conmovedora historia de <strong className="text-white font-medium">Eva</strong>, una madre que soñó durante <strong className="text-white font-medium">más de 25 años</strong> con volver a abrazar a su familia. Tras décadas de distancia, lágrimas y esperanza, finalmente lo logró. Un testimonio real que demuestra que nunca es tarde para reunirse con quienes más amamos.</>
                   : <>In this documentary, <strong className="text-white font-medium">Attorney Manuel Solís</strong> shares the moving story of <strong className="text-white font-medium">Eva</strong>, a mother who dreamed for <strong className="text-white font-medium">over 25 years</strong> of embracing her family again. After decades of distance, tears, and hope, she finally made it. A real testimony that proves it is never too late to reunite with those we love most.</>
                 }
               </p>
-            </motion.div>
+            </m.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-6 pl-2 pt-4">
+            <m.div variants={fadeInUp} className="grid grid-cols-2 gap-6 pl-2 pt-4">
                 <div className="p-5 rounded-xl glass glow-gold-hover transition-all duration-500 group/stat">
                     <h3 className="text-4xl font-light text-white flex items-baseline">
                         200 <span className="text-[#B2904D] text-2xl ml-0.5 group-hover/stat:rotate-12 transition-transform">+</span>
@@ -103,9 +103,9 @@ export default function About() {
                         {language === 'es' ? 'Años Experiencia' : 'Years Experience'}
                     </p>
                 </div>
-            </motion.div>
+            </m.div>
 
-            <motion.div variants={fadeInUp} className="pt-6 pl-2">
+            <m.div variants={fadeInUp} className="pt-6 pl-2">
                 <Link
                   href={`/${language}/testimonios`}
                   className="group relative inline-flex items-center justify-center px-10 py-4
@@ -121,15 +121,15 @@ export default function About() {
                     <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#B2904D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                   </span>
                 </Link>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
 
           {/* Right Column: YouTube with thumbnail */}
           <div className="lg:col-span-6 relative w-full mt-8 lg:mt-0">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-blue-600/20 blur-[80px] rounded-full -z-10" />
               <div className="absolute top-3 -right-3 w-full h-full border border-[#B2904D]/20 rounded-2xl z-0 hidden lg:block" />
 
-              <motion.div
+              <m.div
                initial={{ opacity: 0, scale: 0.95 }}
                whileInView={{ opacity: 1, scale: 1 }}
                viewport={{ once: true }}
@@ -171,7 +171,7 @@ export default function About() {
                   )}
 
                   <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
-              </motion.div>
+              </m.div>
           </div>
 
         </div>

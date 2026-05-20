@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 interface Category {
   id: string;
@@ -25,7 +25,7 @@ export default function CategoryFilter({ categories, selected, onSelect, lang }:
         const isSelected = selected === cat.id;
         
         return (
-          <motion.button
+          <m.button
             key={cat.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -46,7 +46,7 @@ export default function CategoryFilter({ categories, selected, onSelect, lang }:
             )}
             
             <span className="relative z-10">{t(cat)}</span>
-          </motion.button>
+          </m.button>
         );
       })}
     </div>

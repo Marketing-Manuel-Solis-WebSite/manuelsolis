@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useLanguage } from '../../context/LanguageContext';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { m, AnimatePresence, Variants } from 'framer-motion';
 import { User, Phone, Mail, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react';
 import { track } from '@vercel/analytics/react';
 
@@ -28,12 +28,12 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
 
     return (
         <div className="relative group">
-            <motion.div
+            <m.div
                 animate={isFocused ? { color: ACCENT_GOLD, scale: 1.1 } : { color: '#64748b', scale: 1 }}
                 className="absolute left-4 top-4 z-20 transition-all duration-300 pointer-events-none"
             >
                 <Icon size={20} />
-            </motion.div>
+            </m.div>
 
             <input
                 type={type}
@@ -52,7 +52,7 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
 
             {/* Línea inferior animada al hacer foco - Optimizada */}
             <div className="absolute bottom-0 left-2 right-2 h-[1px] bg-transparent overflow-hidden pointer-events-none">
-               <motion.div
+               <m.div
                  initial={{ x: "-100%" }}
                  animate={{ x: isFocused ? "0%" : "-100%" }}
                  transition={{ duration: 0.3, ease: "easeOut" }}
@@ -66,7 +66,7 @@ const NeonInput = ({ icon: Icon, name, type = "text", placeholder, value, onChan
 // Componente del Contenido del Formulario (con lógica de estado)
 function FormContent({ formData, isSubmitting, submitStatus, handleSubmit, handleChange, t, lang }: any) {
     return (
-        <motion.div
+        <m.div
             variants={containerVar}
             initial="hidden"
             animate="visible"
@@ -74,58 +74,58 @@ function FormContent({ formData, isSubmitting, submitStatus, handleSubmit, handl
         >
             <AnimatePresence>
                 {(submitStatus === 'success' || submitStatus === 'error') && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                     // Optimización: Menos blur y más opacidad
                     className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-[2rem] backdrop-blur-sm"
                   >
                       {submitStatus === 'success' ? (
-                        <motion.div
+                        <m.div
                            initial={{ scale: 0 }} animate={{ scale: 1 }}
                            transition={{ type: "spring", stiffness: 200, damping: 10 }}
                         >
                           <CheckCircle2 size={80} className="text-green-400 mb-6 drop-shadow-[0_0_15px_rgba(74,222,128,0.5)]" />
                           <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('¡Enviado con Éxito!', 'Successfully Sent!')}</h3>
                           <p className="text-blue-200">{t('Nuestro equipo revisará su caso de inmediato.', 'Our team will review your case immediately.')}</p>
-                        </motion.div>
+                        </m.div>
                       ) : (
-                        <motion.div
+                        <m.div
                            initial={{ scale: 0 }} animate={{ scale: 1 }}
                            transition={{ type: "spring", stiffness: 200, damping: 10 }}
                         >
                           <XCircle size={80} className="text-red-400 mb-6 drop-shadow-[0_0_15px_rgba(252,165,165,0.5)]" />
                           <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('Error de Envío', 'Submission Error')}</h3>
                           <p className="text-red-200">{t('Hubo un problema. Intente de nuevo o llame al (713) 701-1731.', 'There was an issue. Please try again or call (713) 701-1731.')}</p>
-                        </motion.div>
+                        </m.div>
                       )}
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             <form onSubmit={handleSubmit} className="space-y-8">
 
                 <div className="grid md:grid-cols-2 gap-8">
-                    <motion.div variants={itemVar}>
+                    <m.div variants={itemVar}>
                         <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
                         <div className="space-y-5">
                             <NeonInput icon={User} name="firstName" placeholder={t('Nombre', 'First Name')} value={formData.firstName} onChange={handleChange} required autoFocus />
                             <NeonInput icon={User} name="lastName" placeholder={t('Apellido', 'Last Name')} value={formData.lastName} onChange={handleChange} required />
                         </div>
-                    </motion.div>
+                    </m.div>
 
-                    <motion.div variants={itemVar}>
+                    <m.div variants={itemVar}>
                         <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
                         <div className="space-y-5">
                             <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
                             <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
                         </div>
-                    </motion.div>
+                    </m.div>
                 </div>
 
                 {/* --- ZONA DE CONSENTIMIENTOS --- */}
                 <div className="space-y-4">
 
                     {/* 1. CHECKBOX OBLIGATORIO (Términos y Privacidad) */}
-                    <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
+                    <m.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                         <div className="relative flex items-center pt-1">
                             <input
                                 type="checkbox"
@@ -152,10 +152,10 @@ function FormContent({ formData, isSubmitting, submitStatus, handleSubmit, handl
                                 {t('Política de Privacidad', 'Privacy Statement')}
                             </a>.
                         </label>
-                    </motion.div>
+                    </m.div>
 
                     {/* 2. CHECKBOX OPCIONAL (SMS/Marketing) */}
-                    <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
+                    <m.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
                         <div className="relative flex items-center pt-1">
                             <input
                                 type="checkbox"
@@ -178,11 +178,11 @@ function FormContent({ formData, isSubmitting, submitStatus, handleSubmit, handl
                                 {t('Términos de Servicio SMS', 'Law Office of Manuel Solís SMS Terms of Service')}
                             </a>
                         </label>
-                    </motion.div>
+                    </m.div>
 
                 </div>
 
-                <motion.div variants={itemVar} className="pt-2">
+                <m.div variants={itemVar} className="pt-2">
                     <button
                         type="submit"
                         disabled={isSubmitting || !formData.acceptedTerms}
@@ -211,9 +211,9 @@ function FormContent({ formData, isSubmitting, submitStatus, handleSubmit, handl
                             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-in-out" />
                         )}
                     </button>
-                </motion.div>
+                </m.div>
             </form>
-        </motion.div>
+        </m.div>
     );
 }
 
@@ -311,7 +311,7 @@ export default function JoinInClient() {
                     <div className="grid lg:grid-cols-12 gap-10 items-center">
 
                         {/* --- COLUMNA IZQUIERDA: INFORMACIÓN --- */}
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, x: -50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
@@ -336,10 +336,10 @@ export default function JoinInClient() {
                                 <p>• {t('Recordatorios de citas', 'Appointment reminders')}</p>
                                 <p>• {t('Anuncios de la oficina', 'Office announcements')}</p>
                             </div>
-                        </motion.div>
+                        </m.div>
 
                         {/* --- COLUMNA DERECHA: FORMULARIO --- */}
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, x: 50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
@@ -358,7 +358,7 @@ export default function JoinInClient() {
                                     lang={lang}
                                 />
                             </div>
-                        </motion.div>
+                        </m.div>
 
                     </div>
                 </div>

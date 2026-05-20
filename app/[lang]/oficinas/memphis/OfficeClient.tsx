@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { MapPin, Clock, User, Quote, Sparkles, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -114,13 +114,13 @@ export default function OfficeClient() {
           
           {!isMobile && (
             <>
-              <motion.div 
+              <m.div 
                 animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
                 transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
                 style={{ willChange: "transform, opacity" }}
                 className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/20 rounded-full blur-[100px]" 
               />
-              <motion.div 
+              <m.div 
                 animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.35, 0.15] }}
                 transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 3 }}
                 style={{ willChange: "transform, opacity" }}
@@ -140,7 +140,7 @@ export default function OfficeClient() {
             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16 md:mb-24">
               
               {/* Texto Hero */}
-              <motion.div 
+              <m.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
@@ -163,10 +163,10 @@ export default function OfficeClient() {
                 <p className="text-white/70 text-base md:text-lg leading-relaxed font-light max-w-xl">
                   {t(officeData.description)}
                 </p>
-              </motion.div>
+              </m.div>
 
               {/* IMAGEN DE OFICINA */}
-              <motion.div 
+              <m.div 
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -181,7 +181,7 @@ export default function OfficeClient() {
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent opacity-40" />
-              </motion.div>
+              </m.div>
             </div>
 
             {/* --- INFO GRID --- */}
@@ -189,7 +189,7 @@ export default function OfficeClient() {
               
               {/* Detalles de Contacto */}
               <div className="lg:col-span-5 space-y-8">
-                 <motion.div 
+                 <m.div 
                    initial={{ opacity: 0, y: 20 }}
                    whileInView={{ opacity: 1, y: 0 }}
                    viewport={{ once: true }}
@@ -225,14 +225,14 @@ export default function OfficeClient() {
                         </div>
                       </div>
                    </div>
-                 </motion.div>
+                 </m.div>
               </div>
 
               {/* Grid de Equipo */}
               <div className="lg:col-span-7 space-y-16">
                 
                 {/* --- SECCIÓN ABOGADOS --- */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -277,10 +277,10 @@ export default function OfficeClient() {
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </m.div>
 
                 {/* --- SECCIÓN SERVICIOS --- */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -321,13 +321,13 @@ export default function OfficeClient() {
                       );
                     })}
                   </div>
-                </motion.div>
+                </m.div>
 
               </div>
             </div>
 
             {/* --- FORMULARIO DE CONTACTO --- */}
-            <motion.div 
+            <m.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "100px" }}
@@ -340,7 +340,7 @@ export default function OfficeClient() {
                    <ContactForm />
                 </div>
               </div>
-            </motion.div>
+            </m.div>
 
           </div>
         </div>

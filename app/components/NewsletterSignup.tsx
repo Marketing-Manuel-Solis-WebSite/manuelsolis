@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Mail, ArrowRight, CheckCircle, Loader2, Sparkles, Shield } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -86,7 +86,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
             required
             className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all"
           />
-          <motion.button
+          <m.button
             type="submit"
             disabled={status === 'loading' || status === 'success'}
             whileHover={{ scale: 1.02 }}
@@ -100,26 +100,26 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
             ) : (
               t.cta
             )}
-          </motion.button>
+          </m.button>
         </form>
         <AnimatePresence>
           {status === 'success' && (
-            <motion.p
+            <m.p
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-sm text-emerald-400 mt-2"
             >
               {t.success}
-            </motion.p>
+            </m.p>
           )}
           {status === 'error' && (
-            <motion.p
+            <m.p
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-sm text-red-400 mt-2"
             >
               {t.error}
-            </motion.p>
+            </m.p>
           )}
         </AnimatePresence>
       </div>
@@ -128,7 +128,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
 
   if (variant === 'banner') {
     return (
-      <motion.section
+      <m.section
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -157,7 +157,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
           <div className="w-full md:w-auto md:min-w-[380px]">
             <AnimatePresence mode="wait">
               {status === 'success' ? (
-                <motion.div
+                <m.div
                   key="success"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -167,9 +167,9 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                     <CheckCircle className="w-7 h-7 text-emerald-400" />
                   </div>
                   <p className="text-white font-medium text-center">{t.success}</p>
-                </motion.div>
+                </m.div>
               ) : (
-                <motion.form
+                <m.form
                   key="form"
                   onSubmit={handleSubmit}
                   className="flex flex-col gap-3"
@@ -190,7 +190,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                       required
                       className="flex-1 px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all backdrop-blur-sm"
                     />
-                    <motion.button
+                    <m.button
                       type="submit"
                       disabled={status === 'loading'}
                       whileHover={{ scale: 1.02 }}
@@ -205,33 +205,33 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                           <ArrowRight className="w-4 h-4" />
                         </>
                       )}
-                    </motion.button>
+                    </m.button>
                   </div>
                   <div className="flex items-center gap-2 mt-1">
                     <Shield className="w-3.5 h-3.5 text-[#B2904D]/50" />
                     <p className="text-xs text-blue-200/40">{t.privacy}</p>
                   </div>
                   {status === 'error' && (
-                    <motion.p
+                    <m.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className="text-sm text-red-400"
                     >
                       {t.error}
-                    </motion.p>
+                    </m.p>
                   )}
-                </motion.form>
+                </m.form>
               )}
             </AnimatePresence>
           </div>
         </div>
-      </motion.section>
+      </m.section>
     );
   }
 
   // Default: inline variant (for blog sidebar, etc.)
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -258,7 +258,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
 
         <AnimatePresence mode="wait">
           {status === 'success' ? (
-            <motion.div
+            <m.div
               key="success"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -266,9 +266,9 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
             >
               <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
               <p className="text-sm text-emerald-300">{t.success}</p>
-            </motion.div>
+            </m.div>
           ) : (
-            <motion.form key="form" onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <m.form key="form" onSubmit={handleSubmit} className="flex flex-col gap-3">
               <input
                 type="email"
                 value={email}
@@ -277,7 +277,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                 required
                 className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all"
               />
-              <motion.button
+              <m.button
                 type="submit"
                 disabled={status === 'loading'}
                 whileHover={{ scale: 1.02 }}
@@ -292,21 +292,21 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                     {t.cta}
                   </>
                 )}
-              </motion.button>
+              </m.button>
               <p className="text-xs text-blue-200/40 text-center">{t.privacy}</p>
               {status === 'error' && (
-                <motion.p
+                <m.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-sm text-red-400 text-center"
                 >
                   {t.error}
-                </motion.p>
+                </m.p>
               )}
-            </motion.form>
+            </m.form>
           )}
         </AnimatePresence>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

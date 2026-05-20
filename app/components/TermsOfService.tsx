@@ -5,7 +5,7 @@ import Header from './Header'
 import Footer from './Footer'
 import ContactForm from './ContactForm'
 import { useLanguage } from '../context/LanguageContext'
-import { motion, Variants } from 'framer-motion'
+import { m, Variants } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -179,17 +179,17 @@ export default function TermsOfService() {
       <div className="fixed inset-0 z-0 w-full h-full bg-[#001540]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
-        <motion.div
+        <m.div
           animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, -30, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]"
         />
-        <motion.div
+        <m.div
           animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.3, 1], x: [0, -40, 0], y: [0, 40, 0] }}
           transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]"
         />
-        <motion.div
+        <m.div
           initial={{ x: "20%" }}
           animate={{ x: "-20%" }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear", repeatType: "mirror" }}
@@ -198,14 +198,14 @@ export default function TermsOfService() {
           <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
             TERMS
           </span>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* HERO SECTION */}
       <section className="relative pt-64 pb-16 z-10 px-6 lg:px-12">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
@@ -222,7 +222,7 @@ export default function TermsOfService() {
                   priority
                 />
               </div>
-            </motion.div>
+            </m.div>
 
             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
               <div className="relative">
@@ -236,7 +236,7 @@ export default function TermsOfService() {
                 </h1>
               </div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4, duration: 1 }}
@@ -245,16 +245,16 @@ export default function TermsOfService() {
                 <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
                   {t('hero.subtitle')}
                 </p>
-              </motion.div>
+              </m.div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1 }}
                 className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
               >
                 <p>{t('intro')}</p>
-              </motion.div>
+              </m.div>
             </div>
           </div>
         </div>
@@ -264,7 +264,7 @@ export default function TermsOfService() {
       <section className="container mx-auto px-4 py-20 relative z-10 max-w-7xl space-y-24">
 
         {/* SECCIÓN 1: Uso del Sitio Web */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
           <SectionTitle title={t('section1.title')} />
           <div className="p-8 bg-white/5 rounded-2xl border border-white/10 shadow-xl">
             <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
@@ -272,10 +272,10 @@ export default function TermsOfService() {
               <p className="text-base text-blue-100/80">{t('section1.content')}</p>
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 2: SMS Communications */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
           <SectionTitle title={t('section2.title')} />
           <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
             <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
@@ -300,73 +300,73 @@ export default function TermsOfService() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIONES 3, 4, 5 */}
         <div className="grid lg:grid-cols-3 gap-8">
-          <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
             <SectionTitle title={t('section3.title')} />
             <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
               <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section3}<span className="font-semibold">{lang === 'es' ? 'Propiedad Intelectual' : 'Intellectual Property'}</span></div>
               <p className="text-base text-blue-100/80">{t('section3.content')}</p>
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
             <SectionTitle title={t('section4.title')} />
             <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
               <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section4}<span className="font-semibold">{lang === 'es' ? 'Exención de Garantías' : 'Disclaimer'}</span></div>
               <p className="text-base text-blue-100/80">{t('section4.content')}</p>
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
             <SectionTitle title={t('section5.title')} />
             <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
               <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section5}<span className="font-semibold">{lang === 'es' ? 'Limitación' : 'Limitation'}</span></div>
               <p className="text-base text-blue-100/80">{t('section5.content')}</p>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* SECCIONES 6, 7 */}
         <div className="grid md:grid-cols-2 gap-8">
-          <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section6.title')} />
             <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
               <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section6}<span className="font-semibold">{lang === 'es' ? 'Enlaces de Terceros' : 'Third-Party Links'}</span></div>
               <p>{t('section6.content')}</p>
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section7.title')} />
             <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
               <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section7}<span className="font-semibold">{lang === 'es' ? 'Privacidad' : 'Privacy'}</span></div>
               <p>{t('section7.content')}</p>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* SECCIONES 8, 9 */}
-          <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section8.title')} />
             <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
               <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section8}<span className="font-semibold">{lang === 'es' ? 'Cambios' : 'Changes'}</span></div>
               <p>{t('section8.content')}</p>
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section9.title')} />
             <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
               <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section9}<span className="font-semibold">{lang === 'es' ? 'Ley Aplicable' : 'Governing Law'}</span></div>
               <p>{t('section9.content')}</p>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* SECCIÓN 10: Contáctenos */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
           <SectionTitle title={t('section10.title')} />
           <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
             <p className="text-base text-white font-medium">{t('section10.intro')}</p>
@@ -389,7 +389,7 @@ export default function TermsOfService() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
       </section>
 

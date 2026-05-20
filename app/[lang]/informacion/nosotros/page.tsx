@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Newspaper, Hammer, ArrowRight, Construction, HardHat, Compass } from 'lucide-react';
 import Link from 'next/link';
 import Header from '../../../components/Header';
@@ -33,12 +33,12 @@ export default function NewsComingSoon() {
                 {/* Red de fondo */}
                 <rect width="100%" height="100%" fill="url(#grid)" />
                 {/* Líneas diagonales grandes cruzando la pantalla */}
-                <motion.line 
+                <m.line 
                   x1="0" y1="100%" x2="100%" y2="0" 
                   stroke="#B2904D" strokeWidth="1" opacity="0.2"
                   initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 5, ease: "easeInOut" }}
                 />
-                <motion.line 
+                <m.line 
                   x1="-20%" y1="50%" x2="120%" y2="50%" 
                   stroke="#B2904D" strokeWidth="1" opacity="0.1"
                   strokeDasharray="10,10"
@@ -47,7 +47,7 @@ export default function NewsComingSoon() {
 
             {/* Partículas Doradas Flotantes (Se mantienen) */}
             {[...Array(15)].map((_, i) => (
-                <motion.div
+                <m.div
                     key={i}
                     className="absolute bg-[#B2904D] rounded-full"
                     initial={{
@@ -75,7 +75,7 @@ export default function NewsComingSoon() {
         </div>
 
         {/* 2. TARJETA CENTRAL (Glassmorphism) */}
-        <motion.div 
+        <m.div 
             initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, type: "spring", delay: 0.2 }}
@@ -86,7 +86,7 @@ export default function NewsComingSoon() {
 
             {/* Icono Animado Central */}
             <div className="flex justify-center mb-8 relative">
-                <motion.div
+                <m.div
                     initial={{ rotate: -10 }}
                     animate={{ rotate: 10 }}
                     transition={{ duration: 5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
@@ -95,21 +95,21 @@ export default function NewsComingSoon() {
                     <Newspaper size={64} className="text-white/90" />
                     
                     {/* Martillo y Brújula animados (Nuevo icono añadido) */}
-                    <motion.div 
+                    <m.div 
                         className="absolute -right-5 -top-2 bg-[#B2904D] p-2 rounded-full text-[#002342] shadow-lg"
                         animate={{ rotate: [0, 30, 0], scale: [1, 1.1, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
                     >
                         <Hammer size={22} />
-                    </motion.div>
+                    </m.div>
                     <div className="absolute -left-4 bottom-0 text-[#B2904D] opacity-70">
                        <Compass size={28} />
                     </div>
-                </motion.div>
+                </m.div>
             </div>
 
             {/* Texto Principal */}
-            <motion.h1 
+            <m.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
@@ -119,9 +119,9 @@ export default function NewsComingSoon() {
                     Estamos Cimentando
                 </span> <br />
                 <span className="text-[#B2904D] drop-shadow-md">La Verdad</span>
-            </motion.h1>
+            </m.h1>
 
-            <motion.p 
+            <m.p 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
@@ -129,7 +129,7 @@ export default function NewsComingSoon() {
             >
                 Nuestra sección de <strong>Noticias</strong> está bajo una reconstrucción estratégica. 
                 Pronto encontrará aquí análisis jurídicos profundos y actualizaciones migratorias esenciales.
-            </motion.p>
+            </m.p>
 
             {/* --- Barra de Progreso 26% --- */}
             <div className="max-w-md mx-auto mb-12 relative">
@@ -141,7 +141,7 @@ export default function NewsComingSoon() {
                 {/* Contenedor de la barra */}
                 <div className="h-3 w-full bg-[#001021] rounded-full overflow-hidden relative border border-white/10 box-shadow-inner">
                     {/* Barra de relleno animada */}
-                    <motion.div 
+                    <m.div 
                         className="h-full bg-gradient-to-r from-[#B2904D] to-[#d4af67] absolute top-0 left-0 rounded-full relative overflow-hidden"
                         initial={{ width: "0%" }}
                         animate={{ width: "26%" }} /* CAMBIO: Ajustado al 26% */
@@ -149,10 +149,10 @@ export default function NewsComingSoon() {
                     >
                          {/* Brillo intenso en la punta de la barra */}
                          <div className="absolute right-0 top-0 h-full w-[5px] bg-white blur-[3px]"></div>
-                    </motion.div>
+                    </m.div>
 
                     {/* Efecto de escaneo sobre la barra */}
-                    <motion.div 
+                    <m.div 
                         className="absolute top-0 bottom-0 w-10 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
                         animate={{ x: [-50, 450] }}
                         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
@@ -161,7 +161,7 @@ export default function NewsComingSoon() {
             </div>
 
             {/* Botones de Acción */}
-            <motion.div 
+            <m.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
@@ -180,25 +180,25 @@ export default function NewsComingSoon() {
                      {/* Fondo sutil al hacer hover */}
                     <div className="absolute inset-0 bg-[#B2904D] opacity-0 group-hover:opacity-10 transition-opacity"></div>
                 </Link>
-            </motion.div>
+            </m.div>
 
-        </motion.div>
+        </m.div>
 
         {/* Elementos decorativos flotantes del fondo */}
-        <motion.div 
+        <m.div 
             animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-20 left-10 opacity-20 hidden lg:block pointer-events-none"
         >
             <Construction size={120} className="text-[#B2904D] blur-[2px]" />
-        </motion.div>
-        <motion.div 
+        </m.div>
+        <m.div 
             animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-40 right-10 opacity-10 hidden lg:block pointer-events-none"
         >
             <HardHat size={100} className="text-white blur-[2px]" />
-        </motion.div>
+        </m.div>
 
       </main>
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -36,7 +36,7 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
   };
 
   return (
-    <motion.article
+    <m.article
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -100,6 +100,6 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
           </div>
         </div>
       </Link>
-    </motion.article>
+    </m.article>
   );
 }

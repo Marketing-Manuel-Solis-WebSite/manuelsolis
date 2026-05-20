@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowUp } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import NewsletterSignup from './NewsletterSignup'
 
 export default function Footer() {
@@ -70,7 +70,7 @@ export default function Footer() {
             {socialLinks.map((social) => {
               const IconComponent = social.icon
               return (
-                <motion.a
+                <m.a
                   key={social.name}
                   href={social.href}
                   target="_blank"
@@ -86,7 +86,7 @@ export default function Footer() {
                   `}
                 >
                   <IconComponent className="w-5 h-5" />
-                </motion.a>
+                </m.a>
               )
             })}
           </div>
@@ -215,7 +215,7 @@ export default function Footer() {
       </div>
 
       {/* BOTÓN "BACK TO TOP" */}
-      <motion.button
+      <m.button
         onClick={scrollToTop}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -223,7 +223,7 @@ export default function Footer() {
         className={`absolute bottom-8 right-8 w-10 h-10 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 text-[#B2904D] flex items-center justify-center hover:bg-[#B2904D] hover:text-[#001540] transition-all duration-300 backdrop-blur-sm hidden md:flex`}
       >
         <ArrowUp size={18} />
-      </motion.button>
+      </m.button>
     </footer>
   )
 }

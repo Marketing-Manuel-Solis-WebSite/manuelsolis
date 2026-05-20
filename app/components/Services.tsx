@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRef, useCallback, useState } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { m, Variants } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext'
 
 // 3D tilt card component
@@ -126,7 +126,7 @@ export default function Services() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
-        <motion.div
+        <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
@@ -148,9 +148,9 @@ export default function Services() {
             <p className="text-xl text-blue-100/60 font-light max-w-2xl mx-auto leading-relaxed">
               {t.services.description}
             </p>
-          </motion.div>
+          </m.div>
 
-        <motion.div
+        <m.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 items-stretch"
             variants={staggerContainer}
             initial="hidden"
@@ -159,7 +159,7 @@ export default function Services() {
         >
           {services.map((service, index) => {
             return (
-              <motion.div key={index} variants={fadeInUp} className="block h-full">
+              <m.div key={index} variants={fadeInUp} className="block h-full">
                 <TiltCard
                   href={service.href}
                   ariaLabel={`${t.services.learnMore} - ${service.title}`}
@@ -205,10 +205,10 @@ export default function Services() {
                   </div>
 
                 </TiltCard>
-              </motion.div>
+              </m.div>
             )
           })}
-        </motion.div>
+        </m.div>
 
       </div>
     </section>

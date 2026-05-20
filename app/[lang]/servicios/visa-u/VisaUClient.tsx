@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { m, AnimatePresence, Variants } from 'framer-motion';
 import {
   PhoneCall,
   ArrowRight,
@@ -256,13 +256,13 @@ export default function VisaUClient() {
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#001f5f]" />
          <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-         <motion.div
+         <m.div
            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
            style={{ willChange: "transform, opacity" }}
            className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] bg-blue-600/10 rounded-full blur-[80px]"
          />
-         <motion.div
+         <m.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             style={{ willChange: "transform, opacity" }}
@@ -293,7 +293,7 @@ export default function VisaUClient() {
            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
              {/* IMAGE CONTAINER */}
-             <motion.div
+             <m.div
                initial={{ opacity: 0, x: -50 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ duration: 1.2, ease: "easeOut" }}
@@ -311,7 +311,7 @@ export default function VisaUClient() {
                    />
                 </div>
 
-                <motion.div
+                <m.div
                    initial={{ opacity: 0, y: 20 }}
                    animate={{ opacity: 1, y: 0 }}
                    transition={{ delay: 0.8, duration: 0.8 }}
@@ -329,8 +329,8 @@ export default function VisaUClient() {
                         {lang === 'es' ? 'Años' : 'Years'}
                       </span>
                    </div>
-                </motion.div>
-             </motion.div>
+                </m.div>
+             </m.div>
 
              {/* TEXT CONTAINER */}
              <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-8 relative z-20 order-1 lg:order-2 flex flex-col justify-center items-start">
@@ -342,32 +342,32 @@ export default function VisaUClient() {
 
                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-thin text-white tracking-tight leading-[1.1]">
                    <span className="block">
-                     <motion.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
+                     <m.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
                          {gT(texts.interface.heroTitle1)}
-                     </motion.span>
+                     </m.span>
                    </span>
                    <span className="block">
-                     <motion.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">
+                     <m.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">
                          {gT(texts.interface.heroTitle2)}
-                     </motion.span>
+                     </m.span>
                    </span>
                  </h1>
 
-                 <motion.div
+                 <m.div
                    initial={{ opacity: 0, x: -20 }}
                    animate={{ opacity: 1, x: 0 }}
                    transition={{ delay: 0.6 }}
                    className="h-1 w-24 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full"
                  />
 
-                 <motion.p
+                 <m.p
                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
                    className="text-lg md:text-xl text-blue-100/70 font-light max-w-xl leading-relaxed"
                  >
                    {gT(texts.interface.heroDescription)}
-                 </motion.p>
+                 </m.p>
 
-                 <motion.div
+                 <m.div
                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
                    className="flex flex-wrap gap-4 pt-4"
                  >
@@ -380,7 +380,7 @@ export default function VisaUClient() {
                       <PhoneCall size={20} className="text-[#B2904D]" />
                       {gT(texts.interface.ctaCall)}
                    </a>
-                 </motion.div>
+                 </m.div>
              </div>
 
            </div>
@@ -390,13 +390,13 @@ export default function VisaUClient() {
       {/* --- ELIGIBILITY REQUIREMENTS SECTION --- */}
       <section className="py-24 relative overflow-hidden bg-[#001f5f]/30 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <motion.div
+            <m.div
               initial={{ width: 0 }}
               whileInView={{ width: 60 }}
               viewport={{ once: true }}
@@ -408,7 +408,7 @@ export default function VisaUClient() {
             <p className="text-blue-100/60 text-lg max-w-2xl mx-auto font-light">
               {gT(texts.interface.eligibilitySubtitle)}
             </p>
-          </motion.div>
+          </m.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -433,7 +433,7 @@ export default function VisaUClient() {
                 desc: { es: "El crimen debe haber ocurrido en Estados Unidos o haber violado leyes estadounidenses. Esto incluye crímenes en territorios de EE.UU. y en bases militares en el extranjero.", en: "The crime must have occurred in the United States or violated U.S. laws. This includes crimes in U.S. territories and on military bases abroad." }
               }
             ].map((req, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -445,14 +445,14 @@ export default function VisaUClient() {
                 <div className="bg-[#001026] p-8 rounded-[2rem] border border-white/10 hover:border-[#B2904D]/50 transition-all duration-300 h-full shadow-lg relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#B2904D]/0 to-[#B2904D]/0 group-hover:from-[#B2904D]/10 group-hover:to-transparent transition-all duration-500"></div>
 
-                  <motion.div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-[#B2904D] transition-colors duration-300 shadow-inner mb-6">
+                  <m.div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-[#B2904D] transition-colors duration-300 shadow-inner mb-6">
                     <req.icon size={30} className="text-white/80 group-hover:text-[#001540] transition-colors" />
-                  </motion.div>
+                  </m.div>
 
                   <h3 className="font-bold text-lg text-white mb-3">{gT(req.title)}</h3>
                   <p className="text-blue-100/60 text-sm leading-relaxed">{gT(req.desc)}</p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -465,7 +465,7 @@ export default function VisaUClient() {
           {/* TABS HEADER */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-16">
             {texts.infoTabs.map((tab, index) => (
-              <motion.button
+              <m.button
                 key={tab.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -493,13 +493,13 @@ export default function VisaUClient() {
                     {gT(tab.title)}
                   </span>
                 </div>
-              </motion.button>
+              </m.button>
             ))}
           </div>
 
           {/* EXPANDED CONTENT */}
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={selectedTab}
               initial={{ opacity: 0, y: 20, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -514,14 +514,14 @@ export default function VisaUClient() {
 
                 {/* Content Header */}
                 <div className="flex flex-col md:flex-row items-start gap-8 mb-10 pb-10 border-b border-white/10">
-                  <motion.div
+                  <m.div
                     initial={{ scale: 0, rotate: -45 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
                     className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-[#B2904D] to-[#D4AF37] flex items-center justify-center shadow-lg shadow-[#B2904D]/20 flex-shrink-0"
                   >
                     <activeTabContent.icon size={44} className="text-[#001540]" />
-                  </motion.div>
+                  </m.div>
 
                   <div className="flex-1">
                     <h3 className="text-3xl md:text-5xl font-black text-white mb-3 leading-tight tracking-tight">
@@ -554,7 +554,7 @@ export default function VisaUClient() {
                       </h5>
                       <div className="grid md:grid-cols-2 gap-4">
                         {activeTabContent.content.subPoints?.map((point: any, i: number) => (
-                          <motion.div
+                          <m.div
                             key={i}
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -563,7 +563,7 @@ export default function VisaUClient() {
                           >
                             <div className="w-2 h-2 rounded-full mt-2.5 shrink-0 bg-[#B2904D] group-hover:shadow-[0_0_8px_#B2904D] transition-shadow"></div>
                             <span className="text-base font-medium leading-snug">{gT(point)}</span>
-                          </motion.div>
+                          </m.div>
                         ))}
                       </div>
                     </div>
@@ -581,19 +581,19 @@ export default function VisaUClient() {
 
                   {/* Internal CTA */}
                   <div className="pt-6 flex justify-end">
-                    <motion.a
+                    <m.a
                       href="#contacto"
                       whileHover={{ x: 5 }}
                       className="inline-flex items-center gap-2 text-[#B2904D] font-bold uppercase tracking-widest text-sm hover:text-white transition-colors"
                     >
                       {gT(texts.interface.requestEvaluation)}
                       <ArrowRight size={18} />
-                    </motion.a>
+                    </m.a>
                   </div>
                 </div>
 
               </div>
-            </motion.div>
+            </m.div>
           </AnimatePresence>
         </div>
       </section>
@@ -601,13 +601,13 @@ export default function VisaUClient() {
       {/* --- PROCESS STEPS SECTION --- */}
       <section className="py-32 relative overflow-hidden bg-[#001f5f]/30">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-24"
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
@@ -616,11 +616,11 @@ export default function VisaUClient() {
             >
               <FileText size={14} className="text-[#B2904D]" />
               <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">{gT(texts.interface.processMethod)}</span>
-            </motion.div>
+            </m.div>
 
             <h2 className="text-2xl sm:text-4xl md:text-6xl font-black text-white mb-6">{gT(texts.interface.processTitle)}</h2>
             <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full shadow-[0_0_15px_#B2904D]" />
-          </motion.div>
+          </m.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-12 relative">
 
@@ -628,7 +628,7 @@ export default function VisaUClient() {
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" />
 
             {texts.processSteps.map((step, index) => (
-              <motion.div
+              <m.div
                 key={step.id}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -643,18 +643,18 @@ export default function VisaUClient() {
                   <div className="absolute inset-0 bg-gradient-to-br from-[#B2904D]/0 to-[#B2904D]/0 group-hover:from-[#B2904D]/10 group-hover:to-transparent transition-all duration-500"></div>
 
                   <div className="flex justify-between items-start mb-6">
-                      <motion.div
+                      <m.div
                         className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-[#B2904D] transition-colors duration-300 shadow-inner"
                       >
                         <step.icon size={30} className="text-white/80 group-hover:text-[#001540] transition-colors" />
-                      </motion.div>
+                      </m.div>
                       <span className="text-4xl font-black text-white/5 group-hover:text-[#B2904D]/20 transition-colors">0{step.id}</span>
                   </div>
 
                   <h3 className="font-bold text-xl text-white mb-3">{gT(step.title)}</h3>
                   <p className="text-blue-100/60 text-sm leading-relaxed">{gT(step.desc)}</p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -670,7 +670,7 @@ export default function VisaUClient() {
 
           <div className="space-y-4">
              {texts.faqs.map((faq, i) => (
-               <motion.div
+               <m.div
                  key={i}
                  initial={{ opacity: 0, y: 10 }}
                  whileInView={{ opacity: 1, y: 0 }}
@@ -690,7 +690,7 @@ export default function VisaUClient() {
                      </p>
                    </div>
                  </div>
-               </motion.div>
+               </m.div>
              ))}
           </div>
         </div>
@@ -699,7 +699,7 @@ export default function VisaUClient() {
       {/* --- OFFICES SECTION --- */}
       <section className="py-24 relative bg-[#001f5f]/30">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -707,14 +707,14 @@ export default function VisaUClient() {
           >
             <h2 className="text-3xl md:text-4xl font-black text-white mb-4">{gT(texts.interface.officesTitle)}</h2>
             <p className="text-blue-100/60 text-lg max-w-2xl mx-auto font-light">{gT(texts.interface.officesSubtitle)}</p>
-            <motion.div
+            <m.div
               initial={{ width: 0 }}
               whileInView={{ width: 80 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="h-1 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6"
             />
-          </motion.div>
+          </m.div>
 
           <div className="bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-sm">
             <div className="flex items-center gap-3 mb-6">
@@ -723,7 +723,7 @@ export default function VisaUClient() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
               {texts.offices.map((office, i) => (
-                <motion.div
+                <m.div
                   key={i}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -733,7 +733,7 @@ export default function VisaUClient() {
                 >
                   <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
                   <span className="font-medium text-xs">{office}</span>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>
@@ -743,7 +743,7 @@ export default function VisaUClient() {
       {/* --- RELATED BLOG ARTICLES SECTION --- */}
       <section className="py-24 relative bg-[#001540]">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -755,18 +755,18 @@ export default function VisaUClient() {
             <p className="text-blue-100/60 text-lg max-w-2xl mx-auto font-light mb-6">
               {gT(texts.interface.blogSubtitle)}
             </p>
-            <motion.div
+            <m.div
               initial={{ width: 0 }}
               whileInView={{ width: 80 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="h-1 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full"
             />
-          </motion.div>
+          </m.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {texts.blogArticles.map((article, i) => (
-              <motion.div
+              <m.div
                 key={article.slug}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -792,7 +792,7 @@ export default function VisaUClient() {
                     </span>
                   </div>
                 </Link>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -801,7 +801,7 @@ export default function VisaUClient() {
       {/* --- PHONE CTA BANNER --- */}
       <section className="py-16 relative bg-gradient-to-r from-[#B2904D]/20 via-[#B2904D]/10 to-[#B2904D]/20 border-y border-[#B2904D]/20">
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -821,14 +821,14 @@ export default function VisaUClient() {
               <PhoneCall size={24} className="group-hover:animate-pulse" />
               (832) 598-0914
             </a>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
       {/* --- CONTACT FORM SECTION --- */}
       <section id="contacto" className="relative py-32 z-10 bg-transparent">
         <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -847,7 +847,7 @@ export default function VisaUClient() {
                     <ContactForm />
                 </div>
              </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 

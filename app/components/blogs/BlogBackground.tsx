@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 export default function BlogBackground() {
   return (
@@ -10,7 +10,7 @@ export default function BlogBackground() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
       
       {/* Orbe Dorado (Derecha Superior) */}
-      <motion.div 
+      <m.div 
         animate={{ 
           scale: [1, 1.2, 1], 
           opacity: [0.15, 0.3, 0.15],
@@ -21,7 +21,7 @@ export default function BlogBackground() {
       />
 
       {/* Orbe Azul (Izquierda Inferior) */}
-      <motion.div 
+      <m.div 
         animate={{ 
           scale: [1, 1.3, 1], 
           opacity: [0.1, 0.25, 0.1],

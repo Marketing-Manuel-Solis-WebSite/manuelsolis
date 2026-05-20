@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, LazyMotion, domMax } from 'framer-motion';
 import {
   X, Play, Star, MapPin, ExternalLink, Quote, Users, Building2,
   ArrowRight, MessageSquare
@@ -189,6 +189,10 @@ export default function TestimoniosClient() {
   };
 
   return (
+    // Nested domMax provider: this page uses `layoutId` (shared-layout
+    // animation), which the global domAnimation feature set does not cover.
+    // Only /testimonios pays the extra cost. See components/MotionProvider.tsx.
+    <LazyMotion features={domMax}>
     <div className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
 
       <Header />
@@ -199,7 +203,7 @@ export default function TestimoniosClient() {
       <div className="fixed inset-0 z-0 pointer-events-none w-full h-full transform-gpu">
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
 
-         <motion.div
+         <m.div
             initial={{ x: "60%" }}
             animate={{ x: "-160%" }}
             transition={{
@@ -214,16 +218,16 @@ export default function TestimoniosClient() {
             <span className={`text-[160vh] leading-none font-extrabold italic text-white tracking-tighter mix-blend-overlay transform -skew-x-12`}>
                  N/\И/\
             </span>
-         </motion.div>
+         </m.div>
 
          {/* Orbes optimizados: Blur reducido y will-change */}
-         <motion.div
+         <m.div
            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
            style={{ willChange: "transform, opacity" }}
            className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/10 rounded-full blur-[80px]"
          />
-         <motion.div
+         <m.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
             transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             style={{ willChange: "transform, opacity" }}
@@ -238,7 +242,7 @@ export default function TestimoniosClient() {
           2. HERO SECTION
       ========================================================================= */}
       <section className="relative pt-44 pb-20 px-4 z-10 text-center">
-        <motion.div
+        <m.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -256,7 +260,7 @@ export default function TestimoniosClient() {
             <p className="text-blue-100/70 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed border-t border-white/10 pt-8">
               {texts.hero.subtitle[language]}
             </p>
-        </motion.div>
+        </m.div>
       </section>
 
       {/* =========================================================================
@@ -266,7 +270,7 @@ export default function TestimoniosClient() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
 
           {testimonials.map((item, index) => (
-            <motion.div
+            <m.div
               layoutId={`card-${item.id}`}
               key={item.id}
               initial={{ opacity: 0, y: 40 }}
@@ -281,13 +285,13 @@ export default function TestimoniosClient() {
 
                 {/* Fondo animado interno de la tarjeta - Optimizado */}
                 <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-[32px]">
-                    <motion.div
+                    <m.div
                         animate={{ x: [0, 80, 0], y: [0, -40, 0], scale: [1, 1.1, 1] }}
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                         style={{ willChange: "transform" }}
                         className="absolute -top-20 -left-20 w-64 h-64 bg-[#B2904D]/10 rounded-full blur-[60px]" // Opacidad y blur reducidos
                     />
-                     <motion.div
+                     <m.div
                         animate={{ x: [0, -80, 0], y: [0, 40, 0], scale: [1, 1.1, 1] }}
                         transition={{ duration: 25, repeat: Infinity, ease: "linear", delay: 2 }}
                         style={{ willChange: "transform" }}
@@ -314,7 +318,7 @@ export default function TestimoniosClient() {
 
                    {/* BOTÓN DE PLAY MEJORADO CON GLASSMORPHISM */}
                    <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/10 transition-colors duration-500">
-                      <motion.div
+                      <m.div
                         initial={{ scale: 1 }}
                         whileHover={{ scale: 1.1 }}
                         className="relative"
@@ -333,7 +337,7 @@ export default function TestimoniosClient() {
                           {/* Brillo superior */}
                           <div className="absolute top-2 left-2 right-2 h-6 bg-white/10 rounded-full blur-sm" />
                         </div>
-                      </motion.div>
+                      </m.div>
                    </div>
                 </div>
 
@@ -360,7 +364,7 @@ export default function TestimoniosClient() {
                 </div>
 
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </section>
@@ -371,7 +375,7 @@ export default function TestimoniosClient() {
       <AnimatePresence>
         {selectedId && selectedTestimonial && (
           <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8">
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -379,7 +383,7 @@ export default function TestimoniosClient() {
               // Optimización: Menos blur y más opacidad
               className="absolute inset-0 bg-[#000a20]/95 backdrop-blur-md"
             />
-            <motion.div
+            <m.div
               layoutId={`card-${selectedId}`}
               className="relative w-full max-w-7xl h-[85vh] bg-[#001540] rounded-[32px] border border-[#B2904D]/30 shadow-2xl overflow-hidden flex flex-col lg:flex-row z-10"
             >
@@ -402,7 +406,7 @@ export default function TestimoniosClient() {
 
               {/* Panel lateral con información */}
               <div className="w-full lg:w-1/3 h-full bg-[#001540] p-12 flex flex-col relative overflow-y-auto border-l border-white/5 scrollbar-custom">
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 }}
@@ -427,9 +431,9 @@ export default function TestimoniosClient() {
                             {texts.modal.button[language]}
                          </a>
                       </div>
-                  </motion.div>
+                  </m.div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         )}
       </AnimatePresence>
@@ -438,7 +442,7 @@ export default function TestimoniosClient() {
           5. STATS BAND — MARQUEE
       ========================================================================= */}
       <div className="relative z-10 py-6 border-y border-white/10 overflow-hidden bg-[#000a20]/60">
-        <motion.div
+        <m.div
           className="flex"
           animate={{ x: ['0%', '-50%'] }}
           transition={{ duration: 30, ease: 'linear', repeat: Infinity }}
@@ -455,7 +459,7 @@ export default function TestimoniosClient() {
               <span className="text-[#B2904D]/30 text-xs px-3">★</span>
             </div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
 
       {/* =========================================================================
@@ -463,7 +467,7 @@ export default function TestimoniosClient() {
       ========================================================================= */}
       <section className="px-4 py-24 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -486,11 +490,11 @@ export default function TestimoniosClient() {
                 ? 'Reseñas reales de clientes verificadas en Google Maps.'
                 : 'Real client reviews verified on Google Maps.'}
             </p>
-          </motion.div>
+          </m.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {googleReviews.map((review, index) => (
-              <motion.div
+              <m.div
                 key={review.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -528,7 +532,7 @@ export default function TestimoniosClient() {
                     {language === 'es' ? 'Ver en Google' : 'View on Google'}
                   </a>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -539,7 +543,7 @@ export default function TestimoniosClient() {
       ========================================================================= */}
       <section className="px-4 py-24 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -557,13 +561,13 @@ export default function TestimoniosClient() {
                 {language === 'es' ? 'éxito' : 'success'}
               </span>
             </h2>
-          </motion.div>
+          </m.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {successStories.map((story, index) => {
               const linkedReview = googleReviews.find(r => r.id === story.reviewId);
               return (
-                <motion.div
+                <m.div
                   key={story.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -588,7 +592,7 @@ export default function TestimoniosClient() {
                       <p className="text-xs text-[#B2904D] mt-2 font-medium">— {linkedReview.name}</p>
                     </div>
                   )}
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
@@ -600,7 +604,7 @@ export default function TestimoniosClient() {
       ========================================================================= */}
       <section className="px-4 py-24 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -618,11 +622,11 @@ export default function TestimoniosClient() {
                 {language === 'es' ? 'reunidas' : 'reunited'}
               </span>
             </h2>
-          </motion.div>
+          </m.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {galleryPhotos.map((photo, index) => (
-              <motion.div
+              <m.div
                 key={photo.name}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -642,7 +646,7 @@ export default function TestimoniosClient() {
                 <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                   <p className="text-white font-medium text-sm">{photo.name}</p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
@@ -667,5 +671,6 @@ export default function TestimoniosClient() {
 
       <Footer />
     </div>
+    </LazyMotion>
   );
 }

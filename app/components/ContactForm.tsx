@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation' 
-import { motion, AnimatePresence, Variants } from 'framer-motion' 
+import { m, AnimatePresence, Variants } from 'framer-motion' 
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
 import { track } from '@vercel/analytics/react' // 1. Importamos el tracker de Vercel
 import { pushToDataLayer, trackConversion } from '../lib/tracking'
@@ -73,7 +73,7 @@ const NeonInput = (props: any) => {
       
       {/* Línea inferior animada - Simplificada */}
       <div className="absolute bottom-0 left-2 right-2 h-[1px] bg-transparent overflow-hidden pointer-events-none">
-         <motion.div 
+         <m.div 
            initial={{ x: "-100%" }}
            animate={{ x: isFocused ? "0%" : "-100%" }}
            transition={{ duration: 0.3, ease: "easeOut" }} // Más rápido
@@ -229,7 +229,7 @@ function ContactFormContent() {
       </div>
 
       <div className="container mx-auto px-4 relative z-20 max-w-5xl">
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+        <m.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight drop-shadow-sm">
             {t('Solicite su', 'Request Your')}{' '}
             <span className="font-medium text-[#B2904D]">
@@ -239,9 +239,9 @@ function ContactFormContent() {
           <p className="text-lg text-blue-100 max-w-2xl mx-auto font-light leading-relaxed opacity-90">
             {t('Manténgase informado sobre actualizaciones e información importantes.', 'Stay informed about important updates and information.')}
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
+        <m.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
           // Optimización: Opacidad aumentada, blur reducido
           className="relative bg-[#001026]/95 backdrop-blur-md rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 shadow-2xl border border-white/10 overflow-hidden"
         >
@@ -250,54 +250,54 @@ function ContactFormContent() {
             <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
               <AnimatePresence>
                 {submitStatus !== 'idle' && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-[2rem]" role="alert" aria-live="assertive">
+                  <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-[2rem]" role="alert" aria-live="assertive">
                       {submitStatus === 'success' ? (
                         <>
-                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
+                            <m.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
                                 <CheckCircle2 size={80} className="text-green-400 mb-6" />
-                            </motion.div>
+                            </m.div>
                             <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('¡Enviado con Éxito!', 'Successfully Sent!')}</h3>
                             <p className="text-blue-200">{t('Nuestro equipo revisará su caso de inmediato.', 'Our team will review your case immediately.')}</p>
                         </>
                       ) : (
                         <>
-                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
+                            <m.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
                                 <XCircle size={80} className="text-red-400 mb-6" />
-                            </motion.div>
+                            </m.div>
                             <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('Error de Envío', 'Submission Error')}</h3>
                             <p className="text-red-200">{t('Hubo un problema. Intente de nuevo más tarde.', 'There was an issue. Please try again later.')}</p>
                         </>
                       )}
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
 
               <div className="grid md:grid-cols-2 gap-8">
-                <motion.div variants={itemVar}>
+                <m.div variants={itemVar}>
                     <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
                     <div className="space-y-5">
                         <NeonInput icon={User} name="first_name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
                         <NeonInput icon={User} name="last_name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
                     </div>
-                </motion.div>
+                </m.div>
 
-                <motion.div variants={itemVar}>
+                <m.div variants={itemVar}>
                     <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
                     <div className="space-y-5">
                         <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
                         <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
                     </div>
-                </motion.div>
+                </m.div>
               </div>
 
-              <motion.div variants={itemVar}>
+              <m.div variants={itemVar}>
                 <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
                 <NeonInput icon={MessageSquare} name="enquiry_detail" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
-              </motion.div>
+              </m.div>
 
               <div className="space-y-4">
                   {/* SMS Disclaimer */}
-                  <motion.div variants={itemVar} className="p-5 rounded-xl bg-[#000814]/50 border border-white/10">
+                  <m.div variants={itemVar} className="p-5 rounded-xl bg-[#000814]/50 border border-white/10">
                     <p className="text-xs text-blue-200/80 leading-relaxed">
                       {t(
                         'Al proporcionar voluntariamente su número de teléfono y optar explícitamente por recibir mensajes de texto, usted consiente recibir comunicaciones SMS del Law Office of Manuel Solis relacionadas con responder a consultas sobre servicios de inmigración, programar consultas, enviar recordatorios de citas, solicitar documentos y proporcionar actualizaciones de casos. La frecuencia de los mensajes puede variar. Pueden aplicarse tarifas estándar de mensajes y datos. Su consentimiento para recibir mensajes SMS no es una condición para adquirir ningún servicio. Puede cancelar en cualquier momento respondiendo "STOP" a cualquier mensaje, y puede solicitar ayuda adicional respondiendo "HELP". Para más detalles, por favor visite nuestra',
@@ -307,9 +307,9 @@ function ContactFormContent() {
                       {t('y', 'and')}{' '}
                       <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('términos de servicio SMS', 'SMS terms of service')}</a>.
                     </p>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
+                  <m.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
                     <div className="relative flex items-center pt-1">
                       <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-7 w-7 sm:h-6 sm:w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400" />
                       <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={16} strokeWidth={3} /></div>
@@ -320,9 +320,9 @@ function ContactFormContent() {
                       {t('y he leído la', 'and have read the')}{' '}
                       <a href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Statement')}</a>.
                     </label>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
+                  <m.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
                     <div className="relative flex items-center pt-1">
                       <input type="checkbox" id="marketingConsent" name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} className="peer h-6 w-6 sm:h-5 sm:w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500" />
                       <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
@@ -331,10 +331,10 @@ function ContactFormContent() {
                       {t('Me gustaría recibir comunicaciones SMS del Law Office of Manuel Solís al número de teléfono proporcionado relacionadas con consultas sobre servicios de inmigración, programación de consultas, recordatorios de citas, solicitud de documentos y actualizaciones de casos. Pueden aplicar tarifas de mensajes y datos. La frecuencia de los mensajes puede variar. Responda STOP para cancelar, HELP para ayuda.', 'I would like to receive SMS communications from the Law Office of Manuel Solís at the phone number provided regarding immigration service inquiries, scheduling consultations, appointment reminders, document requests, and case updates. Message and data rates may apply. Message frequency may vary. Reply STOP to cancel, HELP for help.')}{' '}
                       <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio SMS', 'SMS Terms of Service')}</a>
                     </label>
-                  </motion.div>
+                  </m.div>
               </div>
 
-              <motion.div variants={itemVar} className="pt-2">
+              <m.div variants={itemVar} className="pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting || !formData.acceptedTerms}
@@ -361,9 +361,9 @@ function ContactFormContent() {
                       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-500 ease-in-out" />
                   )}
                 </button>
-              </motion.div>
+              </m.div>
             </form>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   )

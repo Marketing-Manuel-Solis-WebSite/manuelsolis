@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
 import { pushToDataLayer, trackConversion } from '../../lib/tracking';
 
@@ -69,7 +69,7 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
           </h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {articles.map((article, i) => (
-              <motion.div
+              <m.div
                 key={article.slug}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
                     </span>
                   </div>
                 </Link>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>

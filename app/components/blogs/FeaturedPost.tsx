@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, User, Star, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
 
   return (
     <Link href={`/${lang}/blog/${post.slug}`}>
-      <motion.article
+      <m.article
         initial={{ opacity: 0, scale: 0.98 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
@@ -116,7 +116,7 @@ export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
              </div>
           </div>
         </div>
-      </motion.article>
+      </m.article>
     </Link>
   );
 }

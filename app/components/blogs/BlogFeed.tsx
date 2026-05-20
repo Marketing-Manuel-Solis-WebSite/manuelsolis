@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Search, TrendingUp, Sparkles, Frown } from 'lucide-react';
 // Imports de tus componentes existentes
 import BlogCard from './BlogCard';
@@ -52,7 +52,7 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Hero Section del Blog */}
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -74,10 +74,10 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
             <p className="text-blue-100/70 text-base md:text-xl leading-relaxed font-light max-w-3xl mx-auto">
               {t(uiText.hero.subtitle)}
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Barra de Herramientas (Search + Filter) */}
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -85,12 +85,12 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
           >
             <SearchBar value={searchQuery} onChange={setSearchQuery} lang={lang} />
             <CategoryFilter categories={categories} selected={selectedCategoryId} onSelect={setSelectedCategoryId} lang={lang} />
-          </motion.div>
+          </m.div>
 
           {/* Artículo Destacado (Solo en vista por defecto) */}
           <div className="min-h-[500px]"> {/* Contenedor para evitar saltos de layout */}
             {isDefaultView && featuredPost && (
-              <motion.div 
+              <m.div 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -104,12 +104,12 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
                 </div>
                 
                 <FeaturedPost post={featuredPost} lang={lang} />
-              </motion.div>
+              </m.div>
             )}
 
             {/* Grid de Artículos */}
             {filteredPosts.length > 0 ? (
-              <motion.div 
+              <m.div 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -132,11 +132,11 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
                     </React.Fragment>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
             ) : (
               // Estado Vacío (si no hay resultados)
               (!isDefaultView || !featuredPost) && (
-                <motion.div 
+                <m.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-center py-20 bg-white/5 rounded-3xl border border-white/10"
@@ -151,7 +151,7 @@ export default function BlogFeed({ initialPosts, categories, uiText, lang }: Blo
                   >
                     Limpiar Filtros
                   </button>
-                </motion.div>
+                </m.div>
               )
             )}
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
   Mail,
@@ -413,7 +413,7 @@ export default function AdminClient({
           </div>
           <AnimatePresence initial={false}>
             {mode === 'test' && (
-              <motion.div
+              <m.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
@@ -435,7 +435,7 @@ export default function AdminClient({
                     {testEmails.length} email{testEmails.length === 1 ? '' : 's'} válidos detectados.
                   </p>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </Card>
@@ -589,7 +589,7 @@ export default function AdminClient({
 
           <AnimatePresence>
             {confirmStep && !running && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -639,7 +639,7 @@ export default function AdminClient({
                     Cancelar
                   </button>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
 
@@ -657,7 +657,7 @@ export default function AdminClient({
 
         <AnimatePresence>
           {(running || events.length > 0) && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-6"
@@ -680,7 +680,7 @@ export default function AdminClient({
                 </div>
 
                 <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden mb-5">
-                  <motion.div
+                  <m.div
                     className="h-full bg-[#B2904D]"
                     initial={{ width: 0 }}
                     animate={{ width: `${progressPct}%` }}
@@ -726,13 +726,13 @@ export default function AdminClient({
                   </details>
                 )}
               </Card>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
 
         <AnimatePresence>
           {summary && !running && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-6"
@@ -792,13 +792,13 @@ export default function AdminClient({
                   </p>
                 )}
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
 
         <AnimatePresence>
           {fatalError && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-6 bg-red-50 border-2 border-red-200 rounded-2xl p-5"
@@ -810,7 +810,7 @@ export default function AdminClient({
                   <p className="text-sm text-red-800 mt-1 break-words">{fatalError}</p>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>
@@ -1140,14 +1140,14 @@ function EmailPreviewModal({
   }
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
       onClick={onClose}
     >
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.96, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
@@ -1268,8 +1268,8 @@ function EmailPreviewModal({
             <strong className="text-gray-700">Tip:</strong> los enlaces dentro del iframe están deshabilitados (sandbox sin <code className="px-1 bg-white border border-gray-200 rounded">allow-top-navigation</code>). Usa &quot;Abrir en pestaña&quot; si quieres clic real.
           </span>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 

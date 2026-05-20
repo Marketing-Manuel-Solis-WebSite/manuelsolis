@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { m, useMotionValue, useMotionTemplate } from 'framer-motion';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -209,15 +209,15 @@ export default function AccesoClientesClient() {
         </svg>
 
         {/* Layer 4: Mouse spotlight */}
-        <motion.div className="pointer-events-none absolute inset-0 z-0" style={{ background: spotlight }} />
+        <m.div className="pointer-events-none absolute inset-0 z-0" style={{ background: spotlight }} />
 
         {/* Layer 5: Animated orbs */}
-        <motion.div
+        <m.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-[10%] left-[-10%] w-[55vw] h-[55vw] bg-[#B2904D]/15 rounded-full blur-[120px] pointer-events-none z-0"
         />
-        <motion.div
+        <m.div
           animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
           className="absolute bottom-[5%] right-[-10%] w-[60vw] h-[60vw] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none z-0"
@@ -230,7 +230,7 @@ export default function AccesoClientesClient() {
           const duration = ((i * 7) % 12) + 10;
           const delay = (i * 0.4) % 6;
           return (
-            <motion.div
+            <m.div
               key={i}
               className="absolute bg-[#B2904D] rounded-full pointer-events-none z-0"
               initial={{ y: '110%', opacity: 0 }}
@@ -242,7 +242,7 @@ export default function AccesoClientesClient() {
         })}
 
         {/* Layer 7: Diagonal scan line */}
-        <motion.div
+        <m.div
           className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/40 to-transparent pointer-events-none z-0"
           initial={{ y: '0%' }}
           animate={{ y: '100vh' }}
@@ -261,7 +261,7 @@ export default function AccesoClientesClient() {
         <div className="relative z-20 w-full max-w-6xl mx-auto text-center pt-48 md:pt-52 lg:pt-56 pb-20">
 
           {/* Top badge with pulsing dot */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -274,35 +274,35 @@ export default function AccesoClientesClient() {
             <span className="text-[#B2904D] text-[11px] font-bold tracking-[0.3em] uppercase">
               {gT(ui.badge)}
             </span>
-          </motion.div>
+          </m.div>
 
           {/* Hero Title */}
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tighter leading-[1] mb-8"
           >
-            <motion.span
+            <m.span
               initial={{ y: 60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="block text-white/95 mb-2"
             >
               {gT(ui.heroTitle1)}
-            </motion.span>
-            <motion.span
+            </m.span>
+            <m.span
               initial={{ y: 60, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="block font-black bg-clip-text text-transparent bg-[linear-gradient(110deg,#B2904D_0%,#F3E5AB_25%,#FFFFFF_50%,#F3E5AB_75%,#B2904D_100%)] bg-[length:200%_auto] animate-acceso-shine drop-shadow-[0_0_30px_rgba(178,144,77,0.4)]"
             >
               {gT(ui.heroTitle2)}
-            </motion.span>
-          </motion.h1>
+            </m.span>
+          </m.h1>
 
           {/* Decorative line */}
-          <motion.div
+          <m.div
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: 96, opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
@@ -310,17 +310,17 @@ export default function AccesoClientesClient() {
           />
 
           {/* Subtitle */}
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
             className="text-base md:text-xl text-blue-100/75 font-light max-w-2xl mx-auto leading-relaxed mb-14"
           >
             {gT(ui.heroDescription)}
-          </motion.p>
+          </m.p>
 
           {/* CENTER CTA — refined */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
@@ -339,10 +339,10 @@ export default function AccesoClientesClient() {
             <span className="text-[10px] text-blue-100/45 font-light tracking-[0.2em] uppercase">
               {gT(ui.ctaPrimaryHint)}
             </span>
-          </motion.div>
+          </m.div>
 
           {/* Trust strip */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.8 }}
@@ -361,7 +361,7 @@ export default function AccesoClientesClient() {
                 )}
               </React.Fragment>
             ))}
-          </motion.div>
+          </m.div>
         </div>
 
         {/* ============================================================ */}
@@ -369,13 +369,13 @@ export default function AccesoClientesClient() {
         {/* ============================================================ */}
 
         {/* Left card — Case status */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: -40, rotate: -10 }}
           animate={{ opacity: 1, x: 0, rotate: -6 }}
           transition={{ delay: 1.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="hidden 2xl:block absolute left-[3%] bottom-[12%] z-30 w-60 pointer-events-none"
         >
-          <motion.div
+          <m.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
             className="p-4 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]"
@@ -400,7 +400,7 @@ export default function AccesoClientesClient() {
               </div>
             </div>
             <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden mb-1.5">
-              <motion.div
+              <m.div
                 initial={{ width: 0 }}
                 animate={{ width: '92%' }}
                 transition={{ delay: 2, duration: 1.5 }}
@@ -411,17 +411,17 @@ export default function AccesoClientesClient() {
               <span>{lang === 'es' ? 'Progreso' : 'Progress'}</span>
               <span className="text-[#B2904D] font-bold">92%</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
         {/* Right card — Notification */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: 40, rotate: 10 }}
           animate={{ opacity: 1, x: 0, rotate: 5 }}
           transition={{ delay: 1.6, duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="hidden 2xl:block absolute right-[3%] bottom-[14%] z-30 w-60 pointer-events-none"
         >
-          <motion.div
+          <m.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
             className="p-4 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]"
@@ -454,8 +454,8 @@ export default function AccesoClientesClient() {
                 {lang === 'es' ? 'Equipo legal al tanto' : 'Legal team on it'}
               </span>
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </section>
 
       {/* Shine animation keyframes */}
@@ -475,7 +475,7 @@ export default function AccesoClientesClient() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* IMAGE */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -510,11 +510,11 @@ export default function AccesoClientesClient() {
               </div>
               {/* Decorative orb */}
               <div className="absolute -top-6 -left-6 w-32 h-32 bg-[#B2904D]/20 rounded-full blur-[60px] pointer-events-none -z-10" />
-            </motion.div>
+            </m.div>
 
             {/* TEXT */}
             <div>
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -524,23 +524,23 @@ export default function AccesoClientesClient() {
                 <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">
                   {lang === 'es' ? 'La Plataforma' : 'The Platform'}
                 </span>
-              </motion.div>
-              <motion.h2
+              </m.div>
+              <m.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight"
               >
                 {gT(ui.whatTitle)}
-              </motion.h2>
-              <motion.div
+              </m.h2>
+              <m.div
                 initial={{ width: 0 }}
                 whileInView={{ width: 64 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
                 className="h-1 bg-[#B2904D] rounded-full mb-8"
               />
-              <motion.p
+              <m.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -548,7 +548,7 @@ export default function AccesoClientesClient() {
                 className="text-base md:text-lg text-blue-100/80 font-light leading-relaxed"
               >
                 {gT(ui.whatDesc)}
-              </motion.p>
+              </m.p>
             </div>
           </div>
         </div>
@@ -557,7 +557,7 @@ export default function AccesoClientesClient() {
       {/* --- BENEFITS GRID --- */}
       <section className="relative py-24 md:py-32 px-4 z-10">
         <div className="max-w-7xl mx-auto">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -573,11 +573,11 @@ export default function AccesoClientesClient() {
               {gT(ui.benefitsTitle)}
             </h2>
             <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full shadow-[0_0_15px_#B2904D]" />
-          </motion.div>
+          </m.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {benefits.map((benefit, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -598,7 +598,7 @@ export default function AccesoClientesClient() {
                     {gT(benefit.desc)}
                   </p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -607,7 +607,7 @@ export default function AccesoClientesClient() {
       {/* --- PROMISE BANNER --- */}
       <section className="relative py-20 md:py-24 px-4 z-10 overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -627,7 +627,7 @@ export default function AccesoClientesClient() {
             </div>
 
             {/* Image side */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -653,7 +653,7 @@ export default function AccesoClientesClient() {
                 </div>
               </div>
               <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#B2904D]/30 rounded-full blur-2xl pointer-events-none -z-10" />
-            </motion.div>
+            </m.div>
 
             {/* Quote text */}
             <div className="md:col-span-3 relative z-10">
@@ -670,14 +670,14 @@ export default function AccesoClientesClient() {
                 </span>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
       {/* --- HOW IT WORKS --- */}
       <section className="relative py-24 md:py-32 px-4 z-10 bg-[#001f5f]/30">
         <div className="max-w-7xl mx-auto">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -693,12 +693,12 @@ export default function AccesoClientesClient() {
               {gT(ui.howTitle)}
             </h2>
             <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full shadow-[0_0_15px_#B2904D]" />
-          </motion.div>
+          </m.div>
 
           <div className="grid md:grid-cols-3 gap-8 lg:gap-12 relative">
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-transparent via-[#B2904D]/40 to-transparent z-0" />
             {steps.map((step, i) => (
-              <motion.div
+              <m.div
                 key={step.n}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -720,7 +720,7 @@ export default function AccesoClientesClient() {
                     {gT(step.desc)}
                   </p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -741,7 +741,7 @@ export default function AccesoClientesClient() {
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -753,7 +753,7 @@ export default function AccesoClientesClient() {
             <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-500/15 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="relative z-10">
-              <motion.div
+              <m.div
                 initial={{ scale: 0, rotate: -45 }}
                 whileInView={{ scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
@@ -761,7 +761,7 @@ export default function AccesoClientesClient() {
                 className="w-16 h-16 mx-auto mb-8 rounded-2xl bg-gradient-to-br from-[#B2904D] to-[#D4AF37] flex items-center justify-center shadow-[0_0_40px_rgba(178,144,77,0.4)]"
               >
                 <LogIn size={28} className="text-[#001540]" />
-              </motion.div>
+              </m.div>
 
               <h2 className="text-3xl md:text-5xl font-black text-white mb-5 tracking-tight">
                 {gT(ui.finalTitle)}
@@ -790,10 +790,10 @@ export default function AccesoClientesClient() {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* No credentials helper */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -809,7 +809,7 @@ export default function AccesoClientesClient() {
                 {gT(ui.noCredentialsDesc)}
               </p>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 

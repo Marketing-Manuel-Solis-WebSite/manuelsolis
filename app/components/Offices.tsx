@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Clock, Navigation, Scale } from 'lucide-react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
@@ -456,13 +456,13 @@ export default function FuturisticOffices() {
         <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/50 via-[#001540] to-[#000a20]`} />
         
         {/* Orbes flotantes */}
-        <motion.div 
+        <m.div 
           animate={isDesktop ? { x: [0, 50, 0], y: [0, -50, 0], opacity: [0.3, 0.6, 0.3] } : { opacity: 0.3 }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
           className={`absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full ${isDesktop ? 'blur-[120px]' : 'blur-[60px]'} mix-blend-screen`}
         />
-        <motion.div 
+        <m.div 
           animate={isDesktop ? { x: [0, -30, 0], y: [0, 30, 0], opacity: [0.2, 0.4, 0.2] } : { opacity: 0.2 }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
@@ -547,14 +547,14 @@ export default function FuturisticOffices() {
                    {officesData.filter(o => HOUSTON_IDS.includes(o.id)).map((office) => {
                      const isActive = activeId === office.id;
                      return (
-                       <motion.button key={office.id} onClick={() => setActiveId(office.id)}
+                       <m.button key={office.id} onClick={() => setActiveId(office.id)}
                          className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
                          whileHover={{ x: isActive ? 0 : 5 }}
                        >
-                         {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                         {isActive && <m.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
                          {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
                          <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
-                       </motion.button>
+                       </m.button>
                      );
                    })}
                  </div>
@@ -564,14 +564,14 @@ export default function FuturisticOffices() {
                    {officesData.filter(o => o.state === 'TX' && !HOUSTON_IDS.includes(o.id)).map((office) => {
                      const isActive = activeId === office.id;
                      return (
-                       <motion.button key={office.id} onClick={() => setActiveId(office.id)}
+                       <m.button key={office.id} onClick={() => setActiveId(office.id)}
                          className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
                          whileHover={{ x: isActive ? 0 : 5 }}
                        >
-                         {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                         {isActive && <m.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
                          {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
                          <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
-                       </motion.button>
+                       </m.button>
                      );
                    })}
                  </div>
@@ -587,15 +587,15 @@ export default function FuturisticOffices() {
                      {stateOffices.map((office) => {
                        const isActive = activeId === office.id;
                        return (
-                         <motion.button key={office.id} onClick={() => setActiveId(office.id)}
+                         <m.button key={office.id} onClick={() => setActiveId(office.id)}
                            className={`group relative w-full pl-10 pr-4 py-3 rounded-r-xl rounded-l-sm text-left transition-all duration-500 overflow-hidden flex justify-between items-center ${isActive ? 'bg-gradient-to-r from-white/10 to-transparent' : 'hover:bg-white/5'}`}
                            whileHover={{ x: isActive ? 0 : 5 }}
                          >
-                           {isActive && <motion.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
+                           {isActive && <m.div layoutId="activeGlow" className="absolute left-0 top-0 bottom-0 w-1 bg-[#B2904D] shadow-[0_0_15px_rgba(178,144,77,0.5)] rounded-full" />}
                            {!isActive && <div className="absolute left-[17px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/20 rounded-full group-hover:bg-white/50 transition-colors" />}
                            <span className={`block text-xl font-serif leading-none transition-colors ${isActive ? 'text-white font-medium' : 'text-blue-100/60 group-hover:text-white/90'}`}>{office.city}</span>
                            <span className={`text-[10px] tracking-widest uppercase font-bold px-2.5 py-1 rounded-full ${isActive ? 'bg-[#B2904D] text-[#001540]' : 'bg-blue-900/50 text-blue-200/60'}`}>{office.state}</span>
-                         </motion.button>
+                         </m.button>
                        );
                      })}
                    </div>
@@ -607,7 +607,7 @@ export default function FuturisticOffices() {
           {/* --- CENTRAL: DATA VISUALIZER (3D CARD - COL 9) --- */}
           <div className="lg:col-span-9 perspective-[2000px]">
             <AnimatePresence mode="wait">
-              <motion.div
+              <m.div
                 key={activeOffice.id}
                 initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
@@ -636,21 +636,21 @@ export default function FuturisticOffices() {
                             STATUS 
                             <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${isOfficeOpen ? 'bg-green-500' : 'bg-red-500'}`} />
                         </p>
-                        <motion.p 
+                        <m.p 
                             className="text-white text-lg font-mono mt-1"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
                         >
-                            <motion.span 
+                            <m.span 
                                 animate={{ opacity: [0.5, 1, 0.5] }} 
                                 transition={{ duration: 1.5, repeat: Infinity }}
                                 className={`text-sky-400`}
                             >
                                 [ {activeOffice.state} ]
-                            </motion.span>
+                            </m.span>
                              {' '} {isOfficeOpen ? 'ACTIVE' : 'OFFLINE'}
-                        </motion.p>
+                        </m.p>
                    </div>
                    
                    {/* MAIN TITLE (SIN QUOTE) */}
@@ -692,7 +692,7 @@ export default function FuturisticOffices() {
                    {/* CONTACT ACTIONS GRID (The HUD) */}
                    <div className="space-y-6">
                      <h3 className="text-xl font-thin text-white mb-4 flex items-center gap-3">
-                         <motion.div 
+                         <m.div 
                            animate={{ rotate: [0, 360] }}
                            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                            className={`w-4 h-4 rounded-full border border-dashed border-[#B2904D]`}
@@ -707,7 +707,7 @@ export default function FuturisticOffices() {
                    </div>
                    
                 </div>
-              </motion.div>
+              </m.div>
             </AnimatePresence>
           </div>
         </div>

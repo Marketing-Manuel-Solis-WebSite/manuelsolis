@@ -2,12 +2,12 @@
 
 import { CalendarCheck } from 'lucide-react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { track } from '@vercel/analytics/react';
 import { pushToDataLayer, trackConversion } from '../lib/tracking';
 
-const MotionLink = motion(Link);
+const MotionLink = m(Link);
 
 export default function ConsultaFloatingCta() {
   const { language } = useLanguage();

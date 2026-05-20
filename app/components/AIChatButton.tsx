@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, Send, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -107,7 +107,7 @@ export default function AIChatButton() {
   return (
     <>
       {/* --- BOTÓN FLOTANTE "AI" --- */}
-      <motion.button
+      <m.button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-[5.5rem] sm:bottom-6 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center group outline-none"
         aria-label={isOpen ? (language === 'es' ? 'Cerrar asistente legal' : 'Close legal assistant') : (language === 'es' ? 'Abrir asistente legal IA' : 'Open AI legal assistant')}
@@ -131,7 +131,7 @@ export default function AIChatButton() {
       >
         <AnimatePresence mode="wait">
           {!isOpen ? (
-            <motion.div
+            <m.div
               key="ai-text"
               initial={{ scale: 0, rotate: -90, opacity: 0 }}
               animate={{ scale: 1, rotate: 0, opacity: 1 }}
@@ -141,9 +141,9 @@ export default function AIChatButton() {
               <span className="font-serif font-black text-2xl text-[#002342] tracking-tighter drop-shadow-sm">
                 AI
               </span>
-            </motion.div>
+            </m.div>
           ) : (
-            <motion.div
+            <m.div
               key="close-icon"
               initial={{ scale: 0, rotate: 90, opacity: 0 }}
               animate={{ scale: 1, rotate: 0, opacity: 1 }}
@@ -151,15 +151,15 @@ export default function AIChatButton() {
               transition={{ duration: 0.2 }}
             >
               <X size={32} className="text-[#002342] drop-shadow-sm" strokeWidth={2.5} />
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
-      </motion.button>
+      </m.button>
 
       {/* --- VENTANA DE CHAT --- */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }} // Eliminado filter: blur en animación inicial
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -191,7 +191,7 @@ export default function AIChatButton() {
             {/* Chat Body */}
             <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-custom">
               {messages.map((msg, idx) => (
-                <motion.div
+                <m.div
                   key={idx}
                   initial={{ opacity: 0, y: 10 }} // Animación simplificada (sin scale)
                   animate={{ opacity: 1, y: 0 }}
@@ -206,7 +206,7 @@ export default function AIChatButton() {
                   `}>
                     {msg.content}
                   </div>
-                </motion.div>
+                </m.div>
               ))}
 
               {/* Botones de sugerencia */}
@@ -232,13 +232,13 @@ export default function AIChatButton() {
 
               {/* Indicador de carga */}
               {loading && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
+                <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
                   <div className="bg-white/5 border border-white/5 p-4 rounded-2xl rounded-bl-sm flex gap-1.5 items-center">
                     <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                     <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                   </div>
-                </motion.div>
+                </m.div>
               )}
               <div ref={messagesEndRef} />
             </div>
@@ -271,7 +271,7 @@ export default function AIChatButton() {
               </div>
             </div>
 
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 

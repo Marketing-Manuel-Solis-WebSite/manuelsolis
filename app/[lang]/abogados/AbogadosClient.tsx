@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import {
   Scale, ShieldCheck, Gavel, GraduationCap,
   ArrowRight, X as CloseIcon, Mail, Award, ChevronRight
@@ -72,7 +72,7 @@ export default function AbogadosClient() {
       {/* HERO SECTION */}
       <section className="relative pt-48 pb-24 px-4 overflow-hidden z-10">
         <div className="relative z-10 max-w-7xl mx-auto text-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -94,7 +94,7 @@ export default function AbogadosClient() {
             <p className="text-blue-100/70 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
               {texts.hero.subtitle[language]}
             </p>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -171,14 +171,14 @@ export default function AbogadosClient() {
       {/* MODAL DE DETALLE OPTIMIZADO */}
       <AnimatePresence>
         {selectedAttorney && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[9999] flex items-center justify-center p-0 md:p-4 bg-black/85 overflow-hidden"
             onClick={() => setSelectedAttorney(null)}
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0.9, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 50 }}
@@ -312,8 +312,8 @@ export default function AbogadosClient() {
                 </div>
 
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
 

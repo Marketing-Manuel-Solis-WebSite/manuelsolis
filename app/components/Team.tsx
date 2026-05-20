@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useLanguage } from '../context/LanguageContext'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
 export default function Team() {
@@ -32,7 +32,7 @@ export default function Team() {
 
           {/* Left Column: Text */}
           <div className="lg:col-span-6 space-y-10">
-            <motion.div
+            <m.div
                initial={{ opacity: 0, y: 30 }}
                whileInView={{ opacity: 1, y: 0 }}
                viewport={{ once: true, margin: "-100px" }}
@@ -51,9 +51,9 @@ export default function Team() {
                     {language === 'es' ? 'Legal' : '& Attorneys'}
                   </span>
                 </h2>
-            </motion.div>
+            </m.div>
 
-            <motion.div
+            <m.div
                initial={{ opacity: 0 }}
                whileInView={{ opacity: 1 }}
                viewport={{ once: true }}
@@ -75,9 +75,9 @@ export default function Team() {
                     }
                   </p>
               </div>
-            </motion.div>
+            </m.div>
 
-            <motion.div
+            <m.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -98,7 +98,7 @@ export default function Team() {
 
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
                 </Link>
-            </motion.div>
+            </m.div>
           </div>
 
           {/* Right Column: Image (Static) */}
@@ -122,7 +122,7 @@ export default function Team() {
              </div>
 
              {/* Badge with glow */}
-             <motion.div
+             <m.div
                 initial={{ opacity: 0, y: 20, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
@@ -144,7 +144,7 @@ export default function Team() {
                         </div>
                     </div>
                 </div>
-             </motion.div>
+             </m.div>
 
           </div>
         </div>

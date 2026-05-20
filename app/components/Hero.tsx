@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '../context/LanguageContext';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { pushToDataLayer, trackConversion } from '../lib/tracking';
 
 const associations = [
@@ -19,12 +19,11 @@ export default function HeroProfessional() {
   const { t, language } = useLanguage();
   const containerRef = useRef(null);
 
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
 
-  // Fire popup_open when the popup is rendered visible (mount or re-show).
-  // Trigger remains as-is per Phase 1 scope; tracking opens a 14-day window
-  // for Phase 5 decision (see DISCOVERY_v3.md §9.3).
+  // Fire popup_open when the popup becomes visible (preserves the existing
+  // tracking signal; now fires on the delayed/scroll trigger below).
   useEffect(() => {
     if (showPopup) {
       pushToDataLayer('popup_open', {
@@ -33,6 +32,34 @@ export default function HeroProfessional() {
       });
     }
   }, [showPopup]);
+
+  // Trigger the popup after a short delay OR on scroll intent (whichever comes
+  // first) instead of on every page load. A per-session "dismissed" flag stops
+  // it from re-opening once the visitor has closed it. Less intrusive → better
+  // bounce/LCP without removing the lead channel.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (sessionStorage.getItem('detained_popup_dismissed') === '1') return;
+
+    let opened = false;
+    const open = () => {
+      if (opened) return;
+      opened = true;
+      setShowPopup(true);
+      cleanup();
+    };
+    const onScroll = () => {
+      if (window.scrollY > 300) open();
+    };
+    const timer = setTimeout(open, 7000);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    function cleanup() {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', onScroll);
+    }
+    return cleanup;
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -77,6 +104,10 @@ export default function HeroProfessional() {
     pushToDataLayer('popup_dismiss', {
       popup_id: 'detained_relative',
     });
+    // Don't re-open for the rest of this browser session.
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('detained_popup_dismissed', '1');
+    }
     setShowPopup(false);
   };
 
@@ -115,9 +146,12 @@ export default function HeroProfessional() {
           <div className="lg:col-span-5 w-full relative h-[350px] sm:h-[450px] lg:h-[750px] flex items-end justify-center">
             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: isDesktop ? -80 : -20 }}
+            {/* LCP element: no opacity gating so the portrait paints on first
+                frame (and even if JS never runs). Only scale/position animate,
+                which does not delay Largest Contentful Paint. */}
+            <m.div
+              initial={{ scale: 0.9, y: 30 }}
+              animate={{ scale: 1, y: isDesktop ? -80 : -20 }}
               transition={{ duration: 1.5, ease: "easeOut" }}
               className="relative z-10 w-full h-full origin-bottom flex justify-center"
             >
@@ -133,10 +167,10 @@ export default function HeroProfessional() {
                     />
                   </div>
                </div>
-            </motion.div>
+            </m.div>
 
             {/* Experience Badge */}
-            <motion.div
+            <m.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.8, duration: 1 }}
@@ -151,18 +185,18 @@ export default function HeroProfessional() {
                     {language === 'es' ? 'Años de Experiencia' : 'Years Experience'}
                   </p>
                 </div>
-            </motion.div>
+            </m.div>
           </div>
 
           {/* Text Content Section */}
           <div className="lg:col-span-7 w-full space-y-6 lg:space-y-10 pl-0 lg:pl-16 relative z-20">
 
-            <motion.div
+            <m.div
               initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.5 }}
               className="absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-sky-500/30 to-transparent origin-top hidden lg:block"
             />
 
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
@@ -173,7 +207,7 @@ export default function HeroProfessional() {
               <div className="relative flex flex-col items-center lg:items-start overflow-visible">
 
                 {/* "More than" text */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 1 }}
@@ -182,7 +216,7 @@ export default function HeroProfessional() {
                   <span className="text-xl sm:text-2xl lg:text-4xl font-light text-white/60 uppercase tracking-[0.2em] sm:tracking-[0.3em] relative">
                     {language === 'es' ? 'Más de' : 'More than'}
                   </span>
-                </motion.div>
+                </m.div>
 
                 {/* 50,000 Number — Static gradient, no animation */}
                 <div className="relative w-full overflow-visible px-2 sm:px-4 lg:px-4 lg:pr-16 py-2 sm:py-4">
@@ -205,7 +239,7 @@ export default function HeroProfessional() {
                 </div>
 
                 {/* "Cases Won" text */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.9, duration: 1 }}
@@ -214,12 +248,12 @@ export default function HeroProfessional() {
                   <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white uppercase tracking-[0.3em] sm:tracking-[0.4em] font-light">
                     {language === 'es' ? 'Casos Ganados' : 'Cases Won'}
                   </p>
-                </motion.div>
+                </m.div>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* Divider */}
-            <motion.div
+            <m.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 1.2, duration: 1.5, ease: "easeInOut" }}
@@ -227,7 +261,7 @@ export default function HeroProfessional() {
             />
 
             {/* Practice Areas */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 1 }}
@@ -243,7 +277,7 @@ export default function HeroProfessional() {
                 </span>
               </h1>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.6, duration: 1.5 }}
@@ -252,8 +286,8 @@ export default function HeroProfessional() {
                 <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white/70 font-light italic text-center lg:text-left tracking-wide relative z-10">
                   {language === 'es' ? 'Inspirados por la gracia de Dios' : 'Inspired by the grace of God'}
                 </p>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           </div>
         </div>
       </div>
@@ -290,10 +324,10 @@ export default function HeroProfessional() {
 
       {/* Detained Relative Popup */}
       {showPopup && (
-        <motion.div
+        <m.div
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="fixed top-20 sm:top-24 md:top-32 left-4 right-4 sm:left-auto sm:right-4 md:right-10 z-50 w-auto max-w-[calc(100%-2rem)] sm:max-w-sm mx-auto sm:mx-0 p-4 sm:p-6 rounded-2xl bg-red-900/90 backdrop-blur-md border border-red-500/30 shadow-2xl group"
         >
             <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-transparent rounded-2xl opacity-50 pointer-events-none" />
@@ -318,7 +352,7 @@ export default function HeroProfessional() {
                     {language === 'es' ? 'Continuar al sitio' : 'Continue to site'}
                 </button>
             </div>
-        </motion.div>
+        </m.div>
       )}
 
       <style jsx global>{`

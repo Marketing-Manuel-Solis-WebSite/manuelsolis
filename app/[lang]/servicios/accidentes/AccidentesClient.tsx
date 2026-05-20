@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import {
   PhoneCall,
   ArrowRight,
@@ -312,13 +312,13 @@ export default function AccidentsPageBilingual() {
          
          <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-         <motion.div 
+         <m.div 
            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
            style={{ willChange: "transform, opacity" }}
            className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] bg-blue-600/10 rounded-full blur-[80px]" 
          />
-         <motion.div 
+         <m.div 
             animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             style={{ willChange: "transform, opacity" }}
@@ -349,7 +349,7 @@ export default function AccidentsPageBilingual() {
         <div className="container mx-auto max-w-7xl">
            <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-center">
               
-              <motion.div 
+              <m.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
@@ -370,7 +370,7 @@ export default function AccidentsPageBilingual() {
                     </div>
                  </div>
 
-                 <motion.div
+                 <m.div
                     initial={{ opacity: 0, x: -20 }} 
                     animate={{ opacity: 1, x: 0 }} 
                     transition={{ delay: 1, duration: 1 }}
@@ -383,11 +383,11 @@ export default function AccidentsPageBilingual() {
                     <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
                        {t('stats')}
                     </p>
-                 </motion.div>
-              </motion.div>
+                 </m.div>
+              </m.div>
 
               <div className="lg:col-span-7 space-y-6 md:space-y-8 pl-0 lg:pl-12 relative z-20 order-1 lg:order-2">
-                 <motion.div 
+                 <m.div 
                    initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.5 }}
                    className="absolute left-0 top-10 bottom-10 w-[1px] bg-gradient-to-b from-transparent via-[#B2904D]/50 to-transparent origin-top hidden lg:block" 
                  />
@@ -406,7 +406,7 @@ export default function AccidentsPageBilingual() {
                     </span>
                  </h1>
 
-                 <motion.div
+                 <m.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4, duration: 1 }}
@@ -415,9 +415,9 @@ export default function AccidentsPageBilingual() {
                     <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
                       {t('heroDescription')}
                     </p>
-                 </motion.div>
+                 </m.div>
 
-                 <motion.div 
+                 <m.div 
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
                     className="flex flex-wrap gap-4 pt-4"
                  >
@@ -426,7 +426,7 @@ export default function AccidentsPageBilingual() {
                        {t('ctaConsultation')}
                        <ArrowRight size={16} className="md:w-[18px] md:h-[18px] group-hover:translate-x-1 transition-transform"/>
                     </a>
-                 </motion.div>
+                 </m.div>
               </div>
 
            </div>
@@ -440,14 +440,14 @@ export default function AccidentsPageBilingual() {
         <div className="max-w-7xl mx-auto relative z-10">
           
           {/* Header de la sección */}
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="mb-16 text-center"
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
@@ -456,7 +456,7 @@ export default function AccidentsPageBilingual() {
             >
               <Scale size={14} className="text-[#B2904D]" />
               <span className="text-xs font-bold tracking-[0.2em] text-white/80 uppercase">{t('specialties')}</span>
-            </motion.div>
+            </m.div>
             
             <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
               {t('casesTitle')}
@@ -466,19 +466,19 @@ export default function AccidentsPageBilingual() {
               {t('casesSubtitle')}
             </p>
             
-            <motion.div 
+            <m.div 
               initial={{ width: 0 }}
               whileInView={{ width: 80 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
               className="h-1 bg-gradient-to-r from-[#B2904D] to-[#D4AF37] mx-auto rounded-full shadow-[0_0_10px_#B2904D]"
             />
-          </motion.div>
+          </m.div>
 
           {/* TABS - Títulos horizontales */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12">
             {allServicesData.map((service, index) => (
-              <motion.button
+              <m.button
                 key={service.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -506,13 +506,13 @@ export default function AccidentsPageBilingual() {
                     {gT(service.title)}
                   </span>
                 </div>
-              </motion.button>
+              </m.button>
             ))}
           </div>
 
           {/* CONTENIDO EXPANDIDO - Muestra solo el servicio seleccionado */}
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={selectedTab}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -524,14 +524,14 @@ export default function AccidentsPageBilingual() {
                 
                 {/* Header del contenido */}
                 <div className="flex items-start gap-6 mb-8 pb-8 border-b border-white/10">
-                  <motion.div 
+                  <m.div 
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: "spring", stiffness: 200 }}
                     className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#B2904D] to-[#D4AF37] flex items-center justify-center shadow-xl flex-shrink-0"
                   >
                     <activeService.icon size={40} className="text-white" />
-                  </motion.div>
+                  </m.div>
                   
                   <div className="flex-1">
                     <h3 className="text-3xl md:text-4xl font-black text-white mb-3 leading-tight">
@@ -571,7 +571,7 @@ export default function AccidentsPageBilingual() {
                     </h5>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                       {activeService.offices.map((office, i) => (
-                        <motion.div
+                        <m.div
                           key={i}
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
@@ -580,7 +580,7 @@ export default function AccidentsPageBilingual() {
                         >
                           <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
                           <span className="font-medium text-xs">{office}</span>
-                        </motion.div>
+                        </m.div>
                       ))}
                     </div>
                   </div>
@@ -659,7 +659,7 @@ export default function AccidentsPageBilingual() {
 
                   {/* CTA */}
                   <div className="pt-8 border-t border-white/10">
-                    <motion.a 
+                    <m.a 
                       href="#contacto"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -668,12 +668,12 @@ export default function AccidentsPageBilingual() {
                       <PhoneCall size={24}/>
                       <span>{t('requestEvaluation')}</span>
                       <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform"/>
-                    </motion.a>
+                    </m.a>
                   </div>
                 </div>
 
               </div>
-            </motion.div>
+            </m.div>
           </AnimatePresence>
         </div>
       </section>
@@ -684,14 +684,14 @@ export default function AccidentsPageBilingual() {
         <div className="absolute inset-0 bg-[#001540] opacity-90" />
 
         <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center relative z-10">
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="order-2 lg:order-1"
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
@@ -700,7 +700,7 @@ export default function AccidentsPageBilingual() {
             >
               <div className="w-2 h-2 bg-[#B2904D] rounded-full animate-pulse"></div>
               <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">{t('videoSectionBadge')}</span>
-            </motion.div>
+            </m.div>
             
             <h2 className="text-4xl font-black text-white mb-6 leading-tight">
               {t('videoSectionTitle')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] to-[#D4AF37]">Juan Solís</span>
@@ -710,7 +710,7 @@ export default function AccidentsPageBilingual() {
               {t('videoSectionSubtitle')}
             </p>
             
-            <motion.a 
+            <m.a 
               href="tel:+18664200405"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -720,10 +720,10 @@ export default function AccidentsPageBilingual() {
                 <PhoneCall size={20} />
               </div>
               <span className="relative">{t('callNow')}</span>
-            </motion.a>
-          </motion.div>
+            </m.a>
+          </m.div>
 
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -731,7 +731,7 @@ export default function AccidentsPageBilingual() {
             className="order-1 lg:order-2 relative group p-6 bg-white/10 backdrop-blur-md rounded-[2.5rem] shadow-xl border border-white/10"
           >
             <div className="relative rounded-2xl overflow-hidden shadow-xl bg-black aspect-video"> 
-              <motion.div 
+              <m.div 
                 initial={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
@@ -739,14 +739,14 @@ export default function AccidentsPageBilingual() {
                 className="absolute inset-0 flex items-center justify-center z-10 cursor-pointer bg-black/10 hover:bg-black/0 transition-colors"
               >
                 {!isPlaying && (
-                  <motion.div 
+                  <m.div 
                     whileHover={{ scale: 1.1 }}
                     className="w-16 h-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg border border-white/60"
                   >
                     <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
-                  </motion.div>
+                  </m.div>
                 )}
-              </motion.div>
+              </m.div>
               <video 
                 ref={videoRef}
                 src="https://vz-9f852395-0ee.b-cdn.net/d7979aa5-40db-49f2-8566-b8a580591661/playlist.m3u8" 
@@ -754,7 +754,7 @@ export default function AccidentsPageBilingual() {
                 aria-label={t('videoAlt')}
               />
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -762,13 +762,13 @@ export default function AccidentsPageBilingual() {
       <section className="py-32 relative overflow-hidden bg-[#001540]">
         
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <motion.div 
+          <m.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
@@ -777,21 +777,21 @@ export default function AccidentsPageBilingual() {
             >
               <FileText size={14} className="text-[#B2904D]" />
               <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">{t('processMethod')}</span>
-            </motion.div>
+            </m.div>
             
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-6">{t('processTitle')}</h2>
-            <motion.div 
+            <m.div 
               initial={{ width: 0 }}
               whileInView={{ width: 80 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="h-1 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full shadow-[0_0_10px_#B2904D]"
             />
-          </motion.div>
+          </m.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {processStepsData.map((step, index) => (
-              <motion.div
+              <m.div
                 key={step.id}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -802,7 +802,7 @@ export default function AccidentsPageBilingual() {
               >
                 <div className="bg-white/10 backdrop-blur-md p-8 rounded-[2rem] border border-white/20 hover:bg-white/20 hover:border-[#B2904D]/50 transition-all duration-300 h-full shadow-lg">
                   
-                  <motion.div 
+                  <m.div 
                     initial={{ scale: 0, rotate: -180 }}
                     whileInView={{ scale: 1, rotate: 0 }}
                     viewport={{ once: true }}
@@ -810,20 +810,20 @@ export default function AccidentsPageBilingual() {
                     className="absolute -top-4 -left-4 w-10 h-10 bg-gradient-to-br from-[#B2904D] to-[#D4AF37] rounded-lg flex items-center justify-center font-black text-white text-lg shadow-md"
                   >
                     {step.id}
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div 
+                  <m.div 
                     className="w-14 h-14 bg-white/20 rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#B2904D] transition-all"
                   >
                     <step.icon size={26} className="text-white"/>
-                  </motion.div>
+                  </m.div>
 
                   <h3 className="font-black text-xl text-white mb-3">{gT(step.title)}</h3>
                   <p className="text-white/70 text-sm leading-relaxed">{gT(step.desc)}</p>
                 </div>
 
                 {index < processStepsData.length - 1 && (
-                  <motion.div 
+                  <m.div 
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     viewport={{ once: true }}
@@ -831,7 +831,7 @@ export default function AccidentsPageBilingual() {
                     className="hidden md:block absolute top-[25%] -right-4 w-8 h-0.5 bg-gradient-to-r from-[#B2904D] to-transparent origin-left"
                   />
                 )}
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -840,7 +840,7 @@ export default function AccidentsPageBilingual() {
       {/* --- BLOG SUGGESTIONS SECTION --- */}
       <section className="py-24 relative bg-[#001540]">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -854,14 +854,14 @@ export default function AccidentsPageBilingual() {
                 ? 'Artículos informativos preparados por nuestros abogados para ayudarle a entender sus opciones legales.'
                 : 'Informative articles prepared by our attorneys to help you understand your legal options.'}
             </p>
-            <motion.div
+            <m.div
               initial={{ width: 0 }}
               whileInView={{ width: 80 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="h-1 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6"
             />
-          </motion.div>
+          </m.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
@@ -884,7 +884,7 @@ export default function AccidentsPageBilingual() {
                 image: '/blog/blog_08/B8_CR1.png',
               },
             ].map((article, i) => (
-              <motion.a
+              <m.a
                 key={article.slug}
                 href={`/${lang}/blog/${article.slug}`}
                 initial={{ opacity: 0, y: 20 }}
@@ -912,7 +912,7 @@ export default function AccidentsPageBilingual() {
                     {lang === 'es' ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
-              </motion.a>
+              </m.a>
             ))}
           </div>
         </div>
@@ -923,7 +923,7 @@ export default function AccidentsPageBilingual() {
 
         <div className="max-w-4xl mx-auto px-4 relative z-10">
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -936,7 +936,7 @@ export default function AccidentsPageBilingual() {
                 <ContactForm />
              </div>
 
-          </motion.div>
+          </m.div>
         </div>
       </section>
 

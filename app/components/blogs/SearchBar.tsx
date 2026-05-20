@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Search, X } from 'lucide-react';
 
 interface SearchBarProps {
@@ -16,7 +16,7 @@ export default function SearchBar({ value, onChange, lang }: SearchBarProps) {
     : 'Search our legal library...';
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
@@ -40,7 +40,7 @@ export default function SearchBar({ value, onChange, lang }: SearchBarProps) {
         {/* Botón Limpiar */}
         <div className="absolute right-4 top-1/2 -translate-y-1/2">
           {value && (
-            <motion.button
+            <m.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
@@ -48,10 +48,10 @@ export default function SearchBar({ value, onChange, lang }: SearchBarProps) {
               className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/60 hover:text-white transition-colors"
             >
               <X size={14} />
-            </motion.button>
+            </m.button>
           )}
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

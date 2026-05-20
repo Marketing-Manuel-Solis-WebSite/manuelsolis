@@ -5,7 +5,7 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm'
 import { useLanguage } from '../../context/LanguageContext'
-import { motion, Variants } from 'framer-motion'
+import { m, Variants } from 'framer-motion'
 import Image from 'next/image'
 import { MessageSquare, Shield, Mail, Phone, Clock, XOctagon } from 'lucide-react'
 
@@ -177,7 +177,7 @@ export default function SmsTerminosClient() {
 
         <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-        <motion.div
+        <m.div
           animate={{
             opacity: [0.3, 0.5, 0.3],
             scale: [1, 1.2, 1],
@@ -187,7 +187,7 @@ export default function SmsTerminosClient() {
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]"
         />
-        <motion.div
+        <m.div
             animate={{
               opacity: [0.2, 0.4, 0.2],
               scale: [1, 1.3, 1],
@@ -198,7 +198,7 @@ export default function SmsTerminosClient() {
             className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]"
         />
 
-        <motion.div
+        <m.div
           initial={{ x: "20%" }}
           animate={{ x: "-20%" }}
           transition={{
@@ -212,7 +212,7 @@ export default function SmsTerminosClient() {
           <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
               SMS TERMS
           </span>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* =========================================================================
@@ -225,7 +225,7 @@ export default function SmsTerminosClient() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
 
             {/* IZQUIERDA: IMAGEN LOGO INFORMACION (Reutilizada) */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
@@ -243,7 +243,7 @@ export default function SmsTerminosClient() {
                       priority
                   />
               </div>
-            </motion.div>
+            </m.div>
 
             {/* DERECHA: TÍTULO Y SUBTÍTULO */}
             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
@@ -259,7 +259,7 @@ export default function SmsTerminosClient() {
                 </h1>
               </div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4, duration: 1 }}
@@ -268,9 +268,9 @@ export default function SmsTerminosClient() {
                 <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
                   {t('hero.subtitle')}
                 </p>
-              </motion.div>
+              </m.div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1 }}
@@ -284,7 +284,7 @@ export default function SmsTerminosClient() {
                 </p>
                 <hr className="border-[#B2904D]/30" />
                 <div dangerouslySetInnerHTML={{ __html: parseText('section1.content') }} />
-              </motion.div>
+              </m.div>
             </div>
           </div>
         </div>
@@ -294,7 +294,7 @@ export default function SmsTerminosClient() {
       <section className="container mx-auto px-4 py-12 relative z-10 max-w-7xl">
 
         {/* SECCIÓN 2: OPT-OUT */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
             <SectionTitle title={t('section2.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -308,10 +308,10 @@ export default function SmsTerminosClient() {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 3: AYUDA */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
             <SectionTitle title={t('section3.title')} />
             <div className="p-8 bg-[#000814]/60 rounded-2xl border border-white/10 space-y-6 shadow-lg">
                 <div className="text-base text-blue-100/80 font-light space-y-4">
@@ -328,18 +328,18 @@ export default function SmsTerminosClient() {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 4: CARRIER LIABILITY */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
             <SectionTitle title={t('section4.title')} />
             <div className="p-6 bg-[#1a0000]/60 rounded-2xl border border-red-500/30 text-base text-red-100/80 font-light shadow-xl">
                 <div dangerouslySetInnerHTML={{ __html: parseText('section4.content') }} />
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 5: FRECUENCIA Y TARIFAS */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
             <SectionTitle title={t('section5.title')} />
             <div className="grid lg:grid-cols-3 gap-8 p-6 bg-[#000814]/60 rounded-2xl border border-white/10 shadow-lg">
                 <div className="lg:col-span-2 text-base text-blue-100/80 font-light space-y-4">
@@ -358,10 +358,10 @@ export default function SmsTerminosClient() {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 6: POLÍTICA DE PRIVACIDAD */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
             <SectionTitle title={t('section6.title')} />
             <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner flex flex-col md:flex-row justify-between items-center gap-4">
                 <div dangerouslySetInnerHTML={{ __html: parseText('section6.content') }} />
@@ -371,10 +371,10 @@ export default function SmsTerminosClient() {
                     {t('section6.linkText')}
                 </a>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 7: ELEGIBILIDAD */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
             <SectionTitle title={t('section7.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
                 <div className="text-base text-blue-100/80 font-light space-y-4">
@@ -388,10 +388,10 @@ export default function SmsTerminosClient() {
                     ))}
                 </ul>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 8: MODIFICACIONES Y 9: CONTACTO */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="mb-16">
             <SectionTitle title={t('section8.title')} />
             <div className="p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
                  <div className="text-base text-blue-100/80 font-light" dangerouslySetInnerHTML={{ __html: parseText('section8.content') }} />
@@ -411,7 +411,7 @@ export default function SmsTerminosClient() {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </m.div>
 
       </section>
 

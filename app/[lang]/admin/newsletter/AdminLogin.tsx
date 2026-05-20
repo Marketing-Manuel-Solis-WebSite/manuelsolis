@@ -1,7 +1,7 @@
 'use client';
 
 import { Lock, ShieldAlert, Mail } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { loginAction } from './actions';
 
 export default function AdminLogin({
@@ -22,7 +22,7 @@ export default function AdminLogin({
 
   return (
     <div className="min-h-screen bg-[#001540] flex items-center justify-center px-4 py-12">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -66,14 +66,14 @@ export default function AdminLogin({
             </div>
 
             {hasError && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 className="flex items-start gap-2 px-4 py-3 bg-red-50 border border-red-200 rounded-lg"
               >
                 <ShieldAlert className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-red-700">{errorMessage}</p>
-              </motion.div>
+              </m.div>
             )}
 
             <button
@@ -91,7 +91,7 @@ export default function AdminLogin({
             </p>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, ChevronDown, Phone, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
+import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { track } from '@vercel/analytics/react' // 👈 Importamos track
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
@@ -246,7 +246,7 @@ export default function HeaderProfessional() {
 
   return (
     <>
-      <motion.header
+      <m.header
         role="banner"
         className={`fixed top-0 left-0 right-0 z-50 w-full flex flex-col`}
         style={{ willChange: "transform, background-color, backdrop-filter" }}
@@ -417,7 +417,7 @@ export default function HeaderProfessional() {
 
                 <AnimatePresence>
                   {isLangMenuOpen && (
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -429,7 +429,7 @@ export default function HeaderProfessional() {
                       <button onClick={() => toggleLang('en')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
                         <FlagUS /> <span className="text-[10px] font-light text-white tracking-widest">ENG</span>
                       </button>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -489,11 +489,11 @@ export default function HeaderProfessional() {
           </div>
         </div>
 
-      </motion.header>
+      </m.header>
 
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -535,7 +535,7 @@ export default function HeaderProfessional() {
                     
                     <AnimatePresence>
                       {item.submenu && openSubmenu === item.key && (
-                        <motion.div
+                        <m.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
@@ -557,7 +557,7 @@ export default function HeaderProfessional() {
                                   </button>
                                   <AnimatePresence>
                                     {openMobileState === stateGroup.state && (
-                                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden ml-3 border-l border-white/5 pl-3 space-y-1 py-1">
+                                      <m.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden ml-3 border-l border-white/5 pl-3 space-y-1 py-1">
                                         {stateGroup.cities.map(city =>
                                           city.subOffices ? (
                                             <div key={city.name}>
@@ -570,13 +570,13 @@ export default function HeaderProfessional() {
                                               </button>
                                               <AnimatePresence>
                                                 {openMobileCity === city.name && (
-                                                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden ml-3 border-l border-white/5 pl-3 space-y-1 py-1">
+                                                  <m.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden ml-3 border-l border-white/5 pl-3 space-y-1 py-1">
                                                     {city.subOffices.map(sub => (
                                                       <Link key={sub.name} href={sub.href} onClick={() => setIsMenuOpen(false)} className="block text-[11px] text-gray-400 font-light uppercase tracking-[0.12em] hover:text-white transition-colors py-0.5">
                                                         {sub.name}
                                                       </Link>
                                                     ))}
-                                                  </motion.div>
+                                                  </m.div>
                                                 )}
                                               </AnimatePresence>
                                             </div>
@@ -586,7 +586,7 @@ export default function HeaderProfessional() {
                                             </Link>
                                           )
                                         )}
-                                      </motion.div>
+                                      </m.div>
                                     )}
                                   </AnimatePresence>
                                 </div>
@@ -604,7 +604,7 @@ export default function HeaderProfessional() {
                               </Link>
                             ))
                           )}
-                        </motion.div>
+                        </m.div>
                       )}
                     </AnimatePresence>
                   </div>
@@ -632,7 +632,7 @@ export default function HeaderProfessional() {
 
               </nav>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

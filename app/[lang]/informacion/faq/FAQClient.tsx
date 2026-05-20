@@ -6,7 +6,7 @@ import ContactForm from '../../../components/ContactForm'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import React, { useState } from 'react'
 import { useLanguage } from '../../../context/LanguageContext'
-import { motion, AnimatePresence } from 'framer-motion'; 
+import { m, AnimatePresence } from 'framer-motion'; 
 import Image from 'next/image';
 
 // --- TIPOS ---
@@ -57,7 +57,7 @@ function Accordion({ item, lang }: { item: FaqItemBilingual, lang: 'es' | 'en' }
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -68,7 +68,7 @@ function Accordion({ item, lang }: { item: FaqItemBilingual, lang: 'es' | 'en' }
               className="px-6 py-6 text-blue-100/80 text-base font-light leading-relaxed bg-black/20 rounded-b-xl mx-2 border-x border-b border-white/5 shadow-inner"
               dangerouslySetInnerHTML={{ __html: contentHtml }} 
             />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>
@@ -334,13 +334,13 @@ export default function FAQClient() {
          <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
          {/* Animaciones de Luz Optimizado: Blur reducido y will-change */}
-         <motion.div 
+         <m.div 
            animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1] }}
            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
            style={{ willChange: "transform, opacity" }}
            className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[80px]" 
          />
-         <motion.div 
+         <m.div 
             animate={{ opacity: [0.15, 0.3, 0.15], scale: [1, 1.2, 1] }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             style={{ willChange: "transform, opacity" }}
@@ -348,7 +348,7 @@ export default function FAQClient() {
          />
          
          {/* N Gigante (Opacidad muy baja y estática o will-change si se anima) */}
-         <motion.div
+         <m.div
             initial={{ x: "60%" }} 
             animate={{ x: "-160%" }} 
             transition={{ 
@@ -363,7 +363,7 @@ export default function FAQClient() {
             <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
                N/\И/\
             </span>
-         </motion.div>
+         </m.div>
       </div>
       
       {/* =========================================================================
@@ -376,7 +376,7 @@ export default function FAQClient() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
             {/* --- IZQUIERDA: LOGO (Cols 5) --- */}
-            <motion.div 
+            <m.div 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, ease: "easeOut" }}
@@ -385,7 +385,7 @@ export default function FAQClient() {
               {/* Blur reducido */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
               
-              <motion.div
+              <m.div
                 initial={{ scale: 0.8, rotateY: -15 }}
                 animate={{ scale: 1, rotateY: 0 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
@@ -401,10 +401,10 @@ export default function FAQClient() {
                     priority
                   />
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Estadística decorativa - Blur reducido */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: 0.8, duration: 1 }}
@@ -419,13 +419,13 @@ export default function FAQClient() {
                     {lang === 'es' ? 'Preguntas Respondidas' : 'Questions Answered'}
                   </p>
                 </div>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
 
             {/* --- DERECHA: TEXTO (Cols 7) --- */}
             <div className="lg:col-span-7 space-y-10 pl-0 lg:pl-24 relative z-20">
               
-              <motion.div 
+              <m.div 
                 initial={{ scaleY: 0 }} 
                 animate={{ scaleY: 1 }} 
                 transition={{ duration: 1.5, delay: 0.5 }}
@@ -435,18 +435,18 @@ export default function FAQClient() {
               <div className="relative">
                 <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.95] font-thin text-white tracking-tight">
                   <span className="block overflow-hidden pb-2 perspective-[400px]">
-                    <motion.span 
+                    <m.span 
                       initial={{ y: "100%", rotateX: -20, opacity: 0 }}
                       animate={{ y: 0, rotateX: 0, opacity: 1 }}
                       transition={{ duration: 1.2, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
                       className="block text-white/90"
                     >
                       {lang === 'es' ? 'PREGUNTAS' : 'FREQUENTLY'}
-                    </motion.span>
+                    </m.span>
                   </span>
                   
                   <span className="block overflow-hidden pb-4 perspective-[400px]">
-                    <motion.span 
+                    <m.span 
                       initial={{ y: "100%", rotateX: -20, opacity: 0 }}
                       animate={{ y: 0, rotateX: 0, opacity: 1 }}
                       transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
@@ -455,20 +455,20 @@ export default function FAQClient() {
                       <span className="text-[#B2904D] drop-shadow-xl">
                         {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
                       </span>
-                      <motion.span 
+                      <m.span 
                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
                         animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
                         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
                         style={{ willChange: "background-position" }}
                       >
                         {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
-                      </motion.span>
-                    </motion.span>
+                      </m.span>
+                    </m.span>
                   </span>
 
                   {lang === 'en' && (
                     <span className="block overflow-hidden perspective-[400px]">
-                      <motion.span 
+                      <m.span 
                         initial={{ y: "100%", rotateX: -20, opacity: 0 }}
                         animate={{ y: 0, rotateX: 0, opacity: 1 }}
                         transition={{ duration: 1.2, delay: 0.45, ease: [0.25, 1, 0.5, 1] }}
@@ -477,21 +477,21 @@ export default function FAQClient() {
                         <span className="text-[#B2904D] drop-shadow-xl">
                           QUESTIONS
                         </span>
-                        <motion.span 
+                        <m.span 
                           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
                           animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
                           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2, delay: 0.5 }}
                           style={{ willChange: "background-position" }}
                         >
                           QUESTIONS
-                        </motion.span>
-                      </motion.span>
+                        </m.span>
+                      </m.span>
                     </span>
                   )}
                 </h1>
               </div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1 }}
@@ -501,9 +501,9 @@ export default function FAQClient() {
                 <p className="text-xl text-white/70 font-extralight max-w-xl leading-relaxed pl-4 border-l border-white/10">
                   {t('hero.subtitle')}
                 </p>
-              </motion.div>
+              </m.div>
 
-              <motion.div 
+              <m.div 
                 initial={{ opacity: 0, scale: 0.9 }} 
                 animate={{ opacity: 1, scale: 1 }} 
                 transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
@@ -517,7 +517,7 @@ export default function FAQClient() {
                     </p>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
 
             </div>
           </div>

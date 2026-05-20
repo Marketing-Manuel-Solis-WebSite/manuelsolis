@@ -6,7 +6,7 @@ import Footer from '../../components/Footer';
 import ContactForm from '../../components/ContactForm';
 import { Users, Shield, Zap, FileText, ExternalLink, Phone, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import { motion } from 'framer-motion'; 
+import { m } from 'framer-motion'; 
 
 // --- COLORES ---
 
@@ -40,7 +40,7 @@ function StaticResourceItem({ item, lang }: { item: ResourceItemBilingual, lang:
     const contentHtml = parseContent(rawContent);
   
     return (
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -55,7 +55,7 @@ function StaticResourceItem({ item, lang }: { item: ResourceItemBilingual, lang:
           className="text-white/80 text-base font-light leading-relaxed space-y-3"
           dangerouslySetInnerHTML={{ __html: contentHtml }} 
         />
-      </motion.div>
+      </m.div>
     );
 }
 
@@ -205,7 +205,7 @@ export default function ClientesDetenidosClient() {
       <section className="relative pt-54 pb-16 z-10 px-6 lg:px-12">
         <div className="container mx-auto max-w-6xl text-center">
             
-            <motion.h1 
+            <m.h1 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -214,9 +214,9 @@ export default function ClientesDetenidosClient() {
                 <span className="block text-white/90">{getT(texts.hero.title1)}</span>
                 <span className="block text-white/80 text-2xl md:text-4xl lg:text-5xl mt-2 tracking-widest">{getT(texts.hero.title2)}</span>
                 <span className="block font-black text-[#B2904D] mt-2 drop-shadow-xl">{getT(texts.hero.title3)}</span>
-            </motion.h1>
+            </m.h1>
 
-            <motion.div
+            <m.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 0.3 }}
@@ -272,7 +272,7 @@ export default function ClientesDetenidosClient() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 {/* 1. Localizando Seres Queridos */}
-                <motion.div 
+                <m.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -302,10 +302,10 @@ export default function ClientesDetenidosClient() {
                             {getT(texts.section1.help3)}
                         </li>
                     </ul>
-                </motion.div>
+                </m.div>
 
                 {/* 2. Hotline (Destacado) */}
-                <motion.div 
+                <m.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -330,10 +330,10 @@ export default function ClientesDetenidosClient() {
                     <p className="text-xs text-white/40 mt-4 uppercase tracking-widest">
                         {lang === 'es' ? 'Atención Inmediata' : 'Immediate Attention'}
                     </p>
-                </motion.div>
+                </m.div>
 
                 {/* 3. Solicitantes de Asilo */}
-                <motion.div 
+                <m.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -359,7 +359,7 @@ export default function ClientesDetenidosClient() {
                             <span className="text-sm font-medium">{getT(texts.section3.advice)}</span>
                          </div>
                     </div>
-                </motion.div>
+                </m.div>
 
             </div>
         </div>

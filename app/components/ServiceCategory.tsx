@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -31,7 +31,7 @@ export default function ServiceCategory({ title, icon: Icon, items, delay = 0 }:
   const safeItems = Array.isArray(items) ? items : [];
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -79,6 +79,6 @@ export default function ServiceCategory({ title, icon: Icon, items, delay = 0 }:
       
       {/* Barra decorativa inferior */}
       <div className="absolute bottom-0 left-0 w-0 h-1 bg-[#B2904D] group-hover:w-full transition-all duration-500 ease-out" />
-    </motion.div>
+    </m.div>
   );
 }

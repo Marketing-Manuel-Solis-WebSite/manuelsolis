@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import {
   Mail,
   FileText,
@@ -151,7 +151,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <motion.section
+    <m.section
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
@@ -168,7 +168,7 @@ function Section({
         </div>
       </div>
       {children}
-    </motion.section>
+    </m.section>
   );
 }
 

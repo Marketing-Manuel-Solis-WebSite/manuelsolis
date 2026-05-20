@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { m, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { Shield, Clock3, Award, Lock } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -70,15 +70,15 @@ export default function ConsultaClient() {
         </svg>
 
         {/* Mouse spotlight */}
-        <motion.div className="pointer-events-none absolute inset-0 z-0" style={{ background: spotlight }} />
+        <m.div className="pointer-events-none absolute inset-0 z-0" style={{ background: spotlight }} />
 
         {/* Animated orbs */}
-        <motion.div
+        <m.div
           animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.45, 0.25] }}
           transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-[5%] left-[-10%] w-[55vw] h-[55vw] bg-[#B2904D]/12 rounded-full blur-[120px] pointer-events-none z-0"
         />
-        <motion.div
+        <m.div
           animate={{ scale: [1, 1.1, 1], opacity: [0.18, 0.35, 0.18] }}
           transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
           className="absolute bottom-[5%] right-[-10%] w-[60vw] h-[60vw] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none z-0"
@@ -91,7 +91,7 @@ export default function ConsultaClient() {
         {/* Content */}
         <div className="relative z-20 max-w-3xl mx-auto">
           {/* Header */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -121,10 +121,10 @@ export default function ConsultaClient() {
                 ? 'Cuéntanos en menos de un minuto qué necesitas. Un abogado revisará tu caso y te contactará personalmente.'
                 : 'Tell us in less than a minute what you need. An attorney will review your case and contact you personally.'}
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Reassurance strip */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -143,10 +143,10 @@ export default function ConsultaClient() {
                 )}
               </React.Fragment>
             ))}
-          </motion.div>
+          </m.div>
 
           {/* Form panel */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -158,7 +158,7 @@ export default function ConsultaClient() {
             <div className="relative z-10">
               <ContactForm />
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </main>
 

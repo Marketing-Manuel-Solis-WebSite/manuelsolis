@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { Star, Play, X, Quote } from 'lucide-react'
 import Image from 'next/image'
 import { useLanguage } from '../context/LanguageContext'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 
 interface VideoModalProps {
   videoId: string;
@@ -17,14 +17,14 @@ function VideoModal({ videoId, onClose }: VideoModalProps) {
   const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0&controls=1`;
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[100] flex items-center justify-center bg-[#000a20]/98 backdrop-blur-md p-4"
       onClick={onClose}
     >
-      <motion.div
+      <m.div
         initial={{ scale: 0.8, y: 100 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.8, y: 100 }}
@@ -49,8 +49,8 @@ function VideoModal({ videoId, onClose }: VideoModalProps) {
           allowFullScreen
           className="w-full h-full"
         ></iframe>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -102,7 +102,7 @@ export default function Testimonials() {
                 {/* Static dashed circle decoration */}
                 <div className="absolute -inset-16 border border-white/5 rounded-full z-0 border-dashed opacity-40 hidden lg:block" />
 
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
@@ -146,12 +146,12 @@ export default function Testimonials() {
                              <p className="text-white text-2xl font-medium tracking-tight">{current.name}</p>
                         </div>
                     </div>
-                </motion.div>
+                </m.div>
             </div>
 
             {/* Text Column (Right) */}
             <div className="lg:col-span-5 relative space-y-10 pl-0 lg:pl-10">
-                 <motion.div
+                 <m.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -168,9 +168,9 @@ export default function Testimonials() {
                            {language === 'es' ? 'Esperanza' : 'Hope'}
                         </span>
                       </h2>
-                 </motion.div>
+                 </m.div>
 
-                 <motion.div
+                 <m.div
                     initial={{ opacity: 0, x: 50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -182,9 +182,9 @@ export default function Testimonials() {
                     <p className="text-2xl lg:text-3xl font-light text-blue-50 leading-relaxed relative z-10 italic">
                         &quot;{current.comment}&quot;
                     </p>
-                 </motion.div>
+                 </m.div>
 
-                 <motion.div
+                 <m.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
@@ -193,14 +193,14 @@ export default function Testimonials() {
                  >
                     <div className="flex gap-1.5">
                         {[...Array(5)].map((_, i) => (
-                           <motion.div
+                           <m.div
                               key={i}
                               initial={{ opacity: 0, scale: 0 }}
                               whileInView={{ opacity: 1, scale: 1 }}
                               transition={{ delay: 0.5 + (i * 0.1), type: "spring" }}
                            >
                               <Star className="w-6 h-6 fill-[#B2904D] text-[#B2904D]" />
-                           </motion.div>
+                           </m.div>
                         ))}
                     </div>
 
@@ -210,7 +210,7 @@ export default function Testimonials() {
                             {language === 'es' ? 'Caso Ganado' : 'Case Won'}
                         </p>
                     </div>
-                 </motion.div>
+                 </m.div>
             </div>
 
         </div>

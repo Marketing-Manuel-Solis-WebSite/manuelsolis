@@ -9,6 +9,7 @@ import PageViewTracker from '../components/PageViewTracker';
 import type { Language } from '../lib/translations';
 import Script from 'next/script';
 import { LangSetter } from '../components/LangSetter';
+import MotionProvider from '../components/MotionProvider';
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getPlaceData } from '../lib/googleReviews';
@@ -424,11 +425,13 @@ export default async function LangLayout({ children, params }: Props) {
         <Suspense fallback={null}>
           <PageViewTracker />
         </Suspense>
-        {children}
-        <WhatsAppButton />
-        <ConsultaFloatingCta />
-        <AIChatButton />
-        <MobileStickyBar />
+        <MotionProvider>
+          {children}
+          <WhatsAppButton />
+          <ConsultaFloatingCta />
+          <AIChatButton />
+          <MobileStickyBar />
+        </MotionProvider>
 
         <Analytics />
         <SpeedInsights />

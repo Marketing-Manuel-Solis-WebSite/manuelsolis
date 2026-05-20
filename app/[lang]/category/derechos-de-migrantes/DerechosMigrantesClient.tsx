@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { useLanguage } from '../../../context/LanguageContext';
-import { motion, Variants } from 'framer-motion';
+import { m, Variants } from 'framer-motion';
 import { BookOpen, Calendar, User } from 'lucide-react';
 
 // --- FUENTE ---
@@ -163,7 +163,7 @@ export default function DerechosMigrantesClient() {
         <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
         {/* Orbes de luz con movimiento suave - CONTENIDOS */}
-        <motion.div
+        <m.div
           animate={{
             opacity: [0.3, 0.5, 0.3],
             scale: [1, 1.2, 1],
@@ -173,7 +173,7 @@ export default function DerechosMigrantesClient() {
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-blue-600/10 rounded-full blur-[120px]"
         />
-        <motion.div
+        <m.div
           animate={{
             opacity: [0.2, 0.4, 0.2],
             scale: [1, 1.3, 1],
@@ -186,7 +186,7 @@ export default function DerechosMigrantesClient() {
 
         {/* Texto de Fondo Sutil - CONTENIDO */}
         <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
-          <motion.span
+          <m.span
             initial={{ x: "20%" }}
             animate={{ x: "-20%" }}
             transition={{
@@ -198,7 +198,7 @@ export default function DerechosMigrantesClient() {
             className="text-[60vh] font-black italic text-white tracking-tighter whitespace-nowrap"
           >
             DERECHOS
-          </motion.span>
+          </m.span>
         </div>
       </div>
 
@@ -208,16 +208,16 @@ export default function DerechosMigrantesClient() {
 
           {/* --- HERO/HEADER SECTION --- */}
           <div className="w-full mb-20 text-center">
-            <motion.span
+            <m.span
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="inline-block text-sm font-bold tracking-widest text-[#B2904D] uppercase mb-4 drop-shadow-[0_0_10px_rgba(178,144,77,0.3)]"
             >
               {t('header.library')}
-            </motion.span>
+            </m.span>
 
-            <motion.h1
+            <m.h1
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -225,27 +225,27 @@ export default function DerechosMigrantesClient() {
             >
               <span className="font-extrabold text-[#B2904D] drop-shadow-lg">{t('header.title').split(' ')[0]}</span>
               <span className="block text-white/90">{t('header.title').split(' ').slice(1).join(' ')}</span>
-            </motion.h1>
+            </m.h1>
 
-            <motion.div
+            <m.div
               initial={{ width: 0 }}
               animate={{ width: '6rem' }}
               transition={{ duration: 1, delay: 0.8 }}
               className="h-1 bg-gradient-to-r from-[#002868] to-[#B2904D] mx-auto rounded-full mt-6"
-            ></motion.div>
+            ></m.div>
 
-            <motion.p
+            <m.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="mt-8 text-lg sm:text-xl text-blue-100/70 max-w-3xl mx-auto font-light leading-relaxed px-4"
             >
               {t('header.subtitle')}
-            </motion.p>
+            </m.p>
           </div>
 
           {/* --- GRID DE ARTÍCULOS --- */}
-          <motion.div
+          <m.div
             className="w-full grid gap-8 sm:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
             variants={containerVariants}
             initial="hidden"
@@ -253,7 +253,7 @@ export default function DerechosMigrantesClient() {
             viewport={{ once: true, amount: 0.01 }}
           >
             {texts.articles.map((article) => (
-              <motion.div key={article.id} variants={itemVariants} className="w-full">
+              <m.div key={article.id} variants={itemVariants} className="w-full">
                 <Link href={article.url} className="group h-full block">
                   <article className="h-full flex flex-col bg-[#000814]/60 rounded-xl border border-white/10 overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgba(178,144,77,0.3)] hover:scale-[1.03] relative backdrop-blur-sm">
 
@@ -291,20 +291,20 @@ export default function DerechosMigrantesClient() {
                       <span className="text-sm font-medium text-[#B2904D] group-hover:text-white transition-colors truncate">
                         {t('article.read_full')}
                       </span>
-                      <motion.svg
+                      <m.svg
                         className="w-5 h-5 text-[#B2904D] transform transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white flex-shrink-0 ml-2"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                      </motion.svg>
+                      </m.svg>
                     </div>
                   </article>
                 </Link>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         </div>
       </main>
 

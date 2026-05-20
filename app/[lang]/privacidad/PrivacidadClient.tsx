@@ -5,7 +5,7 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm'
 import { useLanguage } from '../../context/LanguageContext'
-import { motion, Variants } from 'framer-motion'
+import { m, Variants } from 'framer-motion'
 import Image from 'next/image'
 import {
   MessageSquare, Mail, Phone, MapPin, FileText, UserCheck, Share2, Server, Globe
@@ -276,7 +276,7 @@ export default function PrivacidadClient() {
           <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
           {/* Orbes de luz con movimiento suave */}
-          <motion.div
+          <m.div
             animate={{
               opacity: [0.3, 0.5, 0.3],
               scale: [1, 1.2, 1],
@@ -286,7 +286,7 @@ export default function PrivacidadClient() {
             transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]"
           />
-          <motion.div
+          <m.div
               animate={{
                 opacity: [0.2, 0.4, 0.2],
                 scale: [1, 1.3, 1],
@@ -298,7 +298,7 @@ export default function PrivacidadClient() {
           />
 
           {/* Texto de Fondo Sutil */}
-          <motion.div
+          <m.div
             initial={{ x: "20%" }}
             animate={{ x: "-20%" }}
             transition={{
@@ -312,7 +312,7 @@ export default function PrivacidadClient() {
             <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
                 PRIVACIDAD
             </span>
-          </motion.div>
+          </m.div>
       </div>
 
       {/* =========================================================================
@@ -325,7 +325,7 @@ export default function PrivacidadClient() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
 
             {/* IZQUIERDA: IMAGEN LOGO INFORMACION */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
@@ -343,7 +343,7 @@ export default function PrivacidadClient() {
                       priority
                   />
               </div>
-            </motion.div>
+            </m.div>
 
             {/* DERECHA: TÍTULO Y SUBTÍTULO */}
             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
@@ -359,7 +359,7 @@ export default function PrivacidadClient() {
                 </h1>
               </div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4, duration: 1 }}
@@ -369,16 +369,16 @@ export default function PrivacidadClient() {
                   {t('hero.subtitle')}
                 </p>
                 <p className="text-sm mt-2 text-white/50">{t('hero.lastUpdated')}</p>
-              </motion.div>
+              </m.div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1 }}
                 className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
               >
                  <div dangerouslySetInnerHTML={{ __html: parseContent(t('generalStatement')) }} />
-              </motion.div>
+              </m.div>
             </div>
           </div>
         </div>
@@ -388,7 +388,7 @@ export default function PrivacidadClient() {
       <section className="container mx-auto px-4 py-20 relative z-10 max-w-7xl space-y-24">
 
         {/* SECCIÓN 1: INFORMACIÓN QUE RECOPILAMOS */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section1.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-8 shadow-xl">
 
@@ -427,10 +427,10 @@ export default function PrivacidadClient() {
                     <p className="text-xs pt-4 text-orange-300/80">{t('section1.C.note')}</p>
                 </div>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 2: USO DE INFORMACIÓN */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section2.title')} />
             <div className="p-8 bg-[#000814]/60 rounded-2xl border border-white/10 space-y-6 shadow-lg">
                 <p className="text-base text-blue-100/80 mb-6">{t('section2.intro')}</p>
@@ -444,10 +444,10 @@ export default function PrivacidadClient() {
                 </div>
                 <p className="text-sm pt-6 border-t border-white/10 text-orange-300/80 font-medium">{t('section2.note')}</p>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 3: PROGRAMA SMS/TEXTO */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section3.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
                 <p className="text-base text-blue-100/80 mb-4">{t('section3.intro')}</p>
@@ -481,10 +481,10 @@ export default function PrivacidadClient() {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIÓN 4: CÓMO COMPARTIMOS SU INFORMACIÓN */}
-        <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
             <SectionTitle title={t('section4.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
                 <p className="text-base text-blue-100/80 mb-4">{t('section4.intro')}</p>
@@ -513,12 +513,12 @@ export default function PrivacidadClient() {
                     <p className="text-sm pt-4 font-semibold text-red-400/90" dangerouslySetInnerHTML={{ __html: parseText('section4.B.note') }} />
                 </div>
             </div>
-        </motion.div>
+        </m.div>
 
         {/* SECCIONES 5, 6, 7 */}
         <div className="grid lg:grid-cols-3 gap-8">
             {/* SECCIÓN 5: SEGURIDAD DE DATOS */}
-            <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
                 <SectionTitle title={t('section5.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-blue-100/80">{t('section5.content1')}</p>
@@ -529,10 +529,10 @@ export default function PrivacidadClient() {
                     </ul>
                     <p className="text-xs pt-4 text-red-300/80">{t('section5.content2')}</p>
                 </div>
-            </motion.div>
+            </m.div>
 
             {/* SECCIÓN 6: RETENCIÓN DE DATOS */}
-            <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
                 <SectionTitle title={t('section6.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-blue-100/80">{t('section6.content1')}</p>
@@ -543,10 +543,10 @@ export default function PrivacidadClient() {
                     </ul>
                     <p className="text-xs pt-4 text-orange-300/80">{t('section6.content2')}</p>
                 </div>
-            </motion.div>
+            </m.div>
 
             {/* SECCIÓN 7: DERECHOS Y OPCIONES */}
-            <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
                 <SectionTitle title={t('section7.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner flex flex-col">
                     <p className="text-base text-blue-100/80">{t('section7.intro')}</p>
@@ -571,37 +571,37 @@ export default function PrivacidadClient() {
                         </div>
                     </div>
                 </div>
-            </motion.div>
+            </m.div>
         </div>
 
         {/* SECCIONES 8, 9, 10, 11 */}
         <div className="grid md:grid-cols-2 gap-8">
             {/* SECCIÓN 8: Enlaces de Terceros */}
-            <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
                 <SectionTitle title={t('section8.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
                     <div dangerouslySetInnerHTML={{ __html: parseText('section8.content') }} />
                 </div>
-            </motion.div>
+            </m.div>
 
             {/* SECCIÓN 9: Privacidad de los Niños */}
-            <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
                 <SectionTitle title={t('section9.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
                     <div dangerouslySetInnerHTML={{ __html: parseText('section9.content') }} />
                 </div>
-            </motion.div>
+            </m.div>
 
             {/* SECCIÓN 10: Cambios a Esta Política */}
-            <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
                 <SectionTitle title={t('section10.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
                     <div dangerouslySetInnerHTML={{ __html: parseText('section10.content') }} />
                 </div>
-            </motion.div>
+            </m.div>
 
             {/* SECCIÓN 11: Contáctenos */}
-            <motion.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
                 <SectionTitle title={t('section11.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-white font-medium">{t('section11.intro')}</p>
@@ -624,7 +624,7 @@ export default function PrivacidadClient() {
                         </div>
                     </div>
                 </div>
-            </motion.div>
+            </m.div>
 
         </div>
 

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { useLanguage } from '../../context/LanguageContext'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import Image from 'next/image'
 import { Landmark, MapPin, Map as MapIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
@@ -112,7 +112,7 @@ export default function NosotrosClient() {
           {/* Orbes solo en Desktop para ahorrar GPU en móvil */}
           {!isMobile && (
             <>
-              <motion.div
+              <m.div
                 animate={{
                   opacity: [0.3, 0.5, 0.3],
                   scale: [1, 1.2, 1],
@@ -123,7 +123,7 @@ export default function NosotrosClient() {
                 style={{ willChange: "transform, opacity" }}
                 className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]"
               />
-              <motion.div
+              <m.div
                  animate={{
                    opacity: [0.2, 0.4, 0.2],
                    scale: [1, 1.3, 1],
@@ -144,7 +144,7 @@ export default function NosotrosClient() {
                  MANUEL SOLIS
                </span>
             ) : (
-                <motion.div
+                <m.div
                   initial={{ x: "20%" }}
                   animate={{ x: "-20%" }}
                   transition={{
@@ -158,7 +158,7 @@ export default function NosotrosClient() {
                   <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
                       MANUEL SOLIS
                   </span>
-                </motion.div>
+                </m.div>
             )}
           </div>
       </div>
@@ -173,7 +173,7 @@ export default function NosotrosClient() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
 
             {/* IZQUIERDA: IMAGEN LOGO INFORMACION */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
@@ -193,7 +193,7 @@ export default function NosotrosClient() {
                        priority
                     />
                 </div>
-            </motion.div>
+            </m.div>
 
             {/* DERECHA: HISTORIA Y MISIÓN */}
             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
@@ -209,7 +209,7 @@ export default function NosotrosClient() {
                 </h1>
               </div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4, duration: 1 }}
@@ -218,9 +218,9 @@ export default function NosotrosClient() {
                 <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
                   {t('hero.subtitle')}
                 </p>
-              </motion.div>
+              </m.div>
 
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1 }}
@@ -228,7 +228,7 @@ export default function NosotrosClient() {
               >
                   <div dangerouslySetInnerHTML={{ __html: parseText('mission.solis') }} />
                   <div dangerouslySetInnerHTML={{ __html: parseText('mission.commitment') }} />
-              </motion.div>
+              </m.div>
             </div>
           </div>
         </div>
@@ -242,7 +242,7 @@ export default function NosotrosClient() {
         <div className="grid lg:grid-cols-12 gap-8 items-stretch">
 
             {/* LISTA DE OFICINAS */}
-            <motion.div
+            <m.div
                initial={{ opacity: 0, x: -20 }}
                whileInView={{ opacity: 1, x: 0 }}
                viewport={{ once: true }}
@@ -266,10 +266,10 @@ export default function NosotrosClient() {
                        ))}
                    </div>
                </div>
-            </motion.div>
+            </m.div>
 
             {/* MAPA DE GOOGLE OPTIMIZADO (SIEMPRE VISIBLE) */}
-            <motion.div
+            <m.div
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
                  viewport={{ once: true }}
@@ -292,7 +292,7 @@ export default function NosotrosClient() {
                <div className="absolute top-4 right-4 bg-black/70 backdrop-blur text-white px-4 py-2 rounded-lg text-xs font-bold border border-white/10 pointer-events-none z-20">
                    INTERACTIVE MAP
                </div>
-            </motion.div>
+            </m.div>
         </div>
 
       </section>
