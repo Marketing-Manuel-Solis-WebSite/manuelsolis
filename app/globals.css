@@ -2,25 +2,65 @@
 
 /* ============================================================
    Design System Foundations — Manuel Solis Law Firm
-   Apple/Stripe/Linear level visual quality
+   ============================================================
+   SINGLE SOURCE OF TRUTH for design tokens.
+   `@theme` (Tailwind v4) generates BOTH CSS variables (e.g.
+   var(--color-gold-500)) AND utility classes (e.g. bg-gold-500,
+   text-navy-500, ease-out-expo, shadow-glow-gold). The TS bridge in
+   app/lib/design-tokens.ts references these variables — it no longer
+   duplicates values, so there is no manual drift.
+
+   NOTE (no visual change in this consolidation): existing markup uses
+   hardcoded values (e.g. bg-[#001540], #B2904D); the generated token
+   utilities are available for the visual refresh but nothing is rewired
+   here. Values below mirror the previous :root / motion.ts exactly.
    ============================================================ */
+
+@theme {
+  /* ---- Brand color: gold (CTA accent) ---- */
+  --color-gold-50: #FDF8F0;
+  --color-gold-100: #F9EDD8;
+  --color-gold-200: #F0D9A8;
+  --color-gold-300: #E5C17A;
+  --color-gold-400: #D4A94E;
+  --color-gold-500: #B2904D; /* dominant CTA */
+  --color-gold-600: #96773E;
+  --color-gold-700: #7A5F30;
+
+  /* ---- Brand color: navy (dominant surface) — mirrors the hardcoded
+     #001540 family used across the site ---- */
+  --color-navy-200: #0b1c33;
+  --color-navy-300: #002868;
+  --color-navy-400: #001E5C;
+  --color-navy-500: #001540; /* primary surface */
+  --color-navy-600: #001026;
+  --color-navy-700: #000510;
+  --color-navy-800: #000A20;
+  --color-navy-900: #000814;
+
+  /* ---- Motion: easings (mirror app/lib/motion.ts, the framer source) ---- */
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* ---- Motion: durations (ms; mirror motion.ts seconds) ---- */
+  --duration-fast: 300ms;
+  --duration-normal: 600ms;
+  --duration-slow: 900ms;
+  --duration-slower: 1200ms;
+
+  /* ---- Depth: glows & elevation (mirror existing glow utility values) ---- */
+  --shadow-glow-gold: 0 0 20px rgba(178,144,77,0.15), 0 0 60px rgba(178,144,77,0.05);
+  --shadow-glow-gold-strong: 0 0 30px rgba(178,144,77,0.25), 0 0 80px rgba(178,144,77,0.1);
+  --shadow-glow-blue: 0 0 20px rgba(59,130,246,0.15), 0 0 60px rgba(59,130,246,0.05);
+}
 
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
-    /* Gold palette */
-    --gold-50: #FDF8F0;
-    --gold-100: #F9EDD8;
-    --gold-200: #F0D9A8;
-    --gold-300: #E5C17A;
-    --gold-400: #D4A94E;
-    --gold-500: #B2904D;
-    --gold-600: #96773E;
-    --gold-700: #7A5F30;
-
-    /* Surface layers */
+    /* Surface layers — consumed by .glass* utilities below (kept identical) */
     --surface-glass: rgba(255,255,255,0.03);
     --surface-elevated: rgba(255,255,255,0.06);
     --border-subtle: rgba(178,144,77,0.15);
