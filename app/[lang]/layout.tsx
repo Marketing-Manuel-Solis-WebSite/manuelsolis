@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import { LanguageProvider } from '../context/LanguageContext';
-import WhatsAppButton from '../components/WhatsAppButton';
-import ConsultaFloatingCta from '../components/ConsultaFloatingCta';
-import AIChatButton from '../components/AIChatButton';
-import MobileStickyBar from '../components/MobileStickyBar';
+import FloatingCtas from '../components/FloatingCtas';
 import PageViewTracker from '../components/PageViewTracker';
 import type { Language } from '../lib/translations';
 import Script from 'next/script';
@@ -434,10 +431,7 @@ export default async function LangLayout({ children, params }: Props) {
         </Suspense>
         <MotionProvider>
           {children}
-          <WhatsAppButton />
-          <ConsultaFloatingCta />
-          <AIChatButton />
-          <MobileStickyBar />
+          <FloatingCtas />
         </MotionProvider>
 
         <Analytics />
