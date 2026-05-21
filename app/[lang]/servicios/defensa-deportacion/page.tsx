@@ -98,7 +98,7 @@ export default async function DeportacionPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <DeportacionClient />
+      <DeportacionClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }

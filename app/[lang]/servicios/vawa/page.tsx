@@ -95,7 +95,7 @@ export default async function VawaPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <VawaClient />
+      <VawaClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }

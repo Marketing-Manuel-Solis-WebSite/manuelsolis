@@ -97,7 +97,7 @@ export default async function AsiloPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <AsiloClient />
+      <AsiloClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }

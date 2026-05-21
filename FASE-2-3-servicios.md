@@ -16,9 +16,9 @@
 | **seguros** | ✅ **Hecho + verificado** (Lote A) | tabs + video · enfoque (b) |
 | **visa-e2** | ✅ **Hecho + verificado** (Lote B) | tabs + FAQ estático · enfoque (b) |
 | **visa-u** | ✅ **Hecho + verificado** (Lote B) | tabs + FAQ estático + eligibility + offices + blog · enfoque (b) |
-| vawa | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
-| defensa-deportacion | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
-| asilo | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
+| **vawa** | ✅ **Hecho + verificado** (Lote C) | tabs + offices linked + blog · enfoque (b) |
+| **defensa-deportacion** | ✅ **Hecho + verificado** (Lote C) | tabs + FAQ estático + offices + blog · enfoque (b) |
+| **asilo** | ✅ **Hecho + verificado** (Lote C) | tabs + offices + blog · enfoque (b) |
 
 ---
 
@@ -121,3 +121,68 @@ Cada página: `page.tsx` intacto salvo `lang` prop; `*Data.ts` + isla(s) + Serve
 ---
 
 **PARO.** Revisa el **hub** y **accidentes** local (`/es/servicios` y `/es/servicios/accidentes`, EN, mobile, reduced-motion). El patrón ya cubre las 2 variaciones (tabs-only como inmigracion, tabs+video como accidentes). **¿Confirmo y continúo con las 7 restantes en lotes (A/B/C), o ajustamos algo del patrón antes?** No avanzo a ciegas en páginas SEO de producción sin tu visto bueno del patrón aplicado a accidentes.
+
+---
+
+## Lote C — vawa, defensa-deportacion, asilo (enfoque b)
+
+Mismo patrón. Variaciones: **vawa** (hero imagen `/home-image.jpg` + offices **enlazadas** a `/oficinas/[slug]` + blog, sin FAQ), **defensa-deportacion** (hero de **stats sin imagen** — tarjeta de emergencia roja + 3 stats; **FAQ estático**; tab "detenidos" con link especial a `/clientes-detenidos`; offices linked; blog), **asilo** (hero imagen + offices linked + blog; tabs con subPoints **con y sin** subTitle, sin FAQ).
+
+| Página | First Load route JS | Freeze list |
+|---|---|---|
+| vawa | **766.2 KB** | solo `lang` prop · LegalService + BreadcrumbList ✓ |
+| defensa-deportacion | **767.1 KB** | solo `lang` prop · LegalService + BreadcrumbList ✓ (FAQ estático server-rendered, answer en HTML) |
+| asilo | **766.9 KB** | solo `lang` prop · LegalService + BreadcrumbList ✓ |
+
+- **on-disk total:** 2749.1 → **2604.0 KB (−145.1 KB)** (las clients más pesadas).
+- **FAQ (defensa):** estático siempre-visible → 100% server-rendered (answer "Posiblemente sí…" confirmada en HTML). No emite FAQPage (pre-existente, preservado).
+- Gates: tsc 0 · build exit 0 · test 54/54 · lint **418 (153/265)** (baja de 444) · 3 rutas ● SSG/ISR.
+
+---
+
+## CIERRE DE LA PLANTILLA SERVICIOS — resumen (10 páginas)
+
+Las **10 páginas de servicios** convertidas a server-first + v2 + 3D, con enfoque (b) donde fue limpio (los 9 clients) y pase visual donde ya era server (el hub).
+
+| # | Página | Patrón | First Load route JS |
+|---|---|---|---|
+| 1 | servicios (hub) | ya server → pase visual | — |
+| 2 | inmigracion | tabs (pilot, patrón base) | 777.3 KB |
+| 3 | accidentes | tabs + video HLS | 782.6 KB |
+| 4 | ley-criminal | tabs (b) | 768.1 KB |
+| 5 | familia | tabs (b) | 768.1 KB |
+| 6 | seguros | tabs + video (b) | 770.4 KB |
+| 7 | visa-e2 | tabs + FAQ estático (b) | 766.0 KB |
+| 8 | visa-u | tabs + FAQ + eligibility + offices + blog (b) | 766.4 KB |
+| 9 | vawa | tabs + offices linked + blog (b) | 766.2 KB |
+| 10 | defensa-deportacion | stats hero + tabs + FAQ + offices + blog (b) | 767.1 KB |
+| 11 | asilo | tabs + offices + blog (b) | 766.9 KB |
+
+> (10 rutas de servicio + el hub.)
+
+### First Load acumulado (raw on-disk del sitio)
+| Hito | on-disk total |
+|---|---|
+| Home completo (2.2c) | 2991.7 KB |
+| + pilot inmigracion | 2963.4 KB |
+| + hub + accidentes | 2940.8 KB |
+| + Lote A (ley-criminal/familia/seguros) | 2841.2 KB |
+| + Lote B (visa-e2/visa-u) | 2749.1 KB |
+| + Lote C (vawa/defensa/asilo) | **2604.0 KB** |
+| **Δ total plantilla servicios** | **−387.7 KB (−13%)** |
+
+El enfoque (b) (datos pre-resueltos por idioma en servidor) es lo que produjo la baja fuerte: el texto bilingüe del otro idioma salió del bundle cliente en las 9 páginas.
+
+### Confirmación FREEZE LIST global
+- **Cada `page.tsx` de servicio:** diff = **1 línea** (solo el prop `lang`). `generateMetadata`, canonical/hreflang y **todos los JSON-LD byte-idénticos** — verificado en el HTML servido de cada ruta.
+- **LegalService** presente en las 10 (es el rich result de servicio legal). **BreadcrumbList** en todas. **FAQPage** solo donde ya existía (inmigracion, accidentes, ley-criminal, familia, seguros); visa-e2/visa-u/vawa/defensa/asilo **no lo emiten** (decisión pre-existente, preservada — NO se añadió/quitó; eso queda para el pase SEO futuro).
+- **Rutas:** las 10 + el hub siguen **● SSG/ISR**.
+- **Imágenes hero conservadas** (immigration/accident/criminal/family/insurance-hero.png, Manuel_Solis.png, home-image.jpg).
+- **LCP sagrado** en todas: imagen `priority` (donde hay) + H1 estático server-side, 1:1 con el estilo original de cada hero.
+
+### Gates finales (plantilla completa)
+tsc **0** · build **exit 0** · test **54/54** · lint **418 (153/265)** — bajó desde 506 baseline (sin `any` nuevos; cada client pesado eliminó deuda). Todo **local, sin push**.
+
+---
+
+**PARO — cierre de plantilla servicios.** Revisa un par de páginas (sugiero `/es/servicios` hub, `/es/servicios/defensa-deportacion` por su hero de stats, y una con video como `/es/servicios/seguros`), EN/mobile/reduced-motion. Con tu OK paso a la **siguiente plantilla: landings** (~25 rutas ciudad×servicio).
