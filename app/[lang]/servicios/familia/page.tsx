@@ -118,7 +118,7 @@ export default async function FamiliaPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
         />
       )}
-      <FamiliaClient />
+      <FamiliaClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }

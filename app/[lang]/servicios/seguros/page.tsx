@@ -117,7 +117,7 @@ export default async function SegurosPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
         />
       )}
-      <SegurosClient />
+      <SegurosClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }

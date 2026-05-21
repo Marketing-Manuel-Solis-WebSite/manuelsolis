@@ -11,14 +11,32 @@
 |---|---|---|
 | **servicios** (hub) | ✅ **Hecho** | Ya era Server Component; **pase visual**: `Reveal`/`Stagger` de entrada, `.card-3d` en las 6 cards, `MagneticButton` en el CTA "Llamar Ahora". Layout/colores 1:1 (no se alteró el esquema sky). |
 | **accidentes** | ✅ **Hecho + verificado** | Conversión completa server-first (representante #1, con la variación de **video HLS**). |
-| ley-criminal | ⏳ Pendiente | tabs |
-| familia | ⏳ Pendiente | tabs |
-| seguros | ⏳ Pendiente | tabs |
-| visa-e2 | ⏳ Pendiente | tabs + acordeón/FAQ |
-| visa-u | ⏳ Pendiente | tabs + acordeón/FAQ |
-| vawa | ⏳ Pendiente | tabs + acordeón/FAQ |
-| defensa-deportacion | ⏳ Pendiente | tabs + acordeón/FAQ |
-| asilo | ⏳ Pendiente | tabs + acordeón/FAQ |
+| **ley-criminal** | ✅ **Hecho + verificado** (Lote A) | tabs · enfoque (b) |
+| **familia** | ✅ **Hecho + verificado** (Lote A) | tabs · enfoque (b) |
+| **seguros** | ✅ **Hecho + verificado** (Lote A) | tabs + video · enfoque (b) |
+| visa-e2 | ⏳ Pendiente (Lote B) | tabs + acordeón/FAQ |
+| visa-u | ⏳ Pendiente (Lote B) | tabs + acordeón/FAQ |
+| vawa | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
+| defensa-deportacion | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
+| asilo | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
+
+---
+
+## Lote A — ley-criminal, familia, seguros (enfoque b)
+
+Mismo patrón que accidentes, ahora con **enfoque (b)**: los datos bilingües viven en `xxxData.ts` (importado **solo por el Server Component**), que **pre-resuelve al idioma activo** y pasa strings de un solo locale a la isla; la isla usa un **mapa de iconos** (clave string → componente lucide). Resultado: el texto del otro idioma **sale del bundle cliente**.
+
+| Página | Estructura | First Load route JS | Freeze list (page.tsx diff) |
+|---|---|---|---|
+| ley-criminal | hero (criminal-hero.png, "12K+") + tabs + proceso + artículos | **768.1 KB** | solo `lang` prop · LegalService/FAQPage/BreadcrumbList ✓ |
+| familia | hero (family-hero.png, "10K+") + tabs + proceso + artículos | **768.1 KB** | solo `lang` prop · 3 JSON-LD ✓ |
+| seguros | hero (insurance-hero.png, "8K+") + tabs + **video HLS** + proceso + artículos | **770.4 KB** | solo `lang` prop · 3 JSON-LD ✓ |
+
+- **on-disk total:** 2940.8 → **2841.2 KB (−99.6 KB)** — el recorte mayor del enfoque (b) (otro idioma fuera del cliente).
+- Archivos por página: `xxxData.ts` (bilingüe + resolvers), `XxxCases.tsx` (isla tabs, mapa de iconos), [seguros: `SegurosVideo.tsx`], `XxxClient.tsx` (server), `page.tsx` (solo `lang`).
+- LCP sagrado: hero `priority` + H1 estático server-side (1:1 con el estilo de cada hero original).
+- **Gates:** tsc 0 · build exit 0 · test 54/54 · lint **460 (169/291)** (baja de 485) · las 3 rutas **● SSG/ISR**.
+- **Screenshots** `docs/fase-2-3-servicios/` (hero+casos, ES/EN × desktop/mobile) — contenido/imágenes presentes, layout 1:1.
 
 ---
 

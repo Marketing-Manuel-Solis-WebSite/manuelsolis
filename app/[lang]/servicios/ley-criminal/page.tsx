@@ -117,7 +117,7 @@ export default async function LeyCriminalPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
         />
       )}
-      <LeyCriminalClient />
+      <LeyCriminalClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }
