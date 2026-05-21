@@ -7,4 +7,5 @@ export { default as Parallax } from './Parallax';
 export { default as MagneticButton } from './MagneticButton';
 export { default as Shimmer } from './Shimmer';
 export { default as TextReveal } from './TextReveal';
+export { default as Tilt, TiltLayer } from './Tilt';
 export type { RevealVariant } from './variants';

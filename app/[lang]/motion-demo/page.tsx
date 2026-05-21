@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Reveal, Stagger, StaggerItem, Parallax, MagneticButton, Shimmer, TextReveal } from '../../components/motion';
+import { Reveal, Stagger, StaggerItem, Parallax, MagneticButton, Shimmer, TextReveal, Tilt, TiltLayer } from '../../components/motion';
 import RevealPlaygroundClient from './RevealPlayground';
 
 // DEV-ONLY showcase. noindex + not in sitemapData + not linked from nav/footer.
@@ -37,7 +37,8 @@ export default function MotionDemoPage() {
             Librería de movimiento — Manuel Solís
           </TextReveal>
           <p className="text-white/60 max-w-2xl">
-            Demo de las 6 primitivas server-first. Para verificar reduced-motion: activa
+            Demo de las primitivas server-first + la extensión 3D (Tilt, TiltLayer, card-3d). Para
+            verificar reduced-motion: activa
             &quot;Reducir movimiento&quot; en tu SO (Windows: Configuración → Accesibilidad → Efectos visuales →
             Efectos de animación = Desactivado) y recarga — parallax y shimmer se desactivan, los reveals
             colapsan a solo-opacidad, y el botón magnético deja de moverse.
@@ -150,6 +151,93 @@ export default function MotionDemoPage() {
                 </StaggerItem>
               ))}
             </Stagger>
+          </div>
+        </section>
+
+        {/* ===================== EXTENSIÓN 3D / DIMENSIONAL ===================== */}
+
+        {/* 7. Tilt 3D — text sharpness is the headline check */}
+        <section>
+          <SectionTitle kicker="07 · Tilt 3D" title="Tilt 3D al puntero (≤ ±6°)" />
+          <p className="text-white/50 text-sm mb-6 max-w-2xl">
+            Mueve el cursor sobre las cards. <strong className="text-white/80">QA crítico:</strong> el
+            texto debe verse NÍTIDO en reposo y tras el tilt (nada de borroso/subpixel). En touch o con
+            reduced-motion el tilt se desactiva (queda plano). El tilt es whisper-subtle a propósito.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Service-style card with body text — the sharpness probe */}
+            <Tilt className="rounded-2xl border border-white/10 bg-white/5 p-7 shadow-e2">
+              <p className="text-gold-500 text-xs font-bold uppercase tracking-[0.25em] mb-3">Inmigración</p>
+              <h3 className="text-xl font-light text-white mb-2">Defensa de Deportación</h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Representación ante la corte de inmigración. Texto de cuerpo para verificar nitidez
+                tipográfica bajo transform 3D — debe permanecer afilado.
+              </p>
+            </Tilt>
+
+            {/* Glare / sheen reactive to tilt */}
+            <Tilt glare className="rounded-2xl border border-gold-500/20 bg-white/5 p-7 shadow-e2">
+              <p className="text-gold-500 text-xs font-bold uppercase tracking-[0.25em] mb-3">Con glare</p>
+              <h3 className="text-xl font-light text-white mb-2">Sheen dorado reactivo</h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Un reflejo sutil sigue al cursor (gold = valor). Solo transform/opacity; se desactiva en
+                reduced-motion.
+              </p>
+            </Tilt>
+
+            {/* TiltLayer pop-out — decorative element floats forward */}
+            <Tilt className="relative rounded-2xl border border-white/10 bg-white/5 p-7 shadow-e2 overflow-visible">
+              <TiltLayer depth={40} className="absolute -top-5 -right-3">
+                <span className="grid place-items-center w-14 h-14 rounded-2xl bg-gold-500 text-navy-500 font-black text-lg shadow-e3">
+                  3D
+                </span>
+              </TiltLayer>
+              <p className="text-gold-500 text-xs font-bold uppercase tracking-[0.25em] mb-3">TiltLayer</p>
+              <h3 className="text-xl font-light text-white mb-2">Pop-out por profundidad</h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                El badge dorado vive en una capa con translateZ: flota sobre el plano de la card durante el
+                tilt. El texto se queda en el plano base (nítido).
+              </p>
+            </Tilt>
+          </div>
+        </section>
+
+        {/* 8. card-3d restraint — depth hover without pointer tilt */}
+        <section>
+          <SectionTitle kicker="08 · card-3d" title="Profundidad sin tilt (restraint)" />
+          <p className="text-white/50 text-sm mb-6 max-w-2xl">
+            Para la mayoría de superficies: lift + glow por cross-fade de opacity (nunca anima box-shadow),
+            sin listeners de puntero. No toda card necesita tilt — esto es lo profesional por defecto.
+          </p>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="card-3d rounded-2xl border border-white/10 bg-white/5 p-6 shadow-e1">
+                <p className="text-2xl font-light text-gold-500 mb-1">{i + 1}</p>
+                <p className="text-white/70 text-sm">Hover: se eleva y enciende su glow.</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* STRESS TEST 3D — REAL worst case: 20 cards w/ Tilt (attorney page = 20) */}
+        <section>
+          <SectionTitle kicker="STRESS TEST 3D" title="20 cards con Tilt (peor caso: página de abogados)" />
+          <p className="text-white/50 text-sm mb-6 max-w-2xl">
+            20 cards con tilt de puntero simultáneas (conteo real de <code>abogados</code>; oficinas = 15).
+            Verifica que mover el cursor entre cards no causa jank — listener por elemento + rect cacheado
+            en enter (sin layout thrash), springs sobre el rAF compartido de framer.
+          </p>
+          <div className="relative rounded-3xl border border-gold-500/20 overflow-hidden p-8 bg-navy-600">
+            <Parallax speed={0.25} className="absolute -top-10 left-1/3 w-72 h-72 bg-gold-500/10 rounded-full blur-[70px]" />
+            <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <Tilt key={i} glare className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-e1">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 mb-3" />
+                  <p className="text-white font-light text-sm mb-1">Abogado {i + 1}</p>
+                  <p className="text-white/50 text-xs">Inmigración · Accidentes</p>
+                </Tilt>
+              ))}
+            </div>
           </div>
         </section>
       </div>

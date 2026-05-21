@@ -53,6 +53,18 @@
   --shadow-glow-gold: 0 0 20px rgba(178,144,77,0.15), 0 0 60px rgba(178,144,77,0.05);
   --shadow-glow-gold-strong: 0 0 30px rgba(178,144,77,0.25), 0 0 80px rgba(178,144,77,0.1);
   --shadow-glow-blue: 0 0 20px rgba(59,130,246,0.15), 0 0 60px rgba(59,130,246,0.05);
+
+  /* ---- Depth: elevation ladder (3D extension). STATIC — never animated
+     (animating box-shadow causes paint). To "lift" a card on hover, cross-fade
+     a glow layer's opacity (see .card-3d). Generates shadow-e1..e4 utilities. */
+  --shadow-e1: 0 1px 2px rgba(0,8,20,0.20), 0 1px 1px rgba(0,8,20,0.12);
+  --shadow-e2: 0 4px 12px rgba(0,8,20,0.26), 0 2px 4px rgba(0,8,20,0.14);
+  --shadow-e3: 0 12px 32px rgba(0,8,20,0.32), 0 4px 10px rgba(0,8,20,0.18);
+  --shadow-e4: 0 24px 64px rgba(0,8,20,0.40), 0 8px 20px rgba(0,8,20,0.22);
+
+  /* ---- Depth: 3D perspective context (consumed by <Tilt> / perspective-* ) ---- */
+  --perspective-near: 800px;
+  --perspective-far: 1600px;
 }
 
 @layer base {
@@ -185,6 +197,40 @@
 
 .card-tilt:hover {
   transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-4px);
+}
+
+/* ============================================================
+   Card depth hover (3D extension) — RESTRAINT option, no pointer-tilt.
+   For surfaces that should read dimensional without full <Tilt> (most cards).
+   Transform/opacity only: lift via translateY/scale, "glow" via a pre-declared
+   shadow layer cross-faded by opacity (never animates box-shadow). Reduced-
+   motion: no lift, glow still cross-fades (opacity is allowed under reduce).
+   Requires position: relative on the element.
+   ============================================================ */
+.card-3d {
+  position: relative;
+  transition: transform var(--duration-fast) var(--ease-smooth);
+  will-change: transform;
+}
+.card-3d::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--shadow-glow-gold);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+  pointer-events: none;
+}
+.card-3d:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+.card-3d:hover::after {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-3d { transition: none; }
+  .card-3d:hover { transform: none; }
 }
 
 /* ============================================================

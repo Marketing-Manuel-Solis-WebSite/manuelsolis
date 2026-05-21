@@ -146,6 +146,16 @@ export const tiltConfig = {
   speed: 400,
 };
 
+// 3D dimensional tokens — consumed by the <Tilt> primitive.
+// Restraint is a hard rule: `max` is the CAP for pointer tilt (whisper-subtle,
+// professional — never exceed 6°). Spring returns the card to rest (0°) so the
+// resting transform is identity and text rasterizes crisply. (DESIGN-LANGUAGE 3D)
+export const tilt = {
+  max: 6, // degrees — hard cap
+  perspective: 1000, // px
+  spring: { stiffness: 250, damping: 25, mass: 0.5 },
+};
+
 // Reduced-motion variants (instant transitions, no transforms)
 export const fadeUpReduced: Variants = {
   hidden: { opacity: 0 },
