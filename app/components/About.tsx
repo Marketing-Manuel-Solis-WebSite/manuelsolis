@@ -1,46 +1,26 @@
-'use client'
+import { Reveal, Stagger, StaggerItem } from './motion';
+import AboutVideo from './AboutVideo';
+import type { Language } from '../lib/translations';
 
-import { useRef, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useLanguage } from '../context/LanguageContext';
-import { m, Variants } from 'framer-motion';
-import { Play } from 'lucide-react';
-
-export default function About() {
-  const { language } = useLanguage();
-  const containerRef = useRef(null);
-  const [showVideo, setShowVideo] = useState(false);
-
-  const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
-    }
-  };
-
-  const staggerContainer: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.1 }
-    }
-  };
+/**
+ * About — server-first (Fase 2.2b pilot). All copy (incl. the bilingual case
+ * study) renders as server HTML; only the video play/iframe is a client island
+ * (<AboutVideo>). Movement budget: ONE protagonist — the text column cascades in
+ * via <Stagger>; the video gets a single <Reveal scale> accent. Stat cards use
+ * the `.card-3d` workhorse (depth on hover, no pointer tilt — restraint). The
+ * gold-glow hover that animated box-shadow was replaced by .card-3d's opacity
+ * cross-fade (transform/opacity-only rule).
+ */
+export default function About({ lang }: { lang: Language }) {
+  const isEs = lang === 'es';
 
   return (
-    <section
-      ref={containerRef}
-      className="relative py-32 lg:py-44 w-full bg-[#001540] overflow-hidden"
-    >
-      {/* Background */}
+    <section className="relative py-32 lg:py-44 w-full bg-navy-500 overflow-hidden">
+      {/* Background — static (decorative depth via layers, not motion) */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[#001540]" />
+        <div className="absolute inset-0 bg-navy-500" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#002868]/30 via-transparent to-[#000a20]/80" />
         <div className="absolute inset-0 gradient-mesh-dark" />
-
-        {/* Static orbs */}
         <div className="absolute top-0 left-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[100px] -translate-x-1/3 -translate-y-1/3 opacity-60" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#B2904D]/10 rounded-full blur-[90px] translate-x-1/3 translate-y-1/3 opacity-60" />
       </div>
@@ -51,131 +31,81 @@ export default function About() {
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
 
-        {/* Título full-width arriba del grid */}
-        <m.div
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="mb-16 text-center"
-        >
+        {/* Section title (full-width). Styled gold span → Reveal, not TextReveal. */}
+        <Reveal variant="up" className="mb-16 text-center" amount={0.4}>
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight">
-            {language === 'es' ? 'Caso Real de ' : 'Real Case of '}
+            {isEs ? 'Caso Real de ' : 'Real Case of '}
             <span className="font-normal text-gradient-gold-subtle">
-              {language === 'es' ? 'Reunificación Familiar' : 'Family Reunification'}
+              {isEs ? 'Reunificación Familiar' : 'Family Reunification'}
             </span>
           </h2>
-        </m.div>
+        </Reveal>
 
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
-          {/* Left Column: Text */}
-          <m.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="lg:col-span-6 space-y-10"
-          >
-            <m.div variants={fadeInUp} className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
+          {/* Left Column: text — the protagonist cascade */}
+          <Stagger gap={0.12} className="lg:col-span-6 space-y-10">
+
+            <StaggerItem as="div" className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
               <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
-                {language === 'es'
-                  ? <><strong className="text-white font-medium">Juana Cervantes</strong> migró a Estados Unidos siendo apenas una niña, dejando en México a su madre, quien entonces tenía <strong className="text-white font-medium">53 años</strong>. Hoy, después de dar el primer paso hacia un estatus legal en Estados Unidos, logró regresar a México tras <strong className="text-white font-medium">más de 30 años</strong> lejos de su tierra, sus raíces y su familia.<br /><br />De la mano del <strong className="text-white font-medium">abogado Manuel Solís</strong>, quien la acompañó en cada etapa del proceso, Juana pudo reencontrarse con su historia, sus tradiciones y los momentos que creyó perdidos, viviendo además una de las celebraciones más importantes para los mexicanos: la <strong className="text-white font-medium">Semana Santa</strong>.<br /><br />Acompaña a Juana en este emotivo viaje de regreso a casa, en un nuevo capítulo de <strong className="text-white font-medium">Uniendo Familias con Manuel Solís</strong>.</>
-                  : <><strong className="text-white font-medium">Juana Cervantes</strong> migrated to the United States as just a little girl, leaving behind in Mexico her mother, who was then <strong className="text-white font-medium">53 years old</strong>. Today, after taking the first step toward legal status in the United States, she was able to return to Mexico after <strong className="text-white font-medium">more than 30 years</strong> away from her land, her roots, and her family.<br /><br />Guided by <strong className="text-white font-medium">Attorney Manuel Solís</strong>, who supported her at every stage of the process, Juana was able to reconnect with her story, her traditions, and the moments she thought were lost — experiencing one of the most important celebrations for Mexicans: <strong className="text-white font-medium">Holy Week</strong>.<br /><br />Join Juana on this moving journey back home, in a new chapter of <strong className="text-white font-medium">Uniting Families with Manuel Solís</strong>.</>
-                }
+                {isEs ? (
+                  <><strong className="text-white font-medium">Juana Cervantes</strong> migró a Estados Unidos siendo apenas una niña, dejando en México a su madre, quien entonces tenía <strong className="text-white font-medium">53 años</strong>. Hoy, después de dar el primer paso hacia un estatus legal en Estados Unidos, logró regresar a México tras <strong className="text-white font-medium">más de 30 años</strong> lejos de su tierra, sus raíces y su familia.<br /><br />De la mano del <strong className="text-white font-medium">abogado Manuel Solís</strong>, quien la acompañó en cada etapa del proceso, Juana pudo reencontrarse con su historia, sus tradiciones y los momentos que creyó perdidos, viviendo además una de las celebraciones más importantes para los mexicanos: la <strong className="text-white font-medium">Semana Santa</strong>.<br /><br />Acompaña a Juana en este emotivo viaje de regreso a casa, en un nuevo capítulo de <strong className="text-white font-medium">Uniendo Familias con Manuel Solís</strong>.</>
+                ) : (
+                  <><strong className="text-white font-medium">Juana Cervantes</strong> migrated to the United States as just a little girl, leaving behind in Mexico her mother, who was then <strong className="text-white font-medium">53 years old</strong>. Today, after taking the first step toward legal status in the United States, she was able to return to Mexico after <strong className="text-white font-medium">more than 30 years</strong> away from her land, her roots, and her family.<br /><br />Guided by <strong className="text-white font-medium">Attorney Manuel Solís</strong>, who supported her at every stage of the process, Juana was able to reconnect with her story, her traditions, and the moments she thought were lost — experiencing one of the most important celebrations for Mexicans: <strong className="text-white font-medium">Holy Week</strong>.<br /><br />Join Juana on this moving journey back home, in a new chapter of <strong className="text-white font-medium">Uniting Families with Manuel Solís</strong>.</>
+                )}
               </p>
-            </m.div>
+            </StaggerItem>
 
-            <m.div variants={fadeInUp} className="grid grid-cols-2 gap-6 pl-2 pt-4">
-                <div className="p-5 rounded-xl glass glow-gold-hover transition-all duration-500 group/stat">
-                    <h3 className="text-4xl font-light text-white flex items-baseline">
-                        200 <span className="text-[#B2904D] text-2xl ml-0.5 group-hover/stat:rotate-12 transition-transform">+</span>
-                    </h3>
-                    <p className="text-[0.65rem] md:text-xs text-blue-200/70 uppercase tracking-[0.2em] mt-2 font-medium">
-                        {language === 'es' ? 'Profesionales' : 'Professionals'}
-                    </p>
-                </div>
-                <div className="p-5 rounded-xl glass glow-gold-hover transition-all duration-500 group/stat">
-                    <h3 className="text-4xl font-light text-white flex items-baseline">
-                        35 <span className="text-sky-400 text-2xl ml-0.5 group-hover/stat:rotate-12 transition-transform">+</span>
-                    </h3>
-                    <p className="text-[0.65rem] md:text-xs text-blue-200/70 uppercase tracking-[0.2em] mt-2 font-medium">
-                        {language === 'es' ? 'Años Experiencia' : 'Years Experience'}
-                    </p>
-                </div>
-            </m.div>
+            {/* Stat cards — .card-3d workhorse (no pointer tilt) */}
+            <StaggerItem as="div" className="grid grid-cols-2 gap-6 pl-2 pt-4">
+              <div className="card-3d p-5 rounded-xl glass group/stat">
+                <h3 className="text-4xl font-light text-white flex items-baseline">
+                  200 <span className="text-[#B2904D] text-2xl ml-0.5 group-hover/stat:rotate-12 transition-transform">+</span>
+                </h3>
+                <p className="text-[0.65rem] md:text-xs text-blue-200/70 uppercase tracking-[0.2em] mt-2 font-medium">
+                  {isEs ? 'Profesionales' : 'Professionals'}
+                </p>
+              </div>
+              <div className="card-3d p-5 rounded-xl glass group/stat">
+                <h3 className="text-4xl font-light text-white flex items-baseline">
+                  35 <span className="text-sky-400 text-2xl ml-0.5 group-hover/stat:rotate-12 transition-transform">+</span>
+                </h3>
+                <p className="text-[0.65rem] md:text-xs text-blue-200/70 uppercase tracking-[0.2em] mt-2 font-medium">
+                  {isEs ? 'Años Experiencia' : 'Years Experience'}
+                </p>
+              </div>
+            </StaggerItem>
 
-            <m.div variants={fadeInUp} className="pt-6 pl-2">
-                <Link
-                  href={`/${language}/testimonios`}
-                  className="group relative inline-flex items-center justify-center px-10 py-4
-                             bg-white/5 text-white font-medium tracking-wide overflow-hidden
-                             rounded-full shadow-lg hover:shadow-[#B2904D]/20 transition-all duration-500
-                             backdrop-blur-md border border-[#B2904D]/30
-                             hover:bg-[#B2904D]/10 hover:border-[#B2904D]/60"
-                >
-                   <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out" />
-
-                  <span className="relative flex items-center gap-3">
-                    {language === 'es' ? 'Conozca Más' : 'Learn More'}
-                    <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#B2904D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                  </span>
-                </Link>
-            </m.div>
-          </m.div>
-
-          {/* Right Column: YouTube with thumbnail */}
-          <div className="lg:col-span-6 relative w-full mt-8 lg:mt-0">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-blue-600/20 blur-[80px] rounded-full -z-10" />
-              <div className="absolute top-3 -right-3 w-full h-full border border-[#B2904D]/20 rounded-2xl z-0 hidden lg:block" />
-
-              <m.div
-               initial={{ opacity: 0, scale: 0.95 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 1.2, ease: "easeOut" }}
-               className="relative z-10 w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 bg-black"
+            {/* CTA — server-rendered link (secondary action, not magnetic) */}
+            <StaggerItem as="div" className="pt-6 pl-2">
+              <a
+                href={`/${lang}/testimonios`}
+                className="group relative inline-flex items-center justify-center px-10 py-4
+                           bg-white/5 text-white font-medium tracking-wide overflow-hidden
+                           rounded-full shadow-lg hover:shadow-[#B2904D]/20 transition-all duration-500
+                           backdrop-blur-md border border-[#B2904D]/30
+                           hover:bg-[#B2904D]/10 hover:border-[#B2904D]/60"
               >
-                  {showVideo ? (
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src="https://www.youtube.com/embed/n8aJSPHdTXg?rel=0&controls=1&autoplay=1"
-                      title={language === 'es' ? 'Documental: Caso real de reunificación familiar - Abogado Manuel Solís' : 'Documentary: Real family reunification case - Attorney Manuel Solis'}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full"
-                    />
-                  ) : (
-                    <button
-                      onClick={() => setShowVideo(true)}
-                      className="relative w-full h-full group cursor-pointer"
-                      aria-label={language === 'es' ? 'Reproducir video' : 'Play video'}
-                    >
-                      <Image
-                        src="https://img.youtube.com/vi/n8aJSPHdTXg/maxresdefault.jpg"
-                        alt="Caso real de reunificación familiar - Abogado Manuel Solís"
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-14 h-14 bg-[#B2904D]/90 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(178,144,77,0.3)] group-hover:scale-110 group-hover:bg-[#B2904D] transition-all duration-300 border border-white/20">
-                          <Play className="w-6 h-6 text-[#001540] ml-0.5 fill-[#001540]" />
-                        </div>
-                      </div>
-                    </button>
-                  )}
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out" />
+                <span className="relative flex items-center gap-3">
+                  {isEs ? 'Conozca Más' : 'Learn More'}
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#B2904D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </span>
+              </a>
+            </StaggerItem>
+          </Stagger>
 
-                  <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
-              </m.div>
+          {/* Right Column: video — single Reveal scale accent */}
+          <div className="lg:col-span-6 relative w-full mt-8 lg:mt-0">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[85%] bg-blue-600/20 blur-[80px] rounded-full -z-10" />
+            <div className="absolute top-3 -right-3 w-full h-full border border-[#B2904D]/20 rounded-2xl z-0 hidden lg:block" />
+            <Reveal variant="scale" amount={0.3}>
+              <AboutVideo lang={lang} />
+            </Reveal>
           </div>
 
         </div>
       </div>
     </section>
-  )
+  );
 }

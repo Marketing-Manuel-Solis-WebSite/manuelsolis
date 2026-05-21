@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Reveal, Stagger, StaggerItem, Parallax } from './motion';
+import { Reveal, Stagger, StaggerItem, Parallax, MagneticButton, Tilt, TiltLayer } from './motion';
 import HeroPopup from './HeroPopup';
 import type { Language } from '../lib/translations';
 
@@ -33,6 +33,11 @@ const MARQUEE_CSS = `
   .hero-marquee { animation: marquee-scroll 35s linear infinite; }
   @media (max-width: 1024px) { .hero-marquee { animation-duration: 20s; } }
   @media (prefers-reduced-motion: reduce) { .hero-marquee { animation: none; } }
+  /* Portrait settle — transform-only (no opacity gate), so the LCP image paints
+     immediately at scale 1.03 and settles to 1. Disabled under reduced-motion. */
+  @keyframes hero-portrait-settle { from { transform: scale(1.03); } to { transform: scale(1); } }
+  .hero-portrait-settle { animation: hero-portrait-settle 1200ms cubic-bezier(0.16,1,0.3,1) both; }
+  @media (prefers-reduced-motion: reduce) { .hero-portrait-settle { animation: none; } }
 `;
 
 /**
@@ -65,7 +70,7 @@ export default function Hero({ lang }: { lang: Language }) {
 
             <div className="relative z-10 w-full h-full origin-bottom flex justify-center -translate-y-5 lg:-translate-y-20">
               <div className="w-full h-full scale-110 sm:scale-125 lg:scale-[1.65] lg:-translate-x-24 lg:origin-bottom transform-gpu">
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full hero-portrait-settle origin-bottom">
                   <Image
                     src="/manuelsolisl.png"
                     alt="Abogado Manuel Solis"
@@ -78,21 +83,25 @@ export default function Hero({ lang }: { lang: Language }) {
               </div>
             </div>
 
-            {/* Experience Badge */}
+            {/* Experience Badge — decorative (NOT the LCP); light 3D pass.
+                Tilt + TiltLayer give subtle depth on hover; reduced-motion/touch
+                render it flat. The portrait/"50,000" LCP elements are untouched. */}
             <Reveal
               variant="right"
               delay={0.4}
-              className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 lg:left-auto lg:right-0 lg:translate-x-0 z-40 p-4 sm:p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/10 shadow-xl text-center lg:text-right min-w-[160px] sm:min-w-[180px]"
+              className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 lg:left-auto lg:right-0 lg:translate-x-0 z-40 text-center lg:text-right min-w-[160px] sm:min-w-[180px]"
             >
-              <div className="group">
-                <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 justify-center lg:justify-end">
-                  <span className="text-4xl sm:text-5xl font-extralight tracking-tighter">35</span>
-                  <span className="text-2xl sm:text-3xl font-thin text-gold-500 ml-2 group-hover:rotate-12 transition-transform">+</span>
+              <Tilt maxTilt={5} className="p-4 sm:p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/10 shadow-xl">
+                <div className="group">
+                  <TiltLayer depth={14} className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50 justify-center lg:justify-end">
+                    <span className="text-4xl sm:text-5xl font-extralight tracking-tighter">35</span>
+                    <span className="text-2xl sm:text-3xl font-thin text-gold-500 ml-2 group-hover:rotate-12 transition-transform">+</span>
+                  </TiltLayer>
+                  <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
+                    {isEs ? 'Años de Experiencia' : 'Years Experience'}
+                  </p>
                 </div>
-                <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
-                  {isEs ? 'Años de Experiencia' : 'Years Experience'}
-                </p>
-              </div>
+              </Tilt>
             </Reveal>
           </div>
 
@@ -161,6 +170,21 @@ export default function Hero({ lang }: { lang: Language }) {
                 <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white/70 font-light italic text-center lg:text-left tracking-wide relative z-10">
                   {isEs ? 'Inspirados por la gracia de Dios' : 'Inspired by the grace of God'}
                 </p>
+              </StaggerItem>
+
+              {/* Primary CTA — single magnetic gold button (secondaries live in the
+                  floating CTAs). Real <a> to the locale-aware /consulta route. */}
+              <StaggerItem variant="up" className="flex justify-center lg:justify-start pt-2">
+                <MagneticButton
+                  as="a"
+                  href={`/${lang}/consulta`}
+                  className="group items-center gap-3 px-8 py-4 bg-gold-500 text-navy-500 font-bold rounded-full shadow-glow-gold"
+                >
+                  <span>{isEs ? 'Consulta gratis' : 'Free consultation'}</span>
+                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </MagneticButton>
               </StaggerItem>
             </Stagger>
           </div>

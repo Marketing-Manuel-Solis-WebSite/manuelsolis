@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Hero from '../components/Hero';
+import About from '../components/About';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -63,10 +64,6 @@ export async function generateMetadata({
   };
 }
 
-const About = dynamic(() => import('../components/About'), {
-  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
-});
-
 const Services = dynamic(() => import('../components/Services'), {
   loading: () => <div className="w-full h-[600px] bg-[#001540]" />
 });
@@ -95,7 +92,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <Hero lang={currentLang} />
       <Header />
       <div className="content-auto">
-        <About />
+        <About lang={currentLang} />
       </div>
       <div className="content-auto">
         <Services />
