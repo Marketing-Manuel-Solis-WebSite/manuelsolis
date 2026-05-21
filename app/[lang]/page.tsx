@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import Hero from '../components/Hero';
 import About from '../components/About';
+import Services from '../components/Services';
+import Testimonials from '../components/Testimonials';
+import Team from '../components/Team';
+import Offices from '../components/Offices';
+import ContactForm from '../components/ContactForm';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -64,26 +68,6 @@ export async function generateMetadata({
   };
 }
 
-const Services = dynamic(() => import('../components/Services'), {
-  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
-});
-
-const Testimonials = dynamic(() => import('../components/Testimonials'), {
-  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
-});
-
-const Team = dynamic(() => import('../components/Team'), {
-  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
-});
-
-const Offices = dynamic(() => import('../components/Offices'), {
-  loading: () => <div className="w-full h-[800px] bg-[#001540]" />
-});
-
-const ContactForm = dynamic(() => import('../components/ContactForm'), {
-  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
-});
-
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const currentLang = lang === 'en' ? 'en' : 'es';
@@ -95,19 +79,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <About lang={currentLang} />
       </div>
       <div className="content-auto">
-        <Services />
+        <Services lang={currentLang} />
       </div>
       <div className="content-auto">
-        <Testimonials />
+        <Testimonials lang={currentLang} />
       </div>
       <div className="content-auto">
-        <Team />
+        <Team lang={currentLang} />
       </div>
       <div className="content-auto">
-        <Offices />
+        <Offices lang={currentLang} />
       </div>
       <div className="content-auto">
-        <ContactForm />
+        <ContactForm lang={currentLang} />
       </div>
       <Footer />
     </main>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   m,
   useMotionValue,
@@ -76,11 +76,19 @@ export default function Tilt({
   // Restraint cap — never exceed 6° even if a caller passes more.
   const cap = Math.min(maxTilt, t.max);
 
+  // Gate the tilt STRUCTURE behind a mount flag so the first client render
+  // matches the server (flat div). Without this, the server renders the flat
+  // branch (no window → finePointer false) while the client renders the
+  // perspective wrapper + m.div → a hydration mismatch that regenerates the
+  // tree. After mount we upgrade to the tilt structure (a normal client update).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const finePointer =
     typeof window !== 'undefined' && typeof window.matchMedia === 'function'
       ? window.matchMedia('(pointer: fine)').matches
       : false;
-  const active = !reduced && finePointer;
+  const active = mounted && !reduced && finePointer;
 
   const onEnter = useCallback(() => {
     if (!active || !ref.current) return;

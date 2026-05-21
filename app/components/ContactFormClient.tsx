@@ -1,0 +1,349 @@
+'use client'
+
+import { useState, Suspense } from 'react'
+import { useLanguage } from '../context/LanguageContext'
+import { useSearchParams } from 'next/navigation'
+import { m, AnimatePresence, Variants } from 'framer-motion'
+import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
+import { track } from '@vercel/analytics/react'
+import { pushToDataLayer, trackConversion } from '../lib/tracking'
+
+// Client island: the interactive lead-capture form. Submit, validation,
+// useSearchParams (UTM/click IDs), and Vercel BotID protection are UNCHANGED
+// from the previous ContactForm — only the surrounding section/header moved to
+// the server wrapper (ContactForm.tsx). Do not break lead capture.
+const API_URL = '/api/lead-capture';
+// Vercel BotID protection for /api/lead-capture is registered in
+// instrumentation-client.ts and verified server-side via checkBotId()
+// in app/api/lead-capture/route.ts. Mode controlled by BOTID_MODE env.
+
+const containerVar: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVar: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } }
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const NeonInput = (props: any) => {
+  const { icon: Icon, name, type = "text", placeholder, value, onChange, required = false, isTextArea = false } = props;
+  const [isFocused, setIsFocused] = useState(false);
+
+  const baseClasses = `w-full bg-[#000510]/60 border rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-slate-500 focus:outline-none transition-colors z-10 relative
+    ${isFocused ? 'border-[#B2904D]/50 bg-[#000510]/90' : 'border-white/10 hover:border-white/20'}`;
+
+  return (
+    <div className="relative group">
+      <div className="absolute left-4 top-4 z-20 pointer-events-none text-[#64748b] group-focus-within:text-[#B2904D] transition-colors">
+        <Icon size={20} />
+      </div>
+
+      {isTextArea ? (
+        <textarea
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          required={required}
+          aria-required={required}
+          aria-label={placeholder}
+          rows={5}
+          className={`${baseClasses} resize-none`}
+          placeholder={placeholder}
+        />
+      ) : (
+        <input
+          id={name}
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          required={required}
+          aria-required={required}
+          aria-label={placeholder}
+          className={baseClasses}
+          placeholder={placeholder}
+        />
+      )}
+
+      <div className="absolute bottom-0 left-2 right-2 h-[1px] bg-transparent overflow-hidden pointer-events-none">
+        <m.div
+          initial={{ x: "-100%" }}
+          animate={{ x: isFocused ? "0%" : "-100%" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="w-full h-full bg-[#B2904D]"
+        />
+      </div>
+    </div>
+  );
+};
+
+const trackConversionEvents = () => {
+  if (typeof window !== 'undefined') {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((window as any).fbq) (window as any).fbq('track', 'Lead');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((window as any).ttq) (window as any).ttq.track('CompleteRegistration');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((window as any).gtag) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (window as any).gtag('event', 'generate_lead', {
+          'event_category': 'Contact',
+          'event_label': 'Form_Submission'
+        });
+      }
+
+      pushToDataLayer('form_submit', {
+        event_category: 'conversion',
+        event_label: 'contact_form',
+        form_type: 'consultation_request',
+      });
+
+      pushToDataLayer('qualified_lead', {
+        event_category: 'conversion',
+        event_label: 'contact_form_qualified',
+      });
+
+    } catch (e) { console.error("Tracking Error", e); }
+  }
+};
+
+function ContactFormContent() {
+  const { language } = useLanguage();
+  const lang = language as 'es' | 'en';
+  const searchParams = useSearchParams();
+
+  const [formData, setFormData] = useState({
+    first_name: '', last_name: '', phone: '', email: '', enquiry_detail: '',
+    acceptedTerms: false, marketingConsent: false
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.acceptedTerms || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    const utmData = {
+      utm_source: searchParams.get('utm_source') || '(direct)',
+      utm_medium: searchParams.get('utm_medium') || '(none)',
+      utm_campaign: searchParams.get('utm_campaign') || '(not set)',
+      utm_content: searchParams.get('utm_content') || null,
+      utm_term: searchParams.get('utm_term') || null
+    };
+
+    const clickIds = {
+      gclid: searchParams.get('gclid') || null,
+      fbclid: searchParams.get('fbclid') || null,
+    };
+
+    let pageUrl = '';
+    let sessionId: string | null = null;
+
+    if (typeof window !== 'undefined') {
+      const hasParams = searchParams.toString().length > 0;
+      pageUrl = hasParams
+        ? window.location.href
+        : `${window.location.origin}${window.location.pathname}`;
+      try {
+        sessionId = window.sessionStorage.getItem('msl_sid');
+      } catch {
+        sessionId = null;
+      }
+    }
+
+    try {
+      const payload = {
+        ...formData,
+        ...utmData,
+        ...clickIds,
+        page_url: pageUrl,
+        language: lang,
+        session_id: sessionId,
+      };
+
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        trackConversionEvents();
+
+        track('Contact Form Submit', {
+          source: 'contact_page',
+          language: lang
+        });
+
+        trackConversion('form_submit', 'contact_form');
+        trackConversion('qualified_lead', 'contact_form_qualified');
+
+        setSubmitStatus('success');
+        setFormData({
+          first_name: '', last_name: '', phone: '', email: '', enquiry_detail: '',
+          acceptedTerms: false, marketingConsent: false
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus('idle'), 4000);
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (e: any) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+  };
+
+  const t = (es: string, en: string) => (lang === 'es' ? es : en);
+
+  return (
+    <m.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
+      className="relative bg-[#001026]/95 backdrop-blur-md rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 shadow-2xl border border-white/10 overflow-hidden"
+    >
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
+
+      <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
+        <AnimatePresence>
+          {submitStatus !== 'idle' && (
+            <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-[2rem]" role="alert" aria-live="assertive">
+              {submitStatus === 'success' ? (
+                <>
+                  <m.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
+                    <CheckCircle2 size={80} className="text-green-400 mb-6" />
+                  </m.div>
+                  <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('¡Enviado con Éxito!', 'Successfully Sent!')}</h3>
+                  <p className="text-blue-200">{t('Nuestro equipo revisará su caso de inmediato.', 'Our team will review your case immediately.')}</p>
+                </>
+              ) : (
+                <>
+                  <m.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 10 }}>
+                    <XCircle size={80} className="text-red-400 mb-6" />
+                  </m.div>
+                  <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('Error de Envío', 'Submission Error')}</h3>
+                  <p className="text-red-200">{t('Hubo un problema. Intente de nuevo más tarde.', 'There was an issue. Please try again later.')}</p>
+                </>
+              )}
+            </m.div>
+          )}
+        </AnimatePresence>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <m.div variants={itemVar}>
+            <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
+            <div className="space-y-5">
+              <NeonInput icon={User} name="first_name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
+              <NeonInput icon={User} name="last_name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
+            </div>
+          </m.div>
+
+          <m.div variants={itemVar}>
+            <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
+            <div className="space-y-5">
+              <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
+              <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
+            </div>
+          </m.div>
+        </div>
+
+        <m.div variants={itemVar}>
+          <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
+          <NeonInput icon={MessageSquare} name="enquiry_detail" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
+        </m.div>
+
+        <div className="space-y-4">
+          <m.div variants={itemVar} className="p-5 rounded-xl bg-[#000814]/50 border border-white/10">
+            <p className="text-xs text-blue-200/80 leading-relaxed">
+              {t(
+                'Al proporcionar voluntariamente su número de teléfono y optar explícitamente por recibir mensajes de texto, usted consiente recibir comunicaciones SMS del Law Office of Manuel Solis relacionadas con responder a consultas sobre servicios de inmigración, programar consultas, enviar recordatorios de citas, solicitar documentos y proporcionar actualizaciones de casos. La frecuencia de los mensajes puede variar. Pueden aplicarse tarifas estándar de mensajes y datos. Su consentimiento para recibir mensajes SMS no es una condición para adquirir ningún servicio. Puede cancelar en cualquier momento respondiendo "STOP" a cualquier mensaje, y puede solicitar ayuda adicional respondiendo "HELP". Para más detalles, por favor visite nuestra',
+                'By voluntarily providing your phone number and explicitly opting in to text messages, you consent to receive SMS communications from Law Office of Manuel Solis regarding respond to immigration service inquiries, schedule consultations, send appointment reminders, request documents, and provide case updates. Message frequency may vary. Standard messaging and data rates may apply. Your consent to receive SMS messages is not a condition of purchasing any service. You may opt out at any time by replying "STOP" to any message, and you may request additional assistance by replying "HELP." For more details, please visit our'
+              )}{' '}
+              <a href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('política de privacidad', 'privacy policy')}</a>{' '}
+              {t('y', 'and')}{' '}
+              <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('términos de servicio SMS', 'SMS terms of service')}</a>.
+            </p>
+          </m.div>
+
+          <m.div variants={itemVar} className="flex items-start gap-4 p-5 rounded-xl bg-[#000814]/50 border border-white/10 hover:border-white/20 transition-colors group">
+            <div className="relative flex items-center pt-1">
+              <input type="checkbox" id="acceptedTerms" name="acceptedTerms" checked={formData.acceptedTerms} onChange={handleChange} className="peer h-7 w-7 sm:h-6 sm:w-6 cursor-pointer appearance-none rounded border-2 border-slate-500 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-400" />
+              <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={16} strokeWidth={3} /></div>
+            </div>
+            <label htmlFor="acceptedTerms" className="text-sm text-blue-100 leading-relaxed cursor-pointer select-none group-hover:text-white transition-colors">
+              {t('Acepto los', 'I accept the')}{' '}
+              <a href={`/${lang}/terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio', 'Terms of Service')}</a>{' '}
+              {t('y he leído la', 'and have read the')}{' '}
+              <a href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Política de Privacidad', 'Privacy Statement')}</a>.
+            </label>
+          </m.div>
+
+          <m.div variants={itemVar} className="flex items-start gap-4 p-4 rounded-xl bg-[#000814]/30 border border-white/5 hover:border-white/10 transition-colors group">
+            <div className="relative flex items-center pt-1">
+              <input type="checkbox" id="marketingConsent" name="marketingConsent" checked={formData.marketingConsent} onChange={handleChange} className="peer h-6 w-6 sm:h-5 sm:w-5 cursor-pointer appearance-none rounded border-2 border-slate-600 bg-transparent transition-all checked:border-[#B2904D] checked:bg-[#B2904D] hover:border-slate-500" />
+              <div className="pointer-events-none absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 text-[#001540] opacity-0 transition-opacity peer-checked:opacity-100"><CheckCircle2 size={14} strokeWidth={3} /></div>
+            </div>
+            <label htmlFor="marketingConsent" className="text-xs text-blue-200/80 leading-relaxed cursor-pointer select-none group-hover:text-blue-100 transition-colors">
+              {t('Me gustaría recibir comunicaciones SMS del Law Office of Manuel Solís al número de teléfono proporcionado relacionadas con consultas sobre servicios de inmigración, programación de consultas, recordatorios de citas, solicitud de documentos y actualizaciones de casos. Pueden aplicar tarifas de mensajes y datos. La frecuencia de los mensajes puede variar. Responda STOP para cancelar, HELP para ayuda.', 'I would like to receive SMS communications from the Law Office of Manuel Solís at the phone number provided regarding immigration service inquiries, scheduling consultations, appointment reminders, document requests, and case updates. Message and data rates may apply. Message frequency may vary. Reply STOP to cancel, HELP for help.')}{' '}
+              <a href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">{t('Términos de Servicio SMS', 'SMS Terms of Service')}</a>
+            </label>
+          </m.div>
+        </div>
+
+        <m.div variants={itemVar} className="pt-2">
+          <button
+            type="submit"
+            disabled={isSubmitting || !formData.acceptedTerms}
+            className={`group relative w-full h-14 sm:h-16 overflow-hidden rounded-xl font-bold tracking-wider sm:tracking-widest uppercase text-sm sm:text-base transition-all shadow-lg
+              ${!formData.acceptedTerms
+                ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5'
+                : 'bg-[#B2904D] text-[#001026] hover:bg-[#cbb06d] cursor-pointer transform hover:-translate-y-1'
+              }
+            `}
+          >
+            <span className="relative z-10 flex items-center justify-center gap-3">
+              {isSubmitting ? (
+                <span className="flex items-center gap-2">
+                  <Zap className="animate-spin text-[#001026]" size={20} /> {t('Procesando...', 'Processing...')}
+                </span>
+              ) : (
+                <>
+                  <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-slate-500" : "text-[#001026]"} />
+                  {t('Registrarse', 'Register')}
+                </>
+              )}
+            </span>
+            {!isSubmitting && formData.acceptedTerms && (
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-500 ease-in-out" />
+            )}
+          </button>
+        </m.div>
+      </form>
+    </m.div>
+  )
+}
+
+export default function ContactFormClient() {
+  return (
+    <Suspense fallback={<div className="py-10 w-full flex justify-center items-center"><Zap className="animate-spin text-[#B2904D]" size={40} /></div>}>
+      <ContactFormContent />
+    </Suspense>
+  )
+}
