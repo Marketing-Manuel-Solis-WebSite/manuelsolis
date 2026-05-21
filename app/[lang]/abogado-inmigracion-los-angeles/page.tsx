@@ -138,6 +138,7 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
         <Script id="faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }} />
       )}
       <CityServiceLanding
+        lang={currentLang}
         config={config}
         office={office}
         service={service}
