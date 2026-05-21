@@ -160,7 +160,7 @@ export default async function ImmigrationPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
         />
       )}
-      <ImmigrationClient />
+      <ImmigrationClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }
