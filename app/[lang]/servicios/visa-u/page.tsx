@@ -95,7 +95,7 @@ export default async function VisaUPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <VisaUClient />
+      <VisaUClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }

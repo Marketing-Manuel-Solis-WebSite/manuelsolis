@@ -92,7 +92,7 @@ export default async function VisaE2Page({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <VisaE2Client />
+      <VisaE2Client lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }

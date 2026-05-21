@@ -14,8 +14,8 @@
 | **ley-criminal** | ✅ **Hecho + verificado** (Lote A) | tabs · enfoque (b) |
 | **familia** | ✅ **Hecho + verificado** (Lote A) | tabs · enfoque (b) |
 | **seguros** | ✅ **Hecho + verificado** (Lote A) | tabs + video · enfoque (b) |
-| visa-e2 | ⏳ Pendiente (Lote B) | tabs + acordeón/FAQ |
-| visa-u | ⏳ Pendiente (Lote B) | tabs + acordeón/FAQ |
+| **visa-e2** | ✅ **Hecho + verificado** (Lote B) | tabs + FAQ estático · enfoque (b) |
+| **visa-u** | ✅ **Hecho + verificado** (Lote B) | tabs + FAQ estático + eligibility + offices + blog · enfoque (b) |
 | vawa | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
 | defensa-deportacion | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
 | asilo | ⏳ Pendiente (Lote C) | tabs + acordeón/FAQ |
@@ -37,6 +37,25 @@ Mismo patrón que accidentes, ahora con **enfoque (b)**: los datos bilingües vi
 - LCP sagrado: hero `priority` + H1 estático server-side (1:1 con el estilo de cada hero original).
 - **Gates:** tsc 0 · build exit 0 · test 54/54 · lint **460 (169/291)** (baja de 485) · las 3 rutas **● SSG/ISR**.
 - **Screenshots** `docs/fase-2-3-servicios/` (hero+casos, ES/EN × desktop/mobile) — contenido/imágenes presentes, layout 1:1.
+
+---
+
+## Lote B — visa-e2, visa-u (enfoque b)
+
+Mismo patrón. Estas dos divergen del template base: visa-e2 tiene **hero text-only** (sin imagen) y visa-u un **hero con imagen + secciones extra** (eligibility, offices, blog). Ambas tienen **FAQ** y tabs (`infoTabs`).
+
+**GUARDA FAQ — hallazgo:** el FAQ de visa-e2/visa-u **no es un acordeón con open/close** — es **estático, siempre visible** (todas las respuestas renderizadas en el DOM). Por eso va 100% server-rendered (no necesita isla); la única interactividad es la entrada `whileInView` (Reveal/Stagger). Verificado por curl: las **respuestas están en el HTML** (ES y EN). **Nota SEO:** estas 2 páginas **no emiten `FAQPage` JSON-LD** (su `page.tsx` solo genera `LegalService` + `BreadcrumbList` — decisión pre-existente); lo **preservé byte-idéntico** (diff = 1 línea, solo `lang`).
+
+| Página | Estructura | First Load route JS | Freeze list |
+|---|---|---|---|
+| visa-e2 | hero text-only ("35+" inline) + tabs (FileText/Shield/Globe…) + proceso (6, "0N") + FAQ estático + artículos | **766.0 KB** | solo `lang` prop · LegalService + BreadcrumbList ✓ (sin FAQPage, pre-existente) |
+| visa-u | hero con imagen (Manuel_Solis.png) + eligibility (4) + tabs (5) + proceso (4) + FAQ estático + offices (15) + blog (5) + banner | **766.4 KB** | solo `lang` prop · LegalService + BreadcrumbList ✓ |
+
+- **on-disk total:** 2841.2 → **2749.1 KB (−92.1 KB)**.
+- Islas: solo `VisaE2Cases`/`VisaUCases` (tabs). Eligibility/offices/blog/FAQ → server-rendered. Datos pre-resueltos por idioma + mapa de iconos.
+- LCP sagrado: visa-e2 H1 estático (LCP de texto); visa-u imagen `priority` + H1 estático.
+- **Gates:** tsc 0 · build exit 0 · test 54/54 · lint **444 (163/281)** (baja de 460) · ambas rutas **● SSG/ISR**.
+- **FAQ answers en HTML** confirmadas (ES+EN). Screenshots `docs/fase-2-3-servicios/` (hero+detalles+faq).
 
 ---
 
