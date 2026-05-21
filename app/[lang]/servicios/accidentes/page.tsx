@@ -118,7 +118,7 @@ export default async function AccidentesPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
         />
       )}
-      <AccidentesClient />
+      <AccidentesClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
 }

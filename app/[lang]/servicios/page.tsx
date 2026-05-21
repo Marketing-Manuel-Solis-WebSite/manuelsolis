@@ -6,6 +6,7 @@ import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { LANDING_PAGES, OFFICES, SERVICES as CITY_SERVICES } from '../../lib/cityServiceData';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -150,7 +151,7 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
       <main className="min-h-screen bg-[#001540]">
         {/* Hero Section */}
         <section className="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-5xl mx-auto text-center">
+          <Reveal variant="up" className="max-w-5xl mx-auto text-center" amount={0.3}>
             <span className="inline-block mb-4 px-4 py-1.5 rounded-full bg-white/10 text-xs font-semibold tracking-widest text-sky-300 uppercase">
               {isEs ? 'Servicios Legales' : 'Legal Services'}
             </span>
@@ -162,39 +163,40 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
                 ? 'Más de 30 años defendiendo los derechos de nuestra comunidad. Encuentre el área legal que necesita.'
                 : 'Over 30 years defending our community\'s rights. Find the legal area you need.'}
             </p>
-          </div>
+          </Reveal>
         </section>
 
         {/* Services Grid */}
         <section className="pb-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Stagger gap={0.08} className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
             {SERVICES.map((service) => {
               const Icon = service.icon;
               return (
-                <Link
-                  key={service.slug}
-                  href={`/${currentLang}/servicios/${service.slug}`}
-                  className="group relative flex flex-col rounded-2xl border border-white/10 bg-white/5 p-8 transition-all duration-300 hover:bg-white/10 hover:border-sky-400/40 hover:shadow-lg hover:shadow-sky-500/10"
-                >
-                  <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400 transition-colors group-hover:bg-sky-500/25">
-                    <Icon className="h-7 w-7" strokeWidth={1.8} />
-                  </div>
-                  <h2 className="text-xl font-bold text-white mb-3 group-hover:text-sky-300 transition-colors">
-                    {service.title[currentLang]}
-                  </h2>
-                  <p className="text-slate-400 text-sm leading-relaxed flex-1">
-                    {service.desc[currentLang]}
-                  </p>
-                  <span className="mt-5 inline-flex items-center text-sm font-semibold text-sky-400 group-hover:text-sky-300 transition-colors">
-                    {isEs ? 'Ver más' : 'Learn more'}
-                    <svg className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </span>
-                </Link>
+                <StaggerItem key={service.slug} as="div">
+                  <Link
+                    href={`/${currentLang}/servicios/${service.slug}`}
+                    className="card-3d group flex flex-col h-full rounded-2xl border border-white/10 bg-white/5 p-8 transition-colors duration-300 hover:bg-white/10 hover:border-sky-400/40"
+                  >
+                    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400 transition-colors group-hover:bg-sky-500/25">
+                      <Icon className="h-7 w-7" strokeWidth={1.8} />
+                    </div>
+                    <h2 className="text-xl font-bold text-white mb-3 group-hover:text-sky-300 transition-colors">
+                      {service.title[currentLang]}
+                    </h2>
+                    <p className="text-slate-400 text-sm leading-relaxed flex-1">
+                      {service.desc[currentLang]}
+                    </p>
+                    <span className="mt-5 inline-flex items-center text-sm font-semibold text-sky-400 group-hover:text-sky-300 transition-colors">
+                      {isEs ? 'Ver más' : 'Learn more'}
+                      <svg className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </Link>
+                </StaggerItem>
               );
             })}
-          </div>
+          </Stagger>
         </section>
 
         {/* Locations × Services (SEO internal linking) */}
@@ -259,12 +261,13 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
                 : 'Speak with an experienced attorney today. Personalized and confidential attention. We are ready to help you.'}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
+              <MagneticButton
+                as="a"
                 href="tel:+18325980914"
-                className="inline-flex items-center justify-center rounded-full bg-white text-blue-900 font-bold text-lg px-8 py-4 transition-transform hover:scale-105 shadow-lg"
+                className="items-center justify-center rounded-full bg-white text-blue-900 font-bold text-lg px-8 py-4 shadow-lg"
               >
                 {isEs ? 'Llamar Ahora: ' : 'Call Now: '}(832) 598-0914
-              </a>
+              </MagneticButton>
               <Link
                 href={`/${currentLang}/informacion/nosotros`}
                 className="inline-flex items-center justify-center rounded-full border-2 border-white text-white font-semibold text-lg px-8 py-4 transition-colors hover:bg-white/10"
