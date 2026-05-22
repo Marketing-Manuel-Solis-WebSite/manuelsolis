@@ -139,7 +139,7 @@ export default async function AttorneyPage({ params }: Props) {
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <AttorneyProfile slug={slug} />
+      <AttorneyProfile slug={slug} lang={lang} />
     </>
   );
 }

@@ -1,40 +1,40 @@
-'use client';
-
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   GraduationCap, Scale, ArrowRight, Mail, ChevronRight, Quote, ArrowLeft, Users, FileText
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-import { useLanguage } from '../../../context/LanguageContext';
+import ContactForm from '../../../components/ContactForm';
 import { attorneys, getText, getRelatedAttorneys, getAttorneyLocation } from '../../../lib/attorneyData';
 import { getArticlesByAuthor } from '../../../lib/blogRelations';
+import { Reveal, Stagger, StaggerItem } from '../../../components/motion';
 
-// --- LAZY LOAD DEL FORMULARIO ---
-const ContactForm = dynamic(() => import('../../../components/ContactForm'), {
-  loading: () => <div className="w-full h-[600px] bg-[#001540]/50 rounded-2xl animate-pulse border border-white/5" />
-});
-
-// --- COLORES ---
-const PRIMARY_DARK = '#001540';
-const ACCENT_GOLD = '#B2904D';
-
+/**
+ * Attorney profile — server-first (Fase 2.3 abogados). Purely presentational
+ * (no interactive state in the original), so it's a pure Server Component: the
+ * bilingual attorney data is resolved to the active `lang` on the server and
+ * the inactive locale never reaches the client bundle (enfoque b). Movement
+ * lives in Reveal/Stagger islands; the related-attorney and article grids use
+ * `.card-3d`. LCP sacred: the hero photo (priority) + H1 render statically.
+ * The per-route page.tsx (generateMetadata + Person/Breadcrumb JSON-LD) is
+ * untouched — only the `lang` prop is threaded in.
+ */
 interface AttorneyProfileProps {
   slug: string;
+  lang: string;
 }
 
-export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
-  const { language } = useLanguage();
+export default function AttorneyProfile({ slug, lang }: AttorneyProfileProps) {
+  const language: 'es' | 'en' = lang === 'en' ? 'en' : 'es';
 
-  const attorney = useMemo(() => attorneys.find(a => a.id === slug), [slug]);
-  const relatedAttorneys = useMemo(() => getRelatedAttorneys(slug), [slug]);
-  const location = useMemo(() => getAttorneyLocation(slug), [slug]);
-  const authorArticles = useMemo(() => getArticlesByAuthor(slug, language as 'es' | 'en'), [slug, language]);
+  const attorney = attorneys.find(a => a.id === slug);
+  const relatedAttorneys = getRelatedAttorneys(slug);
+  const location = getAttorneyLocation(slug);
+  const authorArticles = getArticlesByAuthor(slug, language);
 
-  const texts = useMemo(() => ({
+  const texts = {
     backToTeam: { es: 'Volver al Equipo', en: 'Back to Team' },
     education: { es: 'Educacion', en: 'Education' },
     admissions: { es: 'Admisiones al Colegio de Abogados', en: 'Bar Admissions' },
@@ -51,7 +51,7 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
     articlesByAuthor: { es: 'Articulos Publicados', en: 'Published Articles' },
     readArticle: { es: 'Leer Articulo', en: 'Read Article' },
     viewAllArticles: { es: 'Ver Todos los Articulos', en: 'View All Articles' },
-  }), []);
+  };
 
   if (!attorney) return null;
 
@@ -82,7 +82,7 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
         </div>
       </section>
 
-      {/* HERO SECTION - Attorney Photo + Info */}
+      {/* HERO SECTION - Attorney Photo + Info (static — LCP) */}
       <section className="relative pt-8 pb-16 px-4 z-10">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
@@ -166,7 +166,7 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
       {/* BIO SECTION */}
       <section className="relative px-4 pb-16 z-10">
         <div className="max-w-4xl mx-auto">
-          <div>
+          <Reveal variant="up" amount={0.2}>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 flex items-center gap-3">
               <div className="w-12 h-1 bg-[#B2904D] rounded-full" />
               {texts.biography[language]}
@@ -176,16 +176,16 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* EDUCATION & ADMISSIONS */}
       <section className="relative px-4 pb-16 z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Stagger gap={0.1} className="grid grid-cols-1 md:grid-cols-2 gap-8" amount={0.2}>
             {/* Education */}
-            <div className="p-6 md:p-8 bg-[#001f4a]/60  rounded-2xl border border-white/10">
+            <StaggerItem as="div" className="card-3d p-6 md:p-8 bg-[#001f4a]/60  rounded-2xl border border-white/10">
               <h3 className="text-white font-bold flex items-center gap-3 mb-6 text-lg uppercase tracking-wider">
                 <div className="p-2 bg-[#B2904D]/20 rounded-lg">
                   <GraduationCap size={22} className="text-[#B2904D]" />
@@ -196,14 +196,14 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
                 {attorney.education.map((edu, i) => (
                   <li key={i} className="flex items-start gap-3 text-gray-300">
                     <div className="w-2 h-2 rounded-full bg-[#B2904D] mt-2 flex-shrink-0" />
-                    <span className="text-sm md:text-base">{getText(edu, language as 'es' | 'en')}</span>
+                    <span className="text-sm md:text-base">{getText(edu, language)}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </StaggerItem>
 
             {/* Bar Admissions */}
-            <div className="p-6 md:p-8 bg-[#001f4a]/60  rounded-2xl border border-white/10">
+            <StaggerItem as="div" className="card-3d p-6 md:p-8 bg-[#001f4a]/60  rounded-2xl border border-white/10">
               <h3 className="text-white font-bold flex items-center gap-3 mb-6 text-lg uppercase tracking-wider">
                 <div className="p-2 bg-[#B2904D]/20 rounded-lg">
                   <Scale size={22} className="text-[#B2904D]" />
@@ -214,19 +214,19 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
                 {attorney.admissions.map((adm, i) => (
                   <li key={i} className="flex items-start gap-3 text-gray-300">
                     <div className="w-2 h-2 rounded-full bg-[#B2904D] mt-2 flex-shrink-0" />
-                    <span className="text-sm md:text-base">{getText(adm, language as 'es' | 'en')}</span>
+                    <span className="text-sm md:text-base">{getText(adm, language)}</span>
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
+            </StaggerItem>
+          </Stagger>
         </div>
       </section>
 
       {/* CTA SECTION */}
       <section className="relative px-4 pb-16 z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-[#B2904D]/20 to-[#B2904D]/5 rounded-2xl border border-[#B2904D]/30 p-8 md:p-12 text-center">
+          <Reveal variant="up" amount={0.3} className="bg-gradient-to-br from-[#B2904D]/20 to-[#B2904D]/5 rounded-2xl border border-[#B2904D]/30 p-8 md:p-12 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
               {texts.requestConsultation[language]} {attorney.name}
             </h2>
@@ -241,7 +241,7 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
               {texts.requestConsultation[language]} {firstName}
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </a>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -250,34 +250,35 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
         <section className="relative px-4 pb-16 z-10">
           <div className="max-w-7xl mx-auto">
             <div>
-              <div className="flex items-center gap-3 mb-8">
+              <Reveal variant="up" className="flex items-center gap-3 mb-8" amount={0.4}>
                 <div className="h-px flex-1 bg-gradient-to-r from-[#B2904D]/40 to-transparent" />
                 <h2 className="text-lg sm:text-xl font-semibold text-[#B2904D] uppercase tracking-widest whitespace-nowrap flex items-center gap-2">
                   <FileText size={20} />
                   {texts.articlesByAuthor[language]}
                 </h2>
                 <div className="h-px flex-1 bg-gradient-to-l from-[#B2904D]/40 to-transparent" />
-              </div>
+              </Reveal>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Stagger gap={0.06} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
                 {authorArticles.slice(0, 6).map((article) => (
-                  <Link
-                    key={article.slug}
-                    href={`/${language}/blog/${article.slug}`}
-                    className="group block p-6 bg-[#001f4a]/60 rounded-2xl border border-white/10 hover:border-[#B2904D]/50 hover:shadow-[0_0_20px_rgba(178,144,77,0.15)] transition-all duration-300"
-                  >
-                    <span className="inline-block px-3 py-1 rounded-full bg-[#B2904D]/15 text-[#B2904D] text-xs font-bold tracking-wider uppercase mb-3">
-                      {article.category}
-                    </span>
-                    <h3 className="text-white font-bold text-base leading-snug mb-3 group-hover:text-[#B2904D] transition-colors line-clamp-2">
-                      {article.title}
-                    </h3>
-                    <span className="inline-flex items-center gap-1 text-sm text-[#B2904D] font-medium opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                      {texts.readArticle[language]} <ArrowRight size={14} />
-                    </span>
-                  </Link>
+                  <StaggerItem key={article.slug} as="div">
+                    <Link
+                      href={`/${language}/blog/${article.slug}`}
+                      className="card-3d group block p-6 bg-[#001f4a]/60 rounded-2xl border border-white/10 hover:border-[#B2904D]/50 hover:shadow-[0_0_20px_rgba(178,144,77,0.15)] transition-all duration-300"
+                    >
+                      <span className="inline-block px-3 py-1 rounded-full bg-[#B2904D]/15 text-[#B2904D] text-xs font-bold tracking-wider uppercase mb-3">
+                        {article.category}
+                      </span>
+                      <h3 className="text-white font-bold text-base leading-snug mb-3 group-hover:text-[#B2904D] transition-colors line-clamp-2">
+                        {article.title}
+                      </h3>
+                      <span className="inline-flex items-center gap-1 text-sm text-[#B2904D] font-medium opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                        {texts.readArticle[language]} <ArrowRight size={14} />
+                      </span>
+                    </Link>
+                  </StaggerItem>
                 ))}
-              </div>
+              </Stagger>
 
               {authorArticles.length > 6 && (
                 <div className="text-center mt-8">
@@ -300,50 +301,51 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
         <section className="relative px-4 pb-16 z-10">
           <div className="max-w-7xl mx-auto">
             <div>
-              <div className="flex items-center gap-3 mb-8">
+              <Reveal variant="up" className="flex items-center gap-3 mb-8" amount={0.4}>
                 <div className="h-px flex-1 bg-gradient-to-r from-[#B2904D]/40 to-transparent" />
                 <h2 className="text-lg sm:text-xl font-semibold text-[#B2904D] uppercase tracking-widest whitespace-nowrap flex items-center gap-2">
                   <Users size={20} />
                   {texts.relatedTitle[language]} {location ? location[language] : ''}
                 </h2>
                 <div className="h-px flex-1 bg-gradient-to-l from-[#B2904D]/40 to-transparent" />
-              </div>
+              </Reveal>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <Stagger gap={0.06} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" amount={0.1}>
                 {relatedAttorneys.slice(0, 4).map((related) => (
-                  <Link
-                    key={related.id}
-                    href={`/${language}/abogados/${related.id}`}
-                    className="group relative h-[350px] rounded-2xl overflow-hidden block border border-white/10 bg-[#001540]/60 hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] transition-all duration-500"
-                    >
-                      <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-                        <Image
-                          src={related.image}
-                          alt={related.name}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                          className={related.id === 'lupita-valenzuela-martinez'
-                            ? "object-cover object-[center_20%]"
-                            : "object-cover object-top"}
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#001540]/90 via-[#001540]/50 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-500" />
-                      <div className="absolute bottom-0 left-0 w-full p-5 transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0">
-                        <div className="w-10 h-1 bg-[#B2904D] mb-2 rounded-full group-hover:w-20 transition-all duration-500 shadow-[0_0_15px_#B2904D]" />
-                        <h3 className="text-xl font-bold text-white leading-none mb-1 drop-shadow-lg">
-                          {related.name}
-                        </h3>
-                        <p className="text-[#B2904D] text-xs font-bold tracking-widest uppercase mb-3">
-                          {related.role[language]}
-                        </p>
-                        <div className="flex items-center gap-2 text-white text-sm font-medium opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 delay-75">
-                          {texts.viewProfile[language]} <ChevronRight size={16} className="text-[#B2904D]" />
+                  <StaggerItem key={related.id} as="div">
+                    <Link
+                      href={`/${language}/abogados/${related.id}`}
+                      className="card-3d group relative h-[350px] rounded-2xl overflow-hidden block border border-white/10 bg-[#001540]/60 hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] transition-all duration-500"
+                      >
+                        <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+                          <Image
+                            src={related.image}
+                            alt={related.name}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            className={related.id === 'lupita-valenzuela-martinez'
+                              ? "object-cover object-[center_20%]"
+                              : "object-cover object-top"}
+                            loading="lazy"
+                          />
                         </div>
-                      </div>
-                    </Link>
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#001540]/90 via-[#001540]/50 to-transparent opacity-95 group-hover:opacity-90 transition-opacity duration-500" />
+                        <div className="absolute bottom-0 left-0 w-full p-5 transform transition-transform duration-500 translate-y-2 group-hover:translate-y-0">
+                          <div className="w-10 h-1 bg-[#B2904D] mb-2 rounded-full group-hover:w-20 transition-all duration-500 shadow-[0_0_15px_#B2904D]" />
+                          <h3 className="text-xl font-bold text-white leading-none mb-1 drop-shadow-lg">
+                            {related.name}
+                          </h3>
+                          <p className="text-[#B2904D] text-xs font-bold tracking-widest uppercase mb-3">
+                            {related.role[language]}
+                          </p>
+                          <div className="flex items-center gap-2 text-white text-sm font-medium opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 delay-75">
+                            {texts.viewProfile[language]} <ChevronRight size={16} className="text-[#B2904D]" />
+                          </div>
+                        </div>
+                      </Link>
+                  </StaggerItem>
                 ))}
-              </div>
+              </Stagger>
             </div>
           </div>
         </section>
@@ -362,7 +364,7 @@ export default function AttorneyProfile({ slug }: AttorneyProfileProps) {
               </p>
             </div>
             <div className="bg-[#001026]/80 p-6 md:p-10 rounded-3xl border border-white/10 shadow-2xl">
-              <ContactForm />
+              <ContactForm lang={language} />
             </div>
           </div>
         </div>
