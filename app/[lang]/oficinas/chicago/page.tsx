@@ -93,7 +93,7 @@ export default async function ChicagoPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <OfficeClient />
+      <OfficeClient lang={localeLang} />
     </>
   );
 }

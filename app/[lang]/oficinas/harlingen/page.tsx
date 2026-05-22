@@ -92,7 +92,7 @@ export default async function HarlingenPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <OfficeClient />
+      <OfficeClient lang={localeLang} />
     </>
   );
 }

@@ -1,15 +1,12 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { MapPin, Phone, Building2, ChevronDown } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-
-const ContactForm = dynamic(() => import('../../components/ContactForm'), {
-  loading: () => <div className="w-full h-[400px] bg-[#001540]" />
-});
+import ContactForm from '../../components/ContactForm';
+import { Reveal, Stagger, StaggerItem } from '../../components/motion';
 
 // ISR: contenido prácticamente estático; regenerar cada 24h
 export const revalidate = 86400;
@@ -303,13 +300,13 @@ export default async function OficinasPage({ params }: Props) {
             {OFFICE_GROUPS.map((group) => (
               <div key={group.state.en} className="mb-16">
                 {/* State Header */}
-                <div className="flex items-center gap-3 mb-8">
+                <Reveal variant="up" className="flex items-center gap-3 mb-8" amount={0.4}>
                   <div className="h-px flex-1 bg-gradient-to-r from-[#B2904D]/60 to-transparent" />
                   <h2 className="text-2xl sm:text-3xl font-bold text-[#B2904D] whitespace-nowrap">
                     {group.state[currentLang]}
                   </h2>
                   <div className="h-px flex-1 bg-gradient-to-l from-[#B2904D]/60 to-transparent" />
-                </div>
+                </Reveal>
 
                 {/* City Groups (e.g., Houston) */}
                 {group.cityGroups?.map((cityGroup) => (
@@ -323,11 +320,12 @@ export default async function OficinasPage({ params }: Props) {
                         ({cityGroup.offices.length} {isEs ? 'oficinas' : 'offices'})
                       </span>
                     </summary>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pl-2 sm:pl-8">
+                    <Stagger gap={0.05} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pl-2 sm:pl-8" amount={0.1}>
                       {cityGroup.offices.map((office) => (
-                        <div
+                        <StaggerItem
+                          as="div"
                           key={office.slug}
-                          className="group/card bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#B2904D]/40 transition-all duration-300"
+                          className="card-3d group/card bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#B2904D]/40 transition-all duration-300"
                         >
                           <Link href={`/${currentLang}/oficinas/${office.slug}`} className="block mb-3">
                             <h4 className="text-xl font-semibold text-white mb-4 group-hover/card:text-[#B2904D] transition-colors">
@@ -347,19 +345,20 @@ export default async function OficinasPage({ params }: Props) {
                             <Phone className="w-5 h-5 text-[#B2904D] flex-shrink-0" />
                             <span className="text-sm">{office.phone}</span>
                           </a>
-                        </div>
+                        </StaggerItem>
                       ))}
-                    </div>
+                    </Stagger>
                   </details>
                 ))}
 
                 {/* Standalone Office Cards */}
                 {group.offices.length > 0 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <Stagger gap={0.05} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
                     {group.offices.map((office) => (
-                      <div
+                      <StaggerItem
+                        as="div"
                         key={office.slug}
-                        className="group/card bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#B2904D]/40 transition-all duration-300"
+                        className="card-3d group/card bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#B2904D]/40 transition-all duration-300"
                       >
                         <Link href={`/${currentLang}/oficinas/${office.slug}`} className="block mb-3">
                           <h3 className="text-xl font-semibold text-white mb-4 group-hover/card:text-[#B2904D] transition-colors">
@@ -379,9 +378,9 @@ export default async function OficinasPage({ params }: Props) {
                           <Phone className="w-5 h-5 text-[#B2904D] flex-shrink-0" />
                           <span className="text-sm">{office.phone}</span>
                         </a>
-                      </div>
+                      </StaggerItem>
                     ))}
-                  </div>
+                  </Stagger>
                 )}
               </div>
             ))}
@@ -391,7 +390,7 @@ export default async function OficinasPage({ params }: Props) {
         {/* Contact Form Section */}
         <section className="pb-10 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <ContactForm />
+            <ContactForm lang={currentLang} />
           </div>
         </section>
       </main>
