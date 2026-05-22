@@ -12,7 +12,7 @@ import { revealVariants, type RevealVariant } from './variants';
  * Reduced-motion: handled by the global `MotionConfig reducedMotion="user"`
  * (Fase 1A) — transform offsets are skipped, only opacity animates. (§8)
  */
-type RevealTag = 'div' | 'span' | 'p' | 'section' | 'li' | 'a';
+type RevealTag = 'div' | 'span' | 'p' | 'section' | 'li' | 'a' | 'h2' | 'h3';
 
 interface RevealProps {
   as?: RevealTag;

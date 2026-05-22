@@ -7,6 +7,7 @@ import Footer from '../../components/Footer';
 import NewsletterSignup from '../../components/NewsletterSignup';
 import { newsletters } from '../../lib/newsletterData';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { Reveal, Stagger, StaggerItem } from '../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -130,12 +131,12 @@ export default async function NewsletterPage({ params }: Props) {
         {/* Past Editions */}
         <section className="relative pb-20">
           <div className="max-w-5xl mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-10 text-center">
+            <Reveal as="h2" variant="up" amount={0.4} className="text-2xl md:text-3xl font-bold text-white mb-10 text-center">
               {t.pastEditions}
-            </h2>
+            </Reveal>
 
-            <div className="grid gap-6 md:gap-8">
-              {newsletters.map((nl, index) => {
+            <Stagger gap={0.08} className="grid gap-6 md:gap-8" amount={0.1}>
+              {newsletters.map((nl) => {
                 const title = nl.title[isEs ? 'es' : 'en'];
                 const desc = nl.description[isEs ? 'es' : 'en'];
                 const topics = nl.topics[isEs ? 'es' : 'en'];
@@ -145,12 +146,12 @@ export default async function NewsletterPage({ params }: Props) {
                 );
 
                 return (
+                  <StaggerItem key={nl.slug} as="div">
                   <Link
-                    key={nl.slug}
                     href={`/${lang}/newsletter/${nl.slug}`}
                     className="group block"
                   >
-                    <article className="relative rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] backdrop-blur-sm transition-all duration-300 overflow-hidden">
+                    <article className="card-3d relative rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] backdrop-blur-sm transition-all duration-300 overflow-hidden">
                       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                       <div className="p-6 md:p-8">
@@ -185,9 +186,10 @@ export default async function NewsletterPage({ params }: Props) {
                       </div>
                     </article>
                   </Link>
+                  </StaggerItem>
                 );
               })}
-            </div>
+            </Stagger>
           </div>
         </section>
       </main>

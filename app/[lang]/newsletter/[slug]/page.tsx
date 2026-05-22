@@ -8,6 +8,7 @@ import Footer from '../../../components/Footer';
 import NewsletterSignup from '../../../components/NewsletterSignup';
 import { getNewsletterBySlug, getAllNewsletterSlugs } from '../../../lib/newsletterData';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { Stagger, StaggerItem } from '../../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -183,9 +184,10 @@ export default async function NewsletterEditionPage({ params }: Props) {
         {/* Content */}
         <section className="relative pb-16">
           <div className="max-w-3xl mx-auto px-4">
-            <div className="space-y-10">
+            <Stagger gap={0.08} className="space-y-10" amount={0.1}>
               {sections.map((section, idx) => (
-                <article
+                <StaggerItem
+                  as="article"
                   key={idx}
                   className="relative pl-6 border-l-2 border-[#B2904D]/20 hover:border-[#B2904D]/50 transition-colors"
                 >
@@ -206,9 +208,9 @@ export default async function NewsletterEditionPage({ params }: Props) {
                       </svg>
                     </Link>
                   )}
-                </article>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
 
             {/* Separator */}
             <div className="my-16 h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/30 to-transparent" />

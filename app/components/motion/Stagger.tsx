@@ -51,7 +51,7 @@ function Stagger({
   );
 }
 
-type ItemTag = 'div' | 'li' | 'span' | 'a';
+type ItemTag = 'div' | 'li' | 'span' | 'a' | 'article';
 
 interface StaggerItemProps {
   as?: ItemTag;
