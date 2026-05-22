@@ -1,17 +1,19 @@
-'use client';
-
 import React from 'react';
-import { m } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, User, Star, Sparkles } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, User, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+/**
+ * Featured blog post hero card — server-renderable, single-locale (enfoque b).
+ * Uses `.card-3d` for the hover lift; entrance is handled by the parent island.
+ * Image keeps `priority` (this card is above-the-fold in the default view).
+ */
 interface FeaturedPostProps {
   post: {
     id: string | number;
-    title: { es: string; en: string };
-    excerpt: { es: string; en: string };
-    category: { es: string; en: string };
+    title: string;
+    excerpt: string;
+    category: string;
     author: string;
     date: string;
     readTime: string;
@@ -22,12 +24,10 @@ interface FeaturedPostProps {
 }
 
 export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
-  const t = (obj: any) => obj[lang] || obj.es;
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', { 
-      year: 'numeric', month: 'long', day: 'numeric' 
+    return date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
     });
   };
 
@@ -35,22 +35,16 @@ export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
 
   return (
     <Link href={`/${lang}/blog/${post.slug}`}>
-      <m.article
-        initial={{ opacity: 0, scale: 0.98 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        whileHover={{ scale: 1.005 }}
-        transition={{ duration: 0.5 }}
-        className="group relative w-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#001540] shadow-2xl hover:shadow-[0_0_80px_rgba(178,144,77,0.15)] hover:border-[#B2904D]/40 transition-all duration-500"
+      <article
+        className="card-3d group relative w-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#001540] shadow-2xl hover:shadow-[0_0_80px_rgba(178,144,77,0.15)] hover:border-[#B2904D]/40 transition-all duration-500"
       >
         <div className="grid lg:grid-cols-2 gap-0">
-          
+
           {/* Imagen */}
-          {/* ✅ CORRECCIÓN: 'aspect-video' asegura que la imagen horizontal se vea completa (16:9) y no como un cuadro */}
           <div className="relative aspect-video lg:aspect-auto lg:h-full lg:min-h-[450px] overflow-hidden">
             <Image
               src={post.image || '/placeholder.jpg'}
-              alt={t(post.title)}
+              alt={post.title}
               fill
               className="object-cover object-center transition-transform duration-1000 group-hover:scale-105"
               priority
@@ -58,7 +52,7 @@ export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
             {/* Overlays */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#001540] via-[#001540]/20 to-transparent lg:opacity-100 opacity-60" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent lg:hidden" />
-            
+
             {/* Badge Destacado */}
             <div className="absolute top-8 left-8 flex items-center gap-2 px-4 py-2 rounded-full bg-[#B2904D] backdrop-blur-md border border-white/20 shadow-xl z-10">
               <Sparkles size={14} className="text-white" />
@@ -75,16 +69,16 @@ export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
 
              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit mb-6">
                <span className="text-[#B2904D] text-[10px] font-bold uppercase tracking-[0.2em]">
-                 {t(post.category)}
+                 {post.category}
                </span>
              </div>
 
              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-white mb-6 leading-tight group-hover:text-[#B2904D] transition-colors duration-300">
-               {t(post.title)}
+               {post.title}
              </h2>
 
              <p className="text-blue-100/70 text-lg leading-relaxed mb-8 font-light line-clamp-3">
-               {t(post.excerpt)}
+               {post.excerpt}
              </p>
 
              <div className="flex flex-wrap items-center gap-6 text-sm text-white/50 mb-10 pb-10 border-b border-white/5">
@@ -116,7 +110,7 @@ export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
              </div>
           </div>
         </div>
-      </m.article>
+      </article>
     </Link>
   );
 }

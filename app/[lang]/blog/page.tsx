@@ -729,6 +729,34 @@ export default async function BlogPageIndex({ params }: { params: Promise<{ lang
   const currentLang = (lang === 'es' || lang === 'en') ? lang : 'en';
   const schemaData = getBlogSchema(currentLang);
 
+  // Resolve to the active locale on the server (enfoque b → the inactive
+  // locale never reaches the BlogFeed island). BLOG_DATA stays bilingual
+  // (consumed elsewhere, e.g. newsletter/blogIndex).
+  const resolvedPosts = BLOG_DATA.posts.map((p) => ({
+    id: p.id,
+    slug: p.slug,
+    title: p.title[currentLang],
+    excerpt: p.excerpt[currentLang],
+    category: p.category[currentLang],
+    categoryId: p.categoryId,
+    author: p.author,
+    date: p.date,
+    readTime: p.readTime,
+    image: p.image,
+    featured: p.featured,
+  }));
+  const resolvedCategories = BLOG_DATA.categories.map((c) => ({ id: c.id, label: c[currentLang] }));
+  const resolvedUiText = {
+    hero: {
+      badge: BLOG_DATA.uiText.hero.badge[currentLang],
+      title: BLOG_DATA.uiText.hero.title[currentLang],
+      subtitle: BLOG_DATA.uiText.hero.subtitle[currentLang],
+    },
+    featured: BLOG_DATA.uiText.featured[currentLang],
+    latest: BLOG_DATA.uiText.latest[currentLang],
+    noResults: BLOG_DATA.uiText.noResults[currentLang],
+  };
+
   const breadcrumbData = generateBreadcrumbSchema([
     { name: currentLang === 'es' ? 'Inicio' : 'Home', url: `/${currentLang}` },
     { name: 'Blog', url: `/${currentLang}/blog` },
@@ -750,10 +778,10 @@ export default async function BlogPageIndex({ params }: { params: Promise<{ lang
 
       <Header />
       
-      <BlogFeed 
-        initialPosts={BLOG_DATA.posts}
-        categories={BLOG_DATA.categories}
-        uiText={BLOG_DATA.uiText}
+      <BlogFeed
+        initialPosts={resolvedPosts}
+        categories={resolvedCategories}
+        uiText={resolvedUiText}
         lang={currentLang}
       />
 

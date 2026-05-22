@@ -5,20 +5,16 @@ import { m } from 'framer-motion';
 
 interface Category {
   id: string;
-  es: string;
-  en: string;
+  label: string;
 }
 
 interface CategoryFilterProps {
   categories: Category[];
   selected: string;
   onSelect: (categoryId: string) => void;
-  lang: 'es' | 'en';
 }
 
-export default function CategoryFilter({ categories, selected, onSelect, lang }: CategoryFilterProps) {
-  const t = (obj: any) => obj[lang] || obj.es;
-
+export default function CategoryFilter({ categories, selected, onSelect }: CategoryFilterProps) {
   return (
     <div className="flex flex-wrap justify-center gap-3 md:gap-4">
       {categories.map((cat, idx) => {
@@ -45,7 +41,7 @@ export default function CategoryFilter({ categories, selected, onSelect, lang }:
                  <span className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             )}
             
-            <span className="relative z-10">{t(cat)}</span>
+            <span className="relative z-10">{cat.label}</span>
           </m.button>
         );
       })}

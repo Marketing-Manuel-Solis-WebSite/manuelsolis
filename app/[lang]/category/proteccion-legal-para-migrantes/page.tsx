@@ -30,5 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProteccionLegalPage({ params }: Props) {
-  return <ProteccionLegalClient />;
+  const { lang } = await params;
+  const localeLang = lang === 'en' ? 'en' : 'es';
+  return <ProteccionLegalClient lang={localeLang} />;
 }

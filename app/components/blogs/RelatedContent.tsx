@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { m } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
 import { pushToDataLayer, trackConversion } from '../../lib/tracking';
+import { Stagger, StaggerItem } from '../motion';
 
 interface RelatedArticle {
   title: string;
@@ -67,18 +67,12 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
             <span className="h-[2px] w-8 bg-[#B2904D]" />
             {lang === 'es' ? 'Articulos Relacionados' : 'Related Articles'}
           </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.map((article, i) => (
-              <m.div
-                key={article.slug}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-              >
+          <Stagger gap={0.08} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
+            {articles.map((article) => (
+              <StaggerItem key={article.slug} as="div">
                 <Link
                   href={`/${lang}/blog/${article.slug}`}
-                  className="group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(178,144,77,0.15)]"
+                  className="card-3d group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-all duration-300 hover:shadow-[0_10px_30px_-10px_rgba(178,144,77,0.15)]"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
@@ -103,9 +97,9 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
                     </span>
                   </div>
                 </Link>
-              </m.div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       )}
     </section>

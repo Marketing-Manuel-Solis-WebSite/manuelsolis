@@ -30,5 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function DerechosMigrantesPage({ params }: Props) {
-  return <DerechosMigrantesClient />;
+  const { lang } = await params;
+  const localeLang = lang === 'en' ? 'en' : 'es';
+  return <DerechosMigrantesClient lang={localeLang} />;
 }

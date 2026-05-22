@@ -1,17 +1,20 @@
-'use client';
-
 import React from 'react';
-import { m } from 'framer-motion';
 import { Calendar, Clock, ArrowRight, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+/**
+ * Blog feed card — server-renderable, single-locale (enfoque b): the parent
+ * resolves `title`/`excerpt`/`category` to the active locale, so the inactive
+ * one never ships. Entrance animation is delegated to the parent <Stagger>;
+ * the card itself uses `.card-3d` (workhorse) for the hover lift + glow.
+ */
 interface BlogCardProps {
   post: {
     id: string | number;
-    title: { es: string; en: string };
-    excerpt: { es: string; en: string };
-    category: { es: string; en: string };
+    title: string;
+    excerpt: string;
+    category: string;
     author: string;
     date: string;
     readTime: string;
@@ -19,38 +22,29 @@ interface BlogCardProps {
     slug: string;
   };
   lang: 'es' | 'en';
-  delay?: number;
 }
 
-export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
-  const t = (obj: any) => obj[lang] || obj.es;
-
+export default function BlogCard({ post, lang }: BlogCardProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     };
     return date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', options);
   };
 
   return (
-    <m.article
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay }}
-      className="group h-full"
-    >
+    <article className="group h-full">
       <Link href={`/${lang}/blog/${post.slug}`} className="block h-full">
-        <div className="bg-[#000F24] rounded-2xl overflow-hidden border border-white/10 hover:border-[#B2904D]/50 transition-all duration-500 h-full flex flex-col hover:shadow-[0_20px_40px_-10px_rgba(178,144,77,0.15)] group-hover:-translate-y-1 shimmer">
-          
+        <div className="card-3d bg-[#000F24] rounded-2xl overflow-hidden border border-white/10 hover:border-[#B2904D]/50 transition-all duration-500 h-full flex flex-col hover:shadow-[0_20px_40px_-10px_rgba(178,144,77,0.15)] shimmer">
+
           {/* Imagen */}
           <div className="relative aspect-video overflow-hidden bg-gray-900">
             <Image
               src={post.image || '/placeholder.jpg'}
-              alt={t(post.title)}
+              alt={post.title}
               fill
               loading="lazy"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -58,7 +52,7 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
             />
             {/* Overlay sutil */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#000F24] to-transparent opacity-60" />
-            
+
           </div>
 
           {/* Contenido */}
@@ -77,11 +71,11 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
             </div>
 
             <h3 className="text-xl font-serif text-white mb-3 leading-snug group-hover:text-[#B2904D] transition-colors line-clamp-2">
-              {t(post.title)}
+              {post.title}
             </h3>
 
             <p className="text-blue-100/60 text-sm leading-relaxed mb-6 flex-1 line-clamp-3 font-light">
-              {t(post.excerpt)}
+              {post.excerpt}
             </p>
 
             <div className="flex items-center justify-between pt-4 border-t border-white/5 mt-auto">
@@ -91,7 +85,7 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
                 </div>
                 <span>{post.author}</span>
               </div>
-              
+
               <div className="flex items-center gap-2 text-[#B2904D] text-xs font-bold uppercase tracking-wider group-hover:text-white transition-colors">
                 <span>{lang === 'es' ? 'Leer' : 'Read'}</span>
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -100,6 +94,6 @@ export default function BlogCard({ post, lang, delay = 0 }: BlogCardProps) {
           </div>
         </div>
       </Link>
-    </m.article>
+    </article>
   );
 }

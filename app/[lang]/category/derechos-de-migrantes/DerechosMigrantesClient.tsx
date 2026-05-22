@@ -1,14 +1,19 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-import { useLanguage } from '../../../context/LanguageContext';
-import { m, Variants } from 'framer-motion';
 import { BookOpen, Calendar, User } from 'lucide-react';
+import { Stagger, StaggerItem } from '../../../components/motion';
 
-// --- FUENTE ---
+/**
+ * Category: Derechos de Migrantes — server-first (Fase 2.3 blog). Purely
+ * presentational (no interactive state), so it's a pure Server Component: the
+ * bilingual `texts` resolve to the active `lang` on the server and the inactive
+ * locale never reaches the client bundle (enfoque b). The animated background
+ * orbs + scrolling word are now static (matching the site-wide conversion);
+ * the article grid enters via Stagger and uses `.card-3d`. page.tsx
+ * (generateMetadata) is untouched — only the `lang` prop is threaded in.
+ */
 
 // --- FUNCIÓN AUXILIAR PARA OBTENER EL TEXTO TRADUCIDO ---
 const getTranslatedText = (key: string, lang: 'es' | 'en') => {
@@ -115,36 +120,8 @@ const texts = {
   ]
 };
 
-// --- VARIANTS para Framer Motion ---
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 50, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 10,
-    }
-  },
-};
-
 // --- COMPONENTE DE PÁGINA ---
-export default function DerechosMigrantesClient() {
-  const { language } = useLanguage();
-  const lang = language as 'es' | 'en';
-
+export default function DerechosMigrantesClient({ lang }: { lang: 'es' | 'en' }) {
   const t = (key: string) => getTranslatedText(key, lang);
 
   return (
@@ -153,7 +130,7 @@ export default function DerechosMigrantesClient() {
       <Header />
 
       {/* =========================================================================
-          FONDO ANIMADO (Fixed - Cubre toda la página)
+          FONDO (Fixed - Cubre toda la página) — orbes estáticos
       ========================================================================= */}
       <div className="fixed inset-0 z-0 w-full h-full bg-[#001540] overflow-hidden">
         {/* Gradiente Azul Profundo */}
@@ -162,43 +139,15 @@ export default function DerechosMigrantesClient() {
         {/* Ruido de textura */}
         <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-        {/* Orbes de luz con movimiento suave - CONTENIDOS */}
-        <m.div
-          animate={{
-            opacity: [0.3, 0.5, 0.3],
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-blue-600/10 rounded-full blur-[120px]"
-        />
-        <m.div
-          animate={{
-            opacity: [0.2, 0.4, 0.2],
-            scale: [1, 1.3, 1],
-            x: [0, -40, 0],
-            y: [0, 40, 0]
-          }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-sky-800/10 rounded-full blur-[150px]"
-        />
+        {/* Orbes de luz (estáticos) - CONTENIDOS */}
+        <div className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-blue-600/10 rounded-full blur-[120px] opacity-40" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-sky-800/10 rounded-full blur-[150px] opacity-30" />
 
-        {/* Texto de Fondo Sutil - CONTENIDO */}
+        {/* Texto de Fondo Sutil - CONTENIDO (estático) */}
         <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
-          <m.span
-            initial={{ x: "20%" }}
-            animate={{ x: "-20%" }}
-            transition={{
-              duration: 60,
-              repeat: Infinity,
-              ease: "linear",
-              repeatType: "mirror"
-            }}
-            className="text-[60vh] font-black italic text-white tracking-tighter whitespace-nowrap"
-          >
+          <span className="text-[60vh] font-black italic text-white tracking-tighter whitespace-nowrap">
             DERECHOS
-          </m.span>
+          </span>
         </div>
       </div>
 
@@ -206,56 +155,34 @@ export default function DerechosMigrantesClient() {
       <main className="relative z-10 w-full overflow-x-hidden">
         <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-50 pb-20">
 
-          {/* --- HERO/HEADER SECTION --- */}
+          {/* --- HERO/HEADER SECTION (static — LCP) --- */}
           <div className="w-full mb-20 text-center">
-            <m.span
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-block text-sm font-bold tracking-widest text-[#B2904D] uppercase mb-4 drop-shadow-[0_0_10px_rgba(178,144,77,0.3)]"
-            >
+            <span className="inline-block text-sm font-bold tracking-widest text-[#B2904D] uppercase mb-4 drop-shadow-[0_0_10px_rgba(178,144,77,0.3)]">
               {t('header.library')}
-            </m.span>
+            </span>
 
-            <m.h1
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white mb-4 tracking-tighter leading-tight px-4"
-            >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white mb-4 tracking-tighter leading-tight px-4">
               <span className="font-extrabold text-[#B2904D] drop-shadow-lg">{t('header.title').split(' ')[0]}</span>
               <span className="block text-white/90">{t('header.title').split(' ').slice(1).join(' ')}</span>
-            </m.h1>
+            </h1>
 
-            <m.div
-              initial={{ width: 0 }}
-              animate={{ width: '6rem' }}
-              transition={{ duration: 1, delay: 0.8 }}
-              className="h-1 bg-gradient-to-r from-[#002868] to-[#B2904D] mx-auto rounded-full mt-6"
-            ></m.div>
+            <div className="h-1 w-24 bg-gradient-to-r from-[#002868] to-[#B2904D] mx-auto rounded-full mt-6" />
 
-            <m.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-8 text-lg sm:text-xl text-blue-100/70 max-w-3xl mx-auto font-light leading-relaxed px-4"
-            >
+            <p className="mt-8 text-lg sm:text-xl text-blue-100/70 max-w-3xl mx-auto font-light leading-relaxed px-4">
               {t('header.subtitle')}
-            </m.p>
+            </p>
           </div>
 
           {/* --- GRID DE ARTÍCULOS --- */}
-          <m.div
+          <Stagger
+            gap={0.1}
             className="w-full grid gap-8 sm:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.01 }}
+            amount={0.01}
           >
             {texts.articles.map((article) => (
-              <m.div key={article.id} variants={itemVariants} className="w-full">
+              <StaggerItem key={article.id} as="div" className="w-full">
                 <Link href={article.url} className="group h-full block">
-                  <article className="h-full flex flex-col bg-[#000814]/60 rounded-xl border border-white/10 overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgba(178,144,77,0.3)] hover:scale-[1.03] relative backdrop-blur-sm">
+                  <article className="card-3d h-full flex flex-col bg-[#000814]/60 rounded-xl border border-white/10 overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgba(178,144,77,0.3)] relative backdrop-blur-sm">
 
                     {/* Borde Superior Animado (Dorado) */}
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#B2904D] to-transparent transform origin-center transition-all duration-500 group-hover:scale-x-100 scale-x-0"></div>
@@ -291,20 +218,20 @@ export default function DerechosMigrantesClient() {
                       <span className="text-sm font-medium text-[#B2904D] group-hover:text-white transition-colors truncate">
                         {t('article.read_full')}
                       </span>
-                      <m.svg
+                      <svg
                         className="w-5 h-5 text-[#B2904D] transform transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white flex-shrink-0 ml-2"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                      </m.svg>
+                      </svg>
                     </div>
                   </article>
                 </Link>
-              </m.div>
+              </StaggerItem>
             ))}
-          </m.div>
+          </Stagger>
         </div>
       </main>
 
