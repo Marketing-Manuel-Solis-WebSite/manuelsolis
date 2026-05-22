@@ -31,5 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function NoticiasPage({ params }: Props) {
-  return <NoticiasClient />;
+  const { lang } = await params;
+  const localeLang = lang === 'en' ? 'en' : 'es';
+  return <NoticiasClient lang={localeLang} />;
 }

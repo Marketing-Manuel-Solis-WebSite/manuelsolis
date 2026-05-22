@@ -3,10 +3,10 @@
 import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'
 import ContactForm from '../../../components/ContactForm' 
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import React, { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+import React from 'react'
 import { useLanguage } from '../../../context/LanguageContext'
-import { m, AnimatePresence } from 'framer-motion'; 
+import { m } from 'framer-motion';
 import Image from 'next/image';
 
 // --- TIPOS ---
@@ -27,51 +27,31 @@ const getText = (obj: any, lang: 'es' | 'en'): string => {
   return obj[lang] || obj.es;
 };
 
-// --- COMPONENTE ACORDEÓN OPTIMIZADO ---
+// --- COMPONENTE ACORDEÓN (native <details>: respuesta siempre en el DOM,
+// server-rendered para SEO; abre/cierra sin JS) ---
 function Accordion({ item, lang }: { item: FaqItemBilingual, lang: 'es' | 'en' }) {
-  const [isOpen, setIsOpen] = useState(false);
   const title = getText(item.title, lang);
   const rawContent = getText(item.content, lang);
   const contentHtml = parseContent(rawContent);
 
   return (
-    <div className="group mb-4">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`
-          w-full px-6 py-5 flex items-center justify-between text-left transition-all duration-300 rounded-xl
-          ${isOpen 
-            ? 'bg-white/10 shadow-[0_0_15px_rgba(255,255,255,0.1)] border-white/20' 
-            : 'bg-white/5 hover:bg-white/10 border-white/10 hover:shadow-[0_0_10px_rgba(255,255,255,0.05)]'
-          }
-          border backdrop-blur-md
-        `}
+    <details className="group/faq mb-4 [&>summary]:list-none [&>summary::-webkit-details-marker]:hidden">
+      <summary
+        className="w-full px-6 py-5 flex items-center justify-between text-left transition-all duration-300 rounded-xl cursor-pointer bg-white/5 hover:bg-white/10 border-white/10 hover:shadow-[0_0_10px_rgba(255,255,255,0.05)] group-open/faq:bg-white/10 group-open/faq:shadow-[0_0_15px_rgba(255,255,255,0.1)] group-open/faq:border-white/20 border backdrop-blur-md"
       >
-        <span className={`text-lg font-light tracking-wide ${isOpen ? 'text-[#B2904D] font-medium' : 'text-white'}`}>
+        <span className="text-lg font-light tracking-wide text-white group-open/faq:text-[#B2904D] group-open/faq:font-medium">
           {title}
         </span>
-        <div className={`p-2 rounded-full transition-all duration-300 ${isOpen ? 'bg-[#B2904D] text-[#001540]' : 'bg-white/5 text-white'}`}>
-          {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        <div className="p-2 rounded-full transition-all duration-300 bg-white/5 text-white group-open/faq:bg-[#B2904D] group-open/faq:text-[#001540]">
+          <ChevronDown size={20} className="group-open/faq:rotate-180 transition-transform duration-300" />
         </div>
-      </button>
+      </summary>
 
-      <AnimatePresence>
-        {isOpen && (
-          <m.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <div 
-              className="px-6 py-6 text-blue-100/80 text-base font-light leading-relaxed bg-black/20 rounded-b-xl mx-2 border-x border-b border-white/5 shadow-inner"
-              dangerouslySetInnerHTML={{ __html: contentHtml }} 
-            />
-          </m.div>
-        )}
-      </AnimatePresence>
-    </div>
+      <div
+        className="px-6 py-6 text-blue-100/80 text-base font-light leading-relaxed bg-black/20 rounded-b-xl mx-2 border-x border-b border-white/5 shadow-inner"
+        dangerouslySetInnerHTML={{ __html: contentHtml }}
+      />
+    </details>
   );
 }
 

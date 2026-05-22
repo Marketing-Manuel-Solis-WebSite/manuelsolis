@@ -220,18 +220,12 @@ export default function TestimoniosClient() {
             </span>
          </m.div>
 
-         {/* Orbes optimizados: Blur reducido y will-change */}
-         <m.div
-           animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-           style={{ willChange: "transform, opacity" }}
-           className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/10 rounded-full blur-[80px]"
+         {/* Orbes (estáticos) */}
+         <div
+           className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-600/10 rounded-full blur-[80px] opacity-40"
          />
-         <m.div
-            animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
-            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            style={{ willChange: "transform, opacity" }}
-            className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[90px]"
+         <div
+            className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[90px] opacity-30"
          />
 
          <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>

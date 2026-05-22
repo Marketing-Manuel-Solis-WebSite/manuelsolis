@@ -1,14 +1,10 @@
-'use client'
-
 import React from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm'
-import { useLanguage } from '../../context/LanguageContext'
-import { m, Variants } from 'framer-motion'
 import Image from 'next/image'
 import {
-  MessageSquare, Mail, Phone, MapPin, FileText, UserCheck, Share2, Server, Globe
+  MessageSquare, Mail, Phone, MapPin, FileText, UserCheck, Server, Globe
 } from 'lucide-react'
 
 
@@ -229,10 +225,7 @@ const SectionTitle = ({ title }: { title: string }) => (
 );
 
 // --- PÁGINA DE PRIVACIDAD ---
-export default function PrivacidadClient() {
-  const { language } = useLanguage();
-  const lang = language as 'es' | 'en';
-
+export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
   // Función 't' robusta para evitar errores de undefined
   const t = (key: string): string => {
     const parts = key.split('.');
@@ -248,25 +241,12 @@ export default function PrivacidadClient() {
 
   const parseText = (key: string) => parseContent(t(key));
 
-  // Variants para las secciones de contenido legal
-  const contentVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.4, 0, 0.2, 1]
-      }
-    },
-  };
-
   return (
     <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
       {/* =========================================================================
-          FONDO ANIMADO (Fixed - Cubre toda la página)
+          FONDO (Fixed - Cubre toda la página) — orbes estáticos
       ========================================================================= */}
       <div className="fixed inset-0 z-0 w-full h-full bg-[#001540]">
           {/* Gradiente Azul Profundo */}
@@ -275,62 +255,29 @@ export default function PrivacidadClient() {
           {/* Ruido de textura */}
           <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-          {/* Orbes de luz con movimiento suave */}
-          <m.div
-            animate={{
-              opacity: [0.3, 0.5, 0.3],
-              scale: [1, 1.2, 1],
-              x: [0, 50, 0],
-              y: [0, -30, 0]
-            }}
-            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]"
-          />
-          <m.div
-              animate={{
-                opacity: [0.2, 0.4, 0.2],
-                scale: [1, 1.3, 1],
-                x: [0, -40, 0],
-                y: [0, 40, 0]
-              }}
-              transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]"
-          />
+          {/* Orbes de luz (estáticos) */}
+          <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px] opacity-40" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px] opacity-30" />
 
-          {/* Texto de Fondo Sutil */}
-          <m.div
-            initial={{ x: "20%" }}
-            animate={{ x: "-20%" }}
-            transition={{
-              duration: 60,
-              repeat: Infinity,
-              ease: "linear",
-              repeatType: "mirror"
-            }}
-            className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden"
-          >
+          {/* Texto de Fondo Sutil (estático) */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
             <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
                 PRIVACIDAD
             </span>
-          </m.div>
+          </div>
       </div>
 
       {/* =========================================================================
           CONTENIDO
       ========================================================================= */}
 
-      {/* --- HERO SECTION --- */}
+      {/* --- HERO SECTION (static — LCP) --- */}
       <section className="relative pt-64 pb-16 z-10 px-6 lg:px-12">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
 
             {/* IZQUIERDA: IMAGEN LOGO INFORMACION */}
-            <m.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]"
-            >
+            <div className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]">
               <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
 
               <div className="relative z-10 w-full h-full flex items-center justify-center">
@@ -343,7 +290,7 @@ export default function PrivacidadClient() {
                       priority
                   />
               </div>
-            </m.div>
+            </div>
 
             {/* DERECHA: TÍTULO Y SUBTÍTULO */}
             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
@@ -359,26 +306,16 @@ export default function PrivacidadClient() {
                 </h1>
               </div>
 
-              <m.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4, duration: 1 }}
-                className="relative pl-6 border-l-2 border-[#B2904D]/50"
-              >
+              <div className="relative pl-6 border-l-2 border-[#B2904D]/50">
                 <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
                   {t('hero.subtitle')}
                 </p>
                 <p className="text-sm mt-2 text-white/50">{t('hero.lastUpdated')}</p>
-              </m.div>
+              </div>
 
-              <m.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 1 }}
-                className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
-              >
+              <div className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
                  <div dangerouslySetInnerHTML={{ __html: parseContent(t('generalStatement')) }} />
-              </m.div>
+              </div>
             </div>
           </div>
         </div>
@@ -388,7 +325,7 @@ export default function PrivacidadClient() {
       <section className="container mx-auto px-4 py-20 relative z-10 max-w-7xl space-y-24">
 
         {/* SECCIÓN 1: INFORMACIÓN QUE RECOPILAMOS */}
-        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <div>
             <SectionTitle title={t('section1.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-8 shadow-xl">
 
@@ -427,10 +364,10 @@ export default function PrivacidadClient() {
                     <p className="text-xs pt-4 text-orange-300/80">{t('section1.C.note')}</p>
                 </div>
             </div>
-        </m.div>
+        </div>
 
         {/* SECCIÓN 2: USO DE INFORMACIÓN */}
-        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <div>
             <SectionTitle title={t('section2.title')} />
             <div className="p-8 bg-[#000814]/60 rounded-2xl border border-white/10 space-y-6 shadow-lg">
                 <p className="text-base text-blue-100/80 mb-6">{t('section2.intro')}</p>
@@ -444,10 +381,10 @@ export default function PrivacidadClient() {
                 </div>
                 <p className="text-sm pt-6 border-t border-white/10 text-orange-300/80 font-medium">{t('section2.note')}</p>
             </div>
-        </m.div>
+        </div>
 
         {/* SECCIÓN 3: PROGRAMA SMS/TEXTO */}
-        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <div>
             <SectionTitle title={t('section3.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
                 <p className="text-base text-blue-100/80 mb-4">{t('section3.intro')}</p>
@@ -481,10 +418,10 @@ export default function PrivacidadClient() {
                     </div>
                 </div>
             </div>
-        </m.div>
+        </div>
 
         {/* SECCIÓN 4: CÓMO COMPARTIMOS SU INFORMACIÓN */}
-        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <div>
             <SectionTitle title={t('section4.title')} />
             <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
                 <p className="text-base text-blue-100/80 mb-4">{t('section4.intro')}</p>
@@ -513,12 +450,12 @@ export default function PrivacidadClient() {
                     <p className="text-sm pt-4 font-semibold text-red-400/90" dangerouslySetInnerHTML={{ __html: parseText('section4.B.note') }} />
                 </div>
             </div>
-        </m.div>
+        </div>
 
         {/* SECCIONES 5, 6, 7 */}
         <div className="grid lg:grid-cols-3 gap-8">
             {/* SECCIÓN 5: SEGURIDAD DE DATOS */}
-            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+            <div className="lg:col-span-1">
                 <SectionTitle title={t('section5.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-blue-100/80">{t('section5.content1')}</p>
@@ -529,10 +466,10 @@ export default function PrivacidadClient() {
                     </ul>
                     <p className="text-xs pt-4 text-red-300/80">{t('section5.content2')}</p>
                 </div>
-            </m.div>
+            </div>
 
             {/* SECCIÓN 6: RETENCIÓN DE DATOS */}
-            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+            <div className="lg:col-span-1">
                 <SectionTitle title={t('section6.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-blue-100/80">{t('section6.content1')}</p>
@@ -543,10 +480,10 @@ export default function PrivacidadClient() {
                     </ul>
                     <p className="text-xs pt-4 text-orange-300/80">{t('section6.content2')}</p>
                 </div>
-            </m.div>
+            </div>
 
             {/* SECCIÓN 7: DERECHOS Y OPCIONES */}
-            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+            <div className="lg:col-span-1">
                 <SectionTitle title={t('section7.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner flex flex-col">
                     <p className="text-base text-blue-100/80">{t('section7.intro')}</p>
@@ -571,37 +508,37 @@ export default function PrivacidadClient() {
                         </div>
                     </div>
                 </div>
-            </m.div>
+            </div>
         </div>
 
         {/* SECCIONES 8, 9, 10, 11 */}
         <div className="grid md:grid-cols-2 gap-8">
             {/* SECCIÓN 8: Enlaces de Terceros */}
-            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <div>
                 <SectionTitle title={t('section8.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
                     <div dangerouslySetInnerHTML={{ __html: parseText('section8.content') }} />
                 </div>
-            </m.div>
+            </div>
 
             {/* SECCIÓN 9: Privacidad de los Niños */}
-            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <div>
                 <SectionTitle title={t('section9.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
                     <div dangerouslySetInnerHTML={{ __html: parseText('section9.content') }} />
                 </div>
-            </m.div>
+            </div>
 
             {/* SECCIÓN 10: Cambios a Esta Política */}
-            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <div>
                 <SectionTitle title={t('section10.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
                     <div dangerouslySetInnerHTML={{ __html: parseText('section10.content') }} />
                 </div>
-            </m.div>
+            </div>
 
             {/* SECCIÓN 11: Contáctenos */}
-            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <div>
                 <SectionTitle title={t('section11.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
                     <p className="text-base text-white font-medium">{t('section11.intro')}</p>
@@ -624,7 +561,7 @@ export default function PrivacidadClient() {
                         </div>
                     </div>
                 </div>
-            </m.div>
+            </div>
 
         </div>
 

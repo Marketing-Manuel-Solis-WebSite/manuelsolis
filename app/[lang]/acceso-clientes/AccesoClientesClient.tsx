@@ -211,16 +211,12 @@ export default function AccesoClientesClient() {
         {/* Layer 4: Mouse spotlight */}
         <m.div className="pointer-events-none absolute inset-0 z-0" style={{ background: spotlight }} />
 
-        {/* Layer 5: Animated orbs */}
-        <m.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-[10%] left-[-10%] w-[55vw] h-[55vw] bg-[#B2904D]/15 rounded-full blur-[120px] pointer-events-none z-0"
+        {/* Layer 5: Orbs (static) */}
+        <div
+          className="absolute top-[10%] left-[-10%] w-[55vw] h-[55vw] bg-[#B2904D]/15 rounded-full blur-[120px] pointer-events-none z-0 opacity-40"
         />
-        <m.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-          className="absolute bottom-[5%] right-[-10%] w-[60vw] h-[60vw] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none z-0"
+        <div
+          className="absolute bottom-[5%] right-[-10%] w-[60vw] h-[60vw] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none z-0 opacity-30"
         />
 
         {/* Layer 6: Floating gold particles */}

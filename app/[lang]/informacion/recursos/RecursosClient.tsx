@@ -2,8 +2,8 @@
 
 import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import React, { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+import React from 'react'
 import { useLanguage } from '../../../context/LanguageContext'
 
 const questions1to20 = [
@@ -707,39 +707,33 @@ function VideoSection({
   )
 }
 
-// Accordion Component
+// Accordion Component — native <details>: respuestas siempre en el DOM
+// (server-rendered para SEO), abre/cierra sin JS.
 function AccordionSection({ questions, buttonText }: { questions: any[]; buttonText: string }) {
   const { language } = useLanguage()
-  const [isOpen, setIsOpen] = useState(false)
 
   const getText = (obj: any) => {
     if (typeof obj === 'string') return obj
     // Se asegura de que si no encuentra el idioma, use 'es' o devuelva el objeto (si es el array de respuestas)
-    return obj[language] || obj.es || obj 
+    return obj[language] || obj.es || obj
   }
 
   return (
-    <div className="border-t border-gray-200">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-5 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors duration-200"
+    <details className="border-t border-gray-200 group/acc [&>summary]:list-none [&>summary::-webkit-details-marker]:hidden">
+      <summary
+        className="w-full px-6 py-5 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
       >
         <span className="text-lg font-semibold text-gray-800">
           {buttonText}
         </span>
         <div className="flex items-center gap-2">
-          {isOpen ? (
-            <ChevronUp className="w-6 h-6 text-[#B2904D]" />
-          ) : (
-            <ChevronDown className="w-6 h-6 text-[#B2904D]" />
-          )}
+          <ChevronDown className="w-6 h-6 text-[#B2904D] group-open/acc:rotate-180 transition-transform duration-200" />
         </div>
-      </button>
+      </summary>
 
-      {isOpen && (
-        <div className="p-6 bg-white animate-slide-down">
-          <div className="space-y-6">
-            {questions.map((item, index) => (
+      <div className="p-6 bg-white">
+        <div className="space-y-6">
+          {questions.map((item, index) => (
               <div key={index} className="border-l-4 border-[#B2904D] pl-4 hover:bg-gray-50 transition-colors duration-200 rounded-r-lg p-3">
                 <p className="font-bold text-gray-900 mb-3 text-lg">
                   {getText(item.question)}
@@ -757,7 +751,6 @@ function AccordionSection({ questions, buttonText }: { questions: any[]; buttonT
             ))}
           </div>
         </div>
-      )}
-    </div>
+    </details>
   )
 }

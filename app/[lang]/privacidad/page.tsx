@@ -35,5 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PrivacidadPage({ params }: Props) {
-  return <PrivacidadClient />;
+  const { lang } = await params;
+  const localeLang = lang === 'en' ? 'en' : 'es';
+  return <PrivacidadClient lang={localeLang} />;
 }

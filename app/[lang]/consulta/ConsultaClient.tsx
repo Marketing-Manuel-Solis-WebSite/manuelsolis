@@ -73,15 +73,11 @@ export default function ConsultaClient() {
         <m.div className="pointer-events-none absolute inset-0 z-0" style={{ background: spotlight }} />
 
         {/* Animated orbs */}
-        <m.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.45, 0.25] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-[5%] left-[-10%] w-[55vw] h-[55vw] bg-[#B2904D]/12 rounded-full blur-[120px] pointer-events-none z-0"
+        <div
+          className="absolute top-[5%] left-[-10%] w-[55vw] h-[55vw] bg-[#B2904D]/12 rounded-full blur-[120px] pointer-events-none z-0 opacity-40"
         />
-        <m.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.18, 0.35, 0.18] }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          className="absolute bottom-[5%] right-[-10%] w-[60vw] h-[60vw] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none z-0"
+        <div
+          className="absolute bottom-[5%] right-[-10%] w-[60vw] h-[60vw] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none z-0 opacity-40"
         />
 
         {/* Gold corner brackets */}

@@ -35,5 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SmsTerminosPage({ params }: Props) {
-  return <SmsTerminosClient />;
+  const { lang } = await params;
+  const localeLang = lang === 'en' ? 'en' : 'es';
+  return <SmsTerminosClient lang={localeLang} />;
 }

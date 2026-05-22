@@ -137,7 +137,7 @@ export default async function ClientesDetenidosPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <ClientesDetenidosClient />
+      <ClientesDetenidosClient lang={validLang} />
     </>
   );
 }

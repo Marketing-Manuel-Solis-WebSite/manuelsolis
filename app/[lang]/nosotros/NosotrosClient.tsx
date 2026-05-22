@@ -1,19 +1,22 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import { useLanguage } from '../../context/LanguageContext'
-import { m } from 'framer-motion'
+import ContactForm from '../../components/ContactForm'
+import { Reveal } from '../../components/motion'
 import Image from 'next/image'
-import { Landmark, MapPin, Map as MapIcon } from 'lucide-react'
-import dynamic from 'next/dynamic'
+import { Landmark, MapPin } from 'lucide-react'
 
-// --- LAZY LOAD DEL FORMULARIO ---
-// Evita que el formulario bloquee la carga inicial
-const ContactForm = dynamic(() => import('../../components/ContactForm'), {
-  loading: () => <div className="h-[600px] w-full bg-white/5 animate-pulse rounded-2xl border border-white/10" />
-});
+/**
+ * Nosotros — server-first (Fase 2.3). Purely presentational: the only former
+ * "interactivity" was an `isMobile` flag (window resize) used to gate the
+ * decorative background orbs, which carries no real interactivity, so this is
+ * now a pure Server Component. Bilingual `interfaceTexts` resolve to the active
+ * `lang` on the server (enfoque b). The animated background orbs + scrolling
+ * word are static (matching the site-wide conversion); the hero is static
+ * (LCP) and the offices section enters via Reveal. The lazily-loaded
+ * client-only form is replaced by the server-first <ContactForm lang>.
+ * page.tsx (generateMetadata) is untouched — only the `lang` prop is threaded.
+ */
 
 // --- TEXTOS UI ---
 const interfaceTexts = {
@@ -61,21 +64,7 @@ const SectionTitle = ({ title }: { title: string }) => (
 );
 
 // --- PÁGINA NOSOTROS ---
-export default function NosotrosClient() {
-  const { language } = useLanguage();
-  const lang = language as 'es' | 'en';
-
-  // Estado para optimizaciones
-  const [isMobile, setIsMobile] = useState(true);
-  // Eliminado: const [showMap, setShowMap] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
+export default function NosotrosClient({ lang }: { lang: 'es' | 'en' }) {
   const t = (key: string): string => {
     const parts = key.split('.');
     let current: any = interfaceTexts;
@@ -102,64 +91,22 @@ export default function NosotrosClient() {
       <Header />
 
       {/* =========================================================================
-          FONDO ANIMADO OPTIMIZADO
+          FONDO (orbes estáticos)
       ========================================================================= */}
       <div className="fixed inset-0 z-0 w-full h-full bg-[#001540] pointer-events-none transform-gpu">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
 
           <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-          {/* Orbes solo en Desktop para ahorrar GPU en móvil */}
-          {!isMobile && (
-            <>
-              <m.div
-                animate={{
-                  opacity: [0.3, 0.5, 0.3],
-                  scale: [1, 1.2, 1],
-                  x: [0, 50, 0],
-                  y: [0, -30, 0]
-                }}
-                transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-                style={{ willChange: "transform, opacity" }}
-                className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]"
-              />
-              <m.div
-                 animate={{
-                   opacity: [0.2, 0.4, 0.2],
-                   scale: [1, 1.3, 1],
-                   x: [0, -40, 0],
-                   y: [0, 40, 0]
-                 }}
-                 transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                 style={{ willChange: "transform, opacity" }}
-                 className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]"
-              />
-            </>
-          )}
+          {/* Orbes de luz (estáticos) - solo Desktop */}
+          <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px] hidden lg:block opacity-40" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px] hidden lg:block opacity-40" />
 
-          {/* Texto de Fondo Sutil - Estático en Móvil */}
+          {/* Texto de Fondo Sutil (estático) */}
           <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] select-none overflow-hidden">
-            {isMobile ? (
-               <span className="text-[50vh] font-black italic text-white tracking-tighter whitespace-nowrap transform -skew-x-12">
-                 MANUEL SOLIS
-               </span>
-            ) : (
-                <m.div
-                  initial={{ x: "20%" }}
-                  animate={{ x: "-20%" }}
-                  transition={{
-                    duration: 60,
-                    repeat: Infinity,
-                    ease: "linear",
-                    repeatType: "mirror"
-                  }}
-                  style={{ willChange: "transform" }}
-                >
-                  <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
-                      MANUEL SOLIS
-                  </span>
-                </m.div>
-            )}
+            <span className="text-[50vh] lg:text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap transform -skew-x-12 lg:skew-x-0">
+              MANUEL SOLIS
+            </span>
           </div>
       </div>
 
@@ -167,18 +114,13 @@ export default function NosotrosClient() {
           CONTENIDO
       ========================================================================= */}
 
-      {/* --- HERO SECTION --- */}
+      {/* --- HERO SECTION (static — LCP) --- */}
       <section className="relative pt-54 pb-16 z-10 px-6 lg:px-12">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
 
             {/* IZQUIERDA: IMAGEN LOGO INFORMACION */}
-            <m.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]"
-            >
+            <div className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]">
                 <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
 
                 <div className="relative z-10 w-full h-full flex items-center justify-center">
@@ -193,7 +135,7 @@ export default function NosotrosClient() {
                        priority
                     />
                 </div>
-            </m.div>
+            </div>
 
             {/* DERECHA: HISTORIA Y MISIÓN */}
             <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
@@ -209,26 +151,16 @@ export default function NosotrosClient() {
                 </h1>
               </div>
 
-              <m.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4, duration: 1 }}
-                className="relative pl-6 border-l-2 border-[#B2904D]/50"
-              >
+              <div className="relative pl-6 border-l-2 border-[#B2904D]/50">
                 <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
                   {t('hero.subtitle')}
                 </p>
-              </m.div>
+              </div>
 
-              <m.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 1 }}
-                className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
-              >
+              <div className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
                   <div dangerouslySetInnerHTML={{ __html: parseText('mission.solis') }} />
                   <div dangerouslySetInnerHTML={{ __html: parseText('mission.commitment') }} />
-              </m.div>
+              </div>
             </div>
           </div>
         </div>
@@ -242,12 +174,7 @@ export default function NosotrosClient() {
         <div className="grid lg:grid-cols-12 gap-8 items-stretch">
 
             {/* LISTA DE OFICINAS */}
-            <m.div
-               initial={{ opacity: 0, x: -20 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-               className="lg:col-span-4 p-8 border border-white/10 rounded-2xl backdrop-blur-md bg-[#000814]/60 shadow-2xl flex flex-col justify-between"
-            >
+            <Reveal variant="right" className="lg:col-span-4 p-8 border border-white/10 rounded-2xl backdrop-blur-md bg-[#000814]/60 shadow-2xl flex flex-col justify-between">
                <div>
                  <Landmark size={40} className="text-[#B2904D] mb-4 drop-shadow-[0_0_15px_rgba(178,144,77,0.4)]" />
                  <p className="text-base text-blue-100/80 font-light leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: parseContent(t('usaOffices.description')) }} />
@@ -266,15 +193,10 @@ export default function NosotrosClient() {
                        ))}
                    </div>
                </div>
-            </m.div>
+            </Reveal>
 
             {/* MAPA DE GOOGLE OPTIMIZADO (SIEMPRE VISIBLE) */}
-            <m.div
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 className="lg:col-span-8 min-h-[500px] bg-[#000510] rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden relative"
-            >
+            <Reveal variant="up" className="lg:col-span-8 min-h-[500px] bg-[#000510] rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden relative">
                 {/* IFRAME SIEMPRE CARGADO */}
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d14500000!2d-100!3d38!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sLaw%20Offices%20of%20Manuel%20Solis!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
@@ -292,14 +214,14 @@ export default function NosotrosClient() {
                <div className="absolute top-4 right-4 bg-black/70 backdrop-blur text-white px-4 py-2 rounded-lg text-xs font-bold border border-white/10 pointer-events-none z-20">
                    INTERACTIVE MAP
                </div>
-            </m.div>
+            </Reveal>
         </div>
 
       </section>
 
       {/* --- FORMULARIO DE CONTACTO --- */}
       <div className="relative z-20 mt-12">
-        <ContactForm />
+        <ContactForm lang={lang} />
       </div>
 
       <Footer />
