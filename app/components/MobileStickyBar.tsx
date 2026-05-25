@@ -9,10 +9,10 @@ import { pushToDataLayer, trackConversion } from '../lib/tracking';
 import { track } from '@vercel/analytics/react';
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap';
 
-// TEMP: WhatsApp tab hidden in mobile sticky bar — quitar este flag para reactivar
-const WHATSAPP_HIDDEN = true;
+const WHATSAPP_HIDDEN = false;
 
-const WHATSAPP_NUMBER = '17138557219';
+// +1 713-876-3560 (formato wa.me sin "+", sin guiones)
+const WHATSAPP_NUMBER = '17138763560';
 
 const WHATSAPP_MESSAGE_ES =
   'Website: ¡Hola! Quisiera saber más sobre cómo puedo regularizar mi situación migratoria en EE.UU. ¿Podrían asesorarme?';
