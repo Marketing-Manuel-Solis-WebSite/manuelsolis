@@ -9,7 +9,11 @@ import { User, Phone, Mail, CheckCircle2, ShieldCheck, Zap, XCircle } from 'luci
 import { track } from '@vercel/analytics/react';
 
 const ACCENT_GOLD = '#B2904D';
-const API_URL = '/api/signup-proxy';
+// Migrado de /api/signup-proxy → /api/lead-capture (2026-05-25).
+// El backend anterior (solislawruler.azurewebsites.net) está caído / sin
+// respuesta. Reapuntamos a la misma pipeline que ContactForm, que entrega
+// los leads a bos.manuelsolis.com vía postLead() con retry y BotID.
+const API_URL = '/api/lead-capture';
 
 // --- VARIANTS ---
 const containerVar: Variants = {
@@ -244,13 +248,21 @@ export default function JoinInClient() {
         setIsSubmitting(true);
         setSubmitStatus('idle');
 
+        // Payload con el esquema de /api/lead-capture (snake_case).
+        // enquiry_detail marca el origen para que el equipo distinga estos
+        // leads del formulario de contacto regular en bos.manuelsolis.com.
         const payload = {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            phone: formData.phone.replace(/[^0-9]/g, ''),
             email: formData.email,
-            phoneNumber: formData.phone.replace(/[^0-9]/g, ''),
+            enquiry_detail: lang === 'es'
+                ? 'Suscripción Join-In: actualizaciones de caso, recordatorios y anuncios.'
+                : 'Join-In subscription: case updates, reminders, and announcements.',
             acceptedTerms: formData.acceptedTerms,
-            receiveUpdates: formData.marketingConsent,
+            marketingConsent: formData.marketingConsent,
+            page_url: typeof window !== 'undefined' ? window.location.href : `/${lang}/join-in`,
+            language: lang,
         };
 
         try {

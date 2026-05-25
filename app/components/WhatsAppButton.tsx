@@ -6,8 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { track } from '@vercel/analytics/react'; // 1. Importar track de Vercel
 import { pushToDataLayer, trackConversion } from '../lib/tracking';
 
-// TEMP: WhatsApp button hidden — quitar este flag para reactivar
-const WHATSAPP_HIDDEN = true;
+const WHATSAPP_HIDDEN = false;
 
 export default function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -16,8 +15,8 @@ export default function WhatsAppButton() {
 
   if (WHATSAPP_HIDDEN) return null;
   
-  // 📞 NÚMERO DE WHATSAPP (1-713-855-7219)
-  const whatsappNumber = '17138557219';
+  // 📞 NÚMERO DE WHATSAPP (+1 713-876-3560)
+  const whatsappNumber = '17138763560';
   
   // Mensaje predeterminado con el texto solicitado, codificado para URL
   const rawMessage = 'Website: ¡Hola! Quisiera saber más sobre cómo puedo regularizar mi situación migratoria en EE.UU. ¿Podrían asesorarme?';
