@@ -180,7 +180,7 @@ export default function Hero({ lang }: { lang: Language }) {
                   href={`/${lang}/consulta`}
                   className="group items-center gap-3 px-8 py-4 bg-gold-500 text-navy-500 font-bold rounded-full shadow-glow-gold"
                 >
-                  <span>{isEs ? 'Consulta gratis' : 'Free consultation'}</span>
+                  <span>{isEs ? 'Consulta' : 'Consultation'}</span>
                   <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
