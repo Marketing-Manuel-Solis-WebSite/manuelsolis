@@ -19,6 +19,9 @@ const officeData: OfficeData = {
   mapLink: 'https://share.google/R85nYwhTFqoxLctD4',
   image: '/offices/ofhouston.png',
   
+  // --- TAMBIÉN ATENDEMOS ACCIDENTES (oficina virtual) ---
+  accidentsSection: true,
+
   // --- GERENCIA (ELIMINADO) ---
   managers: [],
   

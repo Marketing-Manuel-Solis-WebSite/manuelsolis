@@ -26,7 +26,25 @@ type OfficeData = {
   mapLink: string;
   image: string;
   services: { es: string; en: string }[];
+  /**
+   * true = la dirección es un centro de negocios virtual (Regus / IWG), no un
+   * local propio del despacho; se atiende SOLO con cita (ver notas en
+   * app/lib/officesRegistry.ts → VIRTUAL_OFFICE_SLUGS). Las 5 virtuales son
+   * north-loop, northchase, main-st, kirby y league-city (aquí con los ids
+   * houston-north-loop, houston-northchase, houston-main, houston-kirby,
+   * league-city). Metadato: NO se renderiza, se calcula en el .map de abajo.
+   */
+  virtual: boolean;
 };
+
+// Ids (de este explorer) cuyas direcciones son oficinas virtuales Regus/IWG.
+const VIRTUAL_OFFICE_IDS = new Set([
+  'houston-north-loop',
+  'houston-northchase',
+  'houston-main',
+  'houston-kirby',
+  'league-city',
+]);
 
 // --- TEXTO ORIGINAL DE DESCRIPCIÓN (Restaurado) ---
 const ORIGINAL_DESC = {
@@ -334,7 +352,8 @@ const officesData: OfficeData[] = [
   return 0;
 }).map(office => ({
     ...office,
-    id: office.id || office.city.toLowerCase().replace(/\s/g, '-')
+    id: office.id || office.city.toLowerCase().replace(/\s/g, '-'),
+    virtual: VIRTUAL_OFFICE_IDS.has(office.id),
 }));
 
 // --- MINI COMPONENTE: ACCIÓN HUD ---

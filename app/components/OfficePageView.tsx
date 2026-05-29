@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock, User, Quote, Sparkles, Scale } from 'lucide-react';
+import { MapPin, Clock, User, Quote, Sparkles, Scale, Car } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -55,6 +55,8 @@ export interface OfficeData {
   managers: OfficeManager[];
   attorneys: OfficeAttorney[];
   services: BiText[];
+  /** Solo oficinas virtuales (Regus/IWG): muestra la sección "también atendemos accidentes". */
+  accidentsSection?: boolean;
 }
 
 export interface OfficeUIText {
@@ -297,6 +299,39 @@ export default function OfficePageView({
 
               </div>
             </div>
+
+            {/* --- TAMBIÉN ATENDEMOS ACCIDENTES (solo oficinas virtuales) --- */}
+            {data.accidentsSection && (
+              <Reveal variant="up" className="relative max-w-4xl mx-auto mb-16" amount={0.15}>
+                <div className="bg-white/5 backdrop-blur-md rounded-2xl border border-[#B2904D]/30 overflow-hidden">
+                  <div className="h-1.5 w-full bg-gradient-to-r from-[#B2904D] via-[#D4AF37] to-[#B2904D]" />
+                  <div className="p-6 md:p-10 flex flex-col sm:flex-row sm:items-center gap-6">
+                    <div className="shrink-0 w-14 h-14 rounded-full bg-[#B2904D]/15 border border-[#B2904D]/30 flex items-center justify-center">
+                      <Car className="text-[#B2904D]" size={26} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl md:text-3xl font-thin text-white mb-3">
+                        {lang === 'es'
+                          ? '¿Tuvo un accidente? Aquí también lo atendemos'
+                          : 'Had an accident? We handle that here too'}
+                      </h3>
+                      <p className="text-white/70 text-base leading-relaxed font-light mb-5">
+                        {lang === 'es'
+                          ? 'Además de inmigración, en esta oficina también llevamos casos de accidentes: choques de auto, accidentes de trabajo, resbalones y caídas, y lesiones personales. Llámenos y con gusto le orientamos sobre su caso.'
+                          : 'In addition to immigration, this office also handles accident cases: auto collisions, work injuries, slip-and-fall, and personal injury. Call us and we will gladly guide you through your case.'}
+                      </p>
+                      <Link
+                        href={`/${lang}/servicios/accidentes`}
+                        className="inline-flex items-center gap-2 text-[#B2904D] text-sm font-bold hover:text-white transition-colors"
+                      >
+                        <Scale size={14} />
+                        {lang === 'es' ? 'Ver servicios de accidentes' : 'See accident services'} →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            )}
 
             {/* --- FORMULARIO DE CONTACTO --- */}
             <Reveal variant="up" className="relative max-w-4xl mx-auto" amount={0.1}>

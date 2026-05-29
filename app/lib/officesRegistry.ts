@@ -48,3 +48,41 @@ export type OfficeSlug = keyof typeof OFFICES_PLACE_IDS;
 export function getOfficePlaceId(slug: string): string | null {
   return OFFICES_PLACE_IDS[slug as OfficeSlug] ?? null;
 }
+
+/**
+ * Oficinas que son DIRECCIONES VIRTUALES (centros de negocios Regus / IWG —
+ * marcas Regus, HQ, Spaces; WeWork en el caso de Main St), no locales propios
+ * del despacho. Verificado por investigación OSINT: Regus/Davinci listan estas
+ * direcciones + suite como "virtual office" con manejo de correo y
+ * contestación de llamadas, y cada edificio aloja decenas de empresas:
+ *   - north-loop   → Regus "Brookhollow Central III", 2950 N Loop W, Ste 500
+ *   - northchase   → Regus / HQ (IWG), 16510 Northchase Dr
+ *   - main-st      → The Great Jones Building (WeWork/Spaces/Regus), 708 Main St
+ *   - kirby        → Regus "River Oaks Tower", 3730 Kirby Dr, Ste 1200
+ *   - league-city  → Regus, 2600 South Shore Blvd, Ste 300
+ *
+ * NOTA "con cita": el despacho SÍ atiende clientes en estas direcciones, pero
+ * solo con cita previa (usa las salas/day-offices del centro de negocios); no
+ * hay personal del despacho en sitio ni atención 24/7 — el "Abierto 24 horas"
+ * publicado corresponde al enrutamiento del call-center central.
+ *
+ * El resto de oficinas son locales FÍSICOS con personal, incluidas las dos de
+ * Navigation Blvd: houston-principal (6657, edificio propiedad de M. Solis) y
+ * houston-accidentes (6705, edificio propio contiguo de la familia Solis).
+ *
+ * Úsalo para decidir el schema.org de cada página: una dirección virtual no
+ * debería emitir openingHoursSpecification 24h ni aggregateRating/review como
+ * si fuera una sede atendida (riesgo de Google Business Profile / NAP).
+ */
+export const VIRTUAL_OFFICE_SLUGS = [
+  'north-loop',
+  'northchase',
+  'main-st',
+  'kirby',
+  'league-city',
+] as const satisfies readonly OfficeSlug[];
+
+/** true si el slug corresponde a una dirección de oficina virtual. */
+export function isVirtualOffice(slug: string): boolean {
+  return (VIRTUAL_OFFICE_SLUGS as readonly string[]).includes(slug);
+}

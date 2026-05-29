@@ -19,6 +19,9 @@ const officeData: OfficeData = {
   mapLink: 'https://share.google/8T736Tycmnh4BZw5o',
   image: '/offices/League.png',
 
+  // --- TAMBIÉN ATENDEMOS ACCIDENTES (oficina virtual) ---
+  accidentsSection: true,
+
   // --- GERENCIA (ELIMINADO) ---
   managers: [],
 

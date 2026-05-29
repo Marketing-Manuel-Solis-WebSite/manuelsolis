@@ -19,6 +19,9 @@ const officeData: OfficeData = {
   mapLink: 'https://share.google/Fc3ISgQAihcayfmws',
   image: '/offices/main.png',
   
+  // --- TAMBIÉN ATENDEMOS ACCIDENTES (oficina virtual) ---
+  accidentsSection: true,
+
   // --- GERENCIA (ELIMINADO) ---
   managers: [],
   
