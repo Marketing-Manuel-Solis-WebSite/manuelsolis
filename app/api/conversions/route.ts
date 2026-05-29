@@ -87,6 +87,10 @@ export async function POST(request: NextRequest) {
       ip,
       userAgent: userAgent ? userAgent.slice(0, 200) : undefined,
       country: country ? country.slice(0, 4) : undefined,
+      firstTouchSource: clip(body.firstTouchSource, 100),
+      firstTouchMedium: clip(body.firstTouchMedium, 100),
+      firstTouchCampaign: clip(body.firstTouchCampaign, 200),
+      firstTouchContent: clip(body.firstTouchContent, 200),
     };
 
     pushEvent(entry);

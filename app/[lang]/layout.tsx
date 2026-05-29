@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { LanguageProvider } from '../context/LanguageContext';
 import FloatingCtas from '../components/FloatingCtas';
 import PageViewTracker from '../components/PageViewTracker';
+import AttributionCapture from '../components/AttributionCapture';
 import type { Language } from '../lib/translations';
 import Script from 'next/script';
 import { LangSetter } from '../components/LangSetter';
@@ -426,6 +427,9 @@ export default async function LangLayout({ children, params }: Props) {
       </noscript>
 
       <LanguageProvider initialLanguage={currentLang}>
+        <Suspense fallback={null}>
+          <AttributionCapture />
+        </Suspense>
         <Suspense fallback={null}>
           <PageViewTracker />
         </Suspense>

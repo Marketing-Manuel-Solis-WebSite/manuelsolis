@@ -35,6 +35,15 @@ export interface StoredEvent {
   ip: string;
   userAgent?: string;
   country?: string;
+  /**
+   * First-touch attribution (cookie msl_attr). Atribuye el lead a la
+   * campaña que lo trajo originalmente, no a la última. Útil para
+   * decidir presupuesto entre canales que generan vs canales que cierran.
+   */
+  firstTouchSource?: string;
+  firstTouchMedium?: string;
+  firstTouchCampaign?: string;
+  firstTouchContent?: string;
 }
 
 const MAX_STORED = 20000;

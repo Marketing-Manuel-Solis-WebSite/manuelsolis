@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { getPageData, getSiblingCities, getRelatedServiceLinks, SITE_URL } from '../../lib/cityServiceData';
 import { getLocalFAQ, getTypicalCases } from '../../lib/cityServiceLocalContent';
+import { buildLandingSchema, LANDING_TO_OFFICE_FOR_REVIEWS } from '../../lib/landingSchema';
 import CityServiceLanding from '../../components/CityServiceLanding';
 
 const PAGE_SLUG = 'defensa-deportacion-chicago';
@@ -39,23 +40,11 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
     { name: config.h1[currentLang], url: `/${currentLang}/${PAGE_SLUG}` },
   ]);
 
-  const legalServiceSchema = {
-    '@context': 'https://schema.org', '@type': 'LegalService',
-    name: `Manuel Solis - ${service.title[currentLang]}`,
-    description: config.metaDescription[currentLang],
-    url: `${SITE_URL}/${currentLang}/${PAGE_SLUG}`,
-    telephone: office.phone,
-    address: { '@type': 'PostalAddress', streetAddress: office.address.split(',')[0], addressLocality: office.city, addressRegion: office.stateCode, postalCode: office.zip, addressCountry: 'US' },
-    geo: { '@type': 'GeoCoordinates', latitude: office.coordinates.lat, longitude: office.coordinates.lng },
-    areaServed: { '@type': 'City', name: office.city },
-    priceRange: '$$',
-    openingHoursSpecification: [
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '18:00' },
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '09:00', closes: '13:00' },
-    ],
-    parentOrganization: { '@type': 'LawFirm', '@id': `${SITE_URL}/#organization`, name: 'Manuel Solis Law Firm' },
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', bestRating: '5', worstRating: '1', ratingCount: '12', reviewCount: '12' },
-  };
+  const legalServiceSchema = await buildLandingSchema({
+    pageSlug: PAGE_SLUG,
+    lang: currentLang,
+    officeSlugForReviews: LANDING_TO_OFFICE_FOR_REVIEWS[PAGE_SLUG],
+  });
 
   const localFAQ = getLocalFAQ(config, office, service);
   const typicalCases = getTypicalCases(config, office, service);

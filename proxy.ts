@@ -32,13 +32,33 @@ const SEO_CRAWLER_REGEX = /Googlebot|bingbot|Sitebulb|Screaming Frog|AhrefsBot|S
 
 export function proxy(request: NextRequest) {
   // --- NUEVA PROTECCIÓN: Bloquear indexación en entornos de prueba ---
-  const hostname = request.headers.get('host') || '';
+  const hostname = (request.headers.get('host') || '').toLowerCase();
 
-  // Si el dominio es v2.manuelsolis.com o bos.manuelsolis.com
-  if (hostname.includes('v2.manuelsolis') || hostname.includes('bos.manuelsolis') || hostname.includes('.vercel.app')) {
+  // Hosts que NUNCA deben aparecer en SERPs:
+  //   - bos.manuelsolis.com (internal operations / Laravel — defense-in-depth;
+  //     en práctica esos requests no llegan a este Next.js app, pero la regla
+  //     queda por si bos alguna vez se sirve detrás del mismo dominio).
+  //   - mme.manuelsolis.com (placeholder para futuras internas).
+  //   - v2.manuelsolis.com (staging).
+  //   - *.vercel.app (preview deployments).
+  //
+  // X-Robots-Tag se envía con directivas exhaustivas para que Google no:
+  //   noindex      — no indexe esta página
+  //   nofollow     — no siga enlaces salientes desde esta página
+  //   noarchive    — no guarde una copia en caché
+  //   nosnippet    — no muestre un snippet en SERPs
+  //   noimageindex — no indexe imágenes embebidas
+  if (
+    hostname.startsWith('bos.') ||
+    hostname.startsWith('mme.') ||
+    hostname.startsWith('v2.') ||
+    hostname.endsWith('.vercel.app')
+  ) {
     const response = NextResponse.next();
-    // Este header le dice a Google: "No guardes esta página en tus resultados"
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    response.headers.set(
+      'X-Robots-Tag',
+      'noindex, nofollow, noarchive, nosnippet, noimageindex',
+    );
     return response;
   }
   // -------------------------------------------------------------------

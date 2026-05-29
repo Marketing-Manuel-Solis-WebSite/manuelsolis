@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import { getPlaceData } from '../../lib/googleReviews';
+import { MAIN_FIRM_PLACE_ID } from '../../lib/officesRegistry';
 import TestimoniosClient from './TestimoniosClient';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -46,10 +48,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// Schema.org — AggregateRating + 9 Reviews individuales para Google Rich Results
-function generateReviewSchema(lang: string) {
+// Schema.org — AggregateRating (live from Google Places, mirrors the LawFirm
+// schema in app/[lang]/layout.tsx:305-329) + curated client testimonials.
+// AggregateRating: pulls live data from MAIN_FIRM_PLACE_ID (Houston Principal)
+// with 24h cache. If the Places API is unavailable, aggregateRating is
+// omitted entirely — never falls back to hardcoded data, same policy as
+// officeSchema.ts:20-22 and landingSchema.ts.
+//
+// TODO(follow-up): the `review[]` entries below are still hardcoded. Per
+// the same anti-fabricated-review policy, these should either come from
+// Places (which currently returns only the top 5 reviews of a single
+// office, not the curated firm-wide selection shown here) or be sourced
+// from a vetted internal CMS where every entry has documented consent +
+// timestamp. Tracking outside of this PR.
+async function generateReviewSchema(lang: string) {
   const isEs = lang === 'es';
-  return {
+  const mainPlaceData = await getPlaceData(MAIN_FIRM_PLACE_ID);
+
+  const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'LegalService',
     name: 'Manuel Solis Law Firm',
@@ -68,14 +84,6 @@ function generateReviewSchema(lang: string) {
       postalCode: '77011',
       addressCountry: 'US',
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      bestRating: '5',
-      worstRating: '1',
-      ratingCount: '9',
-      reviewCount: '9',
-    },
     review: [
       { '@type': 'Review', author: { '@type': 'Person', name: 'Gilmar Guzman' }, datePublished: '2026-02-25', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'He tenido una grata experiencia con mi preparadora de documentos Veronica Velasquez. Ella me ha asesorado y preparado para la entrevista, eso me hace sentir mucha confianza. Recibí mi residencia y seguro social al mismo tiempo. Recomiendo al Abogado Manuel Solis.', locationCreated: { '@type': 'Place', name: 'Los Angeles Office' } },
       { '@type': 'Review', author: { '@type': 'Person', name: 'Isabel Casco' }, datePublished: '2026-02-18', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'Im very grateful with God that after all these years I finally got my green card and that is thanks to the Manuel Solis lawyers. Its been a long process but worth it at the end.', locationCreated: { '@type': 'Place', name: 'Chicago Office' } },
@@ -87,11 +95,24 @@ function generateReviewSchema(lang: string) {
       { '@type': 'Review', author: { '@type': 'Person', name: 'Ana Landeros' }, datePublished: '2026-02-04', reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' }, reviewBody: 'La señorita Evelyn ha estado muy atenta con el caso de mi mamá. Gracias a todo el equipo de Abogados, hacen un gran trabajo por ver familias reunidas.', locationCreated: { '@type': 'Place', name: 'El Paso Office' } },
     ],
   };
+
+  if (mainPlaceData && mainPlaceData.userRatingCount > 0) {
+    schema.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: mainPlaceData.rating.toFixed(1),
+      bestRating: '5',
+      worstRating: '1',
+      ratingCount: mainPlaceData.userRatingCount,
+      reviewCount: mainPlaceData.userRatingCount,
+    };
+  }
+
+  return schema;
 }
 
 export default async function TestimoniosPage({ params }: Props) {
   const { lang } = await params;
-  const reviewSchema = generateReviewSchema(lang);
+  const reviewSchema = await generateReviewSchema(lang);
 
   return (
     <>

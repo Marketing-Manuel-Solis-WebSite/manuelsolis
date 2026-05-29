@@ -28,6 +28,7 @@ import {
   Users,
   Rocket,
   Activity,
+  Link2,
 } from 'lucide-react';
 import { logoutAction } from './newsletter/actions';
 
@@ -42,7 +43,7 @@ export default function AdminHome({ lang }: { lang: 'es' | 'en' }) {
           title="Acceso rápido"
           subtitle="Entra directo a las herramientas del panel."
         >
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <ToolCard
               href={`/${lang}/admin/newsletter`}
               icon={Mail}
@@ -56,6 +57,14 @@ export default function AdminHome({ lang }: { lang: 'es' | 'en' }) {
               icon={Activity}
               title="Analytics · Flight Check"
               description="UTMs, conversiones, page views, sesiones, bounce rate, top URLs, heatmap día/hora y filtros por mes y campaña."
+              status="Live"
+              statusColor="gold"
+            />
+            <ToolCard
+              href={`/${lang}/admin/short-links`}
+              icon={Link2}
+              title="Short Links · Atribución"
+              description="Catálogo de slugs /go/* con UTMs canónicos, clicks por canal, first-touch attribution y feed en vivo de visitas etiquetadas."
               status="Live"
               statusColor="gold"
             />

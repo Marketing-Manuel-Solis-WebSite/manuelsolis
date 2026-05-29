@@ -4,7 +4,13 @@
  *
  * Uso en componentes:
  *   import { trackConversion, trackPageView, getUTMParams, pushToDataLayer } from '@/app/lib/tracking';
+ *
+ * Atribución persistente: `getUTMParams()` lee con prioridad
+ *   URL actual > cookie last_touch > cookie first_touch > 'direct'/'none'
+ * vía `app/lib/attribution.ts`. Así, una conversión disparada después
+ * de varios clicks internos sigue atribuyéndose al canal real.
  */
+import { getEffectiveUtms } from './attribution';
 
 // ─── Tipos ───
 export type ConversionType =
@@ -31,6 +37,15 @@ export interface ConversionEvent {
   screen?: string;
   sessionId?: string;
   timestamp: string;
+  /**
+   * First-touch (cookie msl_attr) — origen al que se le acredita el
+   * lead cuando convierte, independientemente del canal del momento.
+   * Opcionales: pueden faltar si el visitante llegó direct sin UTMs.
+   */
+  firstTouchSource?: string;
+  firstTouchMedium?: string;
+  firstTouchCampaign?: string;
+  firstTouchContent?: string;
 }
 
 // ─── Helpers UTM ───
@@ -45,12 +60,20 @@ export function getUTMParam(key: string): string | null {
 }
 
 export function getUTMParams() {
+  // Prioridad: URL > cookie last_touch > cookie first_touch > direct/none.
+  // Mantenemos el shape `utm_*` que ya consumían los call sites antiguos
+  // (lib/conversion.ts pushToDataLayer, etc.).
+  const eff = getEffectiveUtms();
   return {
-    utm_source: getUTMParam('utm_source') || 'direct',
-    utm_medium: getUTMParam('utm_medium') || 'none',
-    utm_campaign: getUTMParam('utm_campaign') || undefined,
-    utm_content: getUTMParam('utm_content') || undefined,
-    utm_term: getUTMParam('utm_term') || undefined,
+    utm_source: eff.source,
+    utm_medium: eff.medium,
+    utm_campaign: eff.campaign,
+    utm_content: eff.content,
+    utm_term: eff.term,
+    firstTouchSource: eff.firstTouchSource,
+    firstTouchMedium: eff.firstTouchMedium,
+    firstTouchCampaign: eff.firstTouchCampaign,
+    firstTouchContent: eff.firstTouchContent,
   };
 }
 
@@ -156,6 +179,10 @@ function buildBaseEvent(
     screen: getScreen(),
     sessionId: getSessionId(),
     timestamp: new Date().toISOString(),
+    firstTouchSource: utms.firstTouchSource,
+    firstTouchMedium: utms.firstTouchMedium,
+    firstTouchCampaign: utms.firstTouchCampaign,
+    firstTouchContent: utms.firstTouchContent,
   };
 }
 
