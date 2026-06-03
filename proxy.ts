@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { applySecurityHeaders } from './app/lib/securityHeaders';
 
 const locales = ['en', 'es'];
 const defaultLocale = 'es';
@@ -74,7 +75,9 @@ export function proxy(request: NextRequest) {
     if (lowercasePath !== pathname) {
       const newUrl = new URL(lowercasePath, request.url);
       newUrl.search = request.nextUrl.search;
-      return NextResponse.redirect(newUrl, 301);
+      const response = NextResponse.redirect(newUrl, 301);
+      applySecurityHeaders(response.headers);
+      return response;
     }
   }
 
@@ -82,7 +85,9 @@ export function proxy(request: NextRequest) {
   if (pathname.length > 1 && pathname.endsWith('/')) {
     const newUrl = new URL(pathname.slice(0, -1), request.url);
     newUrl.search = request.nextUrl.search;
-    return NextResponse.redirect(newUrl, 301);
+    const response = NextResponse.redirect(newUrl, 301);
+    applySecurityHeaders(response.headers);
+    return response;
   }
 
   // Si ya tiene locale, dejar pasar (fast path para crawlers)
@@ -112,6 +117,7 @@ export function proxy(request: NextRequest) {
     newUrl.search = request.nextUrl.search;
     const response = NextResponse.redirect(newUrl, 301);
     response.headers.set('Content-Language', 'es');
+    applySecurityHeaders(response.headers);
     return response;
   }
 
@@ -124,6 +130,10 @@ export function proxy(request: NextRequest) {
 
   const response = NextResponse.redirect(newUrl);
   response.headers.set('Content-Language', locale);
+  // OWASP/Zoom secure headers on the bare-domain home redirect (/ -> /es).
+  // next.config headers() do not decorate middleware redirects, so a verifier
+  // hitting the root would otherwise see a header-less 307.
+  applySecurityHeaders(response.headers);
 
   // Guardar preferencia
   response.cookies.set('NEXT_LOCALE', locale, { maxAge: 31536000 });

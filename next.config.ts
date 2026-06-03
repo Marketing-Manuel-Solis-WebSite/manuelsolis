@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 import { withBotId } from 'botid/next/config';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { seoRedirects } from './app/lib/seoRedirects';
+import { SECURITY_HEADERS } from './app/lib/securityHeaders';
 
 const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -86,41 +87,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // OWASP / Zoom secure headers on every rendered (200) + static
+        // response. Sourced from app/lib/securityHeaders.ts so the proxy
+        // redirects use the exact same list (see proxy.ts).
         source: '/:path*',
-        headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on'
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload'
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://generativelanguage.googleapis.com; frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com; media-src 'self' https:; worker-src 'self' blob:; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
-          },
-        ],
+        headers: SECURITY_HEADERS,
       },
     ];
   },
