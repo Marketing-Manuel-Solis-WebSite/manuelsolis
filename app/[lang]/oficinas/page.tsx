@@ -72,7 +72,7 @@ const OFFICE_GROUPS: StateGroup[] = [
             city: 'Houston',
             state: 'TX',
             zip: '77057',
-            phone: '(832) 598-0914',
+            phone: '(713) 903-7875',
           },
           {
             name: { es: 'Kirby', en: 'Kirby' },

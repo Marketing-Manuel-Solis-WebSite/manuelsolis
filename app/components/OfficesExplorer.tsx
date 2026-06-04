@@ -180,7 +180,7 @@ const officesData: OfficeData[] = [
     title: { es: 'Houston (Bellaire)', en: 'Houston (Bellaire)' },
     description: ORIGINAL_DESC,
     address: '9188 Bellaire Blvd E, Houston, TX 77036, United States',
-    phone: '(832) 598-0914',
+    phone: '(713) 903-7875',
     hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
     mapLink: generateMapUrl('9188 Bellaire Blvd E, Houston, TX 77036, United States'),
     image: '/offices/Houston.png',

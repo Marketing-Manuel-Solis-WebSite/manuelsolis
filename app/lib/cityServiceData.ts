@@ -30,7 +30,7 @@ export const OFFICES: Record<string, OfficeInfo> = {
     zip: '77011',
     coordinates: { lat: 29.7281, lng: -95.3025 },
     additionalOffices: [
-      { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(832) 598-0914' },
+      { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(713) 903-7875' },
       { name: 'Houston North Loop', address: '2950 N Loop W, Houston, TX 77092', phone: '(713) 429-0237' },
     ],
   },

@@ -5,7 +5,7 @@ export const officesPhoneMap: Record<string, string> = {
   'main-st': '(713) 842-9575',
   'north-loop': '(713) 429-0237',
   'northchase': '(346) 522-4848',
-  'houston-bellaire': '(832) 598-0914',
+  'houston-bellaire': '(713) 903-7875',
   'kirby': '(713) 903-7875',
   'dallas': '(214) 753-8315',
   'el-paso': '(915) 233-7127',
