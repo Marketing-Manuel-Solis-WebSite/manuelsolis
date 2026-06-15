@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import Hero from '../components/Hero';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import FraudWarningBanner from '../components/FraudWarningBanner';
 
 // ISR: regenerar cada hora para mantener fresh sin SSR cost
 export const revalidate = 3600;
@@ -87,11 +88,19 @@ const ContactForm = dynamic(() => import('../components/ContactForm'), {
   loading: () => <div className="w-full h-[600px] bg-[#001540]" />
 });
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const currentLang = lang === 'en' ? 'en' : 'es';
+
   return (
     <main id="main-content" className="min-h-screen bg-[#001540] grain">
       <Hero />
       <Header />
+      <FraudWarningBanner lang={currentLang} />
       <div className="content-auto">
         <About />
       </div>
