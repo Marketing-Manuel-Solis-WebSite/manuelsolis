@@ -29,18 +29,6 @@ const officeData: OfficeData = {
       role: { es: 'Abogado', en: 'Attorney' },
       image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Edward-Steven-Reisman.png', // Usando foto de Edward S. Reisman
       quote: { es: "Guiando a sus clientes con conocimiento y humanidad.", en: "Guiding clients with knowledge and humanity." }
-    },
-    {
-      name: 'Miguel Molina',
-      role: { es: 'Abogado', en: 'Attorney' },
-      image: '/LogoInformacion.png', // Placeholder
-      quote: { es: "Defensa comprometida con la comunidad.", en: "Defense committed to the community." }
-    },
-    {
-      name: 'Amaris Dortar',
-      role: { es: 'Abogada', en: 'Attorney' },
-      image: '/LogoInformacion.png', // Placeholder
-      quote: { es: "Justicia accesible para todos.", en: "Justice accessible to all." }
     }
   ],
 
