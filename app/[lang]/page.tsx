@@ -1,13 +1,9 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import Hero from '../components/Hero';
-import About from '../components/About';
-import Services from '../components/Services';
-import Testimonials from '../components/Testimonials';
-import Team from '../components/Team';
-import Offices from '../components/Offices';
-import ContactForm from '../components/ContactForm';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import FraudWarningBanner from '../components/FraudWarningBanner';
 
 // ISR: regenerar cada hora para mantener fresh sin SSR cost
 export const revalidate = 3600;
@@ -68,13 +64,43 @@ export async function generateMetadata({
   };
 }
 
-export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+const About = dynamic(() => import('../components/About'), {
+  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
+});
+
+const Services = dynamic(() => import('../components/Services'), {
+  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
+});
+
+const Testimonials = dynamic(() => import('../components/Testimonials'), {
+  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
+});
+
+const Team = dynamic(() => import('../components/Team'), {
+  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
+});
+
+const Offices = dynamic(() => import('../components/Offices'), {
+  loading: () => <div className="w-full h-[800px] bg-[#001540]" />
+});
+
+const ContactForm = dynamic(() => import('../components/ContactForm'), {
+  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
+});
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
   const { lang } = await params;
   const currentLang = lang === 'en' ? 'en' : 'es';
+
   return (
     <main id="main-content" className="min-h-screen bg-[#001540] grain">
       <Hero lang={currentLang} />
       <Header />
+      <FraudWarningBanner lang={currentLang} />
       <div className="content-auto">
         <About lang={currentLang} />
       </div>
