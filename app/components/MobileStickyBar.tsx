@@ -5,8 +5,7 @@ import { Phone, FileText, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '../context/LanguageContext';
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
-import { track } from '@vercel/analytics/react';
+import { fireConversion } from '../lib/conversion';
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap';
 
 const WHATSAPP_HIDDEN = false;
@@ -52,32 +51,24 @@ export default function MobileStickyBar() {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
 
   const handleWhatsAppClick = () => {
-    track('Whatsapp Click', { location: 'mobile_sticky_bar' });
-    pushToDataLayer('whatsapp_click', {
-      event_category: 'conversion',
-      event_label: 'mobile_sticky_bar',
+    fireConversion('whatsapp_click', 'mobile_sticky_bar', {
+      location: 'mobile_sticky_bar',
     });
-    trackConversion('whatsapp_click', 'mobile_sticky_bar');
   };
 
   const handlePhoneClick = () => {
     const label = officeSlug ? `mobile_sticky_office_${officeSlug}` : 'mobile_sticky_office_global';
-    track('Phone Click', { location: 'mobile_sticky_bar', office: officeSlug ?? 'global' });
-    pushToDataLayer('phone_click', {
-      event_category: 'conversion',
-      event_label: label,
+    fireConversion('phone_click', label, {
+      location: 'mobile_sticky_bar',
+      office: officeSlug ?? 'global',
       phone_number: phoneNumber,
     });
-    trackConversion('phone_click', label);
   };
 
   const handleConsultaClick = () => {
-    track('Consulta CTA Click', { location: 'mobile_sticky_bar' });
-    pushToDataLayer('consulta_click', {
-      event_category: 'conversion',
-      event_label: 'mobile_sticky_bar',
+    fireConversion('consulta_click', 'mobile_sticky_bar', {
+      location: 'mobile_sticky_bar',
     });
-    trackConversion('consulta_click', 'mobile_sticky_bar');
   };
 
   const callAriaLabel = isEs

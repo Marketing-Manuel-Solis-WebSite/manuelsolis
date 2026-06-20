@@ -11,6 +11,10 @@ import type { FAQItem, TypicalCase } from '../lib/cityServiceLocalContent'
 import type { Language } from '../lib/translations'
 import Link from 'next/link'
 import { Reveal, Stagger, StaggerItem, MagneticButton } from './motion'
+import PhoneClickTracker from './PhoneClickTracker'
+import { getPlaceData } from '../lib/googleReviews'
+import { getOfficePlaceId } from '../lib/officesRegistry'
+import { LANDING_TO_OFFICE_FOR_REVIEWS } from '../lib/landingSchema'
 
 /**
  * City × Service landing — server-first (Fase 2.3 landings). ONE shared
@@ -33,7 +37,7 @@ interface CityServiceLandingProps {
   relatedServiceLinks?: { slug: string; title: { es: string; en: string } }[]
 }
 
-export default function CityServiceLanding({
+export default async function CityServiceLanding({
   config,
   office,
   service,
@@ -46,11 +50,19 @@ export default function CityServiceLanding({
   const isEs = lang === 'es'
   const phoneClean = `+1${office.phone.replace(/\D/g, '')}`
 
+  // Rating en vivo de Google (misma fuente que el JSON-LD de la landing).
+  // Sin clave de API o sin datos → cae a un dato NO fabricado (bilingüe).
+  const reviewOfficeSlug = LANDING_TO_OFFICE_FOR_REVIEWS[config.slug]
+  const placeId = reviewOfficeSlug ? getOfficePlaceId(reviewOfficeSlug) : null
+  const placeData = placeId ? await getPlaceData(placeId) : null
+  const liveRating = placeData && placeData.userRatingCount > 0 ? placeData : null
+
   return (
     <>
       <Header />
 
-      <main className="min-h-screen bg-navy-500">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-navy-500">
+        <PhoneClickTracker label="city_landing" office={office.city} practiceArea={service.shortTitle.en} />
         {/* ===== HERO SECTION ===== */}
         <section className="relative pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-[#001540] via-[#001030] to-[#001540] pointer-events-none" />
@@ -89,7 +101,9 @@ export default function CityServiceLanding({
             {[
               { Icon: Award, value: '35+', label: isEs ? 'Años de experiencia' : 'Years of experience' },
               { Icon: Users, value: '50,000+', label: isEs ? 'Casos ganados' : 'Cases won' },
-              { Icon: Star, value: '4.8★', label: isEs ? 'Calificación promedio' : 'Average rating' },
+              liveRating
+                ? { Icon: Star, value: `${liveRating.rating.toFixed(1)}★`, label: isEs ? `${liveRating.userRatingCount} reseñas en Google` : `${liveRating.userRatingCount} Google reviews` }
+                : { Icon: CheckCircle2, value: '100%', label: isEs ? 'Atención bilingüe' : 'Bilingual service' },
               { Icon: Building2, value: '15', label: isEs ? 'Oficinas en 5 estados' : 'Offices in 5 states' },
             ].map(({ Icon, value, label }, i) => (
               <StaggerItem key={i} as="div" variant="up" className="flex flex-col items-center">
@@ -112,6 +126,13 @@ export default function CityServiceLanding({
                 {isEs ? `Servicios de ${service.shortTitle.es} en ${office.city}` : `${service.shortTitle.en} Services in ${office.city}`}
               </h2>
               <p className="mt-4 text-slate-300 max-w-2xl mx-auto">{service.description[lang]}</p>
+              <Link
+                href={`/${lang}/servicios/${service.serviceSlug}`}
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#B2904D] hover:text-[#9A7A3D] transition-colors"
+              >
+                {isEs ? `Conozca todo sobre ${service.shortTitle.es}` : `Learn more about ${service.shortTitle.en}`}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </Reveal>
 
             <Stagger gap={0.06} className="grid grid-cols-1 sm:grid-cols-2 gap-4" amount={0.1}>

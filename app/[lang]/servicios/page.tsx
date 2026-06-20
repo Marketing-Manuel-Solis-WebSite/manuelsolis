@@ -148,7 +148,7 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
 
       <Header />
 
-      <main className="min-h-screen bg-[#001540]">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#001540]">
         {/* Hero Section */}
         <section className="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8">
           <Reveal variant="up" className="max-w-5xl mx-auto text-center" amount={0.3}>

@@ -446,7 +446,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
         <BlogBackground />
 
-        <main className="relative z-10 pt-32 pb-20">
+        <main id="main-content" tabIndex={-1} className="relative z-10 pt-32 pb-20">
 
           {/* HERO */}
           <section className="container mx-auto px-4 md:px-6 lg:px-8 mb-16">
@@ -506,6 +506,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                      src={IMAGES.article}
                      alt="Entrevista de matrimonio USCIS señales de alerta"
                      fill
+                     sizes="(max-width: 1024px) 100vw, 760px"
                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
                      priority
                    />

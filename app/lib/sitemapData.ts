@@ -8,6 +8,7 @@
 // ============================================================
 
 import { attorneys } from './attorneyData';
+import { collaborators } from './collaboratorData';
 import { LANDING_PAGES } from './cityServiceData';
 import { newsletters } from './newsletterData';
 
@@ -86,10 +87,11 @@ export function getPagesEntries(): SitemapURL[] {
     { route: '', priority: 1.0, changeFrequency: 'weekly', lastModified: '2026-04-30' },
     { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/abogados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+    { route: '/colaboradores', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-06-05' },
     { route: '/testimonios', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+    { route: '/consulta', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/clientes', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/clientes-detenidos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
-    { route: '/join-in', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/inversionistas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/politica-editorial', priority: 0.4, changeFrequency: 'yearly', lastModified: '2025-03-20' },
     { route: '/informacion/faq', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
@@ -100,7 +102,16 @@ export function getPagesEntries(): SitemapURL[] {
     { route: '/category/derechos-de-migrantes', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/category/proteccion-legal-para-migrantes', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
   ];
-  return expandLangs(entries);
+  // Collaborator profile pages (data-driven — scales as more are added).
+  const collaboratorProfiles: SitemapURL[] = collaborators.flatMap((c) =>
+    LANGS.map((lang) => ({
+      url: `${BASE_URL}/${lang}/colaboradores/${c.id}`,
+      lastModified: '2026-06-05',
+      changeFrequency: 'monthly' as ChangeFreq,
+      priority: 0.55,
+    }))
+  );
+  return [...expandLangs(entries), ...collaboratorProfiles];
 }
 
 // Services hub + each service page

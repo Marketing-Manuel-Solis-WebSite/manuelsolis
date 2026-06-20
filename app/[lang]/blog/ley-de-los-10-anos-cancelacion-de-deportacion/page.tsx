@@ -360,7 +360,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
         <BlogBackground />
 
-        <main className="relative z-10 pt-32 pb-20">
+        <main id="main-content" tabIndex={-1} className="relative z-10 pt-32 pb-20">
 
           {/* HERO */}
           <section className="container mx-auto px-4 md:px-6 lg:px-8 mb-16">
@@ -418,8 +418,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                 <div className="mb-12 relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
                    <Image
                      src={IMAGES.article}
-                     alt="Ley de los 10 a\u00f1os cancelaci\u00f3n de deportaci\u00f3n"
+                     alt="Ley de los 10 a&ntilde;os, cancelaci&oacute;n de deportaci&oacute;n"
                      fill
+                     sizes="(max-width: 1024px) 100vw, 760px"
                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
                      priority
                    />
@@ -500,7 +501,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-xl group">
                      <Image
                        src={IMAGES.inside1}
-                       alt="Cancelaci\u00f3n de deportaci\u00f3n da\u00f1o extremo familiar"
+                       alt="Cancelaci&oacute;n de deportaci&oacute;n, da&ntilde;o extremo familiar"
                        fill
                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
                      />
@@ -589,7 +590,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-xl group">
                      <Image
                        src={IMAGES.inside2}
-                       alt="Cancelaci\u00f3n de remoci\u00f3n requisitos juez inmigraci\u00f3n"
+                       alt="Cancelaci&oacute;n de remoci&oacute;n, requisitos del juez de inmigraci&oacute;n"
                        fill
                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
                      />

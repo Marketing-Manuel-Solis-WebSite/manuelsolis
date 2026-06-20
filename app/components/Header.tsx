@@ -7,9 +7,8 @@ import { Menu, X, ChevronDown, Phone, ArrowUpRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-import { track } from '@vercel/analytics/react' // 👈 Importamos track
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
-import { pushToDataLayer, trackConversion } from '../lib/tracking'
+import { fireConversion } from '../lib/conversion'
 
 const FlagES = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-3 w-3 rounded-[1px] flex-shrink-0 opacity-90">
@@ -61,27 +60,15 @@ export default function HeaderProfessional() {
 
   // --- ⚡️ EVENTO DE RASTREO DE LLAMADA ⚡️ ---
   const handleCallClick = () => {
-    // Vercel Analytics
-    track('Call Header Click', {
-      phoneNumber: phoneNumber,
+    // Fanout unificado: Vercel + dataLayer + Meta + TikTok + Flight Check
+    fireConversion('phone_click', 'header_phone_button', {
       location: 'header_main',
-      page: pathname || 'unknown',
-      timestamp: new Date().toISOString()
-    });
-
-    // FASE 3: dataLayer push para GTM → GA4
-    pushToDataLayer('phone_click', {
-      event_category: 'conversion',
-      event_label: 'header_phone_button',
       phone_number: phoneNumber,
+      page: pathname || 'unknown',
     });
-
-    // FASE 4: Flight Check (tracking propio)
-    trackConversion('phone_click', 'header_phone_button');
   };
 
   const callText = language === 'es' ? 'Llámanos para una consulta:' : 'Call for a consultation:';
-  const joinInText = language === 'es' ? 'REGÍSTRATE' : 'REGISTER';
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const shouldBeScrolled = latest > 20;
@@ -409,6 +396,9 @@ export default function HeaderProfessional() {
               <div className="relative group">
                 <button
                   onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                  aria-label="Cambiar idioma / Change language"
+                  aria-haspopup="true"
+                  aria-expanded={isLangMenuOpen}
                   className="flex items-center gap-2 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.2em] transition-colors duration-200"
                 >
                   {language === 'es' ? <FlagES /> : <FlagUS />}
@@ -433,13 +423,6 @@ export default function HeaderProfessional() {
                   )}
                 </AnimatePresence>
               </div>
-
-              <Link 
-                  href={`/${language}/join-in`}
-                  className="text-[10px] font-medium uppercase tracking-[0.15em] bg-[#B2904D] text-[#001026] px-4 py-2 rounded-lg transition-all duration-200 hover:opacity-90 shadow-sm hover:translate-y-[-1px]"
-              >
-                {joinInText}
-              </Link>
             </div>
 
             {/* --- 3. BOTÓN MÓVIL CON CLICK --- */}
@@ -447,6 +430,7 @@ export default function HeaderProfessional() {
               {/* Language toggle for mobile */}
               <button
                 onClick={() => toggleLang(language === 'es' ? 'en' : 'es')}
+                aria-label="Cambiar idioma / Change language"
                 className="flex items-center gap-1.5 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.15em] transition-colors duration-200 px-2 py-1.5 rounded-lg border border-white/10 active:bg-white/10"
               >
                 {language === 'es' ? <FlagUS /> : <FlagES />}
@@ -455,6 +439,8 @@ export default function HeaderProfessional() {
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label={isMenuOpen ? (language === 'es' ? 'Cerrar menú' : 'Close menu') : (language === 'es' ? 'Abrir menú' : 'Open menu')}
+                aria-expanded={isMenuOpen}
                 className="text-white hover:text-sky-300 transition-colors"
               >
                 {isMenuOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
@@ -612,8 +598,8 @@ export default function HeaderProfessional() {
                 ))}
 
                 <div className="pt-4 flex flex-col gap-4">
-                    <Link 
-                      href={`/${language}/join-in`}
+                    <Link
+                      href={`/${language}/consulta`}
                       onClick={() => setIsMenuOpen(false)}
                       className="w-full text-center text-[14px] font-medium uppercase tracking-[0.2em] bg-[#B2904D] text-[#001026] px-4 py-3 rounded-xl transition-all duration-300 hover:opacity-90 shadow-md"
                     >

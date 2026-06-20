@@ -7,6 +7,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import ContactForm from '../../components/ContactForm';
 import { Reveal, Stagger, StaggerItem } from '../../components/motion';
+import PhoneClickTracker from '../../components/PhoneClickTracker';
 
 // ISR: contenido prácticamente estático; regenerar cada 24h
 export const revalidate = 86400;
@@ -273,7 +274,8 @@ export default async function OficinasPage({ params }: Props) {
 
       <Header />
 
-      <main className="min-h-screen bg-[#001540]">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#001540]">
+        <PhoneClickTracker label="offices_index" />
         {/* Hero Section */}
         <section className="relative pt-40 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto text-center">

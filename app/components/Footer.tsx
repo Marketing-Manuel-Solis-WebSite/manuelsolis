@@ -18,6 +18,7 @@ export default function Footer() {
     { name: language === 'es' ? 'DETENIDOS' : 'DETAINED', href: `/${language}/clientes-detenidos` },
     { name: language === 'es' ? 'TESTIMONIALES' : 'TESTIMONIALS', href: `/${language}/testimonios` },
     { name: language === 'es' ? 'ABOGADOS' : 'ATTORNEYS', href: `/${language}/abogados` },
+    { name: language === 'es' ? 'COLABORADORES' : 'COLLABORATORS', href: `/${language}/colaboradores` },
     { name: language === 'es' ? 'OFICINAS' : 'OFFICES', href: `/${language}/oficinas` },
     { name: language === 'es' ? 'INFORMACIÓN' : 'INFORMATION', href: `/${language}/nosotros` },
     { name: language === 'es' ? 'BLOG' : 'BLOG', href: `/${language}/blog` },

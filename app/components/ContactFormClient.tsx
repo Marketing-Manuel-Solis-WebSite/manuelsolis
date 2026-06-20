@@ -7,6 +7,7 @@ import { m, AnimatePresence, Variants } from 'framer-motion'
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
 import { track } from '@vercel/analytics/react'
 import { pushToDataLayer, trackConversion } from '../lib/tracking'
+import { getEffectiveUtms } from '../lib/attribution'
 
 // Client island: the interactive lead-capture form. Submit, validation,
 // useSearchParams (UTM/click IDs), and Vercel BotID protection are UNCHANGED
@@ -136,12 +137,21 @@ function ContactFormContent() {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
+    // Atribución EFECTIVA: URL actual → last-touch → first-touch (cookie
+    // msl_attr) → directo. Antes solo se leía el URL actual, así que un lead
+    // que llegaba por campaña y luego navegaba a /consulta (sin UTMs en el URL)
+    // perdía su origen y caía a "directo". Ahora la campaña real sobrevive la
+    // navegación interna y se envía a BOS.
+    const eff = getEffectiveUtms();
+    const hasRealSource = !!eff.source && eff.source !== 'direct';
     const utmData = {
-      utm_source: searchParams.get('utm_source') || '(direct)',
-      utm_medium: searchParams.get('utm_medium') || '(none)',
-      utm_campaign: searchParams.get('utm_campaign') || '(not set)',
-      utm_content: searchParams.get('utm_content') || null,
-      utm_term: searchParams.get('utm_term') || null
+      utm_source: hasRealSource ? eff.source : '(direct)',
+      utm_medium: hasRealSource ? (eff.medium || '(none)') : '(none)',
+      utm_campaign: (eff.campaign && eff.campaign.trim())
+        ? eff.campaign
+        : (hasRealSource ? '(not set)' : 'directo'),
+      utm_content: eff.content || null,
+      utm_term: eff.term || null
     };
 
     const clickIds = {
@@ -326,7 +336,7 @@ function ContactFormContent() {
               ) : (
                 <>
                   <ShieldCheck size={22} className={!formData.acceptedTerms ? "text-slate-500" : "text-[#001026]"} />
-                  {t('Registrarse', 'Register')}
+                  {t('Solicitar Consulta', 'Request Consultation')}
                 </>
               )}
             </span>

@@ -46,6 +46,7 @@ export default function FeaturedPost({ post, lang }: FeaturedPostProps) {
               src={post.image || '/placeholder.jpg'}
               alt={post.title}
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover object-center transition-transform duration-1000 group-hover:scale-105"
               priority
             />

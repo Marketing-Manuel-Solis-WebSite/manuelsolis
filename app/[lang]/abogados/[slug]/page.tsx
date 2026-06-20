@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { notFound } from 'next/navigation';
 import { attorneys, getText, getAttorneyLocation } from '../../../lib/attorneyData';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
@@ -64,17 +63,16 @@ function getPersonSchema(attorney: typeof attorneys[number], lang: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${SITE_URL}/#person-${attorney.id}`,
     name: attorney.name,
     jobTitle: attorney.role[isEs ? 'es' : 'en'],
     image: attorney.image,
     description: attorney.bio[isEs ? 'es' : 'en'][0],
     url: `${SITE_URL}/${lang}/abogados/${attorney.id}`,
     worksFor: {
-      '@type': 'LawFirm',
+      '@type': ['LegalService', 'LawFirm'],
+      '@id': `${SITE_URL}/#organization`,
       name: 'Manuel Solis Law Firm',
-      url: 'https://www.manuelsolis.com',
-      telephone: '+1-832-598-0914',
-      foundingDate: '1990',
     },
     alumniOf: attorney.education.map(edu => ({
       '@type': 'EducationalOrganization',
@@ -127,16 +125,14 @@ export default async function AttorneyPage({ params }: Props) {
 
   return (
     <>
-      <Script
-        id={`person-schema-${slug}`}
+      {/* JSON-LD server-rendered (plain <script>) → presente en el HTML inicial
+          que ve el crawler, no inyectado tras hidratación. */}
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
-      <Script
-        id={`breadcrumb-schema-${slug}`}
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <AttorneyProfile slug={slug} lang={lang} />

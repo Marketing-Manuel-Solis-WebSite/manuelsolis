@@ -106,7 +106,7 @@ export default function OfficePageView({
     <>
       <Header />
 
-      <main className="relative w-full min-h-screen bg-[#001540] overflow-hidden">
+      <main id="main-content" tabIndex={-1} className="relative w-full min-h-screen bg-[#001540] overflow-hidden">
 
         {/* --- BACKGROUND FX (static; orbs desktop-only) --- */}
         <div className="fixed inset-0 z-0 pointer-events-none transform-gpu">

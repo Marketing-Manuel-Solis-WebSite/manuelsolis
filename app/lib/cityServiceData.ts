@@ -34,6 +34,24 @@ export const OFFICES: Record<string, OfficeInfo> = {
       { name: 'Houston North Loop', address: '2950 N Loop W, Houston, TX 77092', phone: '(713) 429-0237' },
     ],
   },
+  // Oficina PRINCIPAL de Houston (6657 Navigation Blvd). La usan las landings de
+  // inmigración/deportación/asilo/visa-u/vawa de Houston (cuyas reseñas ya apuntan
+  // a houston-principal). NAP alineada con /oficinas/houston-principal +
+  // officesPhoneMap. La clave `houston` de arriba mantiene la oficina de ACCIDENTES.
+  'houston-principal': {
+    city: 'Houston',
+    citySlug: 'houston',
+    state: 'Texas',
+    stateCode: 'TX',
+    address: '6657 Navigation Blvd, Houston, TX 77011',
+    phone: '(713) 701-1731',
+    zip: '77011',
+    coordinates: { lat: 29.7426, lng: -95.3156 },
+    additionalOffices: [
+      { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(713) 903-7875' },
+      { name: 'Houston North Loop', address: '2950 N Loop W, Houston, TX 77092', phone: '(713) 429-0237' },
+    ],
+  },
   dallas: {
     city: 'Dallas',
     citySlug: 'dallas',
@@ -398,7 +416,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   // === IMMIGRATION (8 cities) ===
   {
     slug: 'abogado-inmigracion-houston',
-    officeKey: 'houston',
+    officeKey: 'houston-principal',
     serviceKey: 'inmigracion',
     h1: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
     metaTitle: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
@@ -592,7 +610,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   // === DEPORTATION DEFENSE (5 cities) ===
   {
     slug: 'defensa-deportacion-houston',
-    officeKey: 'houston',
+    officeKey: 'houston-principal',
     serviceKey: 'defensa-deportacion',
     h1: { es: 'Defensa Contra Deportación en Houston, TX', en: 'Deportation Defense in Houston, TX' },
     metaTitle: { es: 'Defensa Contra Deportación en Houston, TX', en: 'Deportation Defense in Houston, TX' },
@@ -689,7 +707,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   // === U VISA (4 cities) ===
   {
     slug: 'visa-u-houston',
-    officeKey: 'houston',
+    officeKey: 'houston-principal',
     serviceKey: 'visa-u',
     h1: { es: 'Visa U en Houston, TX', en: 'U Visa in Houston, TX' },
     metaTitle: { es: 'Visa U en Houston, TX', en: 'U Visa in Houston, TX' },
@@ -767,7 +785,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   // === ASYLUM (3 cities) ===
   {
     slug: 'asilo-politico-houston',
-    officeKey: 'houston',
+    officeKey: 'houston-principal',
     serviceKey: 'asilo',
     h1: { es: 'Asilo Político en Houston, TX', en: 'Political Asylum in Houston, TX' },
     metaTitle: { es: 'Asilo Político en Houston, TX', en: 'Political Asylum in Houston, TX' },
@@ -826,7 +844,7 @@ export const LANDING_PAGES: LandingPageConfig[] = [
   // === VAWA (3 cities) ===
   {
     slug: 'vawa-houston',
-    officeKey: 'houston',
+    officeKey: 'houston-principal',
     serviceKey: 'vawa',
     h1: { es: 'VAWA en Houston, TX — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Houston, TX — Protection for Domestic Violence Victims' },
     metaTitle: { es: 'VAWA en Houston, TX', en: 'VAWA in Houston, TX' },

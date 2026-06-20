@@ -46,6 +46,8 @@ export default function ConsultaClient() {
       <Header />
 
       <main
+        id="main-content"
+        tabIndex={-1}
         onMouseMove={handleMouseMove}
         className="flex-grow relative pt-32 md:pt-40 pb-20 md:pb-28 px-4 z-10 overflow-hidden"
       >

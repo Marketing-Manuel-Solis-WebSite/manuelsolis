@@ -120,7 +120,10 @@ export const seoRedirects: Redirect[] = [
   { source: '/:lang/privacy-policy', destination: '/:lang/privacidad', permanent: true },
   { source: '/:lang/terms', destination: '/:lang/terminos', permanent: true },
   { source: '/:lang/terms-of-service', destination: '/:lang/terminos', permanent: true },
-  { source: '/:lang/careers', destination: '/:lang/join-in', permanent: true },
+  { source: '/:lang/careers', destination: '/:lang/consulta', permanent: true },
+  // /join-in eliminado (registro retirado): redirige a la consulta para no perder tráfico.
+  { source: '/:lang/join-in', destination: '/:lang/consulta', permanent: true },
+  { source: '/join-in', destination: '/es/consulta', permanent: true },
   { source: '/:lang/resources', destination: '/:lang/informacion/recursos', permanent: true },
   { source: '/:lang/detained-clients', destination: '/:lang/clientes-detenidos', permanent: true },
   { source: '/:lang/news', destination: '/:lang/blog', permanent: true },

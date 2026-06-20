@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { track } from '@vercel/analytics/react'; // 1. Importar track de Vercel
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
+import { fireConversion } from '../lib/conversion';
 
 const WHATSAPP_HIDDEN = false;
 
@@ -28,13 +27,7 @@ export default function WhatsAppButton() {
   const handleClick = () => {
     window.open(whatsappUrl, '_blank');
 
-    // 2. Vercel Analytics Tracking
-    track('Whatsapp Click', {
-      location: 'floating_button',
-      timestamp: new Date().toISOString()
-    });
-
-    // 3. Google Analytics Tracking (EXISTENTE)
+    // GA4 directo (legacy, se mantiene)
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'whatsapp_click', {
         'event_category': 'contact',
@@ -42,14 +35,10 @@ export default function WhatsAppButton() {
       });
     }
 
-    // FASE 3: dataLayer push para GTM → GA4
-    pushToDataLayer('whatsapp_click', {
-      event_category: 'conversion',
-      event_label: 'whatsapp_cta',
+    // Fanout unificado: Vercel + dataLayer + Meta + TikTok + Flight Check
+    fireConversion('whatsapp_click', 'whatsapp_floating_button', {
+      location: 'floating_button',
     });
-
-    // FASE 4: Flight Check (tracking propio)
-    trackConversion('whatsapp_click', 'whatsapp_floating_button');
   };
 
   // Mensaje del Tooltip: Usamos el mensaje del cliente si existe, si no, uno por defecto

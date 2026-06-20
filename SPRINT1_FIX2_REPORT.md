@@ -32,7 +32,7 @@ Búsquedas adicionales:
 Señales en `.env.local` y en `leadCapture.ts:75-77`:
 
 ```
-BOS_API_TOKEN="3172|LRq62E1JriQUNI4Ofj9afsWJ0hVUJL7SVY7r7FJhe5620e5f"
+BOS_API_TOKEN=<REDACTADO — ROTAR (Laravel Sanctum)>
 ```
 
 El formato `<id>|<random>` es típico de **Laravel Sanctum** (`personal_access_tokens` table). Más la ruta `/password/reset` que GSC reportó como indexada — esa es la ruta default del scaffold `php artisan make:auth` / Breeze / Jetstream. **Esto confirma que BOS es un Laravel app separado** (con `Auth::routes()` o equivalent expuestas).

@@ -1,6 +1,6 @@
 'use client';
 
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
+import { fireConversion } from '../lib/conversion';
 
 /**
  * Tracked tel: link — small client island that preserves the office-page phone
@@ -21,8 +21,7 @@ export default function TrackedPhoneLink({
     <a
       href={href}
       onClick={() => {
-        pushToDataLayer('phone_click', { event_category: 'conversion', event_label: 'office_page_call' });
-        trackConversion('phone_click', 'office_page_call');
+        fireConversion('phone_click', 'office_page_call', { location: 'office_page' });
       }}
       className={className}
     >
