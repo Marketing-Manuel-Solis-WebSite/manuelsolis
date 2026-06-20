@@ -248,15 +248,6 @@ export default function AttorneysExplorer({
                 </div>
 
                 <div className="mt-auto space-y-3">
-                  {/* Link to full profile page */}
-                  <Link
-                    href={`/${lang}/abogados/${selectedAttorney.id}`}
-                    onClick={() => setSelectedAttorney(null)}
-                    className="w-full bg-transparent border-2 border-[#B2904D] text-[#B2904D] hover:bg-[#B2904D] hover:text-white font-bold py-3 px-6 rounded-xl flex items-center justify-center gap-3 transition-all group"
-                  >
-                    {texts.viewFullProfile}
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </Link>
                   <a href="/#contacto" onClick={() => setSelectedAttorney(null)} className="w-full bg-gradient-to-r from-[#B2904D] to-[#9f7d3d] hover:from-white hover:to-white hover:text-[#002342] text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-black/40 group">
                     <Mail size={20} />
                     {texts.button}
