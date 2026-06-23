@@ -7,7 +7,7 @@ import { m, AnimatePresence, Variants } from 'framer-motion'
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
 import { track } from '@vercel/analytics/react'
 import { pushToDataLayer, trackConversion } from '../lib/tracking'
-import { getEffectiveUtms } from '../lib/attribution'
+import { getEffectiveUtms, effectiveUtmsToLeadFields } from '../lib/attribution'
 
 // Client island: the interactive lead-capture form. Submit, validation,
 // useSearchParams (UTM/click IDs), and Vercel BotID protection are UNCHANGED
@@ -142,21 +142,16 @@ function ContactFormContent() {
     // que llegaba por campaña y luego navegaba a /consulta (sin UTMs en el URL)
     // perdía su origen y caía a "directo". Ahora la campaña real sobrevive la
     // navegación interna y se envía a BOS.
+    // Centinelas GA4 + campaña (lógica pura, validada en
+    // __tests__/attribution.test.ts vía effectiveUtmsToLeadFields).
     const eff = getEffectiveUtms();
-    const hasRealSource = !!eff.source && eff.source !== 'direct';
-    const utmData = {
-      utm_source: hasRealSource ? eff.source : '(direct)',
-      utm_medium: hasRealSource ? (eff.medium || '(none)') : '(none)',
-      utm_campaign: (eff.campaign && eff.campaign.trim())
-        ? eff.campaign
-        : (hasRealSource ? '(not set)' : 'directo'),
-      utm_content: eff.content || null,
-      utm_term: eff.term || null
-    };
+    const utmData = effectiveUtmsToLeadFields(eff);
 
+    // Click IDs: el URL actual gana; si no está (el usuario navegó internamente
+    // y perdió el ?gclid=), recuperamos el persistido en la cookie msl_attr.
     const clickIds = {
-      gclid: searchParams.get('gclid') || null,
-      fbclid: searchParams.get('fbclid') || null,
+      gclid: searchParams.get('gclid') || eff.gclid || null,
+      fbclid: searchParams.get('fbclid') || eff.fbclid || null,
     };
 
     let pageUrl = '';

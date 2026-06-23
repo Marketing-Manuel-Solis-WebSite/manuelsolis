@@ -33,6 +33,11 @@ export interface TouchPoint {
   campaign?: string;
   content?: string;
   term?: string;
+  /** Google Ads click ID — persistido para enlazar conversión ↔ click aunque
+   *  el usuario navegue internamente y pierda el `?gclid=` del URL. */
+  gclid?: string;
+  /** Meta (Facebook/Instagram) click ID — mismo motivo que `gclid`. */
+  fbclid?: string;
   /** Path por el que llegó esta atribución. */
   landing?: string;
   /** Referrer del navegador en el momento del touch. */
@@ -111,14 +116,24 @@ function nonEmpty(v: string | null | undefined): string | undefined {
 }
 
 /**
- * Lee UTMs del URL actual y los devuelve como TouchPoint, o `null` si
- * no hay UTMs (no queremos generar un touch `direct/none` que pise un
- * origen real previamente capturado).
+ * Lee UTMs / click IDs del URL actual y los devuelve como TouchPoint, o
+ * `null` si no hay nada atribuible (no queremos generar un touch
+ * `direct/none` que pise un origen real previamente capturado).
  *
- * Excepción: si el referrer es externo y NO hay UTMs, generamos un
- * touch sintético `<host-del-referrer> / referral` para no perder la
- * fuente. Esto desambigua "alguien escribió la URL a mano" vs
- * "alguien clickeó desde otro sitio que olvidó UTMs".
+ * Prioridad de captura:
+ *   1. `utm_source` presente → touch UTM. `utm_medium` es OPCIONAL: si
+ *      falta, default `none` (un enlace con source+campaign pero sin
+ *      medium es válido y ANTES se perdía por exigir ambos).
+ *   2. Sin utm_source pero con `gclid` → click de Google Ads (auto-tagging,
+ *      que no añade utm_*). Sintetizamos `google / cpc` para no perder la
+ *      campaña pagada, y persistimos el gclid.
+ *   3. Sin utm_source pero con `fbclid` → click desde Meta. Sintetizamos
+ *      `facebook / social` (puede ser orgánico o pagado) y persistimos fbclid.
+ *   4. Sin nada de lo anterior pero con referrer externo → touch sintético
+ *      `<host-del-referrer> / referral`.
+ *
+ * En 1–3 SIEMPRE arrastramos gclid/fbclid si vienen, para que sobrevivan
+ * la navegación interna (antes se leían solo del URL al enviar el form).
  */
 export function readTouchFromUrl(): TouchPoint | null {
   if (typeof window === 'undefined') return null;
@@ -134,21 +149,40 @@ export function readTouchFromUrl(): TouchPoint | null {
   const campaign = nonEmpty(params.get('utm_campaign'));
   const content = nonEmpty(params.get('utm_content'));
   const term = nonEmpty(params.get('utm_term'));
+  const gclid = nonEmpty(params.get('gclid'));
+  const fbclid = nonEmpty(params.get('fbclid'));
 
-  if (source && medium) {
+  const now = new Date().toISOString();
+  const landing = window.location.pathname;
+  const referrer = document.referrer || undefined;
+
+  // 1. utm_source presente — medium opcional (default al centinela GA4).
+  if (source) {
     return {
       source: source.toLowerCase(),
-      medium: medium.toLowerCase(),
+      medium: (medium || '(none)').toLowerCase(),
       campaign: campaign?.toLowerCase(),
       content: content?.toLowerCase(),
       term,
-      landing: window.location.pathname,
-      referrer: document.referrer || undefined,
-      ts: new Date().toISOString(),
+      gclid,
+      fbclid,
+      landing,
+      referrer,
+      ts: now,
     };
   }
 
-  // Sin UTMs explícitos: intentar derivar de referrer externo.
+  // 2. gclid sin UTMs → Google Ads (auto-tagging). gclid es exclusivo de paid search.
+  if (gclid) {
+    return { source: 'google', medium: 'cpc', gclid, fbclid, landing, referrer, ts: now };
+  }
+
+  // 3. fbclid sin UTMs → Meta. Conservador: 'social' (no asumimos paid).
+  if (fbclid) {
+    return { source: 'facebook', medium: 'social', fbclid, landing, referrer, ts: now };
+  }
+
+  // 4. Sin UTMs ni click IDs: derivar de referrer externo.
   const ref = document.referrer;
   if (ref) {
     try {
@@ -158,9 +192,9 @@ export function readTouchFromUrl(): TouchPoint | null {
         return {
           source: refUrl.hostname.toLowerCase(),
           medium: 'referral',
-          landing: window.location.pathname,
+          landing,
           referrer: ref,
-          ts: new Date().toISOString(),
+          ts: now,
         };
       }
     } catch {
@@ -213,6 +247,8 @@ export function getEffectiveUtms(): {
   campaign?: string;
   content?: string;
   term?: string;
+  gclid?: string;
+  fbclid?: string;
   firstTouchSource?: string;
   firstTouchMedium?: string;
   firstTouchCampaign?: string;
@@ -228,10 +264,51 @@ export function getEffectiveUtms(): {
     campaign: current?.campaign,
     content: current?.content,
     term: current?.term,
+    // Click IDs: el del touch actual gana; si falta, recuperamos el último
+    // y luego el primer touch que lo haya tenido (un gclid persiste aunque
+    // el último touch sea orgánico dentro de la misma sesión de conversión).
+    gclid: current?.gclid ?? state.last?.gclid ?? state.first?.gclid,
+    fbclid: current?.fbclid ?? state.last?.fbclid ?? state.first?.fbclid,
     firstTouchSource: state.first?.source,
     firstTouchMedium: state.first?.medium,
     firstTouchCampaign: state.first?.campaign,
     firstTouchContent: state.first?.content,
+  };
+}
+
+// ─── Mapeo a los campos del lead (BOS) ───
+
+export interface LeadUtmFields {
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+  utm_content: string | null;
+  utm_term: string | null;
+}
+
+/**
+ * Convierte el resultado de `getEffectiveUtms()` en los campos `utm_*` que
+ * el formulario manda a `/api/lead-capture` → BOS, aplicando los centinelas
+ * GA4 estándar (`(direct)`, `(none)`, `(not set)`).
+ *
+ * Extraído del componente `ContactFormClient` para poder validar la lógica
+ * exacta en unit tests sin renderizar React (ver `__tests__/attribution.test.ts`).
+ *
+ * Regla de campaña: si hay un slug real se envía tal cual (trim); si no,
+ * SIEMPRE `(not set)` — nunca el literal `directo` que ensuciaba la columna
+ * campaña en BOS para el tráfico directo.
+ */
+export function effectiveUtmsToLeadFields(
+  eff: ReturnType<typeof getEffectiveUtms>,
+): LeadUtmFields {
+  const hasRealSource = !!eff.source && eff.source !== 'direct';
+  return {
+    utm_source: hasRealSource ? eff.source : '(direct)',
+    utm_medium: hasRealSource ? eff.medium || '(none)' : '(none)',
+    utm_campaign:
+      eff.campaign && eff.campaign.trim() ? eff.campaign.trim() : '(not set)',
+    utm_content: eff.content || null,
+    utm_term: eff.term || null,
   };
 }
 

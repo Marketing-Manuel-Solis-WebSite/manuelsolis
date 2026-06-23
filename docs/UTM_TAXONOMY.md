@@ -90,9 +90,11 @@ En **GA4 → Admin → Data Streams → Configure tag settings**:
 ## Flow de atribución implementado en el sitio
 
 1. Visitante llega con `?utm_source=newsletter&utm_medium=email&...`.
-2. `AttributionCapture` (montado en layout) lee los `utm_*` del URL y los persiste en cookie `msl_attr`:
+2. `AttributionCapture` (montado en layout) lee los `utm_*` / click IDs del URL y los persiste en cookie `msl_attr`:
    - **first_touch**: se escribe **una sola vez** (90 días). Es el origen que se le acredita al lead cuando convierte.
-   - **last_touch**: se reescribe cada vez que llega otro UTM. Es el último canal antes de la conversión.
-3. Las conversiones (`fireConversion`) leen prioridad:
-   `URL actual > last_touch cookie > 'direct' / 'none'`
-4. El payload al ledger incluye `firstTouchSource/Medium/Campaign` para que en el dashboard veas qué campaña generó el lead original, no la última.
+   - **last_touch**: se reescribe cada vez que llega otro touch. Es el último canal antes de la conversión.
+   - Se captura con que venga **`utm_source`** (el `utm_medium` es opcional → default `none`).
+   - Si NO hay `utm_*` pero sí `gclid` → se sintetiza `google / cpc`; si hay `fbclid` → `facebook / social`. El click ID (`gclid`/`fbclid`) se persiste en la cookie para que sobreviva la navegación interna.
+3. Las conversiones (`fireConversion`) y el formulario de contacto leen prioridad:
+   `URL actual > last_touch cookie > first_touch cookie > 'direct' / 'none'`
+4. El payload al ledger / BOS incluye `firstTouchSource/Medium/Campaign` y los `gclid/fbclid` recuperados, para que en el dashboard veas qué campaña generó el lead original, no la última.
