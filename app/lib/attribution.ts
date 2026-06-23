@@ -294,9 +294,9 @@ export interface LeadUtmFields {
  * Extraído del componente `ContactFormClient` para poder validar la lógica
  * exacta en unit tests sin renderizar React (ver `__tests__/attribution.test.ts`).
  *
- * Regla de campaña: si hay un slug real se envía tal cual (trim); si no,
- * SIEMPRE `(not set)` — nunca el literal `directo` que ensuciaba la columna
- * campaña en BOS para el tráfico directo.
+ * Regla de campaña: slug real → tal cual (con trim). Sin campaña pero con
+ * source real → `(not set)`. Tráfico directo (sin source) → `directo`,
+ * la etiqueta que el equipo usa en la sección campañas de BOS.
  */
 export function effectiveUtmsToLeadFields(
   eff: ReturnType<typeof getEffectiveUtms>,
@@ -306,7 +306,11 @@ export function effectiveUtmsToLeadFields(
     utm_source: hasRealSource ? eff.source : '(direct)',
     utm_medium: hasRealSource ? eff.medium || '(none)' : '(none)',
     utm_campaign:
-      eff.campaign && eff.campaign.trim() ? eff.campaign.trim() : '(not set)',
+      eff.campaign && eff.campaign.trim()
+        ? eff.campaign.trim()
+        : hasRealSource
+          ? '(not set)'
+          : 'directo',
     utm_content: eff.content || null,
     utm_term: eff.term || null,
   };

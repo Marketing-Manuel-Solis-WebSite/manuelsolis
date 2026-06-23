@@ -225,12 +225,18 @@ describe('Persistencia en cookie msl_attr a través de la navegación', () => {
 });
 
 describe('effectiveUtmsToLeadFields — centinelas GA4', () => {
-  it('FIX: tráfico directo → (direct)/(none)/(not set), NUNCA "directo"', () => {
+  it('tráfico directo → (direct)/(none) y campaña "directo" (etiqueta del equipo en BOS)', () => {
     const fields = effectiveUtmsToLeadFields(getEffectiveUtms()); // sin cookie, sin URL → direct
     expect(fields.utm_source).toBe('(direct)');
     expect(fields.utm_medium).toBe('(none)');
+    expect(fields.utm_campaign).toBe('directo');
+  });
+
+  it('source real SIN campaña → "(not set)" (no "directo")', () => {
+    env.setUrl('/es', '?utm_source=facebook&utm_medium=social');
+    const fields = effectiveUtmsToLeadFields(getEffectiveUtms());
+    expect(fields.utm_source).toBe('facebook');
     expect(fields.utm_campaign).toBe('(not set)');
-    expect(fields.utm_campaign).not.toBe('directo');
   });
 
   it('campaña real pasa tal cual (con trim)', () => {
@@ -298,7 +304,7 @@ describe('E2E: URL → cookie → payload del form → mapFormToPayload (contrat
     expect(payload.gclid).toBe('EAIaIQ456');
   });
 
-  it('visitante directo → BOS recibe (direct)/(none)/(not set), NUNCA "directo"', () => {
+  it('visitante directo → BOS recibe (direct)/(none) y campaña "directo"', () => {
     env.setUrl('/es/consulta', '');
     env.setReferrer('');
     captureAttribution();
@@ -306,7 +312,6 @@ describe('E2E: URL → cookie → payload del form → mapFormToPayload (contrat
     const payload = mapFormToPayload(buildFormPayload(null, null));
     expect(payload.utm_source).toBe('(direct)');
     expect(payload.utm_medium).toBe('(none)');
-    expect(payload.campaign).toBe('(not set)');
-    expect(payload.campaign).not.toBe('directo');
+    expect(payload.campaign).toBe('directo');
   });
 });
