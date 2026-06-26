@@ -7,6 +7,7 @@ import Breadcrumbs from '../../../components/Breadcrumbs';
 import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../components/motion';
 import AccidentesCases from './AccidentesCases';
 import AccidentesVideo from './AccidentesVideo';
+import AccidentesOffices from './AccidentesOffices';
 import { processSteps, ui, getText } from './accidentesData';
 import type { Language } from '../../../lib/translations';
 
@@ -210,6 +211,9 @@ export default function AccidentesClient({ lang }: { lang: Language }) {
           </Reveal>
         </div>
       </section>
+
+      {/* OFICINAS DE ACCIDENTES — direcciones (al final, antes del footer) */}
+      <AccidentesOffices lang={lang} />
 
       <Footer />
     </div>

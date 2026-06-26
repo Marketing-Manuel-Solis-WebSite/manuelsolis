@@ -129,6 +129,21 @@ export function getServiciosEntries(): SitemapURL[] {
     { route: '/servicios/defensa-deportacion', priority: 0.85, changeFrequency: 'monthly', lastModified: '2026-03-23' },
     { route: '/servicios/asilo', priority: 0.85, changeFrequency: 'monthly', lastModified: '2026-03-23' },
   ];
+  // Páginas de accidentes por-oficina (/servicios/accidentes/oficinas/<slug>).
+  // Slugs alineados con app/[lang]/servicios/accidentes/accidentesOfficesData.ts.
+  const accidentOfficeSlugs = [
+    'arvada', 'chicago', 'dallas', 'el-paso', 'harlingen', 'houston-bellaire',
+    'losangeles', 'houston-principal', 'houston-accidentes', 'main-st',
+    'north-loop', 'northchase', 'kirby', 'memphis', 'league-city',
+  ];
+  for (const slug of accidentOfficeSlugs) {
+    entries.push({
+      route: `/servicios/accidentes/oficinas/${slug}`,
+      priority: 0.8,
+      changeFrequency: 'monthly',
+      lastModified: '2026-06-26',
+    });
+  }
   return expandLangs(entries);
 }
 
