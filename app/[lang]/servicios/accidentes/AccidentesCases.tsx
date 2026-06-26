@@ -1,11 +1,25 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { m, AnimatePresence } from 'framer-motion';
 import { Scale, MapPin, PhoneCall, ArrowRight, Quote, CheckCircle2, HandCoins } from 'lucide-react';
 import { Reveal } from '../../../components/motion';
 import { allServices, ui, getText, type CaseItem } from './accidentesData';
+import { accidentOffices } from './accidentesOfficesData';
 import type { Language } from '../../../lib/translations';
+
+/**
+ * Mapa nombre-de-oficina → slug, para enlazar cada chip de "Oficinas
+ * Disponibles" a su página de accidentes. Las claves cubren es+en porque
+ * activeService.offices son strings (ALL_OFFICES) idénticos en ambos idiomas.
+ */
+const OFFICE_SLUG_BY_NAME: Record<string, string> = Object.fromEntries(
+  accidentOffices.flatMap((o) => [
+    [o.name.es, o.id],
+    [o.name.en, o.id],
+  ]),
+);
 
 /**
  * Client island: the interactive "Solutions in Accidents" tabs. Holds the
@@ -90,12 +104,31 @@ export default function AccidentesCases({ lang }: { lang: Language }) {
                     {t('availableOffices')}
                   </h5>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                    {activeService.offices.map((office, i) => (
-                      <div key={i} className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm">
-                        <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
-                        <span className="font-medium text-xs">{office}</span>
-                      </div>
-                    ))}
+                    {activeService.offices.map((office, i) => {
+                      const slug = OFFICE_SLUG_BY_NAME[office];
+                      if (!slug) {
+                        return (
+                          <div key={i} className="flex items-center gap-2 text-white/70 bg-black/20 p-3 rounded-xl border border-white/10 text-sm">
+                            <div className="w-1.5 h-1.5 bg-[#B2904D] rounded-full flex-shrink-0" />
+                            <span className="font-medium text-xs">{office}</span>
+                          </div>
+                        );
+                      }
+                      return (
+                        <Link
+                          key={i}
+                          href={`/${lang}/servicios/accidentes/oficinas/${slug}`}
+                          aria-label={`${gT(activeService.title)} — ${office}`}
+                          className="group flex items-center justify-between gap-2 text-white/80 bg-black/20 hover:bg-[#B2904D] hover:text-[#001540] p-3 rounded-xl border border-white/10 hover:border-[#B2904D] text-sm transition-colors"
+                        >
+                          <span className="flex items-center gap-2 min-w-0">
+                            <div className="w-1.5 h-1.5 bg-[#B2904D] group-hover:bg-[#001540] rounded-full flex-shrink-0" />
+                            <span className="font-medium text-xs truncate">{office}</span>
+                          </span>
+                          <ArrowRight size={14} className="shrink-0 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
 
