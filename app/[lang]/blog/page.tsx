@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import Script from 'next/script';
 
 // Utilidades
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
@@ -20,6 +19,106 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`;
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 export const BLOG_DATA = {
   posts: [
+    {
+      id: 'ciudadania_por_nacimiento_2026_hijos_padres_indocumentados',
+      slug: 'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados',
+      title: {
+        es: 'La Corte Suprema confirma la ciudadanía por nacimiento: qué significa para tu familia',
+        en: 'The Supreme Court Upholds Birthright Citizenship: What It Means for Your Family'
+      },
+      excerpt: {
+        es: 'El 30 de junio de 2026 la Corte Suprema anuló la orden que negaba la ciudadanía a bebés de padres indocumentados. Qué dice el fallo, a quién protege y qué opciones abre para tu familia.',
+        en: 'On June 30, 2026 the Supreme Court struck down the order denying citizenship to babies of undocumented parents. What the ruling says, who it protects, and what options it opens.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-07-03',
+      readTime: '10 min',
+      image: '/blog/blog_36/JUL_B5.png',
+      featured: true
+    },
+    // ---
+    {
+      id: 'redadas_ice_2026_derechos_plan_emergencia_familiar',
+      slug: 'redadas-ice-2026-derechos-plan-emergencia-familiar',
+      title: {
+        es: 'Redadas de ICE en 2026: tus derechos en casa, en el trabajo y en la calle',
+        en: 'ICE Raids in 2026: Your Rights at Home, at Work and on the Street'
+      },
+      excerpt: {
+        es: 'ICE necesita una orden judicial para entrar a tu casa. Conoce tus derechos en una redada, qué no firmar, y cómo preparar un plan de emergencia familiar paso a paso.',
+        en: 'ICE needs a judicial warrant to enter your home. Know your rights during a raid, what not to sign, and how to prepare a family emergency plan step by step.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-07-02',
+      readTime: '12 min',
+      image: '/blog/blog_35/JUL_B4.png',
+      featured: false
+    },
+    // ---
+    {
+      id: 'como_encontrar_detenido_ice_localizador_pasos',
+      slug: 'como-encontrar-detenido-ice-localizador-pasos',
+      title: {
+        es: 'Cómo encontrar a un familiar detenido por ICE: localizador, número A y primeros pasos',
+        en: 'How to Find a Family Member Detained by ICE: Locator, A-Number and First Steps'
+      },
+      excerpt: {
+        es: 'Guía paso a paso para localizar a un ser querido detenido por inmigración: cómo usar el localizador de ICE, qué es el número A, y qué hacer (y no firmar) en las primeras 48 horas.',
+        en: 'Step-by-step guide to locating a loved one detained by immigration: how to use the ICE locator, what the A-number is, and what to do (and not sign) in the first 48 hours.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-07-01',
+      readTime: '10 min',
+      image: '/blog/blog_34/JUL_B3.png',
+      featured: false
+    },
+    // ---
+    {
+      id: 'accidente_trabajo_indocumentado_texas_compensacion',
+      slug: 'accidente-trabajo-indocumentado-texas-compensacion',
+      title: {
+        es: 'Accidente de trabajo siendo indocumentado en Texas: tus derechos reales',
+        en: 'Work Injury While Undocumented in Texas: Your Real Rights'
+      },
+      excerpt: {
+        es: 'Sí tienes derechos si te lesionaste trabajando sin papeles en Texas: compensación laboral, demandas contra patrones sin seguro y protección contra represalias. Guía completa.',
+        en: 'You do have rights if you were injured at work without papers in Texas: workers\' comp, lawsuits against uninsured employers, and protection from retaliation.'
+      },
+      categoryId: 'accidentes',
+      category: { es: 'Accidentes', en: 'Accidents' },
+      author: 'Manuel Solís',
+      date: '2026-06-30',
+      readTime: '11 min',
+      image: '/blog/blog_33/JUL_B2.png',
+      featured: false
+    },
+    // ---
+    {
+      id: 'accidente_camion_18_ruedas_texas_compensacion',
+      slug: 'accidente-camion-18-ruedas-texas-compensacion',
+      title: {
+        es: 'Accidente con tráiler de 18 ruedas en Texas: quién paga y cuánto vale tu caso',
+        en: '18-Wheeler Accidents in Texas: Who Pays and What Your Case Is Worth'
+      },
+      excerpt: {
+        es: 'Los choques con camiones comerciales son los casos de mayor valor en lesiones personales. Conoce quién es responsable, por qué la evidencia desaparece rápido y qué hacer desde el primer día.',
+        en: 'Commercial truck crashes are the highest-value personal injury cases. Learn who is liable, why evidence disappears fast, and what to do from day one.'
+      },
+      categoryId: 'accidentes',
+      category: { es: 'Accidentes', en: 'Accidents' },
+      author: 'Manuel Solís',
+      date: '2026-06-29',
+      readTime: '11 min',
+      image: '/blog/blog_32/JUL_B1.png',
+      featured: false
+    },
+    // ---
     // --- BLOG 31 - DACA 2026 ---
     {
       id: 'daca_2026_estado_legal_tribunales',
@@ -38,7 +137,7 @@ export const BLOG_DATA = {
       date: '2026-05-13',
       readTime: '11 min',
       image: '/blog/blog_31/MAY_B1.png',
-      featured: true
+      featured: false
     },
     // --- BLOG 30 - TPS 2026 ---
     {
@@ -55,7 +154,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-04-10',
+      date: '2026-04-10',
       readTime: '12 min',
       image: '/blog/blog_21/B1_CR1.jpg',
       featured: false
@@ -75,7 +174,7 @@ export const BLOG_DATA = {
       categoryId: 'defensa-deportacion',
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
-      date: '2025-04-14',
+      date: '2026-04-14',
       readTime: '11 min',
       image: '/blog/blog_22/B2_CR1.jpg',
       featured: false
@@ -95,7 +194,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-04-18',
+      date: '2026-04-18',
       readTime: '10 min',
       image: '/blog/blog_23/B3_CR1.jpg',
       featured: false
@@ -115,7 +214,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-04-22',
+      date: '2026-04-22',
       readTime: '11 min',
       image: '/blog/blog_24/B4_CR1.jpg',
       featured: false
@@ -135,7 +234,7 @@ export const BLOG_DATA = {
       categoryId: 'accidentes',
       category: { es: 'Accidentes', en: 'Accidents' },
       author: 'Manuel Solís',
-      date: '2025-04-26',
+      date: '2026-04-26',
       readTime: '10 min',
       image: '/blog/blog_25/B5_CR1.jpg',
       featured: false
@@ -155,7 +254,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-04-30',
+      date: '2026-04-30',
       readTime: '10 min',
       image: '/blog/blog_26/B6_CR1.jpg',
       featured: false
@@ -175,7 +274,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-05-04',
+      date: '2026-05-04',
       readTime: '11 min',
       image: '/blog/blog_28/B7_CR1.jpg',
       featured: false
@@ -195,7 +294,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-05-08',
+      date: '2026-05-08',
       readTime: '10 min',
       image: '/blog/blog_27/B8_CR1.jpg',
       featured: false
@@ -215,7 +314,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-05-12',
+      date: '2026-05-12',
       readTime: '11 min',
       image: '/blog/blog_29/B9_CR1.jpg',
       featured: false
@@ -235,7 +334,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-05-16',
+      date: '2026-05-16',
       readTime: '9 min',
       image: '/blog/blog_30/B10_CR1.jpg',
       featured: false
@@ -255,10 +354,10 @@ export const BLOG_DATA = {
       categoryId: 'visa-humanitaria',
       category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
       author: 'Manuel Solís',
-      date: '2025-04-04',
+      date: '2026-04-04',
       readTime: '11 min',
       image: '/blog/blog_20/BLOG10_CR1.png',
-      featured: true
+      featured: false
     },
     // --- BLOG 19 - NUEVO ---
     {
@@ -275,7 +374,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-04-01',
+      date: '2026-04-01',
       readTime: '10 min',
       image: '/blog/blog_19/BLOG09_CR1.png',
       featured: false
@@ -295,7 +394,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-03-28',
+      date: '2026-03-28',
       readTime: '9 min',
       image: '/blog/blog_18/BLOG08_CR1.png',
       featured: false
@@ -315,7 +414,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-03-24',
+      date: '2026-03-24',
       readTime: '10 min',
       image: '/blog/blog_17/BLOG07_CR1.png',
       featured: false
@@ -335,7 +434,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-03-20',
+      date: '2026-03-20',
       readTime: '11 min',
       image: '/blog/blog_16/BLOG06_CR1.png',
       featured: false
@@ -355,7 +454,7 @@ export const BLOG_DATA = {
       categoryId: 'visa-humanitaria',
       category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
       author: 'Manuel Solís',
-      date: '2025-03-17',
+      date: '2026-03-17',
       readTime: '10 min',
       image: '/blog/blog_15/BLOG05_CR1.png',
       featured: false
@@ -375,10 +474,10 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-03-12',
+      date: '2026-03-12',
       readTime: '9 min',
       image: '/blog/blog_14/BLOG04_CR1.png',
-      featured: true
+      featured: false
     },
     // --- BLOG 13 - NUEVO ---
     {
@@ -395,10 +494,10 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-03-08',
+      date: '2026-03-08',
       readTime: '10 min',
       image: '/blog/blog_13/BLOG03_CR1.png',
-      featured: true
+      featured: false
     },
     // --- BLOG 12 - NUEVO ---
     {
@@ -415,7 +514,7 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-03-05',
+      date: '2026-03-05',
       readTime: '9 min',
       image: '/blog/blog_12/BLOG02_CR1.png',
       featured: false
@@ -435,7 +534,7 @@ export const BLOG_DATA = {
       categoryId: 'defensa-deportacion',
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
-      date: '2025-03-02',
+      date: '2026-03-02',
       readTime: '10 min',
       image: '/blog/blog_11/BLOG01_CR1.png',
       featured: false
@@ -455,10 +554,10 @@ export const BLOG_DATA = {
       categoryId: 'visa-u',
       category: { es: 'Visa U & VAWA', en: 'U Visa & VAWA' },
       author: 'Manuel Solís',
-      date: '2025-02-16',
+      date: '2026-02-16',
       readTime: '8 min',
       image: '/blog/blog_10/B10_CR1.png', 
-      featured: true
+      featured: false
     },
     // --- BLOG 08 ---
     {
@@ -475,10 +574,10 @@ export const BLOG_DATA = {
       categoryId: 'procesos-migratorios',
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
-      date: '2025-02-12',
+      date: '2026-02-12',
       readTime: '10 min',
       image: '/blog/blog_09/B9_CR1.png', 
-      featured: true
+      featured: false
     },
     {
       id: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria',
@@ -494,7 +593,7 @@ export const BLOG_DATA = {
       categoryId: 'visa-humanitaria',
       category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
       author: 'Manuel Solís',
-      date: '2025-02-10',
+      date: '2026-02-10',
       readTime: '7 min',
       image: '/blog/blog_08/B8_CR1.png', 
       featured: false
@@ -514,7 +613,7 @@ export const BLOG_DATA = {
       categoryId: 'visa-T',
       category: { es: 'Visa T', en: 'T Visa' },
       author: 'Manuel Solís',
-      date: '2025-02-03',
+      date: '2026-02-03',
       readTime: '9 min',
       image: '/blog/blog_07/B7_CR1.png', 
       featured: false
@@ -534,7 +633,7 @@ export const BLOG_DATA = {
       categoryId: 'visa-VAWA',
       category: { es: 'Visa VAWA', en: 'VAWA Visa' },
       author: 'Manuel Solís',
-      date: '2025-01-30',
+      date: '2026-01-30',
       readTime: '8 min',
       image: '/blog/blog_06/B6_CR1.png', 
       featured: false
@@ -554,7 +653,7 @@ export const BLOG_DATA = {
       categoryId: 'visa-VAWA',
       category: { es: 'Visa VAWA', en: 'VAWA Visa' },
       author: 'Manuel Solís',
-      date: '2025-01-28',
+      date: '2026-01-28',
       readTime: '10 min',
       image: '/blog/blog_05/B5_CR1.png', 
       featured: false
@@ -574,7 +673,7 @@ export const BLOG_DATA = {
       categoryId: 'visa-u',
       category: { es: 'Visa U', en: 'U Visa' },
       author: 'Manuel Solís',
-      date: '2025-01-23',
+      date: '2026-01-23',
       readTime: '10 min',
       image: '/blog/blog_03/B3_CR1.png', 
       featured: false
@@ -594,7 +693,7 @@ export const BLOG_DATA = {
       categoryId: 'visa-u',
       category: { es: 'Visa U', en: 'U Visa' },
       author: 'Manuel Solís',
-      date: '2025-01-20',
+      date: '2026-01-20',
       readTime: '6 min',
       image: '/blog/blog_02/B2_CR1.png', 
       featured: false
@@ -614,7 +713,7 @@ export const BLOG_DATA = {
       categoryId: 'visa-u',
       category: { es: 'Visa U', en: 'U Visa' },
       author: 'Manuel Solís',
-      date: '2025-01-16',
+      date: '2026-01-16',
       readTime: '8 min',
       image: '/blog/visa-u.png', 
       featured: false
@@ -764,13 +863,13 @@ export default async function BlogPageIndex({ params }: { params: Promise<{ lang
 
   return (
     <>
-      <Script
+      <script
         id="blog-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
 
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}

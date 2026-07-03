@@ -47,7 +47,7 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: '/home-image.jpg',
+          url: '/og-default.jpg',
           width: 1200,
           height: 630,
           alt: isEs
@@ -80,6 +80,10 @@ const Team = dynamic(() => import('../components/Team'), {
   loading: () => <div className="w-full h-[600px] bg-[#001540]" />
 });
 
+const BlogHighlights = dynamic(() => import('../components/BlogHighlights'), {
+  loading: () => <div className="w-full h-[600px] bg-[#001540]" />
+});
+
 const Offices = dynamic(() => import('../components/Offices'), {
   loading: () => <div className="w-full h-[800px] bg-[#001540]" />
 });
@@ -109,6 +113,9 @@ export default async function Home({
       </div>
       <div className="content-auto">
         <Testimonials lang={currentLang} />
+      </div>
+      <div className="content-auto">
+        <BlogHighlights lang={currentLang} />
       </div>
       <div className="content-auto">
         <Team lang={currentLang} />

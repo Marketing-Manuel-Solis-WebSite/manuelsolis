@@ -2,6 +2,8 @@
 // This improves internal linking and topical authority signals
 
 // --- Service link mapping: connects each blog post to its relevant service page ---
+import { BLOG_DATA } from '../[lang]/blog/page';
+
 export interface ServiceLink {
   path: string;
   label: { es: string; en: string };
@@ -45,6 +47,12 @@ const blogServiceMap: Record<string, ServiceLink> = {
   'familias-estatus-mixto-opciones': { path: '/servicios/familia', label: { es: 'Derecho Familiar e Inmigración', en: 'Family Law & Immigration' } },
   'fraude-notarios-inmigracion': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
   'daca-2026-estado-legal-tribunales': { path: '/servicios/inmigracion', label: { es: 'Servicios DACA e Inmigración', en: 'DACA & Immigration Services' } },
+  // Blogs julio 2026
+  'redadas-ice-2026-derechos-plan-emergencia-familiar': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'como-encontrar-detenido-ice-localizador-pasos': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación y Detenidos', en: 'Deportation Defense & Detained Clients' } },
+  'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'accidente-trabajo-indocumentado-texas-compensacion': { path: '/servicios/accidentes', label: { es: 'Accidentes y Lesiones', en: 'Accidents & Injuries' } },
+  'accidente-camion-18-ruedas-texas-compensacion': { path: '/servicios/accidentes', label: { es: 'Accidentes y Lesiones', en: 'Accidents & Injuries' } },
 };
 
 const defaultServiceLink: ServiceLink = {
@@ -67,6 +75,11 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados',
+    'redadas-ice-2026-derechos-plan-emergencia-familiar',
+    'como-encontrar-detenido-ice-localizador-pasos',
+    'accidente-trabajo-indocumentado-texas-compensacion',
+    'accidente-camion-18-ruedas-texas-compensacion',
     'daca-2026-estado-legal-tribunales',
     'tps-2026-paises-elegibles-renovacion',
     'crimenes-deportacion-vileza-moral',
@@ -117,188 +130,15 @@ export function getArticlesByAuthor(attorneyId: string, lang: 'es' | 'en'): { ti
     });
 }
 
-const allArticles: Record<string, RelatedArticle> = {
-  'daca-2026-estado-legal-tribunales': {
-    title: { es: 'DACA 2026: estado legal en los tribunales', en: 'DACA 2026: Legal Status in the Courts' },
-    slug: 'daca-2026-estado-legal-tribunales',
-    image: '/blog/blog_31/MAY_B1.png',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'tps-2026-paises-elegibles-renovacion': {
-    title: { es: 'TPS 2026: países elegibles, cómo renovar y qué pasa si se cancela', en: 'TPS 2026: Eligible Countries, Renewal, and What If Canceled' },
-    slug: 'tps-2026-paises-elegibles-renovacion',
-    image: '/home-image.jpg',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'crimenes-deportacion-vileza-moral': {
-    title: { es: 'Crímenes que causan deportación: vileza moral', en: 'Crimes That Cause Deportation: Moral Turpitude' },
-    slug: 'crimenes-deportacion-vileza-moral',
-    image: '/home-image.jpg',
-    category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
-  },
-  'rfe-responder-evidencia-uscis': {
-    title: { es: 'RFE: cómo responder sin que te nieguen el caso', en: 'RFE: How to Respond Without Getting Denied' },
-    slug: 'rfe-responder-evidencia-uscis',
-    image: '/home-image.jpg',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'barras-3-10-anos-presencia-ilegal': {
-    title: { es: 'Barras de 3 y 10 años: presencia ilegal', en: '3 and 10 Year Bars: Unlawful Presence' },
-    slug: 'barras-3-10-anos-presencia-ilegal',
-    image: '/home-image.jpg',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'accidente-auto-indocumentado-derechos': {
-    title: { es: 'Accidente de auto siendo indocumentado: tus derechos', en: 'Car Accident While Undocumented: Your Rights' },
-    slug: 'accidente-auto-indocumentado-derechos',
-    image: '/home-image.jpg',
-    category: { es: 'Accidentes', en: 'Accidents' },
-  },
-  'i-864-patrocinador-ingreso-minimo': {
-    title: { es: 'I-864: quién puede patrocinar y cuánto ingreso necesita', en: 'I-864: Who Can Sponsor and Income Requirements' },
-    slug: 'i-864-patrocinador-ingreso-minimo',
-    image: '/home-image.jpg',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'visa-k1-prometido-requisitos': {
-    title: { es: 'Visa K-1 de prometido: requisitos y proceso', en: 'K-1 Fiancé Visa: Requirements and Process' },
-    slug: 'visa-k1-prometido-requisitos',
-    image: '/home-image.jpg',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'entrevista-inmigracion-errores-evitar': {
-    title: { es: 'Entrevista de inmigración: 10 errores que evitar', en: 'Immigration Interview: 10 Mistakes to Avoid' },
-    slug: 'entrevista-inmigracion-errores-evitar',
-    image: '/home-image.jpg',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'familias-estatus-mixto-opciones': {
-    title: { es: 'Familias de estatus mixto: opciones legales', en: 'Mixed-Status Families: Legal Options' },
-    slug: 'familias-estatus-mixto-opciones',
-    image: '/home-image.jpg',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'fraude-notarios-inmigracion': {
-    title: { es: 'Fraude de notarios en inmigración', en: 'Notary Fraud in Immigration' },
-    slug: 'fraude-notarios-inmigracion',
-    image: '/home-image.jpg',
-    category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
-  },
-  'permiso-de-trabajo-visa-u': {
-    title: { es: 'Permiso de Trabajo con Visa U (Bona Fide)', en: 'U Visa Work Permit (Bona Fide)' },
-    slug: 'permiso-de-trabajo-visa-u',
-    image: '/blog/visa-u.png',
-    category: { es: 'Visa U', en: 'U Visa' },
-  },
-  'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u': {
-    title: { es: 'Qué hacer si la policía no firma la certificación Visa U', en: 'What to Do if Police Won\'t Sign U Visa Certification' },
-    slug: 'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u',
-    image: '/blog/visa-u.png',
-    category: { es: 'Visa U', en: 'U Visa' },
-  },
-  'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas': {
-    title: { es: 'Perdón I-192: cómo arreglar con la Visa U si tienes deportaciones', en: 'I-192 Waiver: How to Fix Your Case with U Visa After Deportation' },
-    slug: 'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas',
-    image: '/blog/visa-u.png',
-    category: { es: 'Visa U', en: 'U Visa' },
-  },
-  'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados': {
-    title: { es: 'Visa U y VAWA: incluir hijos y nuevos esposos derivados', en: 'U Visa & VAWA: Including Children and New Spouse Derivatives' },
-    slug: 'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
-    image: '/blog/visa-u.png',
-    category: { es: 'Visa U', en: 'U Visa' },
-  },
-  'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria': {
-    title: { es: 'Frenar deportación inminente con solicitud de Visa Humanitaria', en: 'Stop Imminent Deportation with Humanitarian Visa Request' },
-    slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
-    image: '/blog/visa-u.png',
-    category: { es: 'Alivio Humanitario', en: 'Humanitarian Relief' },
-  },
-  'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente': {
-    title: { es: 'VAWA para hombres maltratados por pareja ciudadana o residente', en: 'VAWA for Men Abused by Citizen or Resident Partner' },
-    slug: 'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente',
-    image: '/blog/visa-u.png',
-    category: { es: 'VAWA', en: 'VAWA' },
-  },
-  'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses': {
-    title: { es: 'VAWA para padres: maltrato de hijos ciudadanos estadounidenses', en: 'VAWA for Parents: Abuse by U.S. Citizen Children' },
-    slug: 'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses',
-    image: '/blog/visa-u.png',
-    category: { es: 'VAWA', en: 'VAWA' },
-  },
-  'visa-t-trabajo-forzado-por-deuda-con-coyote': {
-    title: { es: 'Visa T: trabajo forzado por deuda con coyote', en: 'T Visa: Forced Labor Due to Smuggler Debt' },
-    slug: 'visa-t-trabajo-forzado-por-deuda-con-coyote',
-    image: '/blog/visa-u.png',
-    category: { es: 'Visa T', en: 'T Visa' },
-  },
-  'ley-de-los-10-anos-cancelacion-de-deportacion': {
-    title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' },
-    slug: 'ley-de-los-10-anos-cancelacion-de-deportacion',
-    image: '/blog/blog_11/BLOG01_CR1.png',
-    category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
-  },
-  'advance-parole-2026-viajar-con-daca-tps-visa-u': {
-    title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' },
-    slug: 'advance-parole-2026-viajar-con-daca-tps-visa-u',
-    image: '/blog/visa-u.png',
-    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
-  },
-  'formulario-g28-cambiar-abogado-inmigracion': {
-    title: { es: 'Formulario G-28: cómo cambiar de abogado de inmigración', en: 'Form G-28: How to Change Immigration Attorney' },
-    slug: 'formulario-g28-cambiar-abogado-inmigracion',
-    image: '/blog/visa-u.png',
-    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
-  },
-  'residencia-laboral-eb3-ley-245i-entrada-indocumentada': {
-    title: { es: 'Residencia laboral EB-3 y Ley 245(i): entrada indocumentada', en: 'EB-3 Work Residency & Section 245(i): Undocumented Entry' },
-    slug: 'residencia-laboral-eb3-ley-245i-entrada-indocumentada',
-    image: '/blog/visa-u.png',
-    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
-  },
-  'foia-migratoria-pedir-record-antes-de-aplicar': {
-    title: { es: 'FOIA migratoria: pedir record antes de aplicar', en: 'Immigration FOIA: Request Records Before Applying' },
-    slug: 'foia-migratoria-pedir-record-antes-de-aplicar',
-    image: '/blog/visa-u.png',
-    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
-  },
-  'estatus-juvenil-sijs-residencia-jovenes-abandonados': {
-    title: { es: 'Estatus Juvenil SIJS: residencia para jóvenes abandonados', en: 'SIJS Juvenile Status: Residency for Abandoned Youth' },
-    slug: 'estatus-juvenil-sijs-residencia-jovenes-abandonados',
-    image: '/blog/blog_15/BLOG05_CR1.png',
-    category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
-  },
-  'perdon-i601a-arreglar-papeles-entrada-ilegal': {
-    title: { es: 'Perdón I-601A: arreglar papeles si entraste ilegalmente', en: 'I-601A Waiver: Fix Papers After Illegal Entry' },
-    slug: 'perdon-i601a-arreglar-papeles-entrada-ilegal',
-    image: '/blog/blog_16/BLOG06_CR1.png',
-    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
-  },
-  'marihuana-dui-buen-caracter-moral-inmigracion': {
-    title: { es: 'Marihuana, DUI y buen carácter moral en inmigración', en: 'Marijuana, DUI and Good Moral Character in Immigration' },
-    slug: 'marihuana-dui-buen-caracter-moral-inmigracion',
-    image: '/blog/blog_17/BLOG07_CR1.png',
-    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
-  },
-  'ciudadania-en-espanol-reglas-50-20-55-15': {
-    title: { es: 'Ciudadanía en español: reglas 50/20 y 55/15', en: 'Citizenship in Spanish: 50/20 and 55/15 Rules' },
-    slug: 'ciudadania-en-espanol-reglas-50-20-55-15',
-    image: '/blog/blog_18/BLOG08_CR1.png',
-    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
-  },
-  'entrevista-matrimonio-uscis-senales-alerta': {
-    title: { es: 'Entrevista de matrimonio USCIS: señales de alerta', en: 'USCIS Marriage Interview: Red Flags' },
-    slug: 'entrevista-matrimonio-uscis-senales-alerta',
-    image: '/blog/blog_19/BLOG09_CR1.png',
-    category: { es: 'Proceso Migratorio', en: 'Immigration Process' },
-  },
-  'asilo-frontera-2026-puerto-entrada-vs-cruce': {
-    title: { es: 'Asilo en la frontera 2026: puerto de entrada vs cruce irregular', en: 'Asylum at the Border 2026: Port of Entry vs Unauthorized Crossing' },
-    slug: 'asilo-frontera-2026-puerto-entrada-vs-cruce',
-    image: '/blog/blog_20/BLOG10_CR1.png',
-    category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
-  },
-};
+// Derivado de BLOG_DATA (fuente única): título, imagen y categoría reales de
+// cada post — antes era un mapa manual que se desincronizaba (imágenes
+// genéricas /home-image.jpg y /blog/visa-u.png en 19 posts).
+const allArticles: Record<string, RelatedArticle> = Object.fromEntries(
+  BLOG_DATA.posts.map((p) => [
+    p.slug,
+    { title: p.title, slug: p.slug, image: p.image, category: p.category },
+  ])
+);
 
 // Topical clusters for cross-linking
 const clusters: Record<string, string[]> = {
@@ -315,6 +155,8 @@ const clusters: Record<string, string[]> = {
     'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
   ],
   deportation: [
+    'redadas-ice-2026-derechos-plan-emergencia-familiar',
+    'como-encontrar-detenido-ice-localizador-pasos',
     'ley-de-los-10-anos-cancelacion-de-deportacion',
     'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
     'advance-parole-2026-viajar-con-daca-tps-visa-u',
@@ -324,6 +166,7 @@ const clusters: Record<string, string[]> = {
     'daca-2026-estado-legal-tribunales',
   ],
   process: [
+    'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados',
     'formulario-g28-cambiar-abogado-inmigracion',
     'residencia-laboral-eb3-ley-245i-entrada-indocumentada',
     'foia-migratoria-pedir-record-antes-de-aplicar',
@@ -363,6 +206,8 @@ const clusters: Record<string, string[]> = {
     'entrevista-inmigracion-errores-evitar',
   ],
   accidents: [
+    'accidente-trabajo-indocumentado-texas-compensacion',
+    'accidente-camion-18-ruedas-texas-compensacion',
     'accidente-auto-indocumentado-derechos',
   ],
   juvenile_asylum: [
