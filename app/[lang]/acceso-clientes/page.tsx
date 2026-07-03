@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       siteName: 'Manuel Solis Law Firm',
       locale: isEs ? 'es_US' : 'en_US',
-      images: ['/home-image.jpg'],
+      images: ['/og-default.jpg'],
     },
   };
 }

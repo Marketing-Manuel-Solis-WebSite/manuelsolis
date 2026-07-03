@@ -41,7 +41,7 @@ const organizationSchema = {
   alternateName: ['Abogados Manuel Solis', 'Law Offices of Manuel Solis'],
   url: SITE_URL,
   logo: `${SITE_URL}/logo-manuel-solis.png`,
-  image: `${SITE_URL}/home-image.jpg`,
+  image: `${SITE_URL}/og-default.jpg`,
   foundingDate: '1990',
   slogan: 'Defending immigrant rights for over 35 years',
   knowsAbout: [
@@ -108,12 +108,13 @@ const organizationSchema = {
   location: [
     { '@type': 'Place', name: 'Houston Principal Office', address: { '@type': 'PostalAddress', streetAddress: '6657 Navigation Blvd', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77011', addressCountry: 'US' }, telephone: '(713) 701-1731' },
     { '@type': 'Place', name: 'Houston Accidentes Office', address: { '@type': 'PostalAddress', streetAddress: '6705 Navigation Blvd', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77011', addressCountry: 'US' }, telephone: '(713) 231-5384' },
-    { '@type': 'Place', name: 'Houston North Loop Office', address: { '@type': 'PostalAddress', streetAddress: '2950 N Loop W', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77092', addressCountry: 'US' } },
+    // Nota: las direcciones virtuales (Regus/IWG: north-loop, kirby, main-st,
+    // league-city, northchase) se omiten a propósito — ver officesRegistry.ts.
     { '@type': 'Place', name: 'Houston Bellaire Office', address: { '@type': 'PostalAddress', streetAddress: '9188 Bellaire Blvd E', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77036', addressCountry: 'US' } },
     { '@type': 'Place', name: 'Dallas Office', address: { '@type': 'PostalAddress', streetAddress: '1120 Empire Central Pl', addressLocality: 'Dallas', addressRegion: 'TX', postalCode: '75247', addressCountry: 'US' }, telephone: '(214) 753-8315' },
     { '@type': 'Place', name: 'El Paso Office', address: { '@type': 'PostalAddress', streetAddress: '3632 Admiral St', addressLocality: 'El Paso', addressRegion: 'TX', postalCode: '79925', addressCountry: 'US' }, telephone: '(915) 233-7127' },
-    { '@type': 'Place', name: 'Harlingen Office', address: { '@type': 'PostalAddress', streetAddress: '320 E Jackson Ave', addressLocality: 'Harlingen', addressRegion: 'TX', postalCode: '78550', addressCountry: 'US' } },
-    { '@type': 'Place', name: 'Chicago Office', address: { '@type': 'PostalAddress', streetAddress: '6000 Cermak Rd', addressLocality: 'Cicero', addressRegion: 'IL', postalCode: '60804', addressCountry: 'US' }, telephone: '(312) 477-0389' },
+    { '@type': 'Place', name: 'Harlingen Office', address: { '@type': 'PostalAddress', streetAddress: '320 E Jackson St', addressLocality: 'Harlingen', addressRegion: 'TX', postalCode: '78550', addressCountry: 'US' }, telephone: '(956) 597-7090' },
+    { '@type': 'Place', name: 'Chicago Office', address: { '@type': 'PostalAddress', streetAddress: '6000 W Cermak Rd', addressLocality: 'Cicero', addressRegion: 'IL', postalCode: '60804', addressCountry: 'US' }, telephone: '(312) 477-0389' },
     { '@type': 'Place', name: 'Los Angeles Office', address: { '@type': 'PostalAddress', streetAddress: '8337 Telegraph Rd Ste 115', addressLocality: 'Pico Rivera', addressRegion: 'CA', postalCode: '90660', addressCountry: 'US' }, telephone: '(213) 784-1554' },
     { '@type': 'Place', name: 'Memphis Office', address: { '@type': 'PostalAddress', streetAddress: '3385 Airways Blvd Suite 320', addressLocality: 'Memphis', addressRegion: 'TN', postalCode: '38116', addressCountry: 'US' }, telephone: '(901) 557-8357' },
     { '@type': 'Place', name: 'Denver/Arvada Office', address: { '@type': 'PostalAddress', streetAddress: '5400 Ward Rd BLDG IV', addressLocality: 'Arvada', addressRegion: 'CO', postalCode: '80002', addressCountry: 'US' }, telephone: '(720) 358-8973' },
@@ -263,7 +264,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       images: [
         {
-          url: '/home-image.jpg',
+          url: '/og-default.jpg',
           width: 1200,
           height: 630,
           alt: 'Manuel Solis Law Firm',
@@ -274,7 +275,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       creator: '@AbogadoMSolis',
-      images: ['/home-image.jpg'],
+      images: ['/og-default.jpg'],
     },
     
     robots: {
@@ -336,14 +337,17 @@ export default async function LangLayout({ children, params }: Props) {
       <LangSetter lang={currentLang} />
 
       {/* Preconnect to critical third-party origins — hoisted to <head> by Next.js */}
-      <link rel="preconnect" href="https://www.googletagmanager.com" />
-      <link rel="preconnect" href="https://www.youtube.com" />
-      <link rel="preconnect" href="https://img.youtube.com" />
+      {/* dns-prefetch (no preconnect): GA carga lazyOnload y YouTube solo
+          existe en el facade click-to-play de About/Testimonios — un
+          preconnect sitewide compite con la conexión del LCP. */}
+      <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+      <link rel="dns-prefetch" href="https://img.youtube.com" />
       <link rel="dns-prefetch" href="https://connect.facebook.net" />
       <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
 
       {/* RSS Feed for newsletter (SEO + feed readers) */}
       <link rel="alternate" type="application/rss+xml" title="Newsletter - Manuel Solis Law" href={`${SITE_URL}/rss/newsletter`} />
+      <link rel="alternate" type="application/rss+xml" title="Blog Legal - Manuel Solis Law" href={`${SITE_URL}/rss/blog`} />
 
       <script
         type="application/ld+json"

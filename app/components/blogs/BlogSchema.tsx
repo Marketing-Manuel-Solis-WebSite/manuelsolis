@@ -5,6 +5,8 @@ interface BlogSchemaProps {
   description: string;
   slug: string;
   date: string;
+  /** Fecha de última actualización real; si se omite, se usa `date`. */
+  dateModified?: string;
   image: string;
   lang: string;
   readTime?: string;
@@ -20,6 +22,7 @@ export default function BlogSchema({
   description,
   slug,
   date,
+  dateModified,
   image,
   lang,
   readTime,
@@ -30,6 +33,7 @@ export default function BlogSchema({
     description,
     slug,
     date,
+    dateModified,
     image,
     lang,
     readTime,

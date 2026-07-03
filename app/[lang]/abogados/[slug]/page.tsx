@@ -28,9 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!attorney) return { title: 'Not Found' };
 
+  // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
   const title = isEs
-    ? `${attorney.name} | Abogado de Inmigracion - Manuel Solis`
-    : `${attorney.name} | Immigration Attorney - Manuel Solis`;
+    ? `${attorney.name} | Abogado de Inmigración`
+    : `${attorney.name} | Immigration Attorney`;
 
   const description = attorney.bio[isEs ? 'es' : 'en'][0];
 
@@ -66,7 +67,9 @@ function getPersonSchema(attorney: typeof attorneys[number], lang: string) {
     '@id': `${SITE_URL}/#person-${attorney.id}`,
     name: attorney.name,
     jobTitle: attorney.role[isEs ? 'es' : 'en'],
-    image: attorney.image,
+    // Google exige URLs absolutas en structured data (algunas fotos son
+    // rutas relativas de public/, otras ya son URLs de blob storage).
+    image: attorney.image.startsWith('http') ? attorney.image : `${SITE_URL}${attorney.image}`,
     description: attorney.bio[isEs ? 'es' : 'en'][0],
     url: `${SITE_URL}/${lang}/abogados/${attorney.id}`,
     worksFor: {
@@ -87,12 +90,9 @@ function getPersonSchema(attorney: typeof attorneys[number], lang: string) {
       'Asylum',
       'Naturalization',
     ],
-    sameAs: [
-      'https://www.facebook.com/ManuelSolisLawFirm',
-      'https://www.instagram.com/maboralaw/',
-      'https://www.youtube.com/@ManuelSolisLawFirm',
-      'https://www.linkedin.com/company/manuel-solis-law-firm',
-    ],
+    // Sin sameAs: los perfiles sociales de la FIRMA no identifican a la
+    // persona (regla documentada en colaboradores/[slug]). El grafo ya
+    // conecta a la firma vía worksFor → #organization.
     ...(location ? {
       workLocation: {
         '@type': 'Place',

@@ -31,6 +31,13 @@ export interface AccidentOffice {
   state: string;
   /** Título largo bilingüe (reutilizado en el hero de la página por-oficina). */
   title: BiText;
+  /**
+   * Zona para el <title>/H1 SEO de la página por-oficina. Sin esto, las 8
+   * fichas del área de Houston compiten por la misma keyword ("abogado de
+   * accidentes houston") entre sí y contra la landing abogado-accidentes-houston.
+   * El head term de ciudad se queda en la landing; aquí se apunta a la zona.
+   */
+  seoZone?: BiText;
   address: string;
   phone: string;
   email: string;
@@ -100,7 +107,7 @@ export const accidentOffices: AccidentOffice[] = [
     email: 'elpaso@manuelsolis.com',
     hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 2:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 2:00 PM' },
     mapLink: 'https://share.google/uVjOe9OdhnatA0rr6',
-    image: '/offices/El paso.png',
+    image: '/offices/el-paso.png',
   },
   {
     id: 'harlingen',
@@ -118,6 +125,7 @@ export const accidentOffices: AccidentOffice[] = [
   },
   {
     id: 'houston-bellaire',
+    seoZone: { es: 'Bellaire y Chinatown, Houston', en: 'Bellaire & Chinatown, Houston' },
     name: { es: 'Bellaire', en: 'Bellaire' },
     area: 'Houston Bellaire, TX',
     city: 'Houston',
@@ -143,10 +151,11 @@ export const accidentOffices: AccidentOffice[] = [
     email: 'losangeles@manuelsolis.com',
     hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 9:00 AM - 2:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 9:00 AM - 2:00 PM' },
     mapLink: 'https://share.google/VnrxOpNfWDbNYkwjP',
-    image: '/offices/Los Angeles.png',
+    image: '/offices/los-angeles.png',
   },
   {
     id: 'houston-principal',
+    seoZone: { es: 'el East End de Houston (Oficina Principal)', en: 'Houston East End (Main Office)' },
     name: { es: 'Houston Principal', en: 'Houston Main' },
     area: 'Houston, TX',
     city: 'Houston',
@@ -161,6 +170,7 @@ export const accidentOffices: AccidentOffice[] = [
   },
   {
     id: 'houston-accidentes',
+    seoZone: { es: 'el East End de Houston (Centro de Accidentes 24 Horas)', en: 'Houston East End (24-Hour Accident Center)' },
     name: { es: 'Houston Accidentes', en: 'Houston Accidents' },
     area: 'Houston, TX',
     city: 'Houston',
@@ -175,6 +185,7 @@ export const accidentOffices: AccidentOffice[] = [
   },
   {
     id: 'main-st',
+    seoZone: { es: 'Downtown Houston (Main St)', en: 'Downtown Houston (Main St)' },
     name: { es: 'Houston Main St', en: 'Houston Main St' },
     area: 'Houston (Main St), TX',
     city: 'Houston',
@@ -189,6 +200,7 @@ export const accidentOffices: AccidentOffice[] = [
   },
   {
     id: 'north-loop',
+    seoZone: { es: 'North Loop, Noroeste de Houston', en: 'North Loop, Northwest Houston' },
     name: { es: 'Houston NorthLoop', en: 'Houston NorthLoop' },
     area: 'Houston (North Loop), TX',
     city: 'Houston',
@@ -203,6 +215,7 @@ export const accidentOffices: AccidentOffice[] = [
   },
   {
     id: 'northchase',
+    seoZone: { es: 'Northchase, Norte de Houston (Greenspoint)', en: 'Northchase, North Houston (Greenspoint)' },
     name: { es: 'Houston NorthChase', en: 'Houston NorthChase' },
     area: 'Houston (Northchase), TX',
     city: 'Houston',
@@ -212,17 +225,18 @@ export const accidentOffices: AccidentOffice[] = [
     phone: '(346) 522-4848',
     email: 'houston@manuelsolis.com',
     hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: 'https://share.google/your_map_link_here',
+    mapLink: 'https://share.google/wSptYM5hcuGigC3aS',
     image: '/offices/ofNorth.png',
   },
   {
     id: 'kirby',
+    seoZone: { es: 'Upper Kirby, Houston', en: 'Upper Kirby, Houston' },
     name: { es: 'Houston Kirby', en: 'Houston Kirby' },
     area: 'Houston (Kirby), TX',
     city: 'Houston',
     state: 'TX',
     title: { es: 'Accidentes en Houston (Kirby), TX', en: 'Accidents in Houston (Kirby), TX' },
-    address: '3730 Kirby Dr, Houston, TX 77098, United States',
+    address: '3730 Kirby Dr Suite 1200, Houston, TX 77098, United States',
     phone: '(713) 903-7875',
     email: 'houston@manuelsolis.com',
     hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
@@ -240,11 +254,13 @@ export const accidentOffices: AccidentOffice[] = [
     phone: '(901) 557-8357',
     email: 'memphis@manuelsolis.com',
     hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
-    mapLink: 'https://share.google/Fc3ISgQAihcayfmws',
+    // TODO(GBP): sustituir por el share-link real de la ficha de Memphis (el anterior apuntaba a Main St).
+    mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116',
     image: '/offices/ofAirways.png',
   },
   {
     id: 'league-city',
+    seoZone: { es: 'League City, TX (Área de Galveston)', en: 'League City, TX (Galveston Area)' },
     name: { es: 'League City, TX', en: 'League City, TX' },
     area: 'League City, TX',
     city: 'League City',
@@ -273,6 +289,8 @@ export const officesUi = {
   },
   phone: { es: 'Teléfono', en: 'Phone' },
   hours: { es: 'Horario', en: 'Hours' },
+  address: { es: 'Dirección', en: 'Address' },
   viewMap: { es: 'Ver en mapa', en: 'View on map' },
   viewOffice: { es: 'Ver oficina de accidentes', en: 'View accident office' },
+  viewOfficeProfile: { es: 'Ver ficha completa de esta oficina', en: "View this office's full profile" },
 } satisfies Record<string, BiText>;

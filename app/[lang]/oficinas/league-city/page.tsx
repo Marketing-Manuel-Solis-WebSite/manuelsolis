@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
-import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
 
@@ -84,7 +83,7 @@ export default async function LeagueCityPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="local-schema-league-city"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}

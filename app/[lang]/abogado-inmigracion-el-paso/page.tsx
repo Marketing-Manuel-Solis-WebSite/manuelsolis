@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { getPageData, getSiblingCities, getRelatedServiceLinks, SITE_URL } from '../../lib/cityServiceData';
 import { getLocalFAQ, getTypicalCases } from '../../lib/cityServiceLocalContent';
@@ -39,13 +38,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       type: 'website',
       siteName: 'Manuel Solís Law Firm',
       locale: isEs ? 'es_US' : 'en_US',
-      images: [{ url: `${SITE_URL}/home-image.jpg`, width: 1200, height: 630, alt: title }],
+      images: [{ url: `${SITE_URL}/og-default.jpg`, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${SITE_URL}/home-image.jpg`],
+      images: [`${SITE_URL}/og-default.jpg`],
       creator: '@AbogadoMSolis',
     },
     keywords: isEs ? service.keywords.es : service.keywords.en,
@@ -85,10 +84,10 @@ export default async function Page({ params }: { params: Promise<{ lang: string 
 
   return (
     <>
-      <Script id="breadcrumb-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
-      <Script id="legal-service-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }} />
+      <script id="breadcrumb-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
+      <script id="legal-service-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceSchema) }} />
       {faqPageSchema && (
-        <Script id="faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }} />
+        <script id="faq-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }} />
       )}
       <CityServiceLanding
         lang={currentLang}

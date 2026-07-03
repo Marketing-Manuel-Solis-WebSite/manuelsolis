@@ -137,7 +137,7 @@ export default function AccidenteOfficePageView({
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                 {/* Dirección */}
                 <div>
-                  <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{tb(officesUi.viewMap)}</p>
+                  <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{tb(officesUi.address)}</p>
                   <p className="text-white text-sm leading-snug mb-2">{office.address}</p>
                   <a href={mapHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[#B2904D] text-sm font-bold hover:text-white transition-colors">
                     {tb(officesUi.viewMap)} →
@@ -250,10 +250,13 @@ export default function AccidenteOfficePageView({
             </div>
           </Reveal>
 
-          {/* Volver a todas las oficinas */}
-          <div className="text-center mt-10">
+          {/* Volver a todas las oficinas + ficha canónica de la oficina */}
+          <div className="text-center mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
             <Link href={`/${lang}/servicios/accidentes`} className="inline-flex items-center gap-2 text-[#B2904D] text-sm font-bold hover:text-white transition-colors">
               ← {isEs ? 'Ver todas las oficinas de accidentes' : 'See all accident offices'}
+            </Link>
+            <Link href={`/${lang}/oficinas/${office.id}`} className="inline-flex items-center gap-2 text-[#B2904D] text-sm font-bold hover:text-white transition-colors">
+              {tb(officesUi.viewOfficeProfile)} →
             </Link>
           </div>
         </div>

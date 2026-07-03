@@ -210,6 +210,14 @@ export default async function CityServiceLanding({
                   <Phone className="h-4 w-4" />
                   {isEs ? 'Llamar ahora' : 'Call now'}
                 </a>
+                {office.officeSlug && (
+                  <Link
+                    href={`/${lang}/oficinas/${office.officeSlug}`}
+                    className="mt-4 w-full inline-flex items-center justify-center gap-2 text-[#B2904D] text-sm font-bold hover:text-white transition-colors"
+                  >
+                    {isEs ? `Ver nuestra oficina en ${office.city}` : `See our ${office.city} office`} →
+                  </Link>
+                )}
               </StaggerItem>
 
               <StaggerItem as="div" className="p-8 rounded-2xl border border-white/10 bg-white/5">

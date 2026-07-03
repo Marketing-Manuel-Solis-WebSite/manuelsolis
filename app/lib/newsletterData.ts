@@ -48,7 +48,7 @@ export const newsletters: NewsletterEdition[] = [
         {
           heading: 'Consejos para Proteger tu Estatus',
           body: 'En el entorno migratorio actual, es fundamental tomar medidas proactivas: mantenga copias de todos sus documentos migratorios, no viaje sin consultar primero con un abogado, reporte cualquier cambio de dirección a USCIS dentro de 10 días, y evite cualquier contacto con el sistema de justicia penal. Si enfrenta cualquier procedimiento legal, contacte a un abogado de inmigración inmediatamente antes de tomar cualquier decisión.',
-          cta: { text: 'Solicitar Consulta', href: '/es/contacto' },
+          cta: { text: 'Solicitar Consulta', href: '/es/consulta' },
         },
       ],
       en: [
@@ -64,7 +64,7 @@ export const newsletters: NewsletterEdition[] = [
         {
           heading: 'Tips to Protect Your Status',
           body: 'In the current immigration environment, it is essential to take proactive steps: keep copies of all your immigration documents, do not travel without first consulting an attorney, report any change of address to USCIS within 10 days, and avoid any contact with the criminal justice system. If you face any legal proceedings, contact an immigration attorney immediately before making any decisions.',
-          cta: { text: 'Request Consultation', href: '/en/contacto' },
+          cta: { text: 'Request Consultation', href: '/en/consulta' },
         },
       ],
     },
@@ -99,7 +99,7 @@ export const newsletters: NewsletterEdition[] = [
         {
           heading: 'Reporta el Abuso Laboral',
           body: 'Si usted está siendo víctima de abuso laboral — incluyendo robo de salario, amenazas relacionadas con su estatus migratorio, condiciones peligrosas o acoso — existen protecciones legales disponibles. En algunos casos, las víctimas de crímenes laborales pueden calificar para una Visa U o una Visa T. No permita que el miedo le impida buscar justicia. Todas las consultas con nuestros abogados son completamente confidenciales.',
-          cta: { text: 'Consulta Confidencial', href: '/es/contacto' },
+          cta: { text: 'Consulta Confidencial', href: '/es/consulta' },
         },
       ],
       en: [
@@ -115,7 +115,7 @@ export const newsletters: NewsletterEdition[] = [
         {
           heading: 'Report Workplace Abuse',
           body: 'If you are experiencing workplace abuse — including wage theft, threats related to your immigration status, dangerous conditions, or harassment — legal protections are available. In some cases, victims of workplace crimes may qualify for a U Visa or T Visa. Do not let fear prevent you from seeking justice. All consultations with our attorneys are completely confidential.',
-          cta: { text: 'Confidential Consultation', href: '/en/contacto' },
+          cta: { text: 'Confidential Consultation', href: '/en/consulta' },
         },
       ],
     },
@@ -151,7 +151,7 @@ export const newsletters: NewsletterEdition[] = [
         {
           heading: 'Pasos para Solicitar Estas Protecciones',
           body: 'El proceso para solicitar una Visa U o VAWA requiere documentación cuidadosa y presentación estratégica. Para la Visa U, necesitará una certificación policial (Formulario I-918B) y evidencia del crimen y sus efectos. Para VAWA, necesitará evidencia de la relación, el abuso y su buen carácter moral. En ambos casos, contar con un abogado experimentado aumenta significativamente sus posibilidades de aprobación. Nuestro equipo ha manejado miles de estos casos exitosamente.',
-          cta: { text: 'Comience Su Caso Hoy', href: '/es/contacto' },
+          cta: { text: 'Comience Su Caso Hoy', href: '/es/consulta' },
         },
       ],
       en: [
@@ -168,7 +168,7 @@ export const newsletters: NewsletterEdition[] = [
         {
           heading: 'Steps to Apply for These Protections',
           body: 'The process of applying for a U Visa or VAWA requires careful documentation and strategic presentation. For the U Visa, you will need a law enforcement certification (Form I-918B) and evidence of the crime and its effects. For VAWA, you will need evidence of the relationship, the abuse, and your good moral character. In both cases, having an experienced attorney significantly increases your chances of approval. Our team has successfully handled thousands of these cases.',
-          cta: { text: 'Start Your Case Today', href: '/en/contacto' },
+          cta: { text: 'Start Your Case Today', href: '/en/consulta' },
         },
       ],
     },

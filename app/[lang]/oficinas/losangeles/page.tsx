@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
-import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
 
@@ -51,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `https://www.manuelsolis.com/${lang}/oficinas/losangeles`,
-      images: ['/offices/Los Angeles.png'],
+      images: ['/offices/los-angeles.png'],
       type: 'website', 
     }
   };
@@ -84,7 +83,7 @@ export default async function LosAngelesPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="local-schema-los-angeles"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}

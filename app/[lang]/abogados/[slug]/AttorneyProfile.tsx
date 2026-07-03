@@ -92,7 +92,7 @@ export default function AttorneyProfile({ slug, lang }: AttorneyProfileProps) {
               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/40">
                 <Image
                   src={attorney.image}
-                  alt={attorney.name}
+                  alt={`${attorney.name} — ${attorney.role[language]}`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   className={attorney.id === 'lupita-valenzuela-martinez'
@@ -320,7 +320,7 @@ export default function AttorneyProfile({ slug, lang }: AttorneyProfileProps) {
                         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                           <Image
                             src={related.image}
-                            alt={related.name}
+                            alt={`${related.name} — ${related.role[language]}`}
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                             className={related.id === 'lupita-valenzuela-martinez'

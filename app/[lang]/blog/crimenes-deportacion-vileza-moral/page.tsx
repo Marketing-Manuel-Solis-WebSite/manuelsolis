@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
 import {
   Calendar, Clock, ArrowLeft, Sparkles, CheckCircle2, AlertCircle,
   Lightbulb, Quote, TrendingUp, Award, Heart, Star, MessageCircle,
@@ -36,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Crímenes que Causan Deportación: Vileza Moral (CIMT) y Defensa Criminal en Inmigración',
+    metaTitle: 'Crímenes que Causan Deportación: Guía de Vileza Moral (CIMT)',
     metaDesc: 'Guía sobre cómo los delitos afectan tu estatus migratorio. Vileza moral (CIMT), deportabilidad vs inadmisibilidad, petty offense, y por qué un récord sellado no desaparece para inmigración.',
     ui: {
       back: 'Volver al blog',
@@ -45,7 +44,7 @@ const blogContent = {
       published: 'Publicado',
       readTime: '11 min de lectura',
       tags: 'Crímenes y Deportación',
-      date: '14 Abr, 2025',
+      date: '14 Abr, 2026',
       time: '11 min',
       authorRole: 'Fundador & Abogado Principal',
       ctaButton: 'Consultar con un Abogado Ahora'
@@ -238,7 +237,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Crimes That Cause Deportation: Moral Turpitude (CIMT) and Criminal Defense in Immigration',
+    metaTitle: 'Crimes That Cause Deportation: Moral Turpitude (CIMT) Guide',
     metaDesc: 'Guide on how crimes affect your immigration status. Moral turpitude (CIMT), deportability vs inadmissibility, petty offense exception, and why an expunged record does not disappear for immigration.',
     ui: {
       back: 'Back to blog',
@@ -247,7 +246,7 @@ const blogContent = {
       published: 'Published',
       readTime: '11 min read',
       tags: 'Crimes & Deportation',
-      date: 'Apr 14, 2025',
+      date: 'Apr 14, 2026',
       time: '11 min',
       authorRole: 'Founder & Lead Attorney',
       ctaButton: 'Consult with an Attorney Now'
@@ -463,7 +462,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
       ],
       type: 'article',
-      publishedTime: '2025-04-14T08:00:00.000Z',
+      publishedTime: '2026-04-14T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Ley Criminal',
       tags: ['Crímenes', 'Deportación', 'Vileza Moral', 'CIMT', 'Defensa Criminal'],
@@ -502,12 +501,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
         description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
         slug="crimenes-deportacion-vileza-moral"
-        date="2025-04-14"
+        date="2026-04-14"
         image={IMAGES.article}
         lang={lang as string}
         readTime="11"
       />
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
@@ -561,7 +560,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   <Image
                     src={IMAGES.author}
                     alt="Abogado Manuel Solis"
-                    fill
+                    fill sizes="56px"
                     className="object-cover"
                   />
                 </div>
@@ -596,9 +595,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
                 {/* Resumen */}
                 <div className="p-8 rounded-3xl bg-gradient-to-br from-[#B2904D]/20 to-transparent border border-[#B2904D]/30 mb-10 shadow-2xl">
-                   <h3 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
+                   <h2 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
                      <Sparkles size={20} /> {t.summary.title}
-                   </h3>
+                   </h2>
                    <p
                      className="text-lg text-white leading-relaxed font-light m-0"
                      dangerouslySetInnerHTML={{ __html: t.summary.text }}
@@ -845,7 +844,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <h3 className="text-xs font-bold text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-4">Sobre el Autor</h3>
                     <div className="flex flex-col items-center text-center">
                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#001540] shadow-[0_0_0_2px_#B2904D] mb-4">
-                          <Image src={IMAGES.author} alt="Manuel Solis" fill className="object-cover" />
+                          <Image src={IMAGES.author} alt="Manuel Solis" fill sizes="96px" className="object-cover" />
                        </div>
                        <h4 className="text-xl font-bold text-white">Manuel Solís</h4>
                        <p className="text-sm text-[#B2904D] mb-4">{t.ui.authorRole}</p>

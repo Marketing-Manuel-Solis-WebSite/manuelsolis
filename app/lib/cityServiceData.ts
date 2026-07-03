@@ -16,6 +16,10 @@ export interface OfficeInfo {
   phone: string;
   zip: string;
   coordinates: { lat: number; lng: number };
+  /** Ciudad postal real cuando difiere del mercado (Cicero/Pico Rivera/Arvada). */
+  locality?: string;
+  /** Slug de la ficha canónica en /oficinas/<slug> (enlazado landing→oficina). */
+  officeSlug?: string;
   additionalOffices?: { name: string; address: string; phone: string }[];
 }
 
@@ -26,9 +30,11 @@ export const OFFICES: Record<string, OfficeInfo> = {
     state: 'Texas',
     stateCode: 'TX',
     address: '6705 Navigation Blvd, Houston, TX 77011',
+    officeSlug: 'houston-accidentes',
     phone: '(713) 231-5384',
     zip: '77011',
-    coordinates: { lat: 29.7281, lng: -95.3025 },
+    // Alineadas con /oficinas/houston-accidentes (misma cuadra que el 6657).
+    coordinates: { lat: 29.7426, lng: -95.3156 },
     additionalOffices: [
       { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(713) 903-7875' },
       { name: 'Houston North Loop', address: '2950 N Loop W, Houston, TX 77092', phone: '(713) 429-0237' },
@@ -44,6 +50,7 @@ export const OFFICES: Record<string, OfficeInfo> = {
     state: 'Texas',
     stateCode: 'TX',
     address: '6657 Navigation Blvd, Houston, TX 77011',
+    officeSlug: 'houston-principal',
     phone: '(713) 701-1731',
     zip: '77011',
     coordinates: { lat: 29.7426, lng: -95.3156 },
@@ -58,6 +65,7 @@ export const OFFICES: Record<string, OfficeInfo> = {
     state: 'Texas',
     stateCode: 'TX',
     address: '1120 Empire Central Pl, Dallas, TX 75247',
+    officeSlug: 'dallas',
     phone: '(214) 753-8315',
     zip: '75247',
     coordinates: { lat: 32.8140, lng: -96.8591 },
@@ -68,9 +76,11 @@ export const OFFICES: Record<string, OfficeInfo> = {
     state: 'Illinois',
     stateCode: 'IL',
     address: '6000 W Cermak Rd, Cicero, IL 60804',
+    officeSlug: 'chicago',
     phone: '(312) 477-0389',
     zip: '60804',
     coordinates: { lat: 41.8517, lng: -87.7445 },
+    locality: 'Cicero',
   },
   'los-angeles': {
     city: 'Los Angeles',
@@ -78,9 +88,11 @@ export const OFFICES: Record<string, OfficeInfo> = {
     state: 'California',
     stateCode: 'CA',
     address: '8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660',
+    officeSlug: 'losangeles',
     phone: '(213) 784-1554',
     zip: '90660',
     coordinates: { lat: 33.9900, lng: -118.0739 },
+    locality: 'Pico Rivera',
   },
   'el-paso': {
     city: 'El Paso',
@@ -88,6 +100,7 @@ export const OFFICES: Record<string, OfficeInfo> = {
     state: 'Texas',
     stateCode: 'TX',
     address: '3632 Admiral St, El Paso, TX 79925',
+    officeSlug: 'el-paso',
     phone: '(915) 233-7127',
     zip: '79925',
     coordinates: { lat: 31.7700, lng: -106.3801 },
@@ -98,6 +111,7 @@ export const OFFICES: Record<string, OfficeInfo> = {
     state: 'Tennessee',
     stateCode: 'TN',
     address: '3385 Airways Blvd Suite 320, Memphis, TN 38116',
+    officeSlug: 'memphis',
     phone: '(901) 557-8357',
     zip: '38116',
     coordinates: { lat: 35.0726, lng: -89.9848 },
@@ -108,16 +122,19 @@ export const OFFICES: Record<string, OfficeInfo> = {
     state: 'Colorado',
     stateCode: 'CO',
     address: '5400 Ward Rd BLDG IV, Arvada, CO 80002',
+    officeSlug: 'arvada',
     phone: '(720) 358-8973',
     zip: '80002',
     coordinates: { lat: 39.8097, lng: -105.0997 },
+    locality: 'Arvada',
   },
   harlingen: {
     city: 'Harlingen',
     citySlug: 'harlingen',
     state: 'Texas',
     stateCode: 'TX',
-    address: '320 E Jackson Ave, Harlingen, TX 78550',
+    address: '320 E Jackson St, Harlingen, TX 78550',
+    officeSlug: 'harlingen',
     phone: '(956) 597-7090',
     zip: '78550',
     coordinates: { lat: 26.1906, lng: -97.6961 },
@@ -927,11 +944,15 @@ export function getSiblingCities(slug: string): { slug: string; city: string; st
     });
 }
 
-// Cross-links to other landings for the SAME city (different services)
+// Cross-links to other landings for the SAME city (different services).
+// Compara por citySlug, no por officeKey: en Houston conviven las oficinas
+// 'houston' (accidentes) y 'houston-principal' (inmigración) y sus landings
+// deben enlazarse entre sí.
 export function getRelatedServiceLinks(slug: string): { slug: string; title: { es: string; en: string } }[] {
   const config = getPageConfig(slug);
   if (!config) return [];
+  const citySlug = OFFICES[config.officeKey]?.citySlug;
   return LANDING_PAGES
-    .filter((p) => p.officeKey === config.officeKey && p.slug !== slug)
+    .filter((p) => OFFICES[p.officeKey]?.citySlug === citySlug && p.slug !== slug)
     .map((p) => ({ slug: p.slug, title: p.h1 }));
 }

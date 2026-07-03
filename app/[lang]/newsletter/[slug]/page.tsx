@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Header from '../../../components/Header';
@@ -34,7 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = nl.description[isEs ? 'es' : 'en'];
 
   return {
-    title: `${title} | Manuel Solis Law`,
+    // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
+    title,
     description,
     alternates: {
       canonical: `${SITE_URL}/${lang}/newsletter/${slug}`,
@@ -52,6 +52,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: isEs ? 'es_US' : 'en_US',
       type: 'article',
       publishedTime: nl.date,
+      // El openGraph propio reemplaza al del layout (merge shallow): sin esto
+      // las ediciones no emiten og:image.
+      images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: title }],
     },
   };
 }
@@ -124,17 +127,17 @@ export default async function NewsletterEditionPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="newsletter-breadcrumb"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <Script
+      <script
         id="newsletter-article"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-      <Script
+      <script
         id="newsletter-faq"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

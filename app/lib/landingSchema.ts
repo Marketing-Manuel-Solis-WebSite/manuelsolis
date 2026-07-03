@@ -80,6 +80,8 @@ export async function buildLandingSchema(
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'LegalService',
+    // @id estable y neutro de idioma para consolidar señales entre es/en.
+    '@id': `${SITE_URL}/${input.pageSlug}#legalservice`,
     name: `Manuel Solis - ${service.title[input.lang]}`,
     description: config.metaDescription[input.lang],
     url: `${SITE_URL}/${input.lang}/${input.pageSlug}`,
@@ -87,7 +89,9 @@ export async function buildLandingSchema(
     address: {
       '@type': 'PostalAddress',
       streetAddress: office.address.split(',')[0],
-      addressLocality: office.city,
+      // locality = ciudad postal real (Cicero/Pico Rivera/Arvada); city se
+      // conserva para el copy y areaServed (mercado objetivo).
+      addressLocality: office.locality ?? office.city,
       addressRegion: office.stateCode,
       postalCode: office.zip,
       addressCountry: 'US',

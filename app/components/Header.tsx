@@ -26,7 +26,7 @@ const FlagUS = () => (
 );
 
 export default function HeaderProfessional() {
-  const { language, setLanguage } = useLanguage();
+  const { language } = useLanguage();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
@@ -189,8 +189,16 @@ export default function HeaderProfessional() {
     },
   ];
 
-  const toggleLang = (lang: 'es' | 'en') => {
-    setLanguage(lang);
+  // Ruta equivalente en el otro idioma. El switcher usa <Link href> real
+  // (no button+router.push) para que exista un enlace es↔en rastreable.
+  const langPath = (target: 'es' | 'en') => {
+    const rest = pathname.split('/').slice(2).join('/');
+    return `/${target}${rest ? '/' + rest : ''}`;
+  };
+
+  const onLangLinkClick = (target: 'es' | 'en') => {
+    // El proxy usa NEXT_LOCALE para URLs sin prefijo en visitas posteriores.
+    document.cookie = `NEXT_LOCALE=${target}; path=/; max-age=31536000`;
     setIsLangMenuOpen(false);
     setIsMenuOpen(false);
   };
@@ -413,12 +421,12 @@ export default function HeaderProfessional() {
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       className="absolute right-0 top-full mt-4 w-32 bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl border border-white/10 overflow-hidden p-1"
                     >
-                      <button onClick={() => toggleLang('es')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
+                      <Link href={langPath('es')} onClick={() => onLangLinkClick('es')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
                         <FlagES /> <span className="text-[10px] font-light text-white tracking-widest">ESP</span>
-                      </button>
-                      <button onClick={() => toggleLang('en')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
+                      </Link>
+                      <Link href={langPath('en')} onClick={() => onLangLinkClick('en')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
                         <FlagUS /> <span className="text-[10px] font-light text-white tracking-widest">ENG</span>
-                      </button>
+                      </Link>
                     </m.div>
                   )}
                 </AnimatePresence>
@@ -428,14 +436,15 @@ export default function HeaderProfessional() {
             {/* --- 3. BOTÓN MÓVIL CON CLICK --- */}
             <div className="lg:hidden flex items-center gap-3 ml-auto">
               {/* Language toggle for mobile */}
-              <button
-                onClick={() => toggleLang(language === 'es' ? 'en' : 'es')}
+              <Link
+                href={langPath(language === 'es' ? 'en' : 'es')}
+                onClick={() => onLangLinkClick(language === 'es' ? 'en' : 'es')}
                 aria-label="Cambiar idioma / Change language"
                 className="flex items-center gap-1.5 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.15em] transition-colors duration-200 px-2 py-1.5 rounded-lg border border-white/10 active:bg-white/10"
               >
                 {language === 'es' ? <FlagUS /> : <FlagES />}
                 <span>{language === 'es' ? 'EN' : 'ES'}</span>
-              </button>
+              </Link>
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -607,12 +616,12 @@ export default function HeaderProfessional() {
                     </Link>
 
                     <div className="flex gap-2">
-                      <button onClick={() => toggleLang('es')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm tracking-widest transition-all ${language === 'es' ? 'text-white font-bold bg-white/10 border border-white/20' : 'text-gray-400 font-medium bg-white/5 border border-transparent'}`}>
+                      <Link href={langPath('es')} onClick={() => onLangLinkClick('es')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm tracking-widest transition-all ${language === 'es' ? 'text-white font-bold bg-white/10 border border-white/20' : 'text-gray-400 font-medium bg-white/5 border border-transparent'}`}>
                         <FlagES /> ESP
-                      </button>
-                      <button onClick={() => toggleLang('en')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm tracking-widest transition-all ${language === 'en' ? 'text-white font-bold bg-white/10 border border-white/20' : 'text-gray-400 font-medium bg-white/5 border border-transparent'}`}>
+                      </Link>
+                      <Link href={langPath('en')} onClick={() => onLangLinkClick('en')} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm tracking-widest transition-all ${language === 'en' ? 'text-white font-bold bg-white/10 border border-white/20' : 'text-gray-400 font-medium bg-white/5 border border-transparent'}`}>
                         <FlagUS /> ENG
-                      </button>
+                      </Link>
                     </div>
                 </div>
 

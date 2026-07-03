@@ -187,7 +187,7 @@ export default function AccidentesClient({ lang }: { lang: Language }) {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
                   </div>
                   <div className="p-4">
-                    <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">{article.title[lang]}</h4>
+                    <h3 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">{article.title[lang]}</h3>
                     <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
                       {isEs ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                     </span>

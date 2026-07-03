@@ -17,7 +17,7 @@ const officeData: OfficeData = {
   email: 'elpaso@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 2:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 2:00 PM' },
   mapLink: 'https://share.google/uVjOe9OdhnatA0rr6',
-  image: '/offices/El paso.png',
+  image: '/offices/el-paso.png',
   
   // --- GERENCIA (ELIMINADO) ---
   managers: [],

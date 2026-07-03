@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
-import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
 
@@ -21,7 +20,7 @@ const OFFICE_INFO = {
   // Coordenadas aproximadas para 3385 Airways Blvd
   latitude: "35.0673", 
   longitude: "-89.9928",
-  mapUrl: "https://share.google/Fc3ISgQAihcayfmws" // URL CORRECTA DE GMB
+  mapUrl: "https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116" // TODO(GBP): reemplazar por el share-link real de Memphis (el anterior era el de Main St)
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -84,7 +83,7 @@ export default async function MemphisPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="local-schema-memphis"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}

@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
 import {
   Calendar, Clock, ArrowLeft, Sparkles, CheckCircle2, AlertCircle,
   Lightbulb, Quote, TrendingUp, Award, Heart, Star, MessageCircle,
@@ -45,7 +44,7 @@ const blogContent = {
       published: 'Publicado',
       readTime: '10 min de lectura',
       tags: 'RFE / USCIS',
-      date: '18 Abr, 2025',
+      date: '18 Abr, 2026',
       time: '10 min',
       authorRole: 'Fundador & Abogado Principal',
       ctaButton: 'Consultar con un Abogado Ahora'
@@ -242,7 +241,7 @@ const blogContent = {
       published: 'Published',
       readTime: '10 min read',
       tags: 'RFE / USCIS',
-      date: 'Apr 18, 2025',
+      date: 'Apr 18, 2026',
       time: '10 min',
       authorRole: 'Founder & Lead Attorney',
       ctaButton: 'Consult with an Attorney Now'
@@ -453,7 +452,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
       ],
       type: 'article',
-      publishedTime: '2025-04-18T08:00:00.000Z',
+      publishedTime: '2026-04-18T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['RFE', 'USCIS', 'Evidencia', 'Inmigración', 'Request for Evidence'],
@@ -492,12 +491,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
         description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
         slug="rfe-responder-evidencia-uscis"
-        date="2025-04-18"
+        date="2026-04-18"
         image={IMAGES.article}
         lang={lang as string}
         readTime="10"
       />
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
@@ -551,7 +550,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   <Image
                     src={IMAGES.author}
                     alt="Abogado Manuel Solis"
-                    fill
+                    fill sizes="56px"
                     className="object-cover"
                   />
                 </div>
@@ -586,9 +585,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
                 {/* Resumen */}
                 <div className="p-8 rounded-3xl bg-gradient-to-br from-[#B2904D]/20 to-transparent border border-[#B2904D]/30 mb-10 shadow-2xl">
-                   <h3 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
+                   <h2 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
                      <Sparkles size={20} /> {t.summary.title}
-                   </h3>
+                   </h2>
                    <p
                      className="text-lg text-white leading-relaxed font-light m-0"
                      dangerouslySetInnerHTML={{ __html: t.summary.text }}
@@ -814,7 +813,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <h3 className="text-xs font-bold text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-4">Sobre el Autor</h3>
                     <div className="flex flex-col items-center text-center">
                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#001540] shadow-[0_0_0_2px_#B2904D] mb-4">
-                          <Image src={IMAGES.author} alt="Manuel Solis" fill className="object-cover" />
+                          <Image src={IMAGES.author} alt="Manuel Solis" fill sizes="96px" className="object-cover" />
                        </div>
                        <h4 className="text-xl font-bold text-white">Manuel Solís</h4>
                        <p className="text-sm text-[#B2904D] mb-4">{t.ui.authorRole}</p>

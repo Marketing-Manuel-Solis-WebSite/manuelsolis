@@ -17,7 +17,7 @@ const officeData: OfficeData = {
   email: 'losangeles@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 9:00 AM - 2:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 9:00 AM - 2:00 PM' },
   mapLink: 'https://share.google/VnrxOpNfWDbNYkwjP',
-  image: '/offices/Los Angeles.png',
+  image: '/offices/los-angeles.png',
 
   // --- GERENCIA (ELIMINADO) ---
   managers: [],

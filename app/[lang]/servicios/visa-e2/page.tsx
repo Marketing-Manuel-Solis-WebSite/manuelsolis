@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `${SITE_URL}/${lang}/servicios/visa-e2`,
-      images: ['/home-image.jpg'],
+      images: ['/og-default.jpg'],
     },
   };
 }

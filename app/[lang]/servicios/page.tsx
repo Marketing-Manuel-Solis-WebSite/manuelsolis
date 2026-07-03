@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import Link from 'next/link';
 import { Scale, Car, ShieldCheck, Heart, FileText, TrendingUp, MapPin } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
@@ -107,7 +106,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: isEs ? 'es_US' : 'en_US',
       images: [
         {
-          url: `${SITE_URL}/home-image.jpg`,
+          url: `${SITE_URL}/og-default.jpg`,
           width: 1200,
           height: 630,
           alt: title,
@@ -118,7 +117,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       card: 'summary_large_image',
       title,
       description,
-      images: [`${SITE_URL}/home-image.jpg`],
+      images: [`${SITE_URL}/og-default.jpg`],
       creator: '@AbogadoMSolis',
     },
     keywords: isEs
@@ -140,7 +139,7 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
 
   return (
     <>
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
@@ -269,7 +268,7 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
                 {isEs ? 'Llamar Ahora: ' : 'Call Now: '}(832) 598-0914
               </MagneticButton>
               <Link
-                href={`/${currentLang}/informacion/nosotros`}
+                href={`/${currentLang}/nosotros`}
                 className="inline-flex items-center justify-center rounded-full border-2 border-white text-white font-semibold text-lg px-8 py-4 transition-colors hover:bg-white/10"
               >
                 {isEs ? 'Conozca al Equipo' : 'Meet the Team'}

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import ImmigrationClient from './ImmigrationClient';
-import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { generateFAQSchema } from '../../../lib/blogSchema';
 
@@ -39,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : 'Protect your future in the U.S. with expert immigration attorneys.',
       url: `${SITE_URL}/${lang}/servicios/inmigracion`,
       type: 'website',
-      locale: isEs ? 'es_MX' : 'en_US',
+      locale: isEs ? 'es_US' : 'en_US',
       siteName: 'Manuel Solís Law Firm',
       images: [
         {
@@ -85,6 +84,7 @@ const getImmigrationSchema = (lang: string) => {
     ],
     provider: {
       '@type': 'LawFirm',
+      '@id': 'https://www.manuelsolis.com/#organization',
       name: 'Manuel Solis Law Firm',
       url: 'https://www.manuelsolis.com',
       telephone: '+1-832-598-0914',
@@ -145,7 +145,7 @@ export default async function ImmigrationPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="immigration-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}

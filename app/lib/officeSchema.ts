@@ -1,6 +1,6 @@
 import 'server-only';
 import { getPlaceData, type GooglePlaceData } from './googleReviews';
-import { getOfficePlaceId } from './officesRegistry';
+import { getOfficePlaceId, isVirtualOffice } from './officesRegistry';
 
 /**
  * Centralized builder for the per-office LegalService + Attorney
@@ -36,6 +36,8 @@ export type OfficeOpeningHours = {
 };
 
 export type OfficeInfo = {
+  /** Nombre por sucursal (ej. "Manuel Solis Law Firm - Harlingen"); mejora el match con la ficha GBP. */
+  name?: string;
   address: string;
   city: string;
   state: string;
@@ -65,18 +67,14 @@ export async function buildOfficeSchema(
     : null;
 
   const url = `${SITE_URL}/${lang}/oficinas/${input.slug}`;
-
-  const sameAs: string[] = [...SAME_AS_BASE];
-  if (input.officeInfo.mapUrl) sameAs.push(input.officeInfo.mapUrl);
-  if (placeData?.url && !sameAs.includes(placeData.url)) {
-    sameAs.push(placeData.url);
-  }
+  const virtual = isVirtualOffice(input.slug);
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': ['LegalService', 'Attorney'],
-    '@id': `${url}#localbusiness`,
-    name: ORG_NAME,
+    // @id neutro de idioma: es/en describen la MISMA oficina física.
+    '@id': `${SITE_URL}/oficinas/${input.slug}#localbusiness`,
+    name: input.officeInfo.name ?? ORG_NAME,
     description: lang === 'es' ? input.description.es : input.description.en,
     image: ORG_LOGO,
     url,
@@ -95,10 +93,16 @@ export async function buildOfficeSchema(
       latitude: input.officeInfo.latitude,
       longitude: input.officeInfo.longitude,
     },
-    sameAs,
+    areaServed: { '@type': 'City', name: input.officeInfo.city },
+    sameAs: SAME_AS_BASE,
   };
 
-  if (input.openingHours?.length) {
+  const mapLink = input.officeInfo.mapUrl ?? placeData?.url;
+  if (mapLink) schema.hasMap = mapLink;
+
+  // Política de oficinas virtuales (ver officesRegistry.ts): una dirección
+  // Regus/IWG no emite horario 24h ni rating como si fuera sede atendida.
+  if (input.openingHours?.length && !virtual) {
     schema.openingHoursSpecification = input.openingHours.map((h) => ({
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: h.dayOfWeek,
@@ -111,7 +115,7 @@ export async function buildOfficeSchema(
     schema.knowsLanguage = input.knowsLanguage;
   }
 
-  if (placeData && placeData.userRatingCount > 0) {
+  if (placeData && placeData.userRatingCount > 0 && !virtual) {
     schema.aggregateRating = {
       '@type': 'AggregateRating',
       ratingValue: placeData.rating.toFixed(1),
@@ -122,7 +126,7 @@ export async function buildOfficeSchema(
     };
   }
 
-  if (placeData?.reviews?.length) {
+  if (placeData?.reviews?.length && !virtual) {
     schema.review = placeData.reviews.slice(0, 3).map((r) => ({
       '@type': 'Review',
       author: { '@type': 'Person', name: r.authorName },

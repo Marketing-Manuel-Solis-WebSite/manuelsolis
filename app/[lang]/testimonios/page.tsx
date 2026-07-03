@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { getPlaceData } from '../../lib/googleReviews';
 import { MAIN_FIRM_PLACE_ID } from '../../lib/officesRegistry';
 import TestimoniosClient from './TestimoniosClient';
@@ -43,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       siteName: 'Manuel Solis Law Firm',
       locale: isEs ? 'es_US' : 'en_US',
-      images: ['/home-image.jpg'],
+      images: ['/og-default.jpg'],
     },
   };
 }
@@ -109,7 +108,7 @@ export default async function TestimoniosPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="review-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}

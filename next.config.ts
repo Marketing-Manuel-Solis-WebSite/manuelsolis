@@ -43,7 +43,19 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    return seoRedirects;
+    return [
+      // Canonicalización de host: apex → www con 308 permanente. Vercel hoy
+      // emite un 307 (temporal) a nivel dominio, que no consolida señales;
+      // esta regla lo hace permanente si la request llega a la app. Cambiar
+      // también en Vercel → Domains el redirect del apex a "permanent".
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'manuelsolis.com' }],
+        destination: 'https://www.manuelsolis.com/:path*',
+        permanent: true,
+      },
+      ...seoRedirects,
+    ];
   },
   async headers() {
     return [

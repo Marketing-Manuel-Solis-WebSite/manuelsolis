@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
 import {
   Calendar, Clock, ArrowLeft, Sparkles, CheckCircle2, AlertCircle,
   Lightbulb, TrendingUp, MessageCircle,
@@ -35,7 +34,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'DACA 2026: qué está pasando, qué puedes hacer y qué esperar | Bufete Manuel Solís',
+    metaTitle: 'DACA 2026: qué está pasando y qué puedes hacer',
     metaDesc: 'El estado legal de DACA en 2026, explicado en español: qué dicen los tribunales, si puedes renovar, qué pasa si venció tu permiso y qué hacer ahora mismo.',
     ui: {
       back: 'Volver al blog',
@@ -209,7 +208,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'DACA 2026: What\'s Happening, What You Can Do, and What to Expect | Manuel Solis Law',
+    metaTitle: 'DACA 2026: What\'s Happening and What You Can Do',
     metaDesc: 'DACA\'s legal status in 2026, explained: what the courts are saying, whether you can renew, what happens if your permit expired, and what to do right now.',
     ui: {
       back: 'Back to blog',
@@ -450,7 +449,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         lang={lang as string}
         readTime="11"
       />
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
@@ -504,7 +503,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   <Image
                     src={IMAGES.author}
                     alt="Abogado Manuel Solis"
-                    fill
+                    fill sizes="56px"
                     className="object-cover"
                   />
                 </div>
@@ -539,9 +538,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
                 {/* Resumen */}
                 <div className="p-8 rounded-3xl bg-gradient-to-br from-[#B2904D]/20 to-transparent border border-[#B2904D]/30 mb-10 shadow-2xl">
-                   <h3 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
+                   <h2 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
                      <Sparkles size={20} /> {t.summary.title}
-                   </h3>
+                   </h2>
                    <p
                      className="text-lg text-white leading-relaxed font-light m-0"
                      dangerouslySetInnerHTML={{ __html: t.summary.text }}
@@ -847,7 +846,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <h3 className="text-xs font-bold text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-4">Sobre el Autor</h3>
                     <div className="flex flex-col items-center text-center">
                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#001540] shadow-[0_0_0_2px_#B2904D] mb-4">
-                          <Image src={IMAGES.author} alt="Manuel Solis" fill className="object-cover" />
+                          <Image src={IMAGES.author} alt="Manuel Solis" fill sizes="96px" className="object-cover" />
                        </div>
                        <h4 className="text-xl font-bold text-white">Manuel Solís</h4>
                        <p className="text-sm text-[#B2904D] mb-4">{t.ui.authorRole}</p>

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { notFound } from 'next/navigation';
 import { collaborators, getCollaborator } from '../../../lib/collaboratorData';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
@@ -30,7 +29,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!collaborator) return { title: 'Not Found' };
 
   const role = collaborator.role[isEs ? 'es' : 'en'];
-  const title = `${collaborator.name} | ${role} - Manuel Solís`;
+  // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
+  const title = `${collaborator.name} | ${role}`;
   const description = collaborator.description[isEs ? 'es' : 'en'][0];
 
   return {
@@ -102,16 +102,14 @@ export default async function CollaboratorPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id={`person-schema-${slug}`}
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
-      <Script
+      <script
         id={`breadcrumb-schema-${slug}`}
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <CollaboratorProfile slug={slug} lang={lang} />

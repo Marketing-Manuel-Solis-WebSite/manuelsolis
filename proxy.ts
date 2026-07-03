@@ -112,8 +112,10 @@ export function proxy(request: NextRequest) {
   }
 
   // Para crawlers sin locale en URL, redirigir directamente sin cookie logic
+  // Nota: con pathname '/' se emite '/es' (sin slash final) para evitar el
+  // salto extra /es/ → /es que añade el normalizador de trailing slash.
   if (isSEOCrawler) {
-    const newUrl = new URL(`/es${pathname}`, request.url);
+    const newUrl = new URL(pathname === '/' ? '/es' : `/es${pathname}`, request.url);
     newUrl.search = request.nextUrl.search;
     const response = NextResponse.redirect(newUrl, 301);
     response.headers.set('Content-Language', 'es');
@@ -123,7 +125,7 @@ export function proxy(request: NextRequest) {
 
   // Redireccionar a la versión con idioma
   const locale = getLocale(request);
-  const newUrl = new URL(`/${locale}${pathname}`, request.url);
+  const newUrl = new URL(pathname === '/' ? `/${locale}` : `/${locale}${pathname}`, request.url);
 
   // CRÍTICO: Mantener query params (UTMs, search, etc)
   newUrl.search = request.nextUrl.search;

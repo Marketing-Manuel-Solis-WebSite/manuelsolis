@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
 import {
   Calendar, Clock, ArrowLeft, Sparkles, CheckCircle2, AlertCircle,
   Lightbulb, Quote, TrendingUp, Award, Heart, Star, MessageCircle,
@@ -45,7 +44,7 @@ const blogContent = {
       published: 'Publicado',
       readTime: '10 min de lectura',
       tags: 'Accidente Auto & Derechos',
-      date: '26 Abr, 2025',
+      date: '26 Abr, 2026',
       time: '10 min',
       authorRole: 'Fundador & Abogado Principal',
       ctaButton: 'Consultar con un Abogado Ahora'
@@ -59,6 +58,7 @@ const blogContent = {
       'Cada año, miles de personas indocumentadas en Texas y otros estados sufren accidentes automovilísticos. El miedo al estatus migratorio hace que muchas no busquen atención médica, no reporten el accidente, o acepten acuerdos injustos con las aseguradoras.',
       'La realidad legal es clara: <strong>tu estatus migratorio no elimina tus derechos</strong> como víctima de un accidente. Las leyes de lesiones personales protegen a toda persona presente en el territorio, independientemente de si tiene visa, green card, o ningún documento.',
       'Este artículo explica paso a paso qué hacer después de un accidente, qué protecciones legales existen, qué errores evitar, y cuándo un accidente de auto podría tener implicaciones migratorias reales. La información se enfoca en Texas, pero los principios generales aplican en la mayoría de los estados.',
+      'Si tu choque fue en Texas, nuestro equipo de <a href="/es/abogado-accidentes-houston" class="text-[#B2904D] underline hover:text-white">abogados de accidentes en Houston</a> y <a href="/es/abogado-accidentes-dallas" class="text-[#B2904D] underline hover:text-white">Dallas</a> puede evaluar tu caso sin costo y en español.',
       'Cada caso es diferente. <strong>Esta información es educativa y no sustituye la consulta con un abogado.</strong>'
     ],
     sections: {
@@ -190,7 +190,7 @@ const blogContent = {
       published: 'Published',
       readTime: '10 min read',
       tags: 'Car Accident & Rights',
-      date: 'Apr 26, 2025',
+      date: 'Apr 26, 2026',
       time: '10 min',
       authorRole: 'Founder & Lead Attorney',
       ctaButton: 'Consult with an Attorney Now'
@@ -204,6 +204,7 @@ const blogContent = {
       'Every year, thousands of undocumented people in Texas and other states are involved in car accidents. Fear of immigration status causes many to avoid seeking medical attention, fail to report the accident, or accept unfair settlements from insurance companies.',
       'The legal reality is clear: <strong>your immigration status does not eliminate your rights</strong> as an accident victim. Personal injury laws protect every person present in the territory, regardless of whether they have a visa, green card, or no documents at all.',
       'This article explains step by step what to do after an accident, what legal protections exist, what mistakes to avoid, and when a car accident could have real immigration implications. The information focuses on Texas, but the general principles apply in most states.',
+      'If your crash happened in Texas, our team of <a href="/en/abogado-accidentes-houston" class="text-[#B2904D] underline hover:text-white">Houston accident lawyers</a> and <a href="/en/abogado-accidentes-dallas" class="text-[#B2904D] underline hover:text-white">Dallas accident lawyers</a> can evaluate your case free of charge, in Spanish or English.',
       'Every case is different. <strong>This information is educational and does not replace consultation with an attorney.</strong>'
     ],
     sections: {
@@ -349,7 +350,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
       ],
       type: 'article',
-      publishedTime: '2025-04-26T08:00:00.000Z',
+      publishedTime: '2026-04-26T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Lesiones Personales',
       tags: ['Accidente Auto', 'Indocumentado', 'Derechos', 'Lesiones Personales', 'EMTALA'],
@@ -388,12 +389,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         title={blogContent[lang as 'es' | 'en']?.metaTitle || blogContent.es.metaTitle}
         description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
         slug="accidente-auto-indocumentado-derechos"
-        date="2025-04-26"
+        date="2026-04-26"
         image={IMAGES.article}
         lang={lang as string}
         readTime="10"
+        faqs={t.sections.faq.items.map((item) => ({
+          question: item.q,
+          answer: item.a.replace(/<[^>]+>/g, ''),
+        }))}
       />
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
@@ -447,7 +452,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   <Image
                     src={IMAGES.author}
                     alt="Abogado Manuel Solis"
-                    fill
+                    fill sizes="56px"
                     className="object-cover"
                   />
                 </div>
@@ -482,9 +487,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
                 {/* Resumen */}
                 <div className="p-8 rounded-3xl bg-gradient-to-br from-[#B2904D]/20 to-transparent border border-[#B2904D]/30 mb-10 shadow-2xl">
-                   <h3 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
+                   <h2 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
                      <Sparkles size={20} /> {t.summary.title}
-                   </h3>
+                   </h2>
                    <p
                      className="text-lg text-white leading-relaxed font-light m-0"
                      dangerouslySetInnerHTML={{ __html: t.summary.text }}
@@ -713,7 +718,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <h3 className="text-xs font-bold text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-4">Sobre el Autor</h3>
                     <div className="flex flex-col items-center text-center">
                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-[#001540] shadow-[0_0_0_2px_#B2904D] mb-4">
-                          <Image src={IMAGES.author} alt="Manuel Solis" fill className="object-cover" />
+                          <Image src={IMAGES.author} alt="Manuel Solis" fill sizes="96px" className="object-cover" />
                        </div>
                        <h4 className="text-xl font-bold text-white">Manuel Solís</h4>
                        <p className="text-sm text-[#B2904D] mb-4">{t.ui.authorRole}</p>

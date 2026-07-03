@@ -156,6 +156,9 @@ export default function Hero({ lang }: { lang: Language }) {
             <Stagger gap={0.1} className="space-y-6 sm:space-y-8">
               <StaggerItem as="div">
                 <h1 className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 md:gap-6">
+                  {/* Prefijo solo para lectores/crawlers: el H1 indexable es
+                      "Abogados de Inmigración & Accidentes" sin tocar el diseño. */}
+                  <span className="sr-only">{isEs ? 'Abogados de' : 'Attorneys for'}</span>
                   <span className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                     {isEs ? 'Inmigración' : 'Immigration'}
                   </span>

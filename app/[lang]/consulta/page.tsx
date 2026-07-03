@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ConsultaClient from './ConsultaClient';
+import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -15,9 +16,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
   const title = isEs
-    ? 'Consulta Confidencial — Manuel Solis Law Firm'
-    : 'Confidential Consultation — Manuel Solis Law Firm';
+    ? 'Consulta Confidencial con un Abogado'
+    : 'Confidential Attorney Consultation';
   const description = isEs
     ? 'Solicita tu consulta confidencial con un abogado de Manuel Solis Law Firm. Respuesta en menos de 24 horas. Más de 35 años de experiencia.'
     : 'Request your confidential consultation with a Manuel Solis Law Firm attorney. Response within 24 hours. Over 35 years of experience.';
@@ -40,11 +42,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       siteName: 'Manuel Solis Law Firm',
       locale: isEs ? 'es_US' : 'en_US',
-      images: ['/home-image.jpg'],
+      images: ['/og-default.jpg'],
     },
   };
 }
 
-export default async function ConsultaPage() {
-  return <ConsultaClient />;
+export default async function ConsultaPage({ params }: Props) {
+  const { lang } = await params;
+  const currentLang = lang === 'en' ? 'en' : 'es';
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: currentLang === 'es' ? 'Inicio' : 'Home', url: `/${currentLang}` },
+    { name: currentLang === 'es' ? 'Consulta' : 'Consultation', url: `/${currentLang}/consulta` },
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      />
+      <ConsultaClient />
+    </>
+  );
 }

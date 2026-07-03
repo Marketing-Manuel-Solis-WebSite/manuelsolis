@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       url: `${SITE_URL}/${lang}/servicios/seguros`,
-      images: ['/home-image.jpg'],
+      images: ['/og-default.jpg'],
     },
   };
 }

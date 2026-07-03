@@ -62,8 +62,8 @@ const officesData: OfficeData[] = [
     description: ORIGINAL_DESC,
     address: '6657 Navigation Blvd, Houston, TX 77011, United States',
     phone: '(713) 701-1731',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: generateMapUrl('6705 Navigation Blvd, Houston, TX 77011, United States'),
+    hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
+    mapLink: generateMapUrl('6657 Navigation Blvd, Houston, TX 77011, United States'),
     image: '/offices/Houston.png',
     services: [
         { es: 'Inmigración', en: 'Immigration' },
@@ -181,7 +181,7 @@ const officesData: OfficeData[] = [
     description: ORIGINAL_DESC,
     address: '9188 Bellaire Blvd E, Houston, TX 77036, United States',
     phone: '(713) 903-7875',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 8:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 8:00 AM - 4:00 PM' },
     mapLink: generateMapUrl('9188 Bellaire Blvd E, Houston, TX 77036, United States'),
     image: '/offices/Houston.png',
     services: [ 
@@ -196,10 +196,10 @@ const officesData: OfficeData[] = [
     state: 'IL',
     title: { es: 'Chicago', en: 'Chicago' }, 
     description: ORIGINAL_DESC,
-    address: '6000 Cermak Rd, Cicero, IL 60804, United States',
+    address: '6000 W Cermak Rd, Cicero, IL 60804, United States',
     phone: '(312) 477-0389',
     hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 4pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 4pm' },
-    mapLink: generateMapUrl('6000 Cermak Rd, Cicero, IL 60804, United States'),
+    mapLink: generateMapUrl('6000 W Cermak Rd, Cicero, IL 60804, United States'),
     image: '/offices/Chicago.png',
     services: [
         { es: 'Inmigración', en: 'Immigration' }, 
@@ -279,7 +279,7 @@ const officesData: OfficeData[] = [
     phone: '(915) 233-7127',
     hours: { es: 'Lun - Vie 9am - 5pm | Sáb 9am - 2pm', en: 'Mon - Fri 9am - 5pm | Sat 9am - 2pm' },
     mapLink: generateMapUrl('3632 Admiral St, El Paso, TX 79925, United States'),
-    image: '/offices/El paso.png',
+    image: '/offices/el-paso.png',
     services: [
         { es: 'Inmigración', en: 'Immigration' }, 
         { es: 'Seguros', en: 'Insurance' },
@@ -296,7 +296,7 @@ const officesData: OfficeData[] = [
     address: '320 E Jackson St, Harlingen, TX 78550, United States',
     phone: '(956) 597-7090',
     hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
-    mapLink: generateMapUrl('320 E Jackson Ave, Harlingen, TX 78550, United States'),
+    mapLink: generateMapUrl('320 E Jackson St, Harlingen, TX 78550, United States'),
     image: '/offices/Harlingen.png',
     services: [ 
         { es: 'Inmigración', en: 'Immigration' },
@@ -315,7 +315,7 @@ const officesData: OfficeData[] = [
     phone: '(213) 784-1554',
     hours: { es: 'Lun - Vie 9am - 6pm | Sáb 9am - 2pm', en: 'Mon - Fri 9am - 6pm | Sat 9am - 2pm' },
     mapLink: generateMapUrl('8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660, United States'),
-    image: '/offices/Los Angeles.png',
+    image: '/offices/los-angeles.png',
     services: [ 
         { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },

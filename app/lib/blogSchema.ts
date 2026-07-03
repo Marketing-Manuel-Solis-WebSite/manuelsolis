@@ -4,7 +4,9 @@ interface BlogSchemaInput {
   title: string;
   description: string;
   slug: string;
-  date: string; // ISO date string e.g. '2025-04-04'
+  date: string; // ISO date string e.g. '2026-04-04'
+  /** Fecha de última actualización real; si se omite, se usa `date`. */
+  dateModified?: string;
   image: string; // relative path e.g. '/blog/blog_20/BLOG10_CR1.png'
   lang: string;
   readTime?: string;
@@ -25,7 +27,7 @@ export function generateBlogPostingSchema(input: BlogSchemaInput) {
     headline: input.title,
     description: input.description,
     datePublished: input.date,
-    dateModified: input.date,
+    dateModified: input.dateModified ?? input.date,
     url: `${SITE_URL}/${input.lang}/blog/${input.slug}`,
     image: `${SITE_URL}${input.image}`,
     inLanguage: input.lang,
@@ -35,8 +37,12 @@ export function generateBlogPostingSchema(input: BlogSchemaInput) {
     },
     author: {
       '@type': 'Person',
+      // Mismo @id que emite el perfil /abogados/manuel-solis: consolida la
+      // entidad autor↔perfil para E-E-A-T.
+      '@id': `${SITE_URL}/#person-manuel-solis`,
       name: 'Manuel Solís',
-      url: `${SITE_URL}/${input.lang}/abogados`,
+      url: `${SITE_URL}/${input.lang}/abogados/manuel-solis`,
+      image: `${SITE_URL}/abogado-manuel-solis.jpg`,
       jobTitle: input.lang === 'es' ? 'Fundador & Abogado Principal' : 'Founder & Lead Attorney',
       knowsAbout: [
         'Immigration Law',

@@ -25,7 +25,7 @@ export default function SegurosVideo({ videoAlt }: { videoAlt: string }) {
           </m.div>
         )}
       </m.div>
-      <video ref={videoRef} src="https://vz-9f852395-0ee.b-cdn.net/d7979aa5-40db-49f2-8566-b8a580591661/playlist.m3u8" className="w-full h-full object-cover" aria-label={videoAlt} />
+      <video ref={videoRef} preload="none" src="https://vz-9f852395-0ee.b-cdn.net/d7979aa5-40db-49f2-8566-b8a580591661/playlist.m3u8" className="w-full h-full object-cover" aria-label={videoAlt} />
     </div>
   );
 }

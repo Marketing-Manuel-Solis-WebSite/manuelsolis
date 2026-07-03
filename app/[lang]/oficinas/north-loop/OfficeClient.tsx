@@ -21,6 +21,7 @@ const officeData: OfficeData = {
   
   // --- TAMBIÉN ATENDEMOS ACCIDENTES (oficina virtual) ---
   accidentsSection: true,
+  accidentsSlug: 'north-loop',
 
   // --- GERENCIA (ELIMINADO) ---
   managers: [],

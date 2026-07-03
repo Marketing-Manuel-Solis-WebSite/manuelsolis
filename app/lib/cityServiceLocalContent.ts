@@ -731,20 +731,22 @@ const CASE_BUILDERS: Record<string, (o: OfficeInfo, s: CityLocalSignals) => Typi
   vawa: vawaCases,
 };
 
+// CITY_LOCAL se indexa por ciudad; algunos officeKey son por sucursal
+// (p.ej. 'houston-principal'), así que caemos al citySlug de la oficina.
 export function getLocalFAQ(config: LandingPageConfig, office: OfficeInfo, service: ServiceInfo): FAQItem[] {
-  const signals = CITY_LOCAL[config.officeKey];
+  const signals = CITY_LOCAL[config.officeKey] ?? CITY_LOCAL[office.citySlug];
   const builder = FAQ_BUILDERS[service.serviceKey];
   if (!signals || !builder) return [];
   return builder(office, signals);
 }
 
 export function getTypicalCases(config: LandingPageConfig, office: OfficeInfo, service: ServiceInfo): TypicalCase[] {
-  const signals = CITY_LOCAL[config.officeKey];
+  const signals = CITY_LOCAL[config.officeKey] ?? CITY_LOCAL[office.citySlug];
   const builder = CASE_BUILDERS[service.serviceKey];
   if (!signals || !builder) return [];
   return builder(office, signals);
 }
 
-export function getCitySignals(officeKey: string): CityLocalSignals | undefined {
-  return CITY_LOCAL[officeKey];
+export function getCitySignals(officeKey: string, citySlug?: string): CityLocalSignals | undefined {
+  return CITY_LOCAL[officeKey] ?? (citySlug ? CITY_LOCAL[citySlug] : undefined);
 }

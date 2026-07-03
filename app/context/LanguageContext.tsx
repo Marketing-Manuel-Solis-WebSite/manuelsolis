@@ -26,6 +26,9 @@ export function LanguageProvider({
 
   const setLanguage = (newLang: Language) => {
     setLanguageState(newLang);
+    // Persistir la preferencia: el proxy usa NEXT_LOCALE para redirigir
+    // URLs sin prefijo de idioma en visitas posteriores.
+    document.cookie = `NEXT_LOCALE=${newLang}; path=/; max-age=31536000`;
     // Cambiar la URL al nuevo idioma
     const currentPath = pathname.split('/').slice(2).join('/'); // Remueve /es o /en
     router.push(`/${newLang}${currentPath ? '/' + currentPath : ''}`);

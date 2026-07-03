@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
-import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
 
@@ -13,7 +12,7 @@ type Props = {
 // --- CONFIGURACIÓN SEO ESPECÍFICA DE LA OFICINA ---
 const OFFICE_INFO = {
   name: "Manuel Solis Law Firm - Houston Kirby",
-  address: "3730 Kirby Dr",
+  address: "3730 Kirby Dr Suite 1200",
   city: "Houston",
   state: "TX",
   zip: "77098",
@@ -84,7 +83,7 @@ export default async function KirbyPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="local-schema-kirby"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}

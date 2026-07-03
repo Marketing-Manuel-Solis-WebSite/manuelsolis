@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import Link from 'next/link';
 import { MapPin, Phone, Building2, ChevronDown } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
@@ -69,10 +68,10 @@ const OFFICE_GROUPS: StateGroup[] = [
           {
             name: { es: 'Bellaire', en: 'Bellaire' },
             slug: 'houston-bellaire',
-            address: '6220 Westpark Dr Suite 100',
+            address: '9188 Bellaire Blvd, STE E',
             city: 'Houston',
             state: 'TX',
-            zip: '77057',
+            zip: '77036',
             phone: '(713) 903-7875',
           },
           {
@@ -87,16 +86,16 @@ const OFFICE_GROUPS: StateGroup[] = [
           {
             name: { es: 'League City', en: 'League City' },
             slug: 'league-city',
-            address: '350 W Bay Area Blvd',
-            city: 'Webster',
+            address: '2600 S Shore Blvd',
+            city: 'League City',
             state: 'TX',
-            zip: '77598',
+            zip: '77573',
             phone: '(832) 598-3782',
           },
           {
             name: { es: 'Main St', en: 'Main St' },
             slug: 'main-st',
-            address: '2500 Main St',
+            address: '708 Main St',
             city: 'Houston',
             state: 'TX',
             zip: '77002',
@@ -105,16 +104,16 @@ const OFFICE_GROUPS: StateGroup[] = [
           {
             name: { es: 'North Loop', en: 'North Loop' },
             slug: 'north-loop',
-            address: '5801 North Loop East',
+            address: '2950 North Loop W',
             city: 'Houston',
             state: 'TX',
-            zip: '77026',
+            zip: '77092',
             phone: '(713) 429-0237',
           },
           {
             name: { es: 'Northchase', en: 'Northchase' },
             slug: 'northchase',
-            address: '530 Northchase Dr',
+            address: '16510 Northchase Dr',
             city: 'Houston',
             state: 'TX',
             zip: '77060',
@@ -127,25 +126,25 @@ const OFFICE_GROUPS: StateGroup[] = [
       {
         name: { es: 'Dallas', en: 'Dallas' },
         slug: 'dallas',
-        address: '8150 N Central Expressway Suite 500',
+        address: '1120 Empire Central Pl',
         city: 'Dallas',
         state: 'TX',
-        zip: '75206',
+        zip: '75247',
         phone: '(214) 753-8315',
       },
       {
         name: { es: 'El Paso', en: 'El Paso' },
         slug: 'el-paso',
-        address: '221 N Kansas St Suite 700',
+        address: '3632 Admiral St',
         city: 'El Paso',
         state: 'TX',
-        zip: '79901',
+        zip: '79925',
         phone: '(915) 233-7127',
       },
       {
         name: { es: 'Harlingen', en: 'Harlingen' },
         slug: 'harlingen',
-        address: '1800 S 77 Sunshine Strip',
+        address: '320 E Jackson St',
         city: 'Harlingen',
         state: 'TX',
         zip: '78550',
@@ -159,10 +158,10 @@ const OFFICE_GROUPS: StateGroup[] = [
       {
         name: { es: 'Los Angeles', en: 'Los Angeles' },
         slug: 'losangeles',
-        address: '811 Wilshire Blvd Suite 1800',
-        city: 'Los Angeles',
+        address: '8337 Telegraph Rd, STE 115',
+        city: 'Pico Rivera',
         state: 'CA',
-        zip: '90017',
+        zip: '90660',
         phone: '(213) 784-1554',
       },
     ],
@@ -173,10 +172,10 @@ const OFFICE_GROUPS: StateGroup[] = [
       {
         name: { es: 'Chicago', en: 'Chicago' },
         slug: 'chicago',
-        address: '150 N Michigan Ave Suite 2800',
-        city: 'Chicago',
+        address: '6000 W Cermak Rd',
+        city: 'Cicero',
         state: 'IL',
-        zip: '60601',
+        zip: '60804',
         phone: '(312) 477-0389',
       },
     ],
@@ -187,7 +186,7 @@ const OFFICE_GROUPS: StateGroup[] = [
       {
         name: { es: 'Arvada (Denver)', en: 'Arvada (Denver)' },
         slug: 'arvada',
-        address: '5765 Olde Wadsworth Blvd',
+        address: '5400 Ward Rd, Bldg IV',
         city: 'Arvada',
         state: 'CO',
         zip: '80002',
@@ -201,10 +200,10 @@ const OFFICE_GROUPS: StateGroup[] = [
       {
         name: { es: 'Memphis', en: 'Memphis' },
         slug: 'memphis',
-        address: '1661 International Dr Suite 400',
+        address: '3385 Airways Blvd, STE 320',
         city: 'Memphis',
         state: 'TN',
-        zip: '38120',
+        zip: '38116',
         phone: '(901) 557-8357',
       },
     ],
@@ -243,7 +242,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       siteName: 'Manuel Solis Law Firm',
       locale: isEs ? 'es_US' : 'en_US',
-      images: ['/logo-manuel-solis.png'],
+      images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: title }],
     },
   };
 }
@@ -266,7 +265,7 @@ export default async function OficinasPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="breadcrumb-schema-oficinas"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}

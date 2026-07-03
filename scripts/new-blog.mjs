@@ -2,8 +2,11 @@
 // Scaffold a new blog post end-to-end:
 //   1. Creates app/[lang]/blog/<slug>/page.tsx skeleton
 //   2. Injects entry into BLOG_DATA.posts in app/[lang]/blog/page.tsx
-//   3. Injects route into app/sitemap.ts
+//   3. Injects route into getBlogEntries() in app/lib/sitemapData.ts
 //   4. Creates public/blog/blog_<NN>/ folder for images
+//
+// Manual follow-up (not automated): add the post to app/lib/blogRelations.ts
+// (blogServiceMap + authorArticleMap + allArticles + clusters).
 //
 // Usage:
 //   npm run new-blog -- \
@@ -51,11 +54,6 @@ function parseArgs(argv) {
 
 const args = parseArgs(process.argv.slice(2));
 
-if (args.help || args.h) {
-  console.log(USAGE);
-  process.exit(0);
-}
-
 const USAGE = `
 Usage:
   npm run new-blog -- --slug <slug> --title-es <es> --title-en <en> \\
@@ -79,6 +77,11 @@ Optional:
   --date          publish date YYYY-MM-DD (default: today)
   --dry-run       show changes without writing files
 `;
+
+if (args.help || args.h) {
+  console.log(USAGE);
+  process.exit(0);
+}
 
 // --- validation ---
 function fail(msg) {
@@ -136,7 +139,7 @@ const dryRun = Boolean(args['dry-run']);
 const blogPagePath = path.join(ROOT, 'app', '[lang]', 'blog', slug, 'page.tsx');
 const blogPageDir = path.dirname(blogPagePath);
 const blogHubPath = path.join(ROOT, 'app', '[lang]', 'blog', 'page.tsx');
-const sitemapPath = path.join(ROOT, 'app', 'sitemap.ts');
+const sitemapPath = path.join(ROOT, 'app', 'lib', 'sitemapData.ts');
 
 // --- detect duplicates ---
 if (fs.existsSync(blogPagePath)) fail(`Blog folder already exists: ${blogPageDir}`);
@@ -146,7 +149,7 @@ if (hubContent.includes(`slug: '${slug}'`)) {
 }
 const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
 if (sitemapContent.includes(`/blog/${slug}'`)) {
-  fail(`Route /blog/${slug} already present in sitemap.ts.`);
+  fail(`Route /blog/${slug} already present in sitemapData.ts.`);
 }
 
 // --- determine image folder (from image path) ---
@@ -161,7 +164,6 @@ const pageTemplate = `import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
 import { Calendar, Clock, ArrowLeft, ShieldCheck, FileText } from 'lucide-react';
 
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
@@ -316,11 +318,11 @@ export default async function BlogPostPage({ params }: Props) {
         description={t.metaDesc}
         slug={SLUG}
         date={t.date}
-        image={\`\${SITE_URL}\${IMAGES.article}\`}
+        image={IMAGES.article}
         lang={currentLang}
         readTime={t.readTime}
       />
-      <Script id="breadcrumb-schema" type="application/ld+json"
+      <script id="breadcrumb-schema" type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <BlogTracker title={t.title} author={t.author} category="${escapeLiteral(CATEGORY_LABELS[categoryId].es)}" />
@@ -382,7 +384,7 @@ export default async function BlogPostPage({ params }: Props) {
                 {t.cta.title}
               </h2>
               <p className="text-white/70 mb-6">{t.cta.body}</p>
-              <Link href={\`/\${currentLang}/nosotros\`}
+              <Link href={\`/\${currentLang}/consulta\`}
                 className="inline-block bg-[#B2904D] hover:bg-[#9a7c40] text-white font-semibold px-8 py-3 rounded-lg transition-colors">
                 {t.cta.button}
               </Link>
@@ -440,7 +442,7 @@ function injectBlogData(content) {
 function injectSitemap(content) {
   const marker = /(\{\s*route:\s*'\/blog',\s*priority:\s*0\.7,\s*changeFrequency:\s*'weekly',\s*lastModified:\s*'[^']+'\s*\},)/;
   if (!marker.test(content)) {
-    throw new Error('Could not find /blog hub entry marker in app/sitemap.ts');
+    throw new Error('Could not find /blog hub entry marker in app/lib/sitemapData.ts');
   }
   return content.replace(marker, `$1\n${sitemapEntry}`);
 }

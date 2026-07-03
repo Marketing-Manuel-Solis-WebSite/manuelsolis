@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ProteccionLegalClient from './ProteccionLegalClient';
+import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -32,5 +33,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProteccionLegalPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
-  return <ProteccionLegalClient lang={localeLang} />;
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: localeLang === 'es' ? 'Inicio' : 'Home', url: `/${localeLang}` },
+    { name: 'Blog', url: `/${localeLang}/blog` },
+    {
+      name: localeLang === 'es' ? 'Protección Legal para Migrantes' : 'Legal Protection for Migrants',
+      url: `/${localeLang}/category/proteccion-legal-para-migrantes`,
+    },
+  ]);
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      />
+      <ProteccionLegalClient lang={localeLang} />
+    </>
+  );
 }

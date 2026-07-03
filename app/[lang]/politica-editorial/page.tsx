@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
@@ -112,7 +111,7 @@ export default async function PoliticaEditorialPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="breadcrumb-schema-editorial"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}

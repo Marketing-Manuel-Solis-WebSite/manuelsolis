@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import ClientesDetenidosClient from './ClientesDetenidosClient';
 
@@ -127,12 +126,12 @@ export default async function ClientesDetenidosPage({ params }: Props) {
 
   return (
     <>
-      <Script
+      <script
         id="detained-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
-      <Script
+      <script
         id="breadcrumb-schema-detained"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
