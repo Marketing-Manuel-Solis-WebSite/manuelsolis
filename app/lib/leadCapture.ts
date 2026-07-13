@@ -192,6 +192,73 @@ export function inferOffice(pathname: string): string | null {
   return null;
 }
 
+/**
+ * Inyecta los UTMs efectivos DENTRO de la URL que viaja en `page_url`/`uri`.
+ *
+ * BOS no lee los campos `utm_*` del payload: parsea los query params de la
+ * URL. Si el visitante navegó internamente (o llegó directo), la URL del
+ * momento del envío va limpia y BOS registra el lead sin atribución aunque
+ * nuestros campos `utm_*` vayan llenos.
+ *
+ * Reglas:
+ *   - Si la URL ya trae `utm_source`, se respeta tal cual (ya es atribuible).
+ *   - Si no, se inyectan los valores efectivos ya normalizados. Los
+ *     centinelas GA4 con paréntesis se traducen a slugs URL-amigables que
+ *     el equipo de BOS acordó para tráfico propio:
+ *       (direct)  → sitio-web   (utm_source)
+ *       (none)    → sitio-web   (utm_medium)
+ *       (not set) → directo     (utm_campaign)
+ *   - content/term/gclid/fbclid solo se añaden si tienen valor real.
+ */
+export function injectUtmsIntoUrl(
+  pageUrl: string,
+  utms: {
+    source: string;
+    medium: string;
+    campaign: string;
+    content?: string | null;
+    term?: string | null;
+    gclid?: string | null;
+    fbclid?: string | null;
+  },
+): string {
+  let url: URL;
+  try {
+    url = new URL(pageUrl);
+  } catch {
+    try {
+      url = new URL(pageUrl || '/', 'https://www.manuelsolis.com');
+    } catch {
+      return pageUrl;
+    }
+  }
+
+  if (trimOrNull(url.searchParams.get('utm_source'))) return pageUrl;
+
+  const isSentinel = (v: string): boolean => isMissing(v) || v.startsWith('(');
+
+  const sourceIsDirect = isSentinel(utms.source);
+  url.searchParams.set('utm_source', sourceIsDirect ? 'sitio-web' : utms.source);
+  url.searchParams.set('utm_medium', isSentinel(utms.medium) ? 'sitio-web' : utms.medium);
+  // Campaña ausente: 'directo' solo si el tráfico es realmente directo;
+  // con origen real pero sin campaña usamos 'sin-campana' para no mezclar.
+  url.searchParams.set(
+    'utm_campaign',
+    isSentinel(utms.campaign) ? (sourceIsDirect ? 'directo' : 'sin-campana') : utms.campaign,
+  );
+
+  const content = trimOrNull(utms.content);
+  const term = trimOrNull(utms.term);
+  const gclid = trimOrNull(utms.gclid);
+  const fbclid = trimOrNull(utms.fbclid);
+  if (content) url.searchParams.set('utm_content', content);
+  if (term) url.searchParams.set('utm_term', term);
+  if (gclid && !url.searchParams.has('gclid')) url.searchParams.set('gclid', gclid);
+  if (fbclid && !url.searchParams.has('fbclid')) url.searchParams.set('fbclid', fbclid);
+
+  return url.toString();
+}
+
 export function detectDeviceTypeFromUA(ua: string | null | undefined): DeviceType {
   if (!ua) return 'unknown';
   if (/iPad|Tablet|PlayBook|Silk/i.test(ua)) return 'tablet';
@@ -244,6 +311,19 @@ export function mapFormToPayload(input: LeadFormInput): LeadPayload {
     pathname = input.page_url || '';
   }
 
+  // BOS extrae la atribución parseando la URL, no los campos utm_*.
+  // Garantizamos que la URL SIEMPRE lleve UTMs (reales o los slugs de
+  // tráfico propio: sitio-web / directo).
+  const urlWithUtms = injectUtmsIntoUrl(input.page_url, {
+    source,
+    medium,
+    campaign,
+    content: input.utm_content,
+    term: input.utm_term,
+    gclid: input.gclid,
+    fbclid: input.fbclid,
+  });
+
   return {
     name: input.first_name.trim(),
     first_name: input.first_name.trim(),
@@ -253,8 +333,8 @@ export function mapFormToPayload(input: LeadFormInput): LeadPayload {
     enquiry_detail: detail,
     acceptedTerms: input.acceptedTerms ? 1 : 0,
     marketingConsent: input.marketingConsent ? 1 : 0,
-    uri: input.page_url,
-    page_url: input.page_url,
+    uri: urlWithUtms,
+    page_url: urlWithUtms,
     language_preference: input.language,
     source,
     utm_source: source,

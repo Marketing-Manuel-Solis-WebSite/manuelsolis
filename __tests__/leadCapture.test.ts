@@ -337,3 +337,53 @@ describe('mapFormToPayload — validation errors', () => {
     ).toThrow(/language/);
   });
 });
+
+describe('injectUtmsIntoUrl — BOS parsea la URL, no los campos utm_*', () => {
+  it('inyecta sitio-web/directo cuando el lead es directo y la URL va limpia', () => {
+    const p = mapFormToPayload({ ...VALID_INPUT });
+    const u = new URL(p.page_url);
+    expect(u.searchParams.get('utm_source')).toBe('sitio-web');
+    expect(u.searchParams.get('utm_medium')).toBe('sitio-web');
+    expect(u.searchParams.get('utm_campaign')).toBe('directo');
+    expect(p.uri).toBe(p.page_url);
+    expect(u.pathname).toBe('/es/servicios/visa-u');
+  });
+
+  it('inyecta los UTMs efectivos (de cookie) cuando la URL actual va limpia', () => {
+    const p = mapFormToPayload({
+      ...VALID_INPUT,
+      utm_source: 'newsletter',
+      utm_medium: 'email',
+      utm_campaign: 'vawa-mayo-2026',
+      utm_content: 'hero-cta',
+      gclid: 'abc123',
+    });
+    const u = new URL(p.page_url);
+    expect(u.searchParams.get('utm_source')).toBe('newsletter');
+    expect(u.searchParams.get('utm_medium')).toBe('email');
+    expect(u.searchParams.get('utm_campaign')).toBe('vawa-mayo-2026');
+    expect(u.searchParams.get('utm_content')).toBe('hero-cta');
+    expect(u.searchParams.get('gclid')).toBe('abc123');
+  });
+
+  it('usa sin-campana (no directo) cuando hay source real sin campaña', () => {
+    const p = mapFormToPayload({ ...VALID_INPUT, utm_source: 'google', utm_medium: 'organic' });
+    const u = new URL(p.page_url);
+    expect(u.searchParams.get('utm_source')).toBe('google');
+    expect(u.searchParams.get('utm_campaign')).toBe('sin-campana');
+  });
+
+  it('respeta la URL tal cual si ya trae utm_source', () => {
+    const url =
+      'https://www.manuelsolis.com/es?utm_source=instagram&utm_medium=social&utm_campaign=organic-bio';
+    const p = mapFormToPayload({ ...VALID_INPUT, page_url: url, utm_source: 'instagram' });
+    expect(p.page_url).toBe(url);
+  });
+
+  it('tolera page_url relativa (pathname pelón)', () => {
+    const p = mapFormToPayload({ ...VALID_INPUT, page_url: '/es/contacto' });
+    const u = new URL(p.page_url);
+    expect(u.hostname).toBe('www.manuelsolis.com');
+    expect(u.searchParams.get('utm_source')).toBe('sitio-web');
+  });
+});
