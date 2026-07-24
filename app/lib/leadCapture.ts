@@ -203,11 +203,11 @@ export function inferOffice(pathname: string): string | null {
  * Reglas:
  *   - Si la URL ya trae `utm_source`, se respeta tal cual (ya es atribuible).
  *   - Si no, se inyectan los valores efectivos ya normalizados. Los
- *     centinelas GA4 con paréntesis se traducen a slugs URL-amigables que
- *     el equipo de BOS acordó para tráfico propio:
- *       (direct)  → sitio-web   (utm_source)
- *       (none)    → sitio-web   (utm_medium)
- *       (not set) → directo     (utm_campaign)
+ *     centinelas GA4 con paréntesis se traducen a las etiquetas que el
+ *     equipo de BOS acordó para tráfico propio:
+ *       (direct)  → Sitio web       (utm_source)
+ *       (none)    → Organic         (utm_medium)
+ *       (not set) → Organic_search  (utm_campaign, tráfico directo)
  *   - content/term/gclid/fbclid solo se añaden si tienen valor real.
  */
 export function injectUtmsIntoUrl(
@@ -235,16 +235,22 @@ export function injectUtmsIntoUrl(
 
   if (trimOrNull(url.searchParams.get('utm_source'))) return pageUrl;
 
-  const isSentinel = (v: string): boolean => isMissing(v) || v.startsWith('(');
+  // 'directo' es la etiqueta interna que el form pone como utm_campaign en
+  // tráfico directo — para la URL cuenta como "sin campaña".
+  const isSentinel = (v: string): boolean => isMissing(v) || v.startsWith('(') || v === 'directo';
 
   const sourceIsDirect = isSentinel(utms.source);
-  url.searchParams.set('utm_source', sourceIsDirect ? 'sitio-web' : utms.source);
-  url.searchParams.set('utm_medium', isSentinel(utms.medium) ? 'sitio-web' : utms.medium);
-  // Campaña ausente: 'directo' solo si el tráfico es realmente directo;
+  url.searchParams.set('utm_source', sourceIsDirect ? 'Sitio web' : utms.source);
+  url.searchParams.set('utm_medium', isSentinel(utms.medium) ? 'Organic' : utms.medium);
+  // Campaña ausente: 'Organic_search' si el tráfico es del propio sitio;
   // con origen real pero sin campaña usamos 'sin-campana' para no mezclar.
   url.searchParams.set(
     'utm_campaign',
-    isSentinel(utms.campaign) ? (sourceIsDirect ? 'directo' : 'sin-campana') : utms.campaign,
+    isSentinel(utms.campaign)
+      ? sourceIsDirect
+        ? 'Organic_search'
+        : 'sin-campana'
+      : utms.campaign,
   );
 
   const content = trimOrNull(utms.content);
@@ -296,9 +302,19 @@ function validate(input: LeadFormInput): void {
 export function mapFormToPayload(input: LeadFormInput): LeadPayload {
   validate(input);
 
-  const source = normalizeUtmSource(input.utm_source);
-  const medium = normalizeUtmMedium(input.utm_medium);
-  const campaign = normalizeUtmCampaign(input.utm_campaign);
+  let source = normalizeUtmSource(input.utm_source);
+  let medium = normalizeUtmMedium(input.utm_medium);
+  let campaign = normalizeUtmCampaign(input.utm_campaign);
+
+  // Defensa server-side: clientes con la cookie `msl_attr` antigua aún
+  // mandan orígenes sintéticos derivados del referrer (p.ej.
+  // `www.google.com / referral`). Solo las UTMs explícitas cuentan como
+  // origen real — todo lo demás se degrada a tráfico directo del sitio.
+  if (medium.toLowerCase() === 'referral') {
+    source = '(direct)';
+    medium = '(none)';
+    campaign = '(not set)';
+  }
 
   const detail = buildEnquiryDetail(input.enquiry_detail, source);
 

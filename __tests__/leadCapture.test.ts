@@ -339,12 +339,12 @@ describe('mapFormToPayload — validation errors', () => {
 });
 
 describe('injectUtmsIntoUrl — BOS parsea la URL, no los campos utm_*', () => {
-  it('inyecta sitio-web/directo cuando el lead es directo y la URL va limpia', () => {
+  it('inyecta Sitio web/Organic/Organic_search cuando el lead es directo y la URL va limpia', () => {
     const p = mapFormToPayload({ ...VALID_INPUT });
     const u = new URL(p.page_url);
-    expect(u.searchParams.get('utm_source')).toBe('sitio-web');
-    expect(u.searchParams.get('utm_medium')).toBe('sitio-web');
-    expect(u.searchParams.get('utm_campaign')).toBe('directo');
+    expect(u.searchParams.get('utm_source')).toBe('Sitio web');
+    expect(u.searchParams.get('utm_medium')).toBe('Organic');
+    expect(u.searchParams.get('utm_campaign')).toBe('Organic_search');
     expect(p.uri).toBe(p.page_url);
     expect(u.pathname).toBe('/es/servicios/visa-u');
   });
@@ -384,6 +384,6 @@ describe('injectUtmsIntoUrl — BOS parsea la URL, no los campos utm_*', () => {
     const p = mapFormToPayload({ ...VALID_INPUT, page_url: '/es/contacto' });
     const u = new URL(p.page_url);
     expect(u.hostname).toBe('www.manuelsolis.com');
-    expect(u.searchParams.get('utm_source')).toBe('sitio-web');
+    expect(u.searchParams.get('utm_source')).toBe('Sitio web');
   });
 });

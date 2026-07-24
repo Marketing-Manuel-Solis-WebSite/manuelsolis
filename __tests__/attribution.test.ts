@@ -137,28 +137,28 @@ describe('readTouchFromUrl — captura por URL', () => {
     expect(t?.campaign).toBe('verano-2026');
   });
 
-  it('FIX: gclid sin UTMs → google/cpc + gclid persistido', () => {
+  it('gclid sin UTMs → touch direct que solo persiste el gclid (NO google/cpc)', () => {
     env.setUrl('/es', '?gclid=Cj0KCQ123');
     expect(readTouchFromUrl()).toMatchObject({
-      source: 'google',
-      medium: 'cpc',
+      source: 'direct',
+      medium: 'none',
       gclid: 'Cj0KCQ123',
     });
   });
 
-  it('FIX: fbclid sin UTMs → facebook/social + fbclid persistido', () => {
+  it('fbclid sin UTMs → touch direct que solo persiste el fbclid (NO facebook/social)', () => {
     env.setUrl('/es', '?fbclid=IwAR9xyz');
     expect(readTouchFromUrl()).toMatchObject({
-      source: 'facebook',
-      medium: 'social',
+      source: 'direct',
+      medium: 'none',
       fbclid: 'IwAR9xyz',
     });
   });
 
-  it('referrer externo sin UTMs → host/referral', () => {
+  it('referrer externo sin UTMs → null (ya NO se inventa host/referral)', () => {
     env.setUrl('/es', '');
     env.setReferrer('https://www.google.com/search?q=abogado+inmigracion');
-    expect(readTouchFromUrl()).toMatchObject({ source: 'www.google.com', medium: 'referral' });
+    expect(readTouchFromUrl()).toBeNull();
   });
 
   it('sin UTMs, sin click-IDs y referrer interno → null (no pisa origen real)', () => {
@@ -209,7 +209,7 @@ describe('Persistencia en cookie msl_attr a través de la navegación', () => {
     expect(eff.source).toBe('instagram');
   });
 
-  it('FIX: gclid persiste tras navegación interna', () => {
+  it('gclid persiste tras navegación interna (pero el source queda direct)', () => {
     env.setUrl('/es', '?gclid=Cj0ABC');
     env.setReferrer('https://www.google.com/');
     captureAttribution();
@@ -219,8 +219,20 @@ describe('Persistencia en cookie msl_attr a través de la navegación', () => {
 
     const eff = getEffectiveUtms();
     expect(eff.gclid).toBe('Cj0ABC');
-    expect(eff.source).toBe('google');
-    expect(eff.medium).toBe('cpc');
+    expect(eff.source).toBe('direct');
+    expect(eff.medium).toBe('none');
+  });
+
+  it('un touch de solo click-ID NO pisa un origen UTM real previo', () => {
+    env.setUrl('/es', '?utm_source=newsletter&utm_medium=email&utm_campaign=c1');
+    captureAttribution();
+    env.setUrl('/es/consulta', '?fbclid=IwAR123');
+    captureAttribution();
+
+    const eff = getEffectiveUtms();
+    expect(eff.source).toBe('newsletter');
+    expect(eff.campaign).toBe('c1');
+    expect(eff.fbclid).toBe('IwAR123');
   });
 });
 
@@ -290,7 +302,7 @@ describe('E2E: URL → cookie → payload del form → mapFormToPayload (contrat
     expect(payload.utm_medium).toBe('(none)');
   });
 
-  it('FIX: Google Ads con auto-tagging (gclid, sin utm) llega como google/cpc + gclid', () => {
+  it('Google Ads auto-tagging (gclid, sin utm) → direct + gclid conservado en la URL', () => {
     env.setUrl('/es/defensa-deportacion-dallas', '?gclid=EAIaIQ456');
     env.setReferrer('https://www.google.com/');
     captureAttribution();
@@ -299,9 +311,59 @@ describe('E2E: URL → cookie → payload del form → mapFormToPayload (contrat
     captureAttribution();
 
     const payload = mapFormToPayload(buildFormPayload(null, null));
-    expect(payload.source).toBe('google');
-    expect(payload.medium).toBe('cpc');
+    expect(payload.utm_source).toBe('(direct)');
     expect(payload.gclid).toBe('EAIaIQ456');
+    const u = new URL(payload.page_url);
+    expect(u.searchParams.get('utm_source')).toBe('Sitio web');
+    expect(u.searchParams.get('gclid')).toBe('EAIaIQ456');
+  });
+
+  it('visitante orgánico (referrer google, sin UTMs) → URL con Sitio web/Organic/Organic_search', () => {
+    env.setUrl('/es/consulta', '');
+    env.setReferrer('https://www.google.com/search?q=abogado');
+    captureAttribution();
+
+    const payload = mapFormToPayload(buildFormPayload(null, null));
+    expect(payload.utm_source).toBe('(direct)');
+    const u = new URL(payload.page_url);
+    expect(u.searchParams.get('utm_source')).toBe('Sitio web');
+    expect(u.searchParams.get('utm_medium')).toBe('Organic');
+    expect(u.searchParams.get('utm_campaign')).toBe('Organic_search');
+  });
+
+  it('cookie ANTIGUA con touch referral (www.google.com) → se degrada a direct, no llega a BOS', () => {
+    // Simula la cookie que escribió la versión anterior del código.
+    env.setUrl('/es/consulta', '');
+    env.setReferrer('');
+    const state = {
+      first: { source: 'www.google.com', medium: 'referral', ts: '2026-07-01T00:00:00.000Z' },
+      last: { source: 'www.google.com', medium: 'referral', ts: '2026-07-01T00:00:00.000Z' },
+    };
+    document.cookie = `msl_attr=${btoa(unescape(encodeURIComponent(JSON.stringify(state))))}`;
+
+    const eff = getEffectiveUtms();
+    expect(eff.source).toBe('direct');
+
+    const payload = mapFormToPayload(buildFormPayload(null, null));
+    expect(payload.utm_source).toBe('(direct)');
+    const u = new URL(payload.page_url);
+    expect(u.searchParams.get('utm_source')).toBe('Sitio web');
+  });
+
+  it('defensa server-side: payload con medium=referral se degrada a direct', () => {
+    const payload = mapFormToPayload({
+      ...buildFormPayload(null, null),
+      utm_source: 'www.google.com',
+      utm_medium: 'referral',
+      utm_campaign: null,
+    });
+    expect(payload.utm_source).toBe('(direct)');
+    expect(payload.utm_medium).toBe('(none)');
+    const u = new URL(payload.page_url);
+    expect(u.searchParams.get('utm_source')).toBe('Sitio web');
+    expect(u.searchParams.get('utm_medium')).toBe('Organic');
+    expect(u.searchParams.get('utm_campaign')).toBe('Organic_search');
+    expect(payload.enquiry_detail).not.toContain('www.google.com');
   });
 
   it('visitante directo → BOS recibe (direct)/(none) y campaña "directo"', () => {

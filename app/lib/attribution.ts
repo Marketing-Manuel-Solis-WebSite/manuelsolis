@@ -124,16 +124,14 @@ function nonEmpty(v: string | null | undefined): string | undefined {
  *   1. `utm_source` presente → touch UTM. `utm_medium` es OPCIONAL: si
  *      falta, default `none` (un enlace con source+campaign pero sin
  *      medium es válido y ANTES se perdía por exigir ambos).
- *   2. Sin utm_source pero con `gclid` → click de Google Ads (auto-tagging,
- *      que no añade utm_*). Sintetizamos `google / cpc` para no perder la
- *      campaña pagada, y persistimos el gclid.
- *   3. Sin utm_source pero con `fbclid` → click desde Meta. Sintetizamos
- *      `facebook / social` (puede ser orgánico o pagado) y persistimos fbclid.
- *   4. Sin nada de lo anterior pero con referrer externo → touch sintético
- *      `<host-del-referrer> / referral`.
+ *   2. Sin utm_source pero con `gclid`/`fbclid` → touch `direct` que SOLO
+ *      persiste los click IDs. NO sintetizamos source (`google`, `facebook`):
+ *      el equipo acordó que únicamente las UTMs explícitas de la URL cuentan
+ *      como origen; todo lo demás se reporta como tráfico del sitio web.
  *
- * En 1–3 SIEMPRE arrastramos gclid/fbclid si vienen, para que sobrevivan
- * la navegación interna (antes se leían solo del URL al enviar el form).
+ * NO se deriva origen del referrer: antes un visitante orgánico generaba un
+ * touch `www.google.com / referral` que acababa como utm_source del lead en
+ * BOS. Ese comportamiento se eliminó a propósito.
  */
 export function readTouchFromUrl(): TouchPoint | null {
   if (typeof window === 'undefined') return null;
@@ -172,34 +170,10 @@ export function readTouchFromUrl(): TouchPoint | null {
     };
   }
 
-  // 2. gclid sin UTMs → Google Ads (auto-tagging). gclid es exclusivo de paid search.
-  if (gclid) {
-    return { source: 'google', medium: 'cpc', gclid, fbclid, landing, referrer, ts: now };
-  }
-
-  // 3. fbclid sin UTMs → Meta. Conservador: 'social' (no asumimos paid).
-  if (fbclid) {
-    return { source: 'facebook', medium: 'social', fbclid, landing, referrer, ts: now };
-  }
-
-  // 4. Sin UTMs ni click IDs: derivar de referrer externo.
-  const ref = document.referrer;
-  if (ref) {
-    try {
-      const refUrl = new URL(ref);
-      const ownHost = window.location.hostname;
-      if (refUrl.hostname && refUrl.hostname !== ownHost) {
-        return {
-          source: refUrl.hostname.toLowerCase(),
-          medium: 'referral',
-          landing,
-          referrer: ref,
-          ts: now,
-        };
-      }
-    } catch {
-      // ignore
-    }
+  // 2. Click IDs sin UTMs → touch `direct` que solo arrastra los IDs.
+  //    recordTouch() los fusiona sin pisar un origen real previo.
+  if (gclid || fbclid) {
+    return { source: 'direct', medium: 'none', gclid, fbclid, landing, referrer, ts: now };
   }
 
   return null;
@@ -213,14 +187,20 @@ export function getAttributionState(): AttributionState {
 
 /**
  * Persiste un nuevo touch. `first` se escribe solo si no había.
- * `last` se sobrescribe siempre.
+ * `last` se sobrescribe siempre — EXCEPTO cuando el touch nuevo es `direct`
+ * (solo click IDs): en ese caso se fusionan gclid/fbclid en los touches
+ * existentes sin pisar un origen real previo.
  */
 export function recordTouch(touch: TouchPoint): AttributionState {
   const state = getAttributionState();
-  const next: AttributionState = {
-    first: state.first ?? touch,
-    last: touch,
-  };
+  let next: AttributionState;
+  if (touch.source === 'direct') {
+    const merge = (t: TouchPoint | undefined): TouchPoint =>
+      t ? { ...t, gclid: t.gclid ?? touch.gclid, fbclid: t.fbclid ?? touch.fbclid } : touch;
+    next = { first: merge(state.first), last: merge(state.last) };
+  } else {
+    next = { first: state.first ?? touch, last: touch };
+  }
   writeCookie(COOKIE_NAME, encode(next));
   return next;
 }
@@ -256,7 +236,16 @@ export function getEffectiveUtms(): {
 } {
   const fromUrl = readTouchFromUrl();
   const state = getAttributionState();
-  const current = fromUrl ?? state.last;
+  // Cookies escritas por versiones anteriores pueden traer touches
+  // sintéticos derivados del referrer (`www.google.com / referral`).
+  // Ya no son un origen válido: se tratan como direct.
+  const sanitize = (t: TouchPoint | undefined): TouchPoint | undefined =>
+    t && t.medium === 'referral' ? undefined : t;
+  const urlTouch = sanitize(fromUrl ?? undefined);
+  const lastTouch = sanitize(state.last);
+  // Un touch `direct` de solo click-IDs en la URL actual no debe tapar un
+  // origen real guardado en cookie — solo aporta sus IDs (abajo).
+  const current = urlTouch && urlTouch.source !== 'direct' ? urlTouch : (lastTouch ?? urlTouch);
 
   return {
     source: current?.source || 'direct',
@@ -267,12 +256,12 @@ export function getEffectiveUtms(): {
     // Click IDs: el del touch actual gana; si falta, recuperamos el último
     // y luego el primer touch que lo haya tenido (un gclid persiste aunque
     // el último touch sea orgánico dentro de la misma sesión de conversión).
-    gclid: current?.gclid ?? state.last?.gclid ?? state.first?.gclid,
-    fbclid: current?.fbclid ?? state.last?.fbclid ?? state.first?.fbclid,
-    firstTouchSource: state.first?.source,
-    firstTouchMedium: state.first?.medium,
-    firstTouchCampaign: state.first?.campaign,
-    firstTouchContent: state.first?.content,
+    gclid: urlTouch?.gclid ?? current?.gclid ?? state.last?.gclid ?? state.first?.gclid,
+    fbclid: urlTouch?.fbclid ?? current?.fbclid ?? state.last?.fbclid ?? state.first?.fbclid,
+    firstTouchSource: sanitize(state.first)?.source,
+    firstTouchMedium: sanitize(state.first)?.medium,
+    firstTouchCampaign: sanitize(state.first)?.campaign,
+    firstTouchContent: sanitize(state.first)?.content,
   };
 }
 
