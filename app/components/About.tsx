@@ -34,9 +34,9 @@ export default function About({ lang }: { lang: Language }) {
         {/* Section title (full-width). Styled gold span → Reveal, not TextReveal. */}
         <Reveal variant="up" className="mb-16 text-center" amount={0.4}>
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight">
-            {'Uniendo Familias con Manuel Solís | '}
+            {'Uniendo Familias | '}
             <span className="font-normal text-gradient-gold-subtle">
-              EP. 4 — La decisión que lo cambió todo | Habeas Corpus
+              Episodio 4 — La decisión que lo cambió todo
             </span>
           </h2>
         </Reveal>
@@ -47,9 +47,9 @@ export default function About({ lang }: { lang: Language }) {
           <Stagger gap={0.12} className="lg:col-span-6 space-y-10">
 
             <StaggerItem as="div" className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
-              {/* Sinopsis tomada tal cual de la descripción del video en YouTube (mismo texto en ES y EN, el episodio es en español). */}
+              {/* Sinopsis proporcionada por el usuario (versión recortada; mismo texto en ES y EN, el episodio es en español). */}
               <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
-                Una detención por ICE separó a <strong className="text-white font-medium">Pablo</strong> de su familia durante seis meses. Mientras él enfrentaba incertidumbre y miedo, su esposa <strong className="text-white font-medium">Yohana</strong> luchaba sola por sus tres hijos y por encontrar ayuda real.<br /><br />La firma del <strong className="text-white font-medium">abogado de inmigración Manuel Solís</strong> tomó acción a través de un <strong className="text-white font-medium">habeas corpus</strong>, defendiendo sus derechos y abriendo el camino para reunir nuevamente a esta familia.<br /><br />Hoy, su historia es un recordatorio de que siempre hay esperanza cuando se lucha por estar juntos. Dale play y sé testigo de un reencuentro que representa a miles de familias.
+                Una redada de ICE cambia el destino de una familia en minutos. <strong className="text-white font-medium">Pablo</strong> es detenido y separado de su esposa y sus tres hijos, dejándolos frente a un futuro incierto. Mientras él lucha por no perder la esperanza tras las rejas, <strong className="text-white font-medium">Yohana</strong> emprende una carrera contrarreloj para encontrar una salida.<br /><br />Cuando todo parece perdido, el <strong className="text-white font-medium">abogado de inmigración Manuel Solís</strong> interviene con una estrategia legal poco común: un <strong className="text-white font-medium">habeas corpus</strong> para defender los derechos de Pablo y desafiar su detención. Basado en una historia real, este episodio revela el costo humano de la separación familiar y cómo una decisión valiente puede devolver la esperanza.
               </p>
             </StaggerItem>
 
