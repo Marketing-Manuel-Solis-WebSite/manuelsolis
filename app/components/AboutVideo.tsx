@@ -20,8 +20,8 @@ export default function AboutVideo({ lang }: { lang: Language }) {
         <iframe
           width="100%"
           height="100%"
-          src="https://www.youtube.com/embed/n8aJSPHdTXg?rel=0&controls=1&autoplay=1"
-          title={isEs ? 'Documental: Caso real de reunificación familiar - Abogado Manuel Solís' : 'Documentary: Real family reunification case - Attorney Manuel Solis'}
+          src="https://www.youtube.com/embed/AWgRoJitmJo?rel=0&controls=1&autoplay=1"
+          title="Uniendo Familias con Manuel Solís | EP. 4 — La decisión que lo cambió todo | Habeas Corpus."
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
@@ -34,8 +34,8 @@ export default function AboutVideo({ lang }: { lang: Language }) {
           aria-label={isEs ? 'Reproducir video' : 'Play video'}
         >
           <Image
-            src="https://img.youtube.com/vi/n8aJSPHdTXg/maxresdefault.jpg"
-            alt="Caso real de reunificación familiar - Abogado Manuel Solís"
+            src="https://img.youtube.com/vi/AWgRoJitmJo/maxresdefault.jpg"
+            alt="Uniendo Familias con Manuel Solís | EP. 4 — La decisión que lo cambió todo | Habeas Corpus."
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 50vw"

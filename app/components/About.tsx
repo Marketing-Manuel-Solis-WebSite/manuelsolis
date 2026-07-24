@@ -34,9 +34,9 @@ export default function About({ lang }: { lang: Language }) {
         {/* Section title (full-width). Styled gold span → Reveal, not TextReveal. */}
         <Reveal variant="up" className="mb-16 text-center" amount={0.4}>
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight">
-            {isEs ? 'Caso Real de ' : 'Real Case of '}
+            {'Uniendo Familias con Manuel Solís | '}
             <span className="font-normal text-gradient-gold-subtle">
-              {isEs ? 'Reunificación Familiar' : 'Family Reunification'}
+              EP. 4 — La decisión que lo cambió todo | Habeas Corpus
             </span>
           </h2>
         </Reveal>
@@ -47,12 +47,9 @@ export default function About({ lang }: { lang: Language }) {
           <Stagger gap={0.12} className="lg:col-span-6 space-y-10">
 
             <StaggerItem as="div" className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
+              {/* Sinopsis tomada tal cual de la descripción del video en YouTube (mismo texto en ES y EN, el episodio es en español). */}
               <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
-                {isEs ? (
-                  <><strong className="text-white font-medium">Juana Cervantes</strong> migró a Estados Unidos siendo apenas una niña, dejando en México a su madre, quien entonces tenía <strong className="text-white font-medium">53 años</strong>. Hoy, después de dar el primer paso hacia un estatus legal en Estados Unidos, logró regresar a México tras <strong className="text-white font-medium">más de 30 años</strong> lejos de su tierra, sus raíces y su familia.<br /><br />De la mano del <strong className="text-white font-medium">abogado Manuel Solís</strong>, quien la acompañó en cada etapa del proceso, Juana pudo reencontrarse con su historia, sus tradiciones y los momentos que creyó perdidos, viviendo además una de las celebraciones más importantes para los mexicanos: la <strong className="text-white font-medium">Semana Santa</strong>.<br /><br />Acompaña a Juana en este emotivo viaje de regreso a casa, en un nuevo capítulo de <strong className="text-white font-medium">Uniendo Familias con Manuel Solís</strong>.</>
-                ) : (
-                  <><strong className="text-white font-medium">Juana Cervantes</strong> migrated to the United States as just a little girl, leaving behind in Mexico her mother, who was then <strong className="text-white font-medium">53 years old</strong>. Today, after taking the first step toward legal status in the United States, she was able to return to Mexico after <strong className="text-white font-medium">more than 30 years</strong> away from her land, her roots, and her family.<br /><br />Guided by <strong className="text-white font-medium">Attorney Manuel Solís</strong>, who supported her at every stage of the process, Juana was able to reconnect with her story, her traditions, and the moments she thought were lost — experiencing one of the most important celebrations for Mexicans: <strong className="text-white font-medium">Holy Week</strong>.<br /><br />Join Juana on this moving journey back home, in a new chapter of <strong className="text-white font-medium">Uniting Families with Manuel Solís</strong>.</>
-                )}
+                Una detención por ICE separó a <strong className="text-white font-medium">Pablo</strong> de su familia durante seis meses. Mientras él enfrentaba incertidumbre y miedo, su esposa <strong className="text-white font-medium">Yohana</strong> luchaba sola por sus tres hijos y por encontrar ayuda real.<br /><br />La firma del <strong className="text-white font-medium">abogado de inmigración Manuel Solís</strong> tomó acción a través de un <strong className="text-white font-medium">habeas corpus</strong>, defendiendo sus derechos y abriendo el camino para reunir nuevamente a esta familia.<br /><br />Hoy, su historia es un recordatorio de que siempre hay esperanza cuando se lucha por estar juntos. Dale play y sé testigo de un reencuentro que representa a miles de familias.
               </p>
             </StaggerItem>
 
