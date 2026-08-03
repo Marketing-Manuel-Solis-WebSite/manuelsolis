@@ -23,6 +23,7 @@
  */
 import { track } from '@vercel/analytics/react';
 import { pushToDataLayer, trackConversion, type ConversionType } from './tracking';
+import { collectMetaBrowserParams, generateMetaEventId } from './metaPixel';
 
 export type FireConversionType =
   | ConversionType
@@ -98,6 +99,12 @@ export function fireConversion(
       .map(([k, v]) => [k, String(v)]),
   );
 
+  // Un event_id único por disparo: hoy solo lo consume el Pixel
+  // (eventID) y viaja al ledger de Flight Check. El día que estos
+  // eventos se reenvíen también por Conversions API, la deduplicación
+  // Pixel ↔ CAPI ya queda garantizada sin tocar los call sites.
+  const metaEventId = generateMetaEventId();
+
   // 1. Vercel Analytics
   try {
     track(`${type}.${label}`, meta);
@@ -119,10 +126,15 @@ export function fireConversion(
   try {
     const fbqMapping = PIXEL_MAP[type]?.fbq;
     if (w?.fbq && fbqMapping) {
-      w.fbq(fbqMapping.standard ? 'track' : 'trackCustom', fbqMapping.event, {
-        content_name: label,
-        ...stringMeta,
-      });
+      w.fbq(
+        fbqMapping.standard ? 'track' : 'trackCustom',
+        fbqMapping.event,
+        {
+          content_name: label,
+          ...stringMeta,
+        },
+        { eventID: metaEventId },
+      );
     }
   } catch {
     // ignore
@@ -141,7 +153,10 @@ export function fireConversion(
   // 5. Flight Check (server-side ledger). Only forward known types.
   try {
     if (isCanonicalConversionType(type)) {
-      trackConversion(type, label);
+      trackConversion(type, label, {
+        eventId: metaEventId,
+        ...collectMetaBrowserParams(),
+      });
     }
   } catch {
     // ignore

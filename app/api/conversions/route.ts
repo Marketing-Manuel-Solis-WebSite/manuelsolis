@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { after } from 'next/server';
 import { rateLimit } from '../../lib/rateLimit';
 import {
   pushEvent,
@@ -6,6 +7,7 @@ import {
   type StoredEvent,
   type StoredEventType,
 } from '../../lib/analyticsStore';
+import { sendMetaCapiEvents } from '../../lib/metaCapi';
 
 /**
  * FASE 4 — Flight Check API
@@ -15,7 +17,24 @@ import {
  * GET  /api/conversions  → Resumen rápido (compatible con la versión anterior)
  *
  * El dashboard rico vive en /api/analytics.
+ *
+ * Además, los page_view se reenvían a la Meta Conversions API (CAPI)
+ * cuando el payload trae `meta.eventId` — el mismo id del fbq del
+ * navegador, para que Meta deduplique Pixel ↔ server (ver
+ * app/lib/metaCapi.ts). Requiere META_CAPI_ACCESS_TOKEN; sin token el
+ * reenvío es un no-op.
  */
+
+// event_id que genera el navegador: UUID o fallback `ev.<ts36>.<rand>`.
+// Rechazamos cualquier otra forma para no reenviar basura a Meta.
+const META_EVENT_ID_RE = /^[A-Za-z0-9._-]{8,64}$/;
+
+// Solo el dominio real de producción alimenta el dataset de Meta:
+// `domain` viene del cliente (forjable) y sin este filtro el QA local
+// (127.0.0.1 / IP de LAN con token en .env.local) o un preview
+// *.vercel.app inflarían los PageView reales sin par de Pixel que los
+// deduplique.
+const META_PROD_DOMAIN_RE = /(^|\.)manuelsolis\.com$/i;
 
 const VALID_TYPES = new Set<StoredEventType>([
   'form_submit',
@@ -94,6 +113,42 @@ export async function POST(request: NextRequest) {
     };
 
     pushEvent(entry);
+
+    // ─── Meta CAPI passthrough (solo page_view, lo que pidió marketing
+    // para Search Lift). after() responde el beacon primero y envía a
+    // Meta después, sin sumar latencia al cliente. ───
+    const rawMeta = body.meta as
+      | { eventId?: unknown; fbp?: unknown; fbc?: unknown }
+      | undefined;
+    const metaEventId =
+      typeof rawMeta?.eventId === 'string' && META_EVENT_ID_RE.test(rawMeta.eventId)
+        ? rawMeta.eventId
+        : undefined;
+
+    // Gate de entorno: en producción, solo el dominio real. Fuera de
+    // producción (dev local, previews) SOLO con META_CAPI_TEST_EVENT_CODE
+    // seteado — esos eventos caen en la pestaña "Test events" del Events
+    // Manager, nunca en los datos reales.
+    const capiEnvOk =
+      process.env.VERCEL_ENV === 'production'
+        ? META_PROD_DOMAIN_RE.test(entry.domain)
+        : Boolean(process.env.META_CAPI_TEST_EVENT_CODE);
+
+    // userAgent es obligatorio: la Conversions API rechaza eventos
+    // action_source=website sin client_user_agent (subcode 2804019).
+    if (entry.type === 'page_view' && metaEventId && userAgent && capiEnvOk) {
+      const eventSourceUrl = `https://${entry.domain}${entry.path || '/'}`;
+      const capiEvent = {
+        eventName: 'PageView' as const,
+        eventId: metaEventId,
+        eventSourceUrl,
+        clientIpAddress: ip !== 'anonymous' ? ip : undefined,
+        clientUserAgent: userAgent,
+        fbp: clip(rawMeta?.fbp, 128),
+        fbc: clip(rawMeta?.fbc, 400),
+      };
+      after(() => sendMetaCapiEvents([capiEvent]));
+    }
 
     // Solo loggeamos conversions reales (page_view inundaría logs).
     if (entry.type !== 'page_view') {

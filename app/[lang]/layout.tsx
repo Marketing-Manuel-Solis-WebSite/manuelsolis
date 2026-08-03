@@ -380,6 +380,13 @@ export default async function LangLayout({ children, params }: Props) {
         </>
       )}
 
+      {/* Meta Pixel: aquí SOLO init. El PageView (navegador + espejo
+          server-side vía Conversions API) lo dispara PageViewTracker →
+          trackPageView() con un event_id compartido para que Meta
+          deduplique (ver app/lib/metaPixel.ts). Volver a poner
+          fbq('track','PageView') aquí duplicaría el conteo. El evento
+          'msl:fbq-ready' avisa a metaPixel.ts que el stub ya existe y
+          puede vaciar su cola de llamadas pendientes. */}
       {META_PIXEL_ID && (
         <Script
           id="meta-pixel"
@@ -395,7 +402,7 @@ export default async function LangLayout({ children, params }: Props) {
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '${META_PIXEL_ID}');
-              fbq('track', 'PageView');
+              window.dispatchEvent(new Event('msl:fbq-ready'));
             `,
           }}
         />

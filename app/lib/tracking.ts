@@ -11,6 +11,11 @@
  * de varios clicks internos sigue atribuyéndose al canal real.
  */
 import { getEffectiveUtms } from './attribution';
+import {
+  collectMetaBrowserParams,
+  firePixelPageView,
+  generateMetaEventId,
+} from './metaPixel';
 
 // ─── Tipos ───
 export type ConversionType =
@@ -46,6 +51,13 @@ export interface ConversionEvent {
   firstTouchMedium?: string;
   firstTouchCampaign?: string;
   firstTouchContent?: string;
+  /**
+   * Paridad Pixel ↔ Meta CAPI: event_id compartido con el fbq del
+   * navegador + cookies _fbp/_fbc. El server (/api/conversions) reenvía
+   * page_view a la Conversions API con estos datos; en el resto de
+   * tipos el campo solo viaja (dedup-ready para cuando se activen).
+   */
+  meta?: { eventId: string; fbp?: string; fbc?: string };
 }
 
 // ─── Helpers UTM ───
@@ -211,9 +223,12 @@ function postEvent(event: ConversionEvent) {
 export async function trackConversion(
   type: ConversionType,
   label?: string,
+  meta?: ConversionEvent['meta'],
 ): Promise<void> {
   if (typeof window === 'undefined') return;
-  postEvent(buildBaseEvent(type, label));
+  const event = buildBaseEvent(type, label);
+  if (meta) event.meta = meta;
+  postEvent(event);
 }
 
 // ─── Page view tracking ───
@@ -225,5 +240,12 @@ export function trackPageView(label?: string): void {
   const path = window.location.pathname + window.location.search;
   if (path === lastTrackedPath) return;
   lastTrackedPath = path;
-  postEvent(buildBaseEvent('page_view', label));
+  // Un solo event_id por page view: el Pixel del navegador y el evento
+  // que /api/conversions reenvía a la Conversions API llevan el MISMO
+  // id → Meta deduplica y no cuenta la visita dos veces.
+  const eventId = generateMetaEventId();
+  firePixelPageView(eventId);
+  const event = buildBaseEvent('page_view', label);
+  event.meta = { eventId, ...collectMetaBrowserParams() };
+  postEvent(event);
 }
