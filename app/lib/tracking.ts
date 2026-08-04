@@ -89,18 +89,104 @@ export function getUTMParams() {
   };
 }
 
+// ─── Cola hacia los globals de analítica ───
+//
+// gtag.js y los snippets de los pixels se cargan con strategy="lazyOnload"
+// (después del window.load): un click en los primeros segundos de la visita
+// ocurre cuando window.gtag / window.fbq / window.ttq todavía no existen, y
+// llamarlos en ese momento pierde el evento. Aquí se encola hasta que el
+// global aparezca. El evento 'msl:fbq-ready' que dispara el snippet de Meta
+// acelera el vaciado; el poll cubre a los globals que no anuncian su llegada.
+const ANALYTICS_READY_EVENT = 'msl:fbq-ready';
+const ANALYTICS_RETRY_MS = 250;
+const ANALYTICS_MAX_TRIES = 40;
+
+const pendingAnalyticsCalls: Array<() => boolean> = [];
+let analyticsListenerRegistered = false;
+let analyticsPollActive = false;
+
+function flushAnalyticsQueue(): void {
+  const pending = pendingAnalyticsCalls.splice(0, pendingAnalyticsCalls.length);
+  for (const attempt of pending) {
+    if (!attempt()) pendingAnalyticsCalls.push(attempt);
+  }
+}
+
+/**
+ * Ejecuta `use` con el global de analítica que devuelva `resolve` en cuanto
+ * exista. Mientras `resolve` devuelva undefined la llamada queda en cola, así
+ * que un click anterior a la carga del script del proveedor no se descarta.
+ */
+export function whenAnalyticsReady<T>(
+  resolve: () => T | undefined,
+  use: (api: T) => void,
+): void {
+  if (typeof window === 'undefined') return;
+
+  const attempt = (): boolean => {
+    const api = resolve();
+    if (!api) return false;
+    try {
+      use(api);
+    } catch {
+      // Una superficie de analítica rota nunca debe romper la página.
+    }
+    return true;
+  };
+
+  if (attempt()) return;
+  pendingAnalyticsCalls.push(attempt);
+
+  if (!analyticsListenerRegistered) {
+    analyticsListenerRegistered = true;
+    window.addEventListener(ANALYTICS_READY_EVENT, flushAnalyticsQueue);
+  }
+
+  if (analyticsPollActive) return;
+  analyticsPollActive = true;
+  let tries = ANALYTICS_MAX_TRIES;
+  const tick = () => {
+    flushAnalyticsQueue();
+    if (pendingAnalyticsCalls.length === 0 || tries-- <= 0) {
+      analyticsPollActive = false;
+      return;
+    }
+    setTimeout(tick, ANALYTICS_RETRY_MS);
+  };
+  setTimeout(tick, ANALYTICS_RETRY_MS);
+}
+
 // ─── FASE 3: dataLayer push helper ───
+type GtagFn = (...args: unknown[]) => void;
+
+interface WindowWithAnalytics extends Window {
+  dataLayer?: unknown[];
+  gtag?: GtagFn;
+}
+
+/**
+ * Superficie GA4 del sitio. El layout instala gtag.js, no un contenedor GTM:
+ * gtag.js solo procesa las entradas del dataLayer que la propia función gtag()
+ * pushea como `arguments`, de modo que el push plano de aquí es inerte hasta
+ * que exista un contenedor GTM real — se conserva para ese día. El canal que
+ * GA4 lee hoy es gtag('event', …), y por eso el evento no se duplica.
+ */
 export function pushToDataLayer(event: string, params: Record<string, string>) {
   if (typeof window === 'undefined') return;
   try {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
+    const w = window as WindowWithAnalytics;
+    w.dataLayer = w.dataLayer || [];
+    w.dataLayer.push({
       event,
       ...params,
     });
   } catch (e) {
     console.error('[dataLayer] Push error:', e);
   }
+  whenAnalyticsReady(
+    () => (window as WindowWithAnalytics).gtag,
+    (gtag) => gtag('event', event, params),
+  );
 }
 
 // ─── Helpers de contexto del cliente ───

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { after, NextRequest, NextResponse } from 'next/server';
 import { checkBotId } from 'botid/server';
 import { rateLimit } from '../../lib/rateLimit';
 import {
@@ -6,6 +6,7 @@ import {
   LeadValidationError,
   mapFormToPayload,
   postLead,
+  sendLeadFallbackEmail,
   type LeadFormInput,
 } from '../../lib/leadCapture';
 
@@ -21,6 +22,8 @@ import {
  *   2. Vercel BotID — Basic Detection (report-only by default).
  *   3. Validate + normalize the input via mapFormToPayload (pure).
  *   4. POST to LEAD_CAPTURE_ENDPOINT with retry/backoff via postLead.
+ *   5. Si el POST no llegó a entregarse, email de respaldo con el lead
+ *      completo (opt-in vía LEAD_FALLBACK_EMAIL) para que no se pierda.
  *
  * The destination URL is configurable via env so Phase 3b's Solislead
  * cutover is a one-variable change in Vercel — no code change.
@@ -119,6 +122,11 @@ export async function POST(request: NextRequest) {
         attempts: result.attempts,
       });
     }
+
+    // El lead ya no llegó a su destino: el correo de respaldo es la única
+    // vía de recuperación. after() lo envía tras responder, para no sumar
+    // latencia al formulario.
+    after(() => sendLeadFallbackEmail(payload, result));
 
     // Surface upstream status when present so the client can decide
     // whether to show a retry-friendly message.

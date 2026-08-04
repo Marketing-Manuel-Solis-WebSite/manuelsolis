@@ -1,18 +1,17 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useSearchParams } from 'next/navigation'
 import { m, AnimatePresence, Variants } from 'framer-motion'
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
-import { track } from '@vercel/analytics/react'
-import { pushToDataLayer, trackConversion } from '../lib/tracking'
+import { fireConversion } from '../lib/conversion'
 import { getEffectiveUtms, effectiveUtmsToLeadFields } from '../lib/attribution'
 
-// Client island: the interactive lead-capture form. Submit, validation,
-// useSearchParams (UTM/click IDs), and Vercel BotID protection are UNCHANGED
-// from the previous ContactForm — only the surrounding section/header moved to
-// the server wrapper (ContactForm.tsx). Do not break lead capture.
+// Client island: the interactive lead-capture form. La sección y el encabezado
+// viven en el wrapper de servidor (ContactForm.tsx); aquí quedan el submit, la
+// validación, la atribución (UTM/click IDs) y el evento de conversión. Es el
+// único camino de captura de leads del sitio: no romperlo.
 const API_URL = '/api/lead-capture';
 // Vercel BotID protection for /api/lead-capture is registered in
 // instrumentation-client.ts and verified server-side via checkBotId()
@@ -86,35 +85,51 @@ const NeonInput = (props: any) => {
   );
 };
 
-const trackConversionEvents = () => {
-  if (typeof window !== 'undefined') {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((window as any).fbq) (window as any).fbq('track', 'Lead');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((window as any).ttq) (window as any).ttq.track('CompleteRegistration');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((window as any).gtag) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (window as any).gtag('event', 'generate_lead', {
-          'event_category': 'Contact',
-          'event_label': 'Form_Submission'
-        });
-      }
+// Regla de teléfono replicada del servidor (leadCapture.ts PHONE_MIN_DIGITS):
+// si divergen, el usuario recibe un 400 que ya no puede accionar.
+const PHONE_MIN_DIGITS = 7;
 
-      pushToDataLayer('form_submit', {
-        event_category: 'conversion',
-        event_label: 'contact_form',
-        form_type: 'consultation_request',
-      });
+interface BilingualMessage {
+  es: string;
+  en: string;
+}
 
-      pushToDataLayer('qualified_lead', {
-        event_category: 'conversion',
-        event_label: 'contact_form_qualified',
-      });
+const PHONE_MESSAGE: BilingualMessage = {
+  es: `El teléfono debe tener al menos ${PHONE_MIN_DIGITS} dígitos.`,
+  en: `The phone number must have at least ${PHONE_MIN_DIGITS} digits.`,
+};
 
-    } catch (e) { console.error("Tracking Error", e); }
-  }
+// El servidor responde 400 con { error, field }; el texto del servidor es
+// técnico y monolingüe, así que el mensaje al usuario se resuelve aquí.
+const FIELD_MESSAGES: Record<string, BilingualMessage | undefined> = {
+  first_name: {
+    es: 'Escriba su nombre.',
+    en: 'Please enter your first name.',
+  },
+  phone: PHONE_MESSAGE,
+  email: {
+    es: 'Revise su correo electrónico: no parece una dirección válida.',
+    en: 'Please check your email address: it does not look valid.',
+  },
+  acceptedTerms: {
+    es: 'Debe aceptar los Términos de Servicio para enviar su consulta.',
+    en: 'You must accept the Terms of Service to send your inquiry.',
+  },
+};
+
+const GENERIC_FIELD_MESSAGE: BilingualMessage = {
+  es: 'Revise los datos del formulario e intente de nuevo.',
+  en: 'Please review the form fields and try again.',
+};
+
+const RATE_LIMIT_MESSAGE: BilingualMessage = {
+  es: 'Recibimos varios envíos desde su conexión. Espere un minuto e intente de nuevo.',
+  en: 'We received several submissions from your connection. Please wait a minute and try again.',
+};
+
+const TRANSPORT_ERROR_MESSAGE: BilingualMessage = {
+  es: 'Hubo un problema al enviar su consulta. Intente de nuevo más tarde.',
+  en: 'There was an issue sending your inquiry. Please try again later.',
 };
 
 function ContactFormContent() {
@@ -129,11 +144,30 @@ function ContactFormContent() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [overlayMessage, setOverlayMessage] = useState<BilingualMessage>(TRANSPORT_ERROR_MESSAGE);
+  const [fieldMessage, setFieldMessage] = useState<BilingualMessage | null>(null);
+
+  // El overlay de éxito NO se auto-oculta: el formulario queda vacío detrás y
+  // esconder la confirmación invita a un reenvío duplicado. Los errores sí,
+  // porque el usuario necesita el formulario de vuelta para reintentar.
+  useEffect(() => {
+    if (submitStatus !== 'error') return;
+    const timer = setTimeout(() => setSubmitStatus('idle'), 5000);
+    return () => clearTimeout(timer);
+  }, [submitStatus]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.acceptedTerms || isSubmitting) return;
 
+    // Misma regla que el servidor: atrapamos el teléfono corto antes de
+    // gastar un envío que volvería como 400.
+    if (formData.phone.replace(/\D/g, '').length < PHONE_MIN_DIGITS) {
+      setFieldMessage(PHONE_MESSAGE);
+      return;
+    }
+
+    setFieldMessage(null);
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -186,15 +220,12 @@ function ContactFormContent() {
       });
 
       if (response.ok) {
-        trackConversionEvents();
-
-        track('Contact Form Submit', {
-          source: 'contact_page',
-          language: lang
+        // Un solo evento de conversión por envío: fireConversion hace el
+        // fanout a las cinco superficies con un eventID compartido.
+        fireConversion('form_submit', 'contact_form', {
+          language: lang,
+          page_path: typeof window !== 'undefined' ? window.location.pathname : '',
         });
-
-        trackConversion('form_submit', 'contact_form');
-        trackConversion('qualified_lead', 'contact_form_qualified');
 
         setSubmitStatus('success');
         setFormData({
@@ -202,13 +233,27 @@ function ContactFormContent() {
           acceptedTerms: false, marketingConsent: false
         });
       } else {
-        setSubmitStatus('error');
+        const data = (await response.json().catch(() => null)) as { field?: string } | null;
+        const field = typeof data?.field === 'string' ? data.field : null;
+
+        // Solo la validación propia del route responde 400 con `field`; ahí el
+        // usuario puede corregir, así que el mensaje va junto al formulario en
+        // vez del overlay de "intente más tarde". Un 4xx sin `field` viene del
+        // destino del lead: para el usuario es un fallo de envío.
+        if (response.status === 400 && field) {
+          setFieldMessage(FIELD_MESSAGES[field] ?? GENERIC_FIELD_MESSAGE);
+        } else {
+          setOverlayMessage(
+            response.status === 429 ? RATE_LIMIT_MESSAGE : TRANSPORT_ERROR_MESSAGE,
+          );
+          setSubmitStatus('error');
+        }
       }
     } catch {
+      setOverlayMessage(TRANSPORT_ERROR_MESSAGE);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus('idle'), 4000);
     }
   };
 
@@ -216,6 +261,7 @@ function ContactFormContent() {
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+    if (fieldMessage) setFieldMessage(null);
   };
 
   const t = (es: string, en: string) => (lang === 'es' ? es : en);
@@ -236,7 +282,14 @@ function ContactFormContent() {
                     <CheckCircle2 size={80} className="text-green-400 mb-6" />
                   </m.div>
                   <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('¡Enviado con Éxito!', 'Successfully Sent!')}</h3>
-                  <p className="text-blue-200">{t('Nuestro equipo revisará su caso de inmediato.', 'Our team will review your case immediately.')}</p>
+                  <p className="text-blue-200 max-w-md px-6">{t('Recibimos su consulta. Un miembro de nuestro equipo le contactará por teléfono o correo dentro de las próximas 24 horas hábiles. No necesita enviarla de nuevo.', 'We received your inquiry. A member of our team will contact you by phone or email within the next business day. There is no need to send it again.')}</p>
+                  <button
+                    type="button"
+                    onClick={() => setSubmitStatus('idle')}
+                    className="mt-8 rounded-xl border border-[#B2904D]/50 px-6 py-3 text-xs font-bold uppercase tracking-widest text-[#B2904D] transition-colors hover:bg-[#B2904D] hover:text-[#001026] cursor-pointer"
+                  >
+                    {t('Enviar otra consulta', 'Send another inquiry')}
+                  </button>
                 </>
               ) : (
                 <>
@@ -244,7 +297,7 @@ function ContactFormContent() {
                     <XCircle size={80} className="text-red-400 mb-6" />
                   </m.div>
                   <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('Error de Envío', 'Submission Error')}</h3>
-                  <p className="text-red-200">{t('Hubo un problema. Intente de nuevo más tarde.', 'There was an issue. Please try again later.')}</p>
+                  <p className="text-red-200 max-w-md px-6">{t(overlayMessage.es, overlayMessage.en)}</p>
                 </>
               )}
             </m.div>
@@ -313,6 +366,11 @@ function ContactFormContent() {
         </div>
 
         <m.div variants={itemVar} className="pt-2">
+          {fieldMessage && (
+            <p role="alert" className="mb-4 text-sm font-medium text-red-300">
+              {t(fieldMessage.es, fieldMessage.en)}
+            </p>
+          )}
           <button
             type="submit"
             disabled={isSubmitting || !formData.acceptedTerms}

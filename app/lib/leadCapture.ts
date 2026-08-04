@@ -8,6 +8,8 @@
  * Architectural separation:
  *   - mapFormToPayload(input): pure, no I/O — fully unit-testable.
  *   - postLead(payload, opts): I/O with retry + JSON logs.
+ *   - sendLeadFallbackEmail(payload, result): dead-letter por correo
+ *     cuando el destino no aceptó el lead (opt-in por env var).
  *
  * The destination URL is read from the LEAD_CAPTURE_ENDPOINT env var
  * with a fall-back to the current bos.manuelsolis.com endpoint.
@@ -489,12 +491,19 @@ export async function postLead(
     }
   }
 
+  // Los datos del lead viajan en este log a propósito: cuando el destino
+  // queda inaccesible es la única vía de recuperación manual desde los
+  // logs de Vercel si LEAD_FALLBACK_EMAIL no está configurado.
   console.error(
     JSON.stringify({
       event: 'lead_capture_failed_final',
       attempts: maxAttempts,
       status: lastStatus,
       error: lastError,
+      name: payload.name,
+      phone: payload.phone,
+      email: payload.email,
+      page_url: payload.page_url,
       timestamp: new Date().toISOString(),
     }),
   );
@@ -505,4 +514,110 @@ export async function postLead(
     status: lastStatus,
     error: lastError ?? 'Unknown',
   };
+}
+
+// ─── Dead-letter: email de respaldo cuando el destino rechaza el lead ───
+
+const LEAD_FALLBACK_FROM = 'Manuel Solis Law <newsletter@manuelsolis.com>';
+
+function parseFallbackRecipients(raw: string | undefined): string[] {
+  if (!raw) return [];
+  return raw
+    .split(',')
+    .map((address) => address.trim())
+    .filter((address) => address.length > 0);
+}
+
+function formatFallbackBody(payload: LeadPayload, failure: PostLeadResult): string {
+  return [
+    'El lead NO se entregó al destino. Esta es la copia de respaldo para',
+    'capturarlo a mano en BOS:',
+    '',
+    `Nombre:    ${payload.first_name} ${payload.last_name}`.trimEnd(),
+    `Teléfono:  ${payload.phone}`,
+    `Correo:    ${payload.email}`,
+    `Idioma:    ${payload.language_preference}`,
+    `Consulta:  ${payload.enquiry_detail || '(sin detalle)'}`,
+    '',
+    `Página:    ${payload.page_url}`,
+    `Origen:    ${payload.source} / ${payload.medium} / ${payload.campaign}`,
+    `Click IDs: gclid=${payload.gclid ?? '-'} fbclid=${payload.fbclid ?? '-'}`,
+    `Servicio:  ${payload.practice_area_inferred ?? '-'}`,
+    `Oficina:   ${payload.office_inferred ?? '-'}`,
+    `Sesión:    ${payload.session_id ?? '-'} · ${payload.device_type} · ${payload.country ?? '-'}`,
+    `Consentimientos: términos=${payload.acceptedTerms} marketing=${payload.marketingConsent}`,
+    '',
+    `Fallo: HTTP ${failure.status ?? '-'} tras ${failure.attempts} intento(s) · ${failure.error ?? '-'}`,
+    `Fecha: ${new Date().toISOString()}`,
+  ].join('\n');
+}
+
+/**
+ * Envía el payload completo del lead por correo cuando `postLead` no logró
+ * entregarlo. Solo actúa si existen LEAD_FALLBACK_EMAIL (uno o varios
+ * destinatarios separados por coma) y RESEND_API_KEY; sin ellas el único
+ * respaldo es el log `lead_capture_failed_final`.
+ *
+ * Nunca lanza: el lead ya se dio por perdido y el caller la invoca desde un
+ * `after()`, después de responder al usuario.
+ */
+export async function sendLeadFallbackEmail(
+  payload: LeadPayload,
+  failure: PostLeadResult,
+): Promise<void> {
+  const recipients = parseFallbackRecipients(process.env.LEAD_FALLBACK_EMAIL);
+  if (recipients.length === 0) return;
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error(
+      JSON.stringify({
+        event: 'lead_fallback_email_unconfigured',
+        reason: 'RESEND_API_KEY missing',
+        timestamp: new Date().toISOString(),
+      }),
+    );
+    return;
+  }
+
+  try {
+    // Import diferido: mantiene el grafo de este módulo (probado en
+    // __tests__/leadCapture.test.ts) libre del SDK de correo.
+    const { Resend } = await import('resend');
+    const resend = new Resend(apiKey);
+
+    const { error } = await resend.emails.send({
+      from: process.env.LEAD_FALLBACK_FROM || LEAD_FALLBACK_FROM,
+      to: recipients,
+      subject: `[LEAD NO ENTREGADO] ${payload.name || 'Sin nombre'} · ${payload.phone}`,
+      text: formatFallbackBody(payload, failure),
+    });
+
+    if (error) {
+      console.error(
+        JSON.stringify({
+          event: 'lead_fallback_email_failed',
+          error: error.message,
+          timestamp: new Date().toISOString(),
+        }),
+      );
+      return;
+    }
+
+    console.log(
+      JSON.stringify({
+        event: 'lead_fallback_email_sent',
+        recipients: recipients.length,
+        timestamp: new Date().toISOString(),
+      }),
+    );
+  } catch (err) {
+    console.error(
+      JSON.stringify({
+        event: 'lead_fallback_email_failed',
+        error: err instanceof Error ? err.message : String(err),
+        timestamp: new Date().toISOString(),
+      }),
+    );
+  }
 }

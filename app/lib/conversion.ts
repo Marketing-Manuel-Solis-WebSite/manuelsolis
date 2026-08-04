@@ -4,7 +4,7 @@
  * Today the site fires conversion events from 7+ components, each
  * duplicating logic that targets five tracking surfaces:
  *   1. Vercel Analytics  (track from @vercel/analytics)
- *   2. GTM / GA4         (window.dataLayer push)
+ *   2. GA4               (window.gtag, plus a dataLayer push for GTM)
  *   3. Meta Pixel        (window.fbq)
  *   4. TikTok Pixel      (window.ttq)
  *   5. Flight Check      (POST /api/conversions via lib/tracking)
@@ -22,7 +22,12 @@
  * See DISCOVERY_v3.md §10.4 (capa de abstracción `fireConversion()`).
  */
 import { track } from '@vercel/analytics/react';
-import { pushToDataLayer, trackConversion, type ConversionType } from './tracking';
+import {
+  pushToDataLayer,
+  trackConversion,
+  whenAnalyticsReady,
+  type ConversionType,
+} from './tracking';
 import { collectMetaBrowserParams, generateMetaEventId } from './metaPixel';
 
 export type FireConversionType =
@@ -41,6 +46,13 @@ interface PixelMapping {
   fbq?: { event: string; standard: boolean };
   /** TikTok Pixel event name. */
   ttq?: string;
+  /**
+   * GA4 event name when it differs from our internal type. El envío del
+   * formulario llega a GA4 como `generate_lead` desde antes de que existiera
+   * esta capa: es el nombre sobre el que están definidas las conversiones en
+   * GA4 y Google Ads, así que renombrarlo las dejaría a cero.
+   */
+  ga4?: string;
 }
 
 /**
@@ -52,10 +64,12 @@ const PIXEL_MAP: Record<string, PixelMapping> = {
   form_submit: {
     fbq: { event: 'Lead', standard: true },
     ttq: 'CompleteRegistration',
+    ga4: 'generate_lead',
   },
   qualified_lead: {
     fbq: { event: 'Lead', standard: true },
     ttq: 'CompleteRegistration',
+    ga4: 'generate_lead',
   },
   phone_click: {
     fbq: { event: 'Contact', standard: true },
@@ -92,7 +106,6 @@ export function fireConversion(
   label: string,
   meta: FireConversionMeta = {},
 ): void {
-  const w = safeWindow();
   const stringMeta: Record<string, string> = Object.fromEntries(
     Object.entries(meta)
       .filter(([, v]) => v !== undefined && v !== null)
@@ -112,9 +125,9 @@ export function fireConversion(
     // ignore
   }
 
-  // 2. GTM / GA4 dataLayer
+  // 2. GA4 (gtag) + dataLayer
   try {
-    pushToDataLayer(type, {
+    pushToDataLayer(PIXEL_MAP[type]?.ga4 ?? type, {
       event_label: label,
       ...stringMeta,
     });
@@ -122,18 +135,23 @@ export function fireConversion(
     // ignore
   }
 
-  // 3. Meta Pixel
+  // 3. Meta Pixel — encolado: el snippet del layout es lazyOnload y un click
+  // temprano llega antes de que exista window.fbq.
   try {
     const fbqMapping = PIXEL_MAP[type]?.fbq;
-    if (w?.fbq && fbqMapping) {
-      w.fbq(
-        fbqMapping.standard ? 'track' : 'trackCustom',
-        fbqMapping.event,
-        {
-          content_name: label,
-          ...stringMeta,
-        },
-        { eventID: metaEventId },
+    if (fbqMapping && process.env.NEXT_PUBLIC_META_PIXEL_ID) {
+      whenAnalyticsReady(
+        () => safeWindow()?.fbq,
+        (fbq) =>
+          fbq(
+            fbqMapping.standard ? 'track' : 'trackCustom',
+            fbqMapping.event,
+            {
+              content_name: label,
+              ...stringMeta,
+            },
+            { eventID: metaEventId },
+          ),
       );
     }
   } catch {
@@ -143,8 +161,11 @@ export function fireConversion(
   // 4. TikTok Pixel
   try {
     const ttqEvent = PIXEL_MAP[type]?.ttq;
-    if (w?.ttq && ttqEvent) {
-      w.ttq.track(ttqEvent, { content_name: label, ...stringMeta });
+    if (ttqEvent && process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID) {
+      whenAnalyticsReady(
+        () => safeWindow()?.ttq,
+        (ttq) => ttq.track(ttqEvent, { content_name: label, ...stringMeta }),
+      );
     }
   } catch {
     // ignore

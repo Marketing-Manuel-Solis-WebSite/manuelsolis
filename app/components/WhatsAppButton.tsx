@@ -24,18 +24,12 @@ export default function WhatsAppButton() {
   // URL de WhatsApp
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${defaultMessage}`;
   
+  // La navegación la hace el <a href>: este handler solo emite tracking y nunca
+  // debe llamar a preventDefault ni abrir la ventana por su cuenta.
   const handleClick = () => {
-    window.open(whatsappUrl, '_blank');
-
-    // GA4 directo (legacy, se mantiene)
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'whatsapp_click', {
-        'event_category': 'contact',
-        'event_label': 'whatsapp_button'
-      });
-    }
-
-    // Fanout unificado: Vercel + dataLayer + Meta + TikTok + Flight Check
+    // Fanout unificado: Vercel + GA4 + Meta + TikTok + Flight Check. GA4 sale
+    // por aquí desde que el fanout envía gtag('event', …): un gtag directo
+    // adicional contaría whatsapp_click dos veces.
     fireConversion('whatsapp_click', 'whatsapp_floating_button', {
       location: 'floating_button',
     });
@@ -59,7 +53,10 @@ export default function WhatsAppButton() {
         )}
         
         {/* Botón principal */}
-        <button
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={handleClick}
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
@@ -68,10 +65,10 @@ export default function WhatsAppButton() {
         >
           {/* Icono de WhatsApp */}
           <MessageCircle className="w-8 h-8 relative z-10" strokeWidth={2} />
-          
+
           {/* Badge de notificación rojo */}
           <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></span>
-        </button>
+        </a>
       </div>
       
       {/* Estilos personalizados */}
