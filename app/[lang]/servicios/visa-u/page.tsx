@@ -40,16 +40,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const getLegalServiceSchema = (lang: string) => ({
+// Service (no LegalService): la ficha LocalBusiness con dirección vive en
+// /oficinas/<slug>; aquí solo la entidad temática ligada a #organization.
+const getServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
-  '@type': 'LegalService',
+  '@type': 'Service',
+  '@id': `${SITE_URL}/${lang}/servicios/visa-u#service`,
   name: lang === 'es' ? 'Manuel Solís - Abogados de Visa U' : 'Manuel Solis - U Visa Lawyers',
   description: lang === 'es'
     ? 'Abogados especialistas en Visa U para víctimas de crímenes en Estados Unidos.'
     : 'Specialist U Visa attorneys for crime victims in the United States.',
   url: `${SITE_URL}/${lang}/servicios/visa-u`,
-  priceRange: '$$',
-  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -57,13 +58,7 @@ const getLegalServiceSchema = (lang: string) => ({
     { '@type': 'State', name: 'Colorado' },
     { '@type': 'State', name: 'Tennessee' },
   ],
-  provider: {
-    '@type': 'LawFirm',
-    '@id': `${SITE_URL}/#organization`,
-    name: 'Manuel Solis Law Firm',
-    url: SITE_URL,
-    telephone: '+1-832-598-0914',
-  },
+  provider: { '@id': `${SITE_URL}/#organization` },
   serviceType: [
     'U Visa',
     'U Nonimmigrant Status',
@@ -72,12 +67,17 @@ const getLegalServiceSchema = (lang: string) => ({
     'Crime Victim Immigration Relief',
     'I-192 Waiver for U Visa',
   ],
-  availableLanguage: ['English', 'Spanish'],
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    // Debe coincidir con el número que la página marca de verdad (CTA tel: de VisaUClient).
+    servicePhone: { '@type': 'ContactPoint', telephone: '+1-832-598-0914' },
+    availableLanguage: ['English', 'Spanish'],
+  },
 });
 
 export default async function VisaUPage({ params }: Props) {
   const { lang } = await params;
-  const schemaData = getLegalServiceSchema(lang);
+  const schemaData = getServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },

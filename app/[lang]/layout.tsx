@@ -2,16 +2,11 @@ import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import { LanguageProvider } from '../context/LanguageContext';
 import FloatingCtas from '../components/FloatingCtas';
-import PageViewTracker from '../components/PageViewTracker';
+import PageViewTracker, { TrackingSurfaces } from '../components/PageViewTracker';
 import AttributionCapture from '../components/AttributionCapture';
 import type { Language } from '../lib/translations';
-import Script from 'next/script';
 import { LangSetter } from '../components/LangSetter';
 import MotionProvider from '../components/MotionProvider';
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { getPlaceData } from '../lib/googleReviews';
-import { MAIN_FIRM_PLACE_ID } from '../lib/officesRegistry';
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -20,18 +15,22 @@ type Props = {
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
-// ISR: regenerate the [lang] subtree every 24h so the Google Places
-// aggregateRating embedded in the Organization JSON-LD stays fresh in the
-// statically-rendered HTML. Paired with removing headers() from the root
-// layout, this returns the [lang] routes to static/ISR (was ƒ Dynamic).
-// Matches the 24h unstable_cache TTL in lib/googleReviews.ts.
+// ISR: regenerate the [lang] subtree every 24h. It is the revalidate that
+// the pages reading live Google Places data inherit (office cards, city
+// landings, /testimonios), and it matches the 24h unstable_cache TTL in
+// lib/googleReviews.ts. Paired with the root layout avoiding headers(),
+// this keeps the [lang] routes static/ISR instead of ƒ Dynamic.
 export const revalidate = 86400;
 
-// Analytics IDs sourced from environment so they can be rotated/disabled
-// without touching code. Each script renders only when its ID is set.
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+// Only the locales returned by generateStaticParams exist: any other
+// /{lang}/… (e.g. /fr/servicios) is a framework-level 404 instead of
+// silently rendering Spanish content under a non-existent locale.
+export const dynamicParams = false;
+
+// Meta Pixel ID for the <noscript> fallback below. The pixel scripts
+// themselves live in <TrackingSurfaces/> (client component) so the /admin
+// panel can be excluded from every analytics surface.
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
-const TIKTOK_PIXEL_ID = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID;
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -123,8 +122,9 @@ const organizationSchema = {
     '@type': 'QuantitativeValue',
     minValue: 50
   },
-  // aggregateRating and review are populated server-side per request
-  // from Google Places API (MAIN_FIRM_PLACE_ID). See LangLayout body.
+  // No aggregateRating / review here: Google does not accept third-party
+  // (Google Places) reviews nor self-serving reviews in Organization /
+  // LocalBusiness markup, and none of it is rendered on the page.
 };
 
 const websiteSchema = {
@@ -299,39 +299,6 @@ export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params;
   const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
 
-  // Pull live aggregateRating + top reviews from Google Places (24h
-  // cache). If the API key is missing OR the request fails, mainPlaceData
-  // is null and the rendered schema simply omits aggregateRating and
-  // review — never falls back to hardcoded data so we don't reintroduce
-  // the legal risk we're solving (DISCOVERY_v3 §1.1 #5).
-  const mainPlaceData = await getPlaceData(MAIN_FIRM_PLACE_ID);
-  const finalOrganizationSchema: Record<string, unknown> = {
-    ...organizationSchema,
-    ...(mainPlaceData && mainPlaceData.userRatingCount > 0 && {
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: mainPlaceData.rating.toFixed(1),
-        bestRating: '5',
-        worstRating: '1',
-        ratingCount: mainPlaceData.userRatingCount,
-        reviewCount: mainPlaceData.userRatingCount,
-      },
-    }),
-    ...(mainPlaceData?.reviews?.length && {
-      review: mainPlaceData.reviews.slice(0, 3).map((r) => ({
-        '@type': 'Review',
-        author: { '@type': 'Person', name: r.authorName },
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: r.rating,
-          bestRating: 5,
-        },
-        reviewBody: r.text,
-        datePublished: r.publishedAt,
-      })),
-    }),
-  };
-
   return (
     <>
       <LangSetter lang={currentLang} />
@@ -351,79 +318,16 @@ export default async function LangLayout({ children, params }: Props) {
 
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(finalOrganizationSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
 
-      {GA_ID && (
-        <>
-          <Script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-            strategy="lazyOnload"
-          />
-          <Script
-            id="google-analytics"
-            strategy="lazyOnload"
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_ID}');
-              `,
-            }}
-          />
-        </>
-      )}
-
-      {/* Meta Pixel: aquí SOLO init. El PageView (navegador + espejo
-          server-side vía Conversions API) lo dispara PageViewTracker →
-          trackPageView() con un event_id compartido para que Meta
-          deduplique (ver app/lib/metaPixel.ts). Volver a poner
-          fbq('track','PageView') aquí duplicaría el conteo. El evento
-          'msl:fbq-ready' avisa a metaPixel.ts que el stub ya existe y
-          puede vaciar su cola de llamadas pendientes. */}
-      {META_PIXEL_ID && (
-        <Script
-          id="meta-pixel"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${META_PIXEL_ID}');
-              window.dispatchEvent(new Event('msl:fbq-ready'));
-            `,
-          }}
-        />
-      )}
-
-      {TIKTOK_PIXEL_ID && (
-        <Script
-          id="tiktok-pixel"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function (w, d, t) {
-                w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=i+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-
-                ttq.load('${TIKTOK_PIXEL_ID}');
-                ttq.page();
-              }(window, document, 'ttq');
-            `,
-          }}
-        />
-      )}
+      {/* GA4, Meta Pixel, TikTok, Vercel Analytics y Speed Insights. Es un
+          client component porque excluye el panel /admin por pathname. */}
+      <TrackingSurfaces />
 
       <noscript>
         {META_PIXEL_ID && (
@@ -449,10 +353,6 @@ export default async function LangLayout({ children, params }: Props) {
           {children}
           <FloatingCtas />
         </MotionProvider>
-
-        <Analytics />
-        <SpeedInsights />
-
       </LanguageProvider>
     </>
   );

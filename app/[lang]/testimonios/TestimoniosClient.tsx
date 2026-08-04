@@ -153,7 +153,16 @@ const galleryPhotos = [
   { src: '/reviews/pedro.png', name: 'Pedro Rogel' },
 ];
 
-export default function TestimoniosClient() {
+interface TestimoniosClientProps {
+  /**
+   * Rating en vivo de Google, ya formateado, o null si Places no respondió.
+   * Es la misma fuente que alimenta el aggregateRating del JSON-LD de la
+   * página: si aquí se escribiera un número fijo podría contradecir al schema.
+   */
+  googleRating?: string | null;
+}
+
+export default function TestimoniosClient({ googleRating = null }: TestimoniosClientProps) {
   const { language } = useLanguage();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedTestimonial = testimonials.find(t => t.id === selectedId);
@@ -467,12 +476,19 @@ export default function TestimoniosClient() {
             <div key={repeat} className="flex items-center shrink-0">
               <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">35+</strong> {language === 'es' ? 'Años de Experiencia' : 'Years of Experience'}</span>
               <span className="text-[#B2904D]/30 text-xs px-3">★</span>
-              <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">15+</strong> {language === 'es' ? 'Oficinas en EE.UU.' : 'U.S. Offices'}</span>
+              {/* 10 sedes con personal propio; las otras cinco direcciones de
+                  la firma son centros de negocios y no se cuentan como
+                  oficinas atendidas (VIRTUAL_OFFICE_SLUGS en officesRegistry). */}
+              <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">10</strong> {language === 'es' ? 'Oficinas en EE.UU.' : 'U.S. Offices'}</span>
               <span className="text-[#B2904D]/30 text-xs px-3">★</span>
               <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">50,000+</strong> {language === 'es' ? 'Familias Reunidas' : 'Families Reunited'}</span>
               <span className="text-[#B2904D]/30 text-xs px-3">★</span>
-              <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">4.8</strong> {language === 'es' ? 'Estrellas en Google' : 'Google Stars'}</span>
-              <span className="text-[#B2904D]/30 text-xs px-3">★</span>
+              {googleRating && (
+                <>
+                  <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">{googleRating}</strong> {language === 'es' ? 'Estrellas en Google' : 'Google Stars'}</span>
+                  <span className="text-[#B2904D]/30 text-xs px-3">★</span>
+                </>
+              )}
             </div>
           ))}
         </m.div>

@@ -40,16 +40,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const getLegalServiceSchema = (lang: string) => ({
+// Service (no LegalService): la ficha LocalBusiness con dirección vive en
+// /oficinas/<slug>; aquí solo la entidad temática ligada a #organization.
+const getServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
-  '@type': 'LegalService',
+  '@type': 'Service',
+  '@id': `${SITE_URL}/${lang}/servicios/vawa#service`,
   name: lang === 'es' ? 'Manuel Solis - Abogados VAWA' : 'Manuel Solis - VAWA Attorneys',
   description: lang === 'es'
     ? 'Servicios legales VAWA: protección migratoria para víctimas de violencia doméstica por cónyuges, padres o hijos ciudadanos o residentes.'
     : 'VAWA legal services: immigration protection for domestic violence victims abused by citizen or resident spouses, parents, or children.',
   url: `${SITE_URL}/${lang}/servicios/vawa`,
-  priceRange: '$$',
-  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -57,13 +58,7 @@ const getLegalServiceSchema = (lang: string) => ({
     { '@type': 'State', name: 'Colorado' },
     { '@type': 'State', name: 'Tennessee' },
   ],
-  provider: {
-    '@type': 'LawFirm',
-    '@id': `${SITE_URL}/#organization`,
-    name: 'Manuel Solis Law Firm',
-    url: 'https://www.manuelsolis.com',
-    telephone: '+1-832-598-0914',
-  },
+  provider: { '@id': `${SITE_URL}/#organization` },
   serviceType: [
     'VAWA Self-Petition',
     'Violence Against Women Act',
@@ -72,12 +67,17 @@ const getLegalServiceSchema = (lang: string) => ({
     'Abused Spouse Immigration',
     'Abused Parent Immigration',
   ],
-  availableLanguage: ['English', 'Spanish'],
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    // Debe coincidir con el número que la página marca de verdad (CTA tel: de VawaClient).
+    servicePhone: { '@type': 'ContactPoint', telephone: '+1-832-598-0914' },
+    availableLanguage: ['English', 'Spanish'],
+  },
 });
 
 export default async function VawaPage({ params }: Props) {
   const { lang } = await params;
-  const schemaData = getLegalServiceSchema(lang);
+  const schemaData = getServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },

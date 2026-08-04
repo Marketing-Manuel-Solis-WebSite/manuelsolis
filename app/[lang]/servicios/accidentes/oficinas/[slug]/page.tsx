@@ -78,6 +78,7 @@ export default async function AccidenteOficinaPage({ params }: Props) {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
+    '@id': `${SITE_URL}/${localeLang}/servicios/accidentes/oficinas/${slug}#service`,
     name:
       localeLang === 'es'
         ? `Abogado de Accidentes en ${zone}`
@@ -86,8 +87,13 @@ export default async function AccidenteOficinaPage({ params }: Props) {
     provider: { '@id': `${SITE_URL}/#organization` },
     areaServed: { '@type': 'City', name: office.city },
     url: `${SITE_URL}/${localeLang}/servicios/accidentes/oficinas/${slug}`,
-    telephone: office.phone,
-    availableLanguage: ['es', 'en'],
+    // telephone/availableLanguage no son propiedades de Service: viven en el
+    // ServiceChannel, que sí las admite.
+    availableChannel: {
+      '@type': 'ServiceChannel',
+      servicePhone: { '@type': 'ContactPoint', telephone: office.phone },
+      availableLanguage: ['es', 'en'],
+    },
   };
 
   return (

@@ -40,9 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const getLegalServiceSchema = (lang: string) => ({
+// Service (no LegalService): la ficha LocalBusiness con dirección vive en
+// /oficinas/<slug>; aquí solo la entidad temática ligada a #organization.
+const getServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
-  '@type': 'LegalService',
+  '@type': 'Service',
+  '@id': `${SITE_URL}/${lang}/servicios/asilo#service`,
   name: lang === 'es'
     ? 'Manuel Solís - Abogados de Asilo Político'
     : 'Manuel Solis - Political Asylum Lawyers',
@@ -50,8 +53,6 @@ const getLegalServiceSchema = (lang: string) => ({
     ? 'Servicios legales de asilo político: solicitudes de asilo afirmativo y defensivo, entrevistas de miedo creíble, Convención Contra la Tortura y restricción de remoción.'
     : 'Political asylum legal services: affirmative and defensive asylum applications, credible fear interviews, Convention Against Torture, and withholding of removal.',
   url: `${SITE_URL}/${lang}/servicios/asilo`,
-  priceRange: '$$',
-  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -59,13 +60,7 @@ const getLegalServiceSchema = (lang: string) => ({
     { '@type': 'State', name: 'Colorado' },
     { '@type': 'State', name: 'Tennessee' },
   ],
-  provider: {
-    '@type': 'LawFirm',
-    '@id': `${SITE_URL}/#organization`,
-    name: 'Manuel Solis Law Firm',
-    url: SITE_URL,
-    telephone: '+1-832-598-0914',
-  },
+  provider: { '@id': `${SITE_URL}/#organization` },
   serviceType: [
     'Political Asylum',
     'Asylum Applications',
@@ -74,12 +69,17 @@ const getLegalServiceSchema = (lang: string) => ({
     'Credible Fear Interviews',
     'Immigration Court Asylum Hearings',
   ],
-  availableLanguage: ['English', 'Spanish'],
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    // Debe coincidir con el número que la página marca de verdad (CTA tel: de AsiloClient).
+    servicePhone: { '@type': 'ContactPoint', telephone: '+1-832-598-0914' },
+    availableLanguage: ['English', 'Spanish'],
+  },
 });
 
 export default async function AsiloPage({ params }: Props) {
   const { lang } = await params;
-  const schemaData = getLegalServiceSchema(lang);
+  const schemaData = getServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },

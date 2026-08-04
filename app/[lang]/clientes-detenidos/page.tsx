@@ -16,13 +16,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  // El horario debe coincidir con texts.section2.hours de
+  // ClientesDetenidosClient.tsx: en una página de emergencia, prometer una
+  // disponibilidad que la línea no tiene destruye la confianza.
   const title = isEs
-    ? 'Detenidos por ICE — Ayuda Legal de Emergencia 24/7'
-    : 'ICE Detainee Emergency Legal Help — Bond, Locator, Defense 24/7';
+    ? 'Detenidos por ICE — Ayuda Legal de Emergencia'
+    : 'ICE Detainee Emergency Legal Help — Bond, Locator, Defense';
 
   const description = isEs
-    ? '¿Su familiar fue detenido por ICE? Actuamos inmediatamente: localizador ICE, audiencia de fianza, defensa en corte de inmigración. 35+ años de experiencia. Abogados bilingües en Houston, Dallas, Chicago, Los Ángeles, El Paso y más. Atención 24/7: 832-598-0914.'
-    : 'Family member detained by ICE? We respond immediately: ICE detainee locator, bond hearings, immigration court defense and stays of removal. 35+ years of experience. Bilingual attorneys in Houston, Dallas, Chicago, Los Angeles, El Paso and more. 24/7 line: 832-598-0914.';
+    ? '¿Su familiar fue detenido por ICE? Actuamos inmediatamente: localizador ICE, audiencia de fianza, defensa en corte de inmigración. 35+ años de experiencia. Abogados bilingües en Houston, Dallas, Chicago, Los Ángeles, El Paso y más. Línea de ayuda 832-598-0914, lunes a viernes de 9AM a 9PM CST.'
+    : 'Family member detained by ICE? We respond immediately: ICE detainee locator, bond hearings, immigration court defense and stays of removal. 35+ years of experience. Bilingual attorneys in Houston, Dallas, Chicago, Los Angeles, El Paso and more. Help line 832-598-0914, Monday to Friday 9AM to 9PM CST.';
 
   return {
     title,
@@ -77,9 +80,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// Service (no LegalService): la ficha LocalBusiness con dirección vive en
+// /oficinas/<slug>; aquí solo la entidad temática ligada a #organization.
 const getEmergencySchema = (lang: string) => ({
   '@context': 'https://schema.org',
-  '@type': 'LegalService',
+  '@type': 'Service',
+  '@id': `${SITE_URL}/${lang}/clientes-detenidos#service`,
   name: lang === 'es'
     ? 'Manuel Solís — Ayuda Legal para Detenidos por ICE'
     : 'Manuel Solis — Legal Help for ICE Detainees',
@@ -87,14 +93,14 @@ const getEmergencySchema = (lang: string) => ({
     ? 'Asistencia legal de emergencia para personas detenidas por inmigración. Localización, fianzas, defensa en corte.'
     : 'Emergency legal assistance for immigration detainees. Location, bonds, court defense.',
   url: `${SITE_URL}/${lang}/clientes-detenidos`,
-  telephone: '+1-832-598-0914',
-  priceRange: '$$',
-  availableLanguage: ['Spanish', 'English'],
-  provider: {
-    '@type': 'LawFirm',
-    '@id': `${SITE_URL}/#organization`,
-    name: 'Manuel Solis Law Firm',
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    // Debe coincidir con la línea de ayuda que la página marca de verdad
+    // (CTA tel: de ClientesDetenidosClient) y con el horario que anuncia.
+    servicePhone: { '@type': 'ContactPoint', telephone: '+1-832-598-0914' },
+    availableLanguage: ['Spanish', 'English'],
   },
+  provider: { '@id': `${SITE_URL}/#organization` },
   serviceType: [
     'Immigration Detention Defense',
     'Bond Hearings',

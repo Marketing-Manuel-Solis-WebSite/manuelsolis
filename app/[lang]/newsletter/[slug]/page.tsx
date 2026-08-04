@@ -81,6 +81,11 @@ export default async function NewsletterEditionPage({ params }: Props) {
     { name: title, url: `${SITE_URL}/${lang}/newsletter/${slug}` },
   ]);
 
+  // publisher/author apuntan por @id al nodo Organization que emite el layout,
+  // en vez de redeclarar la firma como entidad anónima en cada edición.
+  // `image`: og-default.jpg es la única imagen real de estas ediciones — el
+  // campo `image` de newsletterData apunta a /newsletter/*.jpg, que no existe
+  // en public/, y un NewsArticle no puede declarar una imagen 404.
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
@@ -90,18 +95,14 @@ export default async function NewsletterEditionPage({ params }: Props) {
     dateModified: nl.date,
     url: `${SITE_URL}/${lang}/newsletter/${slug}`,
     inLanguage: isEs ? 'es' : 'en',
+    image: [`${SITE_URL}/og-default.jpg`],
     publisher: {
-      '@type': 'LegalService',
-      name: 'Manuel Solis Law Firm',
-      url: SITE_URL,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${SITE_URL}/logo-manuel-solis.png`,
-      },
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
     },
     author: {
       '@type': 'Organization',
-      name: 'Manuel Solis Law Firm',
+      '@id': `${SITE_URL}/#organization`,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -110,19 +111,6 @@ export default async function NewsletterEditionPage({ params }: Props) {
     keywords: topics.join(', '),
     articleSection: 'Immigration Law',
     about: topics.map((t) => ({ '@type': 'Thing', name: t })),
-  };
-
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: sections.map((s) => ({
-      '@type': 'Question',
-      name: s.heading,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: s.body,
-      },
-    })),
   };
 
   return (
@@ -137,13 +125,8 @@ export default async function NewsletterEditionPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-      <script
-        id="newsletter-faq"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
       <Header />
-      <main className="min-h-screen bg-[#001540]">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#001540]">
         {/* Hero */}
         <section className="relative pt-[160px] pb-12 overflow-hidden">
           <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'url(/noise.png)' }} />

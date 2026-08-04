@@ -27,7 +27,10 @@ export function generateBlogPostingSchema(input: BlogSchemaInput) {
     headline: input.title,
     description: input.description,
     datePublished: input.date,
-    dateModified: input.dateModified ?? input.date,
+    // Sin dateModified real se omite la propiedad: rellenarla con la fecha de
+    // publicación declara una revisión que nunca ocurrió, y en contenido legal
+    // que caduca esa fecha es justo lo que el lector usa para confiar.
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
     url: `${SITE_URL}/${input.lang}/blog/${input.slug}`,
     image: `${SITE_URL}${input.image}`,
     inLanguage: input.lang,

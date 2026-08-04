@@ -40,16 +40,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const getLegalServiceSchema = (lang: string) => ({
+// Service (no LegalService): la ficha LocalBusiness con dirección vive en
+// /oficinas/<slug>; aquí solo la entidad temática ligada a #organization.
+const getServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
-  '@type': 'LegalService',
+  '@type': 'Service',
+  '@id': `${SITE_URL}/${lang}/servicios/visa-e2#service`,
   name: lang === 'es' ? 'Manuel Solís - Visa E-2 Inversionistas' : 'Manuel Solis - E-2 Investor Visa',
   description: lang === 'es'
     ? 'Servicios legales para Visa E-2: asesoría para inversionistas que buscan establecerse en EE.UU.'
     : 'E-2 visa legal services: guidance for investors seeking to establish themselves in the U.S.',
   url: `${SITE_URL}/${lang}/servicios/visa-e2`,
-  priceRange: '$$',
-  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -57,12 +58,7 @@ const getLegalServiceSchema = (lang: string) => ({
     { '@type': 'State', name: 'Colorado' },
     { '@type': 'State', name: 'Tennessee' },
   ],
-  provider: {
-    '@type': 'LawFirm',
-    name: 'Manuel Solis Law Firm',
-    url: 'https://www.manuelsolis.com',
-    telephone: '+1-832-598-0914',
-  },
+  provider: { '@id': `${SITE_URL}/#organization` },
   serviceType: [
     'E-2 Investor Visa',
     'Business Immigration',
@@ -70,12 +66,18 @@ const getLegalServiceSchema = (lang: string) => ({
     'Business Plan Preparation',
     'Visa Renewal and Extension',
   ],
-  availableLanguage: ['English', 'Spanish'],
+  // Sin servicePhone: esta página no muestra teléfono propio (su CTA es el
+  // formulario #contacto); el número de la firma lo declara #organization.
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    serviceUrl: `${SITE_URL}/${lang}/servicios/visa-e2#contacto`,
+    availableLanguage: ['English', 'Spanish'],
+  },
 });
 
 export default async function VisaE2Page({ params }: Props) {
   const { lang } = await params;
-  const schemaData = getLegalServiceSchema(lang);
+  const schemaData = getServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },

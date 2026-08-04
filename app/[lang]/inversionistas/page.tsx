@@ -40,9 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const getLegalServiceSchema = (lang: string) => ({
+// Service (no LegalService): la ficha LocalBusiness con dirección vive en
+// /oficinas/<slug>; aquí solo la entidad temática ligada a #organization.
+const getServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
-  '@type': 'LegalService',
+  '@type': 'Service',
+  '@id': `${SITE_URL}/${lang}/inversionistas#service`,
   name:
     lang === 'es'
       ? 'Manuel Solis - Visa E-2 para Inversionistas'
@@ -52,21 +55,20 @@ const getLegalServiceSchema = (lang: string) => ({
       ? 'Servicios legales especializados en Visa E-2 para inversionistas que buscan establecerse en EE.UU.'
       : 'Specialized E-2 visa legal services for investors seeking to establish themselves in the U.S.',
   url: `${SITE_URL}/${lang}/inversionistas`,
-  priceRange: '$$',
-  telephone: '+1-832-598-0914',
   areaServed: { '@type': 'Country', name: 'US' },
   serviceType: ['E-2 Visa', 'Investor Visa', 'Business Immigration'],
-  provider: {
-    '@type': 'LawFirm',
-    name: 'Manuel Solis Law Firm',
-    url: SITE_URL,
-    logo: `${SITE_URL}/logo-manuel-solis.png`,
+  provider: { '@id': `${SITE_URL}/#organization` },
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    // Debe coincidir con el número que la página marca de verdad (PHONE_LINK de
+    // InversionistasClient), no con el de las páginas de servicios.
+    servicePhone: { '@type': 'ContactPoint', telephone: '+1-888-676-1238' },
   },
 });
 
 export default async function InversionistasPage({ params }: Props) {
   const { lang } = await params;
-  const schemaData = getLegalServiceSchema(lang);
+  const schemaData = getServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     {

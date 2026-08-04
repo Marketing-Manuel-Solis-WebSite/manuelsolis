@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import ImmigrationClient from './ImmigrationClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
-import { generateFAQSchema } from '../../../lib/blogSchema';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -63,18 +62,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // 2. SCHEMA ORG ESPECÍFICO PARA INMIGRACIÓN (JSON-LD)
+// Service (no LegalService): la ficha LocalBusiness con dirección vive en
+// /oficinas/<slug>; aquí solo la entidad temática ligada a #organization.
 const getImmigrationSchema = (lang: string) => {
   return {
     '@context': 'https://schema.org',
-    '@type': 'LegalService',
+    '@type': 'Service',
+    '@id': `${SITE_URL}/${lang}/servicios/inmigracion#service`,
     name: lang === 'es' ? 'Manuel Solís - Abogados de Inmigración' : 'Manuel Solis - Immigration Lawyers',
     description: lang === 'es'
       ? 'Servicios legales de inmigración: Defensa de deportación, Asilo, Visas U y Peticiones Familiares.'
       : 'Immigration legal services: Deportation defense, Asylum, U Visas, and Family Petitions.',
-    url: `https://www.manuelsolis.com/${lang}/servicios/inmigracion`,
-    image: 'https://www.manuelsolis.com/immigration-hero.png',
-    priceRange: '$$',
-    telephone: '+1-832-598-0914',
+    url: `${SITE_URL}/${lang}/servicios/inmigracion`,
+    image: `${SITE_URL}/immigration-hero.png`,
     areaServed: [
       { '@type': 'State', name: 'Texas' },
       { '@type': 'State', name: 'California' },
@@ -82,14 +82,7 @@ const getImmigrationSchema = (lang: string) => {
       { '@type': 'State', name: 'Colorado' },
       { '@type': 'State', name: 'Tennessee' },
     ],
-    provider: {
-      '@type': 'LawFirm',
-      '@id': 'https://www.manuelsolis.com/#organization',
-      name: 'Manuel Solis Law Firm',
-      url: 'https://www.manuelsolis.com',
-      telephone: '+1-832-598-0914',
-      foundingDate: '1990',
-    },
+    provider: { '@id': `${SITE_URL}/#organization` },
     serviceType: [
       'Immigration Law',
       'Deportation Defense',
@@ -102,35 +95,15 @@ const getImmigrationSchema = (lang: string) => {
       'Family Petitions',
       'EB-3 Employment-Based Immigration',
     ],
-    knowsAbout: [
-      'U Nonimmigrant Status',
-      'Violence Against Women Act',
-      'T Nonimmigrant Status',
-      'Immigration and Nationality Act Section 240A(b)',
-      'Bona Fide Determination',
-      'Form I-918',
-      'Form I-360 VAWA Self-Petition',
-      'Humanitarian Visas',
-    ],
-    availableLanguage: ['English', 'Spanish'],
+    // Sin servicePhone: esta página no muestra teléfono propio (su CTA es el
+    // formulario #contacto); el número de la firma lo declara #organization,
+    // que además ya lista el knowsAbout completo de la entidad.
+    availableChannel: {
+      '@type': 'ServiceChannel',
+      serviceUrl: `${SITE_URL}/${lang}/servicios/inmigracion#contacto`,
+      availableLanguage: ['English', 'Spanish'],
+    },
   };
-};
-
-const getImmigrationFAQs = (lang: string) => {
-  const faqs = lang === 'es' ? [
-    { question: '¿Cuánto tiempo tarda el proceso de residencia por familiar?', answer: 'El tiempo varía según la categoría. Para cónyuges de ciudadanos, puede ser de 12 a 18 meses. Para familiares de residentes permanentes, puede tomar de 2 a 5 años o más dependiendo del país de origen y la categoría de preferencia.' },
-    { question: '¿Puedo aplicar a la ciudadanía si tengo antecedentes criminales?', answer: 'Depende del tipo de delito. Algunos delitos menores no impiden la naturalización, pero delitos graves (aggravated felonies) pueden descalificarlo permanentemente. Es crucial consultar con un abogado para evaluar su caso específico antes de aplicar.' },
-    { question: '¿Qué hago si mi petición familiar fue negada?', answer: 'Tiene derecho a apelar la decisión o presentar una moción para reabrir el caso con nueva evidencia. También puede presentar una nueva petición si las circunstancias han cambiado. Nuestros abogados pueden evaluar las razones de la negación y determinar la mejor estrategia.' },
-    { question: '¿Puedo trabajar mientras espero mi residencia?', answer: 'Sí, en muchos casos puede solicitar un permiso de trabajo (EAD) mientras su caso está pendiente. Si tiene un ajuste de estatus pendiente, generalmente puede obtener un EAD dentro de 3 a 6 meses de haber presentado la solicitud.' },
-    { question: '¿Necesito un abogado para mi caso de inmigración?', answer: 'Aunque no es legalmente obligatorio, un abogado de inmigración aumenta significativamente sus posibilidades de éxito. Las leyes de inmigración son complejas y un error puede resultar en negación o deportación. Con más de 50,000 casos resueltos, nuestro equipo conoce cada detalle del proceso.' },
-  ] : [
-    { question: 'How long does the family-based residency process take?', answer: 'Timing varies by category. For spouses of U.S. citizens, it can take 12 to 18 months. For relatives of permanent residents, it may take 2 to 5 years or more depending on the country of origin and preference category.' },
-    { question: 'Can I apply for citizenship if I have a criminal record?', answer: 'It depends on the type of offense. Some minor offenses do not prevent naturalization, but aggravated felonies may permanently disqualify you. It is crucial to consult with an attorney to evaluate your specific case before applying.' },
-    { question: 'What should I do if my family petition was denied?', answer: 'You have the right to appeal the decision or file a motion to reopen the case with new evidence. You may also file a new petition if circumstances have changed. Our attorneys can evaluate the reasons for the denial and determine the best strategy.' },
-    { question: 'Can I work while waiting for my residency?', answer: 'Yes, in many cases you can apply for a work permit (EAD) while your case is pending. If you have a pending adjustment of status, you can generally obtain an EAD within 3 to 6 months of filing.' },
-    { question: 'Do I need a lawyer for my immigration case?', answer: 'While not legally required, an immigration attorney significantly increases your chances of success. Immigration laws are complex and a mistake can result in denial or deportation. With over 50,000 cases resolved, our team knows every detail of the process.' },
-  ];
-  return faqs;
 };
 
 export default async function ImmigrationPage({ params }: Props) {
@@ -141,7 +114,6 @@ export default async function ImmigrationPage({ params }: Props) {
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
     { name: lang === 'es' ? 'Inmigración' : 'Immigration', url: `/${lang}/servicios/inmigracion` },
   ]);
-  const faqData = generateFAQSchema(getImmigrationFAQs(lang));
 
   return (
     <>
@@ -154,12 +126,6 @@ export default async function ImmigrationPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      {faqData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
-        />
-      )}
       <ImmigrationClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );
