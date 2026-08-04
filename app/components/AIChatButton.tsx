@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { X, Send, MessageCircle } from 'lucide-react';
+import { fetchWithTimeout } from '../lib/fetchTimeout';
 import { useLanguage } from '../context/LanguageContext';
 import { useDialog } from './useDialog';
 
@@ -79,17 +80,20 @@ export default function AIChatButton() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userMessage,
-          conversationHistory: messages
-        }),
-        // El modelo puede tardar, pero sin tope un fallo de red deja el
-        // indicador de "escribiendo" girando indefinidamente.
-        signal: AbortSignal.timeout(30000)
-      });
+      // El modelo puede tardar, pero sin tope un fallo de red deja el indicador
+      // de "escribiendo" girando indefinidamente.
+      const response = await fetchWithTimeout(
+        '/api/chat',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: userMessage,
+            conversationHistory: messages
+          })
+        },
+        30000
+      );
 
       const data = await response.json();
 

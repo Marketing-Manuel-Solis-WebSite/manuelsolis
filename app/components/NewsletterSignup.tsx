@@ -5,6 +5,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { Mail, ArrowRight, CheckCircle, Loader2, Sparkles, Shield } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { fireConversion } from '../lib/conversion';
+import { fetchWithTimeout } from '../lib/fetchTimeout';
 
 interface NewsletterSignupProps {
   variant?: 'inline' | 'banner' | 'footer';
@@ -63,14 +64,17 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
 
     setStatus('loading');
     try {
-      const res = await fetch('/api/newsletter/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, firstName, language }),
-        // Sin tope, un fetch que nunca resuelve deja el botón en "cargando"
-        // para siempre y el visitante no sabe si se suscribió.
-        signal: AbortSignal.timeout(15000),
-      });
+      // Sin tope, un fetch que nunca resuelve deja el botón en "cargando" para
+      // siempre y el visitante no sabe si se suscribió.
+      const res = await fetchWithTimeout(
+        '/api/newsletter/subscribe',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, firstName, language }),
+        },
+        15000,
+      );
 
       if (res.ok) {
         // Solo tras el alta confirmada por el servidor: un evento disparado al

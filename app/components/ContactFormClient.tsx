@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext'
 import { m, AnimatePresence, Variants } from 'framer-motion'
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle, type LucideIcon } from 'lucide-react'
 import { fireConversion } from '../lib/conversion'
+import { fetchWithTimeout, FetchTimeoutError } from '../lib/fetchTimeout'
 import { getEffectiveUtms, effectiveUtmsToLeadFields } from '../lib/attribution'
 
 // Client island: the interactive lead-capture form. La sección y el encabezado
@@ -274,17 +275,21 @@ export default function ContactFormClient() {
         session_id: sessionId,
       };
 
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        // Sin este tope el envío puede quedarse colgado indefinidamente y el
-        // usuario se queda mirando "Procesando..." sin error ni reintento: es
-        // lo que ocurrió cuando el challenge de BotID no se servía y el fetch
-        // parcheado nunca resolvía (mayo de 2026). Un timeout convierte ese
-        // fallo silencioso en un mensaje accionable.
-        signal: AbortSignal.timeout(SUBMIT_TIMEOUT_MS),
-      });
+      // El tope evita que el envío quede colgado indefinidamente dejando al
+      // usuario en "Procesando..." sin error ni reintento, que es lo que pasó
+      // cuando el challenge de BotID no se servía y el fetch parcheado nunca
+      // resolvía (mayo de 2026). Va por fetchWithTimeout y no por
+      // AbortSignal.timeout porque esa API no existe en iOS 15 y allí romper
+      // el envío sería peor que el cuelgue que se quiere evitar.
+      const response = await fetchWithTimeout(
+        API_URL,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        },
+        SUBMIT_TIMEOUT_MS,
+      );
 
       if (response.ok) {
         // Un solo evento de conversión por envío: fireConversion hace el
@@ -320,7 +325,7 @@ export default function ContactFormClient() {
       // Un timeout no se distingue de una caída de red para el usuario, pero sí
       // para quien lea los logs: el lead pudo haber llegado al CRM aunque la
       // respuesta no volviera, así que el mensaje no debe afirmar que se perdió.
-      const timedOut = error instanceof DOMException && error.name === 'TimeoutError';
+      const timedOut = error instanceof FetchTimeoutError;
       setOverlayMessage(timedOut ? TIMEOUT_MESSAGE : TRANSPORT_ERROR_MESSAGE);
       setSubmitStatus('error');
     } finally {

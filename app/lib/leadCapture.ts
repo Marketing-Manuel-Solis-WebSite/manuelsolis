@@ -180,31 +180,16 @@ const ATTRIBUTION_QUERY_PARAMS = [
   'ttclid',
 ] as const;
 
-// Hosts propios. `page_url` llega del cliente y de ella se derivan el área de
-// práctica, la oficina y la atribución que BOS parsea de la URL: una cadena
-// con cualquier host no puede decidir esos datos de negocio.
-const PRODUCTION_PAGE_URL_HOSTS = new Set(['www.manuelsolis.com', 'manuelsolis.com']);
-const NON_PRODUCTION_PAGE_URL_HOSTS = new Set(['localhost', '127.0.0.1']);
-
-function isOwnPageUrlHost(hostname: string): boolean {
-  const host = hostname.toLowerCase();
-  return (
-    PRODUCTION_PAGE_URL_HOSTS.has(host) ||
-    NON_PRODUCTION_PAGE_URL_HOSTS.has(host) ||
-    host.endsWith('.vercel.app')
-  );
-}
-
 /**
  * Reduce `page_url` a una URL del sitio: siempre devuelve una absoluta sobre
  * el origen canónico.
  *
- *   - Host propio (producción, preview o local) → se conserva ruta y query,
- *     reescribiendo el origen al canónico.
+ *   - Cualquier host → se conservan ruta y query, y el origen se reescribe al
+ *     canónico, así que a BOS nunca le llega un dominio ajeno. Esto cubre el
+ *     proxy de traducción de Google y los dominios alternos, que sirven las
+ *     mismas rutas.
  *   - Pathname pelón ('/es/contacto') → se resuelve sobre el canónico.
- *   - Cualquier otro host o esquema → se descarta por completo (incluida su
- *     query, de donde saldría la atribución) y queda la raíz del sitio, así
- *     que las inferencias devuelven null en lugar de un dato inventado.
+ *   - Esquema que no es http(s) → queda la raíz del sitio.
  *   - Demasiado larga → se recortan los parámetros ajenos a la atribución,
  *     nunca los utm_* ni los click ids: ver ATTRIBUTION_QUERY_PARAMS.
  */
@@ -219,8 +204,18 @@ export function normalizePageUrl(raw: unknown): string {
     return `${CANONICAL_ORIGIN}/`;
   }
 
+  // Solo el esquema descalifica por completo (javascript:, data:, file:).
+  //
+  // El host NO se usa para descartar la ruta ni el query: el origen siempre se
+  // reescribe al canónico, que es lo que de verdad importaba —que a BOS no
+  // llegue una URL de un dominio ajeno—, y filtrar por host rompía casos
+  // legítimos sin aportar seguridad: quien quiera mandar un `page_url` falso lo
+  // hace igual con el host propio. El caso real que rompía es el proxy de
+  // traducción de Google (`www-manuelsolis-com.translate.goog`), que sirve el
+  // sitio con la MISMA ruta: descartarla convertía un lead de campaña en
+  // orgánico y dejaba sin inferir el servicio y la oficina.
   const schemeOk = parsed.protocol === 'https:' || parsed.protocol === 'http:';
-  if (!schemeOk || !isOwnPageUrlHost(parsed.hostname)) {
+  if (!schemeOk) {
     return `${CANONICAL_ORIGIN}/`;
   }
 

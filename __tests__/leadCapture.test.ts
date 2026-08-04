@@ -369,9 +369,23 @@ describe('normalizePageUrl — no puede alterar la atribución', () => {
     expect(u.searchParams.get('extra0'), 'el relleno ajeno sí se descarta').toBeNull();
   });
 
-  it('descarta por completo una URL de otro host, incluida su query', () => {
+  it('reescribe el origen ajeno al canónico conservando ruta y atribución', () => {
+    // Caso real: el proxy de traducción de Google sirve el sitio con la misma
+    // ruta. Descartarla dejaba el lead sin servicio ni oficina inferidos y,
+    // peor, convertía una campaña en tráfico orgánico.
+    const out = normalizePageUrl(
+      'https://www-manuelsolis-com.translate.goog/es/abogado-inmigracion-houston?utm_source=google&utm_medium=cpc&_x_tr_sl=es',
+    );
+    const u = new URL(out);
+    expect(u.origin).toBe('https://www.manuelsolis.com');
+    expect(u.pathname).toBe('/es/abogado-inmigracion-houston');
+    expect(u.searchParams.get('utm_source')).toBe('google');
+    expect(u.searchParams.get('utm_medium')).toBe('cpc');
+  });
+
+  it('nunca devuelve una URL de un dominio ajeno', () => {
     const out = normalizePageUrl('https://competencia.example.com/landing?utm_source=inyectado');
-    expect(out).toBe('https://www.manuelsolis.com/');
+    expect(new URL(out).origin).toBe('https://www.manuelsolis.com');
   });
 
   it('resuelve una ruta relativa sobre el origen canónico', () => {
