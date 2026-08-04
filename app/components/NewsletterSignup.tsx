@@ -67,6 +67,9 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, firstName, language }),
+        // Sin tope, un fetch que nunca resuelve deja el botón en "cargando"
+        // para siempre y el visitante no sabe si se suscribió.
+        signal: AbortSignal.timeout(15000),
       });
 
       if (res.ok) {

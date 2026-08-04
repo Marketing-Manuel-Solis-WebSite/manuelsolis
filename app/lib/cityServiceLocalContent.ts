@@ -748,7 +748,3 @@ export function getTypicalCases(config: LandingPageConfig, office: OfficeInfo, s
   if (!signals || !builder) return [];
   return builder(office, signals);
 }
-
-export function getCitySignals(officeKey: string, citySlug?: string): CityLocalSignals | undefined {
-  return CITY_LOCAL[officeKey] ?? (citySlug ? CITY_LOCAL[citySlug] : undefined);
-}

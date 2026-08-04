@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm'
 import { Reveal } from '../../components/motion'
 import Image from 'next/image'
-import { Landmark, MapPin } from 'lucide-react'
+import { Landmark, MapPin, Scale } from 'lucide-react'
 import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../lib/officesRegistry'
 
 /**
@@ -24,6 +24,18 @@ import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../lib/officesRegistry'
 const PHYSICAL_OFFICE_COUNT = Object.keys(OFFICES_PLACE_IDS)
   .filter((slug) => !isVirtualOffice(slug)).length;
 
+// --- COLEGIOS Y ASOCIACIONES ---
+// Los nombres NO se acuñan aquí: son los mismos rótulos que el sitio ya publica
+// en el carrusel del Hero (app/components/Hero.tsx), que usa una segunda copia
+// de estos mismos emblemas en /public/state-bar/.
+// `width`/`height` son las dimensiones intrínsecas reales de cada PNG.
+const BAR_ASSOCIATIONS: ReadonlyArray<{ src: string; name: string; width: number; height: number }> = [
+  { src: '/associations/american-bar.png', name: 'American Bar Association', width: 137, height: 137 },
+  { src: '/associations/illinois.png', name: 'Illinois State Bar Association', width: 148, height: 148 },
+  { src: '/associations/chicago.png', name: 'Chicago Bar Association', width: 114, height: 114 },
+  { src: '/associations/new-mexico.png', name: 'State Bar of New Mexico', width: 137, height: 137 },
+];
+
 // --- TEXTOS UI ---
 const interfaceTexts = {
   hero: {
@@ -38,6 +50,13 @@ const interfaceTexts = {
     commitment: {
         es: 'Nuestro compromiso es brindar **asesoría legal confiable, humana y cercana** a la comunidad, luchando incansablemente por mantener a las familias unidas y proteger sus derechos en este país.',
         en: 'Our commitment is to provide **reliable, humane, and close legal advice** to the community, fighting tirelessly to keep families together and protect their rights in this country.'
+    }
+  },
+  associations: {
+    title: { es: 'COLEGIOS Y ASOCIACIONES', en: 'BAR ASSOCIATIONS' },
+    description: {
+      es: 'Colegios de abogados y asociaciones profesionales del ámbito legal en el que ejerce el despacho.',
+      en: 'Bar associations and professional legal organizations in the field where the firm practices.'
     }
   },
   usaOffices: {
@@ -171,6 +190,47 @@ export default function NosotrosClient({ lang }: { lang: 'es' | 'en' }) {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* --- COLEGIOS Y ASOCIACIONES --- */}
+        <section className="container mx-auto px-4 py-12 relative z-10 max-w-7xl">
+
+          <SectionTitle title={t('associations.title')} />
+
+          <Reveal variant="up" className="p-8 border border-white/10 rounded-2xl backdrop-blur-md bg-[#000814]/60 shadow-2xl">
+            <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12">
+
+              <div className="lg:w-1/3">
+                <Scale size={40} className="text-[#B2904D] mb-4 drop-shadow-[0_0_15px_rgba(178,144,77,0.4)]" />
+                <p className="text-base text-blue-100/80 font-light leading-relaxed">
+                  {t('associations.description')}
+                </p>
+              </div>
+
+              <ul className="lg:w-2/3 grid grid-cols-2 sm:grid-cols-4 gap-4 list-none">
+                {BAR_ASSOCIATIONS.map((assoc) => (
+                  // El fondo blanco del contenedor es obligatorio: los PNG son de
+                  // tinta oscura sobre transparencia y serían ilegibles sobre el
+                  // azul marino de la página.
+                  <li
+                    key={assoc.src}
+                    className="flex h-24 items-center justify-center rounded-xl bg-white p-4 shadow-lg ring-1 ring-black/5"
+                  >
+                    <Image
+                      src={assoc.src}
+                      alt={lang === 'es' ? `Logotipo de ${assoc.name}` : `${assoc.name} logo`}
+                      width={assoc.width}
+                      height={assoc.height}
+                      className="max-h-16 w-auto object-contain"
+                      loading="lazy"
+                    />
+                  </li>
+                ))}
+              </ul>
+
+            </div>
+          </Reveal>
+
         </section>
 
         {/* --- SECCIÓN DE MAPA Y UBICACIONES (INTERACTIVO) --- */}

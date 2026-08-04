@@ -26,16 +26,15 @@ interface NewsletterNoCtaEmailProps {
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
-// TODO (Marketing): esta variante NO debe contener CTA de venta. Sustituye
-// el copy de lorem-ipsum por un mensaje dirigido a contactos conocidos por
-// el sistema — tono informativo, sin urgencia comercial.
-const placeholderCopy = {
+// Variante para contactos que ya son clientes: tono informativo y SIN CTA de
+// venta. Cualquier copy que se añada aquí debe respetar esa regla.
+const templateCopy = {
   es: {
     preview: 'Actualizaciones migratorias — Oficinas Legales de Manuel Solis',
     eyebrow: 'Newsletter',
     greeting: (name: string) => (name ? `Hola ${name},` : 'Hola,'),
     intro:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Queremos mantenerte al tanto de los cambios más recientes en materia migratoria.',
+      'Queremos mantenerte al tanto de los cambios más recientes en materia migratoria.',
     softNote:
       'Si ya estás trabajando con nosotros, continúa en contacto con el abogado asignado a tu caso para cualquier duda.',
     readMore: 'Leer la edición completa',
@@ -48,7 +47,7 @@ const placeholderCopy = {
     eyebrow: 'Newsletter',
     greeting: (name: string) => (name ? `Hello ${name},` : 'Hello,'),
     intro:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. We want to keep you informed about the most recent changes in immigration matters.',
+      'We want to keep you informed about the most recent changes in immigration matters.',
     softNote:
       'If you are already working with us, stay in contact with the attorney assigned to your case for any questions.',
     readMore: 'Read the full edition',
@@ -66,7 +65,7 @@ export function NewsletterNoCtaEmail({
   sections,
   unsubscribeUrl,
 }: NewsletterNoCtaEmailProps) {
-  const t = placeholderCopy[language] || placeholderCopy.es;
+  const t = templateCopy[language] || templateCopy.es;
   const editionUrl = `${SITE_URL}/${language}/newsletter/${editionSlug}`;
   const unsubscribeHref =
     unsubscribeUrl || `${SITE_URL}/${language}/newsletter/unsubscribe`;

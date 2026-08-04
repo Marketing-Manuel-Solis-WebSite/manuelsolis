@@ -5,15 +5,11 @@ import { MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { fireConversion } from '../lib/conversion';
 
-const WHATSAPP_HIDDEN = false;
-
 export default function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
   // Se sigue usando useLanguage para el tooltip y manejo de texto general
   const { t, language } = useLanguage();
 
-  if (WHATSAPP_HIDDEN) return null;
-  
   // 📞 NÚMERO DE WHATSAPP (+1 713-876-3560)
   const whatsappNumber = '17138763560';
   

@@ -130,6 +130,11 @@ const PHONE_MIN_DIGITS = 7;
 // aplicar la misma regla server-side sin cambiar el cliente.
 const HONEYPOT_FIELD = 'website';
 
+// Tope del envío. Generoso a propósito: el servidor reintenta contra el CRM
+// hasta tres veces antes de responder, y cortar demasiado pronto descartaría un
+// lead que sí iba a entregarse.
+const SUBMIT_TIMEOUT_MS = 20000;
+
 interface BilingualMessage {
   es: string;
   en: string;
@@ -171,6 +176,15 @@ const RATE_LIMIT_MESSAGE: BilingualMessage = {
 const TRANSPORT_ERROR_MESSAGE: BilingualMessage = {
   es: 'Hubo un problema al enviar su consulta. Intente de nuevo más tarde.',
   en: 'There was an issue sending your inquiry. Please try again later.',
+};
+
+// El envío pudo haber llegado aunque la respuesta no volviera, así que el
+// mensaje evita pedir un reenvío que duplicaría el lead y remite al teléfono
+// que la propia página ya muestra (no se codifica aquí ningún número: cada
+// página enseña el de su oficina).
+const TIMEOUT_MESSAGE: BilingualMessage = {
+  es: 'El envío está tardando más de lo normal y puede que ya haya llegado. No lo reenvíe: si prefiere no esperar, llámenos al número que aparece en esta página y le atendemos de inmediato.',
+  en: 'Your submission is taking longer than usual and may already have gone through. Please do not resend it: if you would rather not wait, call the number shown on this page and we will assist you right away.',
 };
 
 export default function ContactFormClient() {
@@ -264,6 +278,12 @@ export default function ContactFormClient() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
+        // Sin este tope el envío puede quedarse colgado indefinidamente y el
+        // usuario se queda mirando "Procesando..." sin error ni reintento: es
+        // lo que ocurrió cuando el challenge de BotID no se servía y el fetch
+        // parcheado nunca resolvía (mayo de 2026). Un timeout convierte ese
+        // fallo silencioso en un mensaje accionable.
+        signal: AbortSignal.timeout(SUBMIT_TIMEOUT_MS),
       });
 
       if (response.ok) {
@@ -296,8 +316,12 @@ export default function ContactFormClient() {
           setSubmitStatus('error');
         }
       }
-    } catch {
-      setOverlayMessage(TRANSPORT_ERROR_MESSAGE);
+    } catch (error) {
+      // Un timeout no se distingue de una caída de red para el usuario, pero sí
+      // para quien lea los logs: el lead pudo haber llegado al CRM aunque la
+      // respuesta no volviera, así que el mensaje no debe afirmar que se perdió.
+      const timedOut = error instanceof DOMException && error.name === 'TimeoutError';
+      setOverlayMessage(timedOut ? TIMEOUT_MESSAGE : TRANSPORT_ERROR_MESSAGE);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

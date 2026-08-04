@@ -204,11 +204,13 @@ export default function HeaderProfessional() {
             { name: 'Nuestro Equipo', href: `/${language}/abogados` },
             { name: 'Sobre Nosotros', href: `/${language}/nosotros` },
             { name: 'Preguntas Frecuentes', href: `/${language}/informacion/faq` },
+            { name: 'Noticias Legales', href: `/${language}/informacion/noticias` },
           ]
         : [
             { name: 'Our Team', href: `/${language}/abogados` },
             { name: 'About Us', href: `/${language}/nosotros` },
             { name: 'FAQ', href: `/${language}/informacion/faq` },
+            { name: 'Legal News', href: `/${language}/informacion/noticias` },
           ]
     },
     {
@@ -218,11 +220,43 @@ export default function HeaderProfessional() {
     },
   ];
 
+  // La query (?utm_source, gclid…) y el fragmento deben sobrevivir al cambio de
+  // idioma o se pierde la atribución de la visita. No se puede leer
+  // window.location en el primer render (rompería la hidratación), así que se
+  // captura al montar y en cada cambio de URL.
+  const [urlSuffix, setUrlSuffix] = useState('');
+
+  useEffect(() => {
+    const readSuffix = () => setUrlSuffix(window.location.search + window.location.hash);
+    readSuffix();
+    window.addEventListener('popstate', readSuffix);
+    window.addEventListener('hashchange', readSuffix);
+    return () => {
+      window.removeEventListener('popstate', readSuffix);
+      window.removeEventListener('hashchange', readSuffix);
+    };
+  }, [pathname]);
+
+  // Los CTAs flotantes (fixed z-50) se montan fuera del árbol del Header, en el
+  // layout, así que quedarían por encima de este panel modal (z-40) y taparían
+  // sus últimos enlaces. FloatingCtas.tsx escucha este mismo nombre de evento.
+  useEffect(() => {
+    const notify = (open: boolean) => {
+      window.dispatchEvent(new CustomEvent<boolean>('msolis:mobile-menu-toggle', { detail: open }));
+    };
+    notify(isMenuOpen);
+    if (!isMenuOpen) return;
+    // Si el Header se desmonta con el panel abierto, los flotantes deben volver.
+    return () => {
+      notify(false);
+    };
+  }, [isMenuOpen]);
+
   // Ruta equivalente en el otro idioma. El switcher usa <Link href> real
   // (no button+router.push) para que exista un enlace es↔en rastreable.
   const langPath = (target: 'es' | 'en') => {
     const rest = pathname.split('/').slice(2).join('/');
-    return `/${target}${rest ? '/' + rest : ''}`;
+    return `/${target}${rest ? '/' + rest : ''}${urlSuffix}`;
   };
 
   const onLangLinkClick = (target: 'es' | 'en') => {
@@ -307,7 +341,7 @@ export default function HeaderProfessional() {
             </Link>
 
             <div className="hidden lg:flex items-center flex-1 min-w-0">
-              <nav aria-label="Main navigation" className="flex items-center gap-4 xl:gap-7">
+              <nav aria-label={language === 'es' ? 'Navegación principal' : 'Main navigation'} className="flex items-center gap-4 xl:gap-7">
                 {menuItems.map((item) => {
                   if (item.type === 'external') {
                     return (

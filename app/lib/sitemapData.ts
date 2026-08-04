@@ -184,14 +184,15 @@ export function getPagesEntries(): SitemapURL[] {
     { route: '/colaboradores', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-06-05' },
     { route: '/testimonios', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/consulta', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-04-11' },
-    // /clientes queda fuera a propósito: es una página en construcción marcada
-    // noindex. Anunciarla en el sitemap enviaría a Google la señal opuesta.
     { route: '/clientes-detenidos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/acceso-clientes', priority: 0.4, changeFrequency: 'yearly', lastModified: '2026-04-11' },
     { route: '/inversionistas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/politica-editorial', priority: 0.4, changeFrequency: 'yearly', lastModified: '2025-03-20' },
     { route: '/informacion/faq', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/informacion/recursos', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+    // /informacion/noticias entra al sitemap desde que lista artículos reales
+    // derivados de BLOG_DATA: antes era una página "en construcción" con noindex.
+    { route: '/informacion/noticias', priority: 0.5, changeFrequency: 'weekly', lastModified: '2026-08-04' },
     { route: '/privacidad', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
     { route: '/terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
     { route: '/sms-terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },

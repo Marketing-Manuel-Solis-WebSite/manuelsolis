@@ -5,9 +5,22 @@ import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'
 import { ChevronDown } from 'lucide-react'
 import React from 'react'
+import Link from 'next/link'
 import { useLanguage } from '../../../context/LanguageContext'
+import type { Language } from '../../../lib/translations'
 
-const questions1to20 = [
+interface CivicsQuestion {
+  question: Record<Language, string>
+  answers: Record<Language, string[]>
+}
+
+/**
+ * Grupo designado de 20: el conjunto reducido de preguntas de civismo para
+ * quienes califican bajo las reglas 50/20 y 55/15, explicadas en
+ * /blog/ciudadania-en-espanol-reglas-50-20-55-15. Por eso va en su propio
+ * bloque y no numerado dentro del banco: no es "las primeras 20" del examen.
+ */
+const designatedGroup: CivicsQuestion[] = [
   {
     question: { es: "¿Cuál es la ley suprema de la nación?", en: "What is the supreme law of the land?" },
     answers: { es: ["La Constitución"], en: ["The Constitution"] }
@@ -90,7 +103,8 @@ const questions1to20 = [
   }
 ]
 
-const questions21to40 = [
+// Resto del banco de preguntas, en el orden del examen.
+const bankBlock1: CivicsQuestion[] = [
   {
     question: { es: "¿Cuál es la forma de gobierno de los Estados Unidos?", en: "What is the form of government of the United States?" },
     answers: { es: ["República", "República federal basada en la Constitución", "Democracia representativa"], en: ["Republic", "Constitution-based federal republic", "Representative democracy"] }
@@ -176,7 +190,7 @@ const questions21to40 = [
   }
 ]
 
-const questions41to60 = [
+const bankBlock2: CivicsQuestion[] = [
   {
     question: { es: "¿Cuánto dura el término de un miembro de la Cámara de Representantes?", en: "How long is a term for a member of the House of Representatives?" },
     answers: { es: ["Dos (2) años"], en: ["Two (2) years"] }
@@ -235,7 +249,7 @@ const questions41to60 = [
   },
   {
     question: { es: "¿Quién firma los proyectos de ley para convertirlos en leyes?", en: "Who signs bills to become laws?" },
-    answers: { es: ["El Presidente (de los Estados Unidos)"], en: ["The President (of the Estados Unidos)"] }
+    answers: { es: ["El Presidente (de los Estados Unidos)"], en: ["The President (of the United States)"] }
   },
   {
     question: { es: "¿Quién nombra a los jueces federales?", en: "Who appoints federal judges?" },
@@ -259,7 +273,7 @@ const questions41to60 = [
   }
 ]
 
-const questions61to80 = [
+const bankBlock3: CivicsQuestion[] = [
   {
     question: { es: "¿Cuál es una parte de la rama judicial?", en: "What is one part of the judicial branch?" },
     answers: { es: ["Corte Suprema", "Tribunales Federales"], en: ["Supreme Court", "Federal courts"] }
@@ -342,15 +356,13 @@ const questions61to80 = [
   }
 ]
 
-const questions81to100 = [
+const bankBlock4: CivicsQuestion[] = [
   {
     question: { es: "Los colonos vinieron a América por muchas razones. Mencione una.", en: "The colonists came to America for many reasons. Name one." },
     answers: { es: ["Libertad", "Libertad política", "Libertad religiosa", "Oportunidad económica", "Escapar de la persecución"], en: ["Freedom", "Political liberty", "Religious freedom", "Economic opportunity", "Escape persecution"] }
   },
-  {
-    question: { es: "¿Qué grupo de personas fue traído a los Estados Unidos y vendido como esclavos?", en: "What group of people was brought to the United States and sold as slaves?" },
-    answers: { es: ["Africanos", "Gente de África"], en: ["Africans", "People from Africa"] }
-  },
+  // La pregunta sobre las personas traídas y vendidas como esclavos estaba
+  // repetida aquí; su sitio es el grupo designado de 20 (arriba).
   {
     question: { es: "¿Qué guerra libraron los estadounidenses para obtener la independencia de Gran Bretaña?", en: "What war did the Americans fight to win independence from Britain?" },
     answers: { es: ["Revolución Americana", "La Guerra Revolucionaria (Americana)", "Guerra por la Independencia (Americana)"], en: ["American Revolution", "The (American) Revolutionary War", "War for (American) Independence"] }
@@ -425,7 +437,7 @@ const questions81to100 = [
   }
 ]
 
-const questions101to128 = [
+const bankBlock5: CivicsQuestion[] = [
   {
     question: { es: "¿Qué enmienda otorga la ciudadanía a todas las personas nacidas en los Estados Unidos?", en: "What amendment gives citizenship to all persons born in the United States?" },
     answers: { es: ["14ª Enmienda"], en: ["14th Amendment"] }
@@ -471,7 +483,7 @@ const questions101to128 = [
     answers: { es: ["General durante la Segunda Guerra Mundial", "Presidente al final de (durante) la Guerra de Corea", "34º presidente de los Estados Unidos", "Firmó la Ley Federal de Ayuda en Carreteras de 1956 (Creó el Sistema Interestatal)"], en: ["General during World War II", "President at the end of (during) the Korean War", "34th President of the United States", "Signed the Federal-Aid Highway Act of 1956 (Created the Interstate System)"] }
   },
   {
-    question: { es: "¿Cuál fue el principal rival de los Estados Unidos durante la Guerra Fría?", en: "What was the main concern of the United States during the Cold War?" },
+    question: { es: "¿Cuál fue el principal rival de los Estados Unidos durante la Guerra Fría?", en: "Who was the United States' main rival during the Cold War?" },
     answers: { es: ["Unión Soviética", "URSS", "Rusia"], en: ["Soviet Union", "USSR", "Russia"] }
   },
   {
@@ -540,33 +552,65 @@ const questions101to128 = [
   }
 ]
 
+// Rangos de los encabezados derivados del largo real de cada bloque: si se
+// añade o quita una pregunta, los títulos siguen siendo ciertos solos.
+const BANK_SECTIONS: { from: number; to: number; questions: CivicsQuestion[] }[] = (() => {
+  let cursor = 0
+  return [bankBlock1, bankBlock2, bankBlock3, bankBlock4, bankBlock5].map((questions) => {
+    const from = cursor + 1
+    cursor += questions.length
+    return { from, to: cursor, questions }
+  })
+})()
+
+const EXEMPTION_POST_SLUG = 'ciudadania-en-espanol-reglas-50-20-55-15'
+
+const texts = {
+  hero: {
+    title: { es: 'RECURSOS', en: 'RESOURCES' },
+    subtitle: {
+      es: 'Las preguntas de civismo del examen de ciudadanía, con sus respuestas, en español e inglés',
+      en: 'The civics questions from the citizenship test, with their answers, in Spanish and English'
+    }
+  },
+  intro: {
+    title: { es: 'Cómo usar este recurso', en: 'How to use this resource' },
+    body: {
+      es: 'Abra cada bloque y practique en voz alta. Cada pregunta viene con sus respuestas aceptadas, y muchas admiten más de una.',
+      en: 'Open each block and practice out loud. Each question comes with its accepted answers, and many of them allow more than one.'
+    },
+    officials: {
+      es: 'Algunas respuestas dependen de quién ocupa un cargo (Presidente, Vicepresidente, su gobernador, sus senadores) o del estado donde vive, así que cambian con el tiempo. En esas preguntas la respuesta no se fija aquí: le indica la página oficial donde consultarla al día.',
+      en: 'Some answers depend on who currently holds an office (President, Vice President, your governor, your senators) or on the state where you live, so they change over time. For those questions the answer is not fixed here: it points you to the official page where you can look it up.'
+    },
+    exemption: {
+      es: '¿Puede dar el examen en español? Las reglas 50/20 y 55/15 permiten llevar intérprete a la entrevista y reducen las preguntas al grupo designado de 20.',
+      en: 'Can you take the test in Spanish? The 50/20 and 55/15 rules let you bring an interpreter to the interview and narrow the questions down to the designated group of 20.'
+    },
+    exemptionLink: {
+      es: 'Cómo funcionan las exenciones de idioma',
+      en: 'How the language exemptions work'
+    }
+  },
+  designated: {
+    title: { es: 'GRUPO DESIGNADO DE 20 PREGUNTAS', en: 'DESIGNATED GROUP OF 20 QUESTIONS' },
+    note: {
+      es: 'El conjunto reducido para quienes califican bajo las reglas 50/20 o 55/15',
+      en: 'The reduced set for applicants who qualify under the 50/20 or 55/15 rules'
+    }
+  },
+  bankLabel: { es: 'PREGUNTAS', en: 'QUESTIONS' },
+  accordion: {
+    button: {
+      es: 'Mostrar preguntas y respuestas',
+      en: 'Show questions and answers'
+    }
+  }
+}
+
 // Componente principal de la página
 export default function RecursosClient() {
   const { language } = useLanguage()
-
-  const texts = {
-    hero: {
-      title: { es: 'RECURSOS', en: 'RESOURCES' },
-      subtitle: {
-        es: 'Información valiosa para tu proceso de naturalización',
-        en: 'Valuable information for your naturalization process'
-      }
-    },
-    accordion: {
-      button: {
-        es: 'Mostrar preguntas y respuestas',
-        en: 'Show questions and answers'
-      }
-    },
-    sections: {
-      1: { es: 'PREGUNTAS 1 - 20', en: 'QUESTIONS 1 - 20' },
-      2: { es: 'PREGUNTAS 21 - 40', en: 'QUESTIONS 21 - 40' },
-      3: { es: 'PREGUNTAS 41 - 60', en: 'QUESTIONS 41 - 60' },
-      4: { es: 'PREGUNTAS 61 - 80', en: 'QUESTIONS 61 - 80' },
-      5: { es: 'PREGUNTAS 81 - 100', en: 'QUESTIONS 81 - 100' },
-      6: { es: 'PREGUNTAS 101 - 128', en: 'QUESTIONS 101 - 128' } // Corregido el rango
-    }
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -602,41 +646,45 @@ export default function RecursosClient() {
         {/* Questions Section */}
         <div className="container mx-auto px-4 py-16">
 
+          {/* Marco de la página: sustituye a los 6 reproductores de vídeo
+              retirados, que apuntaban al WordPress desmantelado. */}
+          <div className="max-w-4xl mx-auto mb-20 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-[#002342] to-[#00152b] p-6">
+              <h2 className="text-2xl md:text-3xl font-bold text-white text-center">
+                {texts.intro.title[language]}
+              </h2>
+            </div>
+            <div className="p-6 md:p-8 space-y-4 text-gray-700 leading-relaxed">
+              <p>{texts.intro.body[language]}</p>
+              <p>{texts.intro.officials[language]}</p>
+              <div className="border-l-4 border-[#B2904D] pl-4 py-1">
+                <p className="mb-3">{texts.intro.exemption[language]}</p>
+                <Link
+                  href={`/${language}/blog/${EXEMPTION_POST_SLUG}`}
+                  className="inline-flex items-center gap-2 text-[#B2904D] font-semibold hover:text-[#8B6F3E] transition-colors"
+                >
+                  {texts.intro.exemptionLink[language]}
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+
           <QuestionsSection
-            title={texts.sections[1][language]}
-            questions={questions1to20}
+            title={texts.designated.title[language]}
+            note={texts.designated.note[language]}
+            questions={designatedGroup}
             buttonText={texts.accordion.button[language]}
           />
 
-          <QuestionsSection
-            title={texts.sections[2][language]}
-            questions={questions21to40}
-            buttonText={texts.accordion.button[language]}
-          />
-
-          <QuestionsSection
-            title={texts.sections[3][language]}
-            questions={questions41to60}
-            buttonText={texts.accordion.button[language]}
-          />
-
-          <QuestionsSection
-            title={texts.sections[4][language]}
-            questions={questions61to80}
-            buttonText={texts.accordion.button[language]}
-          />
-
-          <QuestionsSection
-            title={texts.sections[5][language]}
-            questions={questions81to100}
-            buttonText={texts.accordion.button[language]}
-          />
-
-          <QuestionsSection
-            title={texts.sections[6][language]}
-            questions={questions101to128}
-            buttonText={texts.accordion.button[language]}
-          />
+          {BANK_SECTIONS.map((section) => (
+            <QuestionsSection
+              key={section.from}
+              title={`${texts.bankLabel[language]} ${section.from} - ${section.to}`}
+              questions={section.questions}
+              buttonText={texts.accordion.button[language]}
+            />
+          ))}
 
         </div>
       </main>
@@ -649,15 +697,17 @@ export default function RecursosClient() {
 // Component for each block of questions.
 // Aqui vivian 6 <video> apuntando a /wp-content del WordPress retirado; esas
 // URLs las redirige seoRedirects.ts a la home, asi que no habia reproduccion
-// posible. El contenido equivalente (las 128 preguntas) esta en el acordeon.
-// Al recuperar los MP4 (blob store o YouTube), reintroducir el reproductor aqui.
+// posible. Al recuperar los MP4 (blob store o YouTube), reintroducir el
+// reproductor aqui; no volver a apuntar a /wp-content.
 function QuestionsSection({
   title,
+  note,
   questions,
   buttonText
 }: {
   title: string
-  questions: any[]
+  note?: string
+  questions: CivicsQuestion[]
   buttonText: string
 }) {
   return (
@@ -668,6 +718,11 @@ function QuestionsSection({
           <h2 className="text-2xl md:text-3xl font-bold text-white text-center">
             {title}
           </h2>
+          {note && (
+            <p className="mt-2 text-sm text-white/80 text-center max-w-2xl mx-auto">
+              {note}
+            </p>
+          )}
         </div>
 
         <AccordionSection questions={questions} buttonText={buttonText} />
@@ -678,14 +733,8 @@ function QuestionsSection({
 
 // Accordion Component — native <details>: respuestas siempre en el DOM
 // (server-rendered para SEO), abre/cierra sin JS.
-function AccordionSection({ questions, buttonText }: { questions: any[]; buttonText: string }) {
+function AccordionSection({ questions, buttonText }: { questions: CivicsQuestion[]; buttonText: string }) {
   const { language } = useLanguage()
-
-  const getText = (obj: any) => {
-    if (typeof obj === 'string') return obj
-    // Se asegura de que si no encuentra el idioma, use 'es' o devuelva el objeto (si es el array de respuestas)
-    return obj[language] || obj.es || obj
-  }
 
   return (
     <details className="border-t border-gray-200 group/acc [&>summary]:list-none [&>summary::-webkit-details-marker]:hidden">
@@ -702,15 +751,14 @@ function AccordionSection({ questions, buttonText }: { questions: any[]; buttonT
 
       <div className="p-6 bg-white">
         <div className="space-y-6">
-          {questions.map((item, index) => (
-              <div key={index} className="border-l-4 border-[#B2904D] pl-4 hover:bg-gray-50 transition-colors duration-200 rounded-r-lg p-3">
+          {questions.map((item) => (
+              <div key={item.question.es} className="border-l-4 border-[#B2904D] pl-4 hover:bg-gray-50 transition-colors duration-200 rounded-r-lg p-3">
                 <p className="font-bold text-gray-900 mb-3 text-lg">
-                  {getText(item.question)}
+                  {item.question[language]}
                 </p>
                 <ul className="space-y-2">
-                  {/* Se asegura de que 'item.answers' se trate como el array de respuestas */}
-                  {Array.isArray(getText(item.answers)) && getText(item.answers).map((answer: string, idx: number) => (
-                    <li key={idx} className="flex items-start gap-2 text-gray-700">
+                  {item.answers[language].map((answer) => (
+                    <li key={answer} className="flex items-start gap-2 text-gray-700">
                       <span className="text-[#B2904D] mt-1">•</span>
                       <span>{answer}</span>
                     </li>

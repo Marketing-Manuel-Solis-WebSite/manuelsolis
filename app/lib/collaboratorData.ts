@@ -19,9 +19,6 @@ export function getText(obj: TranslatableString, language: 'es' | 'en'): string 
 // FIRM-LEVEL DATA (shared across every collaborator profile)
 // ---------------------------------------------------------------------------
 
-// "Ligas oficiales de la página; sitio web."
-export const OFFICIAL_WEBSITE = 'https://www.manuelsolis.com';
-
 export type OfficialLinkType =
   | 'website'
   | 'facebook'

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import NoticiasClient from './NoticiasClient';
+import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -13,12 +14,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  // El `robots: { index: false }` que había aquí cubría una página "en
+  // construcción"; ahora lista artículos publicados, así que se indexa como las
+  // páginas de /category/*.
   return {
     title: isEs ? 'Noticias Legales de Inmigración' : 'Immigration Legal News',
     description: isEs
-      ? 'Próximamente: noticias y actualizaciones legales de inmigración del Abogado Manuel Solís.'
-      : 'Coming soon: immigration legal news and updates from Attorney Manuel Solis.',
-    robots: { index: false, follow: true },
+      ? 'Actualidad migratoria explicada por el Abogado Manuel Solís: ciudadanía por nacimiento, DACA en los tribunales, TPS, asilo en la frontera, Advance Parole y redadas de ICE.'
+      : 'Immigration updates explained by Attorney Manuel Solis: birthright citizenship, DACA in the courts, TPS, asylum at the border, Advance Parole and ICE raids.',
     alternates: {
       canonical: `${SITE_URL}/${lang}/informacion/noticias`,
       languages: {
@@ -33,5 +36,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function NoticiasPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
-  return <NoticiasClient lang={localeLang} />;
+  const breadcrumbData = generateBreadcrumbSchema([
+    { name: localeLang === 'es' ? 'Inicio' : 'Home', url: `/${localeLang}` },
+    {
+      name: localeLang === 'es' ? 'Noticias Legales de Inmigración' : 'Immigration Legal News',
+      url: `/${localeLang}/informacion/noticias`,
+    },
+  ]);
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      />
+      <NoticiasClient lang={localeLang} />
+    </>
+  );
 }

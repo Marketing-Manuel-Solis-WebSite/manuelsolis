@@ -304,5 +304,3 @@ export function effectiveUtmsToLeadFields(
     utm_term: eff.term || null,
   };
 }
-
-export const ATTRIBUTION_COOKIE_NAME = COOKIE_NAME;

@@ -1543,6 +1543,21 @@ Nota metodológica: `android-chrome-192x192.png` y `android-chrome-512x512.png` 
 | LEAD-2 | Con BOS simulado en 5xx, el payload del lead aparece persistido y recuperable |
 | NAP (OFI-2) | Un script de CI compara las 6 fuentes y falla si divergen |
 
+## Apéndice: hallazgos aparecidos durante la remediación
+
+Los 174 hallazgos de este informe salieron de auditar el código. Al aplicar las correcciones aparecieron **otros seis que la auditoría no había detectado**, porque solo se ven al tirar del hilo de un arreglo. Se listan aquí para que quede constancia de que existieron y de cómo se cerraron.
+
+| Hallazgo | Cómo apareció | Estado |
+|---|---|---|
+| **`Lorem ipsum` enviado a los suscriptores.** Dos plantillas de correo del boletín (`newsletterCta`, `newsletterNoCta`) tenían el texto de relleno como primer párrafo, y el blast no pasa ningún `intro` propio: todo envío con esas variantes lo incluía. | Búsqueda de placeholders al empezar la fase de pulido. | Corregido: el párrafo ahora es la frase real que ya acompañaba al relleno. Cubierto por `__tests__/contentHygiene.test.ts`. |
+| **Barra de progreso al 26% inventada.** `/informacion/noticias` mostraba "Fase Inicial de Arquitectura · 26%" sobre una reconstrucción imaginaria, con copy solo en español y `noindex`. | Al ir a corregir su metadata "coming soon". | Página reconstruida: lista 7 artículos reales de actualidad derivados de `BLOG_DATA`, ya indexable, enlazada desde el Header y en el sitemap. |
+| **`/clientes` era una copia literal del placeholder de noticias**, no una página propia a medio hacer. | Al comparar ambos archivos para decidir su destino. | Página eliminada + 308 a `/acceso-clientes`, que es el portal real. |
+| **Tres imágenes del boletín apuntaban a `public/newsletter/`, un directorio que no existe**, en un campo `image` que ningún consumidor leía. | Barrido de rutas de asset contra `public/`. | Campo eliminado del tipo y de las tres ediciones; el compilador confirmó que nadie lo usaba. |
+| **Los tres `fetch` del cliente (formulario, boletín, chat) no tenían timeout.** Es el modo de fallo exacto que en mayo de 2026 dejó el formulario colgado indefinidamente cuando el challenge de BotID no se servía: sin error visible y con el lead perdido. | Al evaluar si se podía activar BotID sin riesgo. | Los tres con `AbortSignal.timeout`. El del formulario avisa de que el envío pudo haber llegado, para no provocar un reenvío duplicado. |
+| **`dallas.png`, entre los logos sin publicar, no es un colegio de abogados**: es el sello del condado con la leyenda "RECOGNIZED ON THE DALLAS COUNTY COMMUNITY PROGRAM", una afirmación de reconocimiento oficial que nada en el repo respalda. | Al abrir los seis emblemas uno por uno antes de publicarlos. | No publicado. Se publicaron los cuatro que sí son asociaciones profesionales verificables. |
+
+Dos entregables antirregresión salieron de aquí: `__tests__/contentHygiene.test.ts` (falla si vuelve un `lorem ipsum`, un placeholder sin rellenar, un `href="#"`, una ruta de asset inexistente o una página que se anuncie "en construcción" en sus metadatos) y `__tests__/napConsistency.test.ts` (divergencias de NAP entre fuentes). Ambos se comprobaron rompiéndolos a propósito: un test que no puede fallar da falsa seguridad.
+
 ## Cobertura y límites de esta auditoría
 
 **Cubierto:** código de las 117 rutas y 21 handlers, metadatos y JSON-LD por plantilla, sitemaps y robots contra el inventario real, seguridad de APIs y admin, flujo completo de leads y atribución, tracking Meta/GA4/TikTok, accesibilidad a nivel de código, rendimiento a nivel de código y assets, integridad de enlaces, i18n, y verificación en producción por HTTP.

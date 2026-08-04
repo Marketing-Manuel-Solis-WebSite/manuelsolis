@@ -82,6 +82,17 @@ export const seoRedirects: Redirect[] = [
   { source: '/:lang(es|en)/contacto', destination: '/:lang/consulta', permanent: true },
 
   // ============================================================
+  // RUTAS RETIRADAS → destino real equivalente
+  // ============================================================
+  // /clientes se eliminó: era un placeholder "en construcción" cuyo cuerpo era
+  // una copia literal del de /informacion/noticias, sin contenido propio. El
+  // área de clientes real y funcional es /acceso-clientes (portal seguro), así
+  // que el destino es esa ruta y no la home: una redirección genérica a la home
+  // la interpreta Google como soft 404 y pierde el equity del enlace.
+  { source: '/clientes', destination: '/es/acceso-clientes', permanent: true },
+  { source: '/:lang(es|en)/clientes', destination: '/:lang/acceso-clientes', permanent: true },
+
+  // ============================================================
   // WORDPRESS CORE PATHS → home
   // ============================================================
   { source: '/wp-admin/:path*', destination: '/es', permanent: true },

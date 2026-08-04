@@ -341,8 +341,15 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     zip: '38116',
     phone: '(901) 557-8357',
     timeZone: 'America/Chicago',
-    // TODO(GBP): sustituir por el share-link real de la ficha de Memphis
-    // (el anterior apuntaba a Main St).
+    // TODO(GBP): falta un dato que nadie del repo puede generar: el share-link
+    // (`https://share.google/…`) de la ficha de Google Business Profile de
+    // Memphis. Lo tiene que entregar quien administra el GBP del despacho
+    // (dueño del proyecto / marketing), copiándolo desde el botón Compartir de
+    // ESA ficha — no vale el de otra oficina (ya pasó una vez: se había pegado
+    // el de Main St). Este módulo lo consumen islas cliente, así que el enlace
+    // tiene que ser una cadena literal; no se puede derivar de Places API aquí.
+    // Mientras no llegue, la búsqueda de Maps de abajo lleva a la dirección
+    // correcta y funciona; solo no abre la ficha.
     mapLink:
       'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116',
     hours: weekly(

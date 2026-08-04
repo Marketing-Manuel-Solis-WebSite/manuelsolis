@@ -303,7 +303,7 @@ Estas paginas son criticas para SEO local. Verificar que el contenido sea unico 
 
 ### Otras paginas
 - [ ] `/es/testimonios` — Videos y testimonios de clientes
-- [ ] `/es/clientes` — Portal de clientes
+- [ ] `/es/acceso-clientes` — Portal de clientes (`/es/clientes` era un placeholder: se retiró y redirige aquí con 308)
 - [ ] `/es/clientes-detenidos` — Info para clientes detenidos
 - [ ] `/es/join-in` — Pagina de reclutamiento
 - [ ] `/es/inversionistas` — Pagina de inversionistas / E-2

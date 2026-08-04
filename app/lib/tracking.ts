@@ -62,16 +62,9 @@ export interface ConversionEvent {
 }
 
 // ─── Helpers UTM ───
-export function getUTMParam(key: string): string | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(key);
-  } catch {
-    return null;
-  }
-}
-
+// Solo `getUTMParams()`: leer un UTM suelto de la URL actual ignoraría las
+// cookies de atribución y volvería a atribuir mal las conversiones que ocurren
+// después de varios clicks internos.
 export function getUTMParams() {
   // Prioridad: URL > cookie last_touch > cookie first_touch > direct/none.
   // Mantenemos el shape `utm_*` que ya consumían los call sites antiguos

@@ -313,7 +313,7 @@ const blogTutorial: TutorialStep[] = [
   --excerpt-es "Aprende los requisitos actualizados..." \\
   --excerpt-en "Learn the updated requirements..." \\
   --category-id "defensa-deportacion" \\
-  --image "/blog/blog_31/hero.png" \\
+  --image "/blog/blog_37/AGO_B1.png" \\
   --read-time "11 min"`}
         />
         <p className="mt-3 text-xs text-gray-500">

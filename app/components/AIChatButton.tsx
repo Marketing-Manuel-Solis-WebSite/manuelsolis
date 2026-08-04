@@ -85,7 +85,10 @@ export default function AIChatButton() {
         body: JSON.stringify({
           message: userMessage,
           conversationHistory: messages
-        })
+        }),
+        // El modelo puede tardar, pero sin tope un fallo de red deja el
+        // indicador de "escribiendo" girando indefinidamente.
+        signal: AbortSignal.timeout(30000)
       });
 
       const data = await response.json();
