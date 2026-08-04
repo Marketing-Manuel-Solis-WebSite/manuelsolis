@@ -145,7 +145,9 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Excluir API, RSS, internos de Next, internos de Vercel y archivos estáticos
-    '/((?!api|rss|_next/static|_next/image|_vercel|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|webmanifest)$).*)',
+    // Excluir API, RSS, short links, internos de Next, internos de Vercel y
+    // archivos estáticos. `go/` vive en app/go/[slug] (sin segmento [lang]):
+    // si el middleware le añadiera prefijo de locale, /go/<slug> daría 404.
+    '/((?!api|rss|go/|_next/static|_next/image|_vercel|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml|webmanifest)$).*)',
   ],
 };

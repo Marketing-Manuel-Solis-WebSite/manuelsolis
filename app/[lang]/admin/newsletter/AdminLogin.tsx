@@ -4,6 +4,15 @@ import { Lock, ShieldAlert, Mail } from 'lucide-react';
 import { m } from 'framer-motion';
 import { loginAction } from './actions';
 
+export type LoginErrorKind = 'invalid' | 'server' | 'ratelimited';
+
+const ERROR_MESSAGES: Record<LoginErrorKind, string> = {
+  invalid: 'Contraseña incorrecta.',
+  server: 'Error de configuración del servidor. Contacta al equipo de desarrollo.',
+  ratelimited:
+    'Demasiados intentos de acceso desde esta red. Espera 5 minutos e intenta de nuevo.',
+};
+
 export default function AdminLogin({
   lang,
   hasError,
@@ -12,13 +21,10 @@ export default function AdminLogin({
 }: {
   lang: 'es' | 'en';
   hasError: boolean;
-  errorKind?: 'invalid' | 'server';
+  errorKind?: LoginErrorKind;
   next?: string;
 }) {
-  const errorMessage =
-    errorKind === 'server'
-      ? 'Error de configuración del servidor. Contacta al equipo de desarrollo.'
-      : 'Contraseña incorrecta.';
+  const errorMessage = ERROR_MESSAGES[errorKind ?? 'invalid'];
 
   return (
     <div className="min-h-screen bg-[#001540] flex items-center justify-center px-4 py-12">

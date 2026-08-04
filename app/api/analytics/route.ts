@@ -9,6 +9,7 @@ import {
 } from '../../lib/analyticsStore';
 import {
   ADMIN_COOKIE_NAME,
+  verifyConversionsApiKey,
   verifySessionToken,
 } from '../../lib/newsletter/auth';
 
@@ -39,13 +40,10 @@ const CONVERSION_TYPES: StoredEventType[] = [
 
 function isAuthorized(request: NextRequest, sessionCookie: string | null): boolean {
   if (verifySessionToken(sessionCookie)) return true;
-  const expectedKey = process.env.CONVERSIONS_API_KEY;
-  if (!expectedKey) return false;
-  const authHeader = request.headers.get('authorization');
-  const bearerKey = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
-  const queryKey = request.nextUrl.searchParams.get('key');
-  const provided = bearerKey || queryKey;
-  return Boolean(provided && provided === expectedKey);
+  return verifyConversionsApiKey(
+    request.headers.get('authorization'),
+    request.headers.get('x-api-key'),
+  );
 }
 
 function parseIntOr<T>(v: string | null, fallback: T): number | T {

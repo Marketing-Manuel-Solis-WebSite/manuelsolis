@@ -34,6 +34,10 @@ if (!isLocalDev && botidClientEnabled) {
     protect: [
       { path: '/api/lead-capture', method: 'POST' },
       { path: '/api/newsletter/subscribe', method: 'POST' },
+      // /api/chat ejecuta checkBotId() en el servidor: sin esta entrada, el
+      // fetch del navegador no lleva challenge y BOTID_MODE=block devolvería
+      // 403 a usuarios reales del chat.
+      { path: '/api/chat', method: 'POST' },
     ],
   });
 }
