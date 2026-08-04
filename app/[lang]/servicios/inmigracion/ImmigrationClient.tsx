@@ -31,12 +31,12 @@ export default function ImmigrationClient({ lang }: { lang: Language }) {
   ];
 
   const articles = [
-    { slug: 'permiso_de_trabajo_visa_u', title: { es: 'Permiso de Trabajo con Visa U (Bona Fide)', en: 'U Visa Work Permit (Bona Fide)' }, image: '/blog/visa-u.png' },
-    { slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion', title: { es: 'Formulario G-28: cómo cambiar de abogado', en: 'Form G-28: How to Change Attorney' }, image: '/blog/blog_09/B9_CR1.png' },
-    { slug: 'ley_de_los_10_anos_cancelacion_de_deportacion', title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' }, image: '/blog/blog_11/BLOG01_CR1.png' },
-    { slug: 'foia_migratoria_pedir_record_antes_de_aplicar', title: { es: 'FOIA: pedir récord antes de aplicar', en: 'FOIA: Request Records Before Applying' }, image: '/blog/blog_14/BLOG04_CR1.png' },
-    { slug: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente', title: { es: 'VAWA para hombres maltratados', en: 'VAWA for Abused Men' }, image: '/blog/blog_06/B6_CR1.png' },
-    { slug: 'advance_parole_2026_viajar_con_daca_tps_visa_u', title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' }, image: '/blog/blog_12/BLOG02_CR1.png' },
+    { slug: 'permiso-de-trabajo-visa-u', title: { es: 'Permiso de Trabajo con Visa U (Bona Fide)', en: 'U Visa Work Permit (Bona Fide)' }, image: '/blog/visa-u.png' },
+    { slug: 'formulario-g28-cambiar-abogado-inmigracion', title: { es: 'Formulario G-28: cómo cambiar de abogado', en: 'Form G-28: How to Change Attorney' }, image: '/blog/blog_09/B9_CR1.png' },
+    { slug: 'ley-de-los-10-anos-cancelacion-de-deportacion', title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' }, image: '/blog/blog_11/BLOG01_CR1.png' },
+    { slug: 'foia-migratoria-pedir-record-antes-de-aplicar', title: { es: 'FOIA: pedir récord antes de aplicar', en: 'FOIA: Request Records Before Applying' }, image: '/blog/blog_14/BLOG04_CR1.png' },
+    { slug: 'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', title: { es: 'VAWA para hombres maltratados', en: 'VAWA for Abused Men' }, image: '/blog/blog_06/B6_CR1.png' },
+    { slug: 'advance-parole-2026-viajar-con-daca-tps-visa-u', title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' }, image: '/blog/blog_12/BLOG02_CR1.png' },
   ];
 
   return (

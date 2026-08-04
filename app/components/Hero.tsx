@@ -79,13 +79,18 @@ export default function Hero({ lang }: { lang: Language }) {
             <div className="relative z-10 w-full h-full origin-bottom flex justify-center -translate-y-5 lg:-translate-y-20">
               <div className="w-full h-full scale-110 sm:scale-125 lg:scale-[1.65] lg:-translate-x-24 lg:origin-bottom transform-gpu">
                 <div className="relative w-full h-full hero-portrait-settle origin-bottom">
+                  {/* sizes en px, no en vw: object-contain sobre un retrato 1080x1200
+                      encaja por altura, asi que el ancho pintado lo fija la altura del
+                      contenedor y no el viewport — 350px*0.9*1.10 y 450px*0.9*1.25 con
+                      la escala del wrapper. Por debajo de lg el retrato queda bajo el
+                      fold (flex-col-reverse) y su preload competia con el LCP real. */}
                   <Image
                     src="/manuelsolisl.png"
                     alt="Abogado Manuel Solis"
                     fill
                     className="object-contain object-bottom drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]"
                     priority
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 639px) 350px, (max-width: 1023px) 510px, 50vw"
                   />
                 </div>
               </div>

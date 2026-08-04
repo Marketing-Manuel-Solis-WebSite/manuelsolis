@@ -28,10 +28,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!attorney) return { title: 'Not Found' };
 
+  // El área de práctica declarada titula el perfil; sin ella cae al término
+  // genérico de `role`, nunca a una especialidad que el abogado no ejerce.
+  const specialty = (attorney.practice?.label ?? attorney.role)[isEs ? 'es' : 'en'];
   // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
-  const title = isEs
-    ? `${attorney.name} | Abogado de Inmigración`
-    : `${attorney.name} | Immigration Attorney`;
+  const title = `${attorney.name} | ${specialty}`;
 
   const description = attorney.bio[isEs ? 'es' : 'en'][0];
 
@@ -81,15 +82,10 @@ function getPersonSchema(attorney: typeof attorneys[number], lang: string) {
       '@type': 'EducationalOrganization',
       name: getText(edu, isEs ? 'es' : 'en'),
     })),
-    knowsAbout: [
-      'Immigration Law',
-      'Deportation Defense',
-      'Family-Based Immigration',
-      'U Visa',
-      'VAWA',
-      'Asylum',
-      'Naturalization',
-    ],
+    // Solo las áreas que la bio del abogado declara. Se omite por completo
+    // cuando no hay ninguna: knowsAbout es opcional y afirmar pericia que no
+    // consta sería información profesional incorrecta.
+    ...(attorney.practice ? { knowsAbout: attorney.practice.topics } : {}),
     // Sin sameAs: los perfiles sociales de la FIRMA no identifican a la
     // persona (regla documentada en colaboradores/[slug]). El grafo ya
     // conecta a la firma vía worksFor → #organization.

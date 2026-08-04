@@ -24,9 +24,9 @@ export default function FamiliaClient({ lang }: { lang: Language }) {
   const steps = resolveSteps(lang);
 
   const articles = [
-    { slug: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente', title: { es: 'VAWA para hombres maltratados por pareja ciudadana', en: 'VAWA for Men Abused by Citizen Partner' }, image: '/blog/blog_06/B6_CR1.png' },
-    { slug: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses', title: { es: 'VAWA para padres: maltrato de hijos ciudadanos', en: 'VAWA for Parents: Abuse by U.S. Citizen Children' }, image: '/blog/blog_05/B5_CR1.png' },
-    { slug: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados', title: { es: 'Visa U y VAWA: incluir hijos y nuevos esposos', en: 'U Visa & VAWA: Including Children and New Spouse' }, image: '/blog/blog_10/B10_CR1.png' },
+    { slug: 'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', title: { es: 'VAWA para hombres maltratados por pareja ciudadana', en: 'VAWA for Men Abused by Citizen Partner' }, image: '/blog/blog_06/B6_CR1.png' },
+    { slug: 'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses', title: { es: 'VAWA para padres: maltrato de hijos ciudadanos', en: 'VAWA for Parents: Abuse by U.S. Citizen Children' }, image: '/blog/blog_05/B5_CR1.png' },
+    { slug: 'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados', title: { es: 'Visa U y VAWA: incluir hijos y nuevos esposos', en: 'U Visa & VAWA: Including Children and New Spouse' }, image: '/blog/blog_10/B10_CR1.png' },
   ];
 
   return (

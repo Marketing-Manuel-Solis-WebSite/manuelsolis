@@ -108,6 +108,7 @@ const ui = {
   processTitle: { es: 'El Proceso de su Reclamación', en: 'Your Claim Process' },
   requestEvaluation: { es: 'Solicitar Evaluación', en: 'Request Evaluation' },
   videoAlt: { es: 'Video explicativo sobre la dedicación del equipo legal.', en: "Explanation video about the legal team's dedication." },
+  videoUnsupported: { es: 'Este video usa formato HLS y tu navegador no puede reproducirlo. Ábrelo en Safari (Mac o iPhone) para verlo.', en: 'This video uses the HLS format and your browser cannot play it. Open this page in Safari (Mac or iPhone) to watch it.' },
   availableOffices: { es: 'Oficinas Disponibles', en: 'Available Offices' },
   officesCount: { es: 'oficinas', en: 'offices' },
 };

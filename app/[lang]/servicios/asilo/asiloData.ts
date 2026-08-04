@@ -107,9 +107,9 @@ const processSteps: { id: number; iconKey: StepIconKey; title: Detail; desc: Det
 ];
 
 const blogArticles: { slug: string; title: Detail; category: Detail; image: string }[] = [
-  { slug: 'asilo_frontera_2026_puerto_entrada_vs_cruce', title: { es: 'Asilo en la frontera 2026: puerto de entrada vs cruce', en: 'Asylum at the Border 2026: Port of Entry vs Crossing' }, category: { es: 'Asilo', en: 'Asylum' }, image: '/blog/blog_20/BLOG10_CR1.png' },
-  { slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', title: { es: 'Parar deportación urgente con Visa U o VAWA pendiente', en: 'Stop Urgent Deportation with Pending U Visa or VAWA' }, category: { es: 'Deportación', en: 'Deportation' }, image: '/blog/blog_08/B8_CR1.png' },
-  { slug: 'estatus_juvenil_sijs_residencia_jovenes_abandonados', title: { es: 'Estatus Juvenil SIJS: papeles para jóvenes', en: 'SIJS: Papers for Abandoned Youth' }, category: { es: 'Humanitario', en: 'Humanitarian' }, image: '/blog/blog_16/BLOG06_CR1.png' },
+  { slug: 'asilo-frontera-2026-puerto-entrada-vs-cruce', title: { es: 'Asilo en la frontera 2026: puerto de entrada vs cruce', en: 'Asylum at the Border 2026: Port of Entry vs Crossing' }, category: { es: 'Asilo', en: 'Asylum' }, image: '/blog/blog_20/BLOG10_CR1.png' },
+  { slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', title: { es: 'Parar deportación urgente con Visa U o VAWA pendiente', en: 'Stop Urgent Deportation with Pending U Visa or VAWA' }, category: { es: 'Deportación', en: 'Deportation' }, image: '/blog/blog_08/B8_CR1.png' },
+  { slug: 'estatus-juvenil-sijs-residencia-jovenes-abandonados', title: { es: 'Estatus Juvenil SIJS: papeles para jóvenes', en: 'SIJS: Papers for Abandoned Youth' }, category: { es: 'Humanitario', en: 'Humanitarian' }, image: '/blog/blog_16/BLOG06_CR1.png' },
 ];
 
 const ui = {

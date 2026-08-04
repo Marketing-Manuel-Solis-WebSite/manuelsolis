@@ -24,9 +24,9 @@ export default function AccidentesClient({ lang }: { lang: Language }) {
   const gT = (obj: Parameters<typeof getText>[0]) => getText(obj, lang);
 
   const articles = [
-    { slug: 'ley_de_los_10_anos_cancelacion_de_deportacion', title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' }, image: '/blog/blog_11/BLOG01_CR1.png' },
-    { slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion', title: { es: 'Formulario G-28: cómo cambiar de abogado', en: 'Form G-28: How to Change Attorney' }, image: '/blog/blog_09/B9_CR1.png' },
-    { slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', title: { es: 'Frenar deportación con Visa Humanitaria', en: 'Stop Deportation with Humanitarian Visa' }, image: '/blog/blog_08/B8_CR1.png' },
+    { slug: 'accidente-camion-18-ruedas-texas-compensacion', title: { es: 'Accidente con tráiler de 18 ruedas en Texas: quién paga y cuánto vale tu caso', en: '18-Wheeler Accidents in Texas: Who Pays and What Your Case Is Worth' }, image: '/blog/blog_32/JUL_B1.png' },
+    { slug: 'accidente-trabajo-indocumentado-texas-compensacion', title: { es: 'Accidente de trabajo siendo indocumentado en Texas: tus derechos reales', en: 'Work Injury While Undocumented in Texas: Your Real Rights' }, image: '/blog/blog_33/JUL_B2.png' },
+    { slug: 'accidente-auto-indocumentado-derechos', title: { es: 'Tuve un accidente de auto siendo indocumentado: ¿tengo derechos?', en: 'I Had a Car Accident While Undocumented: Do I Have Rights?' }, image: '/blog/blog_25/B5_CR1.jpg' },
   ];
 
   return (

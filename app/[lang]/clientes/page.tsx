@@ -15,14 +15,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
-  const title = isEs ? 'Portal de Clientes' : 'Client Portal';
+  const title = isEs
+    ? 'Noticias y Análisis Legal — En construcción'
+    : 'Legal News and Analysis — Under Construction';
   const description = isEs
-    ? 'Información y recursos para clientes actuales de las Oficinas Legales de Manuel Solís.'
-    : 'Information and resources for current clients of the Law Offices of Manuel Solis.';
+    ? 'Nuestra sección de noticias está en reconstrucción. Pronto publicaremos análisis jurídicos y actualizaciones migratorias.'
+    : 'Our news section is being rebuilt. We will soon publish legal analysis and immigration updates.';
 
   return {
     title,
     description,
+    robots: { index: false, follow: true },
     alternates: {
       canonical: `${SITE_URL}/${lang}/clientes`,
       languages: {

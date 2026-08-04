@@ -116,9 +116,9 @@ const processSteps: { id: number; iconKey: StepIconKey; title: Detail; desc: Det
 ];
 
 const blogArticles: { slug: string; title: Detail; category: Detail; image: string }[] = [
-  { slug: 'VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente', title: { es: 'VAWA para Hombres Maltratados por Pareja Ciudadana o Residente', en: 'VAWA for Men Abused by Citizen or Resident Partners' }, category: { es: 'VAWA', en: 'VAWA' }, image: '/blog/blog_05/B5_CR1.png' },
-  { slug: 'VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses', title: { es: 'VAWA para Padres: Maltrato de Hijos Ciudadanos', en: 'VAWA for Parents: Abuse by Citizen Children' }, category: { es: 'VAWA', en: 'VAWA' }, image: '/blog/blog_06/B6_CR1.png' },
-  { slug: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados', title: { es: 'Visa U y VAWA: Incluir Hijos y Nuevos Esposos Derivados', en: 'U Visa & VAWA: Including Children and New Derivative Spouses' }, category: { es: 'VAWA / Visa U', en: 'VAWA / U Visa' }, image: '/blog/blog_08/B8_CR1.png' },
+  { slug: 'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', title: { es: 'VAWA para Hombres Maltratados por Pareja Ciudadana o Residente', en: 'VAWA for Men Abused by Citizen or Resident Partners' }, category: { es: 'VAWA', en: 'VAWA' }, image: '/blog/blog_05/B5_CR1.png' },
+  { slug: 'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses', title: { es: 'VAWA para Padres: Maltrato de Hijos Ciudadanos', en: 'VAWA for Parents: Abuse by Citizen Children' }, category: { es: 'VAWA', en: 'VAWA' }, image: '/blog/blog_06/B6_CR1.png' },
+  { slug: 'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados', title: { es: 'Visa U y VAWA: Incluir Hijos y Nuevos Esposos Derivados', en: 'U Visa & VAWA: Including Children and New Derivative Spouses' }, category: { es: 'VAWA / Visa U', en: 'VAWA / U Visa' }, image: '/blog/blog_08/B8_CR1.png' },
 ];
 
 const ui = {

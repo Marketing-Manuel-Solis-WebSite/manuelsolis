@@ -22,6 +22,7 @@ import {
   Clock3,
 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useLanguage } from '../../context/LanguageContext';
@@ -154,6 +155,37 @@ const steps: { n: string; title: { es: string; en: string }; desc: { es: string;
   },
 ];
 
+/* Capas decorativas del hero con @keyframes CSS (solo transform/opacity, corren
+   en el compositor) en lugar de loops infinitos de framer-motion: eran 27
+   animaciones simultaneas ocupando rAF en el hilo principal durante toda la
+   visita. Las particulas usan longhands porque su duracion y su delay se
+   calculan por particula y llegan en el style inline; la opacidad de reposo
+   vive en la clase para que con `animation: none` (reduced-motion) queden
+   invisibles en vez de saltar a opacity 1. */
+const HERO_MOTION_CSS = `
+  @keyframes acceso-particle {
+    from { transform: translateY(110%); opacity: 0; }
+    50% { opacity: 0.6; }
+    to { transform: translateY(-20%); opacity: 0; }
+  }
+  @keyframes acceso-scan { from { transform: translateY(0); } to { transform: translateY(100vh); } }
+  @keyframes acceso-float-up { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes acceso-float-down { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+  .acceso-particle {
+    opacity: 0;
+    animation-name: acceso-particle;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+  }
+  .acceso-scan { animation: acceso-scan 8s linear infinite both; }
+  .acceso-float-up { animation: acceso-float-up 5s ease-in-out infinite both; }
+  .acceso-float-down { animation: acceso-float-down 6s ease-in-out 1s infinite both; }
+  @media (prefers-reduced-motion: reduce) {
+    .acceso-particle, .acceso-scan, .acceso-float-up, .acceso-float-down { animation: none; }
+  }
+`;
+
 export default function AccesoClientesClient() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
@@ -226,24 +258,29 @@ export default function AccesoClientesClient() {
           const duration = ((i * 7) % 12) + 10;
           const delay = (i * 0.4) % 6;
           return (
-            <m.div
+            <div
               key={i}
-              className="absolute bg-[#B2904D] rounded-full pointer-events-none z-0"
-              initial={{ y: '110%', opacity: 0 }}
-              animate={{ y: '-20%', opacity: [0, 0.6, 0] }}
-              transition={{ duration, repeat: Infinity, ease: 'linear', delay }}
-              style={{ left: `${startX}%`, width: `${size}px`, height: `${size}px`, boxShadow: '0 0 6px #B2904D' }}
+              aria-hidden="true"
+              className="acceso-particle absolute bg-[#B2904D] rounded-full pointer-events-none z-0"
+              style={{
+                left: `${startX}%`,
+                width: `${size}px`,
+                height: `${size}px`,
+                boxShadow: '0 0 6px #B2904D',
+                animationDuration: `${duration}s`,
+                animationDelay: `${delay}s`,
+              }}
             />
           );
         })}
 
         {/* Layer 7: Diagonal scan line */}
-        <m.div
-          className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/40 to-transparent pointer-events-none z-0"
-          initial={{ y: '0%' }}
-          animate={{ y: '100vh' }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        <div
+          aria-hidden="true"
+          className="acceso-scan absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#B2904D]/40 to-transparent pointer-events-none z-0"
         />
+
+        <style dangerouslySetInnerHTML={{ __html: HERO_MOTION_CSS }} />
 
         {/* Layer 8: Gold corner brackets */}
         <div className="absolute top-28 left-6 md:left-10 w-10 h-10 md:w-14 md:h-14 border-l-2 border-t-2 border-[#B2904D]/50 z-10 pointer-events-none" />
@@ -366,16 +403,13 @@ export default function AccesoClientesClient() {
 
         {/* Left card — Case status */}
         <m.div
+          aria-hidden="true"
           initial={{ opacity: 0, x: -40, rotate: -10 }}
           animate={{ opacity: 1, x: 0, rotate: -6 }}
           transition={{ delay: 1.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="hidden 2xl:block absolute left-[3%] bottom-[12%] z-30 w-60 pointer-events-none"
         >
-          <m.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-            className="p-4 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]"
-          >
+          <div className="acceso-float-up p-4 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[9px] text-white/50 tracking-widest uppercase font-bold">
                 {lang === 'es' ? 'Caso Activo' : 'Active Case'}
@@ -407,21 +441,18 @@ export default function AccesoClientesClient() {
               <span>{lang === 'es' ? 'Progreso' : 'Progress'}</span>
               <span className="text-[#B2904D] font-bold">92%</span>
             </div>
-          </m.div>
+          </div>
         </m.div>
 
         {/* Right card — Notification */}
         <m.div
+          aria-hidden="true"
           initial={{ opacity: 0, x: 40, rotate: 10 }}
           animate={{ opacity: 1, x: 0, rotate: 5 }}
           transition={{ delay: 1.6, duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="hidden 2xl:block absolute right-[3%] bottom-[14%] z-30 w-60 pointer-events-none"
         >
-          <m.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="p-4 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]"
-          >
+          <div className="acceso-float-down p-4 rounded-2xl bg-gradient-to-br from-[#001540]/95 to-[#001026]/95 backdrop-blur-xl border border-[#B2904D]/30 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)]">
             <div className="flex items-start gap-2.5 mb-2">
               <div className="relative w-8 h-8 rounded-lg bg-[#B2904D]/20 flex items-center justify-center flex-shrink-0">
                 <Bell size={16} className="text-[#B2904D]" />
@@ -450,7 +481,7 @@ export default function AccesoClientesClient() {
                 {lang === 'es' ? 'Equipo legal al tanto' : 'Legal team on it'}
               </span>
             </div>
-          </m.div>
+          </div>
         </m.div>
       </section>
 
@@ -777,13 +808,13 @@ export default function AccesoClientesClient() {
                   <span>{gT(ui.finalCta)}</span>
                   <ArrowUpRight size={14} className="opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
-                <a
-                  href={`/${lang}/contacto`}
+                <Link
+                  href={`/${lang}/consulta`}
                   className="group inline-flex items-center gap-2 px-6 py-3 border border-[#B2904D]/40 hover:border-[#B2904D] hover:bg-[#B2904D]/5 text-[#B2904D] hover:text-white font-medium rounded-lg text-sm tracking-wide transition-all"
                 >
                   {gT(ui.finalSecondary)}
                   <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-                </a>
+                </Link>
               </div>
             </div>
           </m.div>

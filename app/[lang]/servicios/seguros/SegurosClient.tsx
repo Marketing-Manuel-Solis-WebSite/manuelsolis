@@ -25,9 +25,9 @@ export default function SegurosClient({ lang }: { lang: Language }) {
   const steps = resolveSteps(lang);
 
   const articles = [
-    { slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion', title: { es: 'Formulario G-28: cómo cambiar de abogado', en: 'Form G-28: How to Change Attorney' }, image: '/blog/blog_09/B9_CR1.png' },
-    { slug: 'foia_migratoria_pedir_record_antes_de_aplicar', title: { es: 'FOIA: pedir récord antes de aplicar', en: 'FOIA: Request Records Before Applying' }, image: '/blog/blog_14/BLOG04_CR1.png' },
-    { slug: 'advance_parole_2026_viajar_con_daca_tps_visa_u', title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' }, image: '/blog/blog_12/BLOG02_CR1.png' },
+    { slug: 'accidente-auto-indocumentado-derechos', title: { es: 'Tuve un accidente de auto siendo indocumentado: ¿tengo derechos?', en: 'I Had a Car Accident While Undocumented: Do I Have Rights?' }, image: '/blog/blog_25/B5_CR1.jpg' },
+    { slug: 'accidente-camion-18-ruedas-texas-compensacion', title: { es: 'Accidente con tráiler de 18 ruedas en Texas: quién paga y cuánto vale tu caso', en: '18-Wheeler Accidents in Texas: Who Pays and What Your Case Is Worth' }, image: '/blog/blog_32/JUL_B1.png' },
+    { slug: 'accidente-trabajo-indocumentado-texas-compensacion', title: { es: 'Accidente de trabajo siendo indocumentado en Texas: tus derechos reales', en: 'Work Injury While Undocumented in Texas: Your Real Rights' }, image: '/blog/blog_33/JUL_B2.png' },
   ];
 
   return (
@@ -123,7 +123,7 @@ export default function SegurosClient({ lang }: { lang: Language }) {
           </Reveal>
 
           <Reveal variant="left" amount={0.3} className="order-1 lg:order-2 relative group p-6 bg-white/10 backdrop-blur-xl rounded-[2.5rem] shadow-xl border border-white/10">
-            <SegurosVideo videoAlt={ui.videoAlt} />
+            <SegurosVideo videoAlt={ui.videoAlt} unsupportedNotice={ui.videoUnsupported} />
           </Reveal>
         </div>
       </section>

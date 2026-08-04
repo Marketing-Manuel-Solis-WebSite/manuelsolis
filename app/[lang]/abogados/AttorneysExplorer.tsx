@@ -255,11 +255,11 @@ export default function AttorneysExplorer({
                 </div>
 
                 <div className="mt-auto space-y-3">
-                  <a href="/#contacto" onClick={() => setSelectedAttorney(null)} className="w-full bg-gradient-to-r from-[#B2904D] to-[#9f7d3d] hover:from-white hover:to-white hover:text-[#002342] text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-black/40 group">
+                  <Link href={`/${lang}#contacto`} onClick={() => setSelectedAttorney(null)} className="w-full bg-gradient-to-r from-[#B2904D] to-[#9f7d3d] hover:from-white hover:to-white hover:text-[#002342] text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-black/40 group">
                     <Mail size={20} />
                     {texts.button}
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  </Link>
                 </div>
 
               </div>

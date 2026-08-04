@@ -25,9 +25,9 @@ export default function LeyCriminalClient({ lang }: { lang: Language }) {
   const steps = resolveSteps(lang);
 
   const articles = [
-    { slug: 'ley_de_los_10_anos_cancelacion_de_deportacion', title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' }, image: '/blog/blog_11/BLOG01_CR1.png' },
-    { slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', title: { es: 'Frenar deportación con Visa Humanitaria', en: 'Stop Deportation with Humanitarian Visa' }, image: '/blog/blog_08/B8_CR1.png' },
-    { slug: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas', title: { es: 'Perdón I-192: arreglar con Visa U con deportaciones previas', en: 'I-192 Waiver: Fix with U Visa Despite Prior Deportations' }, image: '/blog/blog_03/B3_CR1.png' },
+    { slug: 'ley-de-los-10-anos-cancelacion-de-deportacion', title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' }, image: '/blog/blog_11/BLOG01_CR1.png' },
+    { slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', title: { es: 'Frenar deportación con Visa Humanitaria', en: 'Stop Deportation with Humanitarian Visa' }, image: '/blog/blog_08/B8_CR1.png' },
+    { slug: 'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas', title: { es: 'Perdón I-192: arreglar con Visa U con deportaciones previas', en: 'I-192 Waiver: Fix with U Visa Despite Prior Deportations' }, image: '/blog/blog_03/B3_CR1.png' },
   ];
 
   return (

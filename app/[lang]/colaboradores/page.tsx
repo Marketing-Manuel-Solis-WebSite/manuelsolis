@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? 'Colaboradores — Equipo Manuel Solís'
     : 'Collaborators — Manuel Solís Team';
   const description = isEs
-    ? 'Conozca a los colaboradores del Law Offices of Manuel Solís. Profesionales dedicados a la experiencia del cliente, con enlaces oficiales, testimonios y reseñas verificadas.'
-    : 'Meet the collaborators of the Law Offices of Manuel Solís. Professionals dedicated to the client experience, with official links, testimonials, and verified reviews.';
+    ? 'Conozca a los colaboradores del Law Offices of Manuel Solís. Profesionales dedicados a la experiencia del cliente, con enlaces oficiales y reseñas verificadas en Google.'
+    : 'Meet the collaborators of the Law Offices of Manuel Solís. Professionals dedicated to the client experience, with official links and verified Google reviews.';
 
   return {
     title,

@@ -130,11 +130,11 @@ const offices = [
 ];
 
 const blogArticles: { slug: string; title: Detail; category: Detail }[] = [
-  { slug: 'permiso_de_trabajo_visa_u', title: { es: 'Permiso de Trabajo con Visa U: Cómo Obtenerlo', en: 'U Visa Work Permit: How to Get It' }, category: { es: 'Visa U', en: 'U Visa' } },
-  { slug: 'que_hacer_si_la_policia_no_firma_la_certificacion_visa_u', title: { es: 'Qué Hacer si la Policía No Firma la Certificación de Visa U', en: "What to Do If Police Won't Sign the U Visa Certification" }, category: { es: 'Visa U', en: 'U Visa' } },
-  { slug: 'perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas', title: { es: 'Perdón I-192: Cómo Arreglar con Visa U si Tienes Deportaciones', en: 'I-192 Waiver: How to Fix Your Case with U Visa Despite Deportations' }, category: { es: 'Perdón Migratorio', en: 'Immigration Waiver' } },
-  { slug: 'Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados', title: { es: 'Visa U y VAWA: Incluir Hijos y Nuevos Esposos como Derivados', en: 'U Visa & VAWA: Including Children and New Spouses as Derivatives' }, category: { es: 'Derivados', en: 'Derivatives' } },
-  { slug: 'Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', title: { es: 'Frenar Deportación Inminente con Solicitud de Visa Humanitaria', en: 'Stop Imminent Deportation with Humanitarian Visa Application' }, category: { es: 'Deportación', en: 'Deportation' } },
+  { slug: 'permiso-de-trabajo-visa-u', title: { es: 'Permiso de Trabajo con Visa U: Cómo Obtenerlo', en: 'U Visa Work Permit: How to Get It' }, category: { es: 'Visa U', en: 'U Visa' } },
+  { slug: 'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u', title: { es: 'Qué Hacer si la Policía No Firma la Certificación de Visa U', en: "What to Do If Police Won't Sign the U Visa Certification" }, category: { es: 'Visa U', en: 'U Visa' } },
+  { slug: 'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas', title: { es: 'Perdón I-192: Cómo Arreglar con Visa U si Tienes Deportaciones', en: 'I-192 Waiver: How to Fix Your Case with U Visa Despite Deportations' }, category: { es: 'Perdón Migratorio', en: 'Immigration Waiver' } },
+  { slug: 'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados', title: { es: 'Visa U y VAWA: Incluir Hijos y Nuevos Esposos como Derivados', en: 'U Visa & VAWA: Including Children and New Spouses as Derivatives' }, category: { es: 'Derivados', en: 'Derivatives' } },
+  { slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', title: { es: 'Frenar Deportación Inminente con Solicitud de Visa Humanitaria', en: 'Stop Imminent Deportation with Humanitarian Visa Application' }, category: { es: 'Deportación', en: 'Deportation' } },
 ];
 
 const ui = {

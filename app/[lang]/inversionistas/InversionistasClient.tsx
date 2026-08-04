@@ -279,6 +279,32 @@ function LandingFooter({ lang }: { lang: 'es' | 'en' }) {
   );
 }
 
+/* Orbes del hero con @keyframes CSS (solo transform/opacity, corren en el
+   compositor) en lugar de loops infinitos de framer-motion, que ocupaban rAF
+   en el hilo principal durante toda la visita. La opacidad de reposo del
+   tercer orbe vive en la clase porque no lleva utilidad de opacidad: con
+   `animation: none` (reduced-motion) volveria a opacity 1. */
+const HERO_ORBS_CSS = `
+  @keyframes inv-orb-gold {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, -40px) scale(1.2); }
+  }
+  @keyframes inv-orb-blue {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-60px, 50px) scale(1.25); }
+  }
+  @keyframes inv-orb-gold-soft {
+    0%, 100% { transform: translate(0, 0); opacity: 0.06; }
+    50% { transform: translate(30px, -20px); opacity: 0.14; }
+  }
+  .inv-orb-gold { animation: inv-orb-gold 16s ease-in-out infinite both; }
+  .inv-orb-blue { animation: inv-orb-blue 20s ease-in-out 2s infinite both; }
+  .inv-orb-gold-soft { opacity: 0.06; animation: inv-orb-gold-soft 14s ease-in-out 1s infinite both; }
+  @media (prefers-reduced-motion: reduce) {
+    .inv-orb-gold, .inv-orb-blue, .inv-orb-gold-soft { animation: none; }
+  }
+`;
+
 // ============================================================
 // COMPONENTE PRINCIPAL
 // ============================================================
@@ -328,22 +354,11 @@ export default function InversionistasClient() {
       {/* --- HERO SECTION --- */}
       <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
         {/* Orbes difuminados */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <m.div
-            animate={{ x: [0, 60, 0], y: [0, -40, 0], scale: [1, 1.2, 1] }}
-            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-[5%] left-[0%] w-[600px] h-[600px] bg-[#B2904D]/[0.12] rounded-full blur-[150px]"
-          />
-          <m.div
-            animate={{ x: [0, -60, 0], y: [0, 50, 0], scale: [1, 1.25, 1] }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-            className="absolute bottom-[0%] right-[5%] w-[700px] h-[700px] bg-blue-400/[0.08] rounded-full blur-[160px]"
-          />
-          <m.div
-            animate={{ x: [0, 30, 0], y: [0, -20, 0], opacity: [0.06, 0.14, 0.06] }}
-            transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="absolute top-[25%] right-[20%] w-[500px] h-[500px] bg-[#B2904D]/[0.08] rounded-full blur-[130px]"
-          />
+        <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="inv-orb-gold absolute top-[5%] left-[0%] w-[600px] h-[600px] bg-[#B2904D]/[0.12] rounded-full blur-[150px]" />
+          <div className="inv-orb-blue absolute bottom-[0%] right-[5%] w-[700px] h-[700px] bg-blue-400/[0.08] rounded-full blur-[160px]" />
+          <div className="inv-orb-gold-soft absolute top-[25%] right-[20%] w-[500px] h-[500px] bg-[#B2904D]/[0.08] rounded-full blur-[130px]" />
+          <style dangerouslySetInnerHTML={{ __html: HERO_ORBS_CSS }} />
         </div>
 
         <div className="container mx-auto max-w-7xl relative z-10">

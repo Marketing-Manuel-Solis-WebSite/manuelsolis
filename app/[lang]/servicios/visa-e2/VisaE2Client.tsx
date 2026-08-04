@@ -25,9 +25,9 @@ export default function VisaE2Client({ lang }: { lang: Language }) {
   const faqs = resolveFaqs(lang);
 
   const articles = [
-    { slug: 'residencia_laboral_eb3_ley_245i_entrada_indocumentada', title: { es: 'Residencia laboral EB-3 y Ley 245(i)', en: 'EB-3 Work Residency & Section 245(i)' }, image: '/blog/blog_13/BLOG03_CR1.png' },
-    { slug: 'advance_parole_2026_viajar_con_daca_tps_visa_u', title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' }, image: '/blog/blog_12/BLOG02_CR1.png' },
-    { slug: 'Formulario_G28_Cambiar_Abogado_Inmigracion', title: { es: 'Formulario G-28: cómo cambiar de abogado', en: 'Form G-28: How to Change Attorney' }, image: '/blog/blog_09/B9_CR1.png' },
+    { slug: 'residencia-laboral-eb3-ley-245i-entrada-indocumentada', title: { es: 'Residencia laboral EB-3 y Ley 245(i)', en: 'EB-3 Work Residency & Section 245(i)' }, image: '/blog/blog_13/BLOG03_CR1.png' },
+    { slug: 'advance-parole-2026-viajar-con-daca-tps-visa-u', title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' }, image: '/blog/blog_12/BLOG02_CR1.png' },
+    { slug: 'formulario-g28-cambiar-abogado-inmigracion', title: { es: 'Formulario G-28: cómo cambiar de abogado', en: 'Form G-28: How to Change Attorney' }, image: '/blog/blog_09/B9_CR1.png' },
   ];
 
   return (

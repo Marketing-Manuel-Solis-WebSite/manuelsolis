@@ -201,8 +201,8 @@ function inmigracionFAQ(office: OfficeInfo, signals: CityLocalSignals): FAQItem[
         en: `How much does an immigration consultation cost in ${office.city}?`,
       },
       answer: {
-        es: `Ofrecemos consultas iniciales accesibles para evaluar su caso. Trabajamos con planes de pago flexibles para que el costo no sea una barrera. Llame al ${office.phone} para programar una cita en nuestra oficina de ${office.city}.`,
-        en: `We offer accessible initial consultations to evaluate your case. We work with flexible payment plans so cost is not a barrier. Call ${office.phone} to schedule an appointment at our ${office.city} office.`,
+        es: `Ofrecemos consultas iniciales accesibles para evaluar su caso. Trabajamos con planes de pago flexibles para que el costo no sea una barrera. Llame al ${office.phone} para programar una cita en nuestra oficina de ${office.locality ?? office.city}.`,
+        en: `We offer accessible initial consultations to evaluate your case. We work with flexible payment plans so cost is not a barrier. Call ${office.phone} to schedule an appointment at our ${office.locality ?? office.city} office.`,
       },
     },
     {

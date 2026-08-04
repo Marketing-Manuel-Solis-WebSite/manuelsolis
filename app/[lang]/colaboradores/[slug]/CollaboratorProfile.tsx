@@ -72,6 +72,8 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
 
   if (!collaborator) return null;
 
+  const testimonial = collaborator.testimonial;
+
   return (
     <div className="min-h-screen flex flex-col bg-[#001529] text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
 
@@ -176,7 +178,8 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
         </div>
       </section>
 
-      {/* EXAMPLE TESTIMONIAL */}
+      {/* TESTIMONIAL — rendered only when a real, attributable one exists */}
+      {testimonial && (
       <section className="relative px-4 pb-16 z-10">
         <div className="max-w-4xl mx-auto">
           <Reveal variant="up" amount={0.3} className="relative bg-gradient-to-br from-[#B2904D]/15 to-[#B2904D]/5 rounded-2xl border border-[#B2904D]/30 p-8 md:p-12">
@@ -198,15 +201,15 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
               ))}
             </div>
             <p className="text-white text-xl md:text-2xl font-light italic leading-relaxed mb-6">
-              &ldquo;{collaborator.testimonial.quote[language]}&rdquo;
+              &ldquo;{testimonial.quote[language]}&rdquo;
             </p>
             <div className="flex items-center gap-3">
               <div className="h-px w-10 bg-[#B2904D]" />
               <div>
-                <p className="text-white font-bold">{collaborator.testimonial.author}</p>
-                {collaborator.testimonial.context && (
+                <p className="text-white font-bold">{testimonial.author}</p>
+                {testimonial.context && (
                   <p className="text-[#B2904D] text-xs font-medium tracking-wide uppercase">
-                    {collaborator.testimonial.context[language]}
+                    {testimonial.context[language]}
                   </p>
                 )}
               </div>
@@ -214,6 +217,7 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
           </Reveal>
         </div>
       </section>
+      )}
 
       {/* GOOGLE REVIEWS — DOCUMENTS IN HAND */}
       <section className="relative px-4 pb-16 z-10">

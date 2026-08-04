@@ -1,6 +1,39 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+// not-found.tsx vive fuera del segmento [lang], así que no recibe el locale por
+// params y su HTML se prerenderiza una sola vez. El idioma se resuelve en el
+// cliente leyendo location.pathname (misma condición que el script inline del
+// root layout); el prerender queda en español, el idioma por defecto del sitio.
+const LOCALE_TEXT = {
+  es: {
+    title: 'Página no encontrada',
+    body: 'La página que buscas no existe o fue movida. No te preocupes, estamos aquí para ayudarte.',
+    short: 'La página que buscas no existe o fue movida.',
+    home: 'Ir al Inicio',
+    services: 'Ver Servicios',
+  },
+  en: {
+    title: 'Page not found',
+    body: "The page you're looking for doesn't exist or has been moved. Don't worry, we're here to help.",
+    short: "The page you're looking for doesn't exist or has been moved.",
+    home: 'Go to Homepage',
+    services: 'View Services',
+  },
+} as const;
+
 export default function NotFound() {
+  const [locale, setLocale] = useState<'es' | 'en'>('es');
+
+  useEffect(() => {
+    if (/^\/en(\/|$)/.test(window.location.pathname)) setLocale('en');
+  }, []);
+
+  const t = LOCALE_TEXT[locale];
+  const alt = LOCALE_TEXT[locale === 'es' ? 'en' : 'es'];
+
   return (
     <div className="min-h-screen bg-[#001540] flex items-center justify-center relative overflow-hidden">
       {/* Background effects */}
@@ -17,32 +50,32 @@ export default function NotFound() {
 
         {/* Message */}
         <div className="space-y-4 -mt-4">
-          <h2 className="text-2xl md:text-3xl font-semibold text-white">
-            Página no encontrada
+          <h2 className="text-2xl md:text-3xl font-semibold text-white" lang={locale}>
+            {t.title}
           </h2>
-          <p className="text-blue-100/60 text-lg max-w-md mx-auto">
-            La página que buscas no existe o fue movida. No te preocupes, estamos aquí para ayudarte.
+          <p className="text-blue-100/60 text-lg max-w-md mx-auto" lang={locale}>
+            {t.body}
           </p>
-          <p className="text-blue-100/40 text-sm">
-            The page you&apos;re looking for doesn&apos;t exist or has been moved.
+          <p className="text-blue-100/40 text-sm" lang={locale === 'es' ? 'en' : 'es'}>
+            {alt.short}
           </p>
         </div>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
           <Link
-            href="/es"
+            href={`/${locale}`}
             className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#B2904D] to-[#D4A94E] text-white font-medium rounded-lg hover:shadow-lg hover:shadow-[#B2904D]/25 transition-all duration-300"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            Ir al Inicio
+            {t.home}
           </Link>
           <Link
-            href="/es/servicios"
+            href={`/${locale}/servicios`}
             className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[#B2904D]/40 text-[#B2904D] font-medium rounded-lg hover:bg-[#B2904D]/10 transition-all duration-300"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
-            Ver Servicios
+            {t.services}
           </Link>
           <a
             href="tel:+18886761238"
