@@ -13,6 +13,10 @@
 //   /es explícito — un destino sin prefijo encadena un segundo 301
 //   cuando el proxy inyecta el locale (desperdicia crawl budget).
 // - The :lang variants exist for URLs that already had /es or /en.
+//   El parámetro va SIEMPRE restringido a `:lang(es|en)`: sin la
+//   restricción captura cualquier primer segmento, así que reglas como
+//   '/:lang/noticias' se tragarían URLs reales sin prefijo de idioma
+//   (/informacion/noticias) antes de que el proxy pueda normalizarlas.
 // - For multi-segment legacy paths use :slug* (catch-all).
 // - For single-segment use :slug.
 // ============================================================
@@ -39,43 +43,43 @@ const DEFUNCT_ATTORNEYS = [
 
 const defunctAttorneyRedirects: Redirect[] = DEFUNCT_ATTORNEYS.flatMap((slug) => [
   { source: `/abogados/${slug}`, destination: '/es/abogados', permanent: true },
-  { source: `/:lang/abogados/${slug}`, destination: '/:lang/abogados', permanent: true },
-  { source: `/:lang/attorneys/${slug}`, destination: '/:lang/abogados', permanent: true },
+  { source: `/:lang(es|en)/abogados/${slug}`, destination: '/:lang/abogados', permanent: true },
+  { source: `/:lang(es|en)/attorneys/${slug}`, destination: '/:lang/abogados', permanent: true },
 ]);
 
 export const seoRedirects: Redirect[] = [
   // ============================================================
   // BLOG SLUG NORMALIZATION (underscore/CamelCase → kebab-case)
   // ============================================================
-  { source: '/:lang/blog/asilo_frontera_2026_puerto_entrada_vs_cruce', destination: '/:lang/blog/asilo-frontera-2026-puerto-entrada-vs-cruce', permanent: true },
-  { source: '/:lang/blog/entrevista_matrimonio_uscis_senales_alerta', destination: '/:lang/blog/entrevista-matrimonio-uscis-senales-alerta', permanent: true },
-  { source: '/:lang/blog/ciudadania_en_espanol_reglas_50_20_55_15', destination: '/:lang/blog/ciudadania-en-espanol-reglas-50-20-55-15', permanent: true },
-  { source: '/:lang/blog/marihuana_dui_buen_caracter_moral_inmigracion', destination: '/:lang/blog/marihuana-dui-buen-caracter-moral-inmigracion', permanent: true },
-  { source: '/:lang/blog/perdon_i601a_arreglar_papeles_entrada_ilegal', destination: '/:lang/blog/perdon-i601a-arreglar-papeles-entrada-ilegal', permanent: true },
-  { source: '/:lang/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados', destination: '/:lang/blog/estatus-juvenil-sijs-residencia-jovenes-abandonados', permanent: true },
-  { source: '/:lang/blog/foia_migratoria_pedir_record_antes_de_aplicar', destination: '/:lang/blog/foia-migratoria-pedir-record-antes-de-aplicar', permanent: true },
-  { source: '/:lang/blog/residencia_laboral_eb3_ley_245i_entrada_indocumentada', destination: '/:lang/blog/residencia-laboral-eb3-ley-245i-entrada-indocumentada', permanent: true },
-  { source: '/:lang/blog/advance_parole_2026_viajar_con_daca_tps_visa_u', destination: '/:lang/blog/advance-parole-2026-viajar-con-daca-tps-visa-u', permanent: true },
-  { source: '/:lang/blog/ley_de_los_10_anos_cancelacion_de_deportacion', destination: '/:lang/blog/ley-de-los-10-anos-cancelacion-de-deportacion', permanent: true },
-  { source: '/:lang/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados', destination: '/:lang/blog/visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados', permanent: true },
-  { source: '/:lang/blog/Formulario_G28_Cambiar_Abogado_Inmigracion', destination: '/:lang/blog/formulario-g28-cambiar-abogado-inmigracion', permanent: true },
-  { source: '/:lang/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', destination: '/:lang/blog/frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', permanent: true },
-  { source: '/:lang/blog/Visa_T_trabajo_forzado_por_deuda_con_coyote', destination: '/:lang/blog/visa-t-trabajo-forzado-por-deuda-con-coyote', permanent: true },
-  { source: '/:lang/blog/VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente', destination: '/:lang/blog/vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', permanent: true },
-  { source: '/:lang/blog/VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses', destination: '/:lang/blog/vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses', permanent: true },
-  { source: '/:lang/blog/perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas', destination: '/:lang/blog/perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas', permanent: true },
-  { source: '/:lang/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u', destination: '/:lang/blog/que-hacer-si-la-policia-no-firma-la-certificacion-visa-u', permanent: true },
-  { source: '/:lang/blog/permiso_de_trabajo_visa_u', destination: '/:lang/blog/permiso-de-trabajo-visa-u', permanent: true },
+  { source: '/:lang(es|en)/blog/asilo_frontera_2026_puerto_entrada_vs_cruce', destination: '/:lang/blog/asilo-frontera-2026-puerto-entrada-vs-cruce', permanent: true },
+  { source: '/:lang(es|en)/blog/entrevista_matrimonio_uscis_senales_alerta', destination: '/:lang/blog/entrevista-matrimonio-uscis-senales-alerta', permanent: true },
+  { source: '/:lang(es|en)/blog/ciudadania_en_espanol_reglas_50_20_55_15', destination: '/:lang/blog/ciudadania-en-espanol-reglas-50-20-55-15', permanent: true },
+  { source: '/:lang(es|en)/blog/marihuana_dui_buen_caracter_moral_inmigracion', destination: '/:lang/blog/marihuana-dui-buen-caracter-moral-inmigracion', permanent: true },
+  { source: '/:lang(es|en)/blog/perdon_i601a_arreglar_papeles_entrada_ilegal', destination: '/:lang/blog/perdon-i601a-arreglar-papeles-entrada-ilegal', permanent: true },
+  { source: '/:lang(es|en)/blog/estatus_juvenil_sijs_residencia_jovenes_abandonados', destination: '/:lang/blog/estatus-juvenil-sijs-residencia-jovenes-abandonados', permanent: true },
+  { source: '/:lang(es|en)/blog/foia_migratoria_pedir_record_antes_de_aplicar', destination: '/:lang/blog/foia-migratoria-pedir-record-antes-de-aplicar', permanent: true },
+  { source: '/:lang(es|en)/blog/residencia_laboral_eb3_ley_245i_entrada_indocumentada', destination: '/:lang/blog/residencia-laboral-eb3-ley-245i-entrada-indocumentada', permanent: true },
+  { source: '/:lang(es|en)/blog/advance_parole_2026_viajar_con_daca_tps_visa_u', destination: '/:lang/blog/advance-parole-2026-viajar-con-daca-tps-visa-u', permanent: true },
+  { source: '/:lang(es|en)/blog/ley_de_los_10_anos_cancelacion_de_deportacion', destination: '/:lang/blog/ley-de-los-10-anos-cancelacion-de-deportacion', permanent: true },
+  { source: '/:lang(es|en)/blog/Visa_U_y_VAWA_incluir_hijos_y_nuevos_esposos_derivados', destination: '/:lang/blog/visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados', permanent: true },
+  { source: '/:lang(es|en)/blog/Formulario_G28_Cambiar_Abogado_Inmigracion', destination: '/:lang/blog/formulario-g28-cambiar-abogado-inmigracion', permanent: true },
+  { source: '/:lang(es|en)/blog/Frenar_deportacion_inminente_con_solicitud_de_Visa_Humanitaria', destination: '/:lang/blog/frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', permanent: true },
+  { source: '/:lang(es|en)/blog/Visa_T_trabajo_forzado_por_deuda_con_coyote', destination: '/:lang/blog/visa-t-trabajo-forzado-por-deuda-con-coyote', permanent: true },
+  { source: '/:lang(es|en)/blog/VAWA_para_hombres_maltratados_por_pareja_ciudadana_o_residente', destination: '/:lang/blog/vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', permanent: true },
+  { source: '/:lang(es|en)/blog/VAWA_para_padres_Maltrato_de_hijos_ciudadanos_estadounidenses', destination: '/:lang/blog/vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses', permanent: true },
+  { source: '/:lang(es|en)/blog/perdon_i_192_como_arreglar_con_la_visa_u_si_tienes_deportaciones_previas', destination: '/:lang/blog/perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas', permanent: true },
+  { source: '/:lang(es|en)/blog/que_hacer_si_la_policia_no_firma_la_certificacion_visa_u', destination: '/:lang/blog/que-hacer-si-la-policia-no-firma-la-certificacion-visa-u', permanent: true },
+  { source: '/:lang(es|en)/blog/permiso_de_trabajo_visa_u', destination: '/:lang/blog/permiso-de-trabajo-visa-u', permanent: true },
 
   // ============================================================
   // INFORMACION ROUTES (legacy /informacion/nosotros)
   // ============================================================
-  { source: '/:lang/informacion/nosotros', destination: '/:lang/nosotros', permanent: true },
+  { source: '/:lang(es|en)/informacion/nosotros', destination: '/:lang/nosotros', permanent: true },
 
   // /contacto nunca existió como ruta (la página de conversión es /consulta);
   // había enlaces internos y puede haber externos apuntando ahí.
   { source: '/contacto', destination: '/es/consulta', permanent: true },
-  { source: '/:lang/contacto', destination: '/:lang/consulta', permanent: true },
+  { source: '/:lang(es|en)/contacto', destination: '/:lang/consulta', permanent: true },
 
   // ============================================================
   // WORDPRESS CORE PATHS → home
@@ -91,73 +95,74 @@ export const seoRedirects: Redirect[] = [
   { source: '/feed', destination: '/es', permanent: true },
   { source: '/feed/:path*', destination: '/es', permanent: true },
   { source: '/comments/feed', destination: '/es', permanent: true },
-  { source: '/:lang/feed', destination: '/:lang', permanent: true },
-  { source: '/:lang/feed/:path*', destination: '/:lang', permanent: true },
-  { source: '/:lang/comments/feed', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/feed', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/feed/:path*', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/comments/feed', destination: '/:lang', permanent: true },
 
   // Author pages → attorney directory
   { source: '/author/:slug*', destination: '/es/abogados', permanent: true },
-  { source: '/:lang/author/:slug*', destination: '/:lang/abogados', permanent: true },
+  { source: '/:lang(es|en)/author/:slug*', destination: '/:lang/abogados', permanent: true },
 
   // WordPress pagination
-  { source: '/:lang/blog/page/:page', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/page/:page', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/blog/page/:page', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/page/:page', destination: '/:lang', permanent: true },
   { source: '/blog/page/:page', destination: '/es/blog', permanent: true },
   { source: '/page/:page', destination: '/es', permanent: true },
 
   // Tag pages
-  { source: '/:lang/tag/:slug*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/tag/:slug*', destination: '/:lang/blog', permanent: true },
   { source: '/tag/:slug*', destination: '/es/blog', permanent: true },
 
   // ============================================================
   // ENGLISH PATH ALIASES → spanish slug equivalents
   // ============================================================
-  { source: '/:lang/about', destination: '/:lang/nosotros', permanent: true },
-  { source: '/:lang/about-us', destination: '/:lang/nosotros', permanent: true },
-  { source: '/:lang/contact', destination: '/:lang/nosotros', permanent: true },
-  { source: '/:lang/contact-us', destination: '/:lang/nosotros', permanent: true },
-  { source: '/:lang/services', destination: '/:lang/servicios', permanent: true },
-  { source: '/:lang/services/:slug*', destination: '/:lang/servicios', permanent: true },
-  { source: '/:lang/offices', destination: '/:lang/oficinas', permanent: true },
-  { source: '/:lang/attorneys', destination: '/:lang/abogados', permanent: true },
-  { source: '/:lang/lawyers', destination: '/:lang/abogados', permanent: true },
-  { source: '/:lang/lawyers/:slug', destination: '/:lang/abogados/:slug', permanent: true },
-  { source: '/:lang/testimonials', destination: '/:lang/testimonios', permanent: true },
-  { source: '/:lang/testimonials/:slug', destination: '/:lang/testimonios', permanent: true },
-  { source: '/:lang/privacy', destination: '/:lang/privacidad', permanent: true },
-  { source: '/:lang/privacy-policy', destination: '/:lang/privacidad', permanent: true },
-  { source: '/:lang/terms', destination: '/:lang/terminos', permanent: true },
-  { source: '/:lang/terms-of-service', destination: '/:lang/terminos', permanent: true },
-  { source: '/:lang/careers', destination: '/:lang/consulta', permanent: true },
+  { source: '/:lang(es|en)/about', destination: '/:lang/nosotros', permanent: true },
+  { source: '/:lang(es|en)/about-us', destination: '/:lang/nosotros', permanent: true },
+  // Intención de contacto → /consulta (misma intención que /contacto), no /nosotros.
+  { source: '/:lang(es|en)/contact', destination: '/:lang/consulta', permanent: true },
+  { source: '/:lang(es|en)/contact-us', destination: '/:lang/consulta', permanent: true },
+  { source: '/:lang(es|en)/services', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/services/:slug*', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/offices', destination: '/:lang/oficinas', permanent: true },
+  { source: '/:lang(es|en)/attorneys', destination: '/:lang/abogados', permanent: true },
+  { source: '/:lang(es|en)/lawyers', destination: '/:lang/abogados', permanent: true },
+  { source: '/:lang(es|en)/lawyers/:slug', destination: '/:lang/abogados/:slug', permanent: true },
+  { source: '/:lang(es|en)/testimonials', destination: '/:lang/testimonios', permanent: true },
+  { source: '/:lang(es|en)/testimonials/:slug', destination: '/:lang/testimonios', permanent: true },
+  { source: '/:lang(es|en)/privacy', destination: '/:lang/privacidad', permanent: true },
+  { source: '/:lang(es|en)/privacy-policy', destination: '/:lang/privacidad', permanent: true },
+  { source: '/:lang(es|en)/terms', destination: '/:lang/terminos', permanent: true },
+  { source: '/:lang(es|en)/terms-of-service', destination: '/:lang/terminos', permanent: true },
+  { source: '/:lang(es|en)/careers', destination: '/:lang/consulta', permanent: true },
   // /join-in eliminado (registro retirado): redirige a la consulta para no perder tráfico.
-  { source: '/:lang/join-in', destination: '/:lang/consulta', permanent: true },
+  { source: '/:lang(es|en)/join-in', destination: '/:lang/consulta', permanent: true },
   { source: '/join-in', destination: '/es/consulta', permanent: true },
-  { source: '/:lang/resources', destination: '/:lang/informacion/recursos', permanent: true },
-  { source: '/:lang/detained-clients', destination: '/:lang/clientes-detenidos', permanent: true },
-  { source: '/:lang/news', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/news/:slug*', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/home', destination: '/:lang', permanent: true },
-  { source: '/:lang/home/', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/resources', destination: '/:lang/informacion/recursos', permanent: true },
+  { source: '/:lang(es|en)/detained-clients', destination: '/:lang/clientes-detenidos', permanent: true },
+  { source: '/:lang(es|en)/news', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/news/:slug*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/home', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/home/', destination: '/:lang', permanent: true },
 
   // ============================================================
   // FAQ legacy → /informacion/faq
   // ============================================================
   { source: '/preguntas-frecuentes', destination: '/es/informacion/faq', permanent: true },
   { source: '/preguntas-frecuentes/:slug*', destination: '/es/informacion/faq', permanent: true },
-  { source: '/:lang/preguntas-frecuentes', destination: '/:lang/informacion/faq', permanent: true },
-  { source: '/:lang/preguntas-frecuentes/:slug*', destination: '/:lang/informacion/faq', permanent: true },
+  { source: '/:lang(es|en)/preguntas-frecuentes', destination: '/:lang/informacion/faq', permanent: true },
+  { source: '/:lang(es|en)/preguntas-frecuentes/:slug*', destination: '/:lang/informacion/faq', permanent: true },
   { source: '/faq', destination: '/es/informacion/faq', permanent: true },
   { source: '/faq/:slug*', destination: '/es/informacion/faq', permanent: true },
-  { source: '/:lang/faq', destination: '/:lang/informacion/faq', permanent: true },
-  { source: '/:lang/faq/:slug*', destination: '/:lang/informacion/faq', permanent: true },
+  { source: '/:lang(es|en)/faq', destination: '/:lang/informacion/faq', permanent: true },
+  { source: '/:lang(es|en)/faq/:slug*', destination: '/:lang/informacion/faq', permanent: true },
 
   // ============================================================
   // NEWS / NOTICIAS legacy → /blog
   // ============================================================
   { source: '/noticias', destination: '/es/blog', permanent: true },
   { source: '/noticias/:slug*', destination: '/es/blog', permanent: true },
-  { source: '/:lang/noticias', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/noticias/:slug*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/noticias', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/noticias/:slug*', destination: '/:lang/blog', permanent: true },
   { source: '/news', destination: '/es/blog', permanent: true },
   { source: '/news/:slug*', destination: '/es/blog', permanent: true },
 
@@ -167,27 +172,27 @@ export const seoRedirects: Redirect[] = [
   { source: '/proteccion-legal-para-migrantes', destination: '/es/blog', permanent: true },
   { source: '/proteccion-legal-para-migrantes/:slug*', destination: '/es/blog', permanent: true },
   { source: '/proteccion-legal-para-migrantes-en/:slug*', destination: '/es/blog', permanent: true },
-  { source: '/:lang/proteccion-legal-para-migrantes', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/proteccion-legal-para-migrantes/:slug*', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/proteccion-legal-para-migrantes-en/:slug*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/proteccion-legal-para-migrantes', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/proteccion-legal-para-migrantes/:slug*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/proteccion-legal-para-migrantes-en/:slug*', destination: '/:lang/blog', permanent: true },
 
   // ============================================================
   // MIGRANT RIGHTS articles → /blog (catch-all subpaths)
   // ============================================================
   { source: '/derechos-de-migrantes/:slug*', destination: '/es/blog', permanent: true },
-  { source: '/:lang/derechos-de-migrantes/:slug*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/derechos-de-migrantes/:slug*', destination: '/:lang/blog', permanent: true },
 
   // ============================================================
   // PROCESO MIGRATORIO / REQUISITOS articles → /blog
   // ============================================================
   { source: '/proceso-migratorio', destination: '/es/blog', permanent: true },
   { source: '/proceso-migratorio/:slug*', destination: '/es/blog', permanent: true },
-  { source: '/:lang/proceso-migratorio', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/proceso-migratorio/:slug*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/proceso-migratorio', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/proceso-migratorio/:slug*', destination: '/:lang/blog', permanent: true },
   { source: '/requisitos-de-visas', destination: '/es/blog', permanent: true },
   { source: '/requisitos-de-visas/:slug*', destination: '/es/blog', permanent: true },
-  { source: '/:lang/requisitos-de-visas', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/requisitos-de-visas/:slug*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/requisitos-de-visas', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/requisitos-de-visas/:slug*', destination: '/:lang/blog', permanent: true },
 
   // ============================================================
   // CATEGORY LEGACY (some are valid pages, some need fallback)
@@ -198,10 +203,10 @@ export const seoRedirects: Redirect[] = [
   { source: '/category/proceso-migratorio/:slug*', destination: '/es/blog', permanent: true },
   { source: '/category/requisitos-de-visas', destination: '/es/blog', permanent: true },
   { source: '/category/requisitos-de-visas/:slug*', destination: '/es/blog', permanent: true },
-  { source: '/:lang/category/proceso-migratorio', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/category/requisitos-de-visas', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/category/proteccion-legal-para-migrantes/page/:page*', destination: '/:lang/blog', permanent: true },
-  { source: '/:lang/category/derechos-de-migrantes/page/:page*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/category/proceso-migratorio', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/category/requisitos-de-visas', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/category/proteccion-legal-para-migrantes/page/:page*', destination: '/:lang/blog', permanent: true },
+  { source: '/:lang(es|en)/category/derechos-de-migrantes/page/:page*', destination: '/:lang/blog', permanent: true },
 
   // ============================================================
   // SERVICE-AREA LEGACY (areas-servicio, service-areas, legal-areas)
@@ -229,56 +234,56 @@ export const seoRedirects: Redirect[] = [
   { source: '/areas-servicio/:slug*', destination: '/es/servicios', permanent: true },
 
   // /:lang/areas-servicio/* mirror
-  { source: '/:lang/areas-servicio/asilo', destination: '/:lang/servicios/asilo', permanent: true },
-  { source: '/:lang/areas-servicio/u-visa-vawa', destination: '/:lang/servicios/visa-u', permanent: true },
-  { source: '/:lang/areas-servicio/defensa-contra-la-deportacion', destination: '/:lang/servicios/defensa-deportacion', permanent: true },
-  { source: '/:lang/areas-servicio/naturalizacion', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/areas-servicio/peticion-de-residencia-por-parte-de-un-familiar', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/areas-servicio/peticion-de-residencia-por-parte-del-empleador', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/areas-servicio/accidentes-de-aviones-y-helicopteros', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/areas-servicio/accidentes-de-vehiculos-de-18-ruedas-trailers', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/areas-servicio/negligencia-medica', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/areas-servicio/explosion-de-plantas-industriales', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/areas-servicio/violencia-domestica', destination: '/:lang/servicios/familia', permanent: true },
-  { source: '/:lang/areas-servicio/theft', destination: '/:lang/servicios/ley-criminal', permanent: true },
-  { source: '/:lang/areas-servicio/child-custody', destination: '/:lang/servicios/familia', permanent: true },
-  { source: '/:lang/areas-servicio/child-support', destination: '/:lang/servicios/familia', permanent: true },
-  { source: '/:lang/areas-servicio/family', destination: '/:lang/servicios/familia', permanent: true },
-  { source: '/:lang/areas-servicio/assault', destination: '/:lang/servicios/ley-criminal', permanent: true },
-  { source: '/:lang/areas-servicio', destination: '/:lang/servicios', permanent: true },
-  { source: '/:lang/areas-servicio/:slug*', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/asilo', destination: '/:lang/servicios/asilo', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/u-visa-vawa', destination: '/:lang/servicios/visa-u', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/defensa-contra-la-deportacion', destination: '/:lang/servicios/defensa-deportacion', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/naturalizacion', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/peticion-de-residencia-por-parte-de-un-familiar', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/peticion-de-residencia-por-parte-del-empleador', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/accidentes-de-aviones-y-helicopteros', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/accidentes-de-vehiculos-de-18-ruedas-trailers', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/negligencia-medica', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/explosion-de-plantas-industriales', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/violencia-domestica', destination: '/:lang/servicios/familia', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/theft', destination: '/:lang/servicios/ley-criminal', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/child-custody', destination: '/:lang/servicios/familia', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/child-support', destination: '/:lang/servicios/familia', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/family', destination: '/:lang/servicios/familia', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/assault', destination: '/:lang/servicios/ley-criminal', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/areas-servicio/:slug*', destination: '/:lang/servicios', permanent: true },
 
   // /:lang/service-areas/* (English style)
-  { source: '/:lang/service-areas', destination: '/:lang/servicios', permanent: true },
-  { source: '/:lang/service-areas/asilo', destination: '/:lang/servicios/asilo', permanent: true },
-  { source: '/:lang/service-areas/asylum', destination: '/:lang/servicios/asilo', permanent: true },
-  { source: '/:lang/service-areas/u-visa-vawa', destination: '/:lang/servicios/visa-u', permanent: true },
-  { source: '/:lang/service-areas/naturalizacion', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/service-areas/naturalization', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/service-areas/peticion-de-residencia-por-parte-de-un-familiar', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/service-areas/peticion-de-residencia-por-parte-del-empleador', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/service-areas/accidentes-de-vehiculos-de-18-ruedas-trailers', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/service-areas/explosion-de-plantas-industriales', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/service-areas/accidentes-automovilisticos', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/service-areas/negligencia-medica', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/service-areas/accidentes-de-aviones-y-helicopteros', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/service-areas/family', destination: '/:lang/servicios/familia', permanent: true },
-  { source: '/:lang/service-areas/child-support', destination: '/:lang/servicios/familia', permanent: true },
-  { source: '/:lang/service-areas/child-custody', destination: '/:lang/servicios/familia', permanent: true },
-  { source: '/:lang/service-areas/theft', destination: '/:lang/servicios/ley-criminal', permanent: true },
-  { source: '/:lang/service-areas/assault', destination: '/:lang/servicios/ley-criminal', permanent: true },
-  { source: '/:lang/service-areas/planificacion-patrimonial', destination: '/:lang/servicios', permanent: true },
-  { source: '/:lang/service-areas/:slug*', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/service-areas', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/service-areas/asilo', destination: '/:lang/servicios/asilo', permanent: true },
+  { source: '/:lang(es|en)/service-areas/asylum', destination: '/:lang/servicios/asilo', permanent: true },
+  { source: '/:lang(es|en)/service-areas/u-visa-vawa', destination: '/:lang/servicios/visa-u', permanent: true },
+  { source: '/:lang(es|en)/service-areas/naturalizacion', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/service-areas/naturalization', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/service-areas/peticion-de-residencia-por-parte-de-un-familiar', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/service-areas/peticion-de-residencia-por-parte-del-empleador', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/service-areas/accidentes-de-vehiculos-de-18-ruedas-trailers', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/service-areas/explosion-de-plantas-industriales', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/service-areas/accidentes-automovilisticos', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/service-areas/negligencia-medica', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/service-areas/accidentes-de-aviones-y-helicopteros', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/service-areas/family', destination: '/:lang/servicios/familia', permanent: true },
+  { source: '/:lang(es|en)/service-areas/child-support', destination: '/:lang/servicios/familia', permanent: true },
+  { source: '/:lang(es|en)/service-areas/child-custody', destination: '/:lang/servicios/familia', permanent: true },
+  { source: '/:lang(es|en)/service-areas/theft', destination: '/:lang/servicios/ley-criminal', permanent: true },
+  { source: '/:lang(es|en)/service-areas/assault', destination: '/:lang/servicios/ley-criminal', permanent: true },
+  { source: '/:lang(es|en)/service-areas/planificacion-patrimonial', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/service-areas/:slug*', destination: '/:lang/servicios', permanent: true },
 
   // /:lang/legal-areas/* (English style)
-  { source: '/:lang/legal-areas', destination: '/:lang/servicios', permanent: true },
-  { source: '/:lang/legal-areas/immigration', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/legal-areas/family', destination: '/:lang/servicios/familia', permanent: true },
-  { source: '/:lang/legal-areas/criminal-law', destination: '/:lang/servicios/ley-criminal', permanent: true },
-  { source: '/:lang/legal-areas/insurance', destination: '/:lang/servicios/seguros', permanent: true },
-  { source: '/:lang/legal-areas/accidents', destination: '/:lang/servicios/accidentes', permanent: true },
-  { source: '/:lang/legal-areas/windstorm-claims', destination: '/:lang/servicios/seguros', permanent: true },
-  { source: '/:lang/legal-areas/:slug*', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/legal-areas', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/legal-areas/immigration', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/legal-areas/family', destination: '/:lang/servicios/familia', permanent: true },
+  { source: '/:lang(es|en)/legal-areas/criminal-law', destination: '/:lang/servicios/ley-criminal', permanent: true },
+  { source: '/:lang(es|en)/legal-areas/insurance', destination: '/:lang/servicios/seguros', permanent: true },
+  { source: '/:lang(es|en)/legal-areas/accidents', destination: '/:lang/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/legal-areas/windstorm-claims', destination: '/:lang/servicios/seguros', permanent: true },
+  { source: '/:lang(es|en)/legal-areas/:slug*', destination: '/:lang/servicios', permanent: true },
 
   // ============================================================
   // OLD SERVICE SLUGS (windstorm/tornado/hailstorm/etc.)
@@ -288,11 +293,11 @@ export const seoRedirects: Redirect[] = [
   { source: '/servicios/windstorm-claims', destination: '/es/servicios/seguros', permanent: true },
   { source: '/servicios/planificacion-patrimonial', destination: '/es/servicios', permanent: true },
   { source: '/servicios/planificacion', destination: '/es/servicios', permanent: true },
-  { source: '/:lang/servicios/hailstorm-claims', destination: '/:lang/servicios/seguros', permanent: true },
-  { source: '/:lang/servicios/tornado-claims', destination: '/:lang/servicios/seguros', permanent: true },
-  { source: '/:lang/servicios/windstorm-claims', destination: '/:lang/servicios/seguros', permanent: true },
-  { source: '/:lang/servicios/planificacion-patrimonial', destination: '/:lang/servicios', permanent: true },
-  { source: '/:lang/servicios/planificacion', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/servicios/hailstorm-claims', destination: '/:lang/servicios/seguros', permanent: true },
+  { source: '/:lang(es|en)/servicios/tornado-claims', destination: '/:lang/servicios/seguros', permanent: true },
+  { source: '/:lang(es|en)/servicios/windstorm-claims', destination: '/:lang/servicios/seguros', permanent: true },
+  { source: '/:lang(es|en)/servicios/planificacion-patrimonial', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/servicios/planificacion', destination: '/:lang/servicios', permanent: true },
 
   // ============================================================
   // STANDALONE VISA PAGES → matching service pages
@@ -301,10 +306,10 @@ export const seoRedirects: Redirect[] = [
   { source: '/visa-t', destination: '/es/servicios/visa-u', permanent: true },
   { source: '/visa-sijs', destination: '/es/servicios/inmigracion', permanent: true },
   { source: '/visa-juvenil-sij', destination: '/es/servicios/inmigracion', permanent: true },
-  { source: '/:lang/visa-vawa', destination: '/:lang/servicios/vawa', permanent: true },
-  { source: '/:lang/visa-t', destination: '/:lang/servicios/visa-u', permanent: true },
-  { source: '/:lang/visa-sijs', destination: '/:lang/servicios/inmigracion', permanent: true },
-  { source: '/:lang/visa-juvenil-sij', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/visa-vawa', destination: '/:lang/servicios/vawa', permanent: true },
+  { source: '/:lang(es|en)/visa-t', destination: '/:lang/servicios/visa-u', permanent: true },
+  { source: '/:lang(es|en)/visa-sijs', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/visa-juvenil-sij', destination: '/:lang/servicios/inmigracion', permanent: true },
 
   // ============================================================
   // OFFICE LEGACY SLUGS
@@ -320,62 +325,62 @@ export const seoRedirects: Redirect[] = [
   { source: '/oficinas/denver', destination: '/es/oficinas/arvada', permanent: true },
   { source: '/oficinas/memphis-office', destination: '/es/oficinas/memphis', permanent: true },
   // /:lang variants
-  { source: '/:lang/oficinas/houston', destination: '/:lang/oficinas/houston-principal', permanent: true },
-  { source: '/:lang/oficinas/houston-principal-office', destination: '/:lang/oficinas/houston-principal', permanent: true },
-  { source: '/:lang/oficinas/houston-navigation', destination: '/:lang/oficinas/houston-principal', permanent: true },
-  { source: '/:lang/oficinas/airways', destination: '/:lang/oficinas/houston-principal', permanent: true },
-  { source: '/:lang/oficinas/los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
-  { source: '/:lang/oficinas/denver', destination: '/:lang/oficinas/arvada', permanent: true },
-  { source: '/:lang/oficinas/memphis-office', destination: '/:lang/oficinas/memphis', permanent: true },
-  { source: '/:lang/oficinas/abogados-inmigracion-los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
+  { source: '/:lang(es|en)/oficinas/houston', destination: '/:lang/oficinas/houston-principal', permanent: true },
+  { source: '/:lang(es|en)/oficinas/houston-principal-office', destination: '/:lang/oficinas/houston-principal', permanent: true },
+  { source: '/:lang(es|en)/oficinas/houston-navigation', destination: '/:lang/oficinas/houston-principal', permanent: true },
+  { source: '/:lang(es|en)/oficinas/airways', destination: '/:lang/oficinas/houston-principal', permanent: true },
+  { source: '/:lang(es|en)/oficinas/los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
+  { source: '/:lang(es|en)/oficinas/denver', destination: '/:lang/oficinas/arvada', permanent: true },
+  { source: '/:lang(es|en)/oficinas/memphis-office', destination: '/:lang/oficinas/memphis', permanent: true },
+  { source: '/:lang(es|en)/oficinas/abogados-inmigracion-los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
   // /:lang/offices/* (English alias) — see also line 113 above
-  { source: '/:lang/offices/houston-principal-office', destination: '/:lang/oficinas/houston-principal', permanent: true },
-  { source: '/:lang/offices/houston', destination: '/:lang/oficinas/houston-principal', permanent: true },
-  { source: '/:lang/offices/dallas', destination: '/:lang/oficinas/dallas', permanent: true },
-  { source: '/:lang/offices/chicago', destination: '/:lang/oficinas/chicago', permanent: true },
-  { source: '/:lang/offices/harlingen', destination: '/:lang/oficinas/harlingen', permanent: true },
-  { source: '/:lang/offices/memphis', destination: '/:lang/oficinas/memphis', permanent: true },
-  { source: '/:lang/offices/memphis-office', destination: '/:lang/oficinas/memphis', permanent: true },
-  { source: '/:lang/offices/los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
-  { source: '/:lang/offices/el-paso', destination: '/:lang/oficinas/el-paso', permanent: true },
-  { source: '/:lang/offices/arvada', destination: '/:lang/oficinas/arvada', permanent: true },
-  { source: '/:lang/offices/denver', destination: '/:lang/oficinas/arvada', permanent: true },
-  { source: '/:lang/offices/:slug*', destination: '/:lang/oficinas', permanent: true },
+  { source: '/:lang(es|en)/offices/houston-principal-office', destination: '/:lang/oficinas/houston-principal', permanent: true },
+  { source: '/:lang(es|en)/offices/houston', destination: '/:lang/oficinas/houston-principal', permanent: true },
+  { source: '/:lang(es|en)/offices/dallas', destination: '/:lang/oficinas/dallas', permanent: true },
+  { source: '/:lang(es|en)/offices/chicago', destination: '/:lang/oficinas/chicago', permanent: true },
+  { source: '/:lang(es|en)/offices/harlingen', destination: '/:lang/oficinas/harlingen', permanent: true },
+  { source: '/:lang(es|en)/offices/memphis', destination: '/:lang/oficinas/memphis', permanent: true },
+  { source: '/:lang(es|en)/offices/memphis-office', destination: '/:lang/oficinas/memphis', permanent: true },
+  { source: '/:lang(es|en)/offices/los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
+  { source: '/:lang(es|en)/offices/el-paso', destination: '/:lang/oficinas/el-paso', permanent: true },
+  { source: '/:lang(es|en)/offices/arvada', destination: '/:lang/oficinas/arvada', permanent: true },
+  { source: '/:lang(es|en)/offices/denver', destination: '/:lang/oficinas/arvada', permanent: true },
+  { source: '/:lang(es|en)/offices/:slug*', destination: '/:lang/oficinas', permanent: true },
   // English standalone city
-  { source: '/:lang/los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
+  { source: '/:lang(es|en)/los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
 
   // ============================================================
   // ATTORNEY LEGACY: /:lang/attorneys/:slug → /:lang/abogados/:slug
   // ============================================================
-  { source: '/:lang/attorneys/:slug', destination: '/:lang/abogados/:slug', permanent: true },
+  { source: '/:lang(es|en)/attorneys/:slug', destination: '/:lang/abogados/:slug', permanent: true },
   ...defunctAttorneyRedirects,
 
   // ============================================================
   // INDIVIDUAL TESTIMONIAL SLUGS (no individual pages exist anymore)
   // ============================================================
   { source: '/testimonios/:slug', destination: '/es/testimonios', permanent: true },
-  { source: '/:lang/testimonios/:slug', destination: '/:lang/testimonios', permanent: true },
+  { source: '/:lang(es|en)/testimonios/:slug', destination: '/:lang/testimonios', permanent: true },
   // /:lang/testimonials/:slug — see line 118 above (deduplicated)
 
   // ============================================================
   // PRIVACY POLICY VARIANTS
   // ============================================================
   { source: '/politica-de-privacidad', destination: '/es/privacidad', permanent: true },
-  { source: '/:lang/politica-de-privacidad', destination: '/:lang/privacidad', permanent: true },
+  { source: '/:lang(es|en)/politica-de-privacidad', destination: '/:lang/privacidad', permanent: true },
 
   // ============================================================
   // RECURSOS / TERMS VARIANTS
   // ============================================================
   { source: '/recursos', destination: '/es/informacion/recursos', permanent: true },
-  { source: '/:lang/recursos', destination: '/:lang/informacion/recursos', permanent: true },
+  { source: '/:lang(es|en)/recursos', destination: '/:lang/informacion/recursos', permanent: true },
   { source: '/terminos-y-condiciones', destination: '/es/terminos', permanent: true },
-  { source: '/:lang/terminos-y-condiciones', destination: '/:lang/terminos', permanent: true },
+  { source: '/:lang(es|en)/terminos-y-condiciones', destination: '/:lang/terminos', permanent: true },
 
   // ============================================================
   // AREAS LEGALES
   // ============================================================
   { source: '/areas-legales', destination: '/es/servicios', permanent: true },
-  { source: '/:lang/areas-legales', destination: '/:lang/servicios', permanent: true },
+  { source: '/:lang(es|en)/areas-legales', destination: '/:lang/servicios', permanent: true },
 
   // ============================================================
   // LANDING PAGES → home or relevant service
@@ -388,28 +393,28 @@ export const seoRedirects: Redirect[] = [
   { source: '/:path(landing-page-fb-.+)', destination: '/es', permanent: true },
   { source: '/landing-visau', destination: '/es/servicios/visa-u', permanent: true },
   { source: '/landing-visa-u', destination: '/es/servicios/visa-u', permanent: true },
-  { source: '/:lang/:path(landing-google-.+)', destination: '/:lang', permanent: true },
-  { source: '/:lang/:path(landing-facebook-.+)', destination: '/:lang', permanent: true },
-  { source: '/:lang/:path(landing-fb-.+)', destination: '/:lang', permanent: true },
-  { source: '/:lang/:path(landing-page-fb-.+)', destination: '/:lang', permanent: true },
-  { source: '/:lang/landing-visau', destination: '/:lang/servicios/visa-u', permanent: true },
-  { source: '/:lang/landing-visa-u', destination: '/:lang/servicios/visa-u', permanent: true },
-  { source: '/:lang/landing-abogado-de-inmigracion', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/:path(landing-google-.+)', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/:path(landing-facebook-.+)', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/:path(landing-fb-.+)', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/:path(landing-page-fb-.+)', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/landing-visau', destination: '/:lang/servicios/visa-u', permanent: true },
+  { source: '/:lang(es|en)/landing-visa-u', destination: '/:lang/servicios/visa-u', permanent: true },
+  { source: '/:lang(es|en)/landing-abogado-de-inmigracion', destination: '/:lang/servicios/inmigracion', permanent: true },
 
   // ============================================================
   // LEAD-QUALIFICATION pages → home
   // ============================================================
   { source: '/:path(abogado-de-inmigracion-calificacion-leads-.+)', destination: '/es', permanent: true },
   { source: '/manuel-solis-calificacion-leads', destination: '/es', permanent: true },
-  { source: '/:lang/:path(abogado-de-inmigracion-calificacion-leads-.+)', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/:path(abogado-de-inmigracion-calificacion-leads-.+)', destination: '/:lang', permanent: true },
 
   // ============================================================
   // THANK-YOU pages
   // ============================================================
   { source: '/gracias', destination: '/es', permanent: true },
   { source: '/:path(gracias-por-completar-.+)', destination: '/es', permanent: true },
-  { source: '/:lang/gracias', destination: '/:lang', permanent: true },
-  { source: '/:lang/:path(gracias-por-completar-.+)', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/gracias', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/:path(gracias-por-completar-.+)', destination: '/:lang', permanent: true },
 
   // ============================================================
   // SOCIAL ALIASES
@@ -432,6 +437,6 @@ export const seoRedirects: Redirect[] = [
   // MISC LEGACY
   // ============================================================
   { source: '/new-home', destination: '/es', permanent: true },
-  { source: '/:lang/new-home', destination: '/:lang', permanent: true },
-  { source: '/:lang/manuel-solis-live-2', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/new-home', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/manuel-solis-live-2', destination: '/:lang', permanent: true },
 ];

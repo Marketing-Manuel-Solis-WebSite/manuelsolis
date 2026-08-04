@@ -119,6 +119,9 @@ export function proxy(request: NextRequest) {
     newUrl.search = request.nextUrl.search;
     const response = NextResponse.redirect(newUrl, 301);
     response.headers.set('Content-Language', 'es');
+    // El destino depende del User-Agent (rama de crawlers): sin Vary un
+    // intermediario podría servir este 301 a un navegador humano.
+    response.headers.set('Vary', 'User-Agent');
     applySecurityHeaders(response.headers);
     return response;
   }
@@ -132,6 +135,12 @@ export function proxy(request: NextRequest) {
 
   const response = NextResponse.redirect(newUrl);
   response.headers.set('Content-Language', locale);
+  // El idioma de destino se decide por cookie NEXT_LOCALE > Accept-Language >
+  // rama de crawler (User-Agent), y la respuesta lleva Set-Cookie: es una
+  // respuesta por-usuario. Sin Vary/no-store un intermediario podría servirle
+  // a un visitante el /es|/en que se calculó para otro.
+  response.headers.set('Vary', 'Accept-Language, Cookie, User-Agent');
+  response.headers.set('Cache-Control', 'private, no-store');
   // OWASP/Zoom secure headers on the bare-domain home redirect (/ -> /es).
   // next.config headers() do not decorate middleware redirects, so a verifier
   // hitting the root would otherwise see a header-less 307.

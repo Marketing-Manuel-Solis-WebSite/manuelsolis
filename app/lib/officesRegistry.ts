@@ -3,6 +3,11 @@ import 'server-only';
 /**
  * Google Place IDs por slug de oficina.
  *
+ * Este módulo es `server-only`, así que las islas cliente no pueden importarlo:
+ * el NAP compartido (dirección, teléfono, horario estructurado, zona horaria y
+ * enlace de mapa) vive en app/components/officesPhoneMap.ts → OFFICES_NAP, con
+ * los mismos slugs que este registro.
+ *
  * Source of truth para el sync con Google Places API (Fase 4 parcial).
  * Si una oficina no tiene placeId válido, simplemente omitir la entry —
  * el schema de esa oficina renderizará sin aggregateRating/review

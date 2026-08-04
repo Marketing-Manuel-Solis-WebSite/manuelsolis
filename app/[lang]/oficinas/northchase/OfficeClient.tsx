@@ -15,7 +15,9 @@ const officeData: OfficeData = {
   address: '16510 Northchase Dr, Houston, TX 77060, United States',
   phone: '(346) 522-4848',
   email: 'houston@manuelsolis.com',
-  hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+  // Dirección virtual (Regus/HQ): atención solo con cita previa; el "24 horas"
+  // publicado es el call-center central, no esta sede.
+  hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
   mapLink: 'https://share.google/wSptYM5hcuGigC3aS',
   image: '/offices/ofNorth.png',
   

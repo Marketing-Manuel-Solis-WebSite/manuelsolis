@@ -3,6 +3,16 @@ import { newsletters } from '../../lib/newsletterData';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
+// RSS 2.0 admite varios <category> por item, uno por tema. Interpolar texto
+// suelto en el XML rompe el feed en cuanto un tema lleve & o <.
+const escapeXml = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+
 export async function GET() {
   const items = newsletters
     .map(
@@ -13,7 +23,7 @@ export async function GET() {
       <description><![CDATA[${nl.description.es}]]></description>
       <pubDate>${new Date(nl.date).toUTCString()}</pubDate>
       <guid isPermaLink="true">${SITE_URL}/es/newsletter/${nl.slug}</guid>
-      <category>${nl.topics.es.join(', ')}</category>
+      ${nl.topics.es.map((topic) => `<category>${escapeXml(topic)}</category>`).join('\n      ')}
     </item>`,
     )
     .join('');
