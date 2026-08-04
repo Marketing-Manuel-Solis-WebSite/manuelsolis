@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { X, Send, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useDialog } from './useDialog';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -18,6 +19,7 @@ export default function AIChatButton() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useDialog(isOpen, () => setIsOpen(false));
 
   const t = {
     es: {
@@ -25,6 +27,9 @@ export default function AIChatButton() {
       subtitle: 'IA Legal Inteligente',
       placeholder: 'Escribe tu consulta aquí...',
       welcome: 'Bienvenido. Soy la IA oficial del despacho Manuel Solís. ¿En qué situación legal puedo orientarte hoy?',
+      close: 'Cerrar asistente legal',
+      send: 'Enviar mensaje',
+      thinking: 'El asistente está escribiendo una respuesta',
       examples: [
         'Información sobre Inmigración',
         'Tuve un accidente de auto',
@@ -36,6 +41,9 @@ export default function AIChatButton() {
       subtitle: 'Smart Legal AI',
       placeholder: 'Type your inquiry here...',
       welcome: 'Welcome. I am the official AI for the Manuel Solís Law Firm. How can I guide you with your legal situation today?',
+      close: 'Close legal assistant',
+      send: 'Send message',
+      thinking: 'The assistant is typing a reply',
       examples: [
         'Information about Immigration',
         'I had a car accident',
@@ -110,8 +118,9 @@ export default function AIChatButton() {
       <m.button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-[5.5rem] sm:bottom-6 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center group outline-none"
-        aria-label={isOpen ? (language === 'es' ? 'Cerrar asistente legal' : 'Close legal assistant') : (language === 'es' ? 'Abrir asistente legal IA' : 'Open AI legal assistant')}
+        aria-label={isOpen ? texts.close : (language === 'es' ? 'Abrir asistente legal IA' : 'Open AI legal assistant')}
         aria-expanded={isOpen}
+        aria-haspopup="dialog"
         style={{
           background: 'radial-gradient(circle at 35% 35%, #F9E79F 0%, #D4AF37 40%, #997B2F 100%)',
           boxShadow: `
@@ -160,6 +169,11 @@ export default function AIChatButton() {
       <AnimatePresence>
         {isOpen && (
           <m.div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={texts.title}
+            tabIndex={-1}
             initial={{ opacity: 0, y: 20, scale: 0.95 }} // Eliminado filter: blur en animación inicial
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -177,7 +191,7 @@ export default function AIChatButton() {
           >
             
             {/* Header */}
-            <div className="relative px-8 py-6 border-b border-white/5 bg-gradient-to-r from-white/5 to-transparent">
+            <div className="relative pl-8 pr-16 py-6 border-b border-white/5 bg-gradient-to-r from-white/5 to-transparent">
               <div>
                 <h3 className="text-white font-serif font-bold text-xl tracking-wide text-shadow-sm mb-1">
                   {texts.title}
@@ -186,10 +200,23 @@ export default function AIChatButton() {
                   {texts.subtitle}
                 </p>
               </div>
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                aria-label={texts.close}
+                className="absolute top-5 right-5 p-2 rounded-full text-white/70 hover:text-white hover:bg-white/10 border border-white/10 transition-colors"
+              >
+                <X size={18} strokeWidth={2.5} />
+              </button>
             </div>
 
             {/* Chat Body */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-custom">
+            <div
+              role="log"
+              aria-live="polite"
+              aria-atomic="false"
+              className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-custom"
+            >
               {messages.map((msg, idx) => (
                 <m.div
                   key={idx}
@@ -234,6 +261,7 @@ export default function AIChatButton() {
               {loading && (
                 <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
                   <div className="bg-white/5 border border-white/5 p-4 rounded-2xl rounded-bl-sm flex gap-1.5 items-center">
+                    <span className="sr-only">{texts.thinking}</span>
                     <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                     <div className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -250,8 +278,14 @@ export default function AIChatButton() {
                   ref={inputRef}
                   type="text"
                   value={input}
+                  aria-label={texts.placeholder}
+                  // El servidor rechaza mensajes de más de 1000 caracteres
+                  // (app/api/chat/route.ts): cortar aquí evita el 400.
+                  maxLength={1000}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') sendMessage();
+                  }}
                   placeholder={texts.placeholder}
                   className="w-full bg-white/5 border border-white/10 text-white placeholder-white/30 rounded-2xl py-4 pl-5 pr-14 focus:outline-none focus:border-[#D4AF37]/50 focus:bg-white/10 transition-all text-sm shadow-inner"
                   disabled={loading}
@@ -259,6 +293,7 @@ export default function AIChatButton() {
                 <button
                   onClick={sendMessage}
                   disabled={!input.trim() || loading}
+                  aria-label={texts.send}
                   className="absolute right-2 p-2.5 bg-gradient-to-br from-[#D4AF37] to-[#997B2F] rounded-xl text-[#002342] shadow-lg hover:shadow-[#D4AF37]/20 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-all active:scale-95"
                 >
                   <Send size={18} strokeWidth={2.5} />

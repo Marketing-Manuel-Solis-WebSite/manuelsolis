@@ -9,6 +9,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { Reveal, Stagger, StaggerItem } from '../../components/motion';
+import { useDialog } from '../../components/useDialog';
 
 /**
  * Attorneys directory grid + detail modal — the only interactive part of the
@@ -58,6 +59,7 @@ export default function AttorneysExplorer({
   lang: 'es' | 'en';
 }) {
   const [selectedAttorney, setSelectedAttorney] = useState<ResolvedAttorney | null>(null);
+  const dialogRef = useDialog(selectedAttorney !== null, () => setSelectedAttorney(null));
 
   return (
     <>
@@ -136,6 +138,11 @@ export default function AttorneysExplorer({
             onClick={() => setSelectedAttorney(null)}
           >
             <m.div
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${texts.modalBadge}: ${selectedAttorney.name}`}
+              tabIndex={-1}
               initial={{ scale: 0.9, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 50 }}
