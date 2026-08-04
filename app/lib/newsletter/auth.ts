@@ -20,10 +20,33 @@ function digestEquals(a: string, b: string): boolean {
   );
 }
 
+/**
+ * Los tres secretos del panel estuvieron fusionados en un único valor
+ * (NEWSLETTER_BLAST_SECRET), así que rotarlo cerraba las sesiones, cambiaba la
+ * contraseña y rompía la automatización a la vez. Ahora cada uno tiene su
+ * variable, con el valor antiguo como respaldo para que el panel siga
+ * funcionando en los entornos donde las nuevas aún no existen.
+ */
+function adminPassword(): string | undefined {
+  return process.env.ADMIN_PASSWORD || process.env.NEWSLETTER_BLAST_SECRET;
+}
+
+function sessionSecret(): string | undefined {
+  return process.env.ADMIN_SESSION_SECRET || process.env.NEWSLETTER_BLAST_SECRET;
+}
+
+/** Bearer de automatización del blast: nunca acepta la contraseña del panel. */
 export function verifyBlastSecret(providedToken: string | null): boolean {
   const expected = process.env.NEWSLETTER_BLAST_SECRET;
   if (!expected || !providedToken) return false;
   return digestEquals(expected, providedToken);
+}
+
+/** Contraseña del formulario de login del panel. */
+export function verifyAdminPassword(providedPassword: string | null): boolean {
+  const expected = adminPassword();
+  if (!expected || !providedPassword) return false;
+  return digestEquals(expected, providedPassword);
 }
 
 export function extractBearer(authHeader: string | null): string | null {
@@ -56,7 +79,7 @@ function signSession(expiresAt: number, secret: string): string {
 }
 
 export function buildSessionToken(): string | null {
-  const secret = process.env.NEWSLETTER_BLAST_SECRET;
+  const secret = sessionSecret();
   if (!secret) return null;
   const expiresAt = Date.now() + SESSION_TTL_MS;
   return `${expiresAt}.${signSession(expiresAt, secret)}`;
@@ -64,7 +87,7 @@ export function buildSessionToken(): string | null {
 
 export function verifySessionToken(token: string | null | undefined): boolean {
   if (!token) return false;
-  const secret = process.env.NEWSLETTER_BLAST_SECRET;
+  const secret = sessionSecret();
   if (!secret) return false;
 
   const separator = token.indexOf('.');

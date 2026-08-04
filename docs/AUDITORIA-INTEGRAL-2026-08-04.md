@@ -1364,7 +1364,18 @@ Detalles, código muerto, limpieza y mejoras menores. No requieren acción urgen
 
 - Archivo: `public`
 - Alcance: Peso de deploy/repo; no afecta a usuarios salvo que alguien enlace los archivos directamente
-- Corrección: Eliminar los 4 archivos (verificando antes con `git grep` que ninguna URL externa/newsletter los referencia). Aprovechar para reexportar los orígenes >1 MB que sí se usan (testimonials/YV0*.png ~1.7 MB c/u, MSTeam.png 1.7 MB) a ~1600px WebP: aunque next/image los optimiza al servir, reduce costo de transformación y del repo.
+- Corrección: Eliminar los archivos (verificando antes con `git grep` que ninguna URL externa/newsletter los referencia). Aprovechar para reexportar los orígenes >1 MB que sí se usan (testimonials/YV0*.png ~1.7 MB c/u, MSTeam.png 1.7 MB) a ~1600px WebP: aunque next/image los optimiza al servir, reduce costo de transformación y del repo.
+
+**Inventario exacto (4-ago-2026).** De los 139 assets de `public/`, **21 no tienen ninguna referencia en el código: 10,2 MB**. Se dejaron SIN BORRAR a propósito: un asset público puede estar enlazado desde un correo ya enviado, una ficha de Google o una publicación en redes, y eso no se puede comprobar desde el repo. La decisión de borrar es del despacho, archivo por archivo.
+
+| Grupo | Archivos | Peso | Comentario |
+|---|---|---|---|
+| Variantes `_CR2`/`_CR3` de blogs antiguos (blog_02…blog_09) | 13 | 8,7 MB | El grueso del problema. Son recortes de una maquetación anterior del blog; los `_CR1` sí se usan. |
+| `lupita.png` | 1 | 1,4 MB | Retrato sin ningún consumidor. |
+| `associations/*.png` (American Bar, Illinois, Dallas, Chicago, New Mexico, Puerto Rico) | 6 | 19 KB | **No es basura: es material de autoridad sin usar.** Son logos de colegios y asociaciones profesionales. En un sitio legal YMYL, la pertenencia a colegios es una señal de E-E-A-T; convendría publicarlos en `/nosotros` o en las fichas de abogados en vez de borrarlos. |
+| `favicon-16x16.png` | 1 | 422 bytes | Favicon válido pero huérfano: no lo declara el HTML ni `site.webmanifest`, así que ningún navegador lo pide. Inofensivo; borrarlo o declararlo. |
+
+Nota metodológica: `android-chrome-192x192.png` y `android-chrome-512x512.png` aparecen como huérfanos en una búsqueda ingenua pero SÍ se usan — los referencia `public/site.webmanifest`, no el código. Cualquier limpieza automática debe incluir el manifest en el corpus de búsqueda.
 
 **[PERF-7]** Cache-Control immutable de 1 año sobre archivos de public/ con nombres estables — reemplazar un asset con el mismo nombre nunca llega a visitantes recurrentes
 

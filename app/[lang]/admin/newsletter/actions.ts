@@ -7,7 +7,7 @@ import {
   ADMIN_COOKIE_NAME,
   buildSessionToken,
   SESSION_TTL_MS,
-  verifyBlastSecret,
+  verifyAdminPassword,
 } from '../../../lib/newsletter/auth';
 
 const COOKIE_MAX_AGE_SECONDS = Math.floor(SESSION_TTL_MS / 1000);
@@ -61,7 +61,7 @@ export async function loginAction(formData: FormData) {
     redirect(`${next}?error=ratelimited`);
   }
 
-  if (!verifyBlastSecret(password)) {
+  if (!verifyAdminPassword(password)) {
     logLoginEvent('admin_login_failed', ip, next);
     redirect(`${next}?error=invalid`);
   }
