@@ -16,7 +16,7 @@ const officeData: OfficeData = {
   phone: '(346) 522-4848',
   email: 'houston@manuelsolis.com',
   hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-  mapLink: 'https://share.google/your_map_link_here', // Placeholder if not provided, assuming standard format or need to find real link. Using generic or previous pattern. I will use the one from existing file if available, or a placeholder if I don't have it. I'll use a generic Google Maps search for the address to be safe.
+  mapLink: 'https://share.google/wSptYM5hcuGigC3aS',
   image: '/offices/ofNorth.png',
   
   // --- TAMBIÉN ATENDEMOS ACCIDENTES (oficina virtual) ---

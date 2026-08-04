@@ -38,12 +38,20 @@ const MARQUEE_CSS = `
   @keyframes hero-portrait-settle { from { transform: scale(1.03); } to { transform: scale(1); } }
   .hero-portrait-settle { animation: hero-portrait-settle 1200ms cubic-bezier(0.16,1,0.3,1) both; }
   @media (prefers-reduced-motion: reduce) { .hero-portrait-settle { animation: none; } }
+  /* Same rule for the H1 and the primary CTA — transform-only, so the copy that
+     converts is already painted in the server HTML instead of fading in after
+     hydration. Never add opacity here. */
+  @keyframes hero-copy-settle { from { transform: translateY(10px); } to { transform: translateY(0); } }
+  .hero-copy-settle { animation: hero-copy-settle 700ms cubic-bezier(0.16,1,0.3,1) both; }
+  .hero-copy-settle-late { animation-delay: 200ms; }
+  @media (prefers-reduced-motion: reduce) { .hero-copy-settle { animation: none; } }
 `;
 
 /**
- * Home hero — server-first. LCP is sacred: the portrait (priority) and the
- * "50,000" showpiece render immediately as server HTML and are NEVER wrapped
- * in opacity-gated reveals nor wait for the (lazy) motion engine. Decorative
+ * Home hero — server-first. LCP is sacred: the portrait (priority), the
+ * "50,000" showpiece, the H1 and the primary CTA render immediately as server
+ * HTML and are NEVER wrapped in opacity-gated reveals nor wait for the (lazy)
+ * motion engine — their entrance is a transform-only CSS settle. Decorative
  * orbs use Parallax; supporting copy cascades in via Stagger (adornment). The
  * detained-relative popup is the only client island. Same content/IA as before.
  */
@@ -152,32 +160,30 @@ export default function Hero({ lang }: { lang: Language }) {
             {/* Divider */}
             <Reveal variant="fade" delay={0.2} className="w-full max-w-md mx-auto lg:mx-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-            {/* Practice Areas */}
-            <Stagger gap={0.1} className="space-y-6 sm:space-y-8">
-              <StaggerItem as="div">
-                <h1 className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 md:gap-6">
-                  {/* Prefijo solo para lectores/crawlers: el H1 indexable es
-                      "Abogados de Inmigración & Accidentes" sin tocar el diseño. */}
-                  <span className="sr-only">{isEs ? 'Abogados de' : 'Attorneys for'}</span>
-                  <span className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
-                    {isEs ? 'Inmigración' : 'Immigration'}
-                  </span>
-                  <span className="text-3xl sm:text-4xl md:text-5xl font-thin text-gold-500"> & </span>
-                  <span className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
-                    {isEs ? 'Accidentes' : 'Accidents'}
-                  </span>
-                </h1>
-              </StaggerItem>
+            {/* Practice Areas — H1 and CTA static (see the LCP note above) */}
+            <div className="space-y-6 sm:space-y-8">
+              <h1 className="hero-copy-settle flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 md:gap-6">
+                {/* Prefijo solo para lectores/crawlers: el H1 indexable es
+                    "Abogados de Inmigración & Accidentes" sin tocar el diseño. */}
+                <span className="sr-only">{isEs ? 'Abogados de' : 'Attorneys for'}</span>
+                <span className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
+                  {isEs ? 'Inmigración' : 'Immigration'}
+                </span>
+                <span className="text-3xl sm:text-4xl md:text-5xl font-thin text-gold-500"> & </span>
+                <span className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
+                  {isEs ? 'Accidentes' : 'Accidents'}
+                </span>
+              </h1>
 
-              <StaggerItem variant="fade" className="relative px-2 sm:px-0">
+              <Reveal variant="fade" delay={0.2} className="relative px-2 sm:px-0">
                 <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white/70 font-light italic text-center lg:text-left tracking-wide relative z-10">
                   {isEs ? 'Inspirados por la gracia de Dios' : 'Inspired by the grace of God'}
                 </p>
-              </StaggerItem>
+              </Reveal>
 
               {/* Primary CTA — single magnetic gold button (secondaries live in the
                   floating CTAs). Real <a> to the locale-aware /consulta route. */}
-              <StaggerItem variant="up" className="flex justify-center lg:justify-start pt-2">
+              <div className="hero-copy-settle hero-copy-settle-late flex justify-center lg:justify-start pt-2">
                 <MagneticButton
                   as="a"
                   href={`/${lang}/consulta`}
@@ -188,8 +194,8 @@ export default function Hero({ lang }: { lang: Language }) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </MagneticButton>
-              </StaggerItem>
-            </Stagger>
+              </div>
+            </div>
           </div>
         </div>
       </div>

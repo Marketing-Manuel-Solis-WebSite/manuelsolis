@@ -104,7 +104,7 @@ export default function AccidenteOfficePageView({
               </p>
 
               <div className="flex flex-wrap gap-4 pt-2">
-                <MagneticButton as="a" href={`tel:${office.phone.replace(/[^\d+]/g, '')}`} className="items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-[#B2904D] hover:bg-white text-[#001540] font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(178,144,77,0.3)] group text-sm md:text-base">
+                <MagneticButton as="a" href={`tel:+1${office.phone.replace(/\D/g, '')}`} className="items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-[#B2904D] hover:bg-white text-[#001540] font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(178,144,77,0.3)] group text-sm md:text-base">
                   <PhoneCall size={18} />
                   {t('callNow')}
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

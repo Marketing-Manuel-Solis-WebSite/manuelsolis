@@ -16,7 +16,7 @@ const officeData: OfficeData = {
   phone: '(901) 557-8357',
   email: 'memphis@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
-  mapLink: 'https://share.google/Fc3ISgQAihcayfmws',
+  mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116', // TODO(GBP): reemplazar por el share-link real de Memphis (el anterior era el de Main St)
   image: '/offices/ofAirways.png',
   
   // --- GERENCIA (ELIMINADO) ---

@@ -16,7 +16,7 @@ const ELIG_ICONS: Record<EligIconKey, ElementType> = { alertTriangle: AlertTrian
 /**
  * Visa U page — server-first (Fase 2.3 Lote B, enfoque b). Image hero, eligibility
  * cards, interactive info tabs island, STATIC server-rendered FAQ, offices grid,
- * blog. LCP sacred: Manuel_Solis.png priority + H1 static. page.tsx
+ * blog. LCP sacred: home-image.jpg priority + H1 static. page.tsx
  * generateMetadata + JSON-LD untouched.
  */
 export default function VisaUClient({ lang }: { lang: Language }) {
@@ -60,7 +60,7 @@ export default function VisaUClient({ lang }: { lang: Language }) {
             <div className="lg:col-span-5 relative h-[450px] md:h-[600px] lg:h-[80vh] flex items-end justify-center order-2 lg:order-1">
               <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent blur-xl z-10 h-1/4 bottom-0 w-full" />
               <div className="relative z-0 w-full h-full flex items-end justify-center">
-                <Image src="/Manuel_Solis.png" alt={isEs ? 'Manuel Solís - Abogado experto en Visa U' : 'Manuel Solis - Expert U Visa Attorney'} fill className="object-contain object-bottom md:scale-105 lg:scale-110 lg:-translate-y-[280px] drop-shadow-[0_0_35px_rgba(178,144,77,0.25)]" priority sizes="(max-width: 768px) 100vw, 50vw" />
+                <Image src="/home-image.jpg" alt={isEs ? 'Abogados de Visa U - Protección para víctimas de delitos' : 'U Visa Attorneys - Protection for crime victims'} fill className="object-contain object-bottom drop-shadow-[0_0_35px_rgba(178,144,77,0.25)]" priority sizes="(max-width: 768px) 100vw, 50vw" />
               </div>
               <Reveal variant="up" delay={0.3} className="absolute bottom-32 lg:bottom-48 -right-4 md:-right-10 z-20 p-6 border border-[#B2904D]/30 rounded-2xl backdrop-blur-xl bg-[#001540]/60 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
                 <div className="flex items-center gap-3 mb-1">
