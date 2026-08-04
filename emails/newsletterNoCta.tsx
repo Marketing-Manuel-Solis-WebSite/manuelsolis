@@ -20,6 +20,8 @@ interface NewsletterNoCtaEmailProps {
   editionDescription: string;
   editionSlug: string;
   sections: Array<{ heading: string; body: string }>;
+  /** Signed unsubscribe URL for this recipient. Falls back to the bare page. */
+  unsubscribeUrl?: string;
 }
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -62,9 +64,12 @@ export function NewsletterNoCtaEmail({
   editionDescription,
   editionSlug,
   sections,
+  unsubscribeUrl,
 }: NewsletterNoCtaEmailProps) {
   const t = placeholderCopy[language] || placeholderCopy.es;
   const editionUrl = `${SITE_URL}/${language}/newsletter/${editionSlug}`;
+  const unsubscribeHref =
+    unsubscribeUrl || `${SITE_URL}/${language}/newsletter/unsubscribe`;
 
   return (
     <Html>
@@ -115,10 +120,7 @@ export function NewsletterNoCtaEmail({
 
           <Section style={footerSection}>
             <Text style={footerText}>{t.footerNote}</Text>
-            <Link
-              href={`${SITE_URL}/${language}/newsletter/unsubscribe`}
-              style={unsubscribeLink}
-            >
+            <Link href={unsubscribeHref} style={unsubscribeLink}>
               {t.unsubscribe}
             </Link>
             <Text style={footerText}>

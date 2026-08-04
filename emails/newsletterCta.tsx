@@ -20,6 +20,8 @@ interface NewsletterCtaEmailProps {
   editionDescription: string;
   editionSlug: string;
   sections: Array<{ heading: string; body: string }>;
+  /** Signed unsubscribe URL for this recipient. Falls back to the bare page. */
+  unsubscribeUrl?: string;
 }
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -64,10 +66,13 @@ export function NewsletterCtaEmail({
   editionDescription,
   editionSlug,
   sections,
+  unsubscribeUrl,
 }: NewsletterCtaEmailProps) {
   const t = placeholderCopy[language] || placeholderCopy.es;
   const editionUrl = `${SITE_URL}/${language}/newsletter/${editionSlug}`;
   const bookUrl = `${SITE_URL}/${language}/consulta`;
+  const unsubscribeHref =
+    unsubscribeUrl || `${SITE_URL}/${language}/newsletter/unsubscribe`;
 
   return (
     <Html>
@@ -124,10 +129,7 @@ export function NewsletterCtaEmail({
 
           <Section style={footerSection}>
             <Text style={footerText}>{t.footerNote}</Text>
-            <Link
-              href={`${SITE_URL}/${language}/newsletter/unsubscribe`}
-              style={unsubscribeLink}
-            >
+            <Link href={unsubscribeHref} style={unsubscribeLink}>
               {t.unsubscribe}
             </Link>
             <Text style={footerText}>

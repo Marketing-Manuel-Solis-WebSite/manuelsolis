@@ -3,6 +3,10 @@ import { checkBotId } from 'botid/server';
 import { Resend } from 'resend';
 import { rateLimit } from '../../../lib/rateLimit';
 import { WelcomeEmail } from '../../../../emails/welcome';
+import {
+  buildUnsubscribeApiUrl,
+  buildUnsubscribePageUrl,
+} from '../../../lib/newsletter/unsubscribeToken';
 
 function getResend() {
   const key = process.env.RESEND_API_KEY;
@@ -72,7 +76,8 @@ export async function POST(request: NextRequest) {
       audienceId,
     });
 
-    // Send welcome email
+    // Send welcome email. Lleva los mismos encabezados de baja que el blast:
+    // Gmail y Yahoo los exigen en todo correo masivo, incluido el de alta.
     await resend.emails.send({
       from: 'Manuel Solis Law <newsletter@manuelsolis.com>',
       to: email,
@@ -80,7 +85,15 @@ export async function POST(request: NextRequest) {
         language === 'es'
           ? '¡Bienvenido al Newsletter de Manuel Solis!'
           : 'Welcome to the Manuel Solis Newsletter!',
-      react: WelcomeEmail({ firstName: firstName || '', language }),
+      react: WelcomeEmail({
+        firstName: firstName || '',
+        language,
+        unsubscribeUrl: buildUnsubscribePageUrl(language, email),
+      }),
+      headers: {
+        'List-Unsubscribe': `<${buildUnsubscribeApiUrl(language, email)}>`,
+        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+      },
     });
 
     return NextResponse.json({ success: true });

@@ -16,6 +16,8 @@ import * as React from 'react';
 interface WelcomeEmailProps {
   firstName: string;
   language: 'es' | 'en';
+  /** Signed unsubscribe URL for this recipient. Falls back to the bare page. */
+  unsubscribeUrl?: string;
 }
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -67,8 +69,14 @@ const content = {
   },
 };
 
-export function WelcomeEmail({ firstName, language = 'es' }: WelcomeEmailProps) {
+export function WelcomeEmail({
+  firstName,
+  language = 'es',
+  unsubscribeUrl,
+}: WelcomeEmailProps) {
   const t = content[language] || content.es;
+  const unsubscribeHref =
+    unsubscribeUrl || `${SITE_URL}/${language}/newsletter/unsubscribe`;
 
   return (
     <Html>
@@ -118,10 +126,7 @@ export function WelcomeEmail({ firstName, language = 'es' }: WelcomeEmailProps) 
           {/* Footer */}
           <Section style={footerSection}>
             <Text style={footerText}>{t.footer}</Text>
-            <Link
-              href={`${SITE_URL}/${language}/newsletter/unsubscribe`}
-              style={unsubscribeLink}
-            >
+            <Link href={unsubscribeHref} style={unsubscribeLink}>
               {t.unsubscribe}
             </Link>
             <Text style={footerText}>

@@ -25,6 +25,10 @@ import {
   getBlogPostBySlug,
   type BlogPostMeta,
 } from '../../../lib/newsletter/blogIndex';
+import {
+  buildUnsubscribeApiUrl,
+  buildUnsubscribePageUrl,
+} from '../../../lib/newsletter/unsubscribeToken';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -251,6 +255,7 @@ export async function POST(request: NextRequest) {
                 content,
                 prettyName(subscriber.first_name || ''),
                 language,
+                buildUnsubscribePageUrl(language, subscriber.email),
               );
 
               const result = await resend.emails.send({
@@ -259,7 +264,8 @@ export async function POST(request: NextRequest) {
                 subject,
                 react,
                 headers: {
-                  'List-Unsubscribe': `<https://www.manuelsolis.com/${language}/newsletter/unsubscribe?email=${encodeURIComponent(
+                  'List-Unsubscribe': `<${buildUnsubscribeApiUrl(
+                    language,
                     subscriber.email,
                   )}>`,
                   'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
@@ -358,11 +364,13 @@ function renderEmail(
   content: ResolvedContent,
   firstName: string,
   language: Language,
+  unsubscribeUrl: string,
 ): React.ReactElement {
   if (content.kind === 'blog') {
     const props = {
       firstName,
       language,
+      unsubscribeUrl,
       blogTitle: content.title,
       blogExcerpt: content.excerpt,
       blogSlug: content.slug,
@@ -380,6 +388,7 @@ function renderEmail(
   const props = {
     firstName,
     language,
+    unsubscribeUrl,
     editionTitle: content.title,
     editionDescription: content.description,
     editionSlug: content.slug,
