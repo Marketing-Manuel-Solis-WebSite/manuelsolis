@@ -16,13 +16,24 @@ import { getPlaceData } from '../lib/googleReviews'
 import { getOfficePlaceId } from '../lib/officesRegistry'
 import { LANDING_TO_OFFICE_FOR_REVIEWS } from '../lib/landingSchema'
 
+/* Entrance for the above-the-fold intro and CTAs: transform-only, so the phone
+   CTA is already painted in the server HTML instead of waiting for hydration
+   plus the lazy motion chunk. Never add opacity to these keyframes. */
+const ABOVE_FOLD_CSS = `
+  @keyframes city-hero-settle { from { transform: translateY(10px); } to { transform: translateY(0); } }
+  .city-hero-settle { animation: city-hero-settle 700ms cubic-bezier(0.16,1,0.3,1) both; }
+  .city-hero-settle-late { animation-delay: 150ms; }
+  @media (prefers-reduced-motion: reduce) { .city-hero-settle { animation: none; } }
+`
+
 /**
  * City × Service landing — server-first (Fase 2.3 landings). ONE shared
  * component renders ~25 SEO landing routes. Bilingual data arrives as props
  * (resolved per `lang` on the server → the inactive locale never reaches the
  * client bundle: enfoque b). No interactive state — purely presentational, so
  * it's a pure Server Component; movement lives in Reveal/Stagger islands and the
- * native `<details>` FAQ. LCP sacred: text H1 renders immediately (no gating).
+ * native `<details>` FAQ. LCP sacred: the H1, the intro and the hero CTAs (phone
+ * included) render immediately — no opacity gating, only a CSS transform settle.
  * The per-route page.tsx (generateMetadata + LegalService/FAQ/Breadcrumb
  * JSON-LD) is untouched — only the `lang` prop is threaded in.
  */
@@ -78,11 +89,11 @@ export default async function CityServiceLanding({
               {config.h1[lang]}
             </h1>
 
-            <Reveal as="p" variant="up" delay={0.1} className="mt-6 max-w-3xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed">
+            <p className="city-hero-settle mt-6 max-w-3xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed">
               {config.intro[lang]}
-            </Reveal>
+            </p>
 
-            <Reveal variant="up" delay={0.2} className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="city-hero-settle city-hero-settle-late mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <MagneticButton as="a" href={`tel:${phoneClean}`} className="items-center justify-center gap-2 rounded-full bg-[#B2904D] text-white font-bold text-lg px-8 py-4 transition-colors hover:bg-[#9A7A3D] shadow-lg shadow-[#B2904D]/20">
                 <Phone className="h-5 w-5" />
                 {isEs ? 'Llamar Ahora: ' : 'Call Now: '}{office.phone}
@@ -91,8 +102,10 @@ export default async function CityServiceLanding({
                 {isEs ? 'Solicitar Consulta' : 'Request Consultation'}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
-            </Reveal>
+            </div>
           </div>
+
+          <style dangerouslySetInnerHTML={{ __html: ABOVE_FOLD_CSS }} />
         </section>
 
         {/* ===== TRUST BAR ===== */}
@@ -329,7 +342,7 @@ export default async function CityServiceLanding({
                   {isEs ? `Casos que manejamos en ${office.city}` : `Cases we handle in ${office.city}`}
                 </h2>
                 <p className="mt-4 text-slate-300 max-w-2xl mx-auto text-sm">
-                  {isEs ? 'Resúmenes anónimos de casos representativos. Cada situación es única — su consulta es confidencial.' : 'Anonymized summaries of representative cases. Each situation is unique — your consultation is confidential.'}
+                  {isEs ? 'Tipos de situación que atendemos en esta oficina, no resultados obtenidos. Cada caso es único — su consulta es confidencial.' : 'Types of situations this office handles, not results obtained. Every case is unique — your consultation is confidential.'}
                 </p>
               </Reveal>
               <Stagger gap={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>

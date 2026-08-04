@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { m, AnimatePresence, LazyMotion, domMax } from 'framer-motion';
 import {
   X, Play, Star, MapPin, ExternalLink, Quote, Users, Building2,
@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import ContactForm from '../../components/ContactForm';
+import { useDialog } from '../../components/useDialog';
 import { useLanguage } from '../../context/LanguageContext';
 
 // --- FUENTE ---
@@ -114,7 +115,11 @@ const testimonials = [
   }
 ];
 
-// --- 10 GOOGLE REVIEWS VERIFICADAS ---
+// --- GOOGLE REVIEWS VERIFICADAS ---
+// Cada entrada se publica bajo el encabezado "Reseñas Verificadas en Google" con
+// un CTA que abre `googleUrl`: solo se admiten reseñas con su propio permalink
+// individual de Google Maps, comprobado. Sin permalink verificable, la reseña no
+// entra (política anti-reseñas-fabricadas, misma regla que testimonios/page.tsx).
 const googleReviews = [
   { id: 'r-la', name: 'Gilmar Guzman', office: { es: 'Los Angeles', en: 'Los Angeles' }, lang: 'ES', date: '2026-02-25', featured: true, text: 'He tenido una grata experiencia con mi preparadora de documentos Veronica Velasquez. Ella me ha asesorado y preparado para la entrevista, eso me hace sentir mucha confianza. Actualizando, recibí mi residencia y seguro social al mismo tiempo. Sin duda las gestiones de Veronica Velasquez fueron de mucha ayuda para mi proceso. Recomiendo al Abogado Manuel Solis.', googleUrl: 'https://maps.app.goo.gl/gu57uFG4eWHAQZdD9' },
   { id: 'r-chi', name: 'Isabel Casco', office: { es: 'Chicago', en: 'Chicago' }, lang: 'EN', date: '2026-02-18', featured: false, text: 'Im very grateful with God that after all these years I finally got my green card and that is thanks to the Manuel Solis lawyers. Especial thanks to Elizabeth Vazquez and Cesar Benitez for helping me out all these years. Its been a long process but worth it at the end.', googleUrl: 'https://share.google/IQ5vOOn9q0Vc617Ww' },
@@ -124,9 +129,6 @@ const googleReviews = [
   { id: 'r-mem', name: 'Blanca Romero', office: { es: 'Memphis', en: 'Memphis' }, lang: 'ES', date: '2026-02-18', featured: false, text: 'Excelente Servicio me encantó, estoy Totalmente Agradecida, una forma tan bonita de brindar la información de acuerdo a todo lo Solicitado. Me encantó el servicio de Sandra P. Ella muy amable muy linda llena de empatía y profesionalismo. Las oficinas muy bonito Lugar y un ambiente muy agradable!! Totalmente Recomendado', googleUrl: 'https://maps.app.goo.gl/QHRCCbJxFkCoCKbE7' },
   { id: 'r-hou', name: 'Nancy Mendez', office: { es: 'Houston Principal', en: 'Houston Principal' }, lang: 'EN', date: '2026-01-21', featured: true, text: 'Martha A. Melendez was excellent in all our interviews, she was so knowledgeable and was very patient with all our questions. She was very clear in explaining and letting us know what was expected from us in putting our case together. Overall we are extremely pleased with her services. Thank you so much Martha!', googleUrl: 'https://maps.app.goo.gl/UwkncNrYHBEVaGtw7' },
   { id: 'r-elp', name: 'Ana Landeros', office: { es: 'El Paso', en: 'El Paso' }, lang: 'ES', date: '2026-02-04', featured: false, text: 'La señorita Evelyn ha estado muy atenta con el caso de mi mamá. Ella siempre ha estado presente si tenemos alguna duda o simplemente dejando a saber lo que está sucediendo. Gracias a todo el equipo de Abogados, hacen un gran trabajo por ver familias reunidas.', googleUrl: 'https://maps.app.goo.gl/mREbMXjUcFoDKxwQ6' },
-  { id: 'r-lc', name: 'María Elena Torres', office: { es: 'League City', en: 'League City' }, lang: 'ES', date: '2026-03-10', featured: false, text: 'Después de 12 años viviendo con miedo, por fin tengo mi permiso de trabajo gracias al equipo de League City. La licenciada me explicó todo paso a paso, nunca me dejaron sola. Mi familia entera les agradece de corazón.', googleUrl: 'https://maps.app.goo.gl/PbN8rR5QqbVGHRsF6' },
-  { id: 'r-nl', name: 'Carlos Hernández', office: { es: 'Houston North Loop', en: 'Houston North Loop' }, lang: 'ES', date: '2026-02-28', featured: false, text: 'Llevaba 3 años esperando una respuesta de inmigración y el abogado Solís logró destrabar mi caso en semanas. El equipo de North Loop es increíble, siempre contestaron mis llamadas y me mantuvieron informado. Hoy tengo mi residencia y puedo trabajar legalmente.', googleUrl: 'https://maps.app.goo.gl/PbN8rR5QqbVGHRsF6' },
-  { id: 'r-kb', name: 'Patricia Morales', office: { es: 'Houston Kirby', en: 'Houston Kirby' }, lang: 'ES', date: '2026-01-30', featured: false, text: 'La oficina de Kirby me ayudó con mi caso de VAWA. Fue un proceso difícil emocionalmente pero el equipo legal fue muy humano y profesional. Gracias a ellos ahora tengo protección y puedo seguir adelante con mis hijos.', googleUrl: 'https://maps.app.goo.gl/PbN8rR5QqbVGHRsF6' },
 ];
 
 // --- 6 HISTORIAS DE ÉXITO ---
@@ -155,18 +157,25 @@ export default function TestimoniosClient() {
   const { language } = useLanguage();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedTestimonial = testimonials.find(t => t.id === selectedId);
-
-  useEffect(() => {
-    if (selectedId) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [selectedId]);
+  const dialogRef = useDialog(Boolean(selectedTestimonial), () => setSelectedId(null));
 
   const getText = (obj: any) => {
     if (typeof obj === 'string') return obj;
     return obj[language] || obj.es || obj;
+  };
+
+  const playLabel = (name: string) =>
+    language === 'es' ? `Reproducir testimonio de ${name}` : `Play ${name}'s testimonial`;
+  const videoLabel = (name: string) =>
+    language === 'es' ? `Testimonio de ${name}` : `${name}'s testimonial`;
+
+  // La tarjeta es un `m.div` con `layoutId` (morph compartido con el modal), no un
+  // <button>: el rol y el manejo de teclado van a mano.
+  const handleCardKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, id: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setSelectedId(id);
+    }
   };
 
   const texts = {
@@ -184,7 +193,8 @@ export default function TestimoniosClient() {
     },
     modal: {
       badge: { es: 'Testimonio', en: 'Testimonial' },
-      button: { es: 'Solicitar Consulta', en: 'Request Consultation' }
+      button: { es: 'Solicitar Consulta', en: 'Request Consultation' },
+      close: { es: 'Cerrar video', en: 'Close video' }
     }
   };
 
@@ -267,12 +277,16 @@ export default function TestimoniosClient() {
             <m.div
               layoutId={`card-${item.id}`}
               key={item.id}
+              role="button"
+              tabIndex={0}
+              aria-label={playLabel(item.name)}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.05, duration: 0.6, ease: "easeOut" }}
               whileHover={{ y: -5 }}
               onClick={() => setSelectedId(item.id)}
+              onKeyDown={(event) => handleCardKeyDown(event, item.id)}
               className="group cursor-pointer h-[550px]"
             >
               <div className="relative w-full h-full rounded-[32px] overflow-hidden bg-[#000a20]/60 backdrop-blur-md border border-[#B2904D]/30 shadow-[0_0_20px_-5px_rgba(178,144,77,0.2)] hover:shadow-[0_0_40px_-5px_rgba(178,144,77,0.4)] hover:border-[#B2904D]/60 transition-all duration-500 flex flex-col transform-gpu">
@@ -378,11 +392,18 @@ export default function TestimoniosClient() {
               className="absolute inset-0 bg-[#000a20]/95 backdrop-blur-md"
             />
             <m.div
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label={videoLabel(selectedTestimonial.name)}
+              tabIndex={-1}
               layoutId={`card-${selectedId}`}
               className="relative w-full max-w-7xl h-[85vh] bg-[#001540] rounded-[32px] border border-[#B2904D]/30 shadow-2xl overflow-hidden flex flex-col lg:flex-row z-10"
             >
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); setSelectedId(null); }}
+                aria-label={texts.modal.close[language]}
                 className="absolute top-6 right-6 z-50 bg-black/40 hover:bg-[#B2904D] text-white p-3 rounded-full backdrop-blur-md transition-all duration-300 border border-white/10"
               >
                 <X size={24} />
@@ -392,6 +413,7 @@ export default function TestimoniosClient() {
               <div className="w-full lg:w-2/3 h-full bg-black relative flex items-center justify-center">
                  <iframe
                    src={`${selectedTestimonial.video}?autoplay=1`}
+                   title={videoLabel(selectedTestimonial.name)}
                    className="w-full h-full"
                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                    allowFullScreen

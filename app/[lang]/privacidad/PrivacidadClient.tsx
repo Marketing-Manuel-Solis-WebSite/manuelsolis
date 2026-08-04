@@ -4,7 +4,8 @@ import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm'
 import Image from 'next/image'
 import {
-  MessageSquare, Mail, Phone, MapPin, FileText, UserCheck, Server, Globe
+  MessageSquare, Mail, Phone, MapPin, FileText, UserCheck, Server, Globe,
+  Cookie, Megaphone, SlidersHorizontal
 } from 'lucide-react'
 
 
@@ -13,7 +14,7 @@ const interfaceTexts = {
   hero: {
     title: { es: 'POLÍTICA DE PRIVACIDAD', en: 'PRIVACY POLICY' },
     subtitle: { es: 'Proteger su información privada es nuestra prioridad.', en: 'Protecting your private information is our priority.' },
-    lastUpdated: { es: 'Última actualización: 5 de diciembre de 2025', en: 'Last updated: December 5, 2025' },
+    lastUpdated: { es: 'Última actualización: 4 de agosto de 2026', en: 'Last updated: August 4, 2026' },
   },
   generalStatement: {
     es: 'La Oficina Legal de Manuel Solís ("nosotros", "nuestro" o "nos") se compromete a proteger su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y salvaguardamos su información cuando visita nuestro sitio web, envía formularios, se comunica con nuestra oficina o participa en nuestro programa de mensajería SMS/texto. Al utilizar nuestro sitio web o optar por recibir mensajes SMS, usted acepta las prácticas descritas en esta Política de Privacidad.',
@@ -45,7 +46,7 @@ const interfaceTexts = {
         { es: 'Páginas vistas', en: 'Pages viewed' },
         { es: 'Cookies e identificadores de seguimiento', en: 'Cookies and tracking identifiers' },
       ],
-      note: { es: 'Esta información nos ayuda a mantener la seguridad, funcionalidad y rendimiento del sitio web.', en: 'This information helps us maintain website security, functionality, and performance.' }
+      note: { es: 'Esta información nos ayuda a mantener la seguridad, funcionalidad y rendimiento del sitio web. Parte de ella también se comparte con las plataformas de publicidad y analítica descritas en la Sección 5.', en: 'This information helps us maintain website security, functionality, and performance. Some of it is also shared with the advertising and analytics platforms described in Section 5.' }
     },
     C: {
       title: { es: 'C. Información de Mensajería SMS/Texto', en: 'C. SMS/Text Messaging Information' },
@@ -73,7 +74,7 @@ const interfaceTexts = {
       { es: 'Cumplir con obligaciones legales y éticas', en: 'Complying with legal and ethical obligations' },
       { es: 'Mantener una comunicación segura con el cliente', en: 'Maintaining secure client communication' },
     ],
-    note: { es: 'Su información nunca se vende a terceros.', en: 'Your information is never sold to third parties.' }
+    note: { es: 'No vendemos su información personal. Para medir el rendimiento de nuestra publicidad y de nuestro sitio web, sí compartimos datos técnicos y de navegación —como su dirección IP, la identificación de su navegador y cookies publicitarias— con plataformas de anuncios y de analítica. La Sección 5 detalla cuáles son y qué reciben.', en: 'We do not sell your personal information. To measure the performance of our advertising and our website, we do share technical and browsing data — such as your IP address, your browser identification, and advertising cookies — with advertising and analytics platforms. Section 5 details which ones they are and what they receive.' }
   },
 
   // 3. Programa SMS/Texto
@@ -127,13 +128,64 @@ const interfaceTexts = {
         { es: 'Para proteger sus derechos o seguridad', en: 'To protect your rights or safety' },
         { es: 'Para cumplir con las obligaciones éticas del abogado', en: 'To meet attorney ethical obligations' },
       ],
-      note: { es: '**NO** hacemos: Vender su información. Compartir su información para marketing por terceros. Divulgar detalles del cliente sin su autorización.', en: 'We do **NOT**: Sell your information. Share your information for marketing by third parties. Disclose client details without your authorization.' }
+      note: { es: '**NO** hacemos: Vender su información. Divulgar los detalles de su caso o sus comunicaciones con un abogado sin su autorización. Enviar su nombre, correo electrónico o número de teléfono a plataformas de publicidad.', en: 'We do **NOT**: Sell your information. Disclose the details of your case or your communications with an attorney without your authorization. Send your name, email address, or phone number to advertising platforms.' },
+      noteAdvertising: { es: '**SÍ** compartimos datos técnicos y de navegación con plataformas de publicidad y analítica para medir nuestras campañas y el uso del sitio. La Sección 5 detalla cada plataforma y los datos que recibe.', en: 'We **DO** share technical and browsing data with advertising and analytics platforms to measure our campaigns and site usage. Section 5 details each platform and the data it receives.' }
     }
   },
 
-  // 5. Seguridad de Datos
+  // 5. Cookies, Píxeles y Terceros
   section5: {
-    title: { es: '5. Seguridad de Datos', en: '5. Data Security' },
+    title: { es: '5. Cookies, Píxeles y Terceros', en: '5. Cookies, Pixels, and Third Parties' },
+    intro: { es: 'Nuestro sitio web usa cookies propias y de terceros, además de píxeles de medición. A continuación explicamos cuáles son, qué datos recibe cada tercero y con qué finalidad.', en: 'Our website uses first-party and third-party cookies, as well as measurement pixels. Below we explain which ones they are, what data each third party receives, and for what purpose.' },
+    A: {
+      title: { es: 'A. Cookies y Tecnologías Similares', en: 'A. Cookies and Similar Technologies' },
+      intro: { es: 'Cuando navega el sitio se pueden guardar en su dispositivo:', en: 'When you browse the site, the following may be stored on your device:' },
+      items: [
+        { es: '**Cookies de funcionamiento:** recuerdan su preferencia de idioma (cookie NEXT_LOCALE) y mantienen la seguridad del sitio.', en: '**Functional cookies:** remember your language preference (NEXT_LOCALE cookie) and keep the site secure.' },
+        { es: '**Cookie propia de atribución (msl_attr):** registra cómo llegó a nuestro sitio —fuente, medio, campaña y, si viene de un anuncio, el identificador de clic— para saber qué campañas generan consultas.', en: '**Our own attribution cookie (msl_attr):** records how you reached our site — source, medium, campaign and, if you came from an ad, the click identifier — so we can tell which campaigns generate inquiries.' },
+        { es: '**Identificador de sesión:** un número aleatorio guardado en el almacenamiento de sesión de su navegador que agrupa las páginas de una misma visita. Se borra al cerrar la pestaña.', en: '**Session identifier:** a random number stored in your browser\'s session storage that groups the pages of a single visit. It is deleted when you close the tab.' },
+        { es: '**Cookies de terceros:** las fijan Meta (_fbp y _fbc), Google Analytics y TikTok cuando cargan sus píxeles.', en: '**Third-party cookies:** set by Meta (_fbp and _fbc), Google Analytics, and TikTok when their pixels load.' },
+      ],
+      note: { es: 'Puede borrar o bloquear cookies desde la configuración de su navegador. El sitio seguirá funcionando, aunque algunas funciones pueden verse limitadas.', en: 'You can delete or block cookies from your browser settings. The site will still work, though some features may be limited.' }
+    },
+    B: {
+      title: { es: 'B. Plataformas de Publicidad y Analítica', en: 'B. Advertising and Analytics Platforms' },
+      intro: { es: 'Compartimos datos técnicos y de navegación —no su nombre, correo electrónico ni teléfono— con las siguientes plataformas:', en: 'We share technical and browsing data — not your name, email address, or phone number — with the following platforms:' },
+      items: [
+        { es: '**Meta (Facebook e Instagram):** a través del píxel que carga en su navegador y también desde nuestro servidor mediante la Conversions API. Meta recibe su dirección IP, la identificación de su navegador (user agent), la dirección de la página visitada y las cookies publicitarias _fbp y _fbc. Finalidad: medir las visitas y conversiones atribuibles a nuestros anuncios.', en: '**Meta (Facebook and Instagram):** through the pixel that loads in your browser and also from our server via the Conversions API. Meta receives your IP address, your browser identification (user agent), the address of the page visited, and the _fbp and _fbc advertising cookies. Purpose: to measure visits and conversions attributable to our ads.' },
+        { es: '**Google (Google Analytics 4):** páginas vistas, dirección IP, tipo de dispositivo y navegador, idioma y el sitio desde el que llegó. Finalidad: analítica de uso del sitio web.', en: '**Google (Google Analytics 4):** pages viewed, IP address, device and browser type, language, and the site you came from. Purpose: website usage analytics.' },
+        { es: '**TikTok (TikTok Pixel):** datos de navegación y de dispositivo equivalentes. Finalidad: medir el rendimiento de nuestros anuncios en TikTok.', en: '**TikTok (TikTok Pixel):** equivalent browsing and device data. Purpose: to measure the performance of our advertising on TikTok.' },
+        { es: '**Eventos de conversión:** cuando envía un formulario o pulsa un botón de llamada o de WhatsApp, avisamos a estas plataformas de que ocurrió una conversión. Ese aviso indica el tipo de acción, nunca el contenido de su consulta ni sus datos de contacto.', en: '**Conversion events:** when you submit a form or tap a call or WhatsApp button, we notify these platforms that a conversion occurred. That notice indicates the type of action, never the content of your inquiry or your contact details.' },
+      ],
+      note: { es: 'Estas plataformas tratan los datos conforme a sus propias políticas de privacidad y pueden combinar estos identificadores con la información que ya tienen de usted. No les enviamos información sobre su caso.', en: 'These platforms process the data under their own privacy policies and may combine these identifiers with information they already hold about you. We do not send them any information about your case.' }
+    },
+    C: {
+      title: { es: 'C. Proveedores de Tecnología y Contenido Incrustado', en: 'C. Technology Providers and Embedded Content' },
+      intro: { es: 'Para operar el sitio y sus funciones recurrimos a:', en: 'To operate the site and its features, we rely on:' },
+      items: [
+        { es: '**Google (Gemini):** los mensajes que escribe en el asistente virtual del sitio se procesan con el modelo Gemini de Google para generar la respuesta. Le pedimos no compartir por ese canal documentos ni detalles sensibles de su caso: para eso use el teléfono, el correo electrónico o una consulta con un abogado.', en: '**Google (Gemini):** the messages you type into the site\'s virtual assistant are processed with Google\'s Gemini model to generate the reply. Please do not share documents or sensitive case details through that channel: for that, use the phone, email, or a consultation with an attorney.' },
+        { es: '**Vercel:** aloja el sitio web y nos proporciona analítica de uso y de rendimiento de las páginas.', en: '**Vercel:** hosts the website and provides us with page usage and performance analytics.' },
+        { es: '**Resend:** envía los correos electrónicos del sitio, incluidos los del boletín, y administra la lista de suscriptores.', en: '**Resend:** sends the site\'s emails, including newsletter emails, and manages the subscriber list.' },
+        { es: '**Google Maps y YouTube:** algunas páginas incluyen mapas y videos incrustados. Al cargarlos, Google puede recibir su dirección IP y datos de su navegador.', en: '**Google Maps and YouTube:** some pages include embedded maps and videos. When they load, Google may receive your IP address and browser data.' },
+      ],
+      note: { es: 'Los proveedores de esta lista tratan los datos para prestarnos el servicio descrito. Los proveedores de mensajería SMS y de comunicación con el cliente se describen en la Sección 4.A.', en: 'The providers in this list process data in order to provide us with the service described. SMS messaging and client communication providers are described in Section 4.A.' }
+    },
+    D: {
+      title: { es: 'D. Sus Opciones', en: 'D. Your Choices' },
+      intro: { es: 'En cuanto a cookies y publicidad, usted puede:', en: 'Regarding cookies and advertising, you may:' },
+      items: [
+        { es: 'Borrar o bloquear las cookies, incluidas las de terceros, desde la configuración de su navegador.', en: 'Delete or block cookies, including third-party cookies, from your browser settings.' },
+        { es: 'Ajustar sus preferencias de anuncios directamente en su cuenta de Meta, Google o TikTok.', en: 'Adjust your advertising preferences directly in your Meta, Google, or TikTok account.' },
+        { es: 'Pedirnos que dejemos de usar sus identificadores con fines de publicidad dirigida, por los medios indicados en la Sección 8.', en: 'Ask us to stop using your identifiers for targeted advertising purposes, through the channels listed in Section 8.' },
+        { es: 'Si es residente de Texas, ejercer los derechos que le reconoce la ley de privacidad de datos del estado, incluida la oposición al uso de sus datos para publicidad dirigida.', en: 'If you are a Texas resident, exercise the rights granted to you by the state\'s data privacy law, including objecting to the use of your data for targeted advertising.' },
+      ],
+      note: { es: 'Actualmente el sitio no muestra un banner de consentimiento: las cookies y píxeles descritos se cargan cuando visita el sitio. Puede limitarlos con los controles de su navegador o solicitándonoslo por los medios indicados arriba.', en: 'The site does not currently display a consent banner: the cookies and pixels described here load when you visit the site. You can limit them using your browser controls or by requesting it from us through the channels listed above.' }
+    }
+  },
+
+  // 6. Seguridad de Datos
+  section6: {
+    title: { es: '6. Seguridad de Datos', en: '6. Data Security' },
     content1: { es: 'Implementamos salvaguardas administrativas, técnicas y físicas para proteger su información, incluyendo:', en: 'We implement administrative, technical, and physical safeguards to protect your information, including:' },
     items: [
       { es: 'Canales de comunicación cifrados', en: 'Encrypted communication channels' },
@@ -144,9 +196,9 @@ const interfaceTexts = {
     content2: { es: 'Aunque tomamos medidas razonables para proteger sus datos, ningún método de transmisión es 100% seguro.', en: 'While we take reasonable measures to protect your data, no method of transmission is 100% secure.' }
   },
 
-  // 6. Retención de Datos
-  section6: {
-    title: { es: '6. Retención de Datos', en: '6. Data Retention' },
+  // 7. Retención de Datos
+  section7: {
+    title: { es: '7. Retención de Datos', en: '7. Data Retention' },
     content1: { es: 'Retenemos la información solo el tiempo necesario para:', en: 'We retain information only as long as necessary to:' },
     items: [
       { es: 'Proporcionar servicios', en: 'Provide services' },
@@ -157,9 +209,9 @@ const interfaceTexts = {
     content2: { es: 'Los datos relacionados con SMS se conservan de acuerdo con nuestros requisitos de comunicación y cumplimiento.', en: 'SMS-related data is retained in accordance with our communication and compliance requirements.' }
   },
 
-  // 7. Sus Derechos y Opciones
-  section7: {
-    title: { es: '7. Sus Derechos y Opciones', en: '7. Your Rights and Choices' },
+  // 8. Sus Derechos y Opciones
+  section8: {
+    title: { es: '8. Sus Derechos y Opciones', en: '8. Your Rights and Choices' },
     intro: { es: 'Usted puede:', en: 'You may:' },
     items: [
       { es: 'Optar por no recibir mensajes SMS en cualquier momento enviando un mensaje de texto con la palabra **STOP**', en: 'Opt out of SMS messages at any time by texting **STOP**' },
@@ -173,27 +225,27 @@ const interfaceTexts = {
     phone: '713-844-2700'
   },
 
-  // 8. Enlaces de Terceros
-  section8: {
-    title: { es: '8. Enlaces de Terceros', en: '8. Third-Party Links' },
+  // 9. Enlaces de Terceros
+  section9: {
+    title: { es: '9. Enlaces de Terceros', en: '9. Third-Party Links' },
     content: { es: 'Nuestro sitio web puede contener enlaces a sitios externos. No somos responsables de las prácticas de privacidad o el contenido de los sitios web de terceros.', en: 'Our website may contain links to external sites. We are not responsible for the privacy practices or content of third-party websites.' }
   },
 
-  // 9. Privacidad de los Niños
-  section9: {
-    title: { es: '9. Privacidad de los Niños', en: '9. Children\'s Privacy' },
+  // 10. Privacidad de los Niños
+  section10: {
+    title: { es: '10. Privacidad de los Niños', en: '10. Children\'s Privacy' },
     content: { es: 'Nuestro sitio web y servicios SMS no están dirigidos a niños menores de 13 años. No recopilamos a sabiendas información de niños sin el consentimiento de los padres.', en: 'Our website and SMS services are not directed to children under 13. We do not knowingly collect information from children without parental consent.' }
   },
 
-  // 10. Cambios a Esta Política
-  section10: {
-    title: { es: '10. Cambios a Esta Política', en: '10. Changes to This Policy' },
+  // 11. Cambios a Esta Política
+  section11: {
+    title: { es: '11. Cambios a Esta Política', en: '11. Changes to This Policy' },
     content: { es: 'Podemos actualizar esta Política de Privacidad de vez en cuando. Las versiones revisadas se publicarán en esta página con una fecha de "Última Actualización" actualizada.', en: 'We may update this Privacy Policy from time to time. Revised versions will be posted on this page with an updated "Last Updated" date.' }
   },
 
-  // 11. Contacto
-  section11: {
-    title: { es: '11. Contáctenos', en: '11. Contact Us' },
+  // 12. Contacto
+  section12: {
+    title: { es: '12. Contáctenos', en: '12. Contact Us' },
     intro: { es: 'Si tiene preguntas sobre esta Política de Privacidad o nuestras prácticas de datos, puede contactarnos en:', en: 'If you have questions about this Privacy Policy or our data practices, you may contact us at:' },
     phone: '713-844-2700',
     email: 'support@manuelsolis.com',
@@ -212,6 +264,10 @@ const parseContent = (text: string) => {
   parsed = parsed.split('<br /><br />').map(p => `<p>${p}</p>`).join('');
   return parsed;
 };
+
+// Variante sin envoltura en <p>: para texto dentro de un <li>, donde un
+// bloque dejaría la viñeta sola en su propia línea (list-style-position: inside).
+const parseInline = (text: string) => text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
 // --- COMPONENTE TÍTULO DE SECCIÓN ---
 const SectionTitle = ({ title }: { title: string }) => (
@@ -448,27 +504,70 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
                         ))}
                     </ul>
                     <p className="text-sm pt-4 font-semibold text-red-400/90" dangerouslySetInnerHTML={{ __html: parseText('section4.B.note') }} />
+                    <p className="text-sm pt-3 text-orange-300/80" dangerouslySetInnerHTML={{ __html: parseText('section4.B.noteAdvertising') }} />
                 </div>
             </div>
         </div>
 
-        {/* SECCIONES 5, 6, 7 */}
-        <div className="grid lg:grid-cols-3 gap-8">
-            {/* SECCIÓN 5: SEGURIDAD DE DATOS */}
-            <div className="lg:col-span-1">
-                <SectionTitle title={t('section5.title')} />
-                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
-                    <p className="text-base text-blue-100/80">{t('section5.content1')}</p>
+        {/* SECCIÓN 5: COOKIES, PÍXELES Y TERCEROS */}
+        <div>
+            <SectionTitle title={t('section5.title')} />
+            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
+                <p className="text-base text-blue-100/80 mb-4">{t('section5.intro')}</p>
+
+                {/* A. Cookies */}
+                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Cookie size={20}/> {t('section5.A.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section5.A.intro')}</p>
                     <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section5.items.map((item, index) => (
+                        {interfaceTexts.section5.A.items.map((item, index) => (
+                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
+                        ))}
+                    </ul>
+                    <p className="text-xs pt-4 text-white/50">{t('section5.A.note')}</p>
+                </div>
+
+                {/* B. Plataformas de publicidad y analítica */}
+                <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
+                    <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><Megaphone size={20}/> {t('section5.B.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section5.B.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                        {interfaceTexts.section5.B.items.map((item, index) => (
+                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
+                        ))}
+                    </ul>
+                    <p className="text-xs pt-4 text-orange-300/80">{t('section5.B.note')}</p>
+                </div>
+
+                {/* C. Proveedores de tecnología y contenido incrustado */}
+                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Server size={20}/> {t('section5.C.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section5.C.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                        {interfaceTexts.section5.C.items.map((item, index) => (
+                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
+                        ))}
+                    </ul>
+                    <p className="text-xs pt-4 text-white/50">{t('section5.C.note')}</p>
+                </div>
+
+                {/* D. Sus opciones */}
+                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><SlidersHorizontal size={20}/> {t('section5.D.title')}</h3>
+                    <p className="text-base text-blue-100/80 mb-4">{t('section5.D.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                        {interfaceTexts.section5.D.items.map((item, index) => (
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
                     </ul>
-                    <p className="text-xs pt-4 text-red-300/80">{t('section5.content2')}</p>
+                    <p className="text-xs pt-4 text-orange-300/80">{t('section5.D.note')}</p>
                 </div>
             </div>
+        </div>
 
-            {/* SECCIÓN 6: RETENCIÓN DE DATOS */}
+        {/* SECCIONES 6, 7, 8 */}
+        <div className="grid lg:grid-cols-3 gap-8">
+            {/* SECCIÓN 6: SEGURIDAD DE DATOS */}
             <div className="lg:col-span-1">
                 <SectionTitle title={t('section6.title')} />
                 <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
@@ -478,32 +577,46 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
                             <li key={index} className="text-white/80">{item[lang] || item.es}</li>
                         ))}
                     </ul>
-                    <p className="text-xs pt-4 text-orange-300/80">{t('section6.content2')}</p>
+                    <p className="text-xs pt-4 text-red-300/80">{t('section6.content2')}</p>
                 </div>
             </div>
 
-            {/* SECCIÓN 7: DERECHOS Y OPCIONES */}
+            {/* SECCIÓN 7: RETENCIÓN DE DATOS */}
             <div className="lg:col-span-1">
                 <SectionTitle title={t('section7.title')} />
-                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner flex flex-col">
-                    <p className="text-base text-blue-100/80">{t('section7.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4 flex-grow">
+                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                    <p className="text-base text-blue-100/80">{t('section7.content1')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
                         {interfaceTexts.section7.items.map((item, index) => (
+                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                        ))}
+                    </ul>
+                    <p className="text-xs pt-4 text-orange-300/80">{t('section7.content2')}</p>
+                </div>
+            </div>
+
+            {/* SECCIÓN 8: DERECHOS Y OPCIONES */}
+            <div className="lg:col-span-1">
+                <SectionTitle title={t('section8.title')} />
+                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner flex flex-col">
+                    <p className="text-base text-blue-100/80">{t('section8.intro')}</p>
+                    <ul className="text-sm list-disc list-inside space-y-3 pl-4 flex-grow">
+                        {interfaceTexts.section8.items.map((item, index) => (
                             <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: item[lang] || item.es }} />
                         ))}
                     </ul>
                     <div className="pt-6 border-t border-white/10 space-y-2 text-sm">
-                        <p className="text-white font-medium">{t('section7.contact')}</p>
+                        <p className="text-white font-medium">{t('section8.contact')}</p>
                         <div className="flex items-center gap-2 text-[#B2904D]">
                             <Mail size={16} />
-                            <a href={`mailto:${interfaceTexts.section7.email}`} className="hover:text-sky-300 transition">
-                              {interfaceTexts.section7.email}
+                            <a href={`mailto:${interfaceTexts.section8.email}`} className="hover:text-sky-300 transition">
+                              {interfaceTexts.section8.email}
                             </a>
                         </div>
                         <div className="flex items-center gap-2 text-[#B2904D]">
                             <Phone size={16} />
-                            <a href={`tel:+1${interfaceTexts.section7.phone.replace(/\D/g, '')}`} className="hover:text-sky-300 transition">
-                              {interfaceTexts.section7.phone}
+                            <a href={`tel:+1${interfaceTexts.section8.phone.replace(/\D/g, '')}`} className="hover:text-sky-300 transition">
+                              {interfaceTexts.section8.phone}
                             </a>
                         </div>
                     </div>
@@ -511,17 +624,9 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
             </div>
         </div>
 
-        {/* SECCIONES 8, 9, 10, 11 */}
+        {/* SECCIONES 9, 10, 11, 12 */}
         <div className="grid md:grid-cols-2 gap-8">
-            {/* SECCIÓN 8: Enlaces de Terceros */}
-            <div>
-                <SectionTitle title={t('section8.title')} />
-                <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
-                    <div dangerouslySetInnerHTML={{ __html: parseText('section8.content') }} />
-                </div>
-            </div>
-
-            {/* SECCIÓN 9: Privacidad de los Niños */}
+            {/* SECCIÓN 9: Enlaces de Terceros */}
             <div>
                 <SectionTitle title={t('section9.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
@@ -529,7 +634,7 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
                 </div>
             </div>
 
-            {/* SECCIÓN 10: Cambios a Esta Política */}
+            {/* SECCIÓN 10: Privacidad de los Niños */}
             <div>
                 <SectionTitle title={t('section10.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
@@ -537,27 +642,35 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
                 </div>
             </div>
 
-            {/* SECCIÓN 11: Contáctenos */}
+            {/* SECCIÓN 11: Cambios a Esta Política */}
             <div>
                 <SectionTitle title={t('section11.title')} />
+                <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
+                    <div dangerouslySetInnerHTML={{ __html: parseText('section11.content') }} />
+                </div>
+            </div>
+
+            {/* SECCIÓN 12: Contáctenos */}
+            <div>
+                <SectionTitle title={t('section12.title')} />
                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
-                    <p className="text-base text-white font-medium">{t('section11.intro')}</p>
+                    <p className="text-base text-white font-medium">{t('section12.intro')}</p>
                     <div className="flex flex-col gap-4 text-sm">
                         <div className="flex items-center gap-3 text-white/90">
                             <Mail size={18} className="text-sky-400" />
-                            <a href={`mailto:${interfaceTexts.section11.email}`} className="hover:text-[#B2904D] transition">
-                              {interfaceTexts.section11.email}
+                            <a href={`mailto:${interfaceTexts.section12.email}`} className="hover:text-[#B2904D] transition">
+                              {interfaceTexts.section12.email}
                             </a>
                         </div>
                         <div className="flex items-center gap-3 text-white/90">
                             <Phone size={18} className="text-sky-400" />
-                            <a href={`tel:+1${interfaceTexts.section11.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
-                              {interfaceTexts.section11.phone}
+                            <a href={`tel:+1${interfaceTexts.section12.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
+                              {interfaceTexts.section12.phone}
                             </a>
                         </div>
                         <div className="flex items-start gap-3 text-white/90">
                             <MapPin size={18} className="text-sky-400 flex-shrink-0 mt-1" />
-                            <span>{interfaceTexts.section11.address}</span>
+                            <span>{interfaceTexts.section12.address}</span>
                         </div>
                     </div>
                 </div>

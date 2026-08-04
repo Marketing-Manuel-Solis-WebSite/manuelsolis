@@ -4,7 +4,6 @@
 // ============================================================
 
 export const SITE_URL = 'https://www.manuelsolis.com';
-export const MAIN_PHONE = '(832) 598-0914';
 
 // ---------- OFFICE DATA ----------
 export interface OfficeInfo {

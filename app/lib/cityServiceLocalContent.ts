@@ -266,8 +266,8 @@ function accidentesFAQ(office: OfficeInfo, signals: CityLocalSignals): FAQItem[]
         en: `What do I do if an insurance company offers me a quick settlement in ${office.city}?`,
       },
       answer: {
-        es: `No firme nada sin consultar a un abogado. Las compañías de seguros suelen ofrecer cantidades bajas inmediatamente, antes de que se conozca el alcance real de las lesiones. En ${office.city}, hemos visto casos donde la oferta inicial era 10x menor que el valor justo del caso. Llámenos primero al ${office.phone}.`,
-        en: `Don't sign anything without consulting an attorney. Insurance companies often offer low amounts immediately, before the full extent of injuries is known. In ${office.city}, we've seen cases where the initial offer was 10x less than the case's fair value. Call us first at ${office.phone}.`,
+        es: `No firme nada sin consultar a un abogado. Las ofertas rápidas llegan antes de que se conozca el alcance real de las lesiones y normalmente no consideran el tratamiento futuro, la terapia ni el tiempo sin trabajar. Firmar el acuerdo cierra el reclamo de forma definitiva. Llámenos primero al ${office.phone} para revisar la oferta.`,
+        en: `Don't sign anything without consulting an attorney. Quick offers arrive before the full extent of injuries is known and usually leave out future treatment, therapy, and time away from work. Signing the release closes the claim for good. Call us first at ${office.phone} so we can review the offer.`,
       },
     },
     {
@@ -296,8 +296,8 @@ function accidentesFAQ(office: OfficeInfo, signals: CityLocalSignals): FAQItem[]
         en: `Which hospitals do you recommend after an accident in ${office.city}?`,
       },
       answer: {
-        es: `Trabajamos con una red de proveedores médicos en ${office.city} (incluyendo ${signals.hospitals.slice(0, 2).join(' y ')}) que aceptan tratar pacientes sin pago inicial cuando hay un caso legal en curso. Lo importante es documentar las lesiones inmediatamente con un médico calificado.`,
-        en: `We work with a network of medical providers in ${office.city} (including ${signals.hospitals.slice(0, 2).join(' and ')}) that agree to treat patients with no upfront payment when there is an ongoing legal case. The important thing is to document injuries immediately with a qualified physician.`,
+        es: `No recomendamos un centro en particular: lo importante es documentar las lesiones de inmediato con un médico calificado. El área de ${office.city} cuenta con hospitales como ${signals.hospitals.slice(0, 2).join(' y ')}. Si no tiene seguro médico, en la consulta le explicamos las opciones que existen para recibir atención mientras su reclamo está en curso.`,
+        en: `We don't recommend one particular facility: what matters is documenting injuries immediately with a qualified physician. The ${office.city} area has hospitals such as ${signals.hospitals.slice(0, 2).join(' and ')}. If you have no health insurance, we explain during the consultation the options available to get care while your claim is pending.`,
       },
     },
   ];
@@ -361,8 +361,8 @@ function defensaDeportacionFAQ(office: OfficeInfo, signals: CityLocalSignals): F
         en: `I have a criminal record. Can you defend me against deportation in ${office.city}?`,
       },
       answer: {
-        es: `Depende del tipo y fecha de la condena. Algunos delitos resultan en deportación obligatoria, pero hay alivios disponibles según las circunstancias. Trabajamos con la fiscalía (${signals.daOffice.es}) cuando es posible para reabrir o reclasificar condenas. Llame para una evaluación honesta.`,
-        en: `It depends on the type and date of the conviction. Some offenses result in mandatory deportation, but reliefs are available depending on circumstances. We work with the prosecutor's office (${signals.daOffice.en}) when possible to reopen or reclassify convictions. Call for an honest evaluation.`,
+        es: `Depende del tipo y la fecha de la condena. Algunos delitos resultan en deportación obligatoria, pero hay alivios disponibles según las circunstancias. Cuando procede, buscamos alivio posterior a la condena en la corte penal (por ejemplo, anular o reclasificar la condena), lo que implica litigar frente a ${signals.daOffice.es}. Llame para una evaluación honesta.`,
+        en: `It depends on the type and date of the conviction. Some offenses result in mandatory deportation, but reliefs are available depending on circumstances. Where appropriate, we pursue post-conviction relief in criminal court (for example, vacating or reclassifying the conviction), which means litigating against the ${signals.daOffice.en}. Call for an honest evaluation.`,
       },
     },
   ];
@@ -376,8 +376,8 @@ function visaUFAQ(office: OfficeInfo, signals: CityLocalSignals): FAQItem[] {
         en: `Who can sign the U Visa certification (Supplement B) in ${office.city}?`,
       },
       answer: {
-        es: `Cualquier agencia con autoridad investigadora: ${signals.policeDept}, oficina del sheriff de ${signals.countyName}, ${signals.daOffice.es}, fiscales federales, o jueces. Tenemos relaciones de trabajo establecidas para gestionar certificaciones en ${office.city}.`,
-        en: `Any agency with investigative authority: ${signals.policeDept}, ${signals.countyName} sheriff's office, ${signals.daOffice.en}, federal prosecutors, or judges. We have established working relationships to manage certifications in ${office.city}.`,
+        es: `Cualquier agencia con autoridad investigadora: ${signals.policeDept}, oficina del sheriff de ${signals.countyName}, ${signals.daOffice.es}, fiscales federales, o jueces. Nosotros identificamos qué agencia investigó su caso en ${office.city}, preparamos la solicitud de certificación y le damos seguimiento.`,
+        en: `Any agency with investigative authority: ${signals.policeDept}, ${signals.countyName} sheriff's office, ${signals.daOffice.en}, federal prosecutors, or judges. We identify which agency investigated your case in ${office.city}, prepare the certification request, and follow up on it.`,
       },
     },
     {
@@ -406,8 +406,8 @@ function visaUFAQ(office: OfficeInfo, signals: CityLocalSignals): FAQItem[] {
         en: `I suffered a crime years ago in ${office.city}. Do I still qualify?`,
       },
       answer: {
-        es: `No hay límite de tiempo para solicitar la Visa U después del crimen. Hemos obtenido aprobaciones para casos ocurridos hace 10+ años. Lo importante es que pueda demostrar que sufrió daño sustancial y cooperó con la investigación.`,
-        en: `There is no time limit for applying for the U Visa after the crime. We have obtained approvals for cases occurring 10+ years ago. What matters is that you can demonstrate substantial harm and cooperation with the investigation.`,
+        es: `No hay límite de tiempo para solicitar la Visa U después del crimen, y atendemos casos de hace más de una década. Lo importante es que pueda demostrar que sufrió daño sustancial y que cooperó con la investigación; entre más antiguo el caso, más trabajo toma localizar el expediente y conseguir la certificación.`,
+        en: `There is no time limit for applying for the U Visa after the crime, and we handle cases from more than a decade ago. What matters is that you can demonstrate substantial harm and cooperation with the investigation; the older the case, the more work it takes to locate the file and obtain the certification.`,
       },
     },
     {
@@ -461,8 +461,8 @@ function asiloFAQ(office: OfficeInfo, signals: CityLocalSignals): FAQItem[] {
         en: `Can I work legally while waiting for asylum?`,
       },
       answer: {
-        es: `Sí. Después de 150 días de presentar la solicitud I-589, puede pedir el permiso de trabajo (EAD), que generalmente se aprueba dentro de 30 días. Esto le permite trabajar legalmente mientras su caso se procesa, lo cual puede tardar varios años en la ${signals.immigrationCourtName}.`,
-        en: `Yes. After 150 days of filing the I-589 application, you can request a work permit (EAD), which is generally approved within 30 days. This allows you to work legally while your case is processed, which can take several years at the ${signals.immigrationCourtName}.`,
+        es: `Sí. Después de 150 días de presentar la solicitud I-589, puede pedir el permiso de trabajo (EAD). Los tiempos de adjudicación de USCIS varían y conviene consultar el tiempo de procesamiento vigente. Una vez emitido, el permiso le deja trabajar legalmente mientras su caso se procesa, lo cual puede tardar varios años en la ${signals.immigrationCourtName}.`,
+        en: `Yes. After 150 days of filing the I-589 application, you can request a work permit (EAD). USCIS adjudication times vary and it's worth checking the current processing time. Once issued, the permit lets you work legally while your case is processed, which can take several years at the ${signals.immigrationCourtName}.`,
       },
     },
     {
@@ -526,8 +526,8 @@ function vawaFAQ(office: OfficeInfo, signals: CityLocalSignals): FAQItem[] {
         en: `Does VAWA apply to male abuse victims in ${office.city}?`,
       },
       answer: {
-        es: `Sí. A pesar del nombre ("Violence Against Women Act"), VAWA es neutral en cuanto al género. Hombres abusados por sus cónyuges ciudadanas/residentes en el área de ${office.city} son elegibles bajo los mismos criterios. Hemos representado casos masculinos exitosos.`,
-        en: `Yes. Despite the name ("Violence Against Women Act"), VAWA is gender-neutral. Men abused by their citizen/resident spouses in the ${office.city} area are eligible under the same criteria. We have represented successful male cases.`,
+        es: `Sí. A pesar del nombre ("Violence Against Women Act"), VAWA es neutral en cuanto al género. Hombres abusados por sus cónyuges ciudadanas/residentes en el área de ${office.city} son elegibles bajo los mismos criterios, y atendemos estas auto-peticiones con los mismos requisitos de evidencia.`,
+        en: `Yes. Despite the name ("Violence Against Women Act"), VAWA is gender-neutral. Men abused by their citizen/resident spouses in the ${office.city} area are eligible under the same criteria, and we handle these self-petitions under the same evidence requirements.`,
       },
     },
     {
@@ -554,7 +554,9 @@ function vawaFAQ(office: OfficeInfo, signals: CityLocalSignals): FAQItem[] {
 }
 
 // ============================================================
-// TYPICAL CASES per service (anonymized scenario summaries)
+// SITUATION TYPES per service — describe what the firm handles
+// locally. No outcomes, amounts, or timelines: Texas advertising
+// rules (7.01/7.02) bar unverifiable past-results claims.
 // ============================================================
 
 function inmigracionCases(office: OfficeInfo, signals: CityLocalSignals): TypicalCase[] {
@@ -562,22 +564,22 @@ function inmigracionCases(office: OfficeInfo, signals: CityLocalSignals): Typica
     {
       title: { es: 'Residencia por matrimonio en ' + office.city, en: 'Marriage-based residency in ' + office.city },
       description: {
-        es: `Cliente de ${signals.neighborhoods.es[0]} se casó con su pareja ciudadana. Manejamos la petición I-130 + ajuste I-485, incluyendo la entrevista en la oficina local de USCIS. Aprobado en 11 meses.`,
-        en: `${signals.neighborhoods.en[0]} client married their US citizen partner. We handled the I-130 petition + I-485 adjustment, including the interview at the local USCIS office. Approved in 11 months.`,
+        es: `Atendemos casos de ajuste de estatus por matrimonio con ciudadano estadounidense o residente permanente: petición I-130, ajuste I-485 y preparación para la entrevista de la oficina de USCIS que cubre ${signals.neighborhoods.es[0]} y el resto del área. Cuando hubo entrada sin inspección, evaluamos si el caso requiere un perdón (I-601A) o trámite consular.`,
+        en: `We handle marriage-based adjustment of status cases with a US citizen or lawful permanent resident spouse: the I-130 petition, the I-485 adjustment, and preparation for the interview at the USCIS office covering ${signals.neighborhoods.en[0]} and the rest of the area. When there was entry without inspection, we assess whether the case needs a waiver (I-601A) or consular processing.`,
       },
     },
     {
-      title: { es: 'Ciudadanía con perdón médico', en: 'Citizenship with medical waiver' },
+      title: { es: 'Ciudadanía y exenciones del examen', en: 'Citizenship and exam waivers' },
       description: {
-        es: `Residente de ${office.city} con discapacidad cognitiva calificó para el formulario N-648 (perdón médico) que exime el examen de inglés y civismo. Naturalización aprobada.`,
-        en: `${office.city} resident with cognitive disability qualified for Form N-648 (medical waiver) that waives the English and civics exam. Naturalization approved.`,
+        es: `Preparamos solicitudes de naturalización N-400 de residentes del área de ${office.city}, incluidos los casos que necesitan la exención médica del examen de inglés y civismo (formulario N-648) o acomodaciones por discapacidad. Antes de presentar revisamos antecedentes penales, ausencias largas del país y el historial de impuestos.`,
+        en: `We prepare N-400 naturalization applications for residents of the ${office.city} area, including cases that need the medical waiver of the English and civics exam (Form N-648) or disability accommodations. Before filing we review criminal history, long absences from the country, and tax history.`,
       },
     },
     {
-      title: { es: 'DACA renovación tras retraso', en: 'DACA renewal after delay' },
+      title: { es: 'DACA: renovaciones y vencimientos', en: 'DACA: renewals and expirations' },
       description: {
-        es: `Joven de ${office.city} dejó vencer su DACA por confusión de fechas. Presentamos la renovación tardía con explicación documentada — aprobado sin laguna en empleo.`,
-        en: `${office.city} youth let DACA expire due to date confusion. We filed late renewal with documented explanation — approved with no employment gap.`,
+        es: `Atendemos renovaciones de DACA de jóvenes de ${office.city}, incluidas las que se presentan después de la fecha de vencimiento, y explicamos cómo el vencimiento afecta el permiso de trabajo. También revisamos si la persona califica para algún alivio adicional a DACA.`,
+        en: `We handle DACA renewals for young people in ${office.city}, including those filed after the expiration date, and explain how expiration affects work authorization. We also review whether the person qualifies for any relief beyond DACA.`,
       },
     },
   ];
@@ -586,24 +588,24 @@ function inmigracionCases(office: OfficeInfo, signals: CityLocalSignals): Typica
 function accidentesCases(office: OfficeInfo, signals: CityLocalSignals): TypicalCase[] {
   return [
     {
-      title: { es: `Choque en ${signals.highways[0]}`, en: `Crash on ${signals.highways[0]}` },
+      title: { es: `Camiones comerciales en ${signals.highways[0]}`, en: `Commercial trucks on ${signals.highways[0]}` },
       description: {
-        es: `Cliente sufrió lesiones graves en colisión con camión comercial en ${signals.highways[0]}. Negociamos un acuerdo seis cifras con la aseguradora del camionero, sin ir a juicio.`,
-        en: `Client suffered serious injuries in commercial truck collision on ${signals.highways[0]}. We negotiated a six-figure settlement with the trucker's insurer, without going to trial.`,
+        es: `Representamos a personas lesionadas en colisiones con camiones de carga en ${signals.highways[0]} y otras vías del área de ${office.city}. Pedimos la preservación de la bitácora del conductor y los datos electrónicos del vehículo, identificamos a la empresa transportista y su aseguradora, y documentamos las lesiones con los médicos que atendieron a la víctima.`,
+        en: `We represent people injured in collisions with freight trucks on ${signals.highways[0]} and other roads in the ${office.city} area. We request preservation of the driver's logs and the vehicle's electronic data, identify the motor carrier and its insurer, and document injuries with the physicians who treated the victim.`,
       },
     },
     {
-      title: { es: 'Conductor sin seguro en ' + office.city, en: 'Uninsured driver in ' + office.city },
+      title: { es: 'Conductor sin seguro o con seguro insuficiente', en: 'Uninsured or underinsured driver' },
       description: {
-        es: `Víctima atropellada en ${signals.neighborhoods.es[1]} por conductor sin seguro. Activamos la cobertura UM/UIM de la propia póliza del cliente y obtuvimos compensación completa por gastos médicos y dolor.`,
-        en: `Victim hit in ${signals.neighborhoods.en[1]} by uninsured driver. We activated the client's own UM/UIM coverage and obtained full compensation for medical bills and pain.`,
+        es: `Cuando el conductor responsable no tiene seguro o su póliza no alcanza para cubrir los daños, revisamos la cobertura UM/UIM de la póliza del cliente y de familiares del mismo hogar, y presentamos el reclamo ante su propia aseguradora. Atendemos estos casos en ${signals.neighborhoods.es[1]} y en toda el área de ${office.city}.`,
+        en: `When the at-fault driver has no insurance or the policy is not enough to cover the damages, we review the UM/UIM coverage on the client's policy and on household relatives' policies, and file the claim with their own insurer. We handle these cases in ${signals.neighborhoods.en[1]} and throughout the ${office.city} area.`,
       },
     },
     {
-      title: { es: 'Resbalón y caída en establecimiento comercial', en: 'Slip and fall at commercial property' },
+      title: { es: 'Resbalones y caídas en establecimientos', en: 'Slip and fall at businesses' },
       description: {
-        es: `Cliente cayó en piso mojado sin señalización en una tienda en ${office.city}. Negociamos directamente con la aseguradora del establecimiento y conseguimos compensación por cirugía y rehabilitación.`,
-        en: `Client fell on unmarked wet floor at a ${office.city} store. We negotiated directly with the property's insurer and obtained compensation for surgery and rehabilitation.`,
+        es: `Atendemos reclamos por caídas en tiendas, estacionamientos y edificios de ${office.city} donde había un peligro sin señalizar. Solicitamos el video de vigilancia antes de que se borre, el reporte interno del incidente y los registros de mantenimiento, y notificamos al dueño de la propiedad y a su aseguradora.`,
+        en: `We handle claims for falls in ${office.city} stores, parking lots, and buildings where a hazard was left unmarked. We request the surveillance video before it is erased, the internal incident report, and maintenance records, and put the property owner and its insurer on notice.`,
       },
     },
   ];
@@ -612,24 +614,24 @@ function accidentesCases(office: OfficeInfo, signals: CityLocalSignals): Typical
 function defensaDeportacionCases(office: OfficeInfo, signals: CityLocalSignals): TypicalCase[] {
   return [
     {
-      title: { es: 'Cancelación de remoción "10 años"', en: '"10-year" cancellation of removal' },
+      title: { es: 'Cancelación de remoción para no residentes', en: 'Cancellation of removal for non-residents' },
       description: {
-        es: `Padre de 3 niños ciudadanos vivía en ${office.city} desde 2010. En la ${signals.immigrationCourtName} demostramos la dificultad excepcional para sus hijos. Juez concedió la residencia.`,
-        en: `Father of 3 US citizen children lived in ${office.city} since 2010. At the ${signals.immigrationCourtName} we proved exceptional hardship to his children. Judge granted residency.`,
+        es: `Preparamos solicitudes de cancelación de remoción ante la ${signals.immigrationCourtName} para personas con más de diez años en el país que deben probar dificultad excepcional y extremadamente inusual a un familiar ciudadano o residente. Reunimos la evidencia médica, escolar y económica de la familia en ${office.city}.`,
+        en: `We prepare cancellation of removal applications before the ${signals.immigrationCourtName} for people with more than ten years in the country who must prove exceptional and extremely unusual hardship to a citizen or resident family member. We gather the family's medical, school, and financial evidence in ${office.city}.`,
       },
     },
     {
-      title: { es: 'Fianza obtenida en 48 horas', en: 'Bond obtained in 48 hours' },
+      title: { es: 'Audiencias de fianza de inmigración', en: 'Immigration bond hearings' },
       description: {
-        es: `Cliente detenido por ICE durante visita rutinaria a oficina USCIS. Trasladado a ${signals.detentionFacilities[0]}. Logramos audiencia de fianza expedita y liberación con $5,000 de fianza.`,
-        en: `Client detained by ICE during routine USCIS office visit. Transferred to ${signals.detentionFacilities[0]}. We secured an expedited bond hearing and release with $5,000 bond.`,
+        es: `Cuando ICE detiene a alguien del área de ${office.city} y lo traslada a ${signals.detentionFacilities[0]}, localizamos a la persona, revisamos si la ley permite fianza en su caso y solicitamos la audiencia. Presentamos evidencia de arraigo comunitario, cartas de apoyo y comprobantes de domicilio y empleo.`,
+        en: `When ICE detains someone from the ${office.city} area and transfers them to ${signals.detentionFacilities[0]}, we locate the person, review whether the law allows bond in their case, and request the hearing. We present evidence of community ties, support letters, and proof of address and employment.`,
       },
     },
     {
-      title: { es: 'Reapertura tras orden in absentia', en: 'Reopening after in absentia order' },
+      title: { es: 'Órdenes de deportación en ausencia', en: 'In absentia removal orders' },
       description: {
-        es: `Cliente de ${office.city} recibió orden de deportación en ausencia por no recibir notificación. Presentamos moción de reapertura mostrando dirección incorrecta — caso reabierto.`,
-        en: `${office.city} client received in absentia deportation order due to not receiving notice. We filed motion to reopen showing incorrect address — case reopened.`,
+        es: `Atendemos mociones para reabrir el caso de personas que recibieron una orden de deportación en ausencia porque la notificación de la corte nunca llegó a su domicilio. Revisamos el expediente de la ${signals.immigrationCourtName}, la dirección registrada y el plazo que aplica a cada motivo de reapertura.`,
+        en: `We handle motions to reopen for people who received an in absentia removal order because the court notice never reached their address. We review the ${signals.immigrationCourtName} record, the address on file, and the deadline that applies to each ground for reopening.`,
       },
     },
   ];
@@ -638,24 +640,24 @@ function defensaDeportacionCases(office: OfficeInfo, signals: CityLocalSignals):
 function visaUCases(office: OfficeInfo, signals: CityLocalSignals): TypicalCase[] {
   return [
     {
-      title: { es: 'Víctima de robo a mano armada', en: 'Armed robbery victim' },
+      title: { es: 'Víctimas de crímenes violentos', en: 'Victims of violent crime' },
       description: {
-        es: `Cliente atacado en ${signals.neighborhoods.es[2]}. Coordinamos certificación con ${signals.policeDept}. Aprobada determinación Bona Fide — permiso de trabajo emitido.`,
-        en: `Client attacked in ${signals.neighborhoods.en[2]}. We coordinated certification with ${signals.policeDept}. Bona Fide determination approved — work permit issued.`,
+        es: `Atendemos solicitudes de Visa U de personas que fueron víctimas de robo con violencia, agresión u otro delito calificado en ${signals.neighborhoods.es[2]} y el resto de ${office.city}. Solicitamos la certificación del suplemento B a la agencia que investigó el caso, normalmente ${signals.policeDept}, y armamos la evidencia del daño sufrido.`,
+        en: `We handle U Visa applications for people who were victims of robbery, assault, or another qualifying crime in ${signals.neighborhoods.en[2]} and the rest of ${office.city}. We request the Supplement B certification from the agency that investigated the case, usually ${signals.policeDept}, and assemble the evidence of the harm suffered.`,
       },
     },
     {
-      title: { es: 'Violencia doméstica + Visa U', en: 'Domestic violence + U Visa' },
+      title: { es: 'Violencia doméstica reportada como crimen', en: 'Domestic violence reported as a crime' },
       description: {
-        es: `Cliente sufrió abuso de su pareja en ${office.city}. Reportó a la policía y obtuvo orden de protección. Visa U aprobada con cooperación documentada en investigación.`,
-        en: `Client suffered abuse from partner in ${office.city}. Reported to police and obtained protection order. U Visa approved with documented cooperation in investigation.`,
+        es: `Cuando la víctima de violencia doméstica en ${office.city} reportó el abuso y cooperó con la investigación, evaluamos la Visa U junto con otras opciones como VAWA y explicamos las diferencias entre ambas. También revisamos cómo se relaciona una orden de protección vigente con la solicitud.`,
+        en: `When a domestic violence victim in ${office.city} reported the abuse and cooperated with the investigation, we evaluate the U Visa alongside other options such as VAWA and explain the differences between them. We also review how an active protective order relates to the application.`,
       },
     },
     {
-      title: { es: 'Crimen de hace 8 años', en: 'Crime from 8 years ago' },
+      title: { es: 'Crímenes ocurridos hace varios años', en: 'Crimes from several years ago' },
       description: {
-        es: `Solicitud presentada por crimen ocurrido años antes. Trabajamos con ${signals.daOffice.es} para conseguir certificación retroactiva — caso aprobado.`,
-        en: `Application filed for crime from years prior. Worked with ${signals.daOffice.en} to secure retroactive certification — case approved.`,
+        es: `No existe plazo límite para solicitar la Visa U después del delito. Atendemos casos antiguos, en los que hay que localizar el expediente en ${signals.daOffice.es} o en el departamento de policía y pedir la certificación años después de que cerró la investigación.`,
+        en: `There is no filing deadline for the U Visa after the crime. We handle older cases, where the file must be located at the ${signals.daOffice.en} or the police department and the certification requested years after the investigation closed.`,
       },
     },
   ];
@@ -664,24 +666,24 @@ function visaUCases(office: OfficeInfo, signals: CityLocalSignals): TypicalCase[
 function asiloCases(office: OfficeInfo, signals: CityLocalSignals): TypicalCase[] {
   return [
     {
-      title: { es: 'Asilo afirmativo aprobado', en: 'Affirmative asylum approved' },
+      title: { es: 'Asilo afirmativo ante USCIS', en: 'Affirmative asylum before USCIS' },
       description: {
-        es: `Familia centroamericana huyendo de pandillas presentó I-589 dentro del año. Presentamos evidencia detallada y testimonios — aprobado tras entrevista.`,
-        en: `Central American family fleeing gangs filed I-589 within the year. We presented detailed evidence and testimony — approved after interview.`,
+        es: `Preparamos solicitudes I-589 de personas que viven en el área de ${office.city} y están dentro del plazo de un año desde su entrada a EE.UU. Trabajamos la declaración personal, la evidencia de las condiciones del país de origen y la preparación para la entrevista en la oficina de asilo.`,
+        en: `We prepare I-589 applications for people living in the ${office.city} area who are within the one-year deadline from their entry into the US. We work on the personal declaration, country conditions evidence, and preparation for the asylum office interview.`,
       },
     },
     {
       title: { es: 'Asilo defensivo en corte de ' + office.city, en: 'Defensive asylum in ' + office.city + ' court' },
       description: {
-        es: `Cliente en proceso de remoción en la ${signals.immigrationCourtName}. Presentamos asilo defensivo con expert witness en condiciones de país — concedido por el juez.`,
-        en: `Client in removal proceedings at ${signals.immigrationCourtName}. We filed defensive asylum with country conditions expert witness — granted by the judge.`,
+        es: `Cuando la persona ya está en proceso de remoción, presentamos el asilo directamente ante la ${signals.immigrationCourtName}: audiencia individual, testimonio del solicitante y, cuando el caso lo amerita, peritos en condiciones de país o evaluación psicológica.`,
+        en: `When the person is already in removal proceedings, we file asylum directly with the ${signals.immigrationCourtName}: individual hearing, applicant testimony and, when the case warrants it, country conditions experts or a psychological evaluation.`,
       },
     },
     {
-      title: { es: 'Excepción al plazo de 1 año', en: '1-year deadline exception' },
+      title: { es: 'Excepciones al plazo de 1 año', en: '1-year deadline exceptions' },
       description: {
-        es: `Cliente que llegó hacía 3 años pero recientemente vivió un cambio de circunstancias en su país. Argumentamos exitosamente la excepción al plazo — caso procesado.`,
-        en: `Client who arrived 3 years prior but recently experienced changed country circumstances. We successfully argued the deadline exception — case processed.`,
+        es: `Atendemos casos presentados después del año de haber entrado al país, donde hay que argumentar una excepción: cambio de circunstancias en el país de origen o circunstancias extraordinarias del solicitante. Analizamos qué excepción encaja y qué documentos la sostienen.`,
+        en: `We handle cases filed after the one-year mark from entering the country, where an exception must be argued: changed circumstances in the country of origin or extraordinary circumstances affecting the applicant. We analyze which exception fits and what documents support it.`,
       },
     },
   ];
@@ -690,24 +692,24 @@ function asiloCases(office: OfficeInfo, signals: CityLocalSignals): TypicalCase[
 function vawaCases(office: OfficeInfo, signals: CityLocalSignals): TypicalCase[] {
   return [
     {
-      title: { es: 'Auto-petición sin denuncia policial', en: 'Self-petition without police report' },
+      title: { es: 'Auto-petición sin denuncia policial', en: 'Self-petition without a police report' },
       description: {
-        es: `Víctima en ${office.city} no reportó el abuso por miedo. Documentamos el caso con registros de ${signals.hospitals[0]}, fotos y declaraciones de vecinos. VAWA aprobada.`,
-        en: `Victim in ${office.city} did not report abuse out of fear. We documented the case with ${signals.hospitals[0]} records, photos and neighbor statements. VAWA approved.`,
+        es: `Muchas víctimas nunca denunciaron el abuso. En esos casos documentamos la auto-petición I-360 con registros médicos de hospitales del área como ${signals.hospitals[0]}, fotografías, mensajes, declaraciones de personas cercanas y constancias de refugios de ${office.city}.`,
+        en: `Many victims never reported the abuse. In those cases we document the I-360 self-petition with medical records from area hospitals such as ${signals.hospitals[0]}, photographs, messages, statements from people close to the victim, and records from ${office.city} shelters.`,
       },
     },
     {
-      title: { es: 'VAWA para hombre víctima', en: 'VAWA for male victim' },
+      title: { es: 'VAWA para hombres víctimas', en: 'VAWA for male victims' },
       description: {
-        es: `Cliente masculino en ${office.city} abusado emocional y físicamente por esposa ciudadana. Auto-petición aprobada — residencia obtenida después.`,
-        en: `Male client in ${office.city} emotionally and physically abused by US citizen wife. Self-petition approved — residency obtained after.`,
+        es: `VAWA es neutral en cuanto al género. Atendemos auto-peticiones de hombres del área de ${office.city} abusados por su cónyuge ciudadana o residente, con los mismos requisitos de convivencia, buen carácter moral y evidencia de crueldad extrema.`,
+        en: `VAWA is gender-neutral. We handle self-petitions by men in the ${office.city} area abused by a citizen or resident spouse, under the same requirements of shared residence, good moral character, and evidence of extreme cruelty.`,
       },
     },
     {
       title: { es: 'VAWA para padres mayores', en: 'VAWA for elderly parents' },
       description: {
-        es: `Cliente de 67 años abusada por su hijo ciudadano americano. Probamos crueldad extrema y vinculo financiero forzado — aprobada como derivativa.`,
-        en: `67-year-old client abused by US citizen son. We proved extreme cruelty and forced financial dependency — approved as derivative.`,
+        es: `VAWA también cubre a padres y madres maltratados por un hijo o hija ciudadano estadounidense mayor de 21 años. Atendemos estos casos en ${office.city}; suelen involucrar dependencia económica y aislamiento, y explicamos qué evidencia sostiene el elemento de crueldad extrema.`,
+        en: `VAWA also covers parents abused by a US citizen son or daughter over 21. We handle these cases in ${office.city}; they usually involve financial dependence and isolation, and we explain what evidence supports the extreme cruelty element.`,
       },
     },
   ];

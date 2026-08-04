@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: isEs ? 'Derechos de Migrantes: Guías y Recursos Legales' : 'Migrant Rights: Legal Guides & Resources',
     description: isEs
-      ? 'Conozca sus derechos como migrante en Estados Unidos. Guías legales sobre protección, asilo, visas humanitarias y más del Abogado Manuel Solís.'
-      : 'Know your rights as a migrant in the United States. Legal guides on protection, asylum, humanitarian visas and more from Attorney Manuel Solis.',
+      ? 'Conozca sus derechos como migrante en Estados Unidos: qué hacer en una redada de ICE, cómo localizar a un detenido, defensa contra la deportación y sus derechos tras un accidente o lesión de trabajo.'
+      : 'Know your rights as a migrant in the United States: what to do in an ICE raid, how to locate a detained relative, deportation defense, and your rights after an accident or work injury.',
     alternates: {
       canonical: `${SITE_URL}/${lang}/category/derechos-de-migrantes`,
       languages: {
