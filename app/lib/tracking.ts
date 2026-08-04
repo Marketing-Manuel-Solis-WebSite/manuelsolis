@@ -15,6 +15,7 @@ import {
   collectMetaBrowserParams,
   firePixelPageView,
   generateMetaEventId,
+  hasFbpCookie,
 } from './metaPixel';
 
 // ─── Tipos ───
@@ -321,6 +322,60 @@ export async function trackConversion(
 // Dedup intra-sesión: no contar la misma URL dos veces si solo cambió el hash.
 let lastTrackedPath: string | null = null;
 
+// Espera máxima a que aparezca la cookie _fbp antes de mandar el beacon del
+// primer page view, y cadencia del sondeo. La escribe fbevents.js, que el
+// layout carga con lazyOnload: en la primera página de un visitante nuevo el
+// beacon salía siempre sin ese match key y el PageView server-side llegaba a
+// Meta solo con IP+UA (EMQ bajo).
+const FBP_WAIT_MAX_MS = 2500;
+const FBP_POLL_MS = 200;
+
+/**
+ * Manda el page view en cuanto exista _fbp, o al vencer FBP_WAIT_MAX_MS, o
+ * cuando el visitante abandona la página — lo que ocurra primero, una sola
+ * vez. El tope es deliberado: con el Pixel bloqueado la cookie no llega nunca
+ * y perder el page view sería peor que perder el match key.
+ */
+function postPageViewWithFbp(event: ConversionEvent, eventId: string): void {
+  const immediate = collectMetaBrowserParams();
+  if (immediate.fbp || !process.env.NEXT_PUBLIC_META_PIXEL_ID) {
+    event.meta = { eventId, ...immediate };
+    postEvent(event);
+    return;
+  }
+
+  let sent = false;
+  let pollId: ReturnType<typeof setInterval> | undefined;
+  let deadlineId: ReturnType<typeof setTimeout> | undefined;
+
+  function onVisibilityChange() {
+    if (document.visibilityState === 'hidden') send();
+  }
+
+  function cleanup() {
+    if (pollId !== undefined) clearInterval(pollId);
+    if (deadlineId !== undefined) clearTimeout(deadlineId);
+    window.removeEventListener('pagehide', send);
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+  }
+
+  function send() {
+    if (sent) return;
+    sent = true;
+    cleanup();
+    // Se relee al enviar: en la espera pueden haber aparecido _fbp y _fbc.
+    event.meta = { eventId, ...collectMetaBrowserParams() };
+    postEvent(event);
+  }
+
+  pollId = setInterval(() => {
+    if (hasFbpCookie()) send();
+  }, FBP_POLL_MS);
+  deadlineId = setTimeout(send, FBP_WAIT_MAX_MS);
+  window.addEventListener('pagehide', send);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+}
+
 export function trackPageView(label?: string): void {
   if (typeof window === 'undefined') return;
   const path = window.location.pathname + window.location.search;
@@ -328,10 +383,10 @@ export function trackPageView(label?: string): void {
   lastTrackedPath = path;
   // Un solo event_id por page view: el Pixel del navegador y el evento
   // que /api/conversions reenvía a la Conversions API llevan el MISMO
-  // id → Meta deduplica y no cuenta la visita dos veces.
+  // id → Meta deduplica y no cuenta la visita dos veces. El beacon puede
+  // salir con unos ms de retraso (espera de _fbp) sin afectar al dedup:
+  // el id ya está fijado aquí.
   const eventId = generateMetaEventId();
   firePixelPageView(eventId);
-  const event = buildBaseEvent('page_view', label);
-  event.meta = { eventId, ...collectMetaBrowserParams() };
-  postEvent(event);
+  postPageViewWithFbp(buildBaseEvent('page_view', label), eventId);
 }

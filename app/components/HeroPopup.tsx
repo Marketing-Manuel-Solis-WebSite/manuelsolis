@@ -2,13 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { m } from 'framer-motion';
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
+import { fireConversion } from '../lib/conversion';
 
 /**
  * Detained-relative popup — interactive island extracted from the Hero so the
  * Hero itself can render server-first. Behavior preserved EXACTLY from Fase 1A:
  * opens after a 7s delay OR scroll intent (whichever first), and a per-session
- * `sessionStorage` flag stops it re-opening once dismissed. Tracking unchanged.
+ * `sessionStorage` flag stops it re-opening once dismissed.
+ *
+ * Tracking: every event goes through `fireConversion` so the popup's funnel
+ * (open → cta → dismiss) reaches all five surfaces, and the `tel:` clicks land
+ * in Meta/TikTok as real Contact conversions instead of only the own ledger.
  *
  * A11y: appears without user action, so it must NOT steal focus nor trap it
  * (that would hijack a keyboard user mid-task). Hence no `useDialog`/`aria-modal`
@@ -20,12 +24,10 @@ export default function HeroPopup({ lang }: { lang: 'es' | 'en' }) {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    if (showPopup) {
-      pushToDataLayer('popup_open', {
-        popup_id: 'detained_relative',
-        page_url: typeof window !== 'undefined' ? window.location.pathname : '',
-      });
-    }
+    if (!showPopup) return;
+    fireConversion('popup_open', 'detained_relative', {
+      page_url: window.location.pathname,
+    });
   }, [showPopup]);
 
   useEffect(() => {
@@ -53,12 +55,14 @@ export default function HeroPopup({ lang }: { lang: 'es' | 'en' }) {
   }, []);
 
   const handleDetainedCallClick = (label: string) => {
-    pushToDataLayer('phone_click', { event_category: 'conversion', event_label: label });
-    trackConversion('phone_click', label);
+    fireConversion('phone_click', label, {
+      location: 'detained_popup',
+      popup_id: 'detained_relative',
+    });
   };
 
   const handleDismissPopup = () => {
-    pushToDataLayer('popup_dismiss', { popup_id: 'detained_relative' });
+    fireConversion('popup_dismiss', 'detained_relative');
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('detained_popup_dismissed', '1');
     }
@@ -66,7 +70,7 @@ export default function HeroPopup({ lang }: { lang: 'es' | 'en' }) {
   };
 
   const handlePopupCtaClick = (ctaLabel: 'client' | 'non_client') => {
-    pushToDataLayer('popup_cta_click', { popup_id: 'detained_relative', cta_label: ctaLabel });
+    fireConversion('popup_cta_click', 'detained_relative', { cta_label: ctaLabel });
     handleDetainedCallClick(ctaLabel === 'client' ? 'detained_popup_client' : 'detained_popup_non_client');
   };
 

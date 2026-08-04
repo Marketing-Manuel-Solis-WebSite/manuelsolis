@@ -7,7 +7,7 @@ import {
   type StoredEvent,
   type StoredEventType,
 } from '../../lib/analyticsStore';
-import { sendMetaCapiEvents } from '../../lib/metaCapi';
+import { metaEventNameForConversion, sendMetaCapiEvents } from '../../lib/metaCapi';
 import { verifyConversionsApiKey } from '../../lib/newsletter/auth';
 
 /**
@@ -199,10 +199,16 @@ export async function POST(request: NextRequest) {
 
     // userAgent es obligatorio: la Conversions API rechaza eventos
     // action_source=website sin client_user_agent (subcode 2804019).
-    if (entry.type === 'page_view' && metaEventId && userAgent && capiEnvOk) {
+    //
+    // El espejo cubre también las conversiones de negocio (Lead, Contact,
+    // InitiateCheckout), no solo PageView: sin él un bloqueador de anuncios
+    // borra la señal de conversión entera. El dedup lo garantiza el eventId,
+    // que es el mismo que fireConversion() pasó al Pixel del navegador.
+    const capiEventName = metaEventNameForConversion(entry.type);
+    if (capiEventName && metaEventId && userAgent && capiEnvOk) {
       const eventSourceUrl = `https://${entry.domain}${entry.path || '/'}`;
       const capiEvent = {
-        eventName: 'PageView' as const,
+        eventName: capiEventName,
         eventId: metaEventId,
         eventSourceUrl,
         clientIpAddress: ip !== 'anonymous' ? ip : undefined,

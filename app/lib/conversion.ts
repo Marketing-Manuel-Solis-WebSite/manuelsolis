@@ -34,7 +34,10 @@ export type FireConversionType =
   | ConversionType
   | 'popup_open'
   | 'popup_dismiss'
-  | 'popup_cta_click';
+  | 'popup_cta_click'
+  // Sin entrada en PIXEL_MAP a propósito: un alta de boletín no es un lead y
+  // mandarla a Meta como tal contaminaría la optimización de las campañas.
+  | 'newsletter_signup';
 
 export interface FireConversionMeta {
   /** Optional structured params that ride along to dataLayer + Vercel. */
