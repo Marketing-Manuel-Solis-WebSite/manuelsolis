@@ -14,7 +14,9 @@ export const revalidate = 3600;
 
 // --- CONFIGURACIÓN DEL SITIO ---
 const SITE_URL = 'https://www.manuelsolis.com';
-const DEFAULT_OG_IMAGE = `${SITE_URL}/blog/visa-u.png`;
+// Imagen genérica del sitio (1200x630, las dimensiones que declara el OG): la
+// portada del índice no debe ser la imagen de un post concreto.
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
 
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
 export const BLOG_DATA = {
@@ -741,6 +743,17 @@ export const BLOG_DATA = {
   }
 };
 
+/**
+ * BLOG_DATA.posts está en el orden en que se fueron añadiendo (con posts de mayo
+ * intercalados entre los de abril): cualquier superficie que muestre "lo último"
+ * —feed, schema del índice, RSS— debe consumir esta lista ya ordenada de la
+ * fecha más reciente a la más antigua. `date` es ISO ('2026-07-03'), así que
+ * comparar como texto ordena igual que por fecha.
+ */
+export const BLOG_POSTS_BY_DATE_DESC = [...BLOG_DATA.posts].sort((a, b) =>
+  b.date.localeCompare(a.date)
+);
+
 // --- METADATA SEO POTENCIADA ---
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -808,7 +821,7 @@ const getBlogSchema = (lang: string) => {
         "url": `${SITE_URL}/logo-manuel-solis.png`
       }
     },
-    "blogPost": BLOG_DATA.posts.map(post => ({
+    "blogPost": BLOG_POSTS_BY_DATE_DESC.map(post => ({
       "@type": "BlogPosting",
       "headline": post.title[lang as 'es'|'en'],
       "description": post.excerpt[lang as 'es'|'en'],
@@ -831,7 +844,7 @@ export default async function BlogPageIndex({ params }: { params: Promise<{ lang
   // Resolve to the active locale on the server (enfoque b → the inactive
   // locale never reaches the BlogFeed island). BLOG_DATA stays bilingual
   // (consumed elsewhere, e.g. newsletter/blogIndex).
-  const resolvedPosts = BLOG_DATA.posts.map((p) => ({
+  const resolvedPosts = BLOG_POSTS_BY_DATE_DESC.map((p) => ({
     id: p.id,
     slug: p.slug,
     title: p.title[currentLang],

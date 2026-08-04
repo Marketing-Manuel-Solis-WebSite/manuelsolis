@@ -25,12 +25,16 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ post, lang }: BlogCardProps) {
+  // `post.date` es una fecha ISO sin hora ('2026-07-03'): se interpreta como
+  // medianoche UTC, así que hay que formatearla en UTC para que el servidor y
+  // los visitantes al oeste de Greenwich vean el mismo día.
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
+      timeZone: 'UTC',
     };
     return date.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', options);
   };
@@ -43,7 +47,7 @@ export default function BlogCard({ post, lang }: BlogCardProps) {
           {/* Imagen */}
           <div className="relative aspect-video overflow-hidden bg-gray-900">
             <Image
-              src={post.image || '/placeholder.jpg'}
+              src={post.image || '/og-default.jpg'}
               alt={post.title}
               fill
               loading="lazy"

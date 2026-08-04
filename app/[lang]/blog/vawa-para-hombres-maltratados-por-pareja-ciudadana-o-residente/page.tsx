@@ -265,7 +265,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
       ],
       type: 'article',
-      publishedTime: '2026-01-20T08:00:00.000Z',
+      publishedTime: '2026-01-30T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Immigration',
       tags: [
