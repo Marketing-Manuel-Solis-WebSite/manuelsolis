@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState } from 'react'
 import { useLanguage } from '../context/LanguageContext'
-import { useSearchParams } from 'next/navigation'
 import { m, AnimatePresence, Variants } from 'framer-motion'
-import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle } from 'lucide-react'
+import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle, type LucideIcon } from 'lucide-react'
 import { fireConversion } from '../lib/conversion'
 import { getEffectiveUtms, effectiveUtmsToLeadFields } from '../lib/attribution'
 
@@ -12,6 +11,11 @@ import { getEffectiveUtms, effectiveUtmsToLeadFields } from '../lib/attribution'
 // viven en el wrapper de servidor (ContactForm.tsx); aquí quedan el submit, la
 // validación, la atribución (UTM/click IDs) y el evento de conversión. Es el
 // único camino de captura de leads del sitio: no romperlo.
+//
+// Sin hooks de navegación (useSearchParams): eso forzaría un boundary de
+// Suspense y el formulario saldría del HTML prerenderizado de las ~65 páginas
+// estáticas. Los click IDs se leen de window.location.search en el submit,
+// igual que readTouchFromUrl() en lib/attribution.ts.
 const API_URL = '/api/lead-capture';
 // Vercel BotID protection for /api/lead-capture is registered in
 // instrumentation-client.ts and verified server-side via checkBotId()
@@ -27,9 +31,34 @@ const itemVar: Variants = {
   visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const NeonInput = (props: any) => {
-  const { icon: Icon, name, type = "text", placeholder, value, onChange, required = false, isTextArea = false } = props;
+interface NeonInputProps {
+  icon: LucideIcon;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  /** Nombre accesible del campo, renderizado como <label> sr-only. Si se omite,
+   *  quien lo usa DEBE asociar su propio <label htmlFor={name}>: el control no
+   *  lleva ningún otro nombre (el placeholder no cuenta). */
+  label?: string;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+  isTextArea?: boolean;
+  autoComplete?: string;
+}
+
+const NeonInput = ({
+  icon: Icon,
+  name,
+  value,
+  onChange,
+  label,
+  type = 'text',
+  placeholder,
+  required = false,
+  isTextArea = false,
+  autoComplete,
+}: NeonInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const baseClasses = `w-full bg-[#000510]/60 border rounded-xl py-4 pl-12 pr-4 text-white font-medium placeholder-slate-500 focus:outline-none transition-colors z-10 relative
@@ -37,6 +66,12 @@ const NeonInput = (props: any) => {
 
   return (
     <div className="relative group">
+      {label && (
+        <label htmlFor={name} className="sr-only">
+          {label}
+        </label>
+      )}
+
       <div className="absolute left-4 top-4 z-20 pointer-events-none text-[#64748b] group-focus-within:text-[#B2904D] transition-colors">
         <Icon size={20} />
       </div>
@@ -51,7 +86,7 @@ const NeonInput = (props: any) => {
           onBlur={() => setIsFocused(false)}
           required={required}
           aria-required={required}
-          aria-label={placeholder}
+          autoComplete={autoComplete}
           rows={5}
           className={`${baseClasses} resize-none`}
           placeholder={placeholder}
@@ -67,7 +102,7 @@ const NeonInput = (props: any) => {
           onBlur={() => setIsFocused(false)}
           required={required}
           aria-required={required}
-          aria-label={placeholder}
+          autoComplete={autoComplete}
           className={baseClasses}
           placeholder={placeholder}
         />
@@ -88,6 +123,12 @@ const NeonInput = (props: any) => {
 // Regla de teléfono replicada del servidor (leadCapture.ts PHONE_MIN_DIGITS):
 // si divergen, el usuario recibe un 400 que ya no puede accionar.
 const PHONE_MIN_DIGITS = 7;
+
+// Honeypot: campo que ninguna persona ve ni puede tabular. Si llega con
+// contenido, el envío es automatizado y se descarta en silencio (nunca se avisa
+// al bot). El nombre viaja también en el payload para que el route pueda
+// aplicar la misma regla server-side sin cambiar el cliente.
+const HONEYPOT_FIELD = 'website';
 
 interface BilingualMessage {
   es: string;
@@ -132,33 +173,32 @@ const TRANSPORT_ERROR_MESSAGE: BilingualMessage = {
   en: 'There was an issue sending your inquiry. Please try again later.',
 };
 
-function ContactFormContent() {
+export default function ContactFormClient() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
-  const searchParams = useSearchParams();
 
   const [formData, setFormData] = useState({
     first_name: '', last_name: '', phone: '', email: '', enquiry_detail: '',
     acceptedTerms: false, marketingConsent: false
   });
 
+  const [honeypot, setHoneypot] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [overlayMessage, setOverlayMessage] = useState<BilingualMessage>(TRANSPORT_ERROR_MESSAGE);
   const [fieldMessage, setFieldMessage] = useState<BilingualMessage | null>(null);
 
-  // El overlay de éxito NO se auto-oculta: el formulario queda vacío detrás y
-  // esconder la confirmación invita a un reenvío duplicado. Los errores sí,
-  // porque el usuario necesita el formulario de vuelta para reintentar.
-  useEffect(() => {
-    if (submitStatus !== 'error') return;
-    const timer = setTimeout(() => setSubmitStatus('idle'), 5000);
-    return () => clearTimeout(timer);
-  }, [submitStatus]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.acceptedTerms || isSubmitting) return;
+
+    // Honeypot relleno = envío automatizado. Se aparenta éxito para no darle
+    // señal al bot, pero no se hace POST ni se registra conversión.
+    if (honeypot.trim().length > 0) {
+      setFieldMessage(null);
+      setSubmitStatus('success');
+      return;
+    }
 
     // Misma regla que el servidor: atrapamos el teléfono corto antes de
     // gastar un envío que volvería como 400.
@@ -181,18 +221,17 @@ function ContactFormContent() {
     const eff = getEffectiveUtms();
     const utmData = effectiveUtmsToLeadFields(eff);
 
-    // Click IDs: el URL actual gana; si no está (el usuario navegó internamente
-    // y perdió el ?gclid=), recuperamos el persistido en la cookie msl_attr.
-    const clickIds = {
-      gclid: searchParams.get('gclid') || eff.gclid || null,
-      fbclid: searchParams.get('fbclid') || eff.fbclid || null,
-    };
-
+    let urlParams: URLSearchParams | null = null;
     let pageUrl = '';
     let sessionId: string | null = null;
 
     if (typeof window !== 'undefined') {
-      const hasParams = searchParams.toString().length > 0;
+      try {
+        urlParams = new URLSearchParams(window.location.search);
+      } catch {
+        urlParams = null;
+      }
+      const hasParams = (urlParams?.toString().length ?? 0) > 0;
       pageUrl = hasParams
         ? window.location.href
         : `${window.location.origin}${window.location.pathname}`;
@@ -203,11 +242,19 @@ function ContactFormContent() {
       }
     }
 
+    // Click IDs: el URL actual gana; si no está (el usuario navegó internamente
+    // y perdió el ?gclid=), recuperamos el persistido en la cookie msl_attr.
+    const clickIds = {
+      gclid: urlParams?.get('gclid') || eff.gclid || null,
+      fbclid: urlParams?.get('fbclid') || eff.fbclid || null,
+    };
+
     try {
       const payload = {
         ...formData,
         ...utmData,
         ...clickIds,
+        [HONEYPOT_FIELD]: honeypot,
         page_url: pageUrl,
         language: lang,
         session_id: sessionId,
@@ -273,6 +320,10 @@ function ContactFormContent() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
 
       <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
+        {/* Ni el éxito ni el error se auto-ocultan: el éxito esconde un
+            formulario ya vacío (invita al reenvío duplicado) y un error que
+            desaparece solo deja al usuario sin saber qué pasó. Ambos se cierran
+            con el botón. */}
         <AnimatePresence>
           {submitStatus !== 'idle' && (
             <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-[#001540]/98 flex flex-col items-center justify-center text-center rounded-[2rem]" role="alert" aria-live="assertive">
@@ -298,6 +349,13 @@ function ContactFormContent() {
                   </m.div>
                   <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">{t('Error de Envío', 'Submission Error')}</h3>
                   <p className="text-red-200 max-w-md px-6">{t(overlayMessage.es, overlayMessage.en)}</p>
+                  <button
+                    type="button"
+                    onClick={() => setSubmitStatus('idle')}
+                    className="mt-8 rounded-xl border border-[#B2904D]/50 px-6 py-3 text-xs font-bold uppercase tracking-widest text-[#B2904D] transition-colors hover:bg-[#B2904D] hover:text-[#001026] cursor-pointer"
+                  >
+                    {t('Volver al formulario', 'Back to the form')}
+                  </button>
                 </>
               )}
             </m.div>
@@ -306,24 +364,28 @@ function ContactFormContent() {
 
         <div className="grid md:grid-cols-2 gap-8">
           <m.div variants={itemVar}>
-            <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</label>
-            <div className="space-y-5">
-              <NeonInput icon={User} name="first_name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
-              <NeonInput icon={User} name="last_name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
-            </div>
+            <fieldset className="min-w-0 p-0">
+              <legend className="block p-0 text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</legend>
+              <div className="space-y-5">
+                <NeonInput icon={User} name="first_name" label={t('Nombre', 'First name')} autoComplete="given-name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
+                <NeonInput icon={User} name="last_name" label={t('Apellido', 'Last name')} autoComplete="family-name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
+              </div>
+            </fieldset>
           </m.div>
 
           <m.div variants={itemVar}>
-            <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</label>
-            <div className="space-y-5">
-              <NeonInput icon={Phone} name="phone" type="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
-              <NeonInput icon={Mail} name="email" type="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
-            </div>
+            <fieldset className="min-w-0 p-0">
+              <legend className="block p-0 text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</legend>
+              <div className="space-y-5">
+                <NeonInput icon={Phone} name="phone" type="tel" label={t('Teléfono', 'Phone number')} autoComplete="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
+                <NeonInput icon={Mail} name="email" type="email" label={t('Correo electrónico', 'Email address')} autoComplete="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
+              </div>
+            </fieldset>
           </m.div>
         </div>
 
         <m.div variants={itemVar}>
-          <label className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
+          <label htmlFor="enquiry_detail" className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
           <NeonInput icon={MessageSquare} name="enquiry_detail" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
         </m.div>
 
@@ -398,15 +460,24 @@ function ContactFormContent() {
             )}
           </button>
         </m.div>
+
+        {/* Honeypot. Va al final y en posición absoluta para no entrar en el
+            ritmo de space-y-8 del formulario. aria-hidden + tabIndex -1: no es
+            un campo real, así que nadie con teclado o lector de pantalla llega
+            a él; los bots que rellenan todo input sí. */}
+        <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden">
+          <label htmlFor={HONEYPOT_FIELD}>{t('No rellene este campo', 'Do not fill in this field')}</label>
+          <input
+            id={HONEYPOT_FIELD}
+            type="text"
+            name={HONEYPOT_FIELD}
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
       </form>
     </m.div>
-  )
-}
-
-export default function ContactFormClient() {
-  return (
-    <Suspense fallback={<div className="py-10 w-full flex justify-center items-center"><Zap className="animate-spin text-[#B2904D]" size={40} /></div>}>
-      <ContactFormContent />
-    </Suspense>
   )
 }

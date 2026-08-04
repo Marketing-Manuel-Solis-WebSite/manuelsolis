@@ -22,6 +22,7 @@
  *
  * See DISCOVERY_v3.md §10.4 for the contract.
  */
+import { createHash } from 'node:crypto';
 
 const DEFAULT_LEAD_ENDPOINT = 'https://bos.manuelsolis.com/lead/manuelsolis';
 
@@ -155,6 +156,68 @@ export function buildEnquiryDetail(detail: string | undefined, source: string): 
   const base = (detail ?? '').trim();
   if (!source || isSentinelSource(source)) return base;
   return base ? `${base} | Fuente: ${source}` : `Fuente: ${source}`;
+}
+
+const CANONICAL_ORIGIN = 'https://www.manuelsolis.com';
+const PAGE_URL_MAX_LENGTH = 500;
+
+// Hosts propios. `page_url` llega del cliente y de ella se derivan el área de
+// práctica, la oficina y la atribución que BOS parsea de la URL: una cadena
+// con cualquier host no puede decidir esos datos de negocio.
+const PRODUCTION_PAGE_URL_HOSTS = new Set(['www.manuelsolis.com', 'manuelsolis.com']);
+const NON_PRODUCTION_PAGE_URL_HOSTS = new Set(['localhost', '127.0.0.1']);
+
+function isOwnPageUrlHost(hostname: string): boolean {
+  const host = hostname.toLowerCase();
+  return (
+    PRODUCTION_PAGE_URL_HOSTS.has(host) ||
+    NON_PRODUCTION_PAGE_URL_HOSTS.has(host) ||
+    host.endsWith('.vercel.app')
+  );
+}
+
+/**
+ * Reduce `page_url` a una URL del sitio: siempre devuelve una absoluta sobre
+ * el origen canónico.
+ *
+ *   - Host propio (producción, preview o local) → se conserva ruta y query,
+ *     reescribiendo el origen al canónico.
+ *   - Pathname pelón ('/es/contacto') → se resuelve sobre el canónico.
+ *   - Cualquier otro host o esquema → se descarta por completo (incluida su
+ *     query, de donde saldría la atribución) y queda la raíz del sitio, así
+ *     que las inferencias devuelven null en lugar de un dato inventado.
+ */
+export function normalizePageUrl(raw: unknown): string {
+  const value = typeof raw === 'string' ? raw.trim() : '';
+  if (!value) return `${CANONICAL_ORIGIN}/`;
+
+  let parsed: URL;
+  try {
+    parsed = new URL(value, CANONICAL_ORIGIN);
+  } catch {
+    return `${CANONICAL_ORIGIN}/`;
+  }
+
+  const schemeOk = parsed.protocol === 'https:' || parsed.protocol === 'http:';
+  if (!schemeOk || !isOwnPageUrlHost(parsed.hostname)) {
+    return `${CANONICAL_ORIGIN}/`;
+  }
+
+  const withQuery = `${CANONICAL_ORIGIN}${parsed.pathname || '/'}${parsed.search}`;
+  if (withQuery.length <= PAGE_URL_MAX_LENGTH) return withQuery;
+
+  const withoutQuery = `${CANONICAL_ORIGIN}${parsed.pathname || '/'}`;
+  return withoutQuery.length <= PAGE_URL_MAX_LENGTH
+    ? withoutQuery
+    : withoutQuery.slice(0, PAGE_URL_MAX_LENGTH);
+}
+
+function pathnameOf(absoluteUrl: string): string {
+  try {
+    return new URL(absoluteUrl).pathname;
+  } catch {
+    return '';
+  }
 }
 
 export function inferPracticeArea(pathname: string): string | null {
@@ -320,19 +383,15 @@ export function mapFormToPayload(input: LeadFormInput): LeadPayload {
 
   const detail = buildEnquiryDetail(input.enquiry_detail, source);
 
-  // Derive a pathname for inference. Accept either a full URL or
-  // a bare pathname.
-  let pathname = '';
-  try {
-    pathname = new URL(input.page_url).pathname;
-  } catch {
-    pathname = input.page_url || '';
-  }
+  // La URL del cliente solo cuenta si es del sitio: de ella salen el área de
+  // práctica, la oficina y la atribución que se manda al destino.
+  const pageUrl = normalizePageUrl(input.page_url);
+  const pathname = pathnameOf(pageUrl);
 
   // BOS extrae la atribución parseando la URL, no los campos utm_*.
   // Garantizamos que la URL SIEMPRE lleve UTMs (reales o los slugs de
   // tráfico propio: sitio-web / directo).
-  const urlWithUtms = injectUtmsIntoUrl(input.page_url, {
+  const urlWithUtms = injectUtmsIntoUrl(pageUrl, {
     source,
     medium,
     campaign,
@@ -378,8 +437,19 @@ export interface PostLeadOptions {
   endpoint?: string;
   maxAttempts?: number;
   baseDelayMs?: number;
+  /** Tope por intento. Sin él, un destino que no responde cuelga el form. */
+  timeoutMs?: number;
+  /** Tope de todos los intentos juntos, incluidas las esperas del backoff. */
+  totalTimeoutMs?: number;
+  /** Override de la clave derivada del payload (solo para pruebas). */
+  idempotencyKey?: string;
   signal?: AbortSignal;
 }
+
+// El usuario espera esta respuesta con el formulario en "Procesando...", así
+// que el presupuesto total acota los intentos: cabe un reintento completo.
+const DEFAULT_ATTEMPT_TIMEOUT_MS = 8000;
+const DEFAULT_TOTAL_TIMEOUT_MS = 12000;
 
 export interface PostLeadResult {
   ok: boolean;
@@ -393,17 +463,47 @@ function getEndpoint(opts: PostLeadOptions): string {
 }
 
 /**
+ * Clave de idempotencia de un envío, para que el destino pueda descartar el
+ * duplicado cuando persistió el lead pero respondió 5xx o no respondió.
+ *
+ * Se deriva SOLO del contenido del lead y de la sesión: un reintento del mismo
+ * envío tiene que producir exactamente la misma clave, así que nada de
+ * aleatoriedad ni de reloj.
+ */
+export function buildIdempotencyKey(payload: LeadPayload): string {
+  const material = [
+    payload.session_id ?? '',
+    payload.email.toLowerCase(),
+    payload.phone.replace(/\D/g, ''),
+    payload.first_name.toLowerCase(),
+    payload.last_name.toLowerCase(),
+    payload.enquiry_detail,
+    payload.page_url,
+  ].join('|');
+  return createHash('sha256').update(material).digest('hex').slice(0, 32);
+}
+
+/** Aborta el intento por su propio tope sin perder el signal del caller. */
+function attemptSignal(timeoutMs: number, external?: AbortSignal): AbortSignal {
+  const timeout = AbortSignal.timeout(timeoutMs);
+  return external ? AbortSignal.any([external, timeout]) : timeout;
+}
+
+/**
  * POSTs the payload to the lead destination with bounded retries.
  *
  * Retry policy:
- *   - Network errors: retry with exponential backoff.
+ *   - Network errors and timeouts: retry with exponential backoff.
  *   - 5xx responses:  retry with exponential backoff.
  *   - 4xx responses:  fail fast (no retry).
  *
- * Default cap: 3 attempts, base delay 200ms (so total worst-case
- * wait is ~600ms before final failure). Designed to fit comfortably
- * inside Vercel's default 300s function budget without keeping the
- * user waiting on UI.
+ * Default cap: 3 attempts, base delay 200ms, 8s por intento y 12s para el
+ * conjunto — el usuario está esperando la respuesta del formulario, así que
+ * los intentos que no caben en el presupuesto no se hacen.
+ *
+ * Todos los intentos van con la MISMA cabecera Idempotency-Key: si el destino
+ * ya guardó el lead y respondió 5xx (o no respondió), el reintento es
+ * reconocible como el mismo envío y no como un lead nuevo.
  */
 export async function postLead(
   payload: LeadPayload,
@@ -412,20 +512,30 @@ export async function postLead(
   const endpoint = getEndpoint(options);
   const maxAttempts = options.maxAttempts ?? 3;
   const baseDelayMs = options.baseDelayMs ?? 200;
+  const attemptTimeoutMs = options.timeoutMs ?? DEFAULT_ATTEMPT_TIMEOUT_MS;
+  const totalTimeoutMs = options.totalTimeoutMs ?? DEFAULT_TOTAL_TIMEOUT_MS;
+  const idempotencyKey = options.idempotencyKey ?? buildIdempotencyKey(payload);
+  const startedAt = Date.now();
 
   let lastError: string | undefined;
   let lastStatus: number | undefined;
+  let attemptsMade = 0;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const remainingMs = totalTimeoutMs - (Date.now() - startedAt);
+    if (remainingMs <= 0) break;
+    attemptsMade = attempt;
+
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'Idempotency-Key': idempotencyKey,
         },
         body: JSON.stringify(payload),
-        signal: options.signal,
+        signal: attemptSignal(Math.min(attemptTimeoutMs, remainingMs), options.signal),
       });
 
       if (response.ok) {
@@ -483,10 +593,13 @@ export async function postLead(
           timestamp: new Date().toISOString(),
         }),
       );
+      // Abortó el caller (no nuestro tope): reintentar ya no sirve a nadie.
+      if (options.signal?.aborted) break;
     }
 
     if (attempt < maxAttempts) {
       const delay = baseDelayMs * Math.pow(2, attempt - 1);
+      if (Date.now() - startedAt + delay >= totalTimeoutMs) break;
       await new Promise((r) => setTimeout(r, delay));
     }
   }
@@ -497,9 +610,10 @@ export async function postLead(
   console.error(
     JSON.stringify({
       event: 'lead_capture_failed_final',
-      attempts: maxAttempts,
+      attempts: attemptsMade,
       status: lastStatus,
       error: lastError,
+      idempotency_key: idempotencyKey,
       name: payload.name,
       phone: payload.phone,
       email: payload.email,
@@ -510,7 +624,7 @@ export async function postLead(
 
   return {
     ok: false,
-    attempts: maxAttempts,
+    attempts: attemptsMade,
     status: lastStatus,
     error: lastError ?? 'Unknown',
   };

@@ -37,17 +37,31 @@ export async function POST(request: NextRequest) {
 
     // Vercel BotID — Basic Detection in report-only mode by default.
     // Promote to BOTID_MODE=block after 7 days if false-positive rate is OK.
-    const botMode = process.env.BOTID_MODE ?? 'report-only';
+    //
+    // Bloquear exige que el cliente esté inicializado
+    // (NEXT_PUBLIC_BOTID_CLIENT_ENABLED, ver instrumentation-client.ts): sin
+    // él el fetch del navegador no lleva challenge y checkBotId() marca como
+    // bot al tráfico legítimo, así que BOTID_MODE=block a solas devolvería 403
+    // al 100% de las altas. En esa configuración se registra pero no bloquea.
+    const botidClientEnabled = process.env.NEXT_PUBLIC_BOTID_CLIENT_ENABLED === 'true';
+    const configuredBotMode = process.env.BOTID_MODE ?? 'report-only';
+    const botBlockDowngraded = configuredBotMode === 'block' && !botidClientEnabled;
+    const botMode = botBlockDowngraded ? 'report-only' : configuredBotMode;
     const verification = await checkBotId();
     if (verification.isBot) {
-      console.warn(JSON.stringify({
+      const detection = JSON.stringify({
         event: 'botid_detected',
         endpoint: '/api/newsletter/subscribe',
         mode: botMode,
+        configured_mode: configuredBotMode,
+        client_enabled: botidClientEnabled,
+        downgraded: botBlockDowngraded,
         timestamp: new Date().toISOString(),
         ip,
         ua: request.headers.get('user-agent') ?? null,
-      }));
+      });
+      if (botBlockDowngraded) console.error(detection);
+      else console.warn(detection);
       if (botMode === 'block') {
         return NextResponse.json(
           { success: false, error: 'Access denied' },
@@ -95,6 +109,19 @@ export async function POST(request: NextRequest) {
         'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
       },
     });
+
+    // Traza de la alta para conciliar el funnel de suscripción. El evento de
+    // conversión lo dispara el cliente con fireConversion() tras el response.ok
+    // (el ledger propio se alimenta desde ahí, no desde aquí, para no contar
+    // dos veces la misma suscripción). Sin correo: es PII y no hace falta.
+    console.log(
+      JSON.stringify({
+        event: 'newsletter_subscribed',
+        language: language === 'en' ? 'en' : 'es',
+        has_name: Boolean(firstName),
+        timestamp: new Date().toISOString(),
+      }),
+    );
 
     return NextResponse.json({ success: true });
   } catch (error) {

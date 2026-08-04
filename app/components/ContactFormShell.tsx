@@ -27,7 +27,9 @@ export default function ContactFormShell({ lang }: { lang: Language }) {
             <span className="font-medium text-[#B2904D]">{isEs ? 'Consulta' : 'Consultation'}</span>
           </h2>
           <p className="text-lg text-blue-100 max-w-2xl mx-auto font-light leading-relaxed opacity-90">
-            {isEs ? 'Manténgase informado sobre actualizaciones e información importantes.' : 'Stay informed about important updates and information.'}
+            {isEs
+              ? 'Cuéntenos su caso y un miembro de nuestro equipo le contactará dentro de las próximas 24 horas hábiles.'
+              : 'Tell us about your case and a member of our team will contact you within the next business day.'}
           </p>
         </Reveal>
 

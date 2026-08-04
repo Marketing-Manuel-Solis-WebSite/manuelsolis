@@ -21,7 +21,9 @@ import {
  *   1. Rate-limit by IP (5 submissions/minute).
  *   2. Vercel BotID — Basic Detection (report-only by default).
  *   3. Validate + normalize the input via mapFormToPayload (pure).
- *   4. POST to LEAD_CAPTURE_ENDPOINT with retry/backoff via postLead.
+ *   4. POST to LEAD_CAPTURE_ENDPOINT via postLead: retry/backoff acotado por
+ *      timeout y con Idempotency-Key estable para que el reintento no
+ *      duplique el lead.
  *   5. Si el POST no llegó a entregarse, email de respaldo con el lead
  *      completo (opt-in vía LEAD_FALLBACK_EMAIL) para que no se pierda.
  *
@@ -47,19 +49,31 @@ export async function POST(request: NextRequest) {
     }
 
     // Vercel BotID — Basic Detection in report-only mode by default.
-    const botMode = process.env.BOTID_MODE ?? 'report-only';
+    //
+    // Bloquear exige que el cliente esté inicializado
+    // (NEXT_PUBLIC_BOTID_CLIENT_ENABLED, ver instrumentation-client.ts): sin
+    // él el fetch del navegador no lleva challenge y checkBotId() marca como
+    // bot al tráfico legítimo, así que BOTID_MODE=block a solas devolvería 403
+    // al 100% de los envíos. En esa configuración se registra pero no bloquea.
+    const botidClientEnabled = process.env.NEXT_PUBLIC_BOTID_CLIENT_ENABLED === 'true';
+    const configuredBotMode = process.env.BOTID_MODE ?? 'report-only';
+    const botBlockDowngraded = configuredBotMode === 'block' && !botidClientEnabled;
+    const botMode = botBlockDowngraded ? 'report-only' : configuredBotMode;
     const verification = await checkBotId();
     if (verification.isBot) {
-      console.warn(
-        JSON.stringify({
-          event: 'botid_detected',
-          endpoint: '/api/lead-capture',
-          mode: botMode,
-          timestamp: new Date().toISOString(),
-          ip,
-          ua: request.headers.get('user-agent') ?? null,
-        }),
-      );
+      const detection = JSON.stringify({
+        event: 'botid_detected',
+        endpoint: '/api/lead-capture',
+        mode: botMode,
+        configured_mode: configuredBotMode,
+        client_enabled: botidClientEnabled,
+        downgraded: botBlockDowngraded,
+        timestamp: new Date().toISOString(),
+        ip,
+        ua: request.headers.get('user-agent') ?? null,
+      });
+      if (botBlockDowngraded) console.error(detection);
+      else console.warn(detection);
       if (botMode === 'block') {
         return NextResponse.json(
           { success: false, error: 'Access denied' },
@@ -68,7 +82,26 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const body = (await request.json()) as Partial<LeadFormInput>;
+    const body = (await request.json()) as Partial<LeadFormInput> & {
+      website?: unknown;
+    };
+
+    // Honeypot: el campo `website` está oculto en el formulario, así que un
+    // humano nunca lo rellena. Se responde 200 sin entregar el lead — decirle
+    // al bot que fue detectado solo le enseña a evitar la trampa.
+    const honeypot = typeof body.website === 'string' ? body.website.trim() : '';
+    if (honeypot) {
+      console.warn(
+        JSON.stringify({
+          event: 'honeypot_triggered',
+          endpoint: '/api/lead-capture',
+          timestamp: new Date().toISOString(),
+          ip,
+          ua: request.headers.get('user-agent') ?? null,
+        }),
+      );
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
 
     // Server-side enrichment: derive device_type from UA and country
     // from Vercel/CDN headers, so the client doesn't need to fingerprint.
