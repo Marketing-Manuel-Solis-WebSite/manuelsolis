@@ -143,6 +143,30 @@ const sectionIcons: Record<string, React.ReactNode> = {
   section10: <HelpCircle size={20} />,
 }
 
+/* Fondo decorativo con @keyframes CSS (solo transform/opacity, corren en el
+   compositor) en lugar de loops infinitos de framer-motion, que ocupaban rAF
+   en el hilo principal durante toda la visita. La opacidad de reposo vive en
+   la clase porque los orbes no llevan utilidad de opacidad: con
+   `animation: none` (reduced-motion) volverian a opacity 1 y se verian mucho
+   mas brillantes que animados. */
+const BACKDROP_CSS = `
+  @keyframes tos-orb-blue {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+    50% { transform: translate(50px, -30px) scale(1.2); opacity: 0.5; }
+  }
+  @keyframes tos-orb-sky {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+    50% { transform: translate(-40px, 40px) scale(1.3); opacity: 0.4; }
+  }
+  @keyframes tos-wordmark { from { transform: translateX(20%); } to { transform: translateX(-20%); } }
+  .tos-orb-blue { opacity: 0.3; animation: tos-orb-blue 18s ease-in-out infinite both; }
+  .tos-orb-sky { opacity: 0.2; animation: tos-orb-sky 22s ease-in-out 2s infinite both; }
+  .tos-wordmark { animation: tos-wordmark 60s linear infinite alternate both; }
+  @media (prefers-reduced-motion: reduce) {
+    .tos-orb-blue, .tos-orb-sky, .tos-wordmark { animation: none; }
+  }
+`
+
 export default function TermsOfService() {
   const { language } = useLanguage()
   const lang = language as 'es' | 'en'
@@ -172,33 +196,21 @@ export default function TermsOfService() {
   }
 
   return (
-    <main className="relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden">
+    <main id="main-content" tabIndex={-1} className="relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden">
       <Header />
 
       {/* FONDO ANIMADO */}
-      <div className="fixed inset-0 z-0 w-full h-full bg-[#001540]">
+      <div aria-hidden="true" className="fixed inset-0 z-0 w-full h-full bg-[#001540] pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
         <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
-        <m.div
-          animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, -30, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]"
-        />
-        <m.div
-          animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.3, 1], x: [0, -40, 0], y: [0, 40, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]"
-        />
-        <m.div
-          initial={{ x: "20%" }}
-          animate={{ x: "-20%" }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear", repeatType: "mirror" }}
-          className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden"
-        >
+        <div className="tos-orb-blue absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]" />
+        <div className="tos-orb-sky absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]" />
+        <div className="tos-wordmark absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
           <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
             TERMS
           </span>
-        </m.div>
+        </div>
+        <style dangerouslySetInnerHTML={{ __html: BACKDROP_CSS }} />
       </div>
 
       {/* HERO SECTION */}

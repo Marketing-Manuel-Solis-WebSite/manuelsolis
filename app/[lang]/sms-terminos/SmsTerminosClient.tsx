@@ -3,6 +3,7 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm'
 import Image from 'next/image'
+import Link from 'next/link'
 import { MessageSquare, Shield, Mail, Phone, Clock, XOctagon } from 'lucide-react'
 
 // --- TEXTOS UI (TÉRMINOS SMS) ---
@@ -14,6 +15,12 @@ const interfaceTexts = {
     subtitle: {
       es: 'Programa de Notificaciones: Solís Law Notifications',
       en: 'Program Name: Solís Law Notifications'
+    },
+    // Fecha de la última modificación del texto legal de esta página. Se
+    // actualiza SOLO cuando cambia el contenido, nunca por cambios de diseño.
+    lastUpdated: {
+      es: 'Última actualización: 21 de marzo de 2026',
+      en: 'Last updated: March 21, 2026'
     },
   },
   section1: {
@@ -145,7 +152,7 @@ export default function SmsTerminosClient({ lang }: { lang: 'es' | 'en' }) {
   const parseText = (key: string) => parseContent(t(key));
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
+    <main id="main-content" tabIndex={-1} className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
       {/* =========================================================================
@@ -212,6 +219,7 @@ export default function SmsTerminosClient({ lang }: { lang: 'es' | 'en' }) {
                 <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
                   {t('hero.subtitle')}
                 </p>
+                <p className="text-sm mt-2 text-white/50">{t('hero.lastUpdated')}</p>
               </div>
 
               <div className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
@@ -304,11 +312,10 @@ export default function SmsTerminosClient({ lang }: { lang: 'es' | 'en' }) {
             <SectionTitle title={t('section6.title')} />
             <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner flex flex-col md:flex-row justify-between items-center gap-4">
                 <div dangerouslySetInnerHTML={{ __html: parseText('section6.content') }} />
-                {/* Asumiendo que 'Privacy Policy' es un enlace a otra página */}
-                <a href="/privacidad" className="flex items-center gap-2 px-4 py-2 bg-[#B2904D] text-[#001540] font-bold rounded-lg hover:bg-[#a08445] transition-colors whitespace-nowrap">
+                <Link href={`/${lang}/privacidad`} className="flex items-center gap-2 px-4 py-2 bg-[#B2904D] text-[#001540] font-bold rounded-lg hover:bg-[#a08445] transition-colors whitespace-nowrap">
                     <Shield size={20}/>
                     {t('section6.linkText')}
-                </a>
+                </Link>
             </div>
         </div>
 

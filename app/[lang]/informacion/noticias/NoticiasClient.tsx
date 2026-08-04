@@ -12,7 +12,7 @@ export default function NoticiasClient({ lang }: { lang: 'es' | 'en' }) {
       <Header />
 
       {/* --- CONTENIDO PRINCIPAL --- */}
-      <main className="flex-grow flex items-center justify-center relative pt-36 md:pt-44 pb-20 px-4">
+      <main id="main-content" tabIndex={-1} className="flex-grow flex items-center justify-center relative pt-36 md:pt-44 pb-20 px-4">
 
         {/* 1. FONDO (estático) */}
         <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
@@ -122,13 +122,13 @@ export default function NoticiasClient({ lang }: { lang: 'es' | 'en' }) {
             <div
                 className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-                <Link href="/" className="group relative px-8 py-4 bg-white text-[#002342] font-bold rounded-full overflow-hidden shadow-[0_5px_15px_rgba(255,255,255,0.1)] hover:shadow-[0_5px_20px_rgba(255,255,255,0.2)] transition-all">
+                <Link href={`/${lang}`} className="group relative px-8 py-4 bg-white text-[#002342] font-bold rounded-full overflow-hidden shadow-[0_5px_15px_rgba(255,255,255,0.1)] hover:shadow-[0_5px_20px_rgba(255,255,255,0.2)] transition-all">
                     <span className="relative z-10 flex items-center gap-2">
                         Volver al Inicio
                     </span>
                 </Link>
 
-                <Link href="/#oficinas" className="group relative px-8 py-4 text-[#B2904D] font-bold rounded-full overflow-hidden transition-all flex items-center justify-center gap-2 border-2 border-[#B2904D]/50 hover:border-[#B2904D]">
+                <Link href={`/${lang}#oficinas`} className="group relative px-8 py-4 text-[#B2904D] font-bold rounded-full overflow-hidden transition-all flex items-center justify-center gap-2 border-2 border-[#B2904D]/50 hover:border-[#B2904D]">
                      <span className="relative z-10 flex items-center gap-2">
                         Contactar <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </span>

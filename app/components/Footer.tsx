@@ -121,9 +121,9 @@ export default function Footer() {
           aria-label={language === 'es' ? 'Servicios por ciudad' : 'Services by city'}
           className="mb-12 border-b border-white/10 pb-10"
         >
-          <h2 className="text-center text-[11px] md:text-xs font-bold tracking-[0.25em] uppercase text-[#B2904D] mb-6">
+          <p className="text-center text-[11px] md:text-xs font-bold tracking-[0.25em] uppercase text-[#B2904D] mb-6">
             {language === 'es' ? 'Abogados por ciudad y servicio' : 'Attorneys by city and service'}
-          </h2>
+          </p>
           <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2 max-w-5xl mx-auto text-[11px] md:text-xs text-blue-100/60">
             {[
               { slug: 'abogado-inmigracion-houston', es: 'Inmigración Houston', en: 'Immigration Houston' },
@@ -175,7 +175,7 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM SECTION */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-blue-200/40">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-blue-200/70">
           
           {/* Categorías (Links secundarios) */}
           <div className="flex flex-wrap justify-center gap-4">
@@ -214,6 +214,16 @@ export default function Footer() {
         </div>
 
       </div>
+
+      {/* Reserva la altura de MobileStickyBar, que es `fixed` + `sm:hidden` y por
+          tanto solapa el final del pie por debajo de 640px. Va dentro del
+          <footer> (no en body) para que el hueco herede el fondo navy en vez de
+          mostrar el blanco del body. */}
+      <div
+        aria-hidden="true"
+        className="sm:hidden"
+        style={{ height: 'calc(3.5rem + env(safe-area-inset-bottom, 0px))' }}
+      />
 
       {/* BOTÓN "BACK TO TOP" */}
       <m.button

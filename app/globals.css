@@ -351,6 +351,24 @@
 }
 
 /* ============================================================
+   Accessibility: WCAG 2.2.2 — pause for auto-moving content
+   ============================================================
+   Marquees run >5s in parallel with other content, so they need a pause
+   mechanism (prefers-reduced-motion alone does not satisfy 2.2.2).
+   `animation-play-state` MUST stay a longhand here: the `animation:` shorthand
+   declared by Hero.tsx's inline <style> would reset it back to `running`, and
+   that stylesheet comes later in document order — the :hover/:focus-within
+   pseudo-class is what wins the cascade on specificity.
+   `:focus-within` also matches the element itself when it is focusable, which
+   is what makes the pause reachable by keyboard.
+   ============================================================ */
+.hero-marquee:hover,
+.hero-marquee:focus-within,
+.hero-marquee:focus-visible {
+  animation-play-state: paused;
+}
+
+/* ============================================================
    Focus visible for keyboard navigation
    ============================================================ */
 :focus-visible {

@@ -298,7 +298,7 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
   const parseText = (key: string) => parseContent(t(key));
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
+    <main id="main-content" tabIndex={-1} className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
       {/* =========================================================================

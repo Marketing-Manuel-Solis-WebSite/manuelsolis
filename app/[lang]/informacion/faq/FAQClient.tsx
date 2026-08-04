@@ -257,6 +257,39 @@ const faqDataBilingual = {
 };
 
 
+/* Fondo decorativo y barrido del H1 con @keyframes CSS en vez de loops
+   infinitos de framer-motion, que ocupaban rAF en el hilo principal durante
+   toda la visita. Notas:
+   - La opacidad de reposo vive en la clase porque los orbes no llevan utilidad
+     de opacidad: con `animation: none` (reduced-motion) volverian a opacity 1.
+   - `faq-title-sweep` es la unica que no anima transform/opacity: el brillo es
+     un gradiente recortado al texto (bg-clip-text), asi que solo se puede
+     mover con background-position. No dispara layout (solo repintado) y ya no
+     paga rAF. El ciclo de 7s = 5s de barrido + 2s de pausa (repeatDelay). */
+const BACKDROP_CSS = `
+  @keyframes faq-orb-blue {
+    0%, 100% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.1); opacity: 0.4; }
+  }
+  @keyframes faq-orb-sky {
+    0%, 100% { transform: scale(1); opacity: 0.15; }
+    50% { transform: scale(1.2); opacity: 0.3; }
+  }
+  @keyframes faq-wordmark { from { transform: translateX(60%); } to { transform: translateX(-160%); } }
+  @keyframes faq-title-sweep {
+    0% { background-position: -150% 0; }
+    71.43%, 100% { background-position: 150% 0; }
+  }
+  .faq-orb-blue { opacity: 0.2; animation: faq-orb-blue 10s ease-in-out infinite both; }
+  .faq-orb-sky { opacity: 0.15; animation: faq-orb-sky 15s ease-in-out 2s infinite both; }
+  .faq-wordmark { animation: faq-wordmark 80s linear infinite both; }
+  .faq-title-sweep { background-position: 150% 0; animation: faq-title-sweep 7s ease-in-out infinite both; }
+  .faq-title-sweep-late { animation-delay: 0.5s; }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-orb-blue, .faq-orb-sky, .faq-wordmark, .faq-title-sweep { animation: none; }
+  }
+`;
+
 export default function FAQClient() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
@@ -297,7 +330,7 @@ export default function FAQClient() {
   };
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
+    <main id="main-content" tabIndex={-1} className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -307,43 +340,24 @@ export default function FAQClient() {
       {/* =========================================================================
           FONDO ATMOSFÉRICO (Z-0) - OPTIMIZADO
       ========================================================================= */}
-      <div className="fixed inset-0 z-0 pointer-events-none w-full h-full transform-gpu">
+      <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none w-full h-full transform-gpu">
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
-         
+
          {/* Ruido sutil */}
          <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-         {/* Animaciones de Luz Optimizado: Blur reducido y will-change */}
-         <m.div 
-           animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1] }}
-           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-           style={{ willChange: "transform, opacity" }}
-           className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[80px]" 
-         />
-         <m.div 
-            animate={{ opacity: [0.15, 0.3, 0.15], scale: [1, 1.2, 1] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            style={{ willChange: "transform, opacity" }}
-            className="absolute bottom-0 left-0 w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[90px]" 
-         />
-         
-         {/* N Gigante (Opacidad muy baja y estática o will-change si se anima) */}
-         <m.div
-            initial={{ x: "60%" }} 
-            animate={{ x: "-160%" }} 
-            transition={{ 
-              duration: 80, 
-              repeat: Infinity, 
-              ease: "linear",
-              repeatType: "loop"
-            }}
-            style={{ willChange: "transform" }}
-            className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden"
-         >
+         {/* Animaciones de Luz: keyframes CSS sobre el compositor */}
+         <div className="faq-orb-blue absolute top-0 right-0 w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[80px]" />
+         <div className="faq-orb-sky absolute bottom-0 left-0 w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[90px]" />
+
+         {/* N Gigante */}
+         <div className="faq-wordmark absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
             <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
                N/\И/\
             </span>
-         </m.div>
+         </div>
+
+         <style dangerouslySetInnerHTML={{ __html: BACKDROP_CSS }} />
       </div>
       
       {/* =========================================================================
@@ -435,14 +449,12 @@ export default function FAQClient() {
                       <span className="text-[#B2904D] drop-shadow-xl">
                         {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
                       </span>
-                      <m.span 
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
-                        animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
-                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
-                        style={{ willChange: "background-position" }}
+                      <span
+                        aria-hidden="true"
+                        className="faq-title-sweep absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
                       >
                         {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
-                      </m.span>
+                      </span>
                     </m.span>
                   </span>
 
@@ -457,14 +469,12 @@ export default function FAQClient() {
                         <span className="text-[#B2904D] drop-shadow-xl">
                           QUESTIONS
                         </span>
-                        <m.span 
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
-                          animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
-                          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2, delay: 0.5 }}
-                          style={{ willChange: "background-position" }}
+                        <span
+                          aria-hidden="true"
+                          className="faq-title-sweep faq-title-sweep-late absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
                         >
                           QUESTIONS
-                        </m.span>
+                        </span>
                       </m.span>
                     </span>
                   )}

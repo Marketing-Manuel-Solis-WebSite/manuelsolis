@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'
 import { ChevronDown } from 'lucide-react'
@@ -564,26 +565,24 @@ export default function RecursosClient() {
       4: { es: 'PREGUNTAS 61 - 80', en: 'QUESTIONS 61 - 80' },
       5: { es: 'PREGUNTAS 81 - 100', en: 'QUESTIONS 81 - 100' },
       6: { es: 'PREGUNTAS 101 - 128', en: 'QUESTIONS 101 - 128' } // Corregido el rango
-    },
-    video: {
-      error: {
-        es: 'Tu navegador no soporta el elemento de video.',
-        en: 'Your browser does not support the video element.'
-      }
     }
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-white">
       <Header />
       
       {/* Hero Section */}
       <section className="relative pt-64 pb-64 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: 'url(/apretondemanos.png)',
-          }}
+        {/* Elemento LCP de la pagina: va por next/image (AVIF/WebP + preload)
+            en lugar de background-image, que el optimizador no puede tocar. */}
+        <Image
+          src="/apretondemanos.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/30"></div>
 
@@ -599,60 +598,42 @@ export default function RecursosClient() {
         </div>
       </section>
 
-      {/* Videos Section */}
+      {/* Questions Section */}
       <div className="container mx-auto px-4 py-16">
-        
-        <VideoSection
+
+        <QuestionsSection
           title={texts.sections[1][language]}
-          videoThumbnail="/testimonials/recursos-1.jpg"
-          videoUrl="https://manuelsolis.com/wp-content/uploads/2023/12/20-Civics-Test-Questions-PP.-I_1.mp4"
           questions={questions1to20}
-          videoError={texts.video.error[language]}
           buttonText={texts.accordion.button[language]}
         />
 
-        <VideoSection
+        <QuestionsSection
           title={texts.sections[2][language]}
-          videoThumbnail="/testimonials/recursos-2.jpg"
-          videoUrl="https://manuelsolis.com/wp-content/uploads/2023/12/20-Civics-Test-Questions-PP.-II_1.mp4"
           questions={questions21to40}
-          videoError={texts.video.error[language]}
           buttonText={texts.accordion.button[language]}
         />
 
-        <VideoSection
+        <QuestionsSection
           title={texts.sections[3][language]}
-          videoThumbnail="/testimonials/recursos-3.jpg"
-          videoUrl="https://manuelsolis.com/wp-content/uploads/2023/12/20-Ciivics-Questions-P-III_1.mp4"
           questions={questions41to60}
-          videoError={texts.video.error[language]}
           buttonText={texts.accordion.button[language]}
         />
 
-        <VideoSection
+        <QuestionsSection
           title={texts.sections[4][language]}
-          videoThumbnail="/testimonials/recursos-4.jpg"
-          videoUrl="https://manuelsolis.com/wp-content/uploads/2023/12/20-Civicts-Test-Questions-IV_1.mp4"
           questions={questions61to80}
-          videoError={texts.video.error[language]}
           buttonText={texts.accordion.button[language]}
         />
 
-        <VideoSection
+        <QuestionsSection
           title={texts.sections[5][language]}
-          videoThumbnail="/testimonials/recursos-5.jpg"
-          videoUrl="https://manuelsolis.com/wp-content/uploads/2023/12/20-Civics-Test-Questions-P-V_1.mp4"
           questions={questions81to100}
-          videoError={texts.video.error[language]}
           buttonText={texts.accordion.button[language]}
         />
 
-        <VideoSection
+        <QuestionsSection
           title={texts.sections[6][language]}
-          videoThumbnail="/testimonials/recursos-6.jpg"
-          videoUrl="https://manuelsolis.com/wp-content/uploads/2023/12/28-Civic-Test-Questions-P-VI_1.mp4"
           questions={questions101to128}
-          videoError={texts.video.error[language]}
           buttonText={texts.accordion.button[language]}
         />
 
@@ -663,42 +644,28 @@ export default function RecursosClient() {
   )
 }
 
-// Component for each video section
-function VideoSection({ 
-  title, 
-  videoThumbnail, 
-  videoUrl, 
+// Component for each block of questions.
+// Aqui vivian 6 <video> apuntando a /wp-content del WordPress retirado; esas
+// URLs las redirige seoRedirects.ts a la home, asi que no habia reproduccion
+// posible. El contenido equivalente (las 128 preguntas) esta en el acordeon.
+// Al recuperar los MP4 (blob store o YouTube), reintroducir el reproductor aqui.
+function QuestionsSection({
+  title,
   questions,
-  videoError,
   buttonText
-}: { 
+}: {
   title: string
-  videoThumbnail: string
-  videoUrl: string
   questions: any[]
-  videoError: string
   buttonText: string
 }) {
   return (
     <div className="mb-20 animate-fade-in-up">
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
-        
+
         <div className="bg-gradient-to-r from-[#B2904D] to-[#8B6F3E] p-6">
           <h2 className="text-2xl md:text-3xl font-bold text-white text-center">
             {title}
           </h2>
-        </div>
-
-        <div className="relative aspect-video bg-gray-900 group">
-          <video 
-            controls 
-            poster={videoThumbnail}
-            className="w-full h-full"
-            preload="metadata"
-          >
-            <source src={videoUrl} type="video/mp4" />
-            {videoError}
-          </video>
         </div>
 
         <AccordionSection questions={questions} buttonText={buttonText} />

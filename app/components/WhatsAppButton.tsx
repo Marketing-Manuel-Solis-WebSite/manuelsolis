@@ -10,7 +10,7 @@ const WHATSAPP_HIDDEN = false;
 export default function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
   // Se sigue usando useLanguage para el tooltip y manejo de texto general
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   if (WHATSAPP_HIDDEN) return null;
   
@@ -36,7 +36,10 @@ export default function WhatsAppButton() {
   };
 
   // Mensaje del Tooltip: Usamos el mensaje del cliente si existe, si no, uno por defecto
-  const tooltipMessage = t.whatsapp?.tooltip || '¡Chatea con nosotros!';
+  const tooltipMessage =
+    t.whatsapp?.tooltip || (language === 'es' ? '¡Chatea con nosotros!' : 'Chat with us!');
+
+  const ariaLabel = language === 'es' ? 'Contactar por WhatsApp' : 'Contact us on WhatsApp';
 
   return (
     <>
@@ -60,8 +63,12 @@ export default function WhatsAppButton() {
           onClick={handleClick}
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
-          className="group relative flex items-center justify-center w-16 h-16 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-3xl"
-          aria-label="Contact us on WhatsApp"
+          onFocus={() => setShowTooltip(true)}
+          onBlur={() => setShowTooltip(false)}
+          // Icono en navy (no blanco): sobre el verde de marca #25D366 el blanco
+          // da 1.99:1 y navy #001540 da 8.96:1 (WCAG AA), sin tocar el fondo.
+          className="group relative flex items-center justify-center w-16 h-16 bg-[#25D366] hover:bg-[#20BA5A] text-[#001540] rounded-full shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-3xl"
+          aria-label={ariaLabel}
         >
           {/* Icono de WhatsApp */}
           <MessageCircle className="w-8 h-8 relative z-10" strokeWidth={2} />

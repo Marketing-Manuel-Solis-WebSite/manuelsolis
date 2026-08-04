@@ -90,7 +90,9 @@ export default function MobileStickyBar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleWhatsAppClick}
-            className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#25D366] text-white font-bold text-sm active:bg-[#1da851] transition-colors"
+            // Texto en navy (no blanco): sobre #25D366 el blanco da 1.99:1;
+            // navy #001540 da 8.96:1 en reposo y 5.73:1 en :active (#1da851).
+            className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#25D366] text-[#001540] font-bold text-sm active:bg-[#1da851] transition-colors"
             aria-label={isEs ? 'Contactar por WhatsApp' : 'Contact via WhatsApp'}
           >
             <MessageCircle className="w-4 h-4" strokeWidth={2.25} />

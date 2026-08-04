@@ -138,7 +138,7 @@ export default async function NewsletterUnsubscribePage({
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[#001540]">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#001540]">
         <section className="relative pt-[160px] pb-24 overflow-hidden">
           <div
             className="absolute inset-0 opacity-[0.02] pointer-events-none"

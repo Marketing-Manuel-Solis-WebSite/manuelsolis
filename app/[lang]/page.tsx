@@ -101,7 +101,7 @@ export default async function Home({
   const currentLang = lang === 'en' ? 'en' : 'es';
 
   return (
-    <main id="main-content" className="min-h-screen bg-[#001540] grain">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#001540] grain">
       <Hero lang={currentLang} />
       <Header />
       <FraudWarningBanner lang={currentLang} />

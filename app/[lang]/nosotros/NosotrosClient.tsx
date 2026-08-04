@@ -5,6 +5,7 @@ import ContactForm from '../../components/ContactForm'
 import { Reveal } from '../../components/motion'
 import Image from 'next/image'
 import { Landmark, MapPin } from 'lucide-react'
+import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../lib/officesRegistry'
 
 /**
  * Nosotros — server-first (Fase 2.3). Purely presentational: the only former
@@ -15,8 +16,13 @@ import { Landmark, MapPin } from 'lucide-react'
  * word are static (matching the site-wide conversion); the hero is static
  * (LCP) and the offices section enters via Reveal. The lazily-loaded
  * client-only form is replaced by the server-first <ContactForm lang>.
- * page.tsx (generateMetadata) is untouched — only the `lang` prop is threaded.
  */
+
+// Conteo derivado de officesRegistry, que distingue las direcciones virtuales
+// (centros de negocios Regus/IWG) de los locales propios del despacho. La cifra
+// debe coincidir con la description de page.tsx.
+const PHYSICAL_OFFICE_COUNT = Object.keys(OFFICES_PLACE_IDS)
+  .filter((slug) => !isVirtualOffice(slug)).length;
 
 // --- TEXTOS UI ---
 const interfaceTexts = {
@@ -38,8 +44,8 @@ const interfaceTexts = {
     title: { es: 'NUESTRAS OFICINAS', en: 'OUR OFFICES' },
     locations: 'Houston, Dallas, Harlingen, El Paso (**Texas**), Chicago (**Illinois**), Los Ángeles (**California**), Denver (**Colorado**), Memphis (**Tennessee**).',
     description: {
-        es: 'Contamos con **8 oficinas físicas** estratégicamente ubicadas en estados clave de la unión americana para ofrecer una representación accesible y directa a nuestros clientes.',
-        en: 'We have **8 physical offices** strategically located in key states across the American union to offer accessible and direct representation to our clients.'
+        es: `Contamos con **${PHYSICAL_OFFICE_COUNT} oficinas físicas** estratégicamente ubicadas en estados clave de la unión americana para ofrecer una representación accesible y directa a nuestros clientes.`,
+        en: `We have **${PHYSICAL_OFFICE_COUNT} physical offices** strategically located in key states across the American union to offer accessible and direct representation to our clients.`
     },
     loadMap: { es: 'Explorar Mapa Interactivo', en: 'Explore Interactive Map' }
   }
@@ -87,7 +93,7 @@ export default function NosotrosClient({ lang }: { lang: 'es' | 'en' }) {
   }
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
+    <main id="main-content" tabIndex={-1} className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
       {/* =========================================================================

@@ -4,14 +4,41 @@ import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
+const TEXTS = {
+  es: {
+    headlineTop: 'Estamos Cimentando',
+    headlineBottom: 'La Verdad',
+    sectionName: 'Noticias',
+    bodyBefore: 'Nuestra sección de ',
+    bodyAfter:
+      ' está bajo una reconstrucción estratégica. Pronto encontrará aquí análisis jurídicos profundos y actualizaciones migratorias esenciales.',
+    progressLabel: 'Fase Inicial de Arquitectura',
+    ctaHome: 'Volver al Inicio',
+    ctaContact: 'Contactar',
+  },
+  en: {
+    headlineTop: 'We Are Building',
+    headlineBottom: 'The Truth',
+    sectionName: 'News',
+    bodyBefore: 'Our ',
+    bodyAfter:
+      ' section is undergoing a strategic rebuild. Soon you will find in-depth legal analysis and essential immigration updates here.',
+    progressLabel: 'Initial Architecture Phase',
+    ctaHome: 'Back to Home',
+    ctaContact: 'Contact Us',
+  },
+} as const;
+
 export default function ClientesClient({ lang }: { lang: 'es' | 'en' }) {
+  const t = TEXTS[lang];
+
   return (
     // Se mantiene el fondo base Navy
     <div className="min-h-screen flex flex-col bg-[#002342] text-white overflow-hidden relative">
 
       <Header />
 
-      <main className="flex-grow flex items-center justify-center relative pt-36 md:pt-44 pb-20 px-4">
+      <main id="main-content" tabIndex={-1} className="flex-grow flex items-center justify-center relative pt-36 md:pt-44 pb-20 px-4">
 
         {/* 1. FONDO (estático) */}
         <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
@@ -85,22 +112,21 @@ export default function ClientesClient({ lang }: { lang: 'es' | 'en' }) {
                 className="text-3xl md:text-5xl font-serif font-bold mb-6 leading-tight"
             >
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
-                    Estamos Cimentando
+                    {t.headlineTop}
                 </span> <br />
-                <span className="text-[#B2904D] drop-shadow-md">La Verdad</span>
+                <span className="text-[#B2904D] drop-shadow-md">{t.headlineBottom}</span>
             </h1>
 
             <p
                 className="text-base md:text-lg text-gray-300 mb-10 max-w-xl mx-auto leading-relaxed font-light"
             >
-                Nuestra sección de <strong>Noticias</strong> está bajo una reconstrucción estratégica.
-                Pronto encontrará aquí análisis jurídicos profundos y actualizaciones migratorias esenciales.
+                {t.bodyBefore}<strong>{t.sectionName}</strong>{t.bodyAfter}
             </p>
 
             {/* --- Barra de Progreso 26% --- */}
             <div className="max-w-md mx-auto mb-12 relative">
                 <div className="flex justify-between text-xs text-[#B2904D]/80 font-bold uppercase tracking-[0.2em] mb-3">
-                    <span>Fase Inicial de Arquitectura</span>
+                    <span>{t.progressLabel}</span>
                     <span className="text-[#B2904D]">26%</span>
                 </div>
 
@@ -121,15 +147,15 @@ export default function ClientesClient({ lang }: { lang: 'es' | 'en' }) {
             <div
                 className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-                <Link href="/" className="group relative px-8 py-4 bg-white text-[#002342] font-bold rounded-full overflow-hidden shadow-[0_5px_15px_rgba(255,255,255,0.1)] hover:shadow-[0_5px_20px_rgba(255,255,255,0.2)] transition-all">
+                <Link href={`/${lang}`} className="group relative px-8 py-4 bg-white text-[#002342] font-bold rounded-full overflow-hidden shadow-[0_5px_15px_rgba(255,255,255,0.1)] hover:shadow-[0_5px_20px_rgba(255,255,255,0.2)] transition-all">
                     <span className="relative z-10 flex items-center gap-2">
-                        Volver al Inicio
+                        {t.ctaHome}
                     </span>
                 </Link>
 
-                <Link href="/#oficinas" className="group relative px-8 py-4 text-[#B2904D] font-bold rounded-full overflow-hidden transition-all flex items-center justify-center gap-2 border-2 border-[#B2904D]/50 hover:border-[#B2904D]">
+                <Link href={`/${lang}#oficinas`} className="group relative px-8 py-4 text-[#B2904D] font-bold rounded-full overflow-hidden transition-all flex items-center justify-center gap-2 border-2 border-[#B2904D]/50 hover:border-[#B2904D]">
                      <span className="relative z-10 flex items-center gap-2">
-                        Contactar <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                        {t.ctaContact} <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </span>
                      {/* Fondo sutil al hacer hover */}
                     <div className="absolute inset-0 bg-[#B2904D] opacity-0 group-hover:opacity-10 transition-opacity"></div>

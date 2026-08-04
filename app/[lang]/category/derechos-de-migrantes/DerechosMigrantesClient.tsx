@@ -77,7 +77,7 @@ export default function DerechosMigrantesClient({ lang }: { lang: 'es' | 'en' })
       </div>
 
       {/* MAIN CONTENT - Con overflow-x-hidden y contenido centrado */}
-      <main className="relative z-10 w-full overflow-x-hidden">
+      <main id="main-content" tabIndex={-1} className="relative z-10 w-full overflow-x-hidden">
         <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-50 pb-20">
 
           {/* --- HERO/HEADER SECTION (static — LCP) --- */}
