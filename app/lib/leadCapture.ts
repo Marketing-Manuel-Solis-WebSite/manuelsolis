@@ -161,6 +161,25 @@ export function buildEnquiryDetail(detail: string | undefined, source: string): 
 const CANONICAL_ORIGIN = 'https://www.manuelsolis.com';
 const PAGE_URL_MAX_LENGTH = 500;
 
+// Parámetros de los que depende el origen del lead. BOS lee la atribución
+// PARSEANDO ESTA URL, no los campos utm_* del payload, así que si hay que
+// recortar por longitud se conservan estos y se descarta todo lo demás:
+// perder un `utm_source` explícito haría que `injectUtmsIntoUrl` lo sustituya
+// por los valores derivados y una campaña pagada entraría como orgánica.
+const ATTRIBUTION_QUERY_PARAMS = [
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_content',
+  'utm_term',
+  'gclid',
+  'gbraid',
+  'wbraid',
+  'fbclid',
+  'msclkid',
+  'ttclid',
+] as const;
+
 // Hosts propios. `page_url` llega del cliente y de ella se derivan el área de
 // práctica, la oficina y la atribución que BOS parsea de la URL: una cadena
 // con cualquier host no puede decidir esos datos de negocio.
@@ -186,6 +205,8 @@ function isOwnPageUrlHost(hostname: string): boolean {
  *   - Cualquier otro host o esquema → se descarta por completo (incluida su
  *     query, de donde saldría la atribución) y queda la raíz del sitio, así
  *     que las inferencias devuelven null en lugar de un dato inventado.
+ *   - Demasiado larga → se recortan los parámetros ajenos a la atribución,
+ *     nunca los utm_* ni los click ids: ver ATTRIBUTION_QUERY_PARAMS.
  */
 export function normalizePageUrl(raw: unknown): string {
   const value = typeof raw === 'string' ? raw.trim() : '';
@@ -206,10 +227,23 @@ export function normalizePageUrl(raw: unknown): string {
   const withQuery = `${CANONICAL_ORIGIN}${parsed.pathname || '/'}${parsed.search}`;
   if (withQuery.length <= PAGE_URL_MAX_LENGTH) return withQuery;
 
+  // Demasiado larga: se recorta quedándose solo con los parámetros de
+  // atribución, nunca descartando el query entero.
+  const attribution = new URLSearchParams();
+  for (const param of ATTRIBUTION_QUERY_PARAMS) {
+    const value = parsed.searchParams.get(param);
+    if (value) attribution.set(param, value);
+  }
+  const attributionQuery = attribution.toString();
+  const withAttribution = `${CANONICAL_ORIGIN}${parsed.pathname || '/'}${
+    attributionQuery ? `?${attributionQuery}` : ''
+  }`;
+  if (withAttribution.length <= PAGE_URL_MAX_LENGTH) return withAttribution;
+
+  // Ni la atribución sola cabe: se prefiere una URL larga a una atribución
+  // falseada, así que solo se recorta si además falta el pathname.
   const withoutQuery = `${CANONICAL_ORIGIN}${parsed.pathname || '/'}`;
-  return withoutQuery.length <= PAGE_URL_MAX_LENGTH
-    ? withoutQuery
-    : withoutQuery.slice(0, PAGE_URL_MAX_LENGTH);
+  return withoutQuery.length <= PAGE_URL_MAX_LENGTH ? withAttribution : withoutQuery.slice(0, PAGE_URL_MAX_LENGTH);
 }
 
 function pathnameOf(absoluteUrl: string): string {

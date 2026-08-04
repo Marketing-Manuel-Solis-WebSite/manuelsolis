@@ -10,6 +10,7 @@ import {
   normalizeUtmCampaign,
   normalizeUtmMedium,
   normalizeUtmSource,
+  normalizePageUrl,
   type LeadFormInput,
 } from '../app/lib/leadCapture';
 
@@ -338,7 +339,68 @@ describe('mapFormToPayload — validation errors', () => {
   });
 });
 
+describe('normalizePageUrl — no puede alterar la atribución', () => {
+  const CAMPAIGN_QUERY =
+    '?utm_source=google&utm_medium=cpc&utm_campaign=Search_Inmigracion_Houston&gclid=CjwKCAjw';
+
+  it('conserva ruta y parámetros de campaña de una URL propia', () => {
+    const out = normalizePageUrl(`https://www.manuelsolis.com/es/abogado-inmigracion-houston${CAMPAIGN_QUERY}`);
+    const u = new URL(out);
+    expect(u.pathname).toBe('/es/abogado-inmigracion-houston');
+    expect(u.searchParams.get('utm_source')).toBe('google');
+    expect(u.searchParams.get('utm_medium')).toBe('cpc');
+    expect(u.searchParams.get('gclid')).toBe('CjwKCAjw');
+  });
+
+  it('conserva la atribución aunque la URL exceda el límite de longitud', () => {
+    // El recorte por longitud NO puede tirar los utm_*: si se perdiera el
+    // utm_source explícito, injectUtmsIntoUrl lo sustituiría por los valores
+    // derivados y una campaña pagada entraría a BOS como tráfico orgánico.
+    const relleno = Array.from({ length: 40 }, (_, i) => `extra${i}=${'x'.repeat(20)}`).join('&');
+    const larga = `https://www.manuelsolis.com/es/abogado-inmigracion-houston${CAMPAIGN_QUERY}&${relleno}`;
+    expect(larga.length).toBeGreaterThan(500);
+
+    const out = normalizePageUrl(larga);
+    const u = new URL(out);
+    expect(u.searchParams.get('utm_source')).toBe('google');
+    expect(u.searchParams.get('utm_medium')).toBe('cpc');
+    expect(u.searchParams.get('utm_campaign')).toBe('Search_Inmigracion_Houston');
+    expect(u.searchParams.get('gclid')).toBe('CjwKCAjw');
+    expect(u.searchParams.get('extra0'), 'el relleno ajeno sí se descarta').toBeNull();
+  });
+
+  it('descarta por completo una URL de otro host, incluida su query', () => {
+    const out = normalizePageUrl('https://competencia.example.com/landing?utm_source=inyectado');
+    expect(out).toBe('https://www.manuelsolis.com/');
+  });
+
+  it('resuelve una ruta relativa sobre el origen canónico', () => {
+    expect(normalizePageUrl('/es/consulta')).toBe('https://www.manuelsolis.com/es/consulta');
+  });
+
+  it('cae a la raíz cuando no llega nada usable', () => {
+    expect(normalizePageUrl('')).toBe('https://www.manuelsolis.com/');
+    expect(normalizePageUrl(undefined)).toBe('https://www.manuelsolis.com/');
+    expect(normalizePageUrl('javascript:alert(1)')).toBe('https://www.manuelsolis.com/');
+  });
+});
+
 describe('injectUtmsIntoUrl — BOS parsea la URL, no los campos utm_*', () => {
+  it('respeta el utm_source explícito de una URL larga en vez de derivarlo', () => {
+    // Caso completo de extremo a extremo: la URL de campaña llega con relleno
+    // suficiente para disparar el recorte, y BOS debe seguir viendo "google".
+    const relleno = Array.from({ length: 40 }, (_, i) => `extra${i}=${'x'.repeat(20)}`).join('&');
+    const p = mapFormToPayload({
+      ...VALID_INPUT,
+      page_url: `https://www.manuelsolis.com/es/abogado-inmigracion-houston?utm_source=google&utm_medium=cpc&utm_campaign=Search_Houston&${relleno}`,
+    });
+    const u = new URL(p.page_url);
+    expect(u.searchParams.get('utm_source')).toBe('google');
+    expect(u.searchParams.get('utm_medium')).toBe('cpc');
+    expect(u.searchParams.get('utm_campaign')).toBe('Search_Houston');
+    expect(p.uri).toBe(p.page_url);
+  });
+
   it('inyecta Sitio web/Organic/Organic_search cuando el lead es directo y la URL va limpia', () => {
     const p = mapFormToPayload({ ...VALID_INPUT });
     const u = new URL(p.page_url);
