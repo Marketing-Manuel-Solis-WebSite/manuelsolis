@@ -139,8 +139,8 @@ const governmentResourcesData: ResourceItemBilingual[] = [
       en: 'Directory of Key Detention Centers (TX/LA)'
     },
     content: {
-      es: '**Localizaciones Comunes y Enlaces Oficiales:**<br />- **CCA Centro de Procesamiento de Houston:** 15850 Export Plaza Dr. [Enlace ICE](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-por-contrato-de-houston)<br />- **Joe Corley Centro de Detención:** 500 Hilbig Road, Conroe, TX. [Enlace ICE](http://www.ice.gov/detention-facility/joe-corley-detention-facility)<br />- **Centro de Procesamiento de Laredo:** 4702 Saunders St. [Enlace ICE](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-de-laredo)<br />- **Río Grande Centro de Detención:** 1001 San Rio Blvd., Laredo. [Enlace ICE](https://www.ice.gov/detain/detention-facilities/rio-grande-detention-center)<br />- **T. Don Hutto Centro Residencial:** 1001 Welch, Taylor, TX. [Enlace ICE](http://www.ice.gov/detention-facility/t-don-hutto-residential-center)<br />- **Centro de Detención South Texas:** 566 Veteran Dr., Pearsall, TX. [Enlace ICE](https://www.ice.gov/detain/detention-facilities/south-texas-family-residential-center)',
-      en: '**Common Locations and Official Links:**<br />- **CCA Houston Processing Center:** 15850 Export Plaza Dr. [ICE Link](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-por-contrato-de-houston)<br />- **Joe Corley Detention Facility:** 500 Hilbig Road, Conroe, TX. [ICE Link](http://www.ice.gov/detention-facility/joe-corley-detention-facility)<br />- **Laredo Processing Center:** 4702 Saunders St. [ICE Link](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-de-laredo)<br />- **Rio Grande Detention Center:** 1001 San Rio Blvd., Laredo. [ICE Link](https://www.ice.gov/detain/detention-facilities/rio-grande-detention-center)<br />- **T. Don Hutto Residential Center:** 1001 Welch, Taylor, TX. [ICE Link](http://www.ice.gov/detention-facility/t-don-hutto-residential-center)<br />- **South Texas Detention Center:** 566 Veteran Dr., Pearsall, TX. [ICE Link](https://www.ice.gov/detain/detention-facilities/south-texas-family-residential-center)',
+      es: '**Localizaciones Comunes y Enlaces Oficiales:**<br />- **CCA Centro de Procesamiento de Houston:** 15850 Export Plaza Dr. [Enlace ICE](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-por-contrato-de-houston)<br />- **Joe Corley Centro de Detención:** 500 Hilbig Road, Conroe, TX. [Enlace ICE](https://www.ice.gov/detention-facility/joe-corley-detention-facility)<br />- **Centro de Procesamiento de Laredo:** 4702 Saunders St. [Enlace ICE](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-de-laredo)<br />- **Río Grande Centro de Detención:** 1001 San Rio Blvd., Laredo. [Enlace ICE](https://www.ice.gov/detain/detention-facilities/rio-grande-detention-center)<br />- **T. Don Hutto Centro Residencial:** 1001 Welch, Taylor, TX. [Enlace ICE](https://www.ice.gov/detention-facility/t-don-hutto-residential-center)<br />- **Centro de Detención South Texas:** 566 Veteran Dr., Pearsall, TX. [Enlace ICE](https://www.ice.gov/detain/detention-facilities/south-texas-family-residential-center)',
+      en: '**Common Locations and Official Links:**<br />- **CCA Houston Processing Center:** 15850 Export Plaza Dr. [ICE Link](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-por-contrato-de-houston)<br />- **Joe Corley Detention Facility:** 500 Hilbig Road, Conroe, TX. [ICE Link](https://www.ice.gov/detention-facility/joe-corley-detention-facility)<br />- **Laredo Processing Center:** 4702 Saunders St. [ICE Link](https://www.ice.gov/es/instalaciones-detencion/centro-de-detencion-de-laredo)<br />- **Rio Grande Detention Center:** 1001 San Rio Blvd., Laredo. [ICE Link](https://www.ice.gov/detain/detention-facilities/rio-grande-detention-center)<br />- **T. Don Hutto Residential Center:** 1001 Welch, Taylor, TX. [ICE Link](https://www.ice.gov/detention-facility/t-don-hutto-residential-center)<br />- **South Texas Detention Center:** 566 Veteran Dr., Pearsall, TX. [ICE Link](https://www.ice.gov/detain/detention-facilities/south-texas-family-residential-center)',
     }
   },
   {
@@ -170,257 +170,258 @@ export default function ClientesDetenidosClient({ lang }: { lang: 'es' | 'en' })
   const getT = (obj: BilingualText) => getText(obj, lang);
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
-
+    <div className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
-      {/* =========================================================================
-          FONDO ATMOSFÉRICO (estático)
-      ========================================================================= */}
-      <div className="fixed inset-0 z-0 pointer-events-none w-full h-full">
-         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
-         <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
-         <div className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] bg-blue-600/10 rounded-full blur-[80px] opacity-30" />
-         <div className="absolute bottom-[-10%] left-[-5%] w-[70vw] h-[70vw] bg-sky-800/10 rounded-full blur-[90px] opacity-20" />
-      </div>
-
-      {/* =========================================================================
-          HERO & INTRO (static — LCP)
-      ========================================================================= */}
-      <section className="relative pt-54 pb-16 z-10 px-6 lg:px-12">
-        <div className="container mx-auto max-w-6xl text-center">
-
-            <h1
-                className="text-4xl md:text-6xl lg:text-8xl font-thin tracking-tight mb-6"
-            >
-                <span className="block text-white/90">{getT(texts.hero.title1)}</span>
-                <span className="block text-white/80 text-2xl md:text-4xl lg:text-5xl mt-2 tracking-widest">{getT(texts.hero.title2)}</span>
-                <span className="block font-black text-[#B2904D] mt-2 drop-shadow-xl">{getT(texts.hero.title3)}</span>
-            </h1>
-
-            <div
-                className="w-32 h-1 bg-gradient-to-r from-transparent via-[#B2904D] to-transparent mx-auto mb-12"
-            />
+      <main id="main-content" tabIndex={-1}>
+        {/* =========================================================================
+            FONDO ATMOSFÉRICO (estático)
+        ========================================================================= */}
+        <div className="fixed inset-0 z-0 pointer-events-none w-full h-full">
+           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
+           <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+           <div className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] bg-blue-600/10 rounded-full blur-[80px] opacity-30" />
+           <div className="absolute bottom-[-10%] left-[-5%] w-[70vw] h-[70vw] bg-sky-800/10 rounded-full blur-[90px] opacity-20" />
         </div>
-      </section>
 
-      {/* =========================================================================
-          EMERGENCY BANNER — Below hero
-      ========================================================================= */}
-      <section className="relative z-10 bg-gradient-to-r from-red-900/90 to-red-800/90 border-y border-red-500/30">
-        <div className="container mx-auto px-4 py-5 max-w-5xl">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3 text-center md:text-left">
-              <AlertTriangle className="w-8 h-8 text-yellow-400 flex-shrink-0 animate-pulse" />
-              <div>
-                <p className="text-white font-bold text-lg md:text-xl">
-                  {lang === 'es' ? '¿Su familiar fue detenido por ICE?' : 'Was your family member detained by ICE?'}
-                </p>
-                <p className="text-white/80 text-sm">
-                  {lang === 'es' ? 'No firme nada. Llame primero.' : "Don't sign anything. Call first."}
-                </p>
+        {/* =========================================================================
+            HERO & INTRO (static — LCP)
+        ========================================================================= */}
+        <section className="relative pt-54 pb-16 z-10 px-6 lg:px-12">
+          <div className="container mx-auto max-w-6xl text-center">
+
+              <h1
+                  className="text-4xl md:text-6xl lg:text-8xl font-thin tracking-tight mb-6"
+              >
+                  <span className="block text-white/90">{getT(texts.hero.title1)}</span>
+                  <span className="block text-white/80 text-2xl md:text-4xl lg:text-5xl mt-2 tracking-widest">{getT(texts.hero.title2)}</span>
+                  <span className="block font-black text-[#B2904D] mt-2 drop-shadow-xl">{getT(texts.hero.title3)}</span>
+              </h1>
+
+              <div
+                  className="w-32 h-1 bg-gradient-to-r from-transparent via-[#B2904D] to-transparent mx-auto mb-12"
+              />
+          </div>
+        </section>
+
+        {/* =========================================================================
+            EMERGENCY BANNER — Below hero
+        ========================================================================= */}
+        <section className="relative z-10 bg-gradient-to-r from-red-900/90 to-red-800/90 border-y border-red-500/30">
+          <div className="container mx-auto px-4 py-5 max-w-5xl">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3 text-center md:text-left">
+                <AlertTriangle className="w-8 h-8 text-yellow-400 flex-shrink-0 animate-pulse" />
+                <div>
+                  <p className="text-white font-bold text-lg md:text-xl">
+                    {lang === 'es' ? '¿Su familiar fue detenido por ICE?' : 'Was your family member detained by ICE?'}
+                  </p>
+                  <p className="text-white/80 text-sm">
+                    {lang === 'es' ? 'No firme nada. Llame primero.' : "Don't sign anything. Call first."}
+                  </p>
+                </div>
+              </div>
+              <a
+                href="tel:+18325980914"
+                className="flex items-center gap-3 bg-white text-red-900 font-black text-xl md:text-2xl px-6 py-3 rounded-xl hover:bg-yellow-400 transition-colors whitespace-nowrap shadow-lg"
+              >
+                <Phone className="w-6 h-6" />
+                832-598-0914
+              </a>
+            </div>
+            <div className="mt-4 pt-4 border-t border-red-500/30">
+              <p className="text-white/90 text-xs font-semibold uppercase tracking-wider mb-2">
+                {lang === 'es' ? 'Tenga lista esta información al llamar:' : 'Have this information ready when you call:'}
+              </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-1 text-white/70 text-xs">
+                <span className="flex items-center gap-1"><span className="text-yellow-400">1.</span> {lang === 'es' ? 'Nombre completo del detenido' : 'Detainee full name'}</span>
+                <span className="flex items-center gap-1"><span className="text-yellow-400">2.</span> {lang === 'es' ? 'Número A (si lo tiene)' : 'A-Number (if available)'}</span>
+                <span className="flex items-center gap-1"><span className="text-yellow-400">3.</span> {lang === 'es' ? 'Fecha y lugar de detención' : 'Date and place of detention'}</span>
+                <span className="flex items-center gap-1"><span className="text-yellow-400">4.</span> {lang === 'es' ? 'Parentesco con el detenido' : 'Relationship to detainee'}</span>
               </div>
             </div>
-            <a
-              href="tel:+18325980914"
-              className="flex items-center gap-3 bg-white text-red-900 font-black text-xl md:text-2xl px-6 py-3 rounded-xl hover:bg-yellow-400 transition-colors whitespace-nowrap shadow-lg"
-            >
-              <Phone className="w-6 h-6" />
-              832-598-0914
-            </a>
           </div>
-          <div className="mt-4 pt-4 border-t border-red-500/30">
-            <p className="text-white/90 text-xs font-semibold uppercase tracking-wider mb-2">
-              {lang === 'es' ? 'Tenga lista esta información al llamar:' : 'Have this information ready when you call:'}
-            </p>
-            <div className="flex flex-wrap gap-x-6 gap-y-1 text-white/70 text-xs">
-              <span className="flex items-center gap-1"><span className="text-yellow-400">1.</span> {lang === 'es' ? 'Nombre completo del detenido' : 'Detainee full name'}</span>
-              <span className="flex items-center gap-1"><span className="text-yellow-400">2.</span> {lang === 'es' ? 'Número A (si lo tiene)' : 'A-Number (if available)'}</span>
-              <span className="flex items-center gap-1"><span className="text-yellow-400">3.</span> {lang === 'es' ? 'Fecha y lugar de detención' : 'Date and place of detention'}</span>
-              <span className="flex items-center gap-1"><span className="text-yellow-400">4.</span> {lang === 'es' ? 'Parentesco con el detenido' : 'Relationship to detainee'}</span>
-            </div>
+        </section>
+
+        {/* =========================================================================
+            INFO GRID (Locating, Hotline, Asylum)
+        ========================================================================= */}
+        <section className="relative z-10 px-6 lg:px-12 pt-16 pb-24">
+          <div className="container mx-auto max-w-7xl">
+              <Stagger gap={0.08} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" amount={0.1}>
+
+                  {/* 1. Localizando Seres Queridos */}
+                  <StaggerItem as="div"
+                      className="card-3d p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-md hover:border-[#B2904D]/30 transition-all duration-300"
+                  >
+                      <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-6 text-[#B2904D]">
+                          <Users size={24} />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-4 text-white">
+                          {getT(texts.section1.title)} <span className="text-[#B2904D]">{getT(texts.section1.titleHighlight)}</span>
+                      </h3>
+                      <p
+                          className="text-white/70 font-light mb-6 leading-relaxed"
+                          dangerouslySetInnerHTML={{ __html: parseContent(getT(texts.section1.intro)) }}
+                      />
+                      <ul className="space-y-3">
+                          <li className="flex items-start gap-3 text-sm text-white/80">
+                              <span className="w-1.5 h-1.5 bg-[#B2904D] rounded-full mt-2 flex-shrink-0" />
+                              {getT(texts.section1.help1)}
+                          </li>
+                          <li className="flex items-start gap-3 text-sm text-white/80">
+                              <span className="w-1.5 h-1.5 bg-[#B2904D] rounded-full mt-2 flex-shrink-0" />
+                              {getT(texts.section1.help2)}
+                          </li>
+                          <li className="flex items-start gap-3 text-sm text-white/80">
+                              <span className="w-1.5 h-1.5 bg-[#B2904D] rounded-full mt-2 flex-shrink-0" />
+                              {getT(texts.section1.help3)}
+                          </li>
+                      </ul>
+                  </StaggerItem>
+
+                  {/* 2. Hotline (Destacado) */}
+                  <StaggerItem as="div"
+                      className="card-3d p-8 bg-gradient-to-b from-[#B2904D]/20 to-[#001026] border border-[#B2904D]/40 rounded-3xl backdrop-blur-md relative overflow-hidden flex flex-col justify-center text-center"
+                  >
+                      <div className="absolute top-0 left-0 w-full h-1 bg-[#B2904D]" />
+                      <div className="w-16 h-16 bg-[#B2904D]/20 rounded-full flex items-center justify-center mb-6 text-[#B2904D] mx-auto">
+                          <Phone size={32} />
+                      </div>
+                      <h3 className="text-2xl font-black mb-2 text-white uppercase tracking-wider">
+                          {getT(texts.section2.title)}
+                      </h3>
+                      <p className="text-sm text-white/60 mb-8">{getT(texts.section2.hours)}</p>
+
+                      <a
+                          href="tel:+18325980914"
+                          className="text-3xl lg:text-4xl font-black text-white hover:text-[#B2904D] transition-colors"
+                      >
+                          832-598-0914
+                      </a>
+                      <p className="text-xs text-white/40 mt-4 uppercase tracking-widest">
+                          {lang === 'es' ? 'Atención Inmediata' : 'Immediate Attention'}
+                      </p>
+                  </StaggerItem>
+
+                  {/* 3. Solicitantes de Asilo */}
+                  <StaggerItem as="div"
+                      className="card-3d p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-md hover:border-[#B2904D]/30 transition-all duration-300"
+                  >
+                      <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-6 text-[#B2904D]">
+                          <Shield size={24} />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-4 text-white">
+                          {getT(texts.section3.title)} <span className="text-[#B2904D]">{getT(texts.section3.titleHighlight)}</span>
+                      </h3>
+                      <p className="text-white/70 font-light mb-6 leading-relaxed">
+                          {getT(texts.section3.intro)} <strong className="text-white">{getT(texts.section3.credibleFear)}</strong> {getT(texts.section3.or)} <strong className="text-white">{getT(texts.section3.reasonableFear)}</strong>.
+                      </p>
+                      <div className="space-y-3">
+                           <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
+                              <Zap size={18} className="text-[#B2904D]" />
+                              <span className="text-sm font-medium">{getT(texts.section3.prep)}</span>
+                           </div>
+                           <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
+                              <Zap size={18} className="text-[#B2904D]" />
+                              <span className="text-sm font-medium">{getT(texts.section3.advice)}</span>
+                           </div>
+                      </div>
+                  </StaggerItem>
+
+              </Stagger>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* =========================================================================
-          INFO GRID (Locating, Hotline, Asylum)
-      ========================================================================= */}
-      <section className="relative z-10 px-6 lg:px-12 pt-16 pb-24">
-        <div className="container mx-auto max-w-7xl">
-            <Stagger gap={0.08} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" amount={0.1}>
+        {/* =========================================================================
+            EXPERIENCE STATS
+        ========================================================================= */}
+        <section className="py-20 bg-black/20 border-y border-white/5">
+          <div className="container mx-auto px-6 lg:px-12 max-w-6xl">
+              <div className="text-center mb-12">
+                  <h2 className="text-3xl font-bold mb-2">
+                      {getT(texts.section4.title)} <span className="text-[#B2904D]">{getT(texts.section4.titleHighlight)}</span>
+                  </h2>
+                  <p className="text-white/60 max-w-2xl mx-auto">{getT(texts.section4.commitment)}</p>
+              </div>
 
-                {/* 1. Localizando Seres Queridos */}
-                <StaggerItem as="div"
-                    className="card-3d p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-md hover:border-[#B2904D]/30 transition-all duration-300"
-                >
-                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-6 text-[#B2904D]">
-                        <Users size={24} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4 text-white">
-                        {getT(texts.section1.title)} <span className="text-[#B2904D]">{getT(texts.section1.titleHighlight)}</span>
-                    </h3>
-                    <p
-                        className="text-white/70 font-light mb-6 leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: parseContent(getT(texts.section1.intro)) }}
-                    />
-                    <ul className="space-y-3">
-                        <li className="flex items-start gap-3 text-sm text-white/80">
-                            <span className="w-1.5 h-1.5 bg-[#B2904D] rounded-full mt-2 flex-shrink-0" />
-                            {getT(texts.section1.help1)}
-                        </li>
-                        <li className="flex items-start gap-3 text-sm text-white/80">
-                            <span className="w-1.5 h-1.5 bg-[#B2904D] rounded-full mt-2 flex-shrink-0" />
-                            {getT(texts.section1.help2)}
-                        </li>
-                        <li className="flex items-start gap-3 text-sm text-white/80">
-                            <span className="w-1.5 h-1.5 bg-[#B2904D] rounded-full mt-2 flex-shrink-0" />
-                            {getT(texts.section1.help3)}
-                        </li>
-                    </ul>
-                </StaggerItem>
+              <div className="grid md:grid-cols-3 gap-8">
+                  <div className="text-center p-6">
+                      <div className="text-5xl font-black text-white mb-2">{getT(texts.section4.stat1Title)}</div>
+                      <div className="text-sm uppercase tracking-widest text-[#B2904D]">{getT(texts.section4.stat1Text)}</div>
+                  </div>
+                  <div className="text-center p-6 border-x border-white/10">
+                      <div className="text-5xl font-black text-white mb-2">{getT(texts.section4.stat2Title)}</div>
+                      <div className="text-sm uppercase tracking-widest text-[#B2904D]">{getT(texts.section4.stat2Text)}</div>
+                  </div>
+                  <div className="text-center p-6">
+                      <div className="text-5xl font-black text-white mb-2">{getT(texts.section4.stat3Title)}</div>
+                      <div className="text-sm uppercase tracking-widest text-[#B2904D]">{getT(texts.section4.stat3Text)}</div>
+                  </div>
+              </div>
+          </div>
+        </section>
 
-                {/* 2. Hotline (Destacado) */}
-                <StaggerItem as="div"
-                    className="card-3d p-8 bg-gradient-to-b from-[#B2904D]/20 to-[#001026] border border-[#B2904D]/40 rounded-3xl backdrop-blur-md relative overflow-hidden flex flex-col justify-center text-center"
-                >
-                    <div className="absolute top-0 left-0 w-full h-1 bg-[#B2904D]" />
-                    <div className="w-16 h-16 bg-[#B2904D]/20 rounded-full flex items-center justify-center mb-6 text-[#B2904D] mx-auto">
-                        <Phone size={32} />
-                    </div>
-                    <h3 className="text-2xl font-black mb-2 text-white uppercase tracking-wider">
-                        {getT(texts.section2.title)}
-                    </h3>
-                    <p className="text-sm text-white/60 mb-8">{getT(texts.section2.hours)}</p>
+        {/* =========================================================================
+            RECURSOS GUBERNAMENTALES
+        ========================================================================= */}
+        <section className="relative z-10 px-6 lg:px-12 py-24">
+           <div className="container mx-auto max-w-4xl">
+              <div className="text-center mb-16">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-sm mb-6">
+                     <ExternalLink size={14} className="text-[#B2904D]" />
+                     <span className="text-xs font-bold tracking-[0.2em] text-white/80 uppercase">Enlaces Oficiales</span>
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-thin text-white mb-4">
+                      {getT(texts.sectionGovernment.title)}
+                  </h2>
+                  <p className="text-lg text-white/60 font-light">
+                      {getT(texts.sectionGovernment.subtitle)}
+                  </p>
+              </div>
 
-                    <a
-                        href="tel:+18325980914"
-                        className="text-3xl lg:text-4xl font-black text-white hover:text-[#B2904D] transition-colors"
-                    >
-                        832-598-0914
-                    </a>
-                    <p className="text-xs text-white/40 mt-4 uppercase tracking-widest">
-                        {lang === 'es' ? 'Atención Inmediata' : 'Immediate Attention'}
-                    </p>
-                </StaggerItem>
+              <Stagger gap={0.08} className="space-y-4" amount={0.1}>
+                  {governmentResourcesData.map((item, index) => (
+                      <StaggerItem key={index} as="div">
+                          <StaticResourceItem item={item} lang={lang} />
+                      </StaggerItem>
+                  ))}
+              </Stagger>
 
-                {/* 3. Solicitantes de Asilo */}
-                <StaggerItem as="div"
-                    className="card-3d p-8 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-md hover:border-[#B2904D]/30 transition-all duration-300"
-                >
-                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-6 text-[#B2904D]">
-                        <Shield size={24} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4 text-white">
-                        {getT(texts.section3.title)} <span className="text-[#B2904D]">{getT(texts.section3.titleHighlight)}</span>
-                    </h3>
-                    <p className="text-white/70 font-light mb-6 leading-relaxed">
-                        {getT(texts.section3.intro)} <strong className="text-white">{getT(texts.section3.credibleFear)}</strong> {getT(texts.section3.or)} <strong className="text-white">{getT(texts.section3.reasonableFear)}</strong>.
-                    </p>
-                    <div className="space-y-3">
-                         <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
-                            <Zap size={18} className="text-[#B2904D]" />
-                            <span className="text-sm font-medium">{getT(texts.section3.prep)}</span>
-                         </div>
-                         <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
-                            <Zap size={18} className="text-[#B2904D]" />
-                            <span className="text-sm font-medium">{getT(texts.section3.advice)}</span>
-                         </div>
-                    </div>
-                </StaggerItem>
+              <div className="mt-12 p-6 bg-[#B2904D]/10 border border-[#B2904D]/30 rounded-2xl flex items-start gap-4">
+                  <AlertTriangle className="text-[#B2904D] flex-shrink-0 mt-1" />
+                  <p className="text-sm text-white/80 italic">
+                      {lang === 'es'
+                          ? 'Descargo de responsabilidad: Los enlaces proporcionados dirigen a sitios web gubernamentales oficiales (.gov). El Bufete Manuel Solís no es responsable del contenido de sitios externos.'
+                          : 'Disclaimer: The links provided direct to official government websites (.gov). The Law Office of Manuel Solís is not responsible for the content of external sites.'
+                      }
+                  </p>
+              </div>
+           </div>
+        </section>
 
-            </Stagger>
-        </div>
-      </section>
+        {/* =========================================================================
+            CONTACT FORM SECTION
+        ========================================================================= */}
+        <section id="contacto" className="relative py-24 z-10 bg-gradient-to-b from-transparent to-[#000a20]">
+          <div className="container mx-auto px-4 max-w-4xl">
+               <div className="text-center mb-12">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                      {getT(texts.contact.title)}
+                  </h2>
+                  <p className="text-blue-100/60 font-light text-lg">
+                      {getT(texts.contact.subtitle)}
+                  </p>
+               </div>
 
-      {/* =========================================================================
-          EXPERIENCE STATS
-      ========================================================================= */}
-      <section className="py-20 bg-black/20 border-y border-white/5">
-        <div className="container mx-auto px-6 lg:px-12 max-w-6xl">
-            <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-2">
-                    {getT(texts.section4.title)} <span className="text-[#B2904D]">{getT(texts.section4.titleHighlight)}</span>
-                </h2>
-                <p className="text-white/60 max-w-2xl mx-auto">{getT(texts.section4.commitment)}</p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center p-6">
-                    <div className="text-5xl font-black text-white mb-2">{getT(texts.section4.stat1Title)}</div>
-                    <div className="text-sm uppercase tracking-widest text-[#B2904D]">{getT(texts.section4.stat1Text)}</div>
-                </div>
-                <div className="text-center p-6 border-x border-white/10">
-                    <div className="text-5xl font-black text-white mb-2">{getT(texts.section4.stat2Title)}</div>
-                    <div className="text-sm uppercase tracking-widest text-[#B2904D]">{getT(texts.section4.stat2Text)}</div>
-                </div>
-                <div className="text-center p-6">
-                    <div className="text-5xl font-black text-white mb-2">{getT(texts.section4.stat3Title)}</div>
-                    <div className="text-sm uppercase tracking-widest text-[#B2904D]">{getT(texts.section4.stat3Text)}</div>
-                </div>
-            </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          RECURSOS GUBERNAMENTALES
-      ========================================================================= */}
-      <section className="relative z-10 px-6 lg:px-12 py-24">
-         <div className="container mx-auto max-w-4xl">
-            <div className="text-center mb-16">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md shadow-sm mb-6">
-                   <ExternalLink size={14} className="text-[#B2904D]" />
-                   <span className="text-xs font-bold tracking-[0.2em] text-white/80 uppercase">Enlaces Oficiales</span>
-                </div>
-                <h2 className="text-4xl md:text-5xl font-thin text-white mb-4">
-                    {getT(texts.sectionGovernment.title)}
-                </h2>
-                <p className="text-lg text-white/60 font-light">
-                    {getT(texts.sectionGovernment.subtitle)}
-                </p>
-            </div>
-
-            <Stagger gap={0.08} className="space-y-4" amount={0.1}>
-                {governmentResourcesData.map((item, index) => (
-                    <StaggerItem key={index} as="div">
-                        <StaticResourceItem item={item} lang={lang} />
-                    </StaggerItem>
-                ))}
-            </Stagger>
-
-            <div className="mt-12 p-6 bg-[#B2904D]/10 border border-[#B2904D]/30 rounded-2xl flex items-start gap-4">
-                <AlertTriangle className="text-[#B2904D] flex-shrink-0 mt-1" />
-                <p className="text-sm text-white/80 italic">
-                    {lang === 'es'
-                        ? 'Descargo de responsabilidad: Los enlaces proporcionados dirigen a sitios web gubernamentales oficiales (.gov). El Bufete Manuel Solís no es responsable del contenido de sitios externos.'
-                        : 'Disclaimer: The links provided direct to official government websites (.gov). The Law Office of Manuel Solís is not responsible for the content of external sites.'
-                    }
-                </p>
-            </div>
-         </div>
-      </section>
-
-      {/* =========================================================================
-          CONTACT FORM SECTION
-      ========================================================================= */}
-      <section id="contacto" className="relative py-24 z-10 bg-gradient-to-b from-transparent to-[#000a20]">
-        <div className="container mx-auto px-4 max-w-4xl">
-             <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                    {getT(texts.contact.title)}
-                </h2>
-                <p className="text-blue-100/60 font-light text-lg">
-                    {getT(texts.contact.subtitle)}
-                </p>
-             </div>
-
-             <div className="bg-[#001026]/80 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
-                 <ContactForm />
-             </div>
-        </div>
-      </section>
+               <div className="bg-[#001026]/80 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-white/10 shadow-2xl">
+                   <ContactForm />
+               </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
-    </main>
+    </div>
   );
 }

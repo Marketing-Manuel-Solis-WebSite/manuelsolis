@@ -20,20 +20,21 @@ interface NewsletterCtaEmailProps {
   editionDescription: string;
   editionSlug: string;
   sections: Array<{ heading: string; body: string }>;
+  /** Signed unsubscribe URL for this recipient. Falls back to the bare page. */
+  unsubscribeUrl?: string;
 }
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
-// TODO (Marketing): reemplazar el copy de lorem-ipsum con los textos oficiales
-// de cada variante. Los placeholders marcan el largo sugerido; la estructura
-// visual debe quedar igual.
-const placeholderCopy = {
+// Copy fijo de la plantilla. Lo variable (título, descripción y secciones de la
+// edición) llega por props: este objeto solo aporta el marco alrededor.
+const templateCopy = {
   es: {
     preview: 'Actualizaciones migratorias — Oficinas Legales de Manuel Solis',
     eyebrow: 'Newsletter',
     greeting: (name: string) => (name ? `Hola ${name},` : 'Hola,'),
     intro:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Estas son las actualizaciones más recientes en materia migratoria que pueden impactar tu caso o el de tu familia.',
+      'Estas son las actualizaciones más recientes en materia migratoria que pueden impactar tu caso o el de tu familia.',
     ctaLead: 'Si tu caso es urgente, no esperes:',
     ctaButton: 'Agenda tu consulta',
     ctaSub: 'Respuesta en menos de 24 horas · Atención personalizada',
@@ -47,7 +48,7 @@ const placeholderCopy = {
     eyebrow: 'Newsletter',
     greeting: (name: string) => (name ? `Hello ${name},` : 'Hello,'),
     intro:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. These are the most recent immigration updates that may impact your case or your family.',
+      'These are the most recent immigration updates that may impact your case or your family.',
     ctaLead: 'If your case is urgent, do not wait:',
     ctaButton: 'Schedule your consultation',
     ctaSub: 'Response in under 24 hours · Personalized attention',
@@ -64,10 +65,13 @@ export function NewsletterCtaEmail({
   editionDescription,
   editionSlug,
   sections,
+  unsubscribeUrl,
 }: NewsletterCtaEmailProps) {
-  const t = placeholderCopy[language] || placeholderCopy.es;
+  const t = templateCopy[language] || templateCopy.es;
   const editionUrl = `${SITE_URL}/${language}/newsletter/${editionSlug}`;
   const bookUrl = `${SITE_URL}/${language}/consulta`;
+  const unsubscribeHref =
+    unsubscribeUrl || `${SITE_URL}/${language}/newsletter/unsubscribe`;
 
   return (
     <Html>
@@ -124,10 +128,7 @@ export function NewsletterCtaEmail({
 
           <Section style={footerSection}>
             <Text style={footerText}>{t.footerNote}</Text>
-            <Link
-              href={`${SITE_URL}/${language}/newsletter/unsubscribe`}
-              style={unsubscribeLink}
-            >
+            <Link href={unsubscribeHref} style={unsubscribeLink}>
               {t.unsubscribe}
             </Link>
             <Text style={footerText}>

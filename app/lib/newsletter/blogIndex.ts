@@ -1,5 +1,4 @@
 import { BLOG_DATA } from '../../[lang]/blog/page';
-import type { Language } from './types';
 
 export interface BlogPostMeta {
   id: string;
@@ -22,12 +21,4 @@ export function getAllBlogPosts(): BlogPostMeta[] {
 export function getBlogPostBySlug(slug: string): BlogPostMeta | null {
   const found = (BLOG_DATA.posts as BlogPostMeta[]).find((p) => p.slug === slug);
   return found ?? null;
-}
-
-export function pickBlogContent(post: BlogPostMeta, language: Language) {
-  return {
-    title: post.title[language],
-    excerpt: post.excerpt[language],
-    category: post.category[language],
-  };
 }

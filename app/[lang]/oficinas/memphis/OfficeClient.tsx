@@ -16,7 +16,12 @@ const officeData: OfficeData = {
   phone: '(901) 557-8357',
   email: 'memphis@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
-  mapLink: 'https://share.google/Fc3ISgQAihcayfmws',
+  // TODO(GBP): falta el share-link (`https://share.google/…`) de la ficha de
+  // Google Business Profile de Memphis; lo entrega quien administra el GBP del
+  // despacho (dueño del proyecto / marketing). Ver el TODO gemelo en
+  // app/components/officesPhoneMap.ts → OFFICES_NAP.memphis. Hasta entonces el
+  // botón de mapa abre esta búsqueda de Maps con la dirección correcta.
+  mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116',
   image: '/offices/ofAirways.png',
   
   // --- GERENCIA (ELIMINADO) ---

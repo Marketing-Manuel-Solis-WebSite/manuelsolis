@@ -86,6 +86,16 @@ export function resolveFbc(
 }
 
 /**
+ * true cuando el Pixel ya escribió _fbp. La escribe fbevents.js (no el stub
+ * inline), así que en la primera carga de un visitante nuevo tarda: quien
+ * necesite el match key debe sondear esto en vez de asumirlo (ver
+ * trackPageView en tracking.ts).
+ */
+export function hasFbpCookie(): boolean {
+  return Boolean(readCookie('_fbp'));
+}
+
+/**
  * Match keys del navegador para el evento CAPI:
  *   - _fbp: browser id que escribe el Pixel (falta en la primera carga
  *     de un visitante nuevo y con adblockers — se envía lo que haya).

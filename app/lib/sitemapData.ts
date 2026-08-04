@@ -11,8 +11,10 @@ import { attorneys } from './attorneyData';
 import { collaborators } from './collaboratorData';
 import { LANDING_PAGES } from './cityServiceData';
 import { newsletters } from './newsletterData';
+import { seoRedirects } from './seoRedirects';
 import { accidentOffices } from '../[lang]/servicios/accidentes/accidentesOfficesData';
 import { OFFICES_PLACE_IDS } from './officesRegistry';
+import { BLOG_DATA } from '../[lang]/blog/page';
 
 export const BASE_URL = 'https://www.manuelsolis.com';
 
@@ -26,6 +28,28 @@ export interface SitemapURL {
 }
 
 const LANGS = ['en', 'es'] as const;
+
+// ===== Guardia: una URL con redirección declarada nunca se publica =====
+// Un <loc> que responde 301 gasta crawl budget y deja la página inaccesible
+// (caso real: un slug de abogado listado a la vez en attorneyData y en los
+// redirects de bajas). Solo se comparan los sources literales de
+// seoRedirects tras expandir :lang a es|en; los que llevan :slug / :path*
+// son patrones legacy que no pueden coincidir con una URL concreta.
+const LANG_PARAM = /:lang(?:\(es\|en\))?/;
+
+const REDIRECTED_PATHS: ReadonlySet<string> = new Set(
+  seoRedirects.flatMap((redirect) => {
+    const source = redirect.source;
+    if (LANG_PARAM.test(source)) {
+      return LANGS.map((lang) => source.replace(LANG_PARAM, lang)).filter((s) => !s.includes(':'));
+    }
+    return source.includes(':') ? [] : [source];
+  })
+);
+
+function publishable(urls: SitemapURL[]): SitemapURL[] {
+  return urls.filter((u) => !REDIRECTED_PATHS.has(u.url.replace(BASE_URL, '')));
+}
 
 // ===== Builders =====
 
@@ -46,7 +70,7 @@ export function buildSitemapXml(urls: SitemapURL[]): string {
     <xhtml:link rel="alternate" hreflang="en" href="${escape(en)}"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="${escape(es)}"/>`;
   };
-  const items = urls
+  const items = publishable(urls)
     .map(
       (u) => `  <url>
     <loc>${escape(u.url)}</loc>
@@ -64,7 +88,10 @@ ${items}
 
 /** Última modificación real de un shard = max(lastModified) de sus URLs. */
 export function shardLastmod(urls: SitemapURL[]): string {
-  return urls.reduce((max, u) => (u.lastModified > max ? u.lastModified : max), '2020-01-01');
+  return publishable(urls).reduce(
+    (max, u) => (u.lastModified > max ? u.lastModified : max),
+    '2020-01-01'
+  );
 }
 
 export function buildSitemapIndexXml(sitemaps: { loc: string; lastmod: string }[]): string {
@@ -91,6 +118,52 @@ type Entry = {
   lastModified: string;
 };
 
+// ===== lastmod derivado del contenido =====
+// Regla: donde los datos llevan fecha (BLOG_DATA.date, newsletters.date) el
+// lastmod SALE DE AHÍ. Las fechas a mano solo sobreviven para páginas
+// estáticas, que no tienen fecha propia en ningún dato.
+
+// Revisiones posteriores a la publicación (arte nuevo, reescritura): elevan el
+// lastmod por encima de BLOG_DATA.date, que sigue siendo la fecha de publicación.
+const BLOG_REVISED: Record<string, string> = {
+  'accidente-camion-18-ruedas-texas-compensacion': '2026-08-03',
+  'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente': '2026-04-17',
+  'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses': '2026-04-17',
+};
+
+// Posts que se salen del patrón por defecto (0.7 / monthly).
+type BlogTuning = { priority?: number; changeFrequency?: ChangeFreq };
+
+const BLOG_TUNING: Record<string, BlogTuning> = {
+  'daca-2026-estado-legal-tribunales': { priority: 0.8, changeFrequency: 'weekly' },
+  'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente': { priority: 0.75 },
+  'vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses': { priority: 0.75 },
+};
+
+function postLastmod(post: { slug: string; date: string }): string {
+  const revised = BLOG_REVISED[post.slug];
+  return revised && revised > post.date ? revised : post.date;
+}
+
+function maxDate(dates: string[]): string {
+  return dates.reduce((max, d) => (d > max ? d : max), '2020-01-01');
+}
+
+// Los índices de categoría listan posts de BLOG_DATA filtrados por categoryId
+// (mismos ids que usan los clientes de app/[lang]/category/*): su lastmod es
+// el del post más reciente que muestran.
+const CATEGORY_POST_IDS: Record<string, readonly string[]> = {
+  '/category/derechos-de-migrantes': ['defensa-deportacion', 'accidentes'],
+  '/category/proteccion-legal-para-migrantes': ['visa-u', 'visa-VAWA', 'visa-T', 'visa-humanitaria'],
+};
+
+function categoryLastmod(route: string): string {
+  const ids: readonly string[] = CATEGORY_POST_IDS[route] ?? [];
+  return maxDate(
+    BLOG_DATA.posts.filter((p) => ids.includes(p.categoryId)).map((p) => postLastmod(p))
+  );
+}
+
 function expandLangs(entries: Entry[]): SitemapURL[] {
   return entries.flatMap((e) =>
     LANGS.map((lang) => ({
@@ -105,24 +178,30 @@ function expandLangs(entries: Entry[]): SitemapURL[] {
 // Hub / static / trust pages
 export function getPagesEntries(): SitemapURL[] {
   const entries: Entry[] = [
-    { route: '', priority: 1.0, changeFrequency: 'weekly', lastModified: '2026-04-30' },
+    { route: '', priority: 1.0, changeFrequency: 'weekly', lastModified: '2026-07-24' },
     { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/abogados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/colaboradores', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-06-05' },
     { route: '/testimonios', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/consulta', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-04-11' },
-    { route: '/clientes', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/clientes-detenidos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/acceso-clientes', priority: 0.4, changeFrequency: 'yearly', lastModified: '2026-04-11' },
     { route: '/inversionistas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/politica-editorial', priority: 0.4, changeFrequency: 'yearly', lastModified: '2025-03-20' },
     { route: '/informacion/faq', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/informacion/recursos', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+    // /informacion/noticias entra al sitemap desde que lista artículos reales
+    // derivados de BLOG_DATA: antes era una página "en construcción" con noindex.
+    { route: '/informacion/noticias', priority: 0.5, changeFrequency: 'weekly', lastModified: '2026-08-04' },
     { route: '/privacidad', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
     { route: '/terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
     { route: '/sms-terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
-    { route: '/category/derechos-de-migrantes', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
-    { route: '/category/proteccion-legal-para-migrantes', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+    ...Object.keys(CATEGORY_POST_IDS).map((route) => ({
+      route,
+      priority: 0.5,
+      changeFrequency: 'monthly' as ChangeFreq,
+      lastModified: categoryLastmod(route),
+    })),
   ];
   // Collaborator profile pages (data-driven — scales as more are added).
   const collaboratorProfiles: SitemapURL[] = collaborators.flatMap((c) =>
@@ -205,54 +284,35 @@ export function getLandingsEntries(): SitemapURL[] {
   );
 }
 
-// Blog
+// Blog — las entradas salen de BLOG_DATA (fuente única del blog), así que un
+// post nuevo entra solo y el lastmod no se puede quedar atrás.
 export function getBlogEntries(): SitemapURL[] {
-  const blog: Entry[] = [
-    { route: '/blog', priority: 0.7, changeFrequency: 'weekly', lastModified: '2026-07-03' },
-  { route: '/blog/ciudadania-por-nacimiento-2026-hijos-padres-indocumentados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-07-03' },
-  { route: '/blog/redadas-ice-2026-derechos-plan-emergencia-familiar', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-07-02' },
-  { route: '/blog/como-encontrar-detenido-ice-localizador-pasos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-07-01' },
-  { route: '/blog/accidente-trabajo-indocumentado-texas-compensacion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-06-30' },
-  { route: '/blog/accidente-camion-18-ruedas-texas-compensacion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-06-29' },
-    { route: '/blog/daca-2026-estado-legal-tribunales', priority: 0.8, changeFrequency: 'weekly', lastModified: '2026-05-13' },
-    { route: '/blog/tps-2026-paises-elegibles-renovacion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-10' },
-    { route: '/blog/crimenes-deportacion-vileza-moral', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-14' },
-    { route: '/blog/rfe-responder-evidencia-uscis', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-18' },
-    { route: '/blog/barras-3-10-anos-presencia-ilegal', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-22' },
-    { route: '/blog/accidente-auto-indocumentado-derechos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-26' },
-    { route: '/blog/i-864-patrocinador-ingreso-minimo', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-30' },
-    { route: '/blog/visa-k1-prometido-requisitos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-05-04' },
-    { route: '/blog/entrevista-inmigracion-errores-evitar', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-05-08' },
-    { route: '/blog/familias-estatus-mixto-opciones', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-05-12' },
-    { route: '/blog/fraude-notarios-inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-05-16' },
-    { route: '/blog/asilo-frontera-2026-puerto-entrada-vs-cruce', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-04' },
-    { route: '/blog/entrevista-matrimonio-uscis-senales-alerta', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-01' },
-    { route: '/blog/ciudadania-en-espanol-reglas-50-20-55-15', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-03-28' },
-    { route: '/blog/marihuana-dui-buen-caracter-moral-inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-03-24' },
-    { route: '/blog/perdon-i601a-arreglar-papeles-entrada-ilegal', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-03-20' },
-    { route: '/blog/estatus-juvenil-sijs-residencia-jovenes-abandonados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-03-17' },
-    { route: '/blog/foia-migratoria-pedir-record-antes-de-aplicar', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-03-12' },
-    { route: '/blog/residencia-laboral-eb3-ley-245i-entrada-indocumentada', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-03-08' },
-    { route: '/blog/advance-parole-2026-viajar-con-daca-tps-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-03-05' },
-    { route: '/blog/ley-de-los-10-anos-cancelacion-de-deportacion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-03-02' },
-    { route: '/blog/visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-02-16' },
-    { route: '/blog/formulario-g28-cambiar-abogado-inmigracion', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-02-12' },
-    { route: '/blog/frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-02-10' },
-    { route: '/blog/visa-t-trabajo-forzado-por-deuda-con-coyote', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-02-03' },
-    { route: '/blog/vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente', priority: 0.75, changeFrequency: 'monthly', lastModified: '2026-04-17' },
-    { route: '/blog/vawa-para-padres-maltrato-de-hijos-ciudadanos-estadounidenses', priority: 0.75, changeFrequency: 'monthly', lastModified: '2026-04-17' },
-    { route: '/blog/perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-01-23' },
-    { route: '/blog/que-hacer-si-la-policia-no-firma-la-certificacion-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-01-20' },
-    { route: '/blog/permiso-de-trabajo-visa-u', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-01-16' },
-  ];
-  return expandLangs(blog);
+  const posts: Entry[] = BLOG_DATA.posts.map((post) => {
+    const tuning: BlogTuning = BLOG_TUNING[post.slug] ?? {};
+    return {
+      route: `/blog/${post.slug}`,
+      priority: tuning.priority ?? 0.7,
+      changeFrequency: tuning.changeFrequency ?? 'monthly',
+      lastModified: postLastmod(post),
+    };
+  });
+  const hub: Entry = {
+    route: '/blog',
+    priority: 0.7,
+    changeFrequency: 'weekly',
+    lastModified: maxDate(posts.map((p) => p.lastModified)),
+  };
+  return expandLangs([hub, ...posts]);
 }
 
 // Newsletter (hub + editions)
 export function getNewsletterEntries(): SitemapURL[] {
+  // El índice cambia cuando se publica una edición: su lastmod es el de la
+  // más reciente.
+  const hubLastmod = maxDate(newsletters.map((nl) => nl.date.slice(0, 10)));
   const hub = LANGS.map((lang) => ({
     url: `${BASE_URL}/${lang}/newsletter`,
-    lastModified: '2026-04-01',
+    lastModified: hubLastmod,
     changeFrequency: 'weekly' as ChangeFreq,
     priority: 0.7,
   }));

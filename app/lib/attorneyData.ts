@@ -3,11 +3,22 @@
 
 export type TranslatableString = string | { es: string; en: string };
 
+// Área de práctica que la propia bio del abogado declara. `label` titula su
+// página de perfil y `topics` alimenta `knowsAbout` del Person JSON-LD.
+// Se omite cuando la bio no declara especialidad: en YMYL legal es incorrecto
+// atribuir a un litigante civil un área que no ejerce, así que el perfil cae al
+// término genérico de `role`.
+export interface AttorneyPractice {
+  label: { es: string; en: string };
+  topics: string[];
+}
+
 export interface Attorney {
   id: string;
   name: string;
   image: string;
   role: { es: string; en: string };
+  practice?: AttorneyPractice;
   bio: { es: string[]; en: string[] };
   quote: { es: string; en: string };
   education: TranslatableString[];
@@ -59,6 +70,10 @@ export const attorneys: Attorney[] = [
       es: 'Abogado Principal y Fundador',
       en: 'Principal Attorney and Founder'
     },
+    practice: {
+      label: { es: 'Abogado de Inmigración y Fundador', en: 'Immigration Attorney and Founder' },
+      topics: ['Immigration Law', 'Deportation Defense', 'Family-Based Immigration']
+    },
     bio: {
       es: [
         "Durante las casi tres décadas que han pasado desde que empecé a trabajar como abogado, he llegado a conocer bien a los inmigrantes. Sobretodo he podido ser testigo del impresionante coraje y valentía que muestran muchos de ellos.",
@@ -81,6 +96,10 @@ export const attorneys: Attorney[] = [
     name: 'Manuel E. Solis III',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20E%20Solis%20III.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
+      topics: ['Immigration Law']
+    },
     bio: {
       es: [
         "Manuel E. Solís III se ocupa principalmente de la ley de inmigración en las Oficinas Legales de Manuel Solís. Se graduó de la Universidad de Houston Downtown y completó su licenciatura en derecho en South Texas College of Law Houston.",
@@ -103,6 +122,10 @@ export const attorneys: Attorney[] = [
     name: 'Juan Solis',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Juan%20Solis.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Litigio Civil e Inmigración', en: 'Civil Litigation and Immigration Attorney' },
+      topics: ['Civil Litigation', 'Insurance Litigation', 'Immigration Law']
+    },
     bio: {
       es: [
         "Juan representa clientes en casos que van desde Inmigración hasta Litigios Civiles, y está muy involucrado en el departamento de Litigios de Seguros.",
@@ -127,6 +150,10 @@ export const attorneys: Attorney[] = [
     name: 'Andrew Fink',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Andrew%20Fink.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Lesiones Personales y Litigio', en: 'Personal Injury and Litigation Attorney' },
+      topics: ['Personal Injury Law', 'Medical Malpractice', 'Civil Litigation']
+    },
     bio: {
       es: [
         "Socio de litigio a nivel nacional. Centra su práctica en lesiones personales, accidentes y negligencia médica. Ha sido el abogado principal en aproximadamente 50 juicios con jurado.",
@@ -149,6 +176,10 @@ export const attorneys: Attorney[] = [
     name: 'Gregory Finney',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gregory%20Finney.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Director de Litigio Civil', en: 'Director of Civil Litigation' },
+      topics: ['Civil Litigation', 'Commercial Litigation', 'Catastrophic Injury Law']
+    },
     bio: {
       es: [
         "Gregory Finney es el Director de Litigio Civil. Su experiencia incluye litigios comerciales complejos, fraude, energía y accidentes catastróficos.",
@@ -174,6 +205,10 @@ export const attorneys: Attorney[] = [
     name: 'Ni Yan',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Ni%20Yan.png',
     role: { es: 'Abogada', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogada de Inmigración', en: 'Immigration Attorney' },
+      topics: ['Immigration Law']
+    },
     bio: {
       es: [
         "Nacida en la República de China, Yan se especializa en ayudar a la comunidad asiática en casos de inmigración. Ha representado a más de 5,000 casos.",
@@ -196,6 +231,10 @@ export const attorneys: Attorney[] = [
     name: 'Mark McBroom',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Mark%20McBroom.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
+      topics: ['Immigration Law', 'Family-Based Immigration', 'Deportation Defense']
+    },
     bio: {
       es: [
         "El Sr. McBroom obtuvo su Doctorado en Jurisprudencia de la Universidad Metodista del Sur. Se dio cuenta de su pasión por las leyes de inmigración mientras era estudiante.",
@@ -218,6 +257,10 @@ export const attorneys: Attorney[] = [
     name: 'Ana Patricia Rueda',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Ana%20Patricia%20Rueda.png',
     role: { es: 'Abogada', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogada de Inmigración', en: 'Immigration Attorney' },
+      topics: ['Immigration Law', 'Deportation Defense', 'Inadmissibility Waivers']
+    },
     bio: {
       es: [
         "La abogada Rueda nació en Zacatecas, México, e inmigró a los 7 años. Descubrió su pasión por la justicia durante sus estudios universitarios.",
@@ -240,14 +283,18 @@ export const attorneys: Attorney[] = [
     name: 'Edwin Zavala',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Edwin%20Zavala.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
+      topics: ['Immigration Law', 'Deportation Defense']
+    },
     bio: {
       es: [
         "Edwin Zavala nació y creció en Metairie, Louisiana. Obtuvo su título de Juris Doctor de la Facultad de Derecho de la Universidad de Loyola en Nueva Orleans, graduándose cum laude.",
-        "Practica principalmente en inmigración y deportación en la oficina de Denver. Se toma el tiempo para dar una evaluación honesta de cada situación."
+        "Practica principalmente en inmigración y deportación en la oficina de Arvada, en el área metropolitana de Denver. Se toma el tiempo para dar una evaluación honesta de cada situación."
       ],
       en: [
         "Edwin Zavala was born and raised in Metairie, Louisiana. He obtained his Juris Doctor degree from Loyola University New Orleans College of Law, graduating cum laude.",
-        "He primarily practices immigration and deportation law in the Denver office. He takes the time to give an honest assessment of each situation."
+        "He primarily practices immigration and deportation law in the Arvada office, in the Denver metro area. He takes the time to give an honest assessment of each situation."
       ]
     },
     education: ["Loyola University New Orleans College of Law", "Louisiana State University"],
@@ -262,6 +309,10 @@ export const attorneys: Attorney[] = [
     name: 'Alejandro Manzano',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Alejandro.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
+      topics: ['Immigration Law', 'Deportation Defense']
+    },
     bio: {
       es: [
         "Comprometido con la comunidad inmigrante, Alejandro ejerce en la oficina de Houston. Creció en el Valle del Río Grande, fortaleciendo su conexión con las comunidades que defiende.",
@@ -292,6 +343,10 @@ export const attorneys: Attorney[] = [
     name: 'Victor Rojas',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Victor%20Rojas.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Litigio Penal e Inmigración', en: 'Criminal Litigation and Immigration Attorney' },
+      topics: ['Criminal Defense', 'Immigration Law']
+    },
     bio: {
       es: [
         "Rojas se graduó de la Facultad de Derecho La Interamericana de Puerto Rico en 2003. Fue Defensor Público por varios años, luchando día tras día para que las ruedas de la Justicia no se descarrilen.",
@@ -317,6 +372,10 @@ export const attorneys: Attorney[] = [
     name: 'Austen Gunnels',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Austen%20Gunnels.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado Marítimo y de Accidentes', en: 'Maritime and Accident Attorney' },
+      topics: ['Maritime Law', 'Personal Injury Law', 'Civil Litigation']
+    },
     bio: {
       es: [
         "Su práctica se enfoca en representar heridos en accidentes marítimos y de vehículos de motor. Tiene experiencia previa en defensa de seguros, lo que le da una ventaja estratégica al negociar.",
@@ -346,6 +405,10 @@ export const attorneys: Attorney[] = [
     name: 'Gabriel Perez',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gabriel%20Perez.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Lesiones Personales e Inmigración', en: 'Personal Injury and Immigration Attorney' },
+      topics: ['Personal Injury Law', 'Insurance Litigation', 'Immigration Law']
+    },
     bio: {
       es: [
         "Nacido en Houston, Texas. Comenzó como asistente legal en la firma y su pasión lo llevó a convertirse en abogado.",
@@ -446,6 +509,10 @@ export const attorneys: Attorney[] = [
     name: 'Edward S. Reisman',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Edward-Steven-Reisman.png',
     role: { es: 'Abogado', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
+      topics: ['Immigration Law']
+    },
     bio: {
       es: [
         "Ejerce en Los Ángeles. Tiene un JD de Georgetown University Law Center. Su experiencia previa en el Servicio de Inmigración y Naturalización (INS) le da una visión única del sistema.",
@@ -471,6 +538,10 @@ export const attorneys: Attorney[] = [
     name: 'Stephanie L. Garcia Vidal',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Stephanie.png',
     role: { es: 'Abogada', en: 'Attorney' },
+    practice: {
+      label: { es: 'Abogada de Inmigración y Litigio Civil', en: 'Immigration and Civil Litigation Attorney' },
+      topics: ['Immigration Law', 'Civil Litigation', 'Family Law']
+    },
     bio: {
       es: [
         "Ejerce en la oficina de Dallas del Bufete de Abogados Manuel Solís, donde brinda representación legal comprometida y empática a personas y familias inmigrantes. Su pasión por la abogacía nace del deseo de apoyar a quienes emprendieron un viaje transformador para construir un futuro más seguro y digno.",

@@ -4,6 +4,7 @@ import { listShortLinks, type ShortLink } from '../../../lib/shortLinks';
 import { filterEvents, type StoredEvent } from '../../../lib/analyticsStore';
 import {
   ADMIN_COOKIE_NAME,
+  verifyConversionsApiKey,
   verifySessionToken,
 } from '../../../lib/newsletter/auth';
 
@@ -18,21 +19,19 @@ import {
  *
  * Pensado para la UI de admin (`/es/admin/short-links`).
  *
- * Auth: cookie de admin (misma sesión que /admin/newsletter) o
- * `Authorization: Bearer <CONVERSIONS_API_KEY>` para automatización.
+ * Auth: cookie de admin (misma sesión que /admin/newsletter) o, para
+ * automatización, `Authorization: Bearer <CONVERSIONS_API_KEY>` /
+ * `x-api-key: <CONVERSIONS_API_KEY>`.
  */
 
 export const dynamic = 'force-dynamic';
 
 function isAuthorized(request: NextRequest, sessionCookie: string | null): boolean {
   if (verifySessionToken(sessionCookie)) return true;
-  const expectedKey = process.env.CONVERSIONS_API_KEY;
-  if (!expectedKey) return false;
-  const authHeader = request.headers.get('authorization');
-  const bearerKey = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
-  const queryKey = request.nextUrl.searchParams.get('key');
-  const provided = bearerKey || queryKey;
-  return Boolean(provided && provided === expectedKey);
+  return verifyConversionsApiKey(
+    request.headers.get('authorization'),
+    request.headers.get('x-api-key'),
+  );
 }
 
 interface SlugStats {

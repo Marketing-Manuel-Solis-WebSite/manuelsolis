@@ -2,23 +2,27 @@ import 'server-only';
 import { getPlaceData, type GooglePlaceData } from './googleReviews';
 import { getOfficePlaceId } from './officesRegistry';
 import { getPageData, SITE_URL } from './cityServiceData';
+import { toSchemaPhone } from './officeSchema';
 
 /**
- * Centralized builder for the per-landing LegalService schema.org payload.
- * 25 city×service landing pages (`/[lang]/<slug>`) used to inline a copy of
- * this schema with a HARDCODED aggregateRating (ratingValue:'4.8', ratingCount:'12').
- * That contradicted the firm's documented policy (see app/lib/officeSchema.ts:20-22
- * and app/[lang]/layout.tsx:299-303) and violated Google's structured-data spam
- * policy on fabricated review counts.
+ * Centralized builder for the per-landing LegalService schema.org payload,
+ * usado por las 25 landings ciudad×servicio (`/[lang]/<slug>`).
  *
- * This helper:
- *   - Builds the LegalService payload from the same data sources the page
- *     already loads (`cityServiceData.getPageData(slug)`).
- *   - When `officeSlugForReviews` is provided and that office has a Google
- *     Place ID in OFFICES_PLACE_IDS, augments the schema with live
- *     aggregateRating + top 3 reviews from Google Places (24h cache).
- *   - When the Place ID is missing OR the Places API fails, OMITS
- *     aggregateRating/review entirely — never falls back to hardcoded data.
+ * Reglas de esta entidad (la landing describe la MISMA oficina física que
+ * /oficinas/<slug>, así que no puede contradecirla):
+ *   - NAP: dirección y teléfono de `cityServiceData`, teléfono normalizado a
+ *     E.164 con el mismo helper que usa officeSchema.
+ *   - `geo`: solo el pin de la ficha GBP que devuelve Google Places para la
+ *     oficina de esa ciudad. Si no hay placeId o la API falla, se OMITE — antes
+ *     se emitían coordenadas propias que diferían kilómetros del pin publicado
+ *     por la página de oficina.
+ *   - `openingHoursSpecification`: solo si la llamada pasa horarios reales de
+ *     esa oficina. El horario genérico que había aquí contradecía el de la
+ *     ficha de oficina; mientras no exista una fuente única de NAP con horario
+ *     por sucursal, la propiedad se omite en lugar de inventarse.
+ *   - Sin `aggregateRating` ni `review`: las reseñas son de Google (terceros) y
+ *     el rating ya lo emite el nodo #organization del layout en esta misma URL;
+ *     duplicarlo por página lo convierte en dos entidades con el mismo rating.
  *
  * Mirrors the design of app/lib/officeSchema.ts:buildOfficeSchema.
  */
@@ -36,30 +40,25 @@ export type BuildLandingSchemaInput = {
   pageSlug: string;
   lang: 'es' | 'en';
   /**
-   * Slug of the office whose Google Place data should feed
-   * aggregateRating + review. Must match a key in
-   * app/lib/officesRegistry.ts → OFFICES_PLACE_IDS.
+   * Slug de la oficina física que atiende esta landing. Debe coincidir con una
+   * clave de app/lib/officesRegistry.ts → OFFICES_PLACE_IDS: de su ficha de
+   * Google se toma el pin (`geo`) para que la landing y /oficinas/<slug>
+   * publiquen las mismas coordenadas.
    *
-   * If omitted (or the office is not in the registry / Places API
-   * fails) the schema is rendered WITHOUT aggregateRating.
-   * NEVER falls back to hardcoded data.
+   * Si se omite (o la oficina no está en el registro / la API falla) el schema
+   * se renderiza sin `geo`. Nunca se cae a datos hardcodeados.
+   *
+   * El nombre conserva el sufijo `ForReviews` porque las 25 landings lo pasan
+   * con esa clave; ya no alimenta reseñas ni rating.
    */
   officeSlugForReviews?: string;
   /**
-   * Optional override for opening hours. Defaults to Mon–Fri 8–18 + Sat 9–13,
-   * which is the shape every landing previously inlined.
+   * Horario REAL de la oficina de esa ciudad. Sin este dato la propiedad se
+   * omite: no hay valor por defecto, porque cualquier horario genérico
+   * contradice el que publica /oficinas/<slug> para la misma dirección.
    */
   openingHours?: LandingOpeningHours[];
 };
-
-const DEFAULT_OPENING_HOURS: LandingOpeningHours[] = [
-  {
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    opens: '08:00',
-    closes: '18:00',
-  },
-  { dayOfWeek: 'Saturday', opens: '09:00', closes: '13:00' },
-];
 
 export async function buildLandingSchema(
   input: BuildLandingSchemaInput,
@@ -85,7 +84,7 @@ export async function buildLandingSchema(
     name: `Manuel Solis - ${service.title[input.lang]}`,
     description: config.metaDescription[input.lang],
     url: `${SITE_URL}/${input.lang}/${input.pageSlug}`,
-    telephone: office.phone,
+    telephone: toSchemaPhone(office.phone),
     address: {
       '@type': 'PostalAddress',
       streetAddress: office.address.split(',')[0],
@@ -96,21 +95,8 @@ export async function buildLandingSchema(
       postalCode: office.zip,
       addressCountry: 'US',
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: office.coordinates.lat,
-      longitude: office.coordinates.lng,
-    },
     areaServed: { '@type': 'City', name: office.city },
     priceRange: '$$',
-    openingHoursSpecification: (input.openingHours ?? DEFAULT_OPENING_HOURS).map(
-      (h) => ({
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: h.dayOfWeek,
-        opens: h.opens,
-        closes: h.closes,
-      }),
-    ),
     parentOrganization: {
       '@type': 'LawFirm',
       '@id': ORG_ID,
@@ -118,28 +104,20 @@ export async function buildLandingSchema(
     },
   };
 
-  if (placeData && placeData.userRatingCount > 0) {
-    schema.aggregateRating = {
-      '@type': 'AggregateRating',
-      ratingValue: placeData.rating.toFixed(1),
-      bestRating: '5',
-      worstRating: '1',
-      ratingCount: placeData.userRatingCount,
-      reviewCount: placeData.userRatingCount,
+  if (placeData?.location) {
+    schema.geo = {
+      '@type': 'GeoCoordinates',
+      latitude: placeData.location.lat,
+      longitude: placeData.location.lng,
     };
   }
 
-  if (placeData?.reviews?.length) {
-    schema.review = placeData.reviews.slice(0, 3).map((r) => ({
-      '@type': 'Review',
-      author: { '@type': 'Person', name: r.authorName },
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: r.rating,
-        bestRating: 5,
-      },
-      reviewBody: r.text,
-      datePublished: r.publishedAt,
+  if (input.openingHours?.length) {
+    schema.openingHoursSpecification = input.openingHours.map((h) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: h.dayOfWeek,
+      opens: h.opens,
+      closes: h.closes,
     }));
   }
 
@@ -147,8 +125,8 @@ export async function buildLandingSchema(
 }
 
 /**
- * Map landing-page slug → office slug whose Google Place feeds the
- * aggregateRating. Verified against OFFICES_PLACE_IDS in
+ * Map landing-page slug → office slug cuya ficha de Google aporta el pin
+ * (`geo`) del schema. Verified against OFFICES_PLACE_IDS in
  * app/lib/officesRegistry.ts — all 25 landings map to an office with
  * a real placeId.
  *

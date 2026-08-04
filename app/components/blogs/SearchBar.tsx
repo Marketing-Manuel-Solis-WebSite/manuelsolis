@@ -34,6 +34,7 @@ export default function SearchBar({ value, onChange, lang }: SearchBarProps) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
+          aria-label={placeholder}
           className="w-full pl-14 pr-14 py-4 bg-[#000a20]/60 backdrop-blur-xl border border-white/10 rounded-full text-white placeholder:text-white/30 focus:outline-none focus:border-[#B2904D]/50 focus:bg-[#000a20]/80 transition-all duration-300 text-base shadow-lg hover:shadow-[#B2904D]/5 hover:border-white/20"
         />
 
@@ -45,6 +46,8 @@ export default function SearchBar({ value, onChange, lang }: SearchBarProps) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               onClick={() => onChange('')}
+              type="button"
+              aria-label={lang === 'es' ? 'Limpiar búsqueda' : 'Clear search'}
               className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/60 hover:text-white transition-colors"
             >
               <X size={14} />

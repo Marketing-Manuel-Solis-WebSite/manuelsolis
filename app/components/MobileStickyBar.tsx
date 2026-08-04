@@ -8,8 +8,6 @@ import { useLanguage } from '../context/LanguageContext';
 import { fireConversion } from '../lib/conversion';
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap';
 
-const WHATSAPP_HIDDEN = false;
-
 // +1 713-876-3560 (formato wa.me sin "+", sin guiones)
 const WHATSAPP_NUMBER = '17138763560';
 
@@ -84,19 +82,19 @@ export default function MobileStickyBar() {
     >
       <div className="flex divide-x divide-white/10">
         {/* WhatsApp — primary */}
-        {!WHATSAPP_HIDDEN && (
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleWhatsAppClick}
-            className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#25D366] text-white font-bold text-sm active:bg-[#1da851] transition-colors"
-            aria-label={isEs ? 'Contactar por WhatsApp' : 'Contact via WhatsApp'}
-          >
-            <MessageCircle className="w-4 h-4" strokeWidth={2.25} />
-            <span>WhatsApp</span>
-          </a>
-        )}
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleWhatsAppClick}
+          // Texto en navy (no blanco): sobre #25D366 el blanco da 1.99:1;
+          // navy #001540 da 8.96:1 en reposo y 5.73:1 en :active (#1da851).
+          className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#25D366] text-[#001540] font-bold text-sm active:bg-[#1da851] transition-colors"
+          aria-label={isEs ? 'Contactar por WhatsApp' : 'Contact via WhatsApp'}
+        >
+          <MessageCircle className="w-4 h-4" strokeWidth={2.25} />
+          <span>WhatsApp</span>
+        </a>
 
         {/* Call — secondary, office-aware */}
         <a

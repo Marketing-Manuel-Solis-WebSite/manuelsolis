@@ -41,7 +41,7 @@ const blogContent = {
       published: 'Publicado',
       readTime: '9 min de lectura',
       tags: 'Visa T por trabajo forzado',
-      date: '02 Feb, 2026',
+      date: '03 Feb, 2026',
       time: '9 min',
       authorRole: 'Fundador & Abogado Principal',
       ctaButton: 'Consultar con un Abogado Ahora'
@@ -147,7 +147,7 @@ const blogContent = {
       published: 'Published',
       readTime: '9 min read',
       tags: 'T Visa Forced Labor',
-      date: 'Feb 02, 2026',
+      date: 'Feb 03, 2026',
       time: '9 min',
       authorRole: 'Founder & Principal Attorney',
       ctaButton: 'Consult with an Attorney Now'
@@ -267,7 +267,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
       ],
       type: 'article',
-      publishedTime: '2026-02-20T08:00:00.000Z',
+      publishedTime: '2026-02-03T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['Visa T', 'Trata laboral', 'Trabajo forzado', 'Deuda con coyote', 'Inmigración USA'],

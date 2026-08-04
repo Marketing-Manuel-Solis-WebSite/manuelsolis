@@ -2,9 +2,11 @@ import { translations, type Language } from '../lib/translations';
 import { Reveal, Stagger, StaggerItem } from './motion';
 
 /**
- * Services — server-first (Fase 2.2c). All copy + the 6 category cards render as
- * server HTML (translations resolved on the server). Movement: ONE protagonist —
- * the card grid cascades in via <Stagger>; the header gets a single <Reveal>.
+ * Services — server-first (Fase 2.2c). All copy + the category cards render as
+ * server HTML (translations resolved on the server). A card only belongs here if
+ * its href resolves to an existing /servicios/* page (no 301 hops to the index).
+ * Movement: ONE protagonist — the card grid cascades in via <Stagger>; the
+ * header gets a single <Reveal>.
  * Cards use the `.card-3d` workhorse (depth lift + glow cross-fade, no pointer
  * tilt) — there is no standout card here, so no <Tilt> (restraint). The previous
  * per-card JS TiltCard + shimmer/box-shadow hover were unified into `.card-3d`.
@@ -19,7 +21,6 @@ export default function Services({ lang }: { lang: Language }) {
     { title: t.services.categories.insurance.title, href: `/${lang}/servicios/seguros`, items: t.services.categories.insurance.services },
     { title: t.services.categories.criminal.title, href: `/${lang}/servicios/ley-criminal`, items: t.services.categories.criminal.services },
     { title: t.services.categories.family.title, href: `/${lang}/servicios/familia`, items: t.services.categories.family.services },
-    { title: t.services.categories.estatePlanning.title, href: `/${lang}/servicios/planificacion`, items: t.services.categories.estatePlanning.services },
   ];
 
   return (

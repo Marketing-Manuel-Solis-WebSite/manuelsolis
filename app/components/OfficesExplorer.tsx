@@ -2,49 +2,52 @@
 
 import React, { useState, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { MapPin, Phone, Clock, Navigation, Scale } from 'lucide-react';
+import { MapPin, Phone, Clock, Navigation, Scale, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Language } from '../lib/translations';
-import { pushToDataLayer, trackConversion } from '../lib/tracking';
-
-// Función auxiliar para mapas
-const generateMapUrl = (address: string) => {
-    const encodedAddress = encodeURIComponent(address);
-    return `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-};
+import { fireConversion } from '../lib/conversion';
+import {
+  OFFICES_NAP,
+  formatOfficeAddress,
+  getOfficeOpenState,
+  type BiText,
+  type OfficeNapSlug,
+  type OfficeOpenState,
+} from './officesPhoneMap';
 
 // --- TIPOS DE DATOS ---
-type OfficeData = {
-  id: string; 
-  city: string; // Nombre corto para el menú
-  state: string; 
-  title: { es: string; en: string }; // Título completo para la tarjeta
-  description: { es: string; en: string }; 
+/**
+ * Lo que es propio del explorador del home (presentación). El NAP —dirección,
+ * teléfono, horario, zona horaria y enlace de mapa— se lee de OFFICES_NAP para
+ * que no exista una segunda copia editable a mano.
+ */
+type OfficePresentation = {
+  slug: OfficeNapSlug;
+  /** Título completo para la tarjeta. */
+  title: BiText;
+  description: BiText;
+  image: string;
+  services: BiText[];
+};
+
+type OfficeData = OfficePresentation & {
+  id: OfficeNapSlug;
+  /** Nombre corto para el menú. */
+  city: string;
+  state: string;
   address: string;
   phone: string;
-  hours: { es: string; en: string };
+  hours: BiText;
   mapLink: string;
-  image: string;
-  services: { es: string; en: string }[];
   /**
    * true = la dirección es un centro de negocios virtual (Regus / IWG), no un
    * local propio del despacho; se atiende SOLO con cita (ver notas en
-   * app/lib/officesRegistry.ts → VIRTUAL_OFFICE_SLUGS). Las 5 virtuales son
-   * north-loop, northchase, main-st, kirby y league-city (aquí con los ids
-   * houston-north-loop, houston-northchase, houston-main, houston-kirby,
-   * league-city). Metadato: NO se renderiza, se calcula en el .map de abajo.
+   * app/lib/officesRegistry.ts → VIRTUAL_OFFICE_SLUGS). Metadato: NO se
+   * renderiza, se deriva del tipo de horario del registro NAP.
    */
   virtual: boolean;
 };
-
-// Ids (de este explorer) cuyas direcciones son oficinas virtuales Regus/IWG.
-const VIRTUAL_OFFICE_IDS = new Set([
-  'houston-north-loop',
-  'houston-northchase',
-  'houston-main',
-  'houston-kirby',
-  'league-city',
-]);
 
 // --- TEXTO ORIGINAL DE DESCRIPCIÓN (Restaurado) ---
 const ORIGINAL_DESC = {
@@ -52,18 +55,12 @@ const ORIGINAL_DESC = {
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.'
 };
 
-// --- DATOS COMPLETOS ---
-const officesData: OfficeData[] = [
+// --- DATOS DE PRESENTACIÓN ---
+const officePresentations: OfficePresentation[] = [
   {
-    id: 'houston-principal',
-    city: 'Houston Principal',
-    state: 'TX',
+    slug: 'houston-principal',
     title: { es: 'Houston Principal', en: 'Houston Principal' },
     description: ORIGINAL_DESC,
-    address: '6657 Navigation Blvd, Houston, TX 77011, United States',
-    phone: '(713) 701-1731',
-    hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
-    mapLink: generateMapUrl('6657 Navigation Blvd, Houston, TX 77011, United States'),
     image: '/offices/Houston.png',
     services: [
         { es: 'Inmigración', en: 'Immigration' },
@@ -75,15 +72,9 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'houston-accidentes',
-    city: 'Accidentes',
-    state: 'TX',
+    slug: 'houston-accidentes',
     title: { es: 'Houston Accidentes', en: 'Houston Accidents' },
     description: ORIGINAL_DESC,
-    address: '6705 Navigation Blvd, Houston, TX 77011, United States',
-    phone: '(713) 231-5384',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: generateMapUrl('6705 Navigation Blvd, Houston, TX 77011, United States'),
     image: '/offices/Houston.png',
     services: [
         { es: 'Accidentes', en: 'Accidents' },
@@ -94,18 +85,12 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'houston-north-loop',
-    city: 'North Loop',
-    state: 'TX',
+    slug: 'north-loop',
     title: { es: 'Houston (North Loop)', en: 'Houston (North Loop)' },
     description: ORIGINAL_DESC,
-    address: '2950 N Loop W, Houston, TX 77092, United States',
-    phone: '(713) 429-0237',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: generateMapUrl('2950 N Loop W, Houston, TX 77092, United States'),
     image: '/offices/ofLoop.png',
-    services: [ 
-        { es: 'Inmigración', en: 'Immigration' }, 
+    services: [
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Seguros', en: 'Insurance' },
         { es: 'Accidentes', en: 'Accidents' },
@@ -114,18 +99,12 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'houston-northchase',
-    city: 'Northchase',
-    state: 'TX',
+    slug: 'northchase',
     title: { es: 'Houston (Northchase)', en: 'Houston (Northchase)' },
     description: ORIGINAL_DESC,
-    address: '16510 Northchase Dr, Houston, TX 77060, United States',
-    phone: '(346) 522-4848',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: generateMapUrl('16510 Northchase Dr, Houston, TX 77060, United States'),
     image: '/offices/ofNorth.png',
-    services: [ 
-        { es: 'Inmigración', en: 'Immigration' }, 
+    services: [
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Seguros', en: 'Insurance' },
         { es: 'Accidentes', en: 'Accidents' },
@@ -134,18 +113,12 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'houston-main',
-    city: 'Main St',
-    state: 'TX',
+    slug: 'main-st',
     title: { es: 'Houston (Main St)', en: 'Houston (Main St)' },
     description: ORIGINAL_DESC,
-    address: '708 Main St, Houston, TX 77002, United States',
-    phone: '(713) 842-9575',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: generateMapUrl('708 Main St, Houston, TX 77002, United States'),
     image: '/offices/main.png',
-    services: [ 
-        { es: 'Inmigración', en: 'Immigration' }, 
+    services: [
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Seguros', en: 'Insurance' },
         { es: 'Accidentes', en: 'Accidents' },
@@ -154,18 +127,12 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'houston-kirby',
-    city: 'Kirby',
-    state: 'TX',
+    slug: 'kirby',
     title: { es: 'Houston (Kirby)', en: 'Houston (Kirby)' },
     description: ORIGINAL_DESC,
-    address: '3730 Kirby Dr, Houston, TX 77098, United States',
-    phone: '(713) 903-7875',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: generateMapUrl('3730 Kirby Dr, Houston, TX 77098, United States'),
     image: '/offices/Houston.png',
-    services: [ 
-        { es: 'Inmigración', en: 'Immigration' }, 
+    services: [
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Seguros', en: 'Insurance' },
         { es: 'Accidentes', en: 'Accidents' },
@@ -174,35 +141,23 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'houston-bellaire',
-    city: 'Bellaire',
-    state: 'TX',
+    slug: 'houston-bellaire',
     title: { es: 'Houston (Bellaire)', en: 'Houston (Bellaire)' },
     description: ORIGINAL_DESC,
-    address: '9188 Bellaire Blvd E, Houston, TX 77036, United States',
-    phone: '(713) 903-7875',
-    hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 8:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 8:00 AM - 4:00 PM' },
-    mapLink: generateMapUrl('9188 Bellaire Blvd E, Houston, TX 77036, United States'),
     image: '/offices/Houston.png',
-    services: [ 
-        { es: 'Inmigración', en: 'Immigration' }, 
+    services: [
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Accidentes', en: 'Accidents' },
         { es: 'Detenidos', en: 'Detained' }
     ],
   },
   {
-    id: 'chicago',
-    city: 'Chicago',
-    state: 'IL',
-    title: { es: 'Chicago', en: 'Chicago' }, 
+    slug: 'chicago',
+    title: { es: 'Chicago', en: 'Chicago' },
     description: ORIGINAL_DESC,
-    address: '6000 W Cermak Rd, Cicero, IL 60804, United States',
-    phone: '(312) 477-0389',
-    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 8am - 4pm', en: 'Mon - Fri 9am - 6pm | Sat 8am - 4pm' },
-    mapLink: generateMapUrl('6000 W Cermak Rd, Cicero, IL 60804, United States'),
     image: '/offices/Chicago.png',
     services: [
-        { es: 'Inmigración', en: 'Immigration' }, 
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Familiar', en: 'Family Law' },
         { es: 'Seguros', en: 'Insurance' },
@@ -212,18 +167,12 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'memphis',
-    city: 'Memphis',
-    state: 'TN',
+    slug: 'memphis',
     title: { es: 'Memphis', en: 'Memphis' },
     description: ORIGINAL_DESC,
-    address: '3385 Airways Blvd Suite 320, Memphis, TN 38116, United States',
-    phone: '(901) 557-8357',
-    hours: { es: 'Lun - Vie 9am - 5pm | Sáb 9am - 1pm', en: 'Mon - Fri 9am - 5pm | Sat 9am - 1pm' },
-    mapLink: generateMapUrl('3385 Airways Blvd Suite 320, Memphis, TN 38116, United States'),
     image: '/offices/Memphis.png',
     services: [
-        { es: 'Inmigración', en: 'Immigration' }, 
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Familiar', en: 'Family Law' },
         { es: 'Seguros', en: 'Insurance' },
@@ -233,15 +182,9 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'denver',
-    city: 'Arvada',
-    state: 'CO',
+    slug: 'arvada',
     title: { es: 'Arvada (Denver)', en: 'Arvada (Denver)' },
     description: ORIGINAL_DESC,
-    address: '5400 Ward Rd BLDG IV, Arvada, CO 80002, United States',
-    phone: '(720) 358-8973',
-    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 9am - 2pm', en: 'Mon - Fri 9am - 6pm | Sat 9am - 2pm' },
-    mapLink: generateMapUrl('5400 Ward Rd BLDG IV, Arvada, CO 80002, United States'),
     image: '/offices/Denver.png',
     services: [
         { es: 'Inmigración', en: 'Immigration' },
@@ -252,53 +195,35 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'dallas',
-    city: 'Dallas',
-    state: 'TX',
+    slug: 'dallas',
     title: { es: 'Dallas', en: 'Dallas' },
     description: ORIGINAL_DESC,
-    address: '1120 Empire Central Pl, Dallas, TX 75247, United States',
-    phone: '(214) 753-8315',
-    hours: { es: 'Lun - Vie 9am - 7pm | Sáb 8am - 4pm', en: 'Mon - Fri 9am - 7pm | Sat 8am - 4pm' },
-    mapLink: generateMapUrl('1120 Empire Central Pl, Dallas, TX 75247, United States'),
     image: '/offices/Dallas.png',
     services: [
-        { es: 'Inmigración', en: 'Immigration' }, 
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Seguros', en: 'Insurance' },
         { es: 'Accidentes', en: 'Accidents' },
         { es: 'Detenidos', en: 'Detained' }
     ],
   },
   {
-    id: 'el-paso',
-    city: 'El Paso',
-    state: 'TX',
+    slug: 'el-paso',
     title: { es: 'El Paso', en: 'El Paso' },
     description: ORIGINAL_DESC,
-    address: '3632 Admiral St, El Paso, TX 79925, United States',
-    phone: '(915) 233-7127',
-    hours: { es: 'Lun - Vie 9am - 5pm | Sáb 9am - 2pm', en: 'Mon - Fri 9am - 5pm | Sat 9am - 2pm' },
-    mapLink: generateMapUrl('3632 Admiral St, El Paso, TX 79925, United States'),
     image: '/offices/el-paso.png',
     services: [
-        { es: 'Inmigración', en: 'Immigration' }, 
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Seguros', en: 'Insurance' },
         { es: 'Accidentes', en: 'Accidents' },
         { es: 'Detenidos', en: 'Detained' }
     ],
   },
   {
-    id: 'harlingen',
-    city: 'Harlingen',
-    state: 'TX',
+    slug: 'harlingen',
     title: { es: 'Harlingen', en: 'Harlingen' },
     description: ORIGINAL_DESC,
-    address: '320 E Jackson St, Harlingen, TX 78550, United States',
-    phone: '(956) 597-7090',
-    hours: { es: 'Lun - Vie 9am - 6pm', en: 'Mon - Fri 9am - 6pm' },
-    mapLink: generateMapUrl('320 E Jackson St, Harlingen, TX 78550, United States'),
     image: '/offices/Harlingen.png',
-    services: [ 
+    services: [
         { es: 'Inmigración', en: 'Immigration' },
         { es: 'Accidentes', en: 'Accidents' },
         { es: 'Seguros', en: 'Insurance' },
@@ -306,17 +231,11 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'los-angeles',
-    city: 'Los Angeles',
-    state: 'CA',
+    slug: 'losangeles',
     title: { es: 'Los Angeles', en: 'Los Angeles' },
     description: ORIGINAL_DESC,
-    address: '8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660, United States',
-    phone: '(213) 784-1554',
-    hours: { es: 'Lun - Vie 9am - 6pm | Sáb 9am - 2pm', en: 'Mon - Fri 9am - 6pm | Sat 9am - 2pm' },
-    mapLink: generateMapUrl('8337 Telegraph Rd Ste 115, Pico Rivera, CA 90660, United States'),
     image: '/offices/los-angeles.png',
-    services: [ 
+    services: [
         { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Seguros', en: 'Insurance' },
@@ -325,18 +244,12 @@ const officesData: OfficeData[] = [
     ],
   },
   {
-    id: 'league-city',
-    city: 'League City',
-    state: 'TX',
+    slug: 'league-city',
     title: { es: 'League City', en: 'League City' },
     description: ORIGINAL_DESC,
-    address: '2600 South Shore Blvd, League City, TX 77573, United States',
-    phone: '(832) 598-3782',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
-    mapLink: generateMapUrl('2600 South Shore Blvd, League City, TX 77573, United States'),
     image: '/offices/League.png',
     services: [
-        { es: 'Inmigración', en: 'Immigration' }, 
+        { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },
         { es: 'Seguros', en: 'Insurance' },
         { es: 'Accidentes', en: 'Accidents' },
@@ -344,33 +257,44 @@ const officesData: OfficeData[] = [
         { es: 'Detenidos', en: 'Detained' }
     ],
   },
-].sort((a, b) => {
-  if (a.id === 'houston-principal') return -1;
-  if (b.id === 'houston-principal') return 1;
-  if (a.city < b.city) return -1;
-  if (a.city > b.city) return 1;
-  return 0;
-}).map(office => ({
-    ...office,
-    id: office.id || office.city.toLowerCase().replace(/\s/g, '-'),
-    virtual: VIRTUAL_OFFICE_IDS.has(office.id),
-}));
+];
+
+const officesData: OfficeData[] = officePresentations
+  .map((office) => {
+    const nap = OFFICES_NAP[office.slug];
+    return {
+      ...office,
+      id: office.slug,
+      city: nap.menuLabel,
+      state: nap.state,
+      address: formatOfficeAddress(nap),
+      phone: nap.phone,
+      hours: nap.hours.label,
+      mapLink: nap.mapLink,
+      virtual: nap.hours.kind === 'appointment',
+    };
+  })
+  .sort((a, b) => {
+    if (a.id === 'houston-principal') return -1;
+    if (b.id === 'houston-principal') return 1;
+    if (a.city < b.city) return -1;
+    if (a.city > b.city) return 1;
+    return 0;
+  });
 
 // --- MINI COMPONENTE: ACCIÓN HUD ---
-const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: string, icon: React.ElementType, href: string }) => {
-    const isLink = href && href !== '#';
-    const isExternal = isLink && (href.startsWith('http') || href.startsWith('tel'));
-    const isTel = isLink && href.startsWith('tel');
+const ActionHUD = ({ label, value, icon: Icon, href, office }: { label: string, value: string, icon: React.ElementType, href?: string, office?: string }) => {
+    const isTel = Boolean(href?.startsWith('tel'));
+    const isExternal = Boolean(href?.startsWith('http'));
 
     const handleClick = () => {
-      if (isTel) {
-        pushToDataLayer('phone_click', {
-          event_category: 'conversion',
-          event_label: 'office_phone_button',
-          phone_number: value,
-        });
-        trackConversion('phone_click', 'office_phone_button');
-      }
+      if (!isTel) return;
+      // Fanout unificado: Vercel + dataLayer/GA4 + Meta + TikTok + Flight Check
+      fireConversion('phone_click', 'office_phone_button', {
+        location: 'home_offices_explorer',
+        phone_number: value,
+        office: office ?? 'unknown',
+      });
     };
 
     const inner = (
@@ -385,7 +309,7 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
       </div>
     );
 
-    if (!isLink) {
+    if (!href) {
       return (
         <div className="block p-4 rounded-xl bg-white/5 border border-white/10 group relative overflow-hidden">
           {inner}
@@ -397,8 +321,8 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
       <a
         href={href}
         onClick={handleClick}
-        target={isExternal && !isTel ? "_blank" : undefined}
-        rel={isExternal && !isTel ? "noopener noreferrer" : undefined}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
         className="block p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 transition-all duration-300 group relative overflow-hidden"
         style={{ transitionProperty: 'background-color, transform' }}
       >
@@ -407,14 +331,49 @@ const ActionHUD = ({ label, value, icon: Icon, href }: { label: string, value: s
     );
 };
 
+// --- MINI COMPONENTE: ENLACE A LA FICHA DE LA OFICINA ---
+const OfficeLinkHUD = ({ label, value, href }: { label: string, value: string, href: string }) => (
+  <Link
+    href={href}
+    className="block p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 transition-all duration-300 group relative overflow-hidden"
+  >
+    <div className="flex justify-between items-start relative z-10">
+      <div>
+        <p className="text-[10px] text-blue-300/60 font-bold uppercase tracking-widest mb-1 group-hover:text-[#B2904D] transition-colors">
+          {label}
+        </p>
+        <p className="text-white font-bold text-sm group-hover:text-white transition-colors">{value}</p>
+      </div>
+      <ArrowRight size={18} className="text-[#B2904D] group-hover:text-white transition-colors" />
+    </div>
+  </Link>
+);
+
 // --- AGRUPACIÓN POR ESTADO → CIUDAD ---
-const HOUSTON_IDS = ['houston-principal', 'houston-accidentes', 'houston-bellaire', 'houston-kirby', 'league-city', 'houston-main', 'houston-north-loop', 'houston-northchase'];
+// League City es municipio propio (área de Galveston), no Houston: va con las
+// otras ciudades de Texas para no inflar el grupo de Houston.
+const HOUSTON_IDS: OfficeNapSlug[] = ['houston-principal', 'houston-accidentes', 'houston-bellaire', 'kirby', 'main-st', 'north-loop', 'northchase'];
 const OTHER_STATES = [
   { code: 'IL', label: 'Illinois' },
   { code: 'TN', label: 'Tennessee' },
   { code: 'CO', label: 'Colorado' },
   { code: 'CA', label: 'California' },
 ];
+
+// --- ESTADO OPERATIVO (por oficina y en SU zona horaria) ---
+const STATUS_LABELS: Record<OfficeOpenState, BiText> = {
+  open: { es: 'ABIERTO', en: 'OPEN' },
+  closed: { es: 'CERRADO', en: 'CLOSED' },
+  'always-open': { es: 'ABIERTO 24 H', en: 'OPEN 24 H' },
+  appointment: { es: 'CON CITA', en: 'BY APPT' },
+};
+
+const STATUS_TONES: Record<OfficeOpenState, { text: string; dot: string }> = {
+  open: { text: 'text-green-400', dot: 'bg-green-500' },
+  closed: { text: 'text-red-400', dot: 'bg-red-500' },
+  'always-open': { text: 'text-green-400', dot: 'bg-green-500' },
+  appointment: { text: 'text-[#B2904D]', dot: 'bg-[#B2904D]' },
+};
 
 // --- COMPONENTE PRINCIPAL (client island) ---
 // Server-first split (Fase 2.2c): the section, static background and heading now
@@ -425,28 +384,38 @@ const OTHER_STATES = [
 export default function OfficesExplorer({ lang }: { lang: Language }) {
   const language = lang;
 
-  const [activeId, setActiveId] = useState(officesData[0].id);
+  const [activeId, setActiveId] = useState<OfficeNapSlug>(officesData[0].id);
   const activeOffice = officesData.find(o => o.id === activeId) || officesData[0];
-  const [isOfficeOpen, setIsOfficeOpen] = useState(false);
+  const [now, setNow] = useState<Date | null>(null);
 
   // --- LÓGICA DE STATUS (live open/closed) ---
+  // El reloj solo se necesita para las oficinas con franjas horarias; se lee
+  // tras el montaje para no desincronizar la hidratación.
   useEffect(() => {
-    const checkTime = () => {
-        const now = new Date();
-        const hour = now.getHours();
-        // Abierto de 9 AM (9) a 7 PM (19)
-        setIsOfficeOpen(hour >= 9 && hour < 19);
-    };
-    checkTime();
-    const interval = setInterval(checkTime, 60000); // Revisar cada minuto
+    setNow(new Date());
+    const interval = setInterval(() => setNow(new Date()), 60000); // Revisar cada minuto
     return () => clearInterval(interval);
   }, []);
+
+  const hoursKind = OFFICES_NAP[activeOffice.id].hours.kind;
+  const openState: OfficeOpenState | null =
+    hoursKind === 'appointment'
+      ? 'appointment'
+      : hoursKind === 'always'
+        ? 'always-open'
+        : now
+          ? getOfficeOpenState(activeOffice.id, now)
+          : null;
+  const statusTone = openState ? STATUS_TONES[openState] : { text: 'text-blue-200/60', dot: 'bg-blue-200/40' };
+  const statusLabel = openState
+    ? STATUS_LABELS[openState][language]
+    : (language === 'es' ? 'VERIFICANDO' : 'CHECKING');
 
   const gT = (obj: { es: string; en: string }) => obj[lang] || obj.es;
 
   return (
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 min-h-[700px]">
-          
+
           {/* --- MÓVIL: SELECTOR HORIZONTAL --- */}
           <div className="lg:hidden col-span-full overflow-x-auto pb-4 -mx-4 px-4 scrollbar-none">
             <div className="flex gap-2 min-w-max">
@@ -574,44 +543,44 @@ export default function OfficesExplorer({ lang }: { lang: Language }) {
                 transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
                 className={`relative h-full bg-[#000a20]/90 backdrop-blur-xl rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col will-change-transform`}
               >
-                
+
                 {/* 1. TOP SECTION (Media + Title) */}
                 <div className="relative h-[300px] lg:h-[350px] w-full bg-black group overflow-hidden">
-                   
+
                    {/* Imagen de fondo con efecto de foco */}
-                   <Image 
-                     src={activeOffice.image} 
-                     alt={activeOffice.city} 
-                     fill 
+                   <Image
+                     src={activeOffice.image}
+                     alt={activeOffice.city}
+                     fill
                      className="object-cover opacity-60 transition-transform duration-1000 group-hover:scale-105"
                      sizes="(max-width: 768px) 100vw, 70vw"
                      priority={false}
                    />
                    <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] via-transparent to-transparent opacity-90" />
-                   
+
                    {/* HUD TOP CORNER: STATUS */}
                    <div className="absolute top-6 right-6 z-20 p-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
-                        <p className={`text-[10px] uppercase tracking-widest font-bold flex items-center gap-2 ${isOfficeOpen ? 'text-green-400' : 'text-red-400'}`}>
-                            STATUS 
-                            <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${isOfficeOpen ? 'bg-green-500' : 'bg-red-500'}`} />
+                        <p className={`text-[10px] uppercase tracking-widest font-bold flex items-center gap-2 ${statusTone.text}`}>
+                            STATUS
+                            <span className={`w-1.5 h-1.5 rounded-full ${openState ? 'animate-pulse' : ''} ${statusTone.dot}`} />
                         </p>
-                        <m.p 
+                        <m.p
                             className="text-white text-lg font-mono mt-1"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
                         >
-                            <m.span 
-                                animate={{ opacity: [0.5, 1, 0.5] }} 
+                            <m.span
+                                animate={{ opacity: [0.5, 1, 0.5] }}
                                 transition={{ duration: 1.5, repeat: Infinity }}
                                 className={`text-sky-400`}
                             >
                                 [ {activeOffice.state} ]
                             </m.span>
-                             {' '} {isOfficeOpen ? 'ACTIVE' : 'OFFLINE'}
+                             {' '} {statusLabel}
                         </m.p>
                    </div>
-                   
+
                    {/* MAIN TITLE (SIN QUOTE) */}
                    <div className="absolute bottom-0 left-0 w-full p-8 lg:p-12 z-20">
                      <h3 className="text-4xl md:text-5xl font-serif font-medium text-white mb-2 leading-tight">
@@ -622,7 +591,7 @@ export default function OfficesExplorer({ lang }: { lang: Language }) {
 
                 {/* 2. INFO DASHBOARD (Main Content) */}
                 <div className="p-8 lg:p-12 flex flex-col gap-10">
-                   
+
                    {/* DESCRIPTION */}
                    <div className="w-full">
                        <h3 className="text-xl font-thin text-white mb-3">{language === 'es' ? 'Sobre nuestra experiencia legal' : 'About Our Legal Experience'}</h3>
@@ -647,11 +616,11 @@ export default function OfficesExplorer({ lang }: { lang: Language }) {
                           </div>
                       </div>
                    </div>
-                   
+
                    {/* CONTACT ACTIONS GRID (The HUD) */}
                    <div className="space-y-6">
                      <h3 className="text-xl font-thin text-white mb-4 flex items-center gap-3">
-                         <m.div 
+                         <m.div
                            animate={{ rotate: [0, 360] }}
                            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                            className={`w-4 h-4 rounded-full border border-dashed border-[#B2904D]`}
@@ -660,11 +629,16 @@ export default function OfficesExplorer({ lang }: { lang: Language }) {
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                          <ActionHUD label={language === 'es' ? 'Ubicación' : 'Location Grid'} value={activeOffice.address} icon={MapPin} href={activeOffice.mapLink} />
-                         <ActionHUD label={language === 'es' ? 'Línea Directa' : 'Direct Line'} value={activeOffice.phone} icon={Phone} href={`tel:+1${activeOffice.phone.replace(/[^0-9]/g, '')}`} />
-                         <ActionHUD label={language === 'es' ? 'Horario Operativo' : 'Operating Hours'} value={gT(activeOffice.hours)} icon={Clock} href="#" />
+                         <ActionHUD label={language === 'es' ? 'Línea Directa' : 'Direct Line'} value={activeOffice.phone} icon={Phone} href={`tel:+1${activeOffice.phone.replace(/[^0-9]/g, '')}`} office={activeOffice.id} />
+                         <ActionHUD label={language === 'es' ? 'Horario Operativo' : 'Operating Hours'} value={gT(activeOffice.hours)} icon={Clock} />
+                         <OfficeLinkHUD
+                           label={language === 'es' ? 'Ficha de la oficina' : 'Office Profile'}
+                           value={language === 'es' ? 'Ver oficina' : 'View office'}
+                           href={`/${lang}/oficinas/${activeOffice.id}`}
+                         />
                       </div>
                    </div>
-                   
+
                 </div>
               </m.div>
             </AnimatePresence>

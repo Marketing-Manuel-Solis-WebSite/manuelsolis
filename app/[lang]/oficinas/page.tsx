@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
+import type { ElementType } from 'react';
 import Link from 'next/link';
 import { MapPin, Phone, Building2, ChevronDown } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { VIRTUAL_OFFICE_SLUGS, isVirtualOffice } from '../../lib/officesRegistry';
+import { OFFICES_NAP, OFFICE_NAP_SLUGS, type OfficeNapSlug } from '../../components/officesPhoneMap';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import ContactForm from '../../components/ContactForm';
@@ -19,25 +22,18 @@ type Props = {
 };
 
 // --- DATOS DE OFICINAS ---
-interface Office {
-  name: { es: string; en: string };
-  slug: string;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  phone: string;
-}
-
+// El NAP (dirección, ciudad, CP, teléfono) NO se copia aquí: se resuelve por
+// slug contra OFFICES_NAP para que el índice no pueda divergir del schema de
+// cada /oficinas/[slug] ni del explorador del home.
 interface CityGroup {
   city: { es: string; en: string };
-  offices: Office[];
+  slugs: OfficeNapSlug[];
 }
 
 interface StateGroup {
   state: { es: string; en: string };
   cityGroups?: CityGroup[];
-  offices: Office[];
+  slugs: OfficeNapSlug[];
 }
 
 const OFFICE_GROUPS: StateGroup[] = [
@@ -45,170 +41,46 @@ const OFFICE_GROUPS: StateGroup[] = [
     state: { es: 'Texas', en: 'Texas' },
     cityGroups: [
       {
+        // League City es municipio propio del área de Galveston: no cuenta como
+        // oficina de Houston (va con las demás ciudades de Texas).
         city: { es: 'Houston', en: 'Houston' },
-        offices: [
-          {
-            name: { es: 'Houston Principal', en: 'Houston Principal' },
-            slug: 'houston-principal',
-            address: '6657 Navigation Blvd',
-            city: 'Houston',
-            state: 'TX',
-            zip: '77011',
-            phone: '(713) 701-1731',
-          },
-          {
-            name: { es: 'Houston Accidentes', en: 'Houston Accidents' },
-            slug: 'houston-accidentes',
-            address: '6705 Navigation Blvd',
-            city: 'Houston',
-            state: 'TX',
-            zip: '77011',
-            phone: '(713) 231-5384',
-          },
-          {
-            name: { es: 'Bellaire', en: 'Bellaire' },
-            slug: 'houston-bellaire',
-            address: '9188 Bellaire Blvd, STE E',
-            city: 'Houston',
-            state: 'TX',
-            zip: '77036',
-            phone: '(713) 903-7875',
-          },
-          {
-            name: { es: 'Kirby', en: 'Kirby' },
-            slug: 'kirby',
-            address: '3730 Kirby Dr Suite 1200',
-            city: 'Houston',
-            state: 'TX',
-            zip: '77098',
-            phone: '(713) 903-7875',
-          },
-          {
-            name: { es: 'League City', en: 'League City' },
-            slug: 'league-city',
-            address: '2600 S Shore Blvd',
-            city: 'League City',
-            state: 'TX',
-            zip: '77573',
-            phone: '(832) 598-3782',
-          },
-          {
-            name: { es: 'Main St', en: 'Main St' },
-            slug: 'main-st',
-            address: '708 Main St',
-            city: 'Houston',
-            state: 'TX',
-            zip: '77002',
-            phone: '(713) 842-9575',
-          },
-          {
-            name: { es: 'North Loop', en: 'North Loop' },
-            slug: 'north-loop',
-            address: '2950 North Loop W',
-            city: 'Houston',
-            state: 'TX',
-            zip: '77092',
-            phone: '(713) 429-0237',
-          },
-          {
-            name: { es: 'Northchase', en: 'Northchase' },
-            slug: 'northchase',
-            address: '16510 Northchase Dr',
-            city: 'Houston',
-            state: 'TX',
-            zip: '77060',
-            phone: '(346) 522-4848',
-          },
+        slugs: [
+          'houston-principal',
+          'houston-accidentes',
+          'houston-bellaire',
+          'kirby',
+          'main-st',
+          'north-loop',
+          'northchase',
         ],
       },
     ],
-    offices: [
-      {
-        name: { es: 'Dallas', en: 'Dallas' },
-        slug: 'dallas',
-        address: '1120 Empire Central Pl',
-        city: 'Dallas',
-        state: 'TX',
-        zip: '75247',
-        phone: '(214) 753-8315',
-      },
-      {
-        name: { es: 'El Paso', en: 'El Paso' },
-        slug: 'el-paso',
-        address: '3632 Admiral St',
-        city: 'El Paso',
-        state: 'TX',
-        zip: '79925',
-        phone: '(915) 233-7127',
-      },
-      {
-        name: { es: 'Harlingen', en: 'Harlingen' },
-        slug: 'harlingen',
-        address: '320 E Jackson St',
-        city: 'Harlingen',
-        state: 'TX',
-        zip: '78550',
-        phone: '(956) 597-7090',
-      },
-    ],
+    slugs: ['dallas', 'el-paso', 'harlingen', 'league-city'],
   },
   {
     state: { es: 'California', en: 'California' },
-    offices: [
-      {
-        name: { es: 'Los Angeles', en: 'Los Angeles' },
-        slug: 'losangeles',
-        address: '8337 Telegraph Rd, STE 115',
-        city: 'Pico Rivera',
-        state: 'CA',
-        zip: '90660',
-        phone: '(213) 784-1554',
-      },
-    ],
+    slugs: ['losangeles'],
   },
   {
     state: { es: 'Illinois', en: 'Illinois' },
-    offices: [
-      {
-        name: { es: 'Chicago', en: 'Chicago' },
-        slug: 'chicago',
-        address: '6000 W Cermak Rd',
-        city: 'Cicero',
-        state: 'IL',
-        zip: '60804',
-        phone: '(312) 477-0389',
-      },
-    ],
+    slugs: ['chicago'],
   },
   {
     state: { es: 'Colorado', en: 'Colorado' },
-    offices: [
-      {
-        name: { es: 'Arvada (Denver)', en: 'Arvada (Denver)' },
-        slug: 'arvada',
-        address: '5400 Ward Rd, Bldg IV',
-        city: 'Arvada',
-        state: 'CO',
-        zip: '80002',
-        phone: '(720) 358-8973',
-      },
-    ],
+    slugs: ['arvada'],
   },
   {
     state: { es: 'Tennessee', en: 'Tennessee' },
-    offices: [
-      {
-        name: { es: 'Memphis', en: 'Memphis' },
-        slug: 'memphis',
-        address: '3385 Airways Blvd, STE 320',
-        city: 'Memphis',
-        state: 'TN',
-        zip: '38116',
-        phone: '(901) 557-8357',
-      },
-    ],
+    slugs: ['memphis'],
   },
 ];
+
+// Conteos derivados del registro: 10 oficinas atendidas + 5 direcciones
+// virtuales Regus/IWG que solo abren con cita (VIRTUAL_OFFICE_SLUGS).
+const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
+const APPOINTMENT_LOCATIONS = VIRTUAL_OFFICE_SLUGS.length;
+const STAFFED_OFFICES = TOTAL_LOCATIONS - APPOINTMENT_LOCATIONS;
+const STATE_COUNT = new Set(OFFICE_NAP_SLUGS.map((slug) => OFFICES_NAP[slug].state)).size;
 
 // --- SEO METADATA ---
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -216,12 +88,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Nuestras Oficinas en 5 Estados'
-    : 'Our Offices in 5 States';
+    ? `Nuestras Oficinas en ${STATE_COUNT} Estados`
+    : `Our Offices in ${STATE_COUNT} States`;
 
   const description = isEs
-    ? 'Encuentre la oficina del Abogado Manuel Solis mas cercana. 15 oficinas en Texas, California, Illinois, Colorado y Tennessee. Abogados de inmigracion y accidentes.'
-    : 'Find the nearest Manuel Solis Law Office. 15 offices across Texas, California, Illinois, Colorado, and Tennessee. Immigration and accident attorneys.';
+    ? `Encuentre la oficina del Abogado Manuel Solis mas cercana. ${STAFFED_OFFICES} oficinas atendidas y ${APPOINTMENT_LOCATIONS} direcciones con cita previa en Texas, California, Illinois, Colorado y Tennessee. Abogados de inmigracion y accidentes.`
+    : `Find the nearest Manuel Solis Law Office. ${STAFFED_OFFICES} staffed offices and ${APPOINTMENT_LOCATIONS} by-appointment locations across Texas, California, Illinois, Colorado, and Tennessee. Immigration and accident attorneys.`;
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -250,6 +122,54 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // --- STATIC PARAMS ---
 export function generateStaticParams() {
   return [{ lang: 'es' }, { lang: 'en' }];
+}
+
+// --- TARJETA DE OFICINA ---
+function OfficeCard({
+  slug,
+  lang,
+  as,
+}: {
+  slug: OfficeNapSlug;
+  lang: 'es' | 'en';
+  as: 'h3' | 'h4';
+}) {
+  const nap = OFFICES_NAP[slug];
+  const Heading: ElementType = as;
+  const byAppointment = isVirtualOffice(slug);
+
+  return (
+    <StaggerItem
+      as="div"
+      className="card-3d group/card bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#B2904D]/40 transition-all duration-300"
+    >
+      <Link href={`/${lang}/oficinas/${slug}`} className="block mb-3">
+        <Heading
+          className={`text-xl font-semibold text-white ${byAppointment ? 'mb-2' : 'mb-4'} group-hover/card:text-[#B2904D] transition-colors`}
+        >
+          {nap.name[lang]}
+        </Heading>
+        {byAppointment && (
+          <span className="inline-block mb-3 px-2.5 py-0.5 rounded-full border border-[#B2904D]/40 text-[10px] font-semibold uppercase tracking-wider text-[#B2904D]">
+            {lang === 'es' ? 'Con cita previa' : 'By appointment'}
+          </span>
+        )}
+        <div className="flex items-start gap-3">
+          <MapPin className="w-5 h-5 text-[#B2904D] mt-0.5 flex-shrink-0" />
+          <span className="text-white/70 text-sm leading-relaxed">
+            {nap.street}, {nap.city} {nap.state} {nap.zip}
+          </span>
+        </div>
+      </Link>
+      <a
+        href={`tel:+1${nap.phone.replace(/[^0-9]/g, '')}`}
+        className="flex items-center gap-3 text-white/70 hover:text-[#B2904D] transition-colors"
+      >
+        <Phone className="w-5 h-5 text-[#B2904D] flex-shrink-0" />
+        <span className="text-sm">{nap.phone}</span>
+      </a>
+    </StaggerItem>
+  );
 }
 
 // --- PAGE COMPONENT ---
@@ -281,7 +201,9 @@ export default async function OficinasPage({ params }: Props) {
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6">
               <Building2 className="w-4 h-4 text-[#B2904D]" />
               <span className="text-sm font-medium text-white/90 tracking-wide uppercase">
-                {isEs ? '15 Oficinas en 5 Estados' : '15 Offices in 5 States'}
+                {isEs
+                  ? `${STAFFED_OFFICES} Oficinas y ${APPOINTMENT_LOCATIONS} Direcciones con Cita en ${STATE_COUNT} Estados`
+                  : `${STAFFED_OFFICES} Offices and ${APPOINTMENT_LOCATIONS} By-Appointment Locations in ${STATE_COUNT} States`}
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
@@ -318,68 +240,22 @@ export default async function OficinasPage({ params }: Props) {
                         {cityGroup.city[currentLang]}
                       </h3>
                       <span className="text-sm text-white/40 font-normal">
-                        ({cityGroup.offices.length} {isEs ? 'oficinas' : 'offices'})
+                        ({cityGroup.slugs.length} {isEs ? 'ubicaciones' : 'locations'})
                       </span>
                     </summary>
                     <Stagger gap={0.05} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pl-2 sm:pl-8" amount={0.1}>
-                      {cityGroup.offices.map((office) => (
-                        <StaggerItem
-                          as="div"
-                          key={office.slug}
-                          className="card-3d group/card bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#B2904D]/40 transition-all duration-300"
-                        >
-                          <Link href={`/${currentLang}/oficinas/${office.slug}`} className="block mb-3">
-                            <h4 className="text-xl font-semibold text-white mb-4 group-hover/card:text-[#B2904D] transition-colors">
-                              {office.name[currentLang]}
-                            </h4>
-                            <div className="flex items-start gap-3">
-                              <MapPin className="w-5 h-5 text-[#B2904D] mt-0.5 flex-shrink-0" />
-                              <span className="text-white/70 text-sm leading-relaxed">
-                                {office.address}, {office.city} {office.state} {office.zip}
-                              </span>
-                            </div>
-                          </Link>
-                          <a
-                            href={`tel:+1${office.phone.replace(/[^0-9]/g, '')}`}
-                            className="flex items-center gap-3 text-white/70 hover:text-[#B2904D] transition-colors"
-                          >
-                            <Phone className="w-5 h-5 text-[#B2904D] flex-shrink-0" />
-                            <span className="text-sm">{office.phone}</span>
-                          </a>
-                        </StaggerItem>
+                      {cityGroup.slugs.map((slug) => (
+                        <OfficeCard key={slug} slug={slug} lang={currentLang} as="h4" />
                       ))}
                     </Stagger>
                   </details>
                 ))}
 
                 {/* Standalone Office Cards */}
-                {group.offices.length > 0 && (
+                {group.slugs.length > 0 && (
                   <Stagger gap={0.05} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
-                    {group.offices.map((office) => (
-                      <StaggerItem
-                        as="div"
-                        key={office.slug}
-                        className="card-3d group/card bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#B2904D]/40 transition-all duration-300"
-                      >
-                        <Link href={`/${currentLang}/oficinas/${office.slug}`} className="block mb-3">
-                          <h3 className="text-xl font-semibold text-white mb-4 group-hover/card:text-[#B2904D] transition-colors">
-                            {office.name[currentLang]}
-                          </h3>
-                          <div className="flex items-start gap-3">
-                            <MapPin className="w-5 h-5 text-[#B2904D] mt-0.5 flex-shrink-0" />
-                            <span className="text-white/70 text-sm leading-relaxed">
-                              {office.address}, {office.city} {office.state} {office.zip}
-                            </span>
-                          </div>
-                        </Link>
-                        <a
-                          href={`tel:+1${office.phone.replace(/[^0-9]/g, '')}`}
-                          className="flex items-center gap-3 text-white/70 hover:text-[#B2904D] transition-colors"
-                        >
-                          <Phone className="w-5 h-5 text-[#B2904D] flex-shrink-0" />
-                          <span className="text-sm">{office.phone}</span>
-                        </a>
-                      </StaggerItem>
+                    {group.slugs.map((slug) => (
+                      <OfficeCard key={slug} slug={slug} lang={currentLang} as="h3" />
                     ))}
                   </Stagger>
                 )}

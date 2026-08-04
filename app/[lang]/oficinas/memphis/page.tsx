@@ -20,7 +20,12 @@ const OFFICE_INFO = {
   // Coordenadas aproximadas para 3385 Airways Blvd
   latitude: "35.0673", 
   longitude: "-89.9928",
-  mapUrl: "https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116" // TODO(GBP): reemplazar por el share-link real de Memphis (el anterior era el de Main St)
+  // TODO(GBP): falta el share-link (`https://share.google/…`) de la ficha de
+  // Google Business Profile de Memphis; lo entrega quien administra el GBP del
+  // despacho (dueño del proyecto / marketing). Ver el TODO gemelo en
+  // app/components/officesPhoneMap.ts → OFFICES_NAP.memphis. Hasta entonces
+  // `hasMap` sale de esta búsqueda de Maps con la dirección correcta.
+  mapUrl: "https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116"
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

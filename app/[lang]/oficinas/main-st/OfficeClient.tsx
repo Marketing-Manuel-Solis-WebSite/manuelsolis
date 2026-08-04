@@ -15,7 +15,9 @@ const officeData: OfficeData = {
   address: '708 Main st, Houston, Texas 77002, United States',
   phone: '(713) 842-9575',
   email: 'houston@manuelsolis.com',
-  hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+  // Dirección virtual (WeWork/Spaces): atención solo con cita previa; el
+  // "24 horas" publicado es el call-center central, no esta sede.
+  hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
   mapLink: 'https://share.google/Fc3ISgQAihcayfmws',
   image: '/offices/main.png',
   

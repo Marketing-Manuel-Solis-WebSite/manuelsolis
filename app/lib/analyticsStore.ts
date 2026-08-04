@@ -89,10 +89,6 @@ export function listEvents(): readonly StoredEvent[] {
   return store.events;
 }
 
-export function eventCount(): number {
-  return getStore().events.length;
-}
-
 // ─── Filtros ───
 export interface AnalyticsFilters {
   from?: number; // epoch ms

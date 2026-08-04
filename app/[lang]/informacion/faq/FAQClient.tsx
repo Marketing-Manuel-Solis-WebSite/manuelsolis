@@ -257,6 +257,39 @@ const faqDataBilingual = {
 };
 
 
+/* Fondo decorativo y barrido del H1 con @keyframes CSS en vez de loops
+   infinitos de framer-motion, que ocupaban rAF en el hilo principal durante
+   toda la visita. Notas:
+   - La opacidad de reposo vive en la clase porque los orbes no llevan utilidad
+     de opacidad: con `animation: none` (reduced-motion) volverian a opacity 1.
+   - `faq-title-sweep` es la unica que no anima transform/opacity: el brillo es
+     un gradiente recortado al texto (bg-clip-text), asi que solo se puede
+     mover con background-position. No dispara layout (solo repintado) y ya no
+     paga rAF. El ciclo de 7s = 5s de barrido + 2s de pausa (repeatDelay). */
+const BACKDROP_CSS = `
+  @keyframes faq-orb-blue {
+    0%, 100% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.1); opacity: 0.4; }
+  }
+  @keyframes faq-orb-sky {
+    0%, 100% { transform: scale(1); opacity: 0.15; }
+    50% { transform: scale(1.2); opacity: 0.3; }
+  }
+  @keyframes faq-wordmark { from { transform: translateX(60%); } to { transform: translateX(-160%); } }
+  @keyframes faq-title-sweep {
+    0% { background-position: -150% 0; }
+    71.43%, 100% { background-position: 150% 0; }
+  }
+  .faq-orb-blue { opacity: 0.2; animation: faq-orb-blue 10s ease-in-out infinite both; }
+  .faq-orb-sky { opacity: 0.15; animation: faq-orb-sky 15s ease-in-out 2s infinite both; }
+  .faq-wordmark { animation: faq-wordmark 80s linear infinite both; }
+  .faq-title-sweep { background-position: 150% 0; animation: faq-title-sweep 7s ease-in-out infinite both; }
+  .faq-title-sweep-late { animation-delay: 0.5s; }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-orb-blue, .faq-orb-sky, .faq-wordmark, .faq-title-sweep { animation: none; }
+  }
+`;
+
 export default function FAQClient() {
   const { language } = useLanguage();
   const lang = language as 'es' | 'en';
@@ -297,280 +330,259 @@ export default function FAQClient() {
   };
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
+    <div className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Header />
 
-      {/* =========================================================================
-          FONDO ATMOSFÉRICO (Z-0) - OPTIMIZADO
-      ========================================================================= */}
-      <div className="fixed inset-0 z-0 pointer-events-none w-full h-full transform-gpu">
-         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
-         
-         {/* Ruido sutil */}
-         <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+      <main id="main-content" tabIndex={-1}>
+        {/* =========================================================================
+            FONDO ATMOSFÉRICO (Z-0) - OPTIMIZADO
+        ========================================================================= */}
+        <div aria-hidden="true" className="fixed inset-0 z-0 pointer-events-none w-full h-full transform-gpu">
+           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
 
-         {/* Animaciones de Luz Optimizado: Blur reducido y will-change */}
-         <m.div 
-           animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1] }}
-           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-           style={{ willChange: "transform, opacity" }}
-           className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[80px]" 
-         />
-         <m.div 
-            animate={{ opacity: [0.15, 0.3, 0.15], scale: [1, 1.2, 1] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            style={{ willChange: "transform, opacity" }}
-            className="absolute bottom-0 left-0 w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[90px]" 
-         />
-         
-         {/* N Gigante (Opacidad muy baja y estática o will-change si se anima) */}
-         <m.div
-            initial={{ x: "60%" }} 
-            animate={{ x: "-160%" }} 
-            transition={{ 
-              duration: 80, 
-              repeat: Infinity, 
-              ease: "linear",
-              repeatType: "loop"
-            }}
-            style={{ willChange: "transform" }}
-            className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden"
-         >
-            <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
-               N/\И/\
-            </span>
-         </m.div>
-      </div>
+           {/* Ruido sutil */}
+           <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+
+           {/* Animaciones de Luz: keyframes CSS sobre el compositor */}
+           <div className="faq-orb-blue absolute top-0 right-0 w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[80px]" />
+           <div className="faq-orb-sky absolute bottom-0 left-0 w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[90px]" />
+
+           {/* N Gigante */}
+           <div aria-hidden="true" className="faq-wordmark absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
+              <span className="text-[120vh] font-black italic text-white tracking-tighter transform -skew-x-12">
+                 N/\И/\
+              </span>
+           </div>
+
+           <style dangerouslySetInnerHTML={{ __html: BACKDROP_CSS }} />
+        </div>
       
-      {/* =========================================================================
-          CONTENIDO (Z-10)
-      ========================================================================= */}
+        {/* =========================================================================
+            CONTENIDO (Z-10)
+        ========================================================================= */}
       
-      {/* --- HERO SECTION --- */}
-      <section className="relative pt-44 pb-32 z-10 px-6 lg:px-12">
-        <div className="container mx-auto">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
+        {/* --- HERO SECTION --- */}
+        <section className="relative pt-44 pb-32 z-10 px-6 lg:px-12">
+          <div className="container mx-auto">
+            <div className="grid lg:grid-cols-12 gap-12 items-center">
             
-            {/* --- IZQUIERDA: LOGO (Cols 5) --- */}
-            <m.div 
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="lg:col-span-5 relative h-[400px] lg:h-[600px] flex items-center justify-center"
-            >
-              {/* Blur reducido */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
-              
-              <m.div
-                initial={{ scale: 0.8, rotateY: -15 }}
-                animate={{ scale: 1, rotateY: 0 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-                className="relative z-10 w-full max-w-md transform-gpu"
-              >
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <Image
-                    src="/LogoInformacion.png"
-                    alt="Logo Información"
-                    width={500}
-                    height={500}
-                    className="object-contain drop-shadow-[0_0_20px_rgba(178,144,77,0.4)] hover:drop-shadow-[0_0_30px_rgba(178,144,77,0.6)] transition-all duration-500"
-                    priority
-                  />
-                </div>
-              </m.div>
-
-              {/* Estadística decorativa - Blur reducido */}
-              <m.div
-                initial={{ opacity: 0, y: 20 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                transition={{ delay: 0.8, duration: 1 }}
-                className="absolute bottom-10 left-0 z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-xl"
-              >
-                <div className="group">
-                  <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50">
-                    <span className="text-5xl font-extralight tracking-tighter">100</span> 
-                    <span className="text-4xl font-thin text-[#B2904D] ml-1 group-hover:rotate-12 transition-transform">+</span>
-                  </div>
-                  <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
-                    {lang === 'es' ? 'Preguntas Respondidas' : 'Questions Answered'}
-                  </p>
-                </div>
-              </m.div>
-            </m.div>
-
-            {/* --- DERECHA: TEXTO (Cols 7) --- */}
-            <div className="lg:col-span-7 space-y-10 pl-0 lg:pl-24 relative z-20">
-              
+              {/* --- IZQUIERDA: LOGO (Cols 5) --- */}
               <m.div 
-                initial={{ scaleY: 0 }} 
-                animate={{ scaleY: 1 }} 
-                transition={{ duration: 1.5, delay: 0.5 }}
-                className="absolute left-12 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-sky-500/30 to-transparent origin-top hidden lg:block" 
-              />
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="lg:col-span-5 relative h-[400px] lg:h-[600px] flex items-center justify-center"
+              >
+                {/* Blur reducido */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
+              
+                <m.div
+                  initial={{ scale: 0.8, rotateY: -15 }}
+                  animate={{ scale: 1, rotateY: 0 }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  className="relative z-10 w-full max-w-md transform-gpu"
+                >
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    <Image
+                      src="/LogoInformacion.png"
+                      alt="Logo Información"
+                      width={500}
+                      height={500}
+                      className="object-contain drop-shadow-[0_0_20px_rgba(178,144,77,0.4)] hover:drop-shadow-[0_0_30px_rgba(178,144,77,0.6)] transition-all duration-500"
+                      priority
+                    />
+                  </div>
+                </m.div>
 
-              <div className="relative">
-                <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.95] font-thin text-white tracking-tight">
-                  <span className="block overflow-hidden pb-2 perspective-[400px]">
-                    <m.span 
-                      initial={{ y: "100%", rotateX: -20, opacity: 0 }}
-                      animate={{ y: 0, rotateX: 0, opacity: 1 }}
-                      transition={{ duration: 1.2, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
-                      className="block text-white/90"
-                    >
-                      {lang === 'es' ? 'PREGUNTAS' : 'FREQUENTLY'}
-                    </m.span>
-                  </span>
-                  
-                  <span className="block overflow-hidden pb-4 perspective-[400px]">
-                    <m.span 
-                      initial={{ y: "100%", rotateX: -20, opacity: 0 }}
-                      animate={{ y: 0, rotateX: 0, opacity: 1 }}
-                      transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
-                      className="block font-medium relative w-fit pr-6"
-                    >
-                      <span className="text-[#B2904D] drop-shadow-xl">
-                        {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
-                      </span>
-                      <m.span 
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
-                        animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
-                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
-                        style={{ willChange: "background-position" }}
-                      >
-                        {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
-                      </m.span>
-                    </m.span>
-                  </span>
+                {/* Estadística decorativa - Blur reducido */}
+                <m.div
+                  initial={{ opacity: 0, y: 20 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  transition={{ delay: 0.8, duration: 1 }}
+                  className="absolute bottom-10 left-0 z-40 p-6 border border-white/10 rounded-xl backdrop-blur-md bg-white/5 shadow-xl"
+                >
+                  <div className="group">
+                    <div className="flex items-baseline text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-sky-200/50">
+                      <span className="text-5xl font-extralight tracking-tighter">100</span> 
+                      <span className="text-4xl font-thin text-[#B2904D] ml-1 group-hover:rotate-12 transition-transform">+</span>
+                    </div>
+                    <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-2 font-medium">
+                      {lang === 'es' ? 'Preguntas Respondidas' : 'Questions Answered'}
+                    </p>
+                  </div>
+                </m.div>
+              </m.div>
 
-                  {lang === 'en' && (
-                    <span className="block overflow-hidden perspective-[400px]">
+              {/* --- DERECHA: TEXTO (Cols 7) --- */}
+              <div className="lg:col-span-7 space-y-10 pl-0 lg:pl-24 relative z-20">
+              
+                <m.div 
+                  initial={{ scaleY: 0 }} 
+                  animate={{ scaleY: 1 }} 
+                  transition={{ duration: 1.5, delay: 0.5 }}
+                  className="absolute left-12 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-sky-500/30 to-transparent origin-top hidden lg:block" 
+                />
+
+                <div className="relative">
+                  <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.95] font-thin text-white tracking-tight">
+                    <span className="block overflow-hidden pb-2 perspective-[400px]">
                       <m.span 
                         initial={{ y: "100%", rotateX: -20, opacity: 0 }}
                         animate={{ y: 0, rotateX: 0, opacity: 1 }}
-                        transition={{ duration: 1.2, delay: 0.45, ease: [0.25, 1, 0.5, 1] }}
+                        transition={{ duration: 1.2, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
+                        className="block text-white/90"
+                      >
+                        {lang === 'es' ? 'PREGUNTAS' : 'FREQUENTLY'}
+                      </m.span>
+                    </span>
+                  
+                    <span className="block overflow-hidden pb-4 perspective-[400px]">
+                      <m.span 
+                        initial={{ y: "100%", rotateX: -20, opacity: 0 }}
+                        animate={{ y: 0, rotateX: 0, opacity: 1 }}
+                        transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
                         className="block font-medium relative w-fit pr-6"
                       >
                         <span className="text-[#B2904D] drop-shadow-xl">
-                          QUESTIONS
+                          {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
                         </span>
-                        <m.span 
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
-                          animate={{ backgroundPosition: ["-150% 0", "150% 0"] }}
-                          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", repeatDelay: 2, delay: 0.5 }}
-                          style={{ willChange: "background-position" }}
+                        <span
+                          aria-hidden="true"
+                          className="faq-title-sweep absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
                         >
-                          QUESTIONS
-                        </m.span>
+                          {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
+                        </span>
                       </m.span>
                     </span>
-                  )}
-                </h1>
-              </div>
 
-              <m.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 1 }}
-                className="relative"
-              >
-                <div className="w-32 h-1 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full shadow-[0_0_10px_#B2904D] mb-6" />
-                <p className="text-xl text-white/70 font-extralight max-w-xl leading-relaxed pl-4 border-l border-white/10">
-                  {t('hero.subtitle')}
-                </p>
-              </m.div>
-
-              <m.div 
-                initial={{ opacity: 0, scale: 0.9 }} 
-                animate={{ opacity: 1, scale: 1 }} 
-                transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
-                className="flex flex-wrap items-center gap-12 pl-4"
-              >
-                <div className="group">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-[#B2904D] shadow-[0_0_5px_#B2904D] group-hover:shadow-[0_0_10px_#B2904D] transition-all" />
-                    <p className="text-sm text-white/60 uppercase tracking-[0.2em] font-medium group-hover:text-white/90 transition-colors">
-                      {lang === 'es' ? 'Respuestas Claras y Profesionales' : 'Clear and Professional Answers'}
-                    </p>
-                  </div>
+                    {lang === 'en' && (
+                      <span className="block overflow-hidden perspective-[400px]">
+                        <m.span 
+                          initial={{ y: "100%", rotateX: -20, opacity: 0 }}
+                          animate={{ y: 0, rotateX: 0, opacity: 1 }}
+                          transition={{ duration: 1.2, delay: 0.45, ease: [0.25, 1, 0.5, 1] }}
+                          className="block font-medium relative w-fit pr-6"
+                        >
+                          <span className="text-[#B2904D] drop-shadow-xl">
+                            QUESTIONS
+                          </span>
+                          <span
+                            aria-hidden="true"
+                            className="faq-title-sweep faq-title-sweep-late absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
+                          >
+                            QUESTIONS
+                          </span>
+                        </m.span>
+                      </span>
+                    )}
+                  </h1>
                 </div>
-              </m.div>
 
+                <m.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 1 }}
+                  className="relative"
+                >
+                  <div className="w-32 h-1 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full shadow-[0_0_10px_#B2904D] mb-6" />
+                  <p className="text-xl text-white/70 font-extralight max-w-xl leading-relaxed pl-4 border-l border-white/10">
+                    {t('hero.subtitle')}
+                  </p>
+                </m.div>
+
+                <m.div 
+                  initial={{ opacity: 0, scale: 0.9 }} 
+                  animate={{ opacity: 1, scale: 1 }} 
+                  transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
+                  className="flex flex-wrap items-center gap-12 pl-4"
+                >
+                  <div className="group">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-[#B2904D] shadow-[0_0_5px_#B2904D] group-hover:shadow-[0_0_10px_#B2904D] transition-all" />
+                      <p className="text-sm text-white/60 uppercase tracking-[0.2em] font-medium group-hover:text-white/90 transition-colors">
+                        {lang === 'es' ? 'Respuestas Claras y Profesionales' : 'Clear and Professional Answers'}
+                      </p>
+                    </div>
+                  </div>
+                </m.div>
+
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       
-      {/* --- SECCIONES DE ACORDEÓN --- */}
-      <div className="container mx-auto px-4 py-12 relative z-10 max-w-4xl">
+        {/* --- SECCIONES DE ACORDEÓN --- */}
+        <div className="container mx-auto px-4 py-12 relative z-10 max-w-4xl">
         
-        {/* LEY CIVIL */}
-        <div className="mb-16">
-          <SectionTitle title={t('sections.civilLaw')} />
-          {faqDataBilingual.civilLaw.map((item, index) => (
-            <Accordion key={index} item={item} lang={lang} />
-          ))}
-        </div>
+          {/* LEY CIVIL */}
+          <div className="mb-16">
+            <SectionTitle title={t('sections.civilLaw')} />
+            {faqDataBilingual.civilLaw.map((item, index) => (
+              <Accordion key={index} item={item} lang={lang} />
+            ))}
+          </div>
 
-        {/* LEY CRIMINAL */}
-        <div className="mb-16">
-          <SectionTitle title={t('sections.criminalLaw')} />
-          {faqDataBilingual.criminalLaw.map((item, index) => (
-            <Accordion key={index} item={item} lang={lang} />
-          ))}
-        </div>
+          {/* LEY CRIMINAL */}
+          <div className="mb-16">
+            <SectionTitle title={t('sections.criminalLaw')} />
+            {faqDataBilingual.criminalLaw.map((item, index) => (
+              <Accordion key={index} item={item} lang={lang} />
+            ))}
+          </div>
 
-        {/* LEY FAMILIAR */}
-        <div className="mb-16">
-          <SectionTitle title={t('sections.familyLaw')} />
-          {faqDataBilingual.familyLaw.map((item, index) => (
-            <Accordion key={index} item={item} lang={lang} />
-          ))}
-        </div>
+          {/* LEY FAMILIAR */}
+          <div className="mb-16">
+            <SectionTitle title={t('sections.familyLaw')} />
+            {faqDataBilingual.familyLaw.map((item, index) => (
+              <Accordion key={index} item={item} lang={lang} />
+            ))}
+          </div>
         
-        {/* LEY INMIGRACIÓN */}
-        <div className="mb-16">
-          <SectionTitle title={t('sections.immigrationLaw')} />
-          {faqDataBilingual.immigrationLaw.map((item, index) => (
-            <Accordion key={index} item={item} lang={lang} />
-          ))}
-        </div>
+          {/* LEY INMIGRACIÓN */}
+          <div className="mb-16">
+            <SectionTitle title={t('sections.immigrationLaw')} />
+            {faqDataBilingual.immigrationLaw.map((item, index) => (
+              <Accordion key={index} item={item} lang={lang} />
+            ))}
+          </div>
         
-        {/* LEY SEGUROS */}
-        <div className="mb-16">
-          <SectionTitle title={t('sections.insuranceLaw')} />
-          {faqDataBilingual.insuranceLaw.map((item, index) => (
-            <Accordion key={index} item={item} lang={lang} />
-          ))}
-        </div>
+          {/* LEY SEGUROS */}
+          <div className="mb-16">
+            <SectionTitle title={t('sections.insuranceLaw')} />
+            {faqDataBilingual.insuranceLaw.map((item, index) => (
+              <Accordion key={index} item={item} lang={lang} />
+            ))}
+          </div>
 
-      </div>
+        </div>
       
-      {/* --- CONTACT SECTION --- */}
-      <section className="relative py-24 z-10 border-t border-white/5 bg-gradient-to-b from-[#001540] to-[#000a20]">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
+        {/* --- CONTACT SECTION --- */}
+        <section className="relative py-24 z-10 border-t border-white/5 bg-gradient-to-b from-[#001540] to-[#000a20]">
+          <div className="container mx-auto px-4 max-w-4xl text-center">
             
-            <div className="mb-12">
-              <h2 className="text-4xl md:text-5xl font-thin text-white mb-4 drop-shadow-sm">
-                  {t('contact.title1')} <span className="font-bold text-[#B2904D] drop-shadow-[0_0_15px_rgba(178,144,77,0.4)]">{t('contact.title2')}</span>
-              </h2>
-              <p className="text-blue-100/60 font-light text-lg">
-                  {t('contact.subtitle')}
-              </p>
-            </div>
+              <div className="mb-12">
+                <h2 className="text-4xl md:text-5xl font-thin text-white mb-4 drop-shadow-sm">
+                    {t('contact.title1')} <span className="font-bold text-[#B2904D] drop-shadow-[0_0_15px_rgba(178,144,77,0.4)]">{t('contact.title2')}</span>
+                </h2>
+                <p className="text-blue-100/60 font-light text-lg">
+                    {t('contact.subtitle')}
+                </p>
+              </div>
             
-            {/* Formulario flotando limpio */}
-            <div className="relative z-20 text-left">
-               <ContactForm /> 
-            </div>
+              {/* Formulario flotando limpio */}
+              <div className="relative z-20 text-left">
+                 <ContactForm /> 
+              </div>
 
-        </div>
-      </section>
+          </div>
+        </section>
+      </main>
 
       <Footer />
-    </main>
+    </div>
   );
 }

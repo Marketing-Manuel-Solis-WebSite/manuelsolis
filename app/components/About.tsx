@@ -34,9 +34,12 @@ export default function About({ lang }: { lang: Language }) {
         {/* Section title (full-width). Styled gold span → Reveal, not TextReveal. */}
         <Reveal variant="up" className="mb-16 text-center" amount={0.4}>
           <h2 className="text-4xl md:text-6xl font-thin text-white mb-6 tracking-tight">
+            {/* "Uniendo Familias" es el nombre de la serie: no se traduce. */}
             {'Uniendo Familias | '}
             <span className="font-normal text-gradient-gold-subtle">
-              Episodio 4 — La decisión que lo cambió todo
+              {isEs
+                ? 'Episodio 4 — La decisión que lo cambió todo'
+                : 'Episode 4 — The Decision That Changed Everything'}
             </span>
           </h2>
         </Reveal>
@@ -47,10 +50,19 @@ export default function About({ lang }: { lang: Language }) {
           <Stagger gap={0.12} className="lg:col-span-6 space-y-10">
 
             <StaggerItem as="div" className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
-              {/* Sinopsis proporcionada por el usuario (versión recortada; mismo texto en ES y EN, el episodio es en español). */}
-              <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
-                Una redada de ICE cambia el destino de una familia en minutos. <strong className="text-white font-medium">Pablo</strong> es detenido y separado de su esposa y sus tres hijos, dejándolos frente a un futuro incierto. Mientras él lucha por no perder la esperanza tras las rejas, <strong className="text-white font-medium">Yohana</strong> emprende una carrera contrarreloj para encontrar una salida.<br /><br />Cuando todo parece perdido, el <strong className="text-white font-medium">abogado de inmigración Manuel Solís</strong> interviene con una estrategia legal poco común: un <strong className="text-white font-medium">habeas corpus</strong> para defender los derechos de Pablo y desafiar su detención. Basado en una historia real, este episodio revela el costo humano de la separación familiar y cómo una decisión valiente puede devolver la esperanza.
-              </p>
+              {/* Sinopsis oficial del episodio (versión recortada). El episodio se grabó en español: de ahí el aviso en EN. */}
+              {isEs ? (
+                <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
+                  Una redada de ICE cambia el destino de una familia en minutos. <strong className="text-white font-medium">Pablo</strong> es detenido y separado de su esposa y sus tres hijos, dejándolos frente a un futuro incierto. Mientras él lucha por no perder la esperanza tras las rejas, <strong className="text-white font-medium">Yohana</strong> emprende una carrera contrarreloj para encontrar una salida.<br /><br />Cuando todo parece perdido, el <strong className="text-white font-medium">abogado de inmigración Manuel Solís</strong> interviene con una estrategia legal poco común: un <strong className="text-white font-medium">habeas corpus</strong> para defender los derechos de Pablo y desafiar su detención. Basado en una historia real, este episodio revela el costo humano de la separación familiar y cómo una decisión valiente puede devolver la esperanza.
+                </p>
+              ) : (
+                <>
+                  <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
+                    An ICE raid changes the fate of a family in minutes. <strong className="text-white font-medium">Pablo</strong> is detained and separated from his wife and their three children, leaving them facing an uncertain future. While he fights not to lose hope behind bars, <strong className="text-white font-medium">Yohana</strong> starts a race against the clock to find a way out.<br /><br />When all seems lost, <strong className="text-white font-medium">immigration attorney Manuel Solís</strong> steps in with an uncommon legal strategy: a <strong className="text-white font-medium">habeas corpus</strong> petition to defend Pablo&apos;s rights and challenge his detention. Based on a true story, this episode reveals the human cost of family separation and how one brave decision can give hope back.
+                  </p>
+                  <p className="pl-6 text-sm text-blue-200/60">Episode in Spanish.</p>
+                </>
+              )}
             </StaggerItem>
 
             {/* Stat cards — .card-3d workhorse (no pointer tilt) */}

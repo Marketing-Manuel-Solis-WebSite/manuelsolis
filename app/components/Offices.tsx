@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { Reveal } from './motion';
 import OfficesExplorer from './OfficesExplorer';
+import { OFFICES_NAP, OFFICE_NAP_SLUGS } from './officesPhoneMap';
 import type { Language } from '../lib/translations';
 
 /**
@@ -40,6 +42,45 @@ export default function Offices({ lang }: { lang: Language }) {
         </Reveal>
 
         <OfficesExplorer lang={lang} />
+
+        {/*
+          Directorio estático: el explorador es una isla cliente y su panel solo
+          muestra la oficina activa, así que los enlaces internos hacia las 15
+          fichas /oficinas/[slug] se emiten aquí, en el HTML del servidor.
+        */}
+        <Reveal variant="up" className="mt-20" amount={0.15}>
+          <nav aria-label={isEs ? 'Directorio de oficinas' : 'Office directory'}>
+            <h3 className="text-sm font-bold text-blue-200/60 uppercase tracking-widest mb-6 text-center">
+              {isEs ? 'Todas nuestras oficinas' : 'All our offices'}
+            </h3>
+            <ul className="flex flex-wrap justify-center gap-2.5">
+              {OFFICE_NAP_SLUGS.map((slug) => {
+                const nap = OFFICES_NAP[slug];
+                return (
+                  <li key={slug}>
+                    <Link
+                      href={`/${lang}/oficinas/${slug}`}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 hover:bg-[#B2904D]/10 hover:border-[#B2904D]/30 transition-all duration-300 rounded-full text-xs text-blue-100 font-medium tracking-wide"
+                    >
+                      {nap.name[lang]}
+                      <span className="text-[10px] text-blue-300/60 uppercase tracking-wider">
+                        {nap.city}, {nap.state}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+              <li>
+                <Link
+                  href={`/${lang}/oficinas`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#B2904D]/10 border border-[#B2904D]/40 hover:bg-[#B2904D]/20 transition-all duration-300 rounded-full text-xs text-[#B2904D] font-bold tracking-wide"
+                >
+                  {isEs ? 'Ver todas las oficinas' : 'View all offices'}
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </Reveal>
       </div>
     </section>
   );

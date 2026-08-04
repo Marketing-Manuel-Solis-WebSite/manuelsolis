@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, ChevronDown, Phone, ArrowUpRight } from 'lucide-react'
@@ -9,6 +9,7 @@ import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motio
 import { usePathname } from 'next/navigation'
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
 import { fireConversion } from '../lib/conversion'
+import { useDialog } from './useDialog'
 
 const FlagES = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-3 w-3 rounded-[1px] flex-shrink-0 opacity-90">
@@ -30,12 +31,40 @@ export default function HeaderProfessional() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [openDesktopDropdown, setOpenDesktopDropdown] = useState<string | null>(null);
   const [openMobileState, setOpenMobileState] = useState<string | null>(null);
   const [openMobileCity, setOpenMobileCity] = useState<string | null>(null);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
-  
+  const dropdownTriggers = useRef<Record<string, HTMLButtonElement | null>>({});
+  // Al cerrar con Escape devolvemos el foco al disparador; ese foco no debe reabrir el panel.
+  const skipFocusOpen = useRef(false);
+
+  // El panel móvil es un diálogo modal: Escape, foco atrapado, scroll bloqueado.
+  const mobileMenuRef = useDialog<HTMLDivElement>(isMenuOpen, () => setIsMenuOpen(false));
+
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // El Header sobrevive a la navegación cliente: un panel abierto quedaría flotando.
+  useEffect(() => {
+    setOpenDesktopDropdown(null);
+  }, [pathname]);
+
+  // 1024px = breakpoint `lg`: al pasar a escritorio el panel móvil deja de pintarse,
+  // así que hay que cerrarlo o el scroll del body quedaría bloqueado sin diálogo visible.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    if (desktop.matches) {
+      setIsMenuOpen(false);
+      return;
+    }
+    const handleBreakpointChange = (event: MediaQueryListEvent) => {
+      if (event.matches) setIsMenuOpen(false);
+    };
+    desktop.addEventListener('change', handleBreakpointChange);
+    return () => desktop.removeEventListener('change', handleBreakpointChange);
+  }, [isMenuOpen]);
 
   // Obtener el teléfono dinámico basado en la ruta actual
   const { phoneNumber, phoneLink } = useMemo(() => {
@@ -175,11 +204,13 @@ export default function HeaderProfessional() {
             { name: 'Nuestro Equipo', href: `/${language}/abogados` },
             { name: 'Sobre Nosotros', href: `/${language}/nosotros` },
             { name: 'Preguntas Frecuentes', href: `/${language}/informacion/faq` },
+            { name: 'Noticias Legales', href: `/${language}/informacion/noticias` },
           ]
         : [
             { name: 'Our Team', href: `/${language}/abogados` },
             { name: 'About Us', href: `/${language}/nosotros` },
             { name: 'FAQ', href: `/${language}/informacion/faq` },
+            { name: 'Legal News', href: `/${language}/informacion/noticias` },
           ]
     },
     {
@@ -189,11 +220,43 @@ export default function HeaderProfessional() {
     },
   ];
 
+  // La query (?utm_source, gclid…) y el fragmento deben sobrevivir al cambio de
+  // idioma o se pierde la atribución de la visita. No se puede leer
+  // window.location en el primer render (rompería la hidratación), así que se
+  // captura al montar y en cada cambio de URL.
+  const [urlSuffix, setUrlSuffix] = useState('');
+
+  useEffect(() => {
+    const readSuffix = () => setUrlSuffix(window.location.search + window.location.hash);
+    readSuffix();
+    window.addEventListener('popstate', readSuffix);
+    window.addEventListener('hashchange', readSuffix);
+    return () => {
+      window.removeEventListener('popstate', readSuffix);
+      window.removeEventListener('hashchange', readSuffix);
+    };
+  }, [pathname]);
+
+  // Los CTAs flotantes (fixed z-50) se montan fuera del árbol del Header, en el
+  // layout, así que quedarían por encima de este panel modal (z-40) y taparían
+  // sus últimos enlaces. FloatingCtas.tsx escucha este mismo nombre de evento.
+  useEffect(() => {
+    const notify = (open: boolean) => {
+      window.dispatchEvent(new CustomEvent<boolean>('msolis:mobile-menu-toggle', { detail: open }));
+    };
+    notify(isMenuOpen);
+    if (!isMenuOpen) return;
+    // Si el Header se desmonta con el panel abierto, los flotantes deben volver.
+    return () => {
+      notify(false);
+    };
+  }, [isMenuOpen]);
+
   // Ruta equivalente en el otro idioma. El switcher usa <Link href> real
   // (no button+router.push) para que exista un enlace es↔en rastreable.
   const langPath = (target: 'es' | 'en') => {
     const rest = pathname.split('/').slice(2).join('/');
-    return `/${target}${rest ? '/' + rest : ''}`;
+    return `/${target}${rest ? '/' + rest : ''}${urlSuffix}`;
   };
 
   const onLangLinkClick = (target: 'es' | 'en') => {
@@ -278,52 +341,93 @@ export default function HeaderProfessional() {
             </Link>
 
             <div className="hidden lg:flex items-center flex-1 min-w-0">
-              <nav aria-label="Main navigation" className="flex items-center gap-4 xl:gap-7">
-                {menuItems.map((item) => (
-                  item.type === 'external' ? (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-[#B2904D] hover:text-[#D4A94E] transition-colors duration-200"
-                    >
-                      <span className="flex flex-col leading-[1.05] text-[10px] xl:text-[12px] font-medium uppercase tracking-[0.12em] xl:tracking-[0.2em] text-left">
-                        {item.name.split(' ').map((word, i) => (
-                          <span key={i}>{word}</span>
-                        ))}
-                      </span>
-                      <ArrowUpRight className="w-3 h-3 opacity-80" strokeWidth={1.75} />
-                    </a>
-                  ) : (
-                  <div key={item.name} className="relative group">
-                    <div className="flex items-center gap-1 cursor-pointer py-3">
-                      {item.submenu ? (
+              <nav aria-label={language === 'es' ? 'Navegación principal' : 'Main navigation'} className="flex items-center gap-4 xl:gap-7">
+                {menuItems.map((item) => {
+                  if (item.type === 'external') {
+                    return (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-[#B2904D] hover:text-[#D4A94E] transition-colors duration-200"
+                      >
+                        <span className="flex flex-col leading-[1.05] text-[10px] xl:text-[12px] font-medium uppercase tracking-[0.12em] xl:tracking-[0.2em] text-left">
+                          {item.name.split(' ').map((word, i) => (
+                            <span key={i}>{word}</span>
+                          ))}
+                        </span>
+                        <ArrowUpRight className="w-3 h-3 opacity-80" strokeWidth={1.75} />
+                      </a>
+                    );
+                  }
+
+                  const dropdownKey = item.key ?? item.name;
+                  const isDropdownOpen = Boolean(item.submenu) && openDesktopDropdown === dropdownKey;
+
+                  return (
+                  <div
+                    key={item.name}
+                    className="relative group"
+                    onKeyDown={(event) => {
+                      if (event.key !== 'Escape' || openDesktopDropdown !== dropdownKey) return;
+                      const trigger = dropdownTriggers.current[dropdownKey];
+                      skipFocusOpen.current = trigger !== document.activeElement;
+                      trigger?.focus();
+                      setOpenDesktopDropdown(null);
+                    }}
+                    onBlur={(event) => {
+                      const next = event.relatedTarget;
+                      if (next instanceof Node && event.currentTarget.contains(next)) return;
+                      setOpenDesktopDropdown((current) => (current === dropdownKey ? null : current));
+                    }}
+                  >
+                    {item.submenu ? (
+                      <button
+                        type="button"
+                        ref={(node) => { dropdownTriggers.current[dropdownKey] = node; }}
+                        aria-haspopup="true"
+                        aria-expanded={isDropdownOpen}
+                        aria-controls={`desktop-dropdown-${dropdownKey}`}
+                        onClick={() => setOpenDesktopDropdown(isDropdownOpen ? null : dropdownKey)}
+                        onFocus={(event) => {
+                          if (skipFocusOpen.current) {
+                            skipFocusOpen.current = false;
+                            return;
+                          }
+                          // El foco por puntero lo resuelve onClick; enfocar solo abre desde el teclado.
+                          if (event.currentTarget.matches(':focus-visible')) setOpenDesktopDropdown(dropdownKey);
+                        }}
+                        className="flex items-center gap-1 cursor-pointer py-3 bg-transparent text-left"
+                      >
                         <span className="text-[10px] xl:text-[12px] font-light uppercase tracking-[0.12em] xl:tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200">
                           {item.name}
                         </span>
-                      ) : (
+                        <ChevronDown className={`w-2.5 h-2.5 text-white/60 group-hover:text-white transition-transform duration-300 group-hover:rotate-180 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                    ) : (
+                      <div className="flex items-center gap-1 cursor-pointer py-3">
                         <Link
                           href={item.href}
                           className="text-[10px] xl:text-[12px] font-light uppercase tracking-[0.12em] xl:tracking-[0.2em] text-white/95 group-hover:text-white transition-colors duration-200"
                         >
                           {item.name}
                         </Link>
-                      )}
-                      {item.submenu && (
-                        <ChevronDown className="w-2.5 h-2.5 text-white/60 group-hover:text-white transition-transform duration-300 group-hover:rotate-180" />
-                      )}
-                    </div>
+                      </div>
+                    )}
 
                     <span className="absolute bottom-1 left-0 w-0 h-[0.5px] bg-sky-200 transition-all duration-300 ease-out group-hover:w-full" />
 
                     {item.submenu && item.key === 'offices' && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]">
+                      <div
+                        id={`desktop-dropdown-${dropdownKey}`}
+                        className={`absolute top-full left-1/2 -translate-x-1/2 pt-6 ${isDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'} group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]`}
+                      >
                         <div className="w-[640px] bg-[#0b1c33]/95 backdrop-blur-md rounded-2xl shadow-2xl shadow-black/40 py-6 px-8 border border-white/10">
                           <div className="flex gap-8">
                             {/* Texas - columna izquierda */}
                             <div className="flex-1 min-w-0 pl-2">
-                              <h4 className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-4 pb-2 border-b border-[#B2904D]/20">Texas</h4>
+                              <p className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-4 pb-2 border-b border-[#B2904D]/20">Texas</p>
                               {/* Houston group */}
                               <div className="mb-4">
                                 <span className="block text-xs font-semibold text-white/80 uppercase tracking-[0.15em] px-4 py-2 bg-white/5 rounded-lg mb-2">Houston</span>
@@ -352,7 +456,7 @@ export default function HeaderProfessional() {
                             <div className="w-[190px] space-y-5 flex-shrink-0">
                               {officeNav.slice(1).map((stateGroup) => (
                                 <div key={stateGroup.state}>
-                                  <h4 className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-2 pb-1.5 border-b border-[#B2904D]/20">{stateGroup.state}</h4>
+                                  <p className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-2 pb-1.5 border-b border-[#B2904D]/20">{stateGroup.state}</p>
                                   {stateGroup.cities.map((city) => (
                                     <Link key={city.name} href={city.href} className="group/item flex items-center px-3 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
                                       <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{city.name}</span>
@@ -376,7 +480,10 @@ export default function HeaderProfessional() {
                     )}
 
                     {item.submenu && item.key !== 'offices' && (
-                      <div className="absolute top-full left-0 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]">
+                      <div
+                        id={`desktop-dropdown-${dropdownKey}`}
+                        className={`absolute top-full left-0 pt-6 ${isDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'} group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]`}
+                      >
                         <div className="min-w-[240px] bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl py-3 px-2 border border-white/10 transform origin-top">
                           {item.submenu.map((subItem) => (
                             <Link
@@ -393,8 +500,8 @@ export default function HeaderProfessional() {
                       </div>
                     )}
                   </div>
-                  )
-                ))}
+                  );
+                })}
               </nav>
             </div>
 
@@ -403,6 +510,7 @@ export default function HeaderProfessional() {
 
               <div className="relative group">
                 <button
+                  type="button"
                   onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
                   aria-label="Cambiar idioma / Change language"
                   aria-haspopup="true"
@@ -447,9 +555,11 @@ export default function HeaderProfessional() {
               </Link>
 
               <button
+                type="button"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label={isMenuOpen ? (language === 'es' ? 'Cerrar menú' : 'Close menu') : (language === 'es' ? 'Abrir menú' : 'Open menu')}
                 aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu-panel"
                 className="text-white hover:text-sky-300 transition-colors"
               >
                 {isMenuOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
@@ -489,6 +599,12 @@ export default function HeaderProfessional() {
       <AnimatePresence>
         {isMenuOpen && (
           <m.div
+            ref={mobileMenuRef}
+            id="mobile-menu-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label={language === 'es' ? 'Menú principal' : 'Main menu'}
+            tabIndex={-1}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -516,21 +632,27 @@ export default function HeaderProfessional() {
                     </a>
                   ) : (
                   <div key={item.name} className="border-b border-white/5 pb-4 group">
-                    <div
-                      className="flex justify-between items-center text-white/90 group-hover:text-white text-lg font-thin uppercase tracking-[0.2em] cursor-pointer"
-                      onClick={() => item.submenu && setOpenSubmenu(openSubmenu === item.key ? null : item.key)}
-                    >
-                      {item.submenu ? (
+                    {item.submenu ? (
+                      <button
+                        type="button"
+                        aria-expanded={openSubmenu === item.key}
+                        aria-controls={`mobile-submenu-${item.key}`}
+                        onClick={() => setOpenSubmenu(openSubmenu === item.key ? null : item.key ?? null)}
+                        className="flex justify-between items-center w-full text-left text-white/90 group-hover:text-white text-lg font-thin uppercase tracking-[0.2em] cursor-pointer bg-transparent"
+                      >
                         <span>{item.name}</span>
-                      ) : (
-                        renderLink(item, true)
-                      )}
-                      {item.submenu && <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${openSubmenu === item.key ? 'rotate-180' : 'opacity-50'}`} />}
-                    </div>
-                    
+                        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${openSubmenu === item.key ? 'rotate-180' : 'opacity-50'}`} />
+                      </button>
+                    ) : (
+                      <div className="flex justify-between items-center text-white/90 group-hover:text-white text-lg font-thin uppercase tracking-[0.2em]">
+                        {renderLink(item, true)}
+                      </div>
+                    )}
+
                     <AnimatePresence>
                       {item.submenu && openSubmenu === item.key && (
                         <m.div
+                          id={`mobile-submenu-${item.key}`}
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
@@ -544,6 +666,8 @@ export default function HeaderProfessional() {
                               {officeNav.map(stateGroup => (
                                 <div key={stateGroup.state} className="mb-1">
                                   <button
+                                    type="button"
+                                    aria-expanded={openMobileState === stateGroup.state}
                                     onClick={() => setOpenMobileState(openMobileState === stateGroup.state ? null : stateGroup.state)}
                                     className="flex justify-between items-center w-full text-xs text-[#B2904D] font-bold uppercase tracking-[0.15em] py-1.5"
                                   >
@@ -557,6 +681,8 @@ export default function HeaderProfessional() {
                                           city.subOffices ? (
                                             <div key={city.name}>
                                               <button
+                                                type="button"
+                                                aria-expanded={openMobileCity === city.name}
                                                 onClick={() => setOpenMobileCity(openMobileCity === city.name ? null : city.name)}
                                                 className="flex justify-between items-center w-full text-xs text-gray-300 font-medium uppercase tracking-[0.12em] py-1 hover:text-white transition-colors"
                                               >
@@ -624,6 +750,16 @@ export default function HeaderProfessional() {
                       </Link>
                     </div>
                 </div>
+
+                {/* El botón de cerrar del encabezado queda fuera del diálogo: con aria-modal
+                    los lectores de pantalla no lo alcanzan, así que el panel lleva el suyo. */}
+                <button
+                  type="button"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="sr-only focus:not-sr-only focus:w-full focus:rounded-xl focus:border focus:border-white/20 focus:px-4 focus:py-3 focus:text-center focus:text-[12px] focus:font-medium focus:uppercase focus:tracking-[0.2em] focus:text-white/90"
+                >
+                  {language === 'es' ? 'Cerrar menú' : 'Close menu'}
+                </button>
 
               </nav>
             </div>

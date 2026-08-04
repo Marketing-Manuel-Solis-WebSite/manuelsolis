@@ -4,8 +4,8 @@
 // Mirrors the attorneyData.ts shape (bilingual ES/EN, resolved to the active
 // locale on the server) so the inactive locale never reaches the client bundle.
 // Each profile is a shareable trust page that a collaborator can hand to a
-// client: photo, role, email, the firm's official links, an example
-// testimonial, and verified Google reviews with documents in hand.
+// client: photo, role, email, the firm's official links, and verified Google
+// reviews with documents in hand.
 
 export type TranslatableString = string | { es: string; en: string };
 
@@ -18,9 +18,6 @@ export function getText(obj: TranslatableString, language: 'es' | 'en'): string 
 // ---------------------------------------------------------------------------
 // FIRM-LEVEL DATA (shared across every collaborator profile)
 // ---------------------------------------------------------------------------
-
-// "Ligas oficiales de la página; sitio web."
-export const OFFICIAL_WEBSITE = 'https://www.manuelsolis.com';
 
 export type OfficialLinkType =
   | 'website'
@@ -113,7 +110,9 @@ export interface Collaborator {
   email: string;
   // Breve descripción — array of paragraphs, like attorney bios.
   description: { es: string[]; en: string[] };
-  testimonial: CollaboratorTestimonial;
+  // Optional on purpose: only set it for a real, attributable testimonial with
+  // documented consent. Never a placeholder — the profile is public advertising.
+  testimonial?: CollaboratorTestimonial;
   // This person's OWN public profiles (LinkedIn, etc.) — used for the Person
   // JSON-LD `sameAs`. Never reuse the firm-level `officialLinks` here: on a
   // Person node `sameAs` must identify the individual, not the firm. Omit when
@@ -138,16 +137,6 @@ export const collaborators: Collaborator[] = [
       en: [
         'Jennifer Olvera leads growth-oriented marketing initiatives focused on opportunity generation and the continuous improvement of the client experience.',
       ],
-    },
-    // ⚠️ PLACEHOLDER (UFMS) — reemplazar con el testimonio real cuando esté
-    // disponible. Solo cambia el texto de `quote`, `author` y `context`.
-    testimonial: {
-      quote: {
-        es: 'El equipo de Law Offices of Manuel Solís nos brindó un acompañamiento excepcional de principio a fin. Su profesionalismo, comunicación constante y compromiso humano marcaron la diferencia en cada etapa de nuestro proceso.',
-        en: 'The team at the Law Offices of Manuel Solís gave us exceptional support from start to finish. Their professionalism, constant communication, and human commitment made the difference at every stage of our process.',
-      },
-      author: 'UFMS',
-      context: { es: 'Testimonio destacado', en: 'Featured testimonial' },
     },
   },
 ];

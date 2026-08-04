@@ -4,9 +4,15 @@
 // ============================================================
 
 export const SITE_URL = 'https://www.manuelsolis.com';
-export const MAIN_PHONE = '(832) 598-0914';
 
 // ---------- OFFICE DATA ----------
+/** Franja horaria en el formato que consume schema.org/OpeningHoursSpecification. */
+export interface OfficeOpeningHoursSpec {
+  dayOfWeek: string | string[];
+  opens: string;
+  closes: string;
+}
+
 export interface OfficeInfo {
   city: string;
   citySlug: string;
@@ -16,12 +22,29 @@ export interface OfficeInfo {
   phone: string;
   zip: string;
   coordinates: { lat: number; lng: number };
+  /**
+   * Horario visible de la sede. Copiado literalmente de la ficha canónica
+   * /oficinas/<officeSlug> (OfficeClient → `hours`): esa ficha es la fuente,
+   * aquí solo se replica para que la landing no publique un horario distinto.
+   * El separador ' | ' se renderiza como salto de línea en la landing.
+   */
+  hours: { es: string; en: string };
+  /** El mismo horario en forma estructurada, para el JSON-LD de la landing. */
+  openingHours: OfficeOpeningHoursSpec[];
   /** Ciudad postal real cuando difiere del mercado (Cicero/Pico Rivera/Arvada). */
   locality?: string;
   /** Slug de la ficha canónica en /oficinas/<slug> (enlazado landing→oficina). */
   officeSlug?: string;
+  /**
+   * Otras sedes FÍSICAS de la misma ciudad. No incluir aquí las direcciones
+   * virtuales listadas en officesRegistry.VIRTUAL_OFFICE_SLUGS: la landing las
+   * presenta como oficinas atendidas y ahí no hay personal del despacho.
+   */
   additionalOffices?: { name: string; address: string; phone: string }[];
 }
+
+const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+const EVERY_DAY = [...WEEKDAYS, 'Saturday', 'Sunday'];
 
 export const OFFICES: Record<string, OfficeInfo> = {
   houston: {
@@ -35,9 +58,11 @@ export const OFFICES: Record<string, OfficeInfo> = {
     zip: '77011',
     // Alineadas con /oficinas/houston-accidentes (misma cuadra que el 6657).
     coordinates: { lat: 29.7426, lng: -95.3156 },
+    hours: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
+    openingHours: [{ dayOfWeek: EVERY_DAY, opens: '00:00', closes: '23:59' }],
     additionalOffices: [
+      { name: 'Houston Principal', address: '6657 Navigation Blvd, Houston, TX 77011', phone: '(713) 701-1731' },
       { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(713) 903-7875' },
-      { name: 'Houston North Loop', address: '2950 N Loop W, Houston, TX 77092', phone: '(713) 429-0237' },
     ],
   },
   // Oficina PRINCIPAL de Houston (6657 Navigation Blvd). La usan las landings de
@@ -54,9 +79,17 @@ export const OFFICES: Record<string, OfficeInfo> = {
     phone: '(713) 701-1731',
     zip: '77011',
     coordinates: { lat: 29.7426, lng: -95.3156 },
+    hours: {
+      es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM',
+      en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM',
+    },
+    openingHours: [
+      { dayOfWeek: WEEKDAYS, opens: '09:00', closes: '19:00' },
+      { dayOfWeek: 'Saturday', opens: '09:00', closes: '16:00' },
+    ],
     additionalOffices: [
       { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(713) 903-7875' },
-      { name: 'Houston North Loop', address: '2950 N Loop W, Houston, TX 77092', phone: '(713) 429-0237' },
+      { name: 'Houston Accidentes', address: '6705 Navigation Blvd, Houston, TX 77011', phone: '(713) 231-5384' },
     ],
   },
   dallas: {
@@ -69,6 +102,14 @@ export const OFFICES: Record<string, OfficeInfo> = {
     phone: '(214) 753-8315',
     zip: '75247',
     coordinates: { lat: 32.8140, lng: -96.8591 },
+    hours: {
+      es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 8:00 AM - 4:00 PM',
+      en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 8:00 AM - 4:00 PM',
+    },
+    openingHours: [
+      { dayOfWeek: WEEKDAYS, opens: '09:00', closes: '19:00' },
+      { dayOfWeek: 'Saturday', opens: '08:00', closes: '16:00' },
+    ],
   },
   chicago: {
     city: 'Chicago',
@@ -80,6 +121,14 @@ export const OFFICES: Record<string, OfficeInfo> = {
     phone: '(312) 477-0389',
     zip: '60804',
     coordinates: { lat: 41.8517, lng: -87.7445 },
+    hours: {
+      es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 8:00 AM - 4:00 PM',
+      en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 8:00 AM - 4:00 PM',
+    },
+    openingHours: [
+      { dayOfWeek: WEEKDAYS, opens: '09:00', closes: '18:00' },
+      { dayOfWeek: 'Saturday', opens: '08:00', closes: '16:00' },
+    ],
     locality: 'Cicero',
   },
   'los-angeles': {
@@ -92,6 +141,14 @@ export const OFFICES: Record<string, OfficeInfo> = {
     phone: '(213) 784-1554',
     zip: '90660',
     coordinates: { lat: 33.9900, lng: -118.0739 },
+    hours: {
+      es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 9:00 AM - 2:00 PM',
+      en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 9:00 AM - 2:00 PM',
+    },
+    openingHours: [
+      { dayOfWeek: WEEKDAYS, opens: '09:00', closes: '18:00' },
+      { dayOfWeek: 'Saturday', opens: '09:00', closes: '14:00' },
+    ],
     locality: 'Pico Rivera',
   },
   'el-paso': {
@@ -104,6 +161,14 @@ export const OFFICES: Record<string, OfficeInfo> = {
     phone: '(915) 233-7127',
     zip: '79925',
     coordinates: { lat: 31.7700, lng: -106.3801 },
+    hours: {
+      es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 2:00 PM',
+      en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 2:00 PM',
+    },
+    openingHours: [
+      { dayOfWeek: WEEKDAYS, opens: '09:00', closes: '17:00' },
+      { dayOfWeek: 'Saturday', opens: '09:00', closes: '14:00' },
+    ],
   },
   memphis: {
     city: 'Memphis',
@@ -115,6 +180,14 @@ export const OFFICES: Record<string, OfficeInfo> = {
     phone: '(901) 557-8357',
     zip: '38116',
     coordinates: { lat: 35.0726, lng: -89.9848 },
+    hours: {
+      es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM',
+      en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM',
+    },
+    openingHours: [
+      { dayOfWeek: WEEKDAYS, opens: '09:00', closes: '17:00' },
+      { dayOfWeek: 'Saturday', opens: '09:00', closes: '13:00' },
+    ],
   },
   denver: {
     city: 'Denver',
@@ -126,6 +199,14 @@ export const OFFICES: Record<string, OfficeInfo> = {
     phone: '(720) 358-8973',
     zip: '80002',
     coordinates: { lat: 39.8097, lng: -105.0997 },
+    hours: {
+      es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 2:00 PM',
+      en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 2:00 PM',
+    },
+    openingHours: [
+      { dayOfWeek: WEEKDAYS, opens: '09:00', closes: '19:00' },
+      { dayOfWeek: 'Saturday', opens: '09:00', closes: '14:00' },
+    ],
     locality: 'Arvada',
   },
   harlingen: {
@@ -138,6 +219,9 @@ export const OFFICES: Record<string, OfficeInfo> = {
     phone: '(956) 597-7090',
     zip: '78550',
     coordinates: { lat: 26.1906, lng: -97.6961 },
+    // La ficha canónica no publica horario de sábado en Harlingen.
+    hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM' },
+    openingHours: [{ dayOfWeek: WEEKDAYS, opens: '09:00', closes: '18:00' }],
   },
 };
 
@@ -438,12 +522,12 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     h1: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
     metaTitle: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
     metaDescription: {
-      es: 'Abogados de inmigración en Houston con 35+ años de experiencia. Residencia, ciudadanía, deportación, Visa U, VAWA y asilo. 3 oficinas en Houston. Llame: (713) 231-5384.',
-      en: 'Immigration lawyers in Houston with 35+ years of experience. Residency, citizenship, deportation, U Visa, VAWA and asylum. 3 offices in Houston. Call: (713) 231-5384.',
+      es: 'Abogados de inmigración en Houston con 35+ años de experiencia. Residencia, ciudadanía, deportación, Visa U, VAWA y asilo. 3 oficinas en Houston. Llame: (713) 701-1731.',
+      en: 'Immigration lawyers in Houston with 35+ years of experience. Residency, citizenship, deportation, U Visa, VAWA and asylum. 3 offices in Houston. Call: (713) 701-1731.',
     },
     intro: {
-      es: 'Houston es el hogar de una de las comunidades inmigrantes más grandes de Estados Unidos. En Manuel Solís, hemos representado a miles de familias del área metropolitana de Houston desde 1990. Con tres oficinas estratégicamente ubicadas en Navigation Blvd, Bellaire y North Loop, estamos cerca de usted para ofrecer asesoría legal migratoria personalizada. Nuestro equipo bilingüe entiende los desafíos únicos que enfrentan los inmigrantes en el área de Houston y trabaja incansablemente para proteger sus derechos.',
-      en: 'Houston is home to one of the largest immigrant communities in the United States. At Manuel Solis, we have represented thousands of families in the Houston metropolitan area since 1990. With three strategically located offices on Navigation Blvd, Bellaire, and North Loop, we are close to you to provide personalized immigration legal advice. Our bilingual team understands the unique challenges immigrants face in the Houston area and works tirelessly to protect their rights.',
+      es: 'Houston es el hogar de una de las comunidades inmigrantes más grandes de Estados Unidos. En Manuel Solís, hemos representado a miles de familias del área metropolitana de Houston desde 1990. Con tres oficinas propias en la ciudad —dos en Navigation Blvd y una en Bellaire Blvd— estamos cerca de usted para ofrecer asesoría legal migratoria personalizada. Nuestro equipo bilingüe entiende los desafíos únicos que enfrentan los inmigrantes en el área de Houston y trabaja incansablemente para proteger sus derechos.',
+      en: 'Houston is home to one of the largest immigrant communities in the United States. At Manuel Solis, we have represented thousands of families in the Houston metropolitan area since 1990. With three of our own offices in the city — two on Navigation Blvd and one on Bellaire Blvd — we are close to you to provide personalized immigration legal advice. Our bilingual team understands the unique challenges immigrants face in the Houston area and works tirelessly to protect their rights.',
     },
     whyChooseUs: {
       es: ['3 oficinas en Houston para su conveniencia', 'Equipo bilingüe con experiencia en cortes de inmigración de Houston', 'Historial comprobado: miles de casos de inmigración ganados en el área', 'Relaciones establecidas con agencias locales y consulados', 'Atención personalizada y confidencial'],
@@ -632,8 +716,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     h1: { es: 'Defensa Contra Deportación en Houston, TX', en: 'Deportation Defense in Houston, TX' },
     metaTitle: { es: 'Defensa Contra Deportación en Houston, TX', en: 'Deportation Defense in Houston, TX' },
     metaDescription: {
-      es: 'Abogados de defensa contra deportación en Houston. Cancelación de deportación, apelaciones, fianzas de inmigración. 35+ años de experiencia. Llame: (713) 231-5384.',
-      en: 'Deportation defense attorneys in Houston. Cancellation of removal, appeals, immigration bonds. 35+ years of experience. Call: (713) 231-5384.',
+      es: 'Abogados de defensa contra deportación en Houston. Cancelación de deportación, apelaciones, fianzas de inmigración. 35+ años de experiencia. Llame: (713) 701-1731.',
+      en: 'Deportation defense attorneys in Houston. Cancellation of removal, appeals, immigration bonds. 35+ years of experience. Call: (713) 701-1731.',
     },
     intro: {
       es: 'Houston alberga una de las cortes de inmigración más ocupadas del país. Si usted o un familiar enfrenta una orden de deportación, cada día cuenta. Nuestros abogados tienen décadas de experiencia defendiendo a familias en la corte de inmigración de Houston, logrando cancelaciones de deportación, fianzas para detenidos y apelaciones exitosas ante la BIA. Con tres oficinas en Houston, respondemos rápidamente a emergencias de deportación.',
@@ -729,8 +813,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     h1: { es: 'Visa U en Houston, TX', en: 'U Visa in Houston, TX' },
     metaTitle: { es: 'Visa U en Houston, TX', en: 'U Visa in Houston, TX' },
     metaDescription: {
-      es: 'Abogados de Visa U en Houston. Ayudamos a víctimas de crímenes a obtener estatus legal, permiso de trabajo y residencia permanente. Llame: (713) 231-5384.',
-      en: 'U Visa attorneys in Houston. We help crime victims obtain legal status, work authorization and permanent residency. Call: (713) 231-5384.',
+      es: 'Abogados de Visa U en Houston. Ayudamos a víctimas de crímenes a obtener estatus legal, permiso de trabajo y residencia permanente. Llame: (713) 701-1731.',
+      en: 'U Visa attorneys in Houston. We help crime victims obtain legal status, work authorization and permanent residency. Call: (713) 701-1731.',
     },
     intro: {
       es: 'Si usted ha sido víctima de un crimen en el área de Houston y ha cooperado con las autoridades, puede calificar para la Visa U. Este beneficio migratorio le otorga estatus legal, permiso de trabajo y un camino hacia la residencia permanente. Nuestros abogados en Houston han ayudado a cientos de víctimas a obtener la Visa U, trabajando de cerca con la policía de Houston, el sheriff del condado de Harris y la fiscalía del distrito para obtener las certificaciones necesarias.',
@@ -807,8 +891,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     h1: { es: 'Asilo Político en Houston, TX', en: 'Political Asylum in Houston, TX' },
     metaTitle: { es: 'Asilo Político en Houston, TX', en: 'Political Asylum in Houston, TX' },
     metaDescription: {
-      es: 'Abogados de asilo político en Houston. Asilo afirmativo, defensivo, miedo creíble y protección contra la tortura. 35+ años de experiencia. Llame: (713) 231-5384.',
-      en: 'Political asylum attorneys in Houston. Affirmative, defensive asylum, credible fear and torture protection. 35+ years of experience. Call: (713) 231-5384.',
+      es: 'Abogados de asilo político en Houston. Asilo afirmativo, defensivo, miedo creíble y protección contra la tortura. 35+ años de experiencia. Llame: (713) 701-1731.',
+      en: 'Political asylum attorneys in Houston. Affirmative, defensive asylum, credible fear and torture protection. 35+ years of experience. Call: (713) 701-1731.',
     },
     intro: {
       es: 'Houston recibe a miles de personas cada año que huyen de la persecución en sus países de origen. Como la ciudad más grande de Texas y un destino principal para refugiados y solicitantes de asilo, Houston tiene una de las cortes de inmigración con mayor carga de casos de asilo. Nuestros abogados tienen amplia experiencia preparando casos de asilo tanto afirmativo (ante USCIS) como defensivo (ante la corte de inmigración), incluyendo entrevistas de miedo creíble para personas recién llegadas.',
@@ -866,8 +950,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     h1: { es: 'VAWA en Houston, TX — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Houston, TX — Protection for Domestic Violence Victims' },
     metaTitle: { es: 'VAWA en Houston, TX', en: 'VAWA in Houston, TX' },
     metaDescription: {
-      es: 'Abogados de VAWA en Houston. Auto-petición independiente para víctimas de violencia doméstica. Estatus legal sin depender del abusador. Llame: (713) 231-5384.',
-      en: 'VAWA attorneys in Houston. Independent self-petition for domestic violence victims. Legal status without depending on the abuser. Call: (713) 231-5384.',
+      es: 'Abogados de VAWA en Houston. Auto-petición independiente para víctimas de violencia doméstica. Estatus legal sin depender del abusador. Llame: (713) 701-1731.',
+      en: 'VAWA attorneys in Houston. Independent self-petition for domestic violence victims. Legal status without depending on the abuser. Call: (713) 701-1731.',
     },
     intro: {
       es: 'En Houston, demasiadas víctimas de violencia doméstica permanecen en situaciones peligrosas porque creen que su estatus migratorio depende de su abusador. La ley VAWA le permite solicitar residencia de manera independiente, sin que su abusador lo sepa. Nuestros abogados en Houston han ayudado a cientos de víctimas a liberarse del ciclo de abuso obteniendo estatus legal propio. Su caso es completamente confidencial y trabajamos con refugios y organizaciones de apoyo en el área de Houston.',

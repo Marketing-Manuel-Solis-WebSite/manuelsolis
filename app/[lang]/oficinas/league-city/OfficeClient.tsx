@@ -15,7 +15,9 @@ const officeData: OfficeData = {
   address: '2600 S Shore Blvd, League City, TX 77573, United States',
   phone: '(832) 598-3782',
   email: 'leaguecity@manuelsolis.com',
-  hours: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
+  // Dirección virtual (Regus): atención solo con cita previa; el "24 horas"
+  // publicado es el call-center central, no esta sede.
+  hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
   mapLink: 'https://share.google/8T736Tycmnh4BZw5o',
   image: '/offices/League.png',
 

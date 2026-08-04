@@ -41,7 +41,14 @@ const CONTENT_SECURITY_POLICY = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https:",
   "font-src 'self' https://fonts.gstatic.com",
-  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://generativelanguage.googleapis.com",
+  // connect-src cubre los beacons/XHR de medición, no solo los scripts:
+  //   - GA4 (gtag) manda los hits a www.google-analytics.com y, según la
+  //     región del visitante, a regionN.google-analytics.com — de ahí el
+  //     comodín de subdominio: los shards regionales no son enumerables.
+  //   - stats.g.doubleclick.net lo usa GA4 cuando Google Signals está activo.
+  //   - fbevents.js manda los eventos (incluido el PageView con eventID) a
+  //     www.facebook.com/tr, no a connect.facebook.net.
+  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://generativelanguage.googleapis.com",
   "frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com",
   "media-src 'self' https:",
   "worker-src 'self' blob:",
@@ -58,7 +65,10 @@ export const SECURITY_HEADERS: SecurityHeader[] = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-  { key: 'X-XSS-Protection', value: '1; mode=block' },
+  // '0' (no '1; mode=block'): el auditor XSS heredado está retirado de los
+  // navegadores y con mode=block introduce sus propios vectores; OWASP pide
+  // desactivarlo explícitamente y confiar en la CSP.
+  { key: 'X-XSS-Protection', value: '0' },
   { key: 'Content-Security-Policy', value: CONTENT_SECURITY_POLICY },
 ];
 

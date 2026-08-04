@@ -15,9 +15,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: isEs ? 'Recursos: Examen de Ciudadanía N-400' : 'Resources: N-400 Citizenship Test',
+    // Sin cifra de preguntas en el copy: el banco cambia y la description no
+    // debe prometer un número que la página no muestre.
     description: isEs
-      ? 'Practique las 100 preguntas del examen de ciudadanía N-400 en español e inglés. Recurso gratuito del Abogado Manuel Solís.'
-      : 'Practice the 100 N-400 citizenship test questions in English and Spanish. Free resource from Attorney Manuel Solis.',
+      ? 'Practique las preguntas de civismo del examen de ciudadanía (N-400) con todas sus respuestas aceptadas, en español e inglés. Incluye el grupo designado de 20 para las reglas 50/20 y 55/15. Recurso gratuito del Abogado Manuel Solís.'
+      : 'Practice the civics questions from the citizenship test (N-400) with all their accepted answers, in English and Spanish. Includes the designated group of 20 for the 50/20 and 55/15 rules. Free resource from Attorney Manuel Solis.',
     alternates: {
       canonical: `${SITE_URL}/${lang}/informacion/recursos`,
       languages: {
@@ -29,6 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function RecursosPage({ params }: Props) {
+// RecursosClient resuelve el idioma con useLanguage, así que la página no
+// necesita `params` más allá de la metadata.
+export default async function RecursosPage() {
   return <RecursosClient />;
 }

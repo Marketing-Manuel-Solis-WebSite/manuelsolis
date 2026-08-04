@@ -119,7 +119,7 @@ export default async function PoliticaEditorialPage({ params }: Props) {
 
       <Header />
 
-      <main className="min-h-screen bg-[#001540] text-white">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#001540] text-white">
         {/* Background */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
@@ -158,8 +158,8 @@ export default async function PoliticaEditorialPage({ params }: Props) {
             {/* Last updated */}
             <div className="mt-12 text-center text-white/40 text-sm">
               {validLang === 'es'
-                ? 'Última actualización: marzo 2025'
-                : 'Last updated: March 2025'}
+                ? 'Última actualización: abril de 2026'
+                : 'Last updated: April 2026'}
             </div>
           </div>
         </section>

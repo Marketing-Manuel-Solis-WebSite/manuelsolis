@@ -160,6 +160,10 @@ if (imageMatch) imageFolder = path.join(ROOT, 'public', 'blog', imageMatch[1]);
 // --- generate page.tsx skeleton ---
 const escapeLiteral = (s) => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
+// Los `// TODO:` que aparecen dentro de esta plantilla NO son deuda de este
+// repo: son marcas que se escriben en el archivo generado y que el paso 3 del
+// panel (app/[lang]/admin/AdminHome.tsx) le pide buscar al autor para saber qué
+// reemplazar. Si se renombran o se quitan, esa instrucción deja de coincidir.
 const pageTemplate = `import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';

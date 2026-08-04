@@ -15,6 +15,7 @@ import {
   collectMetaBrowserParams,
   firePixelPageView,
   generateMetaEventId,
+  hasFbpCookie,
 } from './metaPixel';
 
 // ─── Tipos ───
@@ -61,16 +62,9 @@ export interface ConversionEvent {
 }
 
 // ─── Helpers UTM ───
-export function getUTMParam(key: string): string | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(key);
-  } catch {
-    return null;
-  }
-}
-
+// Solo `getUTMParams()`: leer un UTM suelto de la URL actual ignoraría las
+// cookies de atribución y volvería a atribuir mal las conversiones que ocurren
+// después de varios clicks internos.
 export function getUTMParams() {
   // Prioridad: URL > cookie last_touch > cookie first_touch > direct/none.
   // Mantenemos el shape `utm_*` que ya consumían los call sites antiguos
@@ -89,18 +83,104 @@ export function getUTMParams() {
   };
 }
 
+// ─── Cola hacia los globals de analítica ───
+//
+// gtag.js y los snippets de los pixels se cargan con strategy="lazyOnload"
+// (después del window.load): un click en los primeros segundos de la visita
+// ocurre cuando window.gtag / window.fbq / window.ttq todavía no existen, y
+// llamarlos en ese momento pierde el evento. Aquí se encola hasta que el
+// global aparezca. El evento 'msl:fbq-ready' que dispara el snippet de Meta
+// acelera el vaciado; el poll cubre a los globals que no anuncian su llegada.
+const ANALYTICS_READY_EVENT = 'msl:fbq-ready';
+const ANALYTICS_RETRY_MS = 250;
+const ANALYTICS_MAX_TRIES = 40;
+
+const pendingAnalyticsCalls: Array<() => boolean> = [];
+let analyticsListenerRegistered = false;
+let analyticsPollActive = false;
+
+function flushAnalyticsQueue(): void {
+  const pending = pendingAnalyticsCalls.splice(0, pendingAnalyticsCalls.length);
+  for (const attempt of pending) {
+    if (!attempt()) pendingAnalyticsCalls.push(attempt);
+  }
+}
+
+/**
+ * Ejecuta `use` con el global de analítica que devuelva `resolve` en cuanto
+ * exista. Mientras `resolve` devuelva undefined la llamada queda en cola, así
+ * que un click anterior a la carga del script del proveedor no se descarta.
+ */
+export function whenAnalyticsReady<T>(
+  resolve: () => T | undefined,
+  use: (api: T) => void,
+): void {
+  if (typeof window === 'undefined') return;
+
+  const attempt = (): boolean => {
+    const api = resolve();
+    if (!api) return false;
+    try {
+      use(api);
+    } catch {
+      // Una superficie de analítica rota nunca debe romper la página.
+    }
+    return true;
+  };
+
+  if (attempt()) return;
+  pendingAnalyticsCalls.push(attempt);
+
+  if (!analyticsListenerRegistered) {
+    analyticsListenerRegistered = true;
+    window.addEventListener(ANALYTICS_READY_EVENT, flushAnalyticsQueue);
+  }
+
+  if (analyticsPollActive) return;
+  analyticsPollActive = true;
+  let tries = ANALYTICS_MAX_TRIES;
+  const tick = () => {
+    flushAnalyticsQueue();
+    if (pendingAnalyticsCalls.length === 0 || tries-- <= 0) {
+      analyticsPollActive = false;
+      return;
+    }
+    setTimeout(tick, ANALYTICS_RETRY_MS);
+  };
+  setTimeout(tick, ANALYTICS_RETRY_MS);
+}
+
 // ─── FASE 3: dataLayer push helper ───
+type GtagFn = (...args: unknown[]) => void;
+
+interface WindowWithAnalytics extends Window {
+  dataLayer?: unknown[];
+  gtag?: GtagFn;
+}
+
+/**
+ * Superficie GA4 del sitio. El layout instala gtag.js, no un contenedor GTM:
+ * gtag.js solo procesa las entradas del dataLayer que la propia función gtag()
+ * pushea como `arguments`, de modo que el push plano de aquí es inerte hasta
+ * que exista un contenedor GTM real — se conserva para ese día. El canal que
+ * GA4 lee hoy es gtag('event', …), y por eso el evento no se duplica.
+ */
 export function pushToDataLayer(event: string, params: Record<string, string>) {
   if (typeof window === 'undefined') return;
   try {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
+    const w = window as WindowWithAnalytics;
+    w.dataLayer = w.dataLayer || [];
+    w.dataLayer.push({
       event,
       ...params,
     });
   } catch (e) {
     console.error('[dataLayer] Push error:', e);
   }
+  whenAnalyticsReady(
+    () => (window as WindowWithAnalytics).gtag,
+    (gtag) => gtag('event', event, params),
+  );
 }
 
 // ─── Helpers de contexto del cliente ───
@@ -235,6 +315,60 @@ export async function trackConversion(
 // Dedup intra-sesión: no contar la misma URL dos veces si solo cambió el hash.
 let lastTrackedPath: string | null = null;
 
+// Espera máxima a que aparezca la cookie _fbp antes de mandar el beacon del
+// primer page view, y cadencia del sondeo. La escribe fbevents.js, que el
+// layout carga con lazyOnload: en la primera página de un visitante nuevo el
+// beacon salía siempre sin ese match key y el PageView server-side llegaba a
+// Meta solo con IP+UA (EMQ bajo).
+const FBP_WAIT_MAX_MS = 2500;
+const FBP_POLL_MS = 200;
+
+/**
+ * Manda el page view en cuanto exista _fbp, o al vencer FBP_WAIT_MAX_MS, o
+ * cuando el visitante abandona la página — lo que ocurra primero, una sola
+ * vez. El tope es deliberado: con el Pixel bloqueado la cookie no llega nunca
+ * y perder el page view sería peor que perder el match key.
+ */
+function postPageViewWithFbp(event: ConversionEvent, eventId: string): void {
+  const immediate = collectMetaBrowserParams();
+  if (immediate.fbp || !process.env.NEXT_PUBLIC_META_PIXEL_ID) {
+    event.meta = { eventId, ...immediate };
+    postEvent(event);
+    return;
+  }
+
+  let sent = false;
+  let pollId: ReturnType<typeof setInterval> | undefined;
+  let deadlineId: ReturnType<typeof setTimeout> | undefined;
+
+  function onVisibilityChange() {
+    if (document.visibilityState === 'hidden') send();
+  }
+
+  function cleanup() {
+    if (pollId !== undefined) clearInterval(pollId);
+    if (deadlineId !== undefined) clearTimeout(deadlineId);
+    window.removeEventListener('pagehide', send);
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+  }
+
+  function send() {
+    if (sent) return;
+    sent = true;
+    cleanup();
+    // Se relee al enviar: en la espera pueden haber aparecido _fbp y _fbc.
+    event.meta = { eventId, ...collectMetaBrowserParams() };
+    postEvent(event);
+  }
+
+  pollId = setInterval(() => {
+    if (hasFbpCookie()) send();
+  }, FBP_POLL_MS);
+  deadlineId = setTimeout(send, FBP_WAIT_MAX_MS);
+  window.addEventListener('pagehide', send);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+}
+
 export function trackPageView(label?: string): void {
   if (typeof window === 'undefined') return;
   const path = window.location.pathname + window.location.search;
@@ -242,10 +376,10 @@ export function trackPageView(label?: string): void {
   lastTrackedPath = path;
   // Un solo event_id por page view: el Pixel del navegador y el evento
   // que /api/conversions reenvía a la Conversions API llevan el MISMO
-  // id → Meta deduplica y no cuenta la visita dos veces.
+  // id → Meta deduplica y no cuenta la visita dos veces. El beacon puede
+  // salir con unos ms de retraso (espera de _fbp) sin afectar al dedup:
+  // el id ya está fijado aquí.
   const eventId = generateMetaEventId();
   firePixelPageView(eventId);
-  const event = buildBaseEvent('page_view', label);
-  event.meta = { eventId, ...collectMetaBrowserParams() };
-  postEvent(event);
+  postPageViewWithFbp(buildBaseEvent('page_view', label), eventId);
 }

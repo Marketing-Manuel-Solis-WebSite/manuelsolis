@@ -16,7 +16,12 @@ export default function TrackedPhoneLink({
   phone: string;
   className?: string;
 }) {
-  const href = `tel:+1${phone.replace(/\D/g, '')}`;
+  // El NAP del repo trae 10 dígitos —«(713) 701-1731»—, pero este componente
+  // recibe el número por prop desde tres páginas distintas: si alguna pasa el
+  // 1 de país incluido, `+1` + dígitos daría un tel: inválido («+11713…»).
+  const digits = phone.replace(/\D/g, '');
+  const national = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits;
+  const href = `tel:+1${national}`;
   return (
     <a
       href={href}

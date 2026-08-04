@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Play, X } from 'lucide-react';
 import Image from 'next/image';
 import { m, AnimatePresence } from 'framer-motion';
+import { useDialog } from './useDialog';
 import type { Language } from '../lib/translations';
 
 /**
@@ -28,13 +29,17 @@ export default function TestimonialsVideo({
   const [isOpen, setIsOpen] = useState(false);
   const isEs = lang === 'es';
   const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0&controls=1`;
+  const videoLabel = isEs ? `Testimonio de ${name}` : `${name}'s testimonial`;
+  const dialogRef = useDialog(isOpen, () => setIsOpen(false));
 
   return (
     <>
       <div className="relative z-10 group">
-        <div
+        <button
+          type="button"
           onClick={() => setIsOpen(true)}
-          className="relative w-full aspect-video rounded-[2rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl cursor-pointer group-hover:shadow-[#B2904D]/20 group-hover:border-[#B2904D]/40 transition-all duration-500"
+          aria-label={isEs ? `Reproducir testimonio de ${name}` : `Play ${name}'s testimonial`}
+          className="relative block w-full text-left aspect-video rounded-[2rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl cursor-pointer group-hover:shadow-[#B2904D]/20 group-hover:border-[#B2904D]/40 transition-all duration-500"
         >
           <Image
             src={thumbnail}
@@ -61,7 +66,7 @@ export default function TestimonialsVideo({
             </div>
             <p className="text-white text-2xl font-medium tracking-tight">{name}</p>
           </div>
-        </div>
+        </button>
       </div>
 
       <AnimatePresence>
@@ -74,6 +79,11 @@ export default function TestimonialsVideo({
             onClick={() => setIsOpen(false)}
           >
             <m.div
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label={videoLabel}
+              tabIndex={-1}
               initial={{ scale: 0.8, y: 100 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.8, y: 100 }}
@@ -81,14 +91,14 @@ export default function TestimonialsVideo({
               className="relative w-full max-w-6xl aspect-video rounded-3xl shadow-2xl overflow-hidden bg-black border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
-              <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 z-20 group" aria-label={isEs ? 'Cerrar video' : 'Close video'}>
+              <button type="button" onClick={() => setIsOpen(false)} className="absolute top-6 right-6 z-20 group" aria-label={isEs ? 'Cerrar video' : 'Close video'}>
                 <div className="p-3 bg-white/10 hover:bg-[#B2904D] backdrop-blur-md rounded-full text-white transition-all duration-300 border border-white/20">
                   <X className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
                 </div>
               </button>
               <iframe
                 src={embedUrl}
-                title="Testimonio de Cliente"
+                title={videoLabel}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 className="w-full h-full"

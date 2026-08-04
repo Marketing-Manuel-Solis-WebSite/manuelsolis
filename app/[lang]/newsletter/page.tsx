@@ -101,7 +101,7 @@ export default async function NewsletterPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
       <Header />
-      <main className="min-h-screen bg-[#001540]">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#001540]">
         {/* Hero */}
         <section className="relative pt-[160px] pb-16 overflow-hidden">
           <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'url(/noise.png)' }} />

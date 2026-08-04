@@ -40,9 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const getLegalServiceSchema = (lang: string) => ({
+// Service (no LegalService): la ficha LocalBusiness con dirección vive en
+// /oficinas/<slug>; aquí solo la entidad temática ligada a #organization.
+const getServiceSchema = (lang: string) => ({
   '@context': 'https://schema.org',
-  '@type': 'LegalService',
+  '@type': 'Service',
+  '@id': `${SITE_URL}/${lang}/servicios/defensa-deportacion#service`,
   name: lang === 'es'
     ? 'Manuel Solís - Defensa contra Deportación'
     : 'Manuel Solis - Deportation Defense',
@@ -50,8 +53,6 @@ const getLegalServiceSchema = (lang: string) => ({
     ? 'Servicios legales de defensa contra deportación: cancelación de remoción, fianzas de inmigración, representación en corte y apelaciones ante el BIA.'
     : 'Deportation defense legal services: cancellation of removal, immigration bonds, court representation, and BIA appeals.',
   url: `${SITE_URL}/${lang}/servicios/defensa-deportacion`,
-  priceRange: '$$',
-  telephone: '+1-832-598-0914',
   areaServed: [
     { '@type': 'State', name: 'Texas' },
     { '@type': 'State', name: 'California' },
@@ -59,13 +60,7 @@ const getLegalServiceSchema = (lang: string) => ({
     { '@type': 'State', name: 'Colorado' },
     { '@type': 'State', name: 'Tennessee' },
   ],
-  provider: {
-    '@type': 'LawFirm',
-    '@id': `${SITE_URL}/#organization`,
-    name: 'Manuel Solis Law Firm',
-    url: SITE_URL,
-    telephone: '+1-832-598-0914',
-  },
+  provider: { '@id': `${SITE_URL}/#organization` },
   serviceType: [
     'Deportation Defense',
     'Cancellation of Removal',
@@ -75,12 +70,17 @@ const getLegalServiceSchema = (lang: string) => ({
     'Removal Proceedings',
     'Immigration Appeals',
   ],
-  availableLanguage: ['English', 'Spanish'],
+  availableChannel: {
+    '@type': 'ServiceChannel',
+    // Debe coincidir con el número que la página marca de verdad (CTA tel: de DeportacionClient).
+    servicePhone: { '@type': 'ContactPoint', telephone: '+1-832-598-0914' },
+    availableLanguage: ['English', 'Spanish'],
+  },
 });
 
 export default async function DeportacionPage({ params }: Props) {
   const { lang } = await params;
-  const schemaData = getLegalServiceSchema(lang);
+  const schemaData = getServiceSchema(lang);
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },

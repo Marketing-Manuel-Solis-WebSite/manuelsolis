@@ -5,7 +5,7 @@ interface BlogSchemaProps {
   description: string;
   slug: string;
   date: string;
-  /** Fecha de última actualización real; si se omite, se usa `date`. */
+  /** Fecha de última revisión real; si se omite, no se emite `dateModified`. */
   dateModified?: string;
   image: string;
   lang: string;
@@ -39,13 +39,18 @@ export default function BlogSchema({
     readTime,
   });
 
+  // Sin una fecha de revisión real, omitimos `dateModified`: repetir
+  // `datePublished` le declara a Google una actualización que nunca ocurrió.
+  const jsonLd: Record<string, unknown> = { ...blogSchema };
+  if (!dateModified) delete jsonLd.dateModified;
+
   const faqSchema = faqs && faqs.length > 0 ? generateFAQSchema(faqs) : null;
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {faqSchema && (
         <script

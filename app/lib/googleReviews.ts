@@ -31,6 +31,10 @@ const FIELD_MASK = [
   'userRatingCount',
   'reviews',
   'googleMapsUri',
+  // `location` es el pin de la ficha de Google Business Profile: única fuente
+  // de coordenadas para el schema de oficinas y landings (officeSchema.ts /
+  // landingSchema.ts), que antes declaraban pares lat/lng distintos a mano.
+  'location',
 ].join(',');
 
 export type GooglePlaceReview = {
@@ -48,6 +52,8 @@ export type GooglePlaceData = {
   userRatingCount: number;
   reviews: GooglePlaceReview[];
   url?: string;
+  /** Pin de la ficha GBP. Ausente si la API no lo devuelve. */
+  location?: { lat: number; lng: number };
 };
 
 interface PlacesApiReviewAuthor {
@@ -70,6 +76,7 @@ interface PlacesApiResponse {
   userRatingCount?: number;
   reviews?: PlacesApiReview[];
   googleMapsUri?: string;
+  location?: { latitude?: number; longitude?: number };
 }
 
 function logEvent(event: string, fields: Record<string, unknown>): void {
@@ -149,6 +156,9 @@ export async function getPlaceDataRaw(
       }))
     : [];
 
+  const lat = data.location?.latitude;
+  const lng = data.location?.longitude;
+
   return {
     placeId,
     name: data.displayName?.text ?? '',
@@ -157,6 +167,10 @@ export async function getPlaceDataRaw(
       typeof data.userRatingCount === 'number' ? data.userRatingCount : 0,
     reviews,
     url: data.googleMapsUri,
+    location:
+      typeof lat === 'number' && typeof lng === 'number'
+        ? { lat, lng }
+        : undefined,
   };
 }
 

@@ -3,6 +3,7 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ContactForm from '../../components/ContactForm'
 import Image from 'next/image'
+import Link from 'next/link'
 import { MessageSquare, Shield, Mail, Phone, Clock, XOctagon } from 'lucide-react'
 
 // --- TEXTOS UI (TÉRMINOS SMS) ---
@@ -14,6 +15,12 @@ const interfaceTexts = {
     subtitle: {
       es: 'Programa de Notificaciones: Solís Law Notifications',
       en: 'Program Name: Solís Law Notifications'
+    },
+    // Fecha de la última modificación del texto legal de esta página. Se
+    // actualiza SOLO cuando cambia el contenido, nunca por cambios de diseño.
+    lastUpdated: {
+      es: 'Última actualización: 21 de marzo de 2026',
+      en: 'Last updated: March 21, 2026'
     },
   },
   section1: {
@@ -145,221 +152,223 @@ export default function SmsTerminosClient({ lang }: { lang: 'es' | 'en' }) {
   const parseText = (key: string) => parseContent(t(key));
 
   return (
-    <main className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
+    <div className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
-      {/* =========================================================================
-          FONDO (Fixed - Cubre toda la página) — orbes estáticos
-      ========================================================================= */}
-      <div className="fixed inset-0 z-0 w-full h-full bg-[#001540]">
+      <main id="main-content" tabIndex={-1}>
+        {/* =========================================================================
+            FONDO (Fixed - Cubre toda la página) — orbes estáticos
+        ========================================================================= */}
+        <div className="fixed inset-0 z-0 w-full h-full bg-[#001540]">
 
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
 
-        <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+          <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-        {/* Orbes de luz (estáticos) */}
-        <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px] opacity-40" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px] opacity-30" />
+          {/* Orbes de luz (estáticos) */}
+          <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px] opacity-40" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px] opacity-30" />
 
-        {/* Texto de Fondo Sutil (estático) */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
-          <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
-              SMS TERMS
-          </span>
+          {/* Texto de Fondo Sutil (estático) */}
+          <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
+            <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
+                SMS TERMS
+            </span>
+          </div>
         </div>
-      </div>
 
-      {/* =========================================================================
-          CONTENIDO
-      ========================================================================= */}
+        {/* =========================================================================
+            CONTENIDO
+        ========================================================================= */}
 
-      {/* --- HERO SECTION (static — LCP) --- */}
-      <section className="relative pt-54 pb-16 z-10 px-6 lg:px-12">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
+        {/* --- HERO SECTION (static — LCP) --- */}
+        <section className="relative pt-54 pb-16 z-10 px-6 lg:px-12">
+          <div className="container mx-auto max-w-6xl">
+            <div className="grid lg:grid-cols-12 gap-12 items-center">
 
-            {/* IZQUIERDA: IMAGEN LOGO INFORMACION (Reutilizada) */}
-            <div className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]">
-              <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
+              {/* IZQUIERDA: IMAGEN LOGO INFORMACION (Reutilizada) */}
+              <div className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]">
+                <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
 
-              <div className="relative z-10 w-full h-full flex items-center justify-center">
-                  <Image
-                      src="/LogoInformacion.png"
-                      alt="Law Offices of Manuel Solis"
-                      width={600}
-                      height={600}
-                      className="object-contain drop-shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:scale-105 transition-transform duration-700"
-                      priority
-                  />
-              </div>
-            </div>
-
-            {/* DERECHA: TÍTULO Y SUBTÍTULO */}
-            <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
-
-              <div className="relative">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tight leading-none">
-                  <span className="block text-white/90 font-extralight mb-2">
-                    {t('hero.title').split(' ')[0]}
-                  </span>
-                  <span className="block font-medium text-[#B2904D] drop-shadow-2xl">
-                    {t('hero.title').split(' ').slice(1).join(' ')}
-                  </span>
-                </h1>
-              </div>
-
-              <div className="relative pl-6 border-l-2 border-[#B2904D]/50">
-                <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
-                  {t('hero.subtitle')}
-                </p>
-              </div>
-
-              <div className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
-                <div className="flex items-center gap-3 text-white text-xl font-semibold mb-3">
-                  <MessageSquare size={24} className="text-[#B2904D]"/> Law Office of Manuel Solis – SMS Terms of Service
+                <div className="relative z-10 w-full h-full flex items-center justify-center">
+                    <Image
+                        src="/LogoInformacion.png"
+                        alt="Law Offices of Manuel Solis"
+                        width={600}
+                        height={600}
+                        className="object-contain drop-shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:scale-105 transition-transform duration-700"
+                        priority
+                    />
                 </div>
-                <p className="text-sm">
-                    **Programa:** Solis Law Notifications
-                </p>
-                <hr className="border-[#B2904D]/30" />
-                <div dangerouslySetInnerHTML={{ __html: parseText('section1.content') }} />
+              </div>
+
+              {/* DERECHA: TÍTULO Y SUBTÍTULO */}
+              <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
+
+                <div className="relative">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tight leading-none">
+                    <span className="block text-white/90 font-extralight mb-2">
+                      {t('hero.title').split(' ')[0]}
+                    </span>
+                    <span className="block font-medium text-[#B2904D] drop-shadow-2xl">
+                      {t('hero.title').split(' ').slice(1).join(' ')}
+                    </span>
+                  </h1>
+                </div>
+
+                <div className="relative pl-6 border-l-2 border-[#B2904D]/50">
+                  <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
+                    {t('hero.subtitle')}
+                  </p>
+                  <p className="text-sm mt-2 text-white/50">{t('hero.lastUpdated')}</p>
+                </div>
+
+                <div className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
+                  <div className="flex items-center gap-3 text-white text-xl font-semibold mb-3">
+                    <MessageSquare size={24} className="text-[#B2904D]"/> Law Office of Manuel Solis – SMS Terms of Service
+                  </div>
+                  <p className="text-sm">
+                      **Programa:** Solis Law Notifications
+                  </p>
+                  <hr className="border-[#B2904D]/30" />
+                  <div dangerouslySetInnerHTML={{ __html: parseText('section1.content') }} />
+                </div>
               </div>
             </div>
           </div>
+        </section>
+
+        {/* --- SECCIÓN PRINCIPAL DE TÉRMINOS SMS --- */}
+        <section className="container mx-auto px-4 py-12 relative z-10 max-w-7xl">
+
+          {/* SECCIÓN 2: OPT-OUT */}
+          <div className="mb-16">
+              <SectionTitle title={t('section2.title')} />
+              <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
+                  <div className="grid md:grid-cols-2 gap-6">
+                      <div className="text-base text-blue-100/80 font-light space-y-4 p-4 bg-[#001026] rounded-lg border border-[#B2904D]/20">
+                          <h3 className="text-xl font-medium text-white flex items-center gap-2"><XOctagon size={24} className="text-red-500"/> {lang === 'es' ? 'Cancelación' : 'Cancellation'} (**Requerido**)</h3>
+                          <div dangerouslySetInnerHTML={{ __html: parseText('section2.content1') }} />
+                      </div>
+                      <div className="text-base text-blue-100/80 font-light space-y-4 p-4 bg-[#001026] rounded-lg border border-[#B2904D]/20">
+                          <h3 className="text-xl font-medium text-white flex items-center gap-2"><MessageSquare size={24} className="text-green-500"/> {lang === 'es' ? 'Reunirse' : 'Rejoining'}</h3>
+                          <div dangerouslySetInnerHTML={{ __html: parseText('section2.content2') }} />
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          {/* SECCIÓN 3: AYUDA */}
+          <div className="mb-16">
+              <SectionTitle title={t('section3.title')} />
+              <div className="p-8 bg-[#000814]/60 rounded-2xl border border-white/10 space-y-6 shadow-lg">
+                  <div className="text-base text-blue-100/80 font-light space-y-4">
+                      <div dangerouslySetInnerHTML={{ __html: parseText('section3.content') }} />
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-6 text-lg font-medium">
+                      <div className="flex items-center gap-3 text-[#B2904D] bg-white/5 p-4 rounded-lg">
+                          <Phone size={20} className="text-sky-400" />
+                          {t('section3.phone')}
+                      </div>
+                      <div className="flex items-center gap-3 text-[#B2904D] bg-white/5 p-4 rounded-lg">
+                          <Mail size={20} className="text-sky-400" />
+                          {t('section3.email')}
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          {/* SECCIÓN 4: CARRIER LIABILITY */}
+          <div className="mb-16">
+              <SectionTitle title={t('section4.title')} />
+              <div className="p-6 bg-[#1a0000]/60 rounded-2xl border border-red-500/30 text-base text-red-100/80 font-light shadow-xl">
+                  <div dangerouslySetInnerHTML={{ __html: parseText('section4.content') }} />
+              </div>
+          </div>
+
+          {/* SECCIÓN 5: FRECUENCIA Y TARIFAS */}
+          <div className="mb-16">
+              <SectionTitle title={t('section5.title')} />
+              <div className="grid lg:grid-cols-3 gap-8 p-6 bg-[#000814]/60 rounded-2xl border border-white/10 shadow-lg">
+                  <div className="lg:col-span-2 text-base text-blue-100/80 font-light space-y-4">
+                      <div dangerouslySetInnerHTML={{ __html: parseText('section5.content1') }} />
+                      <p className="font-semibold text-white mt-4">{t('section5.content2')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-2 pl-4">
+                          {interfaceTexts.section5.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                  </div>
+                  <div className="lg:col-span-1 p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20 space-y-3">
+                      <h3 className="text-lg font-bold text-[#B2904D] mb-3 flex items-center gap-2"><Clock size={20}/> {lang === 'es' ? 'Nota Importante' : 'Important Note'}</h3>
+                      <div className="text-sm text-white/80">
+                          <div dangerouslySetInnerHTML={{ __html: parseText('section5.note') }} />
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          {/* SECCIÓN 6: POLÍTICA DE PRIVACIDAD */}
+          <div className="mb-16">
+              <SectionTitle title={t('section6.title')} />
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner flex flex-col md:flex-row justify-between items-center gap-4">
+                  <div dangerouslySetInnerHTML={{ __html: parseText('section6.content') }} />
+                  <Link href={`/${lang}/privacidad`} className="flex items-center gap-2 px-4 py-2 bg-[#B2904D] text-[#001540] font-bold rounded-lg hover:bg-[#a08445] transition-colors whitespace-nowrap">
+                      <Shield size={20}/>
+                      {t('section6.linkText')}
+                  </Link>
+              </div>
+          </div>
+
+          {/* SECCIÓN 7: ELEGIBILIDAD */}
+          <div className="mb-16">
+              <SectionTitle title={t('section7.title')} />
+              <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
+                  <div className="text-base text-blue-100/80 font-light space-y-4">
+                      <div dangerouslySetInnerHTML={{ __html: parseText('section7.content') }} />
+                  </div>
+                  <ul className="text-base list-disc list-outside space-y-3 pl-8 text-white/90">
+                      {interfaceTexts.section7.items.map((item, index) => (
+                          <li key={index}>
+                              **{index + 1}.** {item[lang] || item.es}
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          </div>
+
+          {/* SECCIÓN 8: MODIFICACIONES Y 9: CONTACTO */}
+          <div className="mb-16">
+              <SectionTitle title={t('section8.title')} />
+              <div className="p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                   <div className="text-base text-blue-100/80 font-light" dangerouslySetInnerHTML={{ __html: parseText('section8.content') }} />
+              </div>
+
+              <SectionTitle title={t('contactInfo.title')} />
+              <div className="p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                  <p className="text-base text-white font-medium">Law Office of Manuel Solís</p>
+                  <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-3 text-white/90">
+                          <Phone size={18} className="text-sky-400" />
+                          {t('contactInfo.phone')}
+                      </div>
+                      <div className="flex items-center gap-3 text-white/90">
+                          <Mail size={18} className="text-sky-400" />
+                          {t('contactInfo.email')}
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+        </section>
+
+        {/* --- FORMULARIO DE CONTACTO --- */}
+        <div className="relative z-20 mt-12">
+          <ContactForm />
         </div>
-      </section>
-
-      {/* --- SECCIÓN PRINCIPAL DE TÉRMINOS SMS --- */}
-      <section className="container mx-auto px-4 py-12 relative z-10 max-w-7xl">
-
-        {/* SECCIÓN 2: OPT-OUT */}
-        <div className="mb-16">
-            <SectionTitle title={t('section2.title')} />
-            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
-                <div className="grid md:grid-cols-2 gap-6">
-                    <div className="text-base text-blue-100/80 font-light space-y-4 p-4 bg-[#001026] rounded-lg border border-[#B2904D]/20">
-                        <h3 className="text-xl font-medium text-white flex items-center gap-2"><XOctagon size={24} className="text-red-500"/> {lang === 'es' ? 'Cancelación' : 'Cancellation'} (**Requerido**)</h3>
-                        <div dangerouslySetInnerHTML={{ __html: parseText('section2.content1') }} />
-                    </div>
-                    <div className="text-base text-blue-100/80 font-light space-y-4 p-4 bg-[#001026] rounded-lg border border-[#B2904D]/20">
-                        <h3 className="text-xl font-medium text-white flex items-center gap-2"><MessageSquare size={24} className="text-green-500"/> {lang === 'es' ? 'Reunirse' : 'Rejoining'}</h3>
-                        <div dangerouslySetInnerHTML={{ __html: parseText('section2.content2') }} />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {/* SECCIÓN 3: AYUDA */}
-        <div className="mb-16">
-            <SectionTitle title={t('section3.title')} />
-            <div className="p-8 bg-[#000814]/60 rounded-2xl border border-white/10 space-y-6 shadow-lg">
-                <div className="text-base text-blue-100/80 font-light space-y-4">
-                    <div dangerouslySetInnerHTML={{ __html: parseText('section3.content') }} />
-                </div>
-                <div className="grid md:grid-cols-2 gap-6 text-lg font-medium">
-                    <div className="flex items-center gap-3 text-[#B2904D] bg-white/5 p-4 rounded-lg">
-                        <Phone size={20} className="text-sky-400" />
-                        {t('section3.phone')}
-                    </div>
-                    <div className="flex items-center gap-3 text-[#B2904D] bg-white/5 p-4 rounded-lg">
-                        <Mail size={20} className="text-sky-400" />
-                        {t('section3.email')}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {/* SECCIÓN 4: CARRIER LIABILITY */}
-        <div className="mb-16">
-            <SectionTitle title={t('section4.title')} />
-            <div className="p-6 bg-[#1a0000]/60 rounded-2xl border border-red-500/30 text-base text-red-100/80 font-light shadow-xl">
-                <div dangerouslySetInnerHTML={{ __html: parseText('section4.content') }} />
-            </div>
-        </div>
-
-        {/* SECCIÓN 5: FRECUENCIA Y TARIFAS */}
-        <div className="mb-16">
-            <SectionTitle title={t('section5.title')} />
-            <div className="grid lg:grid-cols-3 gap-8 p-6 bg-[#000814]/60 rounded-2xl border border-white/10 shadow-lg">
-                <div className="lg:col-span-2 text-base text-blue-100/80 font-light space-y-4">
-                    <div dangerouslySetInnerHTML={{ __html: parseText('section5.content1') }} />
-                    <p className="font-semibold text-white mt-4">{t('section5.content2')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-2 pl-4">
-                        {interfaceTexts.section5.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="lg:col-span-1 p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20 space-y-3">
-                    <h3 className="text-lg font-bold text-[#B2904D] mb-3 flex items-center gap-2"><Clock size={20}/> {lang === 'es' ? 'Nota Importante' : 'Important Note'}</h3>
-                    <div className="text-sm text-white/80">
-                        <div dangerouslySetInnerHTML={{ __html: parseText('section5.note') }} />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {/* SECCIÓN 6: POLÍTICA DE PRIVACIDAD */}
-        <div className="mb-16">
-            <SectionTitle title={t('section6.title')} />
-            <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner flex flex-col md:flex-row justify-between items-center gap-4">
-                <div dangerouslySetInnerHTML={{ __html: parseText('section6.content') }} />
-                {/* Asumiendo que 'Privacy Policy' es un enlace a otra página */}
-                <a href="/privacidad" className="flex items-center gap-2 px-4 py-2 bg-[#B2904D] text-[#001540] font-bold rounded-lg hover:bg-[#a08445] transition-colors whitespace-nowrap">
-                    <Shield size={20}/>
-                    {t('section6.linkText')}
-                </a>
-            </div>
-        </div>
-
-        {/* SECCIÓN 7: ELEGIBILIDAD */}
-        <div className="mb-16">
-            <SectionTitle title={t('section7.title')} />
-            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
-                <div className="text-base text-blue-100/80 font-light space-y-4">
-                    <div dangerouslySetInnerHTML={{ __html: parseText('section7.content') }} />
-                </div>
-                <ul className="text-base list-disc list-outside space-y-3 pl-8 text-white/90">
-                    {interfaceTexts.section7.items.map((item, index) => (
-                        <li key={index}>
-                            **{index + 1}.** {item[lang] || item.es}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-
-        {/* SECCIÓN 8: MODIFICACIONES Y 9: CONTACTO */}
-        <div className="mb-16">
-            <SectionTitle title={t('section8.title')} />
-            <div className="p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
-                 <div className="text-base text-blue-100/80 font-light" dangerouslySetInnerHTML={{ __html: parseText('section8.content') }} />
-            </div>
-
-            <SectionTitle title={t('contactInfo.title')} />
-            <div className="p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
-                <p className="text-base text-white font-medium">Law Office of Manuel Solís</p>
-                <div className="flex flex-col gap-3">
-                    <div className="flex items-center gap-3 text-white/90">
-                        <Phone size={18} className="text-sky-400" />
-                        {t('contactInfo.phone')}
-                    </div>
-                    <div className="flex items-center gap-3 text-white/90">
-                        <Mail size={18} className="text-sky-400" />
-                        {t('contactInfo.email')}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-      </section>
-
-      {/* --- FORMULARIO DE CONTACTO --- */}
-      <div className="relative z-20 mt-12">
-        <ContactForm />
-      </div>
+      </main>
 
       <Footer />
-    </main>
+    </div>
   );
 }

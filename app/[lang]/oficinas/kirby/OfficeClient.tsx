@@ -12,10 +12,13 @@ const officeData: OfficeData = {
     es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
   },
-  address: '3730 Kirby Dr, Houston, TX 77098, United States',
+  address: '3730 Kirby Dr Suite 1200, Houston, TX 77098, United States',
   phone: '(713) 903-7875',
   email: 'houston@manuelsolis.com',
-  hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+  // Dirección virtual (Regus): el despacho atiende aquí solo con cita previa.
+  // El "24 horas" publicado es el enrutamiento del call-center, no esta sede
+  // (ver VIRTUAL_OFFICE_SLUGS en app/lib/officesRegistry.ts).
+  hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
   mapLink: 'https://share.google/R85nYwhTFqoxLctD4',
   image: '/offices/ofhouston.png',
   

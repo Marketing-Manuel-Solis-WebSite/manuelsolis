@@ -24,6 +24,8 @@ interface NewsletterBlogCtaEmailProps {
   blogAuthor: string;
   blogDate: string;
   blogReadTime: string;
+  /** Signed unsubscribe URL for this recipient. Falls back to the bare page. */
+  unsubscribeUrl?: string;
 }
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -88,11 +90,14 @@ export function NewsletterBlogCtaEmail({
   blogAuthor,
   blogDate,
   blogReadTime,
+  unsubscribeUrl,
 }: NewsletterBlogCtaEmailProps) {
   const t = copy[language] || copy.es;
   const articleUrl = `${SITE_URL}/${language}/blog/${blogSlug}`;
   const bookUrl = `${SITE_URL}/${language}/consulta`;
   const heroImage = absoluteImage(blogImage);
+  const unsubscribeHref =
+    unsubscribeUrl || `${SITE_URL}/${language}/newsletter/unsubscribe`;
 
   return (
     <Html>
@@ -162,10 +167,7 @@ export function NewsletterBlogCtaEmail({
 
           <Section style={footerSection}>
             <Text style={footerText}>{t.footerNote}</Text>
-            <Link
-              href={`${SITE_URL}/${language}/newsletter/unsubscribe`}
-              style={unsubscribeLink}
-            >
+            <Link href={unsubscribeHref} style={unsubscribeLink}>
               {t.unsubscribe}
             </Link>
             <Text style={footerText}>

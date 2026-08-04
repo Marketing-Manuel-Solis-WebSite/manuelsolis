@@ -9,6 +9,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { Reveal, Stagger, StaggerItem } from '../../components/motion';
+import { useDialog } from '../../components/useDialog';
 
 /**
  * Attorneys directory grid + detail modal — the only interactive part of the
@@ -58,6 +59,7 @@ export default function AttorneysExplorer({
   lang: 'es' | 'en';
 }) {
   const [selectedAttorney, setSelectedAttorney] = useState<ResolvedAttorney | null>(null);
+  const dialogRef = useDialog(selectedAttorney !== null, () => setSelectedAttorney(null));
 
   return (
     <>
@@ -136,6 +138,11 @@ export default function AttorneysExplorer({
             onClick={() => setSelectedAttorney(null)}
           >
             <m.div
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${texts.modalBadge}: ${selectedAttorney.name}`}
+              tabIndex={-1}
               initial={{ scale: 0.9, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 50 }}
@@ -248,11 +255,11 @@ export default function AttorneysExplorer({
                 </div>
 
                 <div className="mt-auto space-y-3">
-                  <a href="/#contacto" onClick={() => setSelectedAttorney(null)} className="w-full bg-gradient-to-r from-[#B2904D] to-[#9f7d3d] hover:from-white hover:to-white hover:text-[#002342] text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-black/40 group">
+                  <Link href={`/${lang}#contacto`} onClick={() => setSelectedAttorney(null)} className="w-full bg-gradient-to-r from-[#B2904D] to-[#9f7d3d] hover:from-white hover:to-white hover:text-[#002342] text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-black/40 group">
                     <Mail size={20} />
                     {texts.button}
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  </Link>
                 </div>
 
               </div>

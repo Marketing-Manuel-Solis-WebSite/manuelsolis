@@ -265,7 +265,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
       ],
       type: 'article',
-      publishedTime: '2026-02-20T08:00:00.000Z',
+      publishedTime: '2026-02-12T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['Formulario G-28', 'Cambio de abogado', 'Abogado de inmigración', 'USCIS', 'Proceso migratorio'],

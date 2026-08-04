@@ -215,42 +215,44 @@ export default function AdminClient({
 
   return (
     <div className="min-h-screen bg-[#f5f6fa] py-10 px-4">
-      <div className="max-w-3xl mx-auto">
-        <header className="mb-8">
-          <Link
-            href={`/${lang}/admin`}
-            className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#001540] mb-4 transition"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Volver al panel
-          </Link>
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#001540] text-white text-xs font-bold tracking-wider uppercase mb-3">
-                <Mail className="w-3.5 h-3.5" />
-                Admin · Newsletter
-              </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-[#001540] tracking-tight">
-                Newsletter Blast
-              </h1>
-              <p className="text-sm text-gray-600 mt-2">
-                Envío directo a la lista de Resend · Manuel Solis Law
-              </p>
+      {/* max-w-3xl/mx-auto se repiten en header y main porque el header quedó
+          fuera del <main> para que el skip link aterrice ya en el contenido. */}
+      <header className="max-w-3xl mx-auto mb-8">
+        <Link
+          href={`/${lang}/admin`}
+          className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#001540] mb-4 transition"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Volver al panel
+        </Link>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#001540] text-white text-xs font-bold tracking-wider uppercase mb-3">
+              <Mail className="w-3.5 h-3.5" />
+              Admin · Newsletter
             </div>
-            <form action={logoutAction}>
-              <input type="hidden" name="lang" value={lang} />
-              <button
-                type="submit"
-                className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#001540] hover:bg-white px-3 py-2 rounded-lg transition"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                Salir
-              </button>
-            </form>
+            <h1 className="text-3xl md:text-4xl font-bold text-[#001540] tracking-tight">
+              Newsletter Blast
+            </h1>
+            <p className="text-sm text-gray-600 mt-2">
+              Envío directo a la lista de Resend · Manuel Solis Law
+            </p>
           </div>
-          <div className="h-[3px] w-20 bg-[#B2904D] mt-4 rounded-full" />
-        </header>
+          <form action={logoutAction}>
+            <input type="hidden" name="lang" value={lang} />
+            <button
+              type="submit"
+              className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#001540] hover:bg-white px-3 py-2 rounded-lg transition"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              Salir
+            </button>
+          </form>
+        </div>
+        <div className="h-[3px] w-20 bg-[#B2904D] mt-4 rounded-full" />
+      </header>
 
+      <main id="main-content" tabIndex={-1} className="max-w-3xl mx-auto">
         <Card>
           <SectionTitle icon={FileText} step={1} title="Tipo de envío" />
           <div className="mt-4 grid grid-cols-2 gap-2">
@@ -813,7 +815,7 @@ export default function AdminClient({
             </m.div>
           )}
         </AnimatePresence>
-      </div>
+      </main>
 
       <AnimatePresence>
         {previewOpen && slug && (

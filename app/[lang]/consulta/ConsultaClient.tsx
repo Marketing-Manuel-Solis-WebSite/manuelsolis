@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { m, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { m, useMotionValue } from 'framer-motion';
 import { Shield, Clock3, Award, Lock } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -14,13 +14,31 @@ export default function ConsultaClient() {
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const spotlight = useMotionTemplate`radial-gradient(700px circle at ${mouseX}px ${mouseY}px, rgba(178,144,77,0.15), transparent 70%)`;
+
+  // mousemove puede dispararse varias veces entre dos repintados: se guarda la
+  // ultima posicion y se escribe una sola vez por frame.
+  const frameRef = React.useRef<number | null>(null);
+  const pendingRef = React.useRef({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    // getBoundingClientRect debe leerse dentro del handler: currentTarget se
+    // anula al salir de el.
     const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
+    pendingRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    if (frameRef.current !== null) return;
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = null;
+      mouseX.set(pendingRef.current.x);
+      mouseY.set(pendingRef.current.y);
+    });
   };
+
+  React.useEffect(
+    () => () => {
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    },
+    []
+  );
 
   const reassurances = [
     {
@@ -71,10 +89,19 @@ export default function ConsultaClient() {
           <rect width="100%" height="100%" fill="url(#consulta-grid)" mask="url(#consulta-mask)" />
         </svg>
 
-        {/* Mouse spotlight */}
-        <m.div className="pointer-events-none absolute inset-0 z-0" style={{ background: spotlight }} />
+        {/* Mouse spotlight — capa de tamano fijo con el degradado ya pintado que
+            solo se traslada (transform va por compositor), en vez de repintar un
+            background a pantalla completa. El radio debe ir explicito: sin el, un
+            radial-gradient usa farthest-corner y estiraria la caida. 490px es el
+            punto donde el degradado original (700px circle, transparent 70%) ya
+            era transparente, y el offset negativo lo centra en el cursor. */}
+        <m.div
+          aria-hidden="true"
+          style={{ x: mouseX, y: mouseY }}
+          className="pointer-events-none absolute -left-[490px] -top-[490px] w-[980px] h-[980px] bg-[radial-gradient(490px_circle_at_center,_rgba(178,144,77,0.15),_transparent_100%)] z-0 will-change-transform"
+        />
 
-        {/* Animated orbs */}
+        {/* Decorative orbs */}
         <div
           className="absolute top-[5%] left-[-10%] w-[55vw] h-[55vw] bg-[#B2904D]/12 rounded-full blur-[120px] pointer-events-none z-0 opacity-40"
         />

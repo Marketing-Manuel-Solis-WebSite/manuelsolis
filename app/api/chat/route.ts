@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { checkBotId } from 'botid/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '../../lib/rateLimit';
 
@@ -44,6 +45,58 @@ IA: Entiendo su necesidad. En las Oficinas de Manuel Solís somos especialistas 
 // --- MAPEO DE ENLACES ELIMINADO ---
 // Se elimina la función linkifyResponse y el LINK_MAP ya que los enlaces están prohibidos.
 
+// --- TOPES DE ENTRADA Y SALIDA ---
+// Cada request gasta cuota de pago (GEMINI_API_KEY), así que el costo
+// máximo por llamada se acota aquí y no en el cliente.
+const MAX_MESSAGE_CHARS = 1000;
+const MAX_HISTORY_TURNS = 10;
+const MAX_TURN_CHARS = 2000;
+// 10 turnos × 2000 chars + mensaje + overhead del JSON, con holgura.
+const MAX_BODY_BYTES = 32_000;
+// gemini-2.5-flash cuenta los thinking tokens dentro de maxOutputTokens:
+// un tope corto devuelve respuestas vacías (finishReason MAX_TOKENS).
+const MAX_OUTPUT_TOKENS = 2048;
+
+interface ChatTurn {
+    role: 'user' | 'model';
+    parts: { text: string }[];
+}
+
+/**
+ * Reconstruye el historial en el servidor. El `role` que manda el cliente
+ * se ignora: de otro modo podría inyectar turnos falsos de "assistant" y
+ * escribir el contexto a su antojo. El widget envía el historial completo
+ * en orden y terminado siempre en la última respuesta del modelo, así que
+ * los roles se asignan hacia atrás desde el final; si el primer turno
+ * queda como model se descarta, porque Gemini exige que el historial
+ * empiece en user y alterne (validateChatHistory del SDK lanza si no).
+ */
+function buildChatHistory(raw: unknown): ChatTurn[] {
+    if (!Array.isArray(raw)) return [];
+
+    const texts: string[] = [];
+    for (const item of raw) {
+        if (!item || typeof item !== 'object') continue;
+        const content = (item as { content?: unknown }).content;
+        if (typeof content !== 'string') continue;
+        const text = content.trim();
+        if (!text) continue;
+        texts.push(text.slice(0, MAX_TURN_CHARS));
+    }
+
+    const recent = texts.slice(-MAX_HISTORY_TURNS);
+    const history: ChatTurn[] = recent.map((text, i) => ({
+        role: (recent.length - 1 - i) % 2 === 0 ? 'model' : 'user',
+        parts: [{ text }],
+    }));
+
+    if (history.length > 0 && history[0].role !== 'user') {
+        history.shift();
+    }
+
+    return history;
+}
+
 export async function POST(request: NextRequest) {
     try {
         // Rate limiting: 15 requests per minute per IP
@@ -58,6 +111,82 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        // Vercel BotID — Basic Detection in report-only mode by default.
+        const botMode = process.env.BOTID_MODE ?? 'report-only';
+        const verification = await checkBotId();
+        if (verification.isBot) {
+            console.warn(
+                JSON.stringify({
+                    event: 'botid_detected',
+                    endpoint: '/api/chat',
+                    mode: botMode,
+                    timestamp: new Date().toISOString(),
+                    ip,
+                    ua: request.headers.get('user-agent') ?? null,
+                }),
+            );
+            if (botMode === 'block') {
+                return NextResponse.json(
+                    { success: false, error: 'Access denied' },
+                    { status: 403 },
+                );
+            }
+        }
+
+        // Tope de cuerpo antes de parsear: content-length primero (barato) y
+        // luego el texto real, porque la cabecera puede faltar o mentir.
+        const declaredLength = Number(request.headers.get('content-length') || 0);
+        if (declaredLength > MAX_BODY_BYTES) {
+            return NextResponse.json(
+                { success: false, error: 'Solicitud demasiado grande' },
+                { status: 413 }
+            );
+        }
+
+        const rawBody = await request.text();
+        if (rawBody.length > MAX_BODY_BYTES) {
+            return NextResponse.json(
+                { success: false, error: 'Solicitud demasiado grande' },
+                { status: 413 }
+            );
+        }
+
+        let parsedBody: unknown;
+        try {
+            parsedBody = JSON.parse(rawBody);
+        } catch {
+            return NextResponse.json(
+                { success: false, error: 'Mensaje inválido' },
+                { status: 400 }
+            );
+        }
+
+        if (!parsedBody || typeof parsedBody !== 'object') {
+            return NextResponse.json(
+                { success: false, error: 'Mensaje inválido' },
+                { status: 400 }
+            );
+        }
+
+        const { message, conversationHistory } = parsedBody as {
+            message?: unknown;
+            conversationHistory?: unknown;
+        };
+
+        if (typeof message !== 'string' || message.trim() === '') {
+            return NextResponse.json(
+                { success: false, error: 'Mensaje inválido' },
+                { status: 400 }
+            );
+        }
+
+        if (message.length > MAX_MESSAGE_CHARS) {
+            return NextResponse.json(
+                { success: false, error: `El mensaje es demasiado largo. Por favor resúmalo en menos de ${MAX_MESSAGE_CHARS} caracteres.` },
+                { status: 400 }
+            );
+        }
+
         const apiKey = process.env.GEMINI_API_KEY;
 
         if (!apiKey) {
@@ -68,31 +197,14 @@ export async function POST(request: NextRequest) {
         }
 
         const genAI = new GoogleGenerativeAI(apiKey);
-        
-        const model = genAI.getGenerativeModel({ 
+
+        const model = genAI.getGenerativeModel({
             model: 'gemini-2.5-flash', // Modelo actualizado para mejor rendimiento
-            systemInstruction: SITE_CONTEXT
+            systemInstruction: SITE_CONTEXT,
+            generationConfig: { maxOutputTokens: MAX_OUTPUT_TOKENS }
         });
 
-        const { message, conversationHistory } = await request.json();
-
-        if (!message || typeof message !== 'string') {
-            return NextResponse.json(
-                { success: false, error: 'Mensaje inválido' },
-                { status: 400 }
-            );
-        }
-
-        const chatHistory = (conversationHistory || [])
-            .filter((msg: any) => msg.content && msg.content.trim() !== '')
-            .map((msg: any) => ({
-                role: msg.role === 'assistant' ? 'model' : 'user',
-                parts: [{ text: msg.content }]
-            }));
-
-        if (chatHistory.length > 0 && chatHistory[0].role !== 'user') {
-            chatHistory.shift();
-        }
+        const chatHistory = buildChatHistory(conversationHistory);
 
         const chat = model.startChat({
             history: chatHistory,

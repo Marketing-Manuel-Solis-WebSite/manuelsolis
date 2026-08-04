@@ -8,6 +8,8 @@
  * Architectural separation:
  *   - mapFormToPayload(input): pure, no I/O — fully unit-testable.
  *   - postLead(payload, opts): I/O with retry + JSON logs.
+ *   - sendLeadFallbackEmail(payload, result): dead-letter por correo
+ *     cuando el destino no aceptó el lead (opt-in por env var).
  *
  * The destination URL is read from the LEAD_CAPTURE_ENDPOINT env var
  * with a fall-back to the current bos.manuelsolis.com endpoint.
@@ -20,6 +22,7 @@
  *
  * See DISCOVERY_v3.md §10.4 for the contract.
  */
+import { createHash } from 'node:crypto';
 
 const DEFAULT_LEAD_ENDPOINT = 'https://bos.manuelsolis.com/lead/manuelsolis';
 
@@ -153,6 +156,97 @@ export function buildEnquiryDetail(detail: string | undefined, source: string): 
   const base = (detail ?? '').trim();
   if (!source || isSentinelSource(source)) return base;
   return base ? `${base} | Fuente: ${source}` : `Fuente: ${source}`;
+}
+
+const CANONICAL_ORIGIN = 'https://www.manuelsolis.com';
+const PAGE_URL_MAX_LENGTH = 500;
+
+// Parámetros de los que depende el origen del lead. BOS lee la atribución
+// PARSEANDO ESTA URL, no los campos utm_* del payload, así que si hay que
+// recortar por longitud se conservan estos y se descarta todo lo demás:
+// perder un `utm_source` explícito haría que `injectUtmsIntoUrl` lo sustituya
+// por los valores derivados y una campaña pagada entraría como orgánica.
+const ATTRIBUTION_QUERY_PARAMS = [
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_content',
+  'utm_term',
+  'gclid',
+  'gbraid',
+  'wbraid',
+  'fbclid',
+  'msclkid',
+  'ttclid',
+] as const;
+
+/**
+ * Reduce `page_url` a una URL del sitio: siempre devuelve una absoluta sobre
+ * el origen canónico.
+ *
+ *   - Cualquier host → se conservan ruta y query, y el origen se reescribe al
+ *     canónico, así que a BOS nunca le llega un dominio ajeno. Esto cubre el
+ *     proxy de traducción de Google y los dominios alternos, que sirven las
+ *     mismas rutas.
+ *   - Pathname pelón ('/es/contacto') → se resuelve sobre el canónico.
+ *   - Esquema que no es http(s) → queda la raíz del sitio.
+ *   - Demasiado larga → se recortan los parámetros ajenos a la atribución,
+ *     nunca los utm_* ni los click ids: ver ATTRIBUTION_QUERY_PARAMS.
+ */
+export function normalizePageUrl(raw: unknown): string {
+  const value = typeof raw === 'string' ? raw.trim() : '';
+  if (!value) return `${CANONICAL_ORIGIN}/`;
+
+  let parsed: URL;
+  try {
+    parsed = new URL(value, CANONICAL_ORIGIN);
+  } catch {
+    return `${CANONICAL_ORIGIN}/`;
+  }
+
+  // Solo el esquema descalifica por completo (javascript:, data:, file:).
+  //
+  // El host NO se usa para descartar la ruta ni el query: el origen siempre se
+  // reescribe al canónico, que es lo que de verdad importaba —que a BOS no
+  // llegue una URL de un dominio ajeno—, y filtrar por host rompía casos
+  // legítimos sin aportar seguridad: quien quiera mandar un `page_url` falso lo
+  // hace igual con el host propio. El caso real que rompía es el proxy de
+  // traducción de Google (`www-manuelsolis-com.translate.goog`), que sirve el
+  // sitio con la MISMA ruta: descartarla convertía un lead de campaña en
+  // orgánico y dejaba sin inferir el servicio y la oficina.
+  const schemeOk = parsed.protocol === 'https:' || parsed.protocol === 'http:';
+  if (!schemeOk) {
+    return `${CANONICAL_ORIGIN}/`;
+  }
+
+  const withQuery = `${CANONICAL_ORIGIN}${parsed.pathname || '/'}${parsed.search}`;
+  if (withQuery.length <= PAGE_URL_MAX_LENGTH) return withQuery;
+
+  // Demasiado larga: se recorta quedándose solo con los parámetros de
+  // atribución, nunca descartando el query entero.
+  const attribution = new URLSearchParams();
+  for (const param of ATTRIBUTION_QUERY_PARAMS) {
+    const value = parsed.searchParams.get(param);
+    if (value) attribution.set(param, value);
+  }
+  const attributionQuery = attribution.toString();
+  const withAttribution = `${CANONICAL_ORIGIN}${parsed.pathname || '/'}${
+    attributionQuery ? `?${attributionQuery}` : ''
+  }`;
+  if (withAttribution.length <= PAGE_URL_MAX_LENGTH) return withAttribution;
+
+  // Ni la atribución sola cabe: se prefiere una URL larga a una atribución
+  // falseada, así que solo se recorta si además falta el pathname.
+  const withoutQuery = `${CANONICAL_ORIGIN}${parsed.pathname || '/'}`;
+  return withoutQuery.length <= PAGE_URL_MAX_LENGTH ? withAttribution : withoutQuery.slice(0, PAGE_URL_MAX_LENGTH);
+}
+
+function pathnameOf(absoluteUrl: string): string {
+  try {
+    return new URL(absoluteUrl).pathname;
+  } catch {
+    return '';
+  }
 }
 
 export function inferPracticeArea(pathname: string): string | null {
@@ -318,19 +412,15 @@ export function mapFormToPayload(input: LeadFormInput): LeadPayload {
 
   const detail = buildEnquiryDetail(input.enquiry_detail, source);
 
-  // Derive a pathname for inference. Accept either a full URL or
-  // a bare pathname.
-  let pathname = '';
-  try {
-    pathname = new URL(input.page_url).pathname;
-  } catch {
-    pathname = input.page_url || '';
-  }
+  // La URL del cliente solo cuenta si es del sitio: de ella salen el área de
+  // práctica, la oficina y la atribución que se manda al destino.
+  const pageUrl = normalizePageUrl(input.page_url);
+  const pathname = pathnameOf(pageUrl);
 
   // BOS extrae la atribución parseando la URL, no los campos utm_*.
   // Garantizamos que la URL SIEMPRE lleve UTMs (reales o los slugs de
   // tráfico propio: sitio-web / directo).
-  const urlWithUtms = injectUtmsIntoUrl(input.page_url, {
+  const urlWithUtms = injectUtmsIntoUrl(pageUrl, {
     source,
     medium,
     campaign,
@@ -376,8 +466,19 @@ export interface PostLeadOptions {
   endpoint?: string;
   maxAttempts?: number;
   baseDelayMs?: number;
+  /** Tope por intento. Sin él, un destino que no responde cuelga el form. */
+  timeoutMs?: number;
+  /** Tope de todos los intentos juntos, incluidas las esperas del backoff. */
+  totalTimeoutMs?: number;
+  /** Override de la clave derivada del payload (solo para pruebas). */
+  idempotencyKey?: string;
   signal?: AbortSignal;
 }
+
+// El usuario espera esta respuesta con el formulario en "Procesando...", así
+// que el presupuesto total acota los intentos: cabe un reintento completo.
+const DEFAULT_ATTEMPT_TIMEOUT_MS = 8000;
+const DEFAULT_TOTAL_TIMEOUT_MS = 12000;
 
 export interface PostLeadResult {
   ok: boolean;
@@ -391,17 +492,47 @@ function getEndpoint(opts: PostLeadOptions): string {
 }
 
 /**
+ * Clave de idempotencia de un envío, para que el destino pueda descartar el
+ * duplicado cuando persistió el lead pero respondió 5xx o no respondió.
+ *
+ * Se deriva SOLO del contenido del lead y de la sesión: un reintento del mismo
+ * envío tiene que producir exactamente la misma clave, así que nada de
+ * aleatoriedad ni de reloj.
+ */
+export function buildIdempotencyKey(payload: LeadPayload): string {
+  const material = [
+    payload.session_id ?? '',
+    payload.email.toLowerCase(),
+    payload.phone.replace(/\D/g, ''),
+    payload.first_name.toLowerCase(),
+    payload.last_name.toLowerCase(),
+    payload.enquiry_detail,
+    payload.page_url,
+  ].join('|');
+  return createHash('sha256').update(material).digest('hex').slice(0, 32);
+}
+
+/** Aborta el intento por su propio tope sin perder el signal del caller. */
+function attemptSignal(timeoutMs: number, external?: AbortSignal): AbortSignal {
+  const timeout = AbortSignal.timeout(timeoutMs);
+  return external ? AbortSignal.any([external, timeout]) : timeout;
+}
+
+/**
  * POSTs the payload to the lead destination with bounded retries.
  *
  * Retry policy:
- *   - Network errors: retry with exponential backoff.
+ *   - Network errors and timeouts: retry with exponential backoff.
  *   - 5xx responses:  retry with exponential backoff.
  *   - 4xx responses:  fail fast (no retry).
  *
- * Default cap: 3 attempts, base delay 200ms (so total worst-case
- * wait is ~600ms before final failure). Designed to fit comfortably
- * inside Vercel's default 300s function budget without keeping the
- * user waiting on UI.
+ * Default cap: 3 attempts, base delay 200ms, 8s por intento y 12s para el
+ * conjunto — el usuario está esperando la respuesta del formulario, así que
+ * los intentos que no caben en el presupuesto no se hacen.
+ *
+ * Todos los intentos van con la MISMA cabecera Idempotency-Key: si el destino
+ * ya guardó el lead y respondió 5xx (o no respondió), el reintento es
+ * reconocible como el mismo envío y no como un lead nuevo.
  */
 export async function postLead(
   payload: LeadPayload,
@@ -410,20 +541,30 @@ export async function postLead(
   const endpoint = getEndpoint(options);
   const maxAttempts = options.maxAttempts ?? 3;
   const baseDelayMs = options.baseDelayMs ?? 200;
+  const attemptTimeoutMs = options.timeoutMs ?? DEFAULT_ATTEMPT_TIMEOUT_MS;
+  const totalTimeoutMs = options.totalTimeoutMs ?? DEFAULT_TOTAL_TIMEOUT_MS;
+  const idempotencyKey = options.idempotencyKey ?? buildIdempotencyKey(payload);
+  const startedAt = Date.now();
 
   let lastError: string | undefined;
   let lastStatus: number | undefined;
+  let attemptsMade = 0;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const remainingMs = totalTimeoutMs - (Date.now() - startedAt);
+    if (remainingMs <= 0) break;
+    attemptsMade = attempt;
+
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          'Idempotency-Key': idempotencyKey,
         },
         body: JSON.stringify(payload),
-        signal: options.signal,
+        signal: attemptSignal(Math.min(attemptTimeoutMs, remainingMs), options.signal),
       });
 
       if (response.ok) {
@@ -481,28 +622,145 @@ export async function postLead(
           timestamp: new Date().toISOString(),
         }),
       );
+      // Abortó el caller (no nuestro tope): reintentar ya no sirve a nadie.
+      if (options.signal?.aborted) break;
     }
 
     if (attempt < maxAttempts) {
       const delay = baseDelayMs * Math.pow(2, attempt - 1);
+      if (Date.now() - startedAt + delay >= totalTimeoutMs) break;
       await new Promise((r) => setTimeout(r, delay));
     }
   }
 
+  // Los datos del lead viajan en este log a propósito: cuando el destino
+  // queda inaccesible es la única vía de recuperación manual desde los
+  // logs de Vercel si LEAD_FALLBACK_EMAIL no está configurado.
   console.error(
     JSON.stringify({
       event: 'lead_capture_failed_final',
-      attempts: maxAttempts,
+      attempts: attemptsMade,
       status: lastStatus,
       error: lastError,
+      idempotency_key: idempotencyKey,
+      name: payload.name,
+      phone: payload.phone,
+      email: payload.email,
+      page_url: payload.page_url,
       timestamp: new Date().toISOString(),
     }),
   );
 
   return {
     ok: false,
-    attempts: maxAttempts,
+    attempts: attemptsMade,
     status: lastStatus,
     error: lastError ?? 'Unknown',
   };
+}
+
+// ─── Dead-letter: email de respaldo cuando el destino rechaza el lead ───
+
+const LEAD_FALLBACK_FROM = 'Manuel Solis Law <newsletter@manuelsolis.com>';
+
+function parseFallbackRecipients(raw: string | undefined): string[] {
+  if (!raw) return [];
+  return raw
+    .split(',')
+    .map((address) => address.trim())
+    .filter((address) => address.length > 0);
+}
+
+function formatFallbackBody(payload: LeadPayload, failure: PostLeadResult): string {
+  return [
+    'El lead NO se entregó al destino. Esta es la copia de respaldo para',
+    'capturarlo a mano en BOS:',
+    '',
+    `Nombre:    ${payload.first_name} ${payload.last_name}`.trimEnd(),
+    `Teléfono:  ${payload.phone}`,
+    `Correo:    ${payload.email}`,
+    `Idioma:    ${payload.language_preference}`,
+    `Consulta:  ${payload.enquiry_detail || '(sin detalle)'}`,
+    '',
+    `Página:    ${payload.page_url}`,
+    `Origen:    ${payload.source} / ${payload.medium} / ${payload.campaign}`,
+    `Click IDs: gclid=${payload.gclid ?? '-'} fbclid=${payload.fbclid ?? '-'}`,
+    `Servicio:  ${payload.practice_area_inferred ?? '-'}`,
+    `Oficina:   ${payload.office_inferred ?? '-'}`,
+    `Sesión:    ${payload.session_id ?? '-'} · ${payload.device_type} · ${payload.country ?? '-'}`,
+    `Consentimientos: términos=${payload.acceptedTerms} marketing=${payload.marketingConsent}`,
+    '',
+    `Fallo: HTTP ${failure.status ?? '-'} tras ${failure.attempts} intento(s) · ${failure.error ?? '-'}`,
+    `Fecha: ${new Date().toISOString()}`,
+  ].join('\n');
+}
+
+/**
+ * Envía el payload completo del lead por correo cuando `postLead` no logró
+ * entregarlo. Solo actúa si existen LEAD_FALLBACK_EMAIL (uno o varios
+ * destinatarios separados por coma) y RESEND_API_KEY; sin ellas el único
+ * respaldo es el log `lead_capture_failed_final`.
+ *
+ * Nunca lanza: el lead ya se dio por perdido y el caller la invoca desde un
+ * `after()`, después de responder al usuario.
+ */
+export async function sendLeadFallbackEmail(
+  payload: LeadPayload,
+  failure: PostLeadResult,
+): Promise<void> {
+  const recipients = parseFallbackRecipients(process.env.LEAD_FALLBACK_EMAIL);
+  if (recipients.length === 0) return;
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error(
+      JSON.stringify({
+        event: 'lead_fallback_email_unconfigured',
+        reason: 'RESEND_API_KEY missing',
+        timestamp: new Date().toISOString(),
+      }),
+    );
+    return;
+  }
+
+  try {
+    // Import diferido: mantiene el grafo de este módulo (probado en
+    // __tests__/leadCapture.test.ts) libre del SDK de correo.
+    const { Resend } = await import('resend');
+    const resend = new Resend(apiKey);
+
+    const { error } = await resend.emails.send({
+      from: process.env.LEAD_FALLBACK_FROM || LEAD_FALLBACK_FROM,
+      to: recipients,
+      subject: `[LEAD NO ENTREGADO] ${payload.name || 'Sin nombre'} · ${payload.phone}`,
+      text: formatFallbackBody(payload, failure),
+    });
+
+    if (error) {
+      console.error(
+        JSON.stringify({
+          event: 'lead_fallback_email_failed',
+          error: error.message,
+          timestamp: new Date().toISOString(),
+        }),
+      );
+      return;
+    }
+
+    console.log(
+      JSON.stringify({
+        event: 'lead_fallback_email_sent',
+        recipients: recipients.length,
+        timestamp: new Date().toISOString(),
+      }),
+    );
+  } catch (err) {
+    console.error(
+      JSON.stringify({
+        event: 'lead_fallback_email_failed',
+        error: err instanceof Error ? err.message : String(err),
+        timestamp: new Date().toISOString(),
+      }),
+    );
+  }
 }

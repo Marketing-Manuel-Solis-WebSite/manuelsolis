@@ -194,7 +194,7 @@ export const accidentOffices: AccidentOffice[] = [
     address: '708 Main St, Houston, Texas 77002, United States',
     phone: '(713) 842-9575',
     email: 'houston@manuelsolis.com',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
     mapLink: 'https://share.google/Fc3ISgQAihcayfmws',
     image: '/offices/main.png',
   },
@@ -209,7 +209,7 @@ export const accidentOffices: AccidentOffice[] = [
     address: '2950 North Loop W, Houston, TX 77092, United States',
     phone: '(713) 429-0237',
     email: 'houston@manuelsolis.com',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
     mapLink: 'https://share.google/aKTPwIvhMmw7JfRcY',
     image: '/offices/ofLoop.png',
   },
@@ -224,7 +224,7 @@ export const accidentOffices: AccidentOffice[] = [
     address: '16510 Northchase Dr, Houston, TX 77060, United States',
     phone: '(346) 522-4848',
     email: 'houston@manuelsolis.com',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
     mapLink: 'https://share.google/wSptYM5hcuGigC3aS',
     image: '/offices/ofNorth.png',
   },
@@ -239,7 +239,7 @@ export const accidentOffices: AccidentOffice[] = [
     address: '3730 Kirby Dr Suite 1200, Houston, TX 77098, United States',
     phone: '(713) 903-7875',
     email: 'houston@manuelsolis.com',
-    hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+    hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
     mapLink: 'https://share.google/R85nYwhTFqoxLctD4',
     image: '/offices/ofhouston.png',
   },
@@ -254,7 +254,11 @@ export const accidentOffices: AccidentOffice[] = [
     phone: '(901) 557-8357',
     email: 'memphis@manuelsolis.com',
     hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
-    // TODO(GBP): sustituir por el share-link real de la ficha de Memphis (el anterior apuntaba a Main St).
+    // TODO(GBP): falta el share-link (`https://share.google/…`) de la ficha de
+    // Google Business Profile de Memphis; lo entrega quien administra el GBP del
+    // despacho (dueño del proyecto / marketing). Ver el TODO gemelo en
+    // app/components/officesPhoneMap.ts → OFFICES_NAP.memphis. Hasta entonces
+    // esta búsqueda de Maps lleva a la dirección correcta.
     mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116',
     image: '/offices/ofAirways.png',
   },
@@ -269,7 +273,7 @@ export const accidentOffices: AccidentOffice[] = [
     address: '2600 S Shore Blvd, League City, TX 77573, United States',
     phone: '(832) 598-3782',
     email: 'leaguecity@manuelsolis.com',
-    hours: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
+    hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
     mapLink: 'https://share.google/8T736Tycmnh4BZw5o',
     image: '/offices/League.png',
   },

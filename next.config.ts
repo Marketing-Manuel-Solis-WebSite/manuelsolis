@@ -22,9 +22,11 @@ const nextConfig: NextConfig = {
     // so 1920 covers retina; 2048+ generated nothing real users could see.
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     remotePatterns: [
+      // Dominio propio: el canónico es www — el apex queda por las URLs
+      // absolutas heredadas que siguen apuntando ahí.
       {
         protocol: 'https',
-        hostname: 'comopuedoarreglar.com',
+        hostname: 'www.manuelsolis.com',
       },
       {
         protocol: 'https',
@@ -60,6 +62,22 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Static assets in public/ keep stable filenames (manuelsolisl.png,
+        // the service heroes, blog art), so `immutable` for a year would
+        // freeze a replaced file in returning visitors' caches forever.
+        // Revalidate daily and allow a week of stale-while-revalidate.
+        // ORDER MATTERS: this extension rule must stay BEFORE the /_next
+        // ones — every matching rule is applied in order, so the hashed
+        // filenames under /_next keep their `immutable` value.
+        source: '/:path*.(png|jpg|jpeg|gif|webp|avif|ico|svg)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      {
         source: '/_next/static/:path*',
         headers: [
           {
@@ -71,16 +89,6 @@ const nextConfig: NextConfig = {
       {
         // Cache optimized images aggressively
         source: '/_next/image/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        // Cache static assets in public folder
-        source: '/:path*.(png|jpg|jpeg|gif|webp|avif|ico|svg)',
         headers: [
           {
             key: 'Cache-Control',

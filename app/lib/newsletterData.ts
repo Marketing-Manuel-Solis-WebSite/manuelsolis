@@ -3,7 +3,6 @@ export interface NewsletterEdition {
   date: string; // ISO date
   title: { es: string; en: string };
   description: { es: string; en: string };
-  image: string;
   topics: { es: string[]; en: string[] };
   content: {
     es: NewsletterSection[];
@@ -29,7 +28,6 @@ export const newsletters: NewsletterEdition[] = [
       es: 'Entérate de los últimos cambios en políticas migratorias, extensiones de TPS, actualizaciones de DACA y consejos legales para proteger tu estatus en Estados Unidos.',
       en: 'Learn about the latest immigration policy changes, TPS extensions, DACA updates, and legal tips to protect your status in the United States.',
     },
-    image: '/newsletter/april-2026.jpg',
     topics: {
       es: ['TPS', 'DACA', 'Política Migratoria', 'Derechos de Inmigrantes'],
       en: ['TPS', 'DACA', 'Immigration Policy', 'Immigrant Rights'],
@@ -80,7 +78,6 @@ export const newsletters: NewsletterEdition[] = [
       es: 'Conoce tus derechos laborales como inmigrante en Estados Unidos. Información sobre permisos de trabajo, protecciones contra abuso laboral y cómo reportar violaciones.',
       en: 'Know your labor rights as an immigrant in the United States. Information about work permits, protections against workplace abuse, and how to report violations.',
     },
-    image: '/newsletter/march-2026.jpg',
     topics: {
       es: ['Derechos Laborales', 'Permisos de Trabajo', 'Abuso Laboral', 'USCIS'],
       en: ['Labor Rights', 'Work Permits', 'Workplace Abuse', 'USCIS'],
@@ -131,7 +128,6 @@ export const newsletters: NewsletterEdition[] = [
       es: 'Guía completa sobre la Visa U y VAWA en 2026. Conoce los requisitos, el proceso de solicitud y cómo estas protecciones pueden ayudarte a obtener estatus legal.',
       en: 'Complete guide to U Visa and VAWA in 2026. Learn about requirements, the application process, and how these protections can help you obtain legal status.',
     },
-    image: '/newsletter/feb-2026.jpg',
     topics: {
       es: ['Visa U', 'VAWA', 'Violencia Doméstica', 'Protecciones Legales'],
       en: ['U Visa', 'VAWA', 'Domestic Violence', 'Legal Protections'],

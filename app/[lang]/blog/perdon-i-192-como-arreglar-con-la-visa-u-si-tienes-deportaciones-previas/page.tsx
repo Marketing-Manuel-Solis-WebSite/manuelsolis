@@ -262,7 +262,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
       ],
       type: 'article',
-      publishedTime: '2026-01-16T08:00:00.000Z',
+      publishedTime: '2026-01-23T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['Visa U', 'Perdon I-192', 'Deportaciones', 'Reingreso Ilegal', 'Waiver Migratorio'],

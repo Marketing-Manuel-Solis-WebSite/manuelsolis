@@ -326,7 +326,7 @@ export default function AnalyticsDashboard({ lang }: { lang: 'es' | 'en' }) {
         generatedAt={data?.meta.generatedAt}
       />
 
-      <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-6">
+      <main id="main-content" tabIndex={-1} className="max-w-[1400px] mx-auto px-4 md:px-6 py-6">
         <FilterBar
           filters={filters}
           activeCount={filtersActive}
@@ -534,7 +534,7 @@ export default function AnalyticsDashboard({ lang }: { lang: 'es' | 'en' }) {
             <FooterNote meta={data.meta} />
           </>
         ) : null}
-      </div>
+      </main>
     </div>
   );
 }
@@ -878,7 +878,9 @@ function SectionCard({
             <Icon className="w-4 h-4 text-[#B2904D]" />
           </div>
           <div>
-            <h3 className="font-bold text-[#001540]">{title}</h3>
+            {/* h2: las SectionCard son secciones de primer nivel bajo el h1 del
+                header, al mismo nivel que "Filtros". */}
+            <h2 className="font-bold text-[#001540]">{title}</h2>
             {subtitle ? <p className="text-xs text-gray-500 mt-0.5">{subtitle}</p> : null}
           </div>
         </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Scale, Car, ShieldCheck, Heart, FileText, TrendingUp, MapPin } from 'lucide-react';
+import { Scale, Car, ShieldCheck, Heart, FileText, TrendingUp, MapPin, Flag, Gavel, UserCheck, FileCheck } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { LANDING_PAGES, OFFICES, SERVICES as CITY_SERVICES } from '../../lib/cityServiceData';
 import Header from '../../components/Header';
@@ -63,6 +63,47 @@ const SERVICES = [
     desc: {
       es: 'Visas para inversionistas y empresarios en EE.UU.',
       en: 'Visas for investors and entrepreneurs in the U.S.',
+    },
+  },
+];
+
+// Páginas de servicio con su propia URL que no caben en las 6 grandes áreas de
+// arriba. Toda página /servicios/* debe estar enlazada desde este hub.
+const SPECIALIZED_SERVICES = [
+  {
+    slug: 'defensa-deportacion',
+    icon: Gavel,
+    title: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+    desc: {
+      es: 'Representación en corte de inmigración, casos de detenidos y cancelación de deportación.',
+      en: 'Immigration court representation, detained cases and cancellation of removal.',
+    },
+  },
+  {
+    slug: 'asilo',
+    icon: Flag,
+    title: { es: 'Asilo Político', en: 'Political Asylum' },
+    desc: {
+      es: 'Asilo afirmativo y defensivo para quienes huyen de persecución.',
+      en: 'Affirmative and defensive asylum for those fleeing persecution.',
+    },
+  },
+  {
+    slug: 'visa-u',
+    icon: FileCheck,
+    title: { es: 'Visa U para Víctimas de Delitos', en: 'U Visa for Crime Victims' },
+    desc: {
+      es: 'Estatus y permiso de trabajo para víctimas de delitos que colaboran con las autoridades.',
+      en: 'Status and work permit for crime victims who cooperate with law enforcement.',
+    },
+  },
+  {
+    slug: 'vawa',
+    icon: UserCheck,
+    title: { es: 'VAWA: Autopetición por Maltrato', en: 'VAWA Self-Petition' },
+    desc: {
+      es: 'Residencia sin depender del agresor para víctimas de violencia doméstica.',
+      en: 'Residency without depending on the abuser for domestic violence victims.',
     },
   },
 ];
@@ -196,6 +237,55 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
               );
             })}
           </Stagger>
+        </section>
+
+        {/* Specialized immigration relief — every /servicios/* page linked from its hub */}
+        <section className="pb-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="inline-block mb-3 px-4 py-1.5 rounded-full bg-white/10 text-xs font-semibold tracking-widest text-sky-300 uppercase">
+                {isEs ? 'Alivios migratorios' : 'Immigration relief'}
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                {isEs ? 'Servicios Especializados de Inmigración' : 'Specialized Immigration Services'}
+              </h2>
+              <p className="mt-3 text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
+                {isEs
+                  ? 'Casos que requieren una estrategia propia. Cada uno tiene su propia página con requisitos, plazos y preguntas frecuentes.'
+                  : 'Cases that need a strategy of their own. Each one has its own page with requirements, timelines and common questions.'}
+              </p>
+            </div>
+
+            <Stagger gap={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" amount={0.1}>
+              {SPECIALIZED_SERVICES.map((service) => {
+                const Icon = service.icon;
+                return (
+                  <StaggerItem key={service.slug} as="div">
+                    <Link
+                      href={`/${currentLang}/servicios/${service.slug}`}
+                      className="card-3d group flex flex-col h-full rounded-2xl border border-white/10 bg-white/5 p-6 transition-colors duration-300 hover:bg-white/10 hover:border-sky-400/40"
+                    >
+                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400 transition-colors group-hover:bg-sky-500/25">
+                        <Icon className="h-6 w-6" strokeWidth={1.8} />
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">
+                        {service.title[currentLang]}
+                      </h3>
+                      <p className="text-slate-400 text-sm leading-relaxed flex-1">
+                        {service.desc[currentLang]}
+                      </p>
+                      <span className="mt-4 inline-flex items-center text-sm font-semibold text-sky-400 group-hover:text-sky-300 transition-colors">
+                        {isEs ? 'Ver más' : 'Learn more'}
+                        <svg className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </Link>
+                  </StaggerItem>
+                );
+              })}
+            </Stagger>
+          </div>
         </section>
 
         {/* Locations × Services (SEO internal linking) */}

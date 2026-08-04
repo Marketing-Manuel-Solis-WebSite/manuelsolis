@@ -15,7 +15,9 @@ const officeData: OfficeData = {
   address: '2950 North Loop W, Houston, TX 77092, United States',
   phone: '(713) 429-0237',
   email: 'houston@manuelsolis.com',
-  hours: { es: 'Abierto 24 horas', en: 'Open 24 hours' },
+  // Dirección virtual (Regus): atención solo con cita previa; el "24 horas"
+  // publicado es el call-center central, no esta sede.
+  hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
   mapLink: 'https://share.google/aKTPwIvhMmw7JfRcY',
   image: '/offices/ofLoop.png',
   

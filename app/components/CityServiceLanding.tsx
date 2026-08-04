@@ -16,13 +16,24 @@ import { getPlaceData } from '../lib/googleReviews'
 import { getOfficePlaceId } from '../lib/officesRegistry'
 import { LANDING_TO_OFFICE_FOR_REVIEWS } from '../lib/landingSchema'
 
+/* Entrance for the above-the-fold intro and CTAs: transform-only, so the phone
+   CTA is already painted in the server HTML instead of waiting for hydration
+   plus the lazy motion chunk. Never add opacity to these keyframes. */
+const ABOVE_FOLD_CSS = `
+  @keyframes city-hero-settle { from { transform: translateY(10px); } to { transform: translateY(0); } }
+  .city-hero-settle { animation: city-hero-settle 700ms cubic-bezier(0.16,1,0.3,1) both; }
+  .city-hero-settle-late { animation-delay: 150ms; }
+  @media (prefers-reduced-motion: reduce) { .city-hero-settle { animation: none; } }
+`
+
 /**
  * City × Service landing — server-first (Fase 2.3 landings). ONE shared
  * component renders ~25 SEO landing routes. Bilingual data arrives as props
  * (resolved per `lang` on the server → the inactive locale never reaches the
  * client bundle: enfoque b). No interactive state — purely presentational, so
  * it's a pure Server Component; movement lives in Reveal/Stagger islands and the
- * native `<details>` FAQ. LCP sacred: text H1 renders immediately (no gating).
+ * native `<details>` FAQ. LCP sacred: the H1, the intro and the hero CTAs (phone
+ * included) render immediately — no opacity gating, only a CSS transform settle.
  * The per-route page.tsx (generateMetadata + LegalService/FAQ/Breadcrumb
  * JSON-LD) is untouched — only the `lang` prop is threaded in.
  */
@@ -49,6 +60,22 @@ export default async function CityServiceLanding({
 }: CityServiceLandingProps) {
   const isEs = lang === 'es'
   const phoneClean = `+1${office.phone.replace(/\D/g, '')}`
+
+  // La dirección postal de tres sedes no está dentro de la ciudad-mercado
+  // (Arvada por Denver, Cicero por Chicago, Pico Rivera por Los Ángeles): en
+  // esos casos el encabezado habla del área metropolitana y la tarjeta nombra
+  // la ciudad donde la oficina sí está.
+  const officeInMarketCity = !office.locality || office.locality === office.city
+  const officeCity = office.locality ?? office.city
+  const officeSectionHeading = officeInMarketCity
+    ? (isEs ? `Nuestra Oficina en ${office.city}` : `Our Office in ${office.city}`)
+    : (isEs ? `Nuestra Oficina del Área de ${office.city}` : `Our ${office.city} Area Office`)
+  const officeCardHeading = officeInMarketCity
+    ? (isEs ? `Oficina de ${office.city}` : `${office.city} Office`)
+    : (isEs ? `Oficina en ${officeCity}` : `${officeCity} Office`)
+  const officeInlineLabel = officeInMarketCity
+    ? (isEs ? `nuestra oficina de ${office.city}` : `our ${office.city} office`)
+    : (isEs ? `nuestra oficina del área de ${office.city}` : `our ${office.city} area office`)
 
   // Rating en vivo de Google (misma fuente que el JSON-LD de la landing).
   // Sin clave de API o sin datos → cae a un dato NO fabricado (bilingüe).
@@ -78,11 +105,11 @@ export default async function CityServiceLanding({
               {config.h1[lang]}
             </h1>
 
-            <Reveal as="p" variant="up" delay={0.1} className="mt-6 max-w-3xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed">
+            <p className="city-hero-settle mt-6 max-w-3xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed">
               {config.intro[lang]}
-            </Reveal>
+            </p>
 
-            <Reveal variant="up" delay={0.2} className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="city-hero-settle city-hero-settle-late mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <MagneticButton as="a" href={`tel:${phoneClean}`} className="items-center justify-center gap-2 rounded-full bg-[#B2904D] text-white font-bold text-lg px-8 py-4 transition-colors hover:bg-[#9A7A3D] shadow-lg shadow-[#B2904D]/20">
                 <Phone className="h-5 w-5" />
                 {isEs ? 'Llamar Ahora: ' : 'Call Now: '}{office.phone}
@@ -91,8 +118,10 @@ export default async function CityServiceLanding({
                 {isEs ? 'Solicitar Consulta' : 'Request Consultation'}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
-            </Reveal>
+            </div>
           </div>
+
+          <style dangerouslySetInnerHTML={{ __html: ABOVE_FOLD_CSS }} />
         </section>
 
         {/* ===== TRUST BAR ===== */}
@@ -104,7 +133,10 @@ export default async function CityServiceLanding({
               liveRating
                 ? { Icon: Star, value: `${liveRating.rating.toFixed(1)}★`, label: isEs ? `${liveRating.userRatingCount} reseñas en Google` : `${liveRating.userRatingCount} Google reviews` }
                 : { Icon: CheckCircle2, value: '100%', label: isEs ? 'Atención bilingüe' : 'Bilingual service' },
-              { Icon: Building2, value: '15', label: isEs ? 'Oficinas en 5 estados' : 'Offices in 5 states' },
+              // 10 sedes con personal propio; las otras cinco direcciones de la
+              // firma son centros de negocios (VIRTUAL_OFFICE_SLUGS) y no se
+              // cuentan aquí como oficinas atendidas.
+              { Icon: Building2, value: '10', label: isEs ? 'Oficinas en 5 estados' : 'Offices in 5 states' },
             ].map(({ Icon, value, label }, i) => (
               <StaggerItem key={i} as="div" variant="up" className="flex flex-col items-center">
                 <Icon className="h-8 w-8 text-[#B2904D] mb-2" />
@@ -179,7 +211,7 @@ export default async function CityServiceLanding({
                 {isEs ? 'Oficina' : 'Office'}
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-                {isEs ? `Nuestra Oficina en ${office.city}` : `Our Office in ${office.city}`}
+                {officeSectionHeading}
               </h2>
             </Reveal>
 
@@ -187,7 +219,7 @@ export default async function CityServiceLanding({
               <StaggerItem as="div" className="p-8 rounded-2xl border border-white/10 bg-white/5">
                 <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                   <Scale className="h-5 w-5 text-[#B2904D]" />
-                  {isEs ? `Oficina de ${office.city}` : `${office.city} Office`}
+                  {officeCardHeading}
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
@@ -201,8 +233,9 @@ export default async function CityServiceLanding({
                   <div className="flex items-start gap-3">
                     <Clock className="h-5 w-5 text-[#B2904D] mt-0.5 flex-shrink-0" />
                     <div className="text-slate-300 text-sm">
-                      <p>{isEs ? 'Lunes a Viernes: 8:00 AM – 6:00 PM' : 'Monday to Friday: 8:00 AM – 6:00 PM'}</p>
-                      <p>{isEs ? 'Sábado: 9:00 AM – 1:00 PM' : 'Saturday: 9:00 AM – 1:00 PM'}</p>
+                      {office.hours[lang].split(' | ').map((line) => (
+                        <p key={line}>{line}</p>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -215,7 +248,7 @@ export default async function CityServiceLanding({
                     href={`/${lang}/oficinas/${office.officeSlug}`}
                     className="mt-4 w-full inline-flex items-center justify-center gap-2 text-[#B2904D] text-sm font-bold hover:text-white transition-colors"
                   >
-                    {isEs ? `Ver nuestra oficina en ${office.city}` : `See our ${office.city} office`} →
+                    {isEs ? `Ver nuestra oficina en ${officeCity}` : `See our ${officeCity} office`} →
                   </Link>
                 )}
               </StaggerItem>
@@ -251,16 +284,16 @@ export default async function CityServiceLanding({
                     </h3>
                     <p className="text-slate-300 mb-4">
                       {isEs
-                        ? 'Manuel Solís es una firma nacional con 15 oficinas en 5 estados. Además de nuestra oficina en ' + office.city + ', tenemos presencia en Texas, California, Illinois, Colorado y Tennessee.'
-                        : 'Manuel Solis is a national firm with 15 offices in 5 states. In addition to our ' + office.city + ' office, we have a presence in Texas, California, Illinois, Colorado, and Tennessee.'}
+                        ? 'Manuel Solís es una firma nacional con 10 oficinas en 5 estados. Además de ' + officeInlineLabel + ', tenemos presencia en Texas, California, Illinois, Colorado y Tennessee.'
+                        : 'Manuel Solis is a national firm with 10 offices in 5 states. In addition to ' + officeInlineLabel + ', we have a presence in Texas, California, Illinois, Colorado, and Tennessee.'}
                     </p>
                     <div className="mt-4 space-y-2 text-sm text-slate-400">
                       <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Houston, TX (3 {isEs ? 'oficinas' : 'offices'})</p>
                       <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Dallas, TX</p>
                       <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> El Paso, TX</p>
                       <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Harlingen, TX</p>
-                      <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Chicago, IL</p>
-                      <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Los Angeles, CA</p>
+                      <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Chicago/Cicero, IL</p>
+                      <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Los Angeles/Pico Rivera, CA</p>
                       <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Denver/Arvada, CO</p>
                       <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Memphis, TN</p>
                     </div>
@@ -310,7 +343,7 @@ export default async function CityServiceLanding({
                 {isEs ? 'Consulta Confidencial' : 'Confidential Consultation'}
               </h2>
               <p className="mt-4 text-slate-300 max-w-2xl mx-auto">
-                {isEs ? `Hable con un abogado experimentado de nuestra oficina en ${office.city}. Atención personalizada y confidencial.` : `Speak with an experienced attorney from our ${office.city} office. Personalized and confidential attention.`}
+                {isEs ? `Hable con un abogado experimentado de ${officeInlineLabel}. Atención personalizada y confidencial.` : `Speak with an experienced attorney from ${officeInlineLabel}. Personalized and confidential attention.`}
               </p>
             </Reveal>
             <ContactForm lang={lang} />
@@ -329,7 +362,7 @@ export default async function CityServiceLanding({
                   {isEs ? `Casos que manejamos en ${office.city}` : `Cases we handle in ${office.city}`}
                 </h2>
                 <p className="mt-4 text-slate-300 max-w-2xl mx-auto text-sm">
-                  {isEs ? 'Resúmenes anónimos de casos representativos. Cada situación es única — su consulta es confidencial.' : 'Anonymized summaries of representative cases. Each situation is unique — your consultation is confidential.'}
+                  {isEs ? 'Tipos de situación que atendemos en esta oficina, no resultados obtenidos. Cada caso es único — su consulta es confidencial.' : 'Types of situations this office handles, not results obtained. Every case is unique — your consultation is confidential.'}
                 </p>
               </Reveal>
               <Stagger gap={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>

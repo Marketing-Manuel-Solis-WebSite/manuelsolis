@@ -1,14 +1,18 @@
 'use server';
 
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { rateLimit } from '../../../lib/rateLimit';
 import {
   ADMIN_COOKIE_NAME,
   buildSessionToken,
-  verifyBlastSecret,
+  SESSION_TTL_MS,
+  verifyAdminPassword,
 } from '../../../lib/newsletter/auth';
 
-const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 4;
+const COOKIE_MAX_AGE_SECONDS = Math.floor(SESSION_TTL_MS / 1000);
+const LOGIN_ATTEMPTS_PER_WINDOW = 5;
+const LOGIN_WINDOW_MS = 300000;
 
 function safeNext(raw: string, lang: 'es' | 'en'): string {
   const fallback = `/${lang}/admin`;
@@ -19,6 +23,26 @@ function safeNext(raw: string, lang: 'es' | 'en'): string {
   return raw;
 }
 
+async function requestIp(): Promise<string> {
+  const headerList = await headers();
+  return (
+    headerList.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    headerList.get('x-real-ip') ||
+    'anonymous'
+  );
+}
+
+function logLoginEvent(event: string, ip: string, next: string) {
+  console.warn(
+    JSON.stringify({
+      event,
+      endpoint: next,
+      timestamp: new Date().toISOString(),
+      ip,
+    }),
+  );
+}
+
 export async function loginAction(formData: FormData) {
   const password = String(formData.get('password') || '');
   const langRaw = String(formData.get('lang') || 'es');
@@ -26,12 +50,25 @@ export async function loginAction(formData: FormData) {
   const nextRaw = String(formData.get('next') || '');
   const next = safeNext(nextRaw, lang);
 
-  if (!verifyBlastSecret(password)) {
+  const ip = await requestIp();
+  const { success: withinLimit } = rateLimit(
+    `admin-login:${ip}`,
+    LOGIN_ATTEMPTS_PER_WINDOW,
+    LOGIN_WINDOW_MS,
+  );
+  if (!withinLimit) {
+    logLoginEvent('admin_login_rate_limited', ip, next);
+    redirect(`${next}?error=ratelimited`);
+  }
+
+  if (!verifyAdminPassword(password)) {
+    logLoginEvent('admin_login_failed', ip, next);
     redirect(`${next}?error=invalid`);
   }
 
   const token = buildSessionToken();
   if (!token) {
+    logLoginEvent('admin_login_misconfigured', ip, next);
     redirect(`${next}?error=server`);
   }
 

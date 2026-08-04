@@ -16,7 +16,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
   const { language } = useLanguage();
 
   return (
-    <nav aria-label="Breadcrumb" className="w-full">
+    <nav aria-label={language === 'es' ? 'Ruta de navegación' : 'Breadcrumb'} className="w-full">
       <ol className="flex items-center gap-1.5 text-sm text-blue-100/50 flex-wrap">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
@@ -42,7 +42,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 </svg>
               )}
               {isLast ? (
-                <span className="text-[#B2904D] font-medium truncate max-w-[200px]">
+                <span aria-current="page" className="text-[#B2904D] font-medium truncate max-w-[200px]">
                   {label}
                 </span>
               ) : (

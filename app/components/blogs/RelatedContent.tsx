@@ -2,9 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { ArrowRight, Phone } from 'lucide-react';
 import { pushToDataLayer, trackConversion } from '../../lib/tracking';
 import { Stagger, StaggerItem } from '../motion';
+import { findServiceLink } from './blogServiceLinks';
+import LegalDisclaimer from './LegalDisclaimer';
 
 interface RelatedArticle {
   title: string;
@@ -21,6 +24,15 @@ interface RelatedContentProps {
 }
 
 export default function RelatedContent({ articles, lang, servicePath, serviceLabel }: RelatedContentProps) {
+  // El destino del CTA sale del mapa curado (blogServiceLinks) usando el slug de
+  // la URL: los props hardcodeados de cada post mandaban 12 artículos al
+  // servicio genérico. Los props siguen siendo el fallback fuera de /blog/<slug>.
+  const pathname = usePathname();
+  const slug = pathname?.split('/blog/')[1]?.split('/')[0] ?? '';
+  const curated = findServiceLink(slug);
+  const resolvedPath = curated?.path ?? servicePath;
+  const resolvedLabel = curated?.label[lang] ?? serviceLabel;
+
   return (
     <section className="mt-16 mb-8">
       {/* Service CTA — placed above related articles for better visibility */}
@@ -36,10 +48,10 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href={`/${lang}${servicePath}`}
+              href={`/${lang}${resolvedPath}`}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#B2904D] text-white text-sm font-medium hover:bg-[#96773E] transition-colors"
             >
-              {serviceLabel || (lang === 'es' ? 'Ver Servicios' : 'View Services')}
+              {resolvedLabel || (lang === 'es' ? 'Ver Servicios' : 'View Services')}
               <ArrowRight size={16} />
             </Link>
             <a
@@ -102,6 +114,8 @@ export default function RelatedContent({ articles, lang, servicePath, serviceLab
           </Stagger>
         </div>
       )}
+
+      <LegalDisclaimer lang={lang} />
     </section>
   );
 }
