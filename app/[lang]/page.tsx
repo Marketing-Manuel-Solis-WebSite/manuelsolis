@@ -101,33 +101,35 @@ export default async function Home({
   const currentLang = lang === 'en' ? 'en' : 'es';
 
   return (
-    <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#001540] grain">
-      <Hero lang={currentLang} />
+    <div className="min-h-screen bg-[#001540] grain">
       <Header />
-      <FraudWarningBanner lang={currentLang} />
-      <div className="content-auto">
-        <About lang={currentLang} />
-      </div>
-      <div className="content-auto">
-        <Services lang={currentLang} />
-      </div>
-      <div className="content-auto">
-        <Testimonials lang={currentLang} />
-      </div>
-      <div className="content-auto">
-        <BlogHighlights lang={currentLang} />
-      </div>
-      <div className="content-auto">
-        <Team lang={currentLang} />
-      </div>
-      <div className="content-auto">
-        <Offices lang={currentLang} />
-      </div>
-      <div className="content-auto">
-        <ContactForm lang={currentLang} />
-      </div>
+      <main id="main-content" tabIndex={-1}>
+        <Hero lang={currentLang} />
+        <FraudWarningBanner lang={currentLang} />
+        <div className="content-auto">
+          <About lang={currentLang} />
+        </div>
+        <div className="content-auto">
+          <Services lang={currentLang} />
+        </div>
+        <div className="content-auto">
+          <Testimonials lang={currentLang} />
+        </div>
+        <div className="content-auto">
+          <BlogHighlights lang={currentLang} />
+        </div>
+        <div className="content-auto">
+          <Team lang={currentLang} />
+        </div>
+        <div className="content-auto">
+          <Offices lang={currentLang} />
+        </div>
+        <div className="content-auto">
+          <ContactForm lang={currentLang} />
+        </div>
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 }
 

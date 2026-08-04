@@ -35,9 +35,9 @@ import { logoutAction } from './newsletter/actions';
 export default function AdminHome({ lang }: { lang: 'es' | 'en' }) {
   return (
     <div className="min-h-screen bg-[#f5f6fa] py-10 px-4">
-      <div className="max-w-5xl mx-auto">
-        <Header lang={lang} />
+      <Header lang={lang} />
 
+      <main id="main-content" tabIndex={-1} className="max-w-5xl mx-auto">
         <Section
           icon={Rocket}
           title="Acceso rápido"
@@ -111,14 +111,16 @@ export default function AdminHome({ lang }: { lang: 'es' | 'en' }) {
         </Section>
 
         <FooterNote lang={lang} />
-      </div>
+      </main>
     </div>
   );
 }
 
 function Header({ lang }: { lang: 'es' | 'en' }) {
   return (
-    <header className="mb-10">
+    // max-w-5xl/mx-auto viven aquí (no en un wrapper) porque el header quedó
+    // fuera del <main> para que el skip link aterrice ya en el contenido.
+    <header className="max-w-5xl mx-auto mb-10">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#001540] text-white text-xs font-bold tracking-wider uppercase mb-3">

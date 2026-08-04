@@ -569,78 +569,80 @@ export default function RecursosClient() {
   }
 
   return (
-    <main id="main-content" tabIndex={-1} className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       <Header />
-      
-      {/* Hero Section */}
-      <section className="relative pt-64 pb-64 overflow-hidden">
-        {/* Elemento LCP de la pagina: va por next/image (AVIF/WebP + preload)
-            en lugar de background-image, que el optimizador no puede tocar. */}
-        <Image
-          src="/apretondemanos.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-black/30"></div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-              {texts.hero.title[language]}
-            </h1>
-            <p className="text-xl text-white/90 animate-fade-in-delay">
-              {texts.hero.subtitle[language]}
-            </p>
+      <main id="main-content" tabIndex={-1}>
+        {/* Hero Section */}
+        <section className="relative pt-64 pb-64 overflow-hidden">
+          {/* Elemento LCP de la pagina: va por next/image (AVIF/WebP + preload)
+              en lugar de background-image, que el optimizador no puede tocar. */}
+          <Image
+            src="/apretondemanos.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-black/30"></div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
+                {texts.hero.title[language]}
+              </h1>
+              <p className="text-xl text-white/90 animate-fade-in-delay">
+                {texts.hero.subtitle[language]}
+              </p>
+            </div>
           </div>
+        </section>
+
+        {/* Questions Section */}
+        <div className="container mx-auto px-4 py-16">
+
+          <QuestionsSection
+            title={texts.sections[1][language]}
+            questions={questions1to20}
+            buttonText={texts.accordion.button[language]}
+          />
+
+          <QuestionsSection
+            title={texts.sections[2][language]}
+            questions={questions21to40}
+            buttonText={texts.accordion.button[language]}
+          />
+
+          <QuestionsSection
+            title={texts.sections[3][language]}
+            questions={questions41to60}
+            buttonText={texts.accordion.button[language]}
+          />
+
+          <QuestionsSection
+            title={texts.sections[4][language]}
+            questions={questions61to80}
+            buttonText={texts.accordion.button[language]}
+          />
+
+          <QuestionsSection
+            title={texts.sections[5][language]}
+            questions={questions81to100}
+            buttonText={texts.accordion.button[language]}
+          />
+
+          <QuestionsSection
+            title={texts.sections[6][language]}
+            questions={questions101to128}
+            buttonText={texts.accordion.button[language]}
+          />
+
         </div>
-      </section>
-
-      {/* Questions Section */}
-      <div className="container mx-auto px-4 py-16">
-
-        <QuestionsSection
-          title={texts.sections[1][language]}
-          questions={questions1to20}
-          buttonText={texts.accordion.button[language]}
-        />
-
-        <QuestionsSection
-          title={texts.sections[2][language]}
-          questions={questions21to40}
-          buttonText={texts.accordion.button[language]}
-        />
-
-        <QuestionsSection
-          title={texts.sections[3][language]}
-          questions={questions41to60}
-          buttonText={texts.accordion.button[language]}
-        />
-
-        <QuestionsSection
-          title={texts.sections[4][language]}
-          questions={questions61to80}
-          buttonText={texts.accordion.button[language]}
-        />
-
-        <QuestionsSection
-          title={texts.sections[5][language]}
-          questions={questions81to100}
-          buttonText={texts.accordion.button[language]}
-        />
-
-        <QuestionsSection
-          title={texts.sections[6][language]}
-          questions={questions101to128}
-          buttonText={texts.accordion.button[language]}
-        />
-
-      </div>
+      </main>
 
       <Footer />
-    </main>
+    </div>
   )
 }
 

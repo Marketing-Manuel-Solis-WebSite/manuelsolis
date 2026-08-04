@@ -196,221 +196,223 @@ export default function TermsOfService() {
   }
 
   return (
-    <main id="main-content" tabIndex={-1} className="relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden">
       <Header />
 
-      {/* FONDO ANIMADO */}
-      <div aria-hidden="true" className="fixed inset-0 z-0 w-full h-full bg-[#001540] pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
-        <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
-        <div className="tos-orb-blue absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]" />
-        <div className="tos-orb-sky absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]" />
-        <div className="tos-wordmark absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
-          <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
-            TERMS
-          </span>
+      <main id="main-content" tabIndex={-1}>
+        {/* FONDO ANIMADO */}
+        <div aria-hidden="true" className="fixed inset-0 z-0 w-full h-full bg-[#001540] pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
+          <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+          <div className="tos-orb-blue absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px]" />
+          <div className="tos-orb-sky absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px]" />
+          <div aria-hidden="true" className="tos-wordmark absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
+            <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
+              TERMS
+            </span>
+          </div>
+          <style dangerouslySetInnerHTML={{ __html: BACKDROP_CSS }} />
         </div>
-        <style dangerouslySetInnerHTML={{ __html: BACKDROP_CSS }} />
-      </div>
 
-      {/* HERO SECTION */}
-      <section className="relative pt-64 pb-16 z-10 px-6 lg:px-12">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            <m.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]"
-            >
-              <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
-              <div className="relative z-10 w-full h-full flex items-center justify-center">
-                <Image
-                  src="/LogoInformacion.png"
-                  alt="Law Offices of Manuel Solis"
-                  width={600}
-                  height={600}
-                  className="object-contain drop-shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:scale-105 transition-transform duration-700"
-                  priority
-                />
+        {/* HERO SECTION */}
+        <section className="relative pt-64 pb-16 z-10 px-6 lg:px-12">
+          <div className="container mx-auto max-w-6xl">
+            <div className="grid lg:grid-cols-12 gap-12 items-center">
+              <m.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]"
+              >
+                <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
+                <div className="relative z-10 w-full h-full flex items-center justify-center">
+                  <Image
+                    src="/LogoInformacion.png"
+                    alt="Law Offices of Manuel Solis"
+                    width={600}
+                    height={600}
+                    className="object-contain drop-shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:scale-105 transition-transform duration-700"
+                    priority
+                  />
+                </div>
+              </m.div>
+
+              <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
+                <div className="relative">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tight leading-none">
+                    <span className="block text-white/90 font-extralight mb-2">
+                      {t('hero.title').split(' ')[0]}
+                    </span>
+                    <span className="block font-medium text-[#B2904D] drop-shadow-2xl">
+                      {t('hero.title').split(' ').slice(1).join(' ')}
+                    </span>
+                  </h1>
+                </div>
+
+                <m.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4, duration: 1 }}
+                  className="relative pl-6 border-l-2 border-[#B2904D]/50"
+                >
+                  <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
+                    {t('hero.subtitle')}
+                  </p>
+                </m.div>
+
+                <m.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 1 }}
+                  className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
+                >
+                  <p>{t('intro')}</p>
+                </m.div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CONTENIDO PRINCIPAL */}
+        <section className="container mx-auto px-4 py-20 relative z-10 max-w-7xl space-y-24">
+
+          {/* SECCIÓN 1: Uso del Sitio Web */}
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <SectionTitle title={t('section1.title')} />
+            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 shadow-xl">
+              <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
+                <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2">{sectionIcons.section1} {t('section1.title')}</h3>
+                <p className="text-base text-blue-100/80">{t('section1.content')}</p>
+              </div>
+            </div>
+          </m.div>
+
+          {/* SECCIÓN 2: SMS Communications */}
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <SectionTitle title={t('section2.title')} />
+            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
+              <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
+                <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2">{sectionIcons.section2} {t('section2.title')}</h3>
+                <p className="text-base text-blue-100/80 mb-4">{t('section2.intro')}</p>
+                <ul className="text-sm list-disc list-inside space-y-3 pl-4 mb-6">
+                  {interfaceTexts.section2.items.map((item, index) => (
+                    <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                  ))}
+                </ul>
+                <p className="text-base text-blue-100/80 mb-4">{t('section2.content2')}</p>
+                <p className="text-sm text-blue-100/80">
+                  {t('section2.privacyNote')}{' '}
+                  <Link href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
+                    {t('section2.privacyLink')}
+                  </Link>
+                  . {t('section2.smsNote')}{' '}
+                  <Link href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
+                    {t('section2.smsLink')}
+                  </Link>
+                  .
+                </p>
+              </div>
+            </div>
+          </m.div>
+
+          {/* SECCIONES 3, 4, 5 */}
+          <div className="grid lg:grid-cols-3 gap-8">
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+              <SectionTitle title={t('section3.title')} />
+              <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section3}<span className="font-semibold">{lang === 'es' ? 'Propiedad Intelectual' : 'Intellectual Property'}</span></div>
+                <p className="text-base text-blue-100/80">{t('section3.content')}</p>
               </div>
             </m.div>
 
-            <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
-              <div className="relative">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tight leading-none">
-                  <span className="block text-white/90 font-extralight mb-2">
-                    {t('hero.title').split(' ')[0]}
-                  </span>
-                  <span className="block font-medium text-[#B2904D] drop-shadow-2xl">
-                    {t('hero.title').split(' ').slice(1).join(' ')}
-                  </span>
-                </h1>
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+              <SectionTitle title={t('section4.title')} />
+              <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section4}<span className="font-semibold">{lang === 'es' ? 'Exención de Garantías' : 'Disclaimer'}</span></div>
+                <p className="text-base text-blue-100/80">{t('section4.content')}</p>
               </div>
+            </m.div>
 
-              <m.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4, duration: 1 }}
-                className="relative pl-6 border-l-2 border-[#B2904D]/50"
-              >
-                <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
-                  {t('hero.subtitle')}
-                </p>
-              </m.div>
-
-              <m.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 1 }}
-                className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl"
-              >
-                <p>{t('intro')}</p>
-              </m.div>
-            </div>
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
+              <SectionTitle title={t('section5.title')} />
+              <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section5}<span className="font-semibold">{lang === 'es' ? 'Limitación' : 'Limitation'}</span></div>
+                <p className="text-base text-blue-100/80">{t('section5.content')}</p>
+              </div>
+            </m.div>
           </div>
+
+          {/* SECCIONES 6, 7 */}
+          <div className="grid md:grid-cols-2 gap-8">
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+              <SectionTitle title={t('section6.title')} />
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
+                <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section6}<span className="font-semibold">{lang === 'es' ? 'Enlaces de Terceros' : 'Third-Party Links'}</span></div>
+                <p>{t('section6.content')}</p>
+              </div>
+            </m.div>
+
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+              <SectionTitle title={t('section7.title')} />
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
+                <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section7}<span className="font-semibold">{lang === 'es' ? 'Privacidad' : 'Privacy'}</span></div>
+                <p>{t('section7.content')}</p>
+              </div>
+            </m.div>
+
+            {/* SECCIONES 8, 9 */}
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+              <SectionTitle title={t('section8.title')} />
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
+                <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section8}<span className="font-semibold">{lang === 'es' ? 'Cambios' : 'Changes'}</span></div>
+                <p>{t('section8.content')}</p>
+              </div>
+            </m.div>
+
+            <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+              <SectionTitle title={t('section9.title')} />
+              <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
+                <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section9}<span className="font-semibold">{lang === 'es' ? 'Ley Aplicable' : 'Governing Law'}</span></div>
+                <p>{t('section9.content')}</p>
+              </div>
+            </m.div>
+          </div>
+
+          {/* SECCIÓN 10: Contáctenos */}
+          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+            <SectionTitle title={t('section10.title')} />
+            <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
+              <p className="text-base text-white font-medium">{t('section10.intro')}</p>
+              <div className="flex flex-col gap-4 text-sm">
+                <div className="flex items-center gap-3 text-white/90">
+                  <Mail size={18} className="text-sky-400" />
+                  <a href={`mailto:${interfaceTexts.section10.email}`} className="hover:text-[#B2904D] transition">
+                    {interfaceTexts.section10.email}
+                  </a>
+                </div>
+                <div className="flex items-center gap-3 text-white/90">
+                  <Phone size={18} className="text-sky-400" />
+                  <a href={`tel:+1${interfaceTexts.section10.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
+                    {interfaceTexts.section10.phone}
+                  </a>
+                </div>
+                <div className="flex items-start gap-3 text-white/90">
+                  <MapPin size={18} className="text-sky-400 flex-shrink-0 mt-1" />
+                  <span>{interfaceTexts.section10.address}</span>
+                </div>
+              </div>
+            </div>
+          </m.div>
+
+        </section>
+
+        {/* FORMULARIO DE CONTACTO */}
+        <div className="relative z-20 mt-24 py-12">
+          <ContactForm />
         </div>
-      </section>
-
-      {/* CONTENIDO PRINCIPAL */}
-      <section className="container mx-auto px-4 py-20 relative z-10 max-w-7xl space-y-24">
-
-        {/* SECCIÓN 1: Uso del Sitio Web */}
-        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-          <SectionTitle title={t('section1.title')} />
-          <div className="p-8 bg-white/5 rounded-2xl border border-white/10 shadow-xl">
-            <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
-              <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2">{sectionIcons.section1} {t('section1.title')}</h3>
-              <p className="text-base text-blue-100/80">{t('section1.content')}</p>
-            </div>
-          </div>
-        </m.div>
-
-        {/* SECCIÓN 2: SMS Communications */}
-        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-          <SectionTitle title={t('section2.title')} />
-          <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
-            <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
-              <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2">{sectionIcons.section2} {t('section2.title')}</h3>
-              <p className="text-base text-blue-100/80 mb-4">{t('section2.intro')}</p>
-              <ul className="text-sm list-disc list-inside space-y-3 pl-4 mb-6">
-                {interfaceTexts.section2.items.map((item, index) => (
-                  <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                ))}
-              </ul>
-              <p className="text-base text-blue-100/80 mb-4">{t('section2.content2')}</p>
-              <p className="text-sm text-blue-100/80">
-                {t('section2.privacyNote')}{' '}
-                <Link href={`/${lang}/privacidad`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
-                  {t('section2.privacyLink')}
-                </Link>
-                . {t('section2.smsNote')}{' '}
-                <Link href={`/${lang}/sms-terminos`} className="text-[#B2904D] hover:text-white transition-colors font-bold underline decoration-dotted">
-                  {t('section2.smsLink')}
-                </Link>
-                .
-              </p>
-            </div>
-          </div>
-        </m.div>
-
-        {/* SECCIONES 3, 4, 5 */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
-            <SectionTitle title={t('section3.title')} />
-            <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
-              <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section3}<span className="font-semibold">{lang === 'es' ? 'Propiedad Intelectual' : 'Intellectual Property'}</span></div>
-              <p className="text-base text-blue-100/80">{t('section3.content')}</p>
-            </div>
-          </m.div>
-
-          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
-            <SectionTitle title={t('section4.title')} />
-            <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
-              <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section4}<span className="font-semibold">{lang === 'es' ? 'Exención de Garantías' : 'Disclaimer'}</span></div>
-              <p className="text-base text-blue-100/80">{t('section4.content')}</p>
-            </div>
-          </m.div>
-
-          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} className="lg:col-span-1">
-            <SectionTitle title={t('section5.title')} />
-            <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
-              <div className="flex items-center gap-2 text-[#B2904D] mb-2">{sectionIcons.section5}<span className="font-semibold">{lang === 'es' ? 'Limitación' : 'Limitation'}</span></div>
-              <p className="text-base text-blue-100/80">{t('section5.content')}</p>
-            </div>
-          </m.div>
-        </div>
-
-        {/* SECCIONES 6, 7 */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-            <SectionTitle title={t('section6.title')} />
-            <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
-              <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section6}<span className="font-semibold">{lang === 'es' ? 'Enlaces de Terceros' : 'Third-Party Links'}</span></div>
-              <p>{t('section6.content')}</p>
-            </div>
-          </m.div>
-
-          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-            <SectionTitle title={t('section7.title')} />
-            <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
-              <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section7}<span className="font-semibold">{lang === 'es' ? 'Privacidad' : 'Privacy'}</span></div>
-              <p>{t('section7.content')}</p>
-            </div>
-          </m.div>
-
-          {/* SECCIONES 8, 9 */}
-          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-            <SectionTitle title={t('section8.title')} />
-            <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
-              <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section8}<span className="font-semibold">{lang === 'es' ? 'Cambios' : 'Changes'}</span></div>
-              <p>{t('section8.content')}</p>
-            </div>
-          </m.div>
-
-          <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-            <SectionTitle title={t('section9.title')} />
-            <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
-              <div className="flex items-center gap-2 text-[#B2904D] mb-4">{sectionIcons.section9}<span className="font-semibold">{lang === 'es' ? 'Ley Aplicable' : 'Governing Law'}</span></div>
-              <p>{t('section9.content')}</p>
-            </div>
-          </m.div>
-        </div>
-
-        {/* SECCIÓN 10: Contáctenos */}
-        <m.div variants={contentVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
-          <SectionTitle title={t('section10.title')} />
-          <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
-            <p className="text-base text-white font-medium">{t('section10.intro')}</p>
-            <div className="flex flex-col gap-4 text-sm">
-              <div className="flex items-center gap-3 text-white/90">
-                <Mail size={18} className="text-sky-400" />
-                <a href={`mailto:${interfaceTexts.section10.email}`} className="hover:text-[#B2904D] transition">
-                  {interfaceTexts.section10.email}
-                </a>
-              </div>
-              <div className="flex items-center gap-3 text-white/90">
-                <Phone size={18} className="text-sky-400" />
-                <a href={`tel:+1${interfaceTexts.section10.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
-                  {interfaceTexts.section10.phone}
-                </a>
-              </div>
-              <div className="flex items-start gap-3 text-white/90">
-                <MapPin size={18} className="text-sky-400 flex-shrink-0 mt-1" />
-                <span>{interfaceTexts.section10.address}</span>
-              </div>
-            </div>
-          </div>
-        </m.div>
-
-      </section>
-
-      {/* FORMULARIO DE CONTACTO */}
-      <div className="relative z-20 mt-24 py-12">
-        <ContactForm />
-      </div>
+      </main>
 
       <Footer />
-    </main>
+    </div>
   )
 }

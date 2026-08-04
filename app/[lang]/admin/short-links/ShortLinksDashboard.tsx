@@ -171,50 +171,52 @@ export default function ShortLinksDashboard({ lang }: { lang: 'es' | 'en' }) {
 
   return (
     <div className="min-h-screen bg-[#f5f6fa] py-10 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <header className="mb-8">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <Link
-                href={`/${lang}/admin`}
-                className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#001540] mb-3"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                Volver al panel
-              </Link>
-              <div
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-white text-xs font-bold tracking-wider uppercase mb-3"
-                style={{ background: NAVY }}
-              >
-                <Link2 className="w-3.5 h-3.5" />
-                Short Links · Atribución
-              </div>
-              <h1
-                className="text-3xl md:text-4xl font-bold tracking-tight"
-                style={{ color: NAVY }}
-              >
-                Tracking de Canales y Campañas
-              </h1>
-              <p className="text-sm text-gray-600 mt-2 max-w-3xl">
-                Cada slug del registry redirige a una URL con UTMs canónicos.
-                Aquí ves <strong>de dónde llega cada visitante</strong>, qué
-                canal trae más clicks y qué campaña convierte. Datos del
-                Flight Check propio (ventana de 30 días).
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setRefreshTick((t) => t + 1)}
-              className="inline-flex items-center gap-1.5 text-xs text-gray-600 hover:text-[#001540] hover:bg-white px-3 py-2 rounded-lg transition border border-gray-200"
+      {/* Header — max-w-7xl/mx-auto se repiten aquí y en el main porque el
+          header quedó fuera del <main> para que el skip link aterrice ya en
+          el contenido. */}
+      <header className="max-w-7xl mx-auto mb-8">
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <Link
+              href={`/${lang}/admin`}
+              className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#001540] mb-3"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              Refrescar
-            </button>
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Volver al panel
+            </Link>
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-white text-xs font-bold tracking-wider uppercase mb-3"
+              style={{ background: NAVY }}
+            >
+              <Link2 className="w-3.5 h-3.5" />
+              Short Links · Atribución
+            </div>
+            <h1
+              className="text-3xl md:text-4xl font-bold tracking-tight"
+              style={{ color: NAVY }}
+            >
+              Tracking de Canales y Campañas
+            </h1>
+            <p className="text-sm text-gray-600 mt-2 max-w-3xl">
+              Cada slug del registry redirige a una URL con UTMs canónicos.
+              Aquí ves <strong>de dónde llega cada visitante</strong>, qué
+              canal trae más clicks y qué campaña convierte. Datos del
+              Flight Check propio (ventana de 30 días).
+            </p>
           </div>
-          <div className="h-[3px] w-20 mt-4 rounded-full" style={{ background: GOLD }} />
-        </header>
+          <button
+            type="button"
+            onClick={() => setRefreshTick((t) => t + 1)}
+            className="inline-flex items-center gap-1.5 text-xs text-gray-600 hover:text-[#001540] hover:bg-white px-3 py-2 rounded-lg transition border border-gray-200"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+            Refrescar
+          </button>
+        </div>
+        <div className="h-[3px] w-20 mt-4 rounded-full" style={{ background: GOLD }} />
+      </header>
 
+      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto">
         {/* KPIs */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <KpiCard
@@ -513,7 +515,7 @@ export default function ShortLinksDashboard({ lang }: { lang: 'es' | 'en' }) {
             dura 90 días y preserva first-touch + last-touch del visitante.
           </p>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

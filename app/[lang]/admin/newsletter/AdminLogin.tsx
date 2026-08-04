@@ -27,7 +27,11 @@ export default function AdminLogin({
   const errorMessage = ERROR_MESSAGES[errorKind ?? 'invalid'];
 
   return (
-    <div className="min-h-screen bg-[#001540] flex items-center justify-center px-4 py-12">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen bg-[#001540] flex items-center justify-center px-4 py-12"
+    >
       <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -98,6 +102,6 @@ export default function AdminLogin({
           </div>
         </div>
       </m.div>
-    </div>
+    </main>
   );
 }

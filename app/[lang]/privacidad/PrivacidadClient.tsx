@@ -298,394 +298,396 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
   const parseText = (key: string) => parseContent(t(key));
 
   return (
-    <main id="main-content" tabIndex={-1} className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
+    <div className={`relative min-h-screen w-full bg-[#001540] text-white overflow-x-hidden`}>
       <Header />
 
-      {/* =========================================================================
-          FONDO (Fixed - Cubre toda la página) — orbes estáticos
-      ========================================================================= */}
-      <div className="fixed inset-0 z-0 w-full h-full bg-[#001540]">
-          {/* Gradiente Azul Profundo */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
+      <main id="main-content" tabIndex={-1}>
+        {/* =========================================================================
+            FONDO (Fixed - Cubre toda la página) — orbes estáticos
+        ========================================================================= */}
+        <div className="fixed inset-0 z-0 w-full h-full bg-[#001540]">
+            {/* Gradiente Azul Profundo */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
 
-          {/* Ruido de textura */}
-          <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
+            {/* Ruido de textura */}
+            <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url(/noise.png)', backgroundRepeat: 'repeat' }}></div>
 
-          {/* Orbes de luz (estáticos) */}
-          <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px] opacity-40" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px] opacity-30" />
+            {/* Orbes de luz (estáticos) */}
+            <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] bg-blue-600/10 rounded-full blur-[120px] opacity-40" />
+            <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-sky-800/10 rounded-full blur-[150px] opacity-30" />
 
-          {/* Texto de Fondo Sutil (estático) */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
-            <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
-                PRIVACIDAD
-            </span>
+            {/* Texto de Fondo Sutil (estático) */}
+            <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
+              <span className="text-[80vh] font-black italic text-white tracking-tighter whitespace-nowrap">
+                  PRIVACIDAD
+              </span>
+            </div>
+        </div>
+
+        {/* =========================================================================
+            CONTENIDO
+        ========================================================================= */}
+
+        {/* --- HERO SECTION (static — LCP) --- */}
+        <section className="relative pt-64 pb-16 z-10 px-6 lg:px-12">
+          <div className="container mx-auto max-w-6xl">
+            <div className="grid lg:grid-cols-12 gap-12 items-center">
+
+              {/* IZQUIERDA: IMAGEN LOGO INFORMACION */}
+              <div className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]">
+                <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
+
+                <div className="relative z-10 w-full h-full flex items-center justify-center">
+                    <Image
+                        src="/LogoInformacion.png"
+                        alt="Law Offices of Manuel Solis"
+                        width={600}
+                        height={600}
+                        className="object-contain drop-shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:scale-105 transition-transform duration-700"
+                        priority
+                    />
+                </div>
+              </div>
+
+              {/* DERECHA: TÍTULO Y SUBTÍTULO */}
+              <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
+
+                <div className="relative">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tight leading-none">
+                    <span className="block text-white/90 font-extralight mb-2">
+                      {t('hero.title').split(' ')[0]}
+                    </span>
+                    <span className="block font-medium text-[#B2904D] drop-shadow-2xl">
+                      {t('hero.title').split(' ').slice(1).join(' ')}
+                    </span>
+                  </h1>
+                </div>
+
+                <div className="relative pl-6 border-l-2 border-[#B2904D]/50">
+                  <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
+                    {t('hero.subtitle')}
+                  </p>
+                  <p className="text-sm mt-2 text-white/50">{t('hero.lastUpdated')}</p>
+                </div>
+
+                <div className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
+                   <div dangerouslySetInnerHTML={{ __html: parseContent(t('generalStatement')) }} />
+                </div>
+              </div>
+            </div>
           </div>
-      </div>
+        </section>
 
-      {/* =========================================================================
-          CONTENIDO
-      ========================================================================= */}
+        {/* --- SECCIÓN PRINCIPAL DE POLÍTICA DE PRIVACIDAD --- */}
+        <section className="container mx-auto px-4 py-20 relative z-10 max-w-7xl space-y-24">
 
-      {/* --- HERO SECTION (static — LCP) --- */}
-      <section className="relative pt-64 pb-16 z-10 px-6 lg:px-12">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
+          {/* SECCIÓN 1: INFORMACIÓN QUE RECOPILAMOS */}
+          <div>
+              <SectionTitle title={t('section1.title')} />
+              <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-8 shadow-xl">
 
-            {/* IZQUIERDA: IMAGEN LOGO INFORMACION */}
-            <div className="lg:col-span-5 relative flex items-center justify-center h-[300px] lg:h-[400px]">
-              <div className="absolute inset-0 bg-[#B2904D]/10 blur-[80px] rounded-full z-0" />
+                  {/* A. Personal Information */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
+                      <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><UserCheck size={20}/> {t('section1.A.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section1.A.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section1.A.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                  </div>
 
-              <div className="relative z-10 w-full h-full flex items-center justify-center">
-                  <Image
-                      src="/LogoInformacion.png"
-                      alt="Law Offices of Manuel Solis"
-                      width={600}
-                      height={600}
-                      className="object-contain drop-shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:scale-105 transition-transform duration-700"
-                      priority
-                  />
+                  {/* B. Automatically Collected Information */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                      <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Globe size={20}/> {t('section1.B.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section1.B.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section1.B.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-white/50">{t('section1.B.note')}</p>
+                  </div>
+
+                  {/* C. SMS/Text Messaging Information */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                      <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><MessageSquare size={20}/> {t('section1.C.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section1.C.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section1.C.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-orange-300/80">{t('section1.C.note')}</p>
+                  </div>
               </div>
-            </div>
-
-            {/* DERECHA: TÍTULO Y SUBTÍTULO */}
-            <div className="lg:col-span-7 space-y-8 pl-0 lg:pl-10 relative z-20">
-
-              <div className="relative">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tight leading-none">
-                  <span className="block text-white/90 font-extralight mb-2">
-                    {t('hero.title').split(' ')[0]}
-                  </span>
-                  <span className="block font-medium text-[#B2904D] drop-shadow-2xl">
-                    {t('hero.title').split(' ').slice(1).join(' ')}
-                  </span>
-                </h1>
-              </div>
-
-              <div className="relative pl-6 border-l-2 border-[#B2904D]/50">
-                <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
-                  {t('hero.subtitle')}
-                </p>
-                <p className="text-sm mt-2 text-white/50">{t('hero.lastUpdated')}</p>
-              </div>
-
-              <div className="text-base md:text-lg text-blue-100/70 font-light leading-relaxed space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
-                 <div dangerouslySetInnerHTML={{ __html: parseContent(t('generalStatement')) }} />
-              </div>
-            </div>
           </div>
+
+          {/* SECCIÓN 2: USO DE INFORMACIÓN */}
+          <div>
+              <SectionTitle title={t('section2.title')} />
+              <div className="p-8 bg-[#000814]/60 rounded-2xl border border-white/10 space-y-6 shadow-lg">
+                  <p className="text-base text-blue-100/80 mb-6">{t('section2.intro')}</p>
+                  <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
+                      {interfaceTexts.section2.items.map((item, index) => (
+                          <div key={index} className="flex items-start gap-3 text-white/90">
+                              <FileText size={18} className="text-[#B2904D] flex-shrink-0 mt-1"/>
+                              <p className="text-base font-light">{item[lang] || item.es}</p>
+                          </div>
+                      ))}
+                  </div>
+                  <p className="text-sm pt-6 border-t border-white/10 text-orange-300/80 font-medium">{t('section2.note')}</p>
+              </div>
+          </div>
+
+          {/* SECCIÓN 3: PROGRAMA SMS/TEXTO */}
+          <div>
+              <SectionTitle title={t('section3.title')} />
+              <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
+                  <p className="text-base text-blue-100/80 mb-4">{t('section3.intro')}</p>
+
+                  {/* A. Purpose */}
+                  <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
+                      <h4 className="text-lg font-semibold text-white mb-4">{t('section3.A.title')}</h4>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section3.A.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                  </div>
+
+                  {/* B. Opt-Out */}
+                  <div className="p-6 bg-[#001026] rounded-lg border border-red-500/30">
+                      <h4 className="text-lg font-semibold text-white mb-3">{t('section3.B.title')}</h4>
+                      <div className="text-base text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.B.content') }} />
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                      {/* C. Rates */}
+                      <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('section3.C.title')}</h4>
+                          <div className="text-sm text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.C.content') }} />
+                      </div>
+                      {/* D. Carrier */}
+                      <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
+                          <h4 className="text-lg font-semibold text-white mb-3">{t('section3.D.title')}</h4>
+                          <div className="text-sm text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.D.content') }} />
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          {/* SECCIÓN 4: CÓMO COMPARTIMOS SU INFORMACIÓN */}
+          <div>
+              <SectionTitle title={t('section4.title')} />
+              <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
+                  <p className="text-base text-blue-100/80 mb-4">{t('section4.intro')}</p>
+
+                  {/* A. Service Providers */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
+                      <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><Server size={20}/> {t('section4.A.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section4.A.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section4.A.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-orange-300/80">{t('section4.A.note')}</p>
+                  </div>
+
+                  {/* B. Legal Requirements */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                      <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><FileText size={20}/> {t('section4.B.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section4.B.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section4.B.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                      <p className="text-sm pt-4 font-semibold text-red-400/90" dangerouslySetInnerHTML={{ __html: parseText('section4.B.note') }} />
+                      <p className="text-sm pt-3 text-orange-300/80" dangerouslySetInnerHTML={{ __html: parseText('section4.B.noteAdvertising') }} />
+                  </div>
+              </div>
+          </div>
+
+          {/* SECCIÓN 5: COOKIES, PÍXELES Y TERCEROS */}
+          <div>
+              <SectionTitle title={t('section5.title')} />
+              <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
+                  <p className="text-base text-blue-100/80 mb-4">{t('section5.intro')}</p>
+
+                  {/* A. Cookies */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                      <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Cookie size={20}/> {t('section5.A.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section5.A.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section5.A.items.map((item, index) => (
+                              <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-white/50">{t('section5.A.note')}</p>
+                  </div>
+
+                  {/* B. Plataformas de publicidad y analítica */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
+                      <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><Megaphone size={20}/> {t('section5.B.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section5.B.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section5.B.items.map((item, index) => (
+                              <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-orange-300/80">{t('section5.B.note')}</p>
+                  </div>
+
+                  {/* C. Proveedores de tecnología y contenido incrustado */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                      <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Server size={20}/> {t('section5.C.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section5.C.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section5.C.items.map((item, index) => (
+                              <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-white/50">{t('section5.C.note')}</p>
+                  </div>
+
+                  {/* D. Sus opciones */}
+                  <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
+                      <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><SlidersHorizontal size={20}/> {t('section5.D.title')}</h3>
+                      <p className="text-base text-blue-100/80 mb-4">{t('section5.D.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section5.D.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-orange-300/80">{t('section5.D.note')}</p>
+                  </div>
+              </div>
+          </div>
+
+          {/* SECCIONES 6, 7, 8 */}
+          <div className="grid lg:grid-cols-3 gap-8">
+              {/* SECCIÓN 6: SEGURIDAD DE DATOS */}
+              <div className="lg:col-span-1">
+                  <SectionTitle title={t('section6.title')} />
+                  <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                      <p className="text-base text-blue-100/80">{t('section6.content1')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section6.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-red-300/80">{t('section6.content2')}</p>
+                  </div>
+              </div>
+
+              {/* SECCIÓN 7: RETENCIÓN DE DATOS */}
+              <div className="lg:col-span-1">
+                  <SectionTitle title={t('section7.title')} />
+                  <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
+                      <p className="text-base text-blue-100/80">{t('section7.content1')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4">
+                          {interfaceTexts.section7.items.map((item, index) => (
+                              <li key={index} className="text-white/80">{item[lang] || item.es}</li>
+                          ))}
+                      </ul>
+                      <p className="text-xs pt-4 text-orange-300/80">{t('section7.content2')}</p>
+                  </div>
+              </div>
+
+              {/* SECCIÓN 8: DERECHOS Y OPCIONES */}
+              <div className="lg:col-span-1">
+                  <SectionTitle title={t('section8.title')} />
+                  <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner flex flex-col">
+                      <p className="text-base text-blue-100/80">{t('section8.intro')}</p>
+                      <ul className="text-sm list-disc list-inside space-y-3 pl-4 flex-grow">
+                          {interfaceTexts.section8.items.map((item, index) => (
+                              <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: item[lang] || item.es }} />
+                          ))}
+                      </ul>
+                      <div className="pt-6 border-t border-white/10 space-y-2 text-sm">
+                          <p className="text-white font-medium">{t('section8.contact')}</p>
+                          <div className="flex items-center gap-2 text-[#B2904D]">
+                              <Mail size={16} />
+                              <a href={`mailto:${interfaceTexts.section8.email}`} className="hover:text-sky-300 transition">
+                                {interfaceTexts.section8.email}
+                              </a>
+                          </div>
+                          <div className="flex items-center gap-2 text-[#B2904D]">
+                              <Phone size={16} />
+                              <a href={`tel:+1${interfaceTexts.section8.phone.replace(/\D/g, '')}`} className="hover:text-sky-300 transition">
+                                {interfaceTexts.section8.phone}
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          {/* SECCIONES 9, 10, 11, 12 */}
+          <div className="grid md:grid-cols-2 gap-8">
+              {/* SECCIÓN 9: Enlaces de Terceros */}
+              <div>
+                  <SectionTitle title={t('section9.title')} />
+                  <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
+                      <div dangerouslySetInnerHTML={{ __html: parseText('section9.content') }} />
+                  </div>
+              </div>
+
+              {/* SECCIÓN 10: Privacidad de los Niños */}
+              <div>
+                  <SectionTitle title={t('section10.title')} />
+                  <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
+                      <div dangerouslySetInnerHTML={{ __html: parseText('section10.content') }} />
+                  </div>
+              </div>
+
+              {/* SECCIÓN 11: Cambios a Esta Política */}
+              <div>
+                  <SectionTitle title={t('section11.title')} />
+                  <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
+                      <div dangerouslySetInnerHTML={{ __html: parseText('section11.content') }} />
+                  </div>
+              </div>
+
+              {/* SECCIÓN 12: Contáctenos */}
+              <div>
+                  <SectionTitle title={t('section12.title')} />
+                  <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
+                      <p className="text-base text-white font-medium">{t('section12.intro')}</p>
+                      <div className="flex flex-col gap-4 text-sm">
+                          <div className="flex items-center gap-3 text-white/90">
+                              <Mail size={18} className="text-sky-400" />
+                              <a href={`mailto:${interfaceTexts.section12.email}`} className="hover:text-[#B2904D] transition">
+                                {interfaceTexts.section12.email}
+                              </a>
+                          </div>
+                          <div className="flex items-center gap-3 text-white/90">
+                              <Phone size={18} className="text-sky-400" />
+                              <a href={`tel:+1${interfaceTexts.section12.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
+                                {interfaceTexts.section12.phone}
+                              </a>
+                          </div>
+                          <div className="flex items-start gap-3 text-white/90">
+                              <MapPin size={18} className="text-sky-400 flex-shrink-0 mt-1" />
+                              <span>{interfaceTexts.section12.address}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+
+        </section>
+
+        {/* --- FORMULARIO DE CONTACTO --- */}
+        <div className="relative z-20 mt-24 py-12">
+          <ContactForm />
         </div>
-      </section>
-
-      {/* --- SECCIÓN PRINCIPAL DE POLÍTICA DE PRIVACIDAD --- */}
-      <section className="container mx-auto px-4 py-20 relative z-10 max-w-7xl space-y-24">
-
-        {/* SECCIÓN 1: INFORMACIÓN QUE RECOPILAMOS */}
-        <div>
-            <SectionTitle title={t('section1.title')} />
-            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-8 shadow-xl">
-
-                {/* A. Personal Information */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
-                    <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><UserCheck size={20}/> {t('section1.A.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section1.A.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section1.A.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                </div>
-
-                {/* B. Automatically Collected Information */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Globe size={20}/> {t('section1.B.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section1.B.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section1.B.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-white/50">{t('section1.B.note')}</p>
-                </div>
-
-                {/* C. SMS/Text Messaging Information */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><MessageSquare size={20}/> {t('section1.C.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section1.C.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section1.C.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-orange-300/80">{t('section1.C.note')}</p>
-                </div>
-            </div>
-        </div>
-
-        {/* SECCIÓN 2: USO DE INFORMACIÓN */}
-        <div>
-            <SectionTitle title={t('section2.title')} />
-            <div className="p-8 bg-[#000814]/60 rounded-2xl border border-white/10 space-y-6 shadow-lg">
-                <p className="text-base text-blue-100/80 mb-6">{t('section2.intro')}</p>
-                <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
-                    {interfaceTexts.section2.items.map((item, index) => (
-                        <div key={index} className="flex items-start gap-3 text-white/90">
-                            <FileText size={18} className="text-[#B2904D] flex-shrink-0 mt-1"/>
-                            <p className="text-base font-light">{item[lang] || item.es}</p>
-                        </div>
-                    ))}
-                </div>
-                <p className="text-sm pt-6 border-t border-white/10 text-orange-300/80 font-medium">{t('section2.note')}</p>
-            </div>
-        </div>
-
-        {/* SECCIÓN 3: PROGRAMA SMS/TEXTO */}
-        <div>
-            <SectionTitle title={t('section3.title')} />
-            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
-                <p className="text-base text-blue-100/80 mb-4">{t('section3.intro')}</p>
-
-                {/* A. Purpose */}
-                <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
-                    <h4 className="text-lg font-semibold text-white mb-4">{t('section3.A.title')}</h4>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section3.A.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                </div>
-
-                {/* B. Opt-Out */}
-                <div className="p-6 bg-[#001026] rounded-lg border border-red-500/30">
-                    <h4 className="text-lg font-semibold text-white mb-3">{t('section3.B.title')}</h4>
-                    <div className="text-base text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.B.content') }} />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                    {/* C. Rates */}
-                    <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
-                        <h4 className="text-lg font-semibold text-white mb-3">{t('section3.C.title')}</h4>
-                        <div className="text-sm text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.C.content') }} />
-                    </div>
-                    {/* D. Carrier */}
-                    <div className="p-6 bg-[#001026] rounded-lg border border-white/10">
-                        <h4 className="text-lg font-semibold text-white mb-3">{t('section3.D.title')}</h4>
-                        <div className="text-sm text-blue-100/80" dangerouslySetInnerHTML={{ __html: parseText('section3.D.content') }} />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {/* SECCIÓN 4: CÓMO COMPARTIMOS SU INFORMACIÓN */}
-        <div>
-            <SectionTitle title={t('section4.title')} />
-            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
-                <p className="text-base text-blue-100/80 mb-4">{t('section4.intro')}</p>
-
-                {/* A. Service Providers */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
-                    <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><Server size={20}/> {t('section4.A.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section4.A.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section4.A.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-orange-300/80">{t('section4.A.note')}</p>
-                </div>
-
-                {/* B. Legal Requirements */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><FileText size={20}/> {t('section4.B.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section4.B.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section4.B.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                    <p className="text-sm pt-4 font-semibold text-red-400/90" dangerouslySetInnerHTML={{ __html: parseText('section4.B.note') }} />
-                    <p className="text-sm pt-3 text-orange-300/80" dangerouslySetInnerHTML={{ __html: parseText('section4.B.noteAdvertising') }} />
-                </div>
-            </div>
-        </div>
-
-        {/* SECCIÓN 5: COOKIES, PÍXELES Y TERCEROS */}
-        <div>
-            <SectionTitle title={t('section5.title')} />
-            <div className="p-8 bg-white/5 rounded-2xl border border-white/10 space-y-6 shadow-xl">
-                <p className="text-base text-blue-100/80 mb-4">{t('section5.intro')}</p>
-
-                {/* A. Cookies */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Cookie size={20}/> {t('section5.A.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section5.A.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section5.A.items.map((item, index) => (
-                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-white/50">{t('section5.A.note')}</p>
-                </div>
-
-                {/* B. Plataformas de publicidad y analítica */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-[#B2904D]/20">
-                    <h3 className="text-xl font-bold text-[#B2904D] mb-4 flex items-center gap-2"><Megaphone size={20}/> {t('section5.B.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section5.B.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section5.B.items.map((item, index) => (
-                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-orange-300/80">{t('section5.B.note')}</p>
-                </div>
-
-                {/* C. Proveedores de tecnología y contenido incrustado */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Server size={20}/> {t('section5.C.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section5.C.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section5.C.items.map((item, index) => (
-                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: parseInline(item[lang] || item.es) }} />
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-white/50">{t('section5.C.note')}</p>
-                </div>
-
-                {/* D. Sus opciones */}
-                <div className="p-6 bg-[#001026] rounded-xl border border-white/10">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><SlidersHorizontal size={20}/> {t('section5.D.title')}</h3>
-                    <p className="text-base text-blue-100/80 mb-4">{t('section5.D.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section5.D.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-orange-300/80">{t('section5.D.note')}</p>
-                </div>
-            </div>
-        </div>
-
-        {/* SECCIONES 6, 7, 8 */}
-        <div className="grid lg:grid-cols-3 gap-8">
-            {/* SECCIÓN 6: SEGURIDAD DE DATOS */}
-            <div className="lg:col-span-1">
-                <SectionTitle title={t('section6.title')} />
-                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
-                    <p className="text-base text-blue-100/80">{t('section6.content1')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section6.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-red-300/80">{t('section6.content2')}</p>
-                </div>
-            </div>
-
-            {/* SECCIÓN 7: RETENCIÓN DE DATOS */}
-            <div className="lg:col-span-1">
-                <SectionTitle title={t('section7.title')} />
-                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
-                    <p className="text-base text-blue-100/80">{t('section7.content1')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4">
-                        {interfaceTexts.section7.items.map((item, index) => (
-                            <li key={index} className="text-white/80">{item[lang] || item.es}</li>
-                        ))}
-                    </ul>
-                    <p className="text-xs pt-4 text-orange-300/80">{t('section7.content2')}</p>
-                </div>
-            </div>
-
-            {/* SECCIÓN 8: DERECHOS Y OPCIONES */}
-            <div className="lg:col-span-1">
-                <SectionTitle title={t('section8.title')} />
-                <div className="h-full p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner flex flex-col">
-                    <p className="text-base text-blue-100/80">{t('section8.intro')}</p>
-                    <ul className="text-sm list-disc list-inside space-y-3 pl-4 flex-grow">
-                        {interfaceTexts.section8.items.map((item, index) => (
-                            <li key={index} className="text-white/80" dangerouslySetInnerHTML={{ __html: item[lang] || item.es }} />
-                        ))}
-                    </ul>
-                    <div className="pt-6 border-t border-white/10 space-y-2 text-sm">
-                        <p className="text-white font-medium">{t('section8.contact')}</p>
-                        <div className="flex items-center gap-2 text-[#B2904D]">
-                            <Mail size={16} />
-                            <a href={`mailto:${interfaceTexts.section8.email}`} className="hover:text-sky-300 transition">
-                              {interfaceTexts.section8.email}
-                            </a>
-                        </div>
-                        <div className="flex items-center gap-2 text-[#B2904D]">
-                            <Phone size={16} />
-                            <a href={`tel:+1${interfaceTexts.section8.phone.replace(/\D/g, '')}`} className="hover:text-sky-300 transition">
-                              {interfaceTexts.section8.phone}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {/* SECCIONES 9, 10, 11, 12 */}
-        <div className="grid md:grid-cols-2 gap-8">
-            {/* SECCIÓN 9: Enlaces de Terceros */}
-            <div>
-                <SectionTitle title={t('section9.title')} />
-                <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
-                    <div dangerouslySetInnerHTML={{ __html: parseText('section9.content') }} />
-                </div>
-            </div>
-
-            {/* SECCIÓN 10: Privacidad de los Niños */}
-            <div>
-                <SectionTitle title={t('section10.title')} />
-                <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
-                    <div dangerouslySetInnerHTML={{ __html: parseText('section10.content') }} />
-                </div>
-            </div>
-
-            {/* SECCIÓN 11: Cambios a Esta Política */}
-            <div>
-                <SectionTitle title={t('section11.title')} />
-                <div className="p-6 bg-white/5 rounded-2xl border border-white/10 text-base text-blue-100/80 font-light shadow-inner">
-                    <div dangerouslySetInnerHTML={{ __html: parseText('section11.content') }} />
-                </div>
-            </div>
-
-            {/* SECCIÓN 12: Contáctenos */}
-            <div>
-                <SectionTitle title={t('section12.title')} />
-                <div className="p-6 bg-white/5 rounded-2xl border border-white/10 space-y-4 shadow-inner">
-                    <p className="text-base text-white font-medium">{t('section12.intro')}</p>
-                    <div className="flex flex-col gap-4 text-sm">
-                        <div className="flex items-center gap-3 text-white/90">
-                            <Mail size={18} className="text-sky-400" />
-                            <a href={`mailto:${interfaceTexts.section12.email}`} className="hover:text-[#B2904D] transition">
-                              {interfaceTexts.section12.email}
-                            </a>
-                        </div>
-                        <div className="flex items-center gap-3 text-white/90">
-                            <Phone size={18} className="text-sky-400" />
-                            <a href={`tel:+1${interfaceTexts.section12.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
-                              {interfaceTexts.section12.phone}
-                            </a>
-                        </div>
-                        <div className="flex items-start gap-3 text-white/90">
-                            <MapPin size={18} className="text-sky-400 flex-shrink-0 mt-1" />
-                            <span>{interfaceTexts.section12.address}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-      </section>
-
-      {/* --- FORMULARIO DE CONTACTO --- */}
-      <div className="relative z-20 mt-24 py-12">
-        <ContactForm />
-      </div>
+      </main>
 
       <Footer />
-    </main>
+    </div>
   );
 }

@@ -890,12 +890,14 @@ export default async function BlogPageIndex({ params }: { params: Promise<{ lang
 
       <Header />
       
-      <BlogFeed
-        initialPosts={resolvedPosts}
-        categories={resolvedCategories}
-        uiText={resolvedUiText}
-        lang={currentLang}
-      />
+      <main id="main-content" tabIndex={-1}>
+        <BlogFeed
+          initialPosts={resolvedPosts}
+          categories={resolvedCategories}
+          uiText={resolvedUiText}
+          lang={currentLang}
+        />
+      </main>
 
       <Footer />
     </>

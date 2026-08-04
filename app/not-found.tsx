@@ -42,7 +42,9 @@ export default function NotFound() {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/8 rounded-full blur-[100px]" />
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
+      {/* El <main> es el mismo elemento que antes era el div de contenido: mantiene
+          sus clases para no alterar el centrado del flex padre. */}
+      <main id="main-content" tabIndex={-1} className="relative z-10 text-center px-6 max-w-2xl mx-auto">
         {/* 404 number */}
         <h1 className="text-[8rem] md:text-[12rem] font-bold leading-none tracking-tighter text-gradient-gold select-none">
           404
@@ -92,7 +94,7 @@ export default function NotFound() {
           <span className="text-[#B2904D]/40 text-xs tracking-widest uppercase">Manuel Solis Law Firm</span>
           <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#B2904D]/40" />
         </div>
-      </div>
+      </main>
     </div>
   );
 }

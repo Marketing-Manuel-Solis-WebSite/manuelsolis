@@ -344,296 +344,298 @@ export default function InversionistasClient() {
         <div
           className="absolute bottom-[-10%] left-[-5%] w-[70vw] h-[70vw] bg-sky-800/10 rounded-full blur-[90px] opacity-30"
         />
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
           <span className="text-[15vw] font-black italic text-white tracking-tighter transform -skew-x-12 whitespace-nowrap">
             VISA E-2
           </span>
         </div>
       </div>
 
-      {/* --- HERO SECTION --- */}
-      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
-        {/* Orbes difuminados */}
-        <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="inv-orb-gold absolute top-[5%] left-[0%] w-[600px] h-[600px] bg-[#B2904D]/[0.12] rounded-full blur-[150px]" />
-          <div className="inv-orb-blue absolute bottom-[0%] right-[5%] w-[700px] h-[700px] bg-blue-400/[0.08] rounded-full blur-[160px]" />
-          <div className="inv-orb-gold-soft absolute top-[25%] right-[20%] w-[500px] h-[500px] bg-[#B2904D]/[0.08] rounded-full blur-[130px]" />
-          <style dangerouslySetInnerHTML={{ __html: HERO_ORBS_CSS }} />
-        </div>
-
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* TEXT CONTAINER */}
-            <div className="lg:col-span-12 space-y-8 relative z-20 flex flex-col justify-center items-start max-w-4xl">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#B2904D]/30 bg-[#B2904D]/10 backdrop-blur-sm shadow-[0_0_15px_rgba(178,144,77,0.1)] self-start">
-                <Briefcase size={16} className="text-[#B2904D]" />
-                <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">
-                  {gT(ui.badge)}
-                </span>
-              </div>
-
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-thin text-white tracking-tight leading-[1.1]">
-                <span className="block">
-                  <m.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
-                    {gT(ui.heroTitle1)}
-                  </m.span>
-                </span>
-                <span className="block">
-                  <m.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">
-                    {gT(ui.heroTitle2)}
-                  </m.span>
-                </span>
-              </h1>
-
-              <m.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 }}
-                className="h-1 w-24 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full"
-              />
-
-              <m.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="text-lg md:text-xl text-blue-100/70 font-light max-w-xl leading-relaxed"
-              >
-                {gT(ui.heroDescription)}
-              </m.p>
-
-              <m.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="flex flex-wrap items-center gap-4 pt-4"
-              >
-                <a
-                  href="#contacto"
-                  className="px-8 py-4 bg-[#B2904D] hover:bg-[#d4af37] text-[#001540] font-bold rounded-xl transition-all shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:shadow-[0_0_40px_rgba(178,144,77,0.5)] hover:-translate-y-1 flex items-center gap-3 group text-base"
-                >
-                  <FileText size={20} />
-                  {gT(ui.ctaConsultation)}
-                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                </a>
-
-                <div className="inline-flex items-center gap-3 px-5 py-3 border border-[#B2904D]/30 rounded-xl backdrop-blur-xl bg-[#001540]/40">
-                  <Star className="w-5 h-5 text-[#B2904D] fill-[#B2904D]" />
-                  <div className="flex items-baseline text-white">
-                    <span className="text-2xl md:text-3xl font-black tracking-tighter">35+</span>
-                    <span className="ml-2 text-xs font-light uppercase tracking-wider opacity-80">
-                      {lang === 'es' ? 'Años de experiencia' : 'Years of experience'}
-                    </span>
-                  </div>
-                </div>
-              </m.div>
-            </div>
+      <main id="main-content" tabIndex={-1}>
+        {/* --- HERO SECTION --- */}
+        <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-4 z-10 min-h-[85vh] flex flex-col justify-center">
+          {/* Orbes difuminados */}
+          <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <div className="inv-orb-gold absolute top-[5%] left-[0%] w-[600px] h-[600px] bg-[#B2904D]/[0.12] rounded-full blur-[150px]" />
+            <div className="inv-orb-blue absolute bottom-[0%] right-[5%] w-[700px] h-[700px] bg-blue-400/[0.08] rounded-full blur-[160px]" />
+            <div className="inv-orb-gold-soft absolute top-[25%] right-[20%] w-[500px] h-[500px] bg-[#B2904D]/[0.08] rounded-full blur-[130px]" />
+            <style dangerouslySetInnerHTML={{ __html: HERO_ORBS_CSS }} />
           </div>
-        </div>
-      </section>
 
-      {/* --- SECCION DE TABS --- */}
-      <section className="px-4 py-24 relative z-10 bg-[#001026]" id="detalles">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {infoTabs.map((tab, index) => (
-              <m.button
-                key={tab.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08, duration: 0.5 }}
-                onClick={() => setSelectedTab(tab.id)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`group relative px-6 py-4 rounded-2xl transition-all duration-300 border ${
-                  selectedTab === tab.id
-                    ? 'bg-[#B2904D] border-[#B2904D] shadow-[0_0_20px_rgba(178,144,77,0.4)]'
-                    : 'bg-white/5 border-white/10 hover:border-[#B2904D]/50 hover:bg-white/10'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <tab.icon size={20} className={`transition-all ${selectedTab === tab.id ? 'text-[#001540]' : 'text-white/70 group-hover:text-[#B2904D]'}`} />
-                  <span className={`font-bold text-sm tracking-wide ${selectedTab === tab.id ? 'text-[#001540]' : 'text-white/90 group-hover:text-white'}`}>
-                    {gT(tab.title)}
+          <div className="container mx-auto max-w-7xl relative z-10">
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              {/* TEXT CONTAINER */}
+              <div className="lg:col-span-12 space-y-8 relative z-20 flex flex-col justify-center items-start max-w-4xl">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#B2904D]/30 bg-[#B2904D]/10 backdrop-blur-sm shadow-[0_0_15px_rgba(178,144,77,0.1)] self-start">
+                  <Briefcase size={16} className="text-[#B2904D]" />
+                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">
+                    {gT(ui.badge)}
                   </span>
                 </div>
-              </m.button>
-            ))}
-          </div>
 
-          <AnimatePresence mode="wait">
-            <m.div
-              key={selectedTab}
-              initial={{ opacity: 0, y: 20, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.98 }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-              className="max-w-5xl mx-auto"
-            >
-              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#B2904D]/10 rounded-full blur-[80px] pointer-events-none" />
+                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-thin text-white tracking-tight leading-[1.1]">
+                  <span className="block">
+                    <m.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
+                      {gT(ui.heroTitle1)}
+                    </m.span>
+                  </span>
+                  <span className="block">
+                    <m.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">
+                      {gT(ui.heroTitle2)}
+                    </m.span>
+                  </span>
+                </h1>
 
-                <div className="flex flex-col md:flex-row items-start gap-8 mb-10 pb-10 border-b border-white/10">
-                  <m.div
-                    initial={{ scale: 0, rotate: -45 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
-                    className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-[#B2904D] to-[#D4AF37] flex items-center justify-center shadow-lg shadow-[#B2904D]/20 flex-shrink-0"
+                <m.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="h-1 w-24 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full"
+                />
+
+                <m.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="text-lg md:text-xl text-blue-100/70 font-light max-w-xl leading-relaxed"
+                >
+                  {gT(ui.heroDescription)}
+                </m.p>
+
+                <m.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1 }}
+                  className="flex flex-wrap items-center gap-4 pt-4"
+                >
+                  <a
+                    href="#contacto"
+                    className="px-8 py-4 bg-[#B2904D] hover:bg-[#d4af37] text-[#001540] font-bold rounded-xl transition-all shadow-[0_0_30px_rgba(178,144,77,0.3)] hover:shadow-[0_0_40px_rgba(178,144,77,0.5)] hover:-translate-y-1 flex items-center gap-3 group text-base"
                   >
-                    <activeTabContent.icon size={44} className="text-[#001540]" />
-                  </m.div>
-                  <div className="flex-1">
-                    <h3 className="text-3xl md:text-5xl font-black text-white mb-3 leading-tight tracking-tight">{gT(activeTabContent.title)}</h3>
-                    <p className="text-[#B2904D] text-sm md:text-base font-bold uppercase tracking-[0.2em] mb-4">{gT(activeTabContent.subtitle)}</p>
-                  </div>
-                </div>
+                    <FileText size={20} />
+                    {gT(ui.ctaConsultation)}
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </a>
 
-                <div className="space-y-10">
-                  <div>
-                    <h4 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                      <Target className="text-[#B2904D]" size={24} />
-                      {gT(activeTabContent.content.intro)}
-                    </h4>
-                    <p className="text-lg md:text-xl text-blue-100/80 leading-relaxed font-light">{gT(activeTabContent.content.description)}</p>
-                  </div>
-
-                  {activeTabContent.content.subPoints && activeTabContent.content.subTitle && (
-                    <div className="bg-[#001026]/40 p-8 rounded-3xl border border-white/5">
-                      <h5 className="font-bold text-white mb-6 flex items-center gap-3 text-lg uppercase tracking-wider">{gT(activeTabContent.content.subTitle)}</h5>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        {activeTabContent.content.subPoints.map((point: any, i: number) => (
-                          <m.div
-                            key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.2 + i * 0.1 }}
-                            className="flex items-start gap-4 text-white/80 bg-white/5 p-5 rounded-2xl border border-white/5 hover:border-[#B2904D]/30 hover:bg-white/10 transition-colors group"
-                          >
-                            <div className="w-2 h-2 rounded-full mt-2.5 shrink-0 bg-[#B2904D] group-hover:shadow-[0_0_8px_#B2904D] transition-shadow" />
-                            <span className="text-base font-medium leading-snug">{gT(point)}</span>
-                          </m.div>
-                        ))}
-                      </div>
+                  <div className="inline-flex items-center gap-3 px-5 py-3 border border-[#B2904D]/30 rounded-xl backdrop-blur-xl bg-[#001540]/40">
+                    <Star className="w-5 h-5 text-[#B2904D] fill-[#B2904D]" />
+                    <div className="flex items-baseline text-white">
+                      <span className="text-2xl md:text-3xl font-black tracking-tighter">35+</span>
+                      <span className="ml-2 text-xs font-light uppercase tracking-wider opacity-80">
+                        {lang === 'es' ? 'Años de experiencia' : 'Years of experience'}
+                      </span>
                     </div>
-                  )}
+                  </div>
+                </m.div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                  {(activeTabContent.content as any).solution && (
-                    <div className="bg-gradient-to-r from-[#B2904D]/20 to-transparent p-6 rounded-2xl border-l-4 border-[#B2904D]">
-                      <p className="text-white leading-relaxed font-medium text-lg flex gap-4 items-start">
-                        <DollarSign className="text-[#B2904D] shrink-0 mt-1" />
-                        {gT((activeTabContent.content as any).solution)}
-                      </p>
-                    </div>
-                  )}
+        {/* --- SECCION DE TABS --- */}
+        <section className="px-4 py-24 relative z-10 bg-[#001026]" id="detalles">
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex flex-wrap justify-center gap-4 mb-16">
+              {infoTabs.map((tab, index) => (
+                <m.button
+                  key={tab.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08, duration: 0.5 }}
+                  onClick={() => setSelectedTab(tab.id)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`group relative px-6 py-4 rounded-2xl transition-all duration-300 border ${
+                    selectedTab === tab.id
+                      ? 'bg-[#B2904D] border-[#B2904D] shadow-[0_0_20px_rgba(178,144,77,0.4)]'
+                      : 'bg-white/5 border-white/10 hover:border-[#B2904D]/50 hover:bg-white/10'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <tab.icon size={20} className={`transition-all ${selectedTab === tab.id ? 'text-[#001540]' : 'text-white/70 group-hover:text-[#B2904D]'}`} />
+                    <span className={`font-bold text-sm tracking-wide ${selectedTab === tab.id ? 'text-[#001540]' : 'text-white/90 group-hover:text-white'}`}>
+                      {gT(tab.title)}
+                    </span>
+                  </div>
+                </m.button>
+              ))}
+            </div>
 
-                  <div className="pt-6 flex justify-end">
-                    <m.a
-                      href="#contacto"
-                      whileHover={{ x: 5 }}
-                      className="inline-flex items-center gap-2 text-[#B2904D] font-bold uppercase tracking-widest text-sm hover:text-white transition-colors"
+            <AnimatePresence mode="wait">
+              <m.div
+                key={selectedTab}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+                className="max-w-5xl mx-auto"
+              >
+                <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-[#B2904D]/10 rounded-full blur-[80px] pointer-events-none" />
+
+                  <div className="flex flex-col md:flex-row items-start gap-8 mb-10 pb-10 border-b border-white/10">
+                    <m.div
+                      initial={{ scale: 0, rotate: -45 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 200, delay: 0.1 }}
+                      className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-[#B2904D] to-[#D4AF37] flex items-center justify-center shadow-lg shadow-[#B2904D]/20 flex-shrink-0"
                     >
-                      {gT(ui.requestEvaluation)}
-                      <ArrowRight size={18} />
-                    </m.a>
+                      <activeTabContent.icon size={44} className="text-[#001540]" />
+                    </m.div>
+                    <div className="flex-1">
+                      <h3 className="text-3xl md:text-5xl font-black text-white mb-3 leading-tight tracking-tight">{gT(activeTabContent.title)}</h3>
+                      <p className="text-[#B2904D] text-sm md:text-base font-bold uppercase tracking-[0.2em] mb-4">{gT(activeTabContent.subtitle)}</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-10">
+                    <div>
+                      <h4 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                        <Target className="text-[#B2904D]" size={24} />
+                        {gT(activeTabContent.content.intro)}
+                      </h4>
+                      <p className="text-lg md:text-xl text-blue-100/80 leading-relaxed font-light">{gT(activeTabContent.content.description)}</p>
+                    </div>
+
+                    {activeTabContent.content.subPoints && activeTabContent.content.subTitle && (
+                      <div className="bg-[#001026]/40 p-8 rounded-3xl border border-white/5">
+                        <h5 className="font-bold text-white mb-6 flex items-center gap-3 text-lg uppercase tracking-wider">{gT(activeTabContent.content.subTitle)}</h5>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {activeTabContent.content.subPoints.map((point: any, i: number) => (
+                            <m.div
+                              key={i}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.2 + i * 0.1 }}
+                              className="flex items-start gap-4 text-white/80 bg-white/5 p-5 rounded-2xl border border-white/5 hover:border-[#B2904D]/30 hover:bg-white/10 transition-colors group"
+                            >
+                              <div className="w-2 h-2 rounded-full mt-2.5 shrink-0 bg-[#B2904D] group-hover:shadow-[0_0_8px_#B2904D] transition-shadow" />
+                              <span className="text-base font-medium leading-snug">{gT(point)}</span>
+                            </m.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {(activeTabContent.content as any).solution && (
+                      <div className="bg-gradient-to-r from-[#B2904D]/20 to-transparent p-6 rounded-2xl border-l-4 border-[#B2904D]">
+                        <p className="text-white leading-relaxed font-medium text-lg flex gap-4 items-start">
+                          <DollarSign className="text-[#B2904D] shrink-0 mt-1" />
+                          {gT((activeTabContent.content as any).solution)}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="pt-6 flex justify-end">
+                      <m.a
+                        href="#contacto"
+                        whileHover={{ x: 5 }}
+                        className="inline-flex items-center gap-2 text-[#B2904D] font-bold uppercase tracking-widest text-sm hover:text-white transition-colors"
+                      >
+                        {gT(ui.requestEvaluation)}
+                        <ArrowRight size={18} />
+                      </m.a>
+                    </div>
                   </div>
                 </div>
+              </m.div>
+            </AnimatePresence>
+          </div>
+        </section>
+
+        {/* --- PROCESO SECTION --- */}
+        <section className="py-32 relative overflow-hidden bg-[#001f5f]/30">
+          <div className="max-w-7xl mx-auto px-4 relative z-10">
+            <m.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-24">
+              <m.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ type: 'spring', stiffness: 200 }}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8"
+              >
+                <FileText size={14} className="text-[#B2904D]" />
+                <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">{gT(ui.processMethod)}</span>
+              </m.div>
+              <h2 className="text-4xl md:text-6xl font-black text-white mb-6">{gT(ui.processTitle)}</h2>
+              <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full shadow-[0_0_15px_#B2904D]" />
+            </m.div>
+
+            <div className="grid md:grid-cols-3 gap-8 lg:gap-12 relative">
+              <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" />
+              {processSteps.map((step, index) => (
+                <m.div
+                  key={step.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.15, duration: 0.6 }}
+                  whileHover={{ y: -10 }}
+                  className="group relative z-10"
+                >
+                  <div className="bg-[#001026] p-8 rounded-[2rem] border border-white/10 hover:border-[#B2904D]/50 transition-all duration-300 h-full shadow-lg relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#B2904D]/0 to-[#B2904D]/0 group-hover:from-[#B2904D]/10 group-hover:to-transparent transition-all duration-500" />
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-[#B2904D] transition-colors duration-300 shadow-inner">
+                        <step.icon size={30} className="text-white/80 group-hover:text-[#001540] transition-colors" />
+                      </div>
+                      <span className="text-4xl font-black text-white/5 group-hover:text-[#B2904D]/20 transition-colors">0{step.id}</span>
+                    </div>
+                    <h3 className="font-bold text-xl text-white mb-3">{gT(step.title)}</h3>
+                    <p className="text-blue-100/60 text-sm leading-relaxed">{gT(step.desc)}</p>
+                  </div>
+                </m.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* --- FAQ SECTION --- */}
+        <section className="relative py-24 bg-[#001026]">
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">{gT(ui.faqTitle)}</h2>
+              <p className="text-blue-100/60 text-lg max-w-2xl mx-auto font-light">{gT(ui.faqSubtitle)}</p>
+            </div>
+            <div className="space-y-4">
+              {faqs.map((faq, i) => (
+                <m.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-[#B2904D]/30 transition-all duration-300">
+                    <div className="flex items-center justify-between p-6">
+                      <h3 className="text-lg font-medium text-white pr-8 flex gap-3">
+                        <HelpCircle size={20} className="text-[#B2904D] shrink-0 mt-1" />
+                        {gT(faq.q)}
+                      </h3>
+                    </div>
+                    <div className="px-6 pb-8 pl-14">
+                      <p className="text-blue-100/70 leading-relaxed text-base border-l-2 border-white/10 pl-4">{gT(faq.a)}</p>
+                    </div>
+                  </div>
+                </m.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* --- CONTACTO SECTION — usa ContactForm real del proyecto --- */}
+        <section id="contacto" className="relative py-32 z-10 bg-transparent">
+          <div className="max-w-4xl mx-auto px-4 relative z-10">
+            <m.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative z-10 p-8 md:p-12 bg-white/5 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/10 overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-96 h-96 bg-[#B2904D]/20 rounded-full blur-[100px] pointer-events-none -mr-20 -mt-20" />
+              <div className="relative z-10 text-white">
+                <ContactForm />
               </div>
             </m.div>
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* --- PROCESO SECTION --- */}
-      <section className="py-32 relative overflow-hidden bg-[#001f5f]/30">
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <m.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-24">
-            <m.div
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ type: 'spring', stiffness: 200 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-8"
-            >
-              <FileText size={14} className="text-[#B2904D]" />
-              <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">{gT(ui.processMethod)}</span>
-            </m.div>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-6">{gT(ui.processTitle)}</h2>
-            <div className="h-1 w-24 bg-[#B2904D] mx-auto rounded-full shadow-[0_0_15px_#B2904D]" />
-          </m.div>
-
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12 relative">
-            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" />
-            {processSteps.map((step, index) => (
-              <m.div
-                key={step.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15, duration: 0.6 }}
-                whileHover={{ y: -10 }}
-                className="group relative z-10"
-              >
-                <div className="bg-[#001026] p-8 rounded-[2rem] border border-white/10 hover:border-[#B2904D]/50 transition-all duration-300 h-full shadow-lg relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#B2904D]/0 to-[#B2904D]/0 group-hover:from-[#B2904D]/10 group-hover:to-transparent transition-all duration-500" />
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-[#B2904D] transition-colors duration-300 shadow-inner">
-                      <step.icon size={30} className="text-white/80 group-hover:text-[#001540] transition-colors" />
-                    </div>
-                    <span className="text-4xl font-black text-white/5 group-hover:text-[#B2904D]/20 transition-colors">0{step.id}</span>
-                  </div>
-                  <h3 className="font-bold text-xl text-white mb-3">{gT(step.title)}</h3>
-                  <p className="text-blue-100/60 text-sm leading-relaxed">{gT(step.desc)}</p>
-                </div>
-              </m.div>
-            ))}
           </div>
-        </div>
-      </section>
-
-      {/* --- FAQ SECTION --- */}
-      <section className="relative py-24 bg-[#001026]">
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">{gT(ui.faqTitle)}</h2>
-            <p className="text-blue-100/60 text-lg max-w-2xl mx-auto font-light">{gT(ui.faqSubtitle)}</p>
-          </div>
-          <div className="space-y-4">
-            {faqs.map((faq, i) => (
-              <m.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                <div className="bg-white/5 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-[#B2904D]/30 transition-all duration-300">
-                  <div className="flex items-center justify-between p-6">
-                    <h3 className="text-lg font-medium text-white pr-8 flex gap-3">
-                      <HelpCircle size={20} className="text-[#B2904D] shrink-0 mt-1" />
-                      {gT(faq.q)}
-                    </h3>
-                  </div>
-                  <div className="px-6 pb-8 pl-14">
-                    <p className="text-blue-100/70 leading-relaxed text-base border-l-2 border-white/10 pl-4">{gT(faq.a)}</p>
-                  </div>
-                </div>
-              </m.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* --- CONTACTO SECTION — usa ContactForm real del proyecto --- */}
-      <section id="contacto" className="relative py-32 z-10 bg-transparent">
-        <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <m.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 p-8 md:p-12 bg-white/5 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/10 overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#B2904D]/20 rounded-full blur-[100px] pointer-events-none -mr-20 -mt-20" />
-            <div className="relative z-10 text-white">
-              <ContactForm />
-            </div>
-          </m.div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <LandingFooter lang={lang} />
 

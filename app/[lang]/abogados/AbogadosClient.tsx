@@ -72,32 +72,34 @@ export default function AbogadosClient({ lang }: { lang: 'es' | 'en' }) {
         <div className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-600/20 rounded-full blur-[180px] opacity-40" />
       </div>
 
-      {/* HERO SECTION (static — LCP) */}
-      <section className="relative pt-48 pb-24 px-4 overflow-hidden z-10">
-        <div className="relative z-10 max-w-7xl mx-auto text-center">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#B2904D]/30 bg-[#B2904D]/10 backdrop-blur-md mb-6">
-              <Scale size={14} className="text-[#B2904D]" />
-              <span className="text-[#B2904D] text-xs font-bold tracking-widest uppercase">
-                {hero.badge[language]}
-              </span>
+      <main id="main-content" tabIndex={-1}>
+        {/* HERO SECTION (static — LCP) */}
+        <section className="relative pt-48 pb-24 px-4 overflow-hidden z-10">
+          <div className="relative z-10 max-w-7xl mx-auto text-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#B2904D]/30 bg-[#B2904D]/10 backdrop-blur-md mb-6">
+                <Scale size={14} className="text-[#B2904D]" />
+                <span className="text-[#B2904D] text-xs font-bold tracking-widest uppercase">
+                  {hero.badge[language]}
+                </span>
+              </div>
+
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                {hero.title1[language]}{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] to-[#e6c67e]">
+                  {hero.title2[language]}
+                </span>
+              </h1>
+
+              <p className="text-blue-100/70 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                {hero.subtitle[language]}
+              </p>
             </div>
-
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-              {hero.title1[language]}{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] to-[#e6c67e]">
-                {hero.title2[language]}
-              </span>
-            </h1>
-
-            <p className="text-blue-100/70 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-              {hero.subtitle[language]}
-            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <AttorneysExplorer groups={groups} texts={texts} lang={language} />
+        <AttorneysExplorer groups={groups} texts={texts} lang={language} />
+      </main>
 
       <Footer />
     </div>

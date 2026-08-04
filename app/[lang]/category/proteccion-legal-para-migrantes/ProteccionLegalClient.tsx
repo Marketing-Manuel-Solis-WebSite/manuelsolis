@@ -69,7 +69,7 @@ export default function ProteccionLegalClient({ lang }: { lang: 'es' | 'en' }) {
           <div className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-sky-800/10 rounded-full blur-[150px] opacity-30" />
 
           {/* Texto de Fondo Sutil - CONTENIDO (estático) */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
+          <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none overflow-hidden">
             <span className="text-[60vh] font-black italic text-white tracking-tighter whitespace-nowrap">
                 LEGAL
             </span>
