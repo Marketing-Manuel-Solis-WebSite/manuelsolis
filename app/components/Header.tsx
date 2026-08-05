@@ -520,7 +520,7 @@ export default function HeaderProfessional() {
                 <button
                   type="button"
                   onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                  aria-label="Cambiar idioma / Change language"
+                  aria-label={`${language === 'es' ? 'ES' : 'EN'} — ${language === 'es' ? 'Cambiar idioma' : 'Change language'}`}
                   aria-haspopup="true"
                   aria-expanded={isLangMenuOpen}
                   className="flex items-center gap-2 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.2em] transition-colors duration-200"
@@ -555,7 +555,7 @@ export default function HeaderProfessional() {
               <Link
                 href={langPath(language === 'es' ? 'en' : 'es')}
                 onClick={() => onLangLinkClick(language === 'es' ? 'en' : 'es')}
-                aria-label="Cambiar idioma / Change language"
+                aria-label={`${language === 'es' ? 'ES' : 'EN'} — ${language === 'es' ? 'Cambiar idioma' : 'Change language'}`}
                 className="flex items-center gap-1.5 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.15em] transition-colors duration-200 px-2 py-1.5 rounded-lg border border-white/10 active:bg-white/10"
               >
                 {language === 'es' ? <FlagUS /> : <FlagES />}

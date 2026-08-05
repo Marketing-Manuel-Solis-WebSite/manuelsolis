@@ -69,6 +69,17 @@ const pages = files.map((file) => {
 })
 
 const publicPages = pages.filter((p) => !p.internal)
+
+// Sin páginas no hay nada que verificar, y decir "sin fallos" ahí es peor que
+// fallar: es exactamente lo que pasó cuando un build roto dejó .next vacío y
+// este script informó de que todo estaba bien.
+if (publicPages.length === 0) {
+  console.error(
+    `No se encontró ninguna página pública en ${APP_DIR}. ¿Falló el build? Ejecuta \`npm run build\` y vuelve a intentarlo.`,
+  )
+  process.exit(1)
+}
+
 const errors = []
 const warnings = []
 

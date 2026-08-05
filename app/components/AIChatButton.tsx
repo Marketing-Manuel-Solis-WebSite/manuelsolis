@@ -125,7 +125,10 @@ export default function AIChatButton() {
       <m.button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-[5.5rem] sm:bottom-6 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center group outline-none"
-        aria-label={isOpen ? texts.close : (language === 'es' ? 'Abrir asistente legal IA' : 'Open AI legal assistant')}
+        // El nombre accesible empieza por "AI", el texto visible del botón:
+        // WCAG 2.5.3 (Label in Name) lo exige para que el control por voz
+        // funcione. Lighthouse lo marcaba como label-content-name-mismatch.
+        aria-label={isOpen ? texts.close : (language === 'es' ? 'AI — Abrir asistente legal' : 'AI — Open legal assistant')}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
         style={{

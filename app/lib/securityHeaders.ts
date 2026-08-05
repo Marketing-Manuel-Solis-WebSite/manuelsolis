@@ -48,7 +48,11 @@ const CONTENT_SECURITY_POLICY = [
   //   - stats.g.doubleclick.net lo usa GA4 cuando Google Signals está activo.
   //   - fbevents.js manda los eventos (incluido el PageView con eventID) a
   //     www.facebook.com/tr, no a connect.facebook.net.
-  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://generativelanguage.googleapis.com",
+  //   - TikTok no se queda en analytics.tiktok.com: su pixel también llama a
+  //     analytics-ipv6.tiktokw.us para resolver la IP del visitante. Sin ese
+  //     dominio, Lighthouse registraba el bloqueo en consola en producción y esa
+  //     parte de la medición no llegaba.
+  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://*.tiktokw.us https://va.vercel-scripts.com https://vitals.vercel-insights.com https://generativelanguage.googleapis.com",
   "frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com",
   "media-src 'self' https:",
   "worker-src 'self' blob:",
