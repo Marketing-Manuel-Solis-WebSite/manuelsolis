@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import LeyCriminalClient from './LeyCriminalClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -31,12 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/servicios/ley-criminal`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/servicios/ley-criminal`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/servicios/ley-criminal`,
-      images: ['/og-default.jpg'],
-    },
+    }),
   };
 }
 

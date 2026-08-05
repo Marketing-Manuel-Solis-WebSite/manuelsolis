@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SLUG = 'el-paso';
 
@@ -46,13 +47,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `https://www.manuelsolis.com/es/oficinas/el-paso`,
       },
     },
-    openGraph: {
+    // Dimensiones = las del PNG real en public/offices (no el 1200x630 nominal).
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/oficinas/el-paso`,
       title,
       description,
-      url: `https://www.manuelsolis.com/${lang}/oficinas/el-paso`,
-      images: ['/offices/el-paso.png'],
-      type: 'website', 
-    }
+      images: [{ url: '/offices/el-paso.png', width: 1200, height: 900 }],
+    }),
   };
 }
 

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import TermsOfService from '../../components/TermsOfService';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -15,11 +16,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  const title = isEs ? 'Términos de Servicio' : 'Terms of Service';
+  const description = isEs
+    ? 'Términos y condiciones de uso de los servicios de las Oficinas Legales de Manuel Solís.'
+    : 'Terms and conditions for using the services of the Law Offices of Manuel Solis.';
+
   return {
-    title: isEs ? 'Términos de Servicio' : 'Terms of Service',
-    description: isEs
-      ? 'Términos y condiciones de uso de los servicios de las Oficinas Legales de Manuel Solís.'
-      : 'Terms and conditions for using the services of the Law Offices of Manuel Solis.',
+    title,
+    description,
     alternates: {
       canonical: `${SITE_URL}/${lang}/terminos`,
       languages: {
@@ -28,6 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/terminos`,
       },
     },
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/terminos`,
+      title,
+      description,
+    }),
   };
 }
 

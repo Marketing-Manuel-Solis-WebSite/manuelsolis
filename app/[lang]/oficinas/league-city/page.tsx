@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SLUG = 'league-city';
 
@@ -27,13 +28,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
-  const title = isEs 
-    ? `Abogados en League City, TX (South Shore Blvd)`
-    : `Lawyers in League City, TX (South Shore Blvd)`;
+  // "S Shore Blvd" es como aparece la calle en el NAP canónico
+  // (officesPhoneMap.OFFICES_NAP); escrita entera el title llegaba a 61.
+  const title = isEs
+    ? `Abogados en League City, TX (S Shore Blvd)`
+    : `Lawyers in League City, TX (S Shore Blvd)`;
 
   const description = isEs
-    ? `Oficina de Manuel Solís en League City (South Shore Blvd). Abogados de inmigración, familia y accidentes sirviendo a la comunidad 24 horas.`
-    : `Manuel Solis Law Office in League City (South Shore Blvd). Immigration, family, and accident attorneys serving the community 24 hours.`;
+    ? `Oficina de Manuel Solís en League City (S Shore Blvd). Abogados de inmigración, familia y accidentes sirviendo a la comunidad 24 horas.`
+    : `Manuel Solis Law Office in League City (S Shore Blvd). Immigration, family, and accident attorneys serving the community 24 hours.`;
 
   return {
     title,
@@ -46,13 +49,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `https://www.manuelsolis.com/es/oficinas/league-city`,
       },
     },
-    openGraph: {
+    // Dimensiones = las del PNG real en public/offices (no el 1200x630 nominal).
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/oficinas/league-city`,
       title,
       description,
-      url: `https://www.manuelsolis.com/${lang}/oficinas/league-city`,
-      images: ['/offices/League.png'],
-      type: 'website', 
-    }
+      images: [{ url: '/offices/League.png', width: 1000, height: 1000 }],
+    }),
   };
 }
 

@@ -2,9 +2,21 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { attorneys, getText, getAttorneyLocation } from '../../../lib/attorneyData';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
+import type { Language } from '../../../lib/translations';
 import AttorneyProfile from './AttorneyProfile';
 
 const SITE_URL = 'https://www.manuelsolis.com';
+// El layout añade ' | Manuel Solís' (15 caracteres) vía template. Con nombre +
+// especialidad hay perfiles que se iban a 84 caracteres, y Google corta ~60:
+// cuando no cabe todo, la especialidad del abogado pesa más en la SERP que
+// repetir la marca, así que el título se emite como `absolute` sin el sufijo.
+const BRAND_SUFFIX_LENGTH = 15;
+const TITLE_LIMIT = 60;
+// `education` mezcla instituciones con títulos y logros ("Juris Doctor",
+// "30+ Años de Experiencia"): solo lo primero puede ir en `alumniOf`, porque
+// declarar un logro como EducationalOrganization es un dato falso.
+const INSTITUTION_MARKER = /universi|univ\b|college|school|escuela|facultad|law center|institut/i;
 
 type Props = {
   params: Promise<{ lang: string; slug: string }>;
@@ -24,20 +36,22 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
   const isEs = lang === 'es';
+  const language: Language = isEs ? 'es' : 'en';
   const attorney = attorneys.find(a => a.id === slug);
 
   if (!attorney) return { title: 'Not Found' };
 
   // El área de práctica declarada titula el perfil; sin ella cae al término
   // genérico de `role`, nunca a una especialidad que el abogado no ejerce.
-  const specialty = (attorney.practice?.label ?? attorney.role)[isEs ? 'es' : 'en'];
-  // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
+  const specialty = (attorney.practice?.label ?? attorney.role)[language];
   const title = `${attorney.name} | ${specialty}`;
 
-  const description = attorney.bio[isEs ? 'es' : 'en'][0];
+  // `bio[0]` es un párrafo visible del perfil y en varios abogados pasa de 300
+  // caracteres: cuando existe `seoDescription` se usa esa versión corta.
+  const description = attorney.seoDescription?.[language] ?? attorney.bio[language][0];
 
   return {
-    title,
+    title: title.length + BRAND_SUFFIX_LENGTH <= TITLE_LIMIT ? title : { absolute: title },
     description,
     alternates: {
       canonical: `${SITE_URL}/${lang}/abogados/${slug}`,
@@ -47,13 +61,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/abogados/${slug}`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: language,
+      path: `/${lang}/abogados/${slug}`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/abogados/${slug}`,
-      images: [attorney.image],
-      type: 'profile',
-    },
+      images: [{ url: attorney.image, alt: `${attorney.name} — ${attorney.role[language]}` }],
+    }),
   };
 }
 
@@ -61,6 +75,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 function getPersonSchema(attorney: typeof attorneys[number], lang: string) {
   const isEs = lang === 'es';
   const location = getAttorneyLocation(attorney.id);
+  const schools = attorney.education
+    .map(edu => getText(edu, isEs ? 'es' : 'en'))
+    .filter(name => INSTITUTION_MARKER.test(name));
 
   return {
     '@context': 'https://schema.org',
@@ -78,10 +95,17 @@ function getPersonSchema(attorney: typeof attorneys[number], lang: string) {
       '@id': `${SITE_URL}/#organization`,
       name: 'Manuel Solis Law Firm',
     },
-    alumniOf: attorney.education.map(edu => ({
-      '@type': 'EducationalOrganization',
-      name: getText(edu, isEs ? 'es' : 'en'),
-    })),
+    // Se omite si ninguna entrada de `education` nombra una institución (p. ej.
+    // un perfil que solo declara "Juris Doctor"): un array vacío no aporta y
+    // rellenarlo con el texto tal cual inventaría una escuela.
+    ...(schools.length
+      ? {
+          alumniOf: schools.map(name => ({
+            '@type': 'EducationalOrganization',
+            name,
+          })),
+        }
+      : {}),
     // Solo las áreas que la bio del abogado declara. Se omite por completo
     // cuando no hay ninguna: knowsAbout es opcional y afirmar pericia que no
     // consta sería información profesional incorrecta.

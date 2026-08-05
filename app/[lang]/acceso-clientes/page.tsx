@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import AccesoClientesClient from './AccesoClientesClient';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -20,8 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'Client Access — Manuel Solis Secure Portal';
 
   const description = isEs
-    ? 'Conozca el portal de clientes de Law Offices of Manuel Solís: consulte el estado de su caso, comparta documentos, comuníquese con su abogado y realice pagos en línea desde un mismo lugar.'
-    : 'Discover the Law Offices of Manuel Solís client portal: check your case status, share documents, communicate with your attorney, and make online payments — all in one place.';
+    ? 'Portal de clientes de Law Offices of Manuel Solís: consulte el estado de su caso, comparta documentos, escriba a su abogado y pague en línea.'
+    : 'Law Offices of Manuel Solís client portal: check your case status, share documents, message your attorney and pay online, all in one place.';
 
   return {
     title,
@@ -34,15 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/acceso-clientes`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/acceso-clientes`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/acceso-clientes`,
-      type: 'website',
-      siteName: 'Manuel Solis Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      images: ['/og-default.jpg'],
-    },
+    }),
   };
 }
 

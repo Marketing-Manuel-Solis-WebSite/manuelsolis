@@ -120,8 +120,14 @@ type Entry = {
 
 // ===== lastmod derivado del contenido =====
 // Regla: donde los datos llevan fecha (BLOG_DATA.date, newsletters.date) el
-// lastmod SALE DE AHÍ. Las fechas a mano solo sobreviven para páginas
-// estáticas, que no tienen fecha propia en ningún dato.
+// lastmod SALE DE AHÍ. Eso incluye las páginas que no son el post pero listan
+// posts — portada, /informacion/noticias, /category/* y el hub de blog —, que
+// usan la fecha del contenido que muestran con la última edición de su propia
+// copia como suelo.
+// Las fechas a mano solo sobreviven donde NINGÚN dato tiene fecha (oficinas,
+// servicios, perfiles de abogado y colaborador, landings, legales). Ahí se
+// deja la fecha vieja antes que inventar una: un lastmod falso le enseña a
+// Google a ignorar la señal en todo el sitemap.
 
 // Revisiones posteriores a la publicación (arte nuevo, reescritura): elevan el
 // lastmod por encima de BLOG_DATA.date, que sigue siendo la fecha de publicación.
@@ -164,6 +170,49 @@ function categoryLastmod(route: string): string {
   );
 }
 
+// Slugs que lista /informacion/noticias. Replica de NEWS_SLUGS en
+// app/[lang]/informacion/noticias/NoticiasClient.tsx: ese módulo es
+// 'use client', así que importar su constante desde un route handler
+// devolvería una referencia de cliente en vez del valor (mismo motivo por el
+// que CATEGORY_POST_IDS replica los ids de los clientes de /category/*).
+// Al añadir un slug allí hay que añadirlo aquí, o el lastmod se queda atrás.
+const NEWS_POST_SLUGS: readonly string[] = [
+  'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados',
+  'redadas-ice-2026-derechos-plan-emergencia-familiar',
+  'como-encontrar-detenido-ice-localizador-pasos',
+  'daca-2026-estado-legal-tribunales',
+  'tps-2026-paises-elegibles-renovacion',
+  'asilo-frontera-2026-puerto-entrada-vs-cruce',
+  'advance-parole-2026-viajar-con-daca-tps-visa-u',
+];
+
+// Última revisión a mano de la copia PROPIA de estas dos páginas (encabezados,
+// subtítulos: lo que no sale de BLOG_DATA). Actúa de suelo: el lastmod
+// publicado es el máximo entre esta fecha y la de los posts que la página
+// realmente pinta, así que publicar o revisar un post lo mueve solo y nunca
+// retrocede por debajo de la última edición de la propia página.
+const HOME_COPY_REVISED = '2026-07-24';
+const NEWS_HUB_COPY_REVISED = '2026-08-04';
+
+// <BlogHighlights> (app/components/BlogHighlights.tsx) pinta los 5 primeros
+// posts de BLOG_DATA en la portada, así que el HTML de la portada cambia al
+// publicar uno nuevo.
+const HOME_HIGHLIGHTED_POSTS = 5;
+
+function homeLastmod(): string {
+  return maxDate([
+    HOME_COPY_REVISED,
+    ...BLOG_DATA.posts.slice(0, HOME_HIGHLIGHTED_POSTS).map((p) => postLastmod(p)),
+  ]);
+}
+
+function newsHubLastmod(): string {
+  return maxDate([
+    NEWS_HUB_COPY_REVISED,
+    ...BLOG_DATA.posts.filter((p) => NEWS_POST_SLUGS.includes(p.slug)).map((p) => postLastmod(p)),
+  ]);
+}
+
 function expandLangs(entries: Entry[]): SitemapURL[] {
   return entries.flatMap((e) =>
     LANGS.map((lang) => ({
@@ -178,7 +227,7 @@ function expandLangs(entries: Entry[]): SitemapURL[] {
 // Hub / static / trust pages
 export function getPagesEntries(): SitemapURL[] {
   const entries: Entry[] = [
-    { route: '', priority: 1.0, changeFrequency: 'weekly', lastModified: '2026-07-24' },
+    { route: '', priority: 1.0, changeFrequency: 'weekly', lastModified: homeLastmod() },
     { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/abogados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/colaboradores', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-06-05' },
@@ -192,7 +241,7 @@ export function getPagesEntries(): SitemapURL[] {
     { route: '/informacion/recursos', priority: 0.5, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     // /informacion/noticias entra al sitemap desde que lista artículos reales
     // derivados de BLOG_DATA: antes era una página "en construcción" con noindex.
-    { route: '/informacion/noticias', priority: 0.5, changeFrequency: 'weekly', lastModified: '2026-08-04' },
+    { route: '/informacion/noticias', priority: 0.5, changeFrequency: 'weekly', lastModified: newsHubLastmod() },
     { route: '/privacidad', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
     { route: '/terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },
     { route: '/sms-terminos', priority: 0.3, changeFrequency: 'yearly', lastModified: '2025-01-01' },

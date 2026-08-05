@@ -1,8 +1,16 @@
 import type { Metadata } from 'next';
 import ImmigrationClient from './ImmigrationClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
+import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../../lib/officesRegistry';
 
 const SITE_URL = 'https://www.manuelsolis.com';
+
+// Solo los locales propios: las direcciones virtuales (centros Regus/IWG) están
+// marcadas en officesRegistry y no se anuncian como oficinas. Misma derivación
+// que /nosotros para que las dos páginas no publiquen cifras distintas.
+const PHYSICAL_OFFICE_COUNT = Object.keys(OFFICES_PLACE_IDS)
+  .filter((slug) => !isVirtualOffice(slug)).length;
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -13,13 +21,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  const title = isEs
+    ? 'Abogados de Inmigración en Estados Unidos'
+    : 'Immigration Lawyers in the United States';
+
+  const description = isEs
+    ? `Abogados de inmigración con 35+ años y 50,000+ casos ganados. Defensa de deportación, asilo, Visa U, VAWA, residencia y ciudadanía. ${PHYSICAL_OFFICE_COUNT} oficinas en 5 estados.`
+    : `Immigration lawyers with 35+ years and 50,000+ cases won. Deportation defense, asylum, U Visa, VAWA, residency and citizenship. ${PHYSICAL_OFFICE_COUNT} offices in 5 states.`;
+
   return {
-    title: isEs
-      ? 'Abogados de Inmigración en Estados Unidos'
-      : 'Immigration Lawyers in the United States',
-    description: isEs
-      ? 'Abogados de inmigración con 35+ años y 50,000+ casos ganados. Defensa de deportación, asilo, Visa U, VAWA, residencia y ciudadanía. 15 oficinas en 5 estados.'
-      : 'Immigration lawyers with 35+ years and 50,000+ cases won. Deportation defense, asylum, U Visa, VAWA, residency and citizenship. 15 offices in 5 states.',
+    title,
+    description,
     alternates: {
       canonical: `${SITE_URL}/${lang}/servicios/inmigracion`,
       languages: {
@@ -28,36 +40,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/servicios/inmigracion`,
       },
     },
-    openGraph: {
+    // El copy social es propio (más corto y con gancho); se conserva tal cual.
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/servicios/inmigracion`,
       title: isEs
         ? 'Defensa de Deportación y Visas | Manuel Solís Law Firm'
         : 'Deportation Defense & Visas | Manuel Solis Law Firm',
       description: isEs
         ? 'Proteja su futuro en EE.UU. con abogados expertos en inmigración.'
         : 'Protect your future in the U.S. with expert immigration attorneys.',
-      url: `${SITE_URL}/${lang}/servicios/inmigracion`,
-      type: 'website',
-      locale: isEs ? 'es_US' : 'en_US',
-      siteName: 'Manuel Solís Law Firm',
       images: [
         {
-          url: `${SITE_URL}/immigration-hero.png`,
-          width: 1200,
-          height: 630,
+          url: '/immigration-hero.png',
           alt: isEs ? 'Abogados de Inmigración Manuel Solís' : 'Manuel Solis Immigration Lawyers',
         },
       ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: isEs
-        ? 'Defensa de Deportación y Visas | Manuel Solís Law Firm'
-        : 'Deportation Defense & Visas | Manuel Solis Law Firm',
-      description: isEs
-        ? 'Proteja su futuro en EE.UU. con abogados expertos en inmigración.'
-        : 'Protect your future in the U.S. with expert immigration attorneys.',
-      images: [`${SITE_URL}/immigration-hero.png`],
-    },
+    }),
   };
 }
 

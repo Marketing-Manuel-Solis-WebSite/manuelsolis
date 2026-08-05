@@ -10,6 +10,7 @@ import {
 
 // IMPORTACIONES
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -32,7 +33,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Parar deportación urgente: Stay of Removal con Visa U o VAWA pendiente',
+    metaTitle: 'Parar deportación urgente: Stay of Removal con Visa U o VAWA',
     metaDesc: '¿Tienes una deportación inminente? Descubre cómo frenar la expulsión con una Visa U o VAWA pendiente y solicitar un Stay of Removal (I-246) ante ICE a tiempo.',
     ui: {
       back: 'Volver al blog',
@@ -140,7 +141,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Stop an Urgent Deportation: Stay of Removal with a Pending U Visa or VAWA',
+    metaTitle: 'Stop an Urgent Deportation: Stay of Removal with U Visa/VAWA',
     metaDesc: 'Facing an imminent deportation? Learn how a pending U Visa or VAWA petition may help pause removal through a Stay of Removal (I-246) with ICE.',
     ui: {
       back: 'Back to blog',
@@ -253,36 +254,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
   
-  const imageUrl = `${SITE_URL}${IMAGES.article}`;
+  const social = buildSocialMetadata({
+    lang: lang === 'en' ? 'en' : 'es',
+    path: `/${lang}/blog/frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria`,
+    title: t.title,
+    description: t.metaDesc,
+    images: [{ url: IMAGES.article, alt: t.title }],
+    type: 'article',
+    publishedTime: '2026-02-10T08:00:00.000Z',
+  });
 
   return {
     title: { absolute: t.metaTitle },
     description: t.metaDesc,
     openGraph: {
-      title: t.title,
-      description: t.metaDesc,
-      url: `${SITE_URL}/${lang}/blog/frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria`,
-      images: [
-        {
-          url: imageUrl, 
-          width: 1200,
-          height: 630,
-          alt: t.title,
-        },
-      ],
+      ...social.openGraph,
+      // Campos article:* que buildSocialMetadata no cubre.
       type: 'article',
-      publishedTime: '2026-02-10T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['Stay of Removal','Deportación inminente','Visa Humanitaria','Visa U','VAWA'],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: t.title,
-      description: t.metaDesc,
-      images: [imageUrl],
-      creator: '@AbogadoMSolis',
-    },
+    twitter: social.twitter,
     alternates: {
       canonical: `${SITE_URL}/${lang}/blog/frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria`,
       languages: {

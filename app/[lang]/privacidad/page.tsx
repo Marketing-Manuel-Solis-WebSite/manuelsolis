@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import PrivacidadClient from './PrivacidadClient';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -16,9 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs ? 'Política de Privacidad' : 'Privacy Policy';
+  // La description resume lo que la página realmente detalla (secciones 1, 5 y
+  // 8): datos recopilados en web y SMS, píxeles de terceros y ejercicio de
+  // derechos. Nada que no esté en PrivacidadClient.
   const description = isEs
-    ? 'Política de privacidad de las Oficinas Legales de Manuel Solís.'
-    : 'Privacy policy of the Law Offices of Manuel Solis.';
+    ? 'Qué datos recopilamos en el sitio y por SMS, qué comparten los píxeles de Meta, Google y TikTok, y cómo pedir acceso, corrección o borrado de su información.'
+    : 'What data we collect on the site and by SMS, what the Meta, Google and TikTok pixels share, and how to request access to, correction, or deletion of your data.';
 
   return {
     title,
@@ -31,6 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/privacidad`,
       },
     },
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/privacidad`,
+      title,
+      description,
+    }),
   };
 }
 

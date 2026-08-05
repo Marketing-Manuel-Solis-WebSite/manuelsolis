@@ -7,9 +7,48 @@ import Footer from '../../../components/Footer';
 import NewsletterSignup from '../../../components/NewsletterSignup';
 import { getNewsletterBySlug, getAllNewsletterSlugs } from '../../../lib/newsletterData';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import { Stagger, StaggerItem } from '../../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
+
+type Bilingual = { es: string; en: string };
+
+/**
+ * Versiones cortas del título (y, donde hacía falta, de la description) para
+ * las SERPs. Los valores de `newsletterData` se renderizan como H1 y entradilla
+ * visibles de la edición, y con el sufijo de marca del layout llegaban a 90
+ * caracteres. Estas solo las ve el buscador; el cuerpo sigue mostrando el
+ * título completo. Un slug sin entrada usa su título tal cual.
+ */
+const SEO_OVERRIDES: Record<string, { title: Bilingual; description?: Bilingual }> = {
+  'abril-2026-actualizaciones-migratorias': {
+    title: {
+      es: 'TPS y DACA: Cambios Migratorios Abril 2026',
+      en: 'TPS and DACA: Immigration Changes April 2026',
+    },
+    description: {
+      es: 'Últimos cambios en políticas migratorias, extensiones de TPS, actualizaciones de DACA y consejos legales para proteger tu estatus en Estados Unidos.',
+      en: 'Learn about the latest immigration policy changes, TPS extensions, DACA updates, and legal tips to protect your status in the United States.',
+    },
+  },
+  'febrero-2026-visa-u-vawa-protecciones': {
+    title: {
+      es: 'Visa U y VAWA: Protección para Víctimas',
+      en: 'U Visa and VAWA: Protection for Crime Victims',
+    },
+  },
+  'marzo-2026-derechos-laborales-inmigrantes': {
+    title: {
+      es: 'Derechos Laborales para Inmigrantes en 2026',
+      en: 'Labor Rights for Immigrants in 2026',
+    },
+    description: {
+      es: 'Conoce tus derechos laborales como inmigrante en EE.UU.: permisos de trabajo, protecciones contra el abuso laboral y cómo reportar violaciones.',
+      en: 'Know your labor rights as an immigrant in the United States: work permits, protections against workplace abuse, and how to report violations.',
+    },
+  },
+};
 
 type Props = {
   params: Promise<{ lang: string; slug: string }>;
@@ -29,8 +68,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!nl) return {};
 
   const isEs = lang === 'es';
-  const title = nl.title[isEs ? 'es' : 'en'];
-  const description = nl.description[isEs ? 'es' : 'en'];
+  const locale = isEs ? 'es' : 'en';
+  const seo = SEO_OVERRIDES[slug];
+  const title = seo?.title[locale] ?? nl.title[locale];
+  const description = seo?.description?.[locale] ?? nl.description[locale];
 
   return {
     // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
@@ -44,18 +85,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/newsletter/${slug}`,
       },
     },
-    openGraph: {
-      title,
-      description,
-      url: `${SITE_URL}/${lang}/newsletter/${slug}`,
-      siteName: 'Manuel Solis Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
+    ...buildSocialMetadata({
+      lang: locale,
+      path: `/${lang}/newsletter/${slug}`,
+      // En redes gana el título completo de la edición: ahí no hay límite de
+      // 60 caracteres y el recorte solo existe para las SERPs.
+      title: nl.title[locale],
+      description: nl.description[locale],
       type: 'article',
       publishedTime: nl.date,
-      // El openGraph propio reemplaza al del layout (merge shallow): sin esto
-      // las ediciones no emiten og:image.
-      images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: title }],
-    },
+      images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: nl.title[locale] }],
+    }),
   };
 }
 

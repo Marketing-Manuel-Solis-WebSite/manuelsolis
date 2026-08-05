@@ -11,6 +11,7 @@ import {
 
 // IMPORTACIONES
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -34,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Barras de 3 y 10 Años por Presencia Ilegal: Qué Son y Cómo Evitarlas',
+    metaTitle: 'Barras de 3 y 10 Años: Presencia Ilegal y Cómo Evitarlas',
     metaDesc: '¿Saliste de EE. UU. después de estar sin papeles? Conoce las barras de 3 años, 10 años y permanente, el perdón I-601A y cómo protegerte.',
     ui: {
       back: 'Volver al blog',
@@ -182,7 +183,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: '3 and 10 Year Bars for Unlawful Presence: What They Are and How to Avoid Them',
+    metaTitle: '3 and 10 Year Bars: Unlawful Presence and How to Avoid Them',
     metaDesc: 'Did you leave the U.S. after being undocumented? Learn about the 3-year, 10-year, and permanent bars, the I-601A waiver, and how to protect yourself.',
     ui: {
       back: 'Back to blog',
@@ -335,36 +336,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const imageUrl = `${SITE_URL}${IMAGES.article}`;
+  const social = buildSocialMetadata({
+    lang: lang === 'en' ? 'en' : 'es',
+    path: `/${lang}/blog/barras-3-10-anos-presencia-ilegal`,
+    title: t.title,
+    description: t.metaDesc,
+    images: [{ url: IMAGES.article, alt: t.title }],
+    type: 'article',
+    publishedTime: '2026-04-22T08:00:00.000Z',
+  });
 
   return {
     title: { absolute: t.metaTitle },
     description: t.metaDesc,
     openGraph: {
-      title: t.title,
-      description: t.metaDesc,
-      url: `${SITE_URL}/${lang}/blog/barras-3-10-anos-presencia-ilegal`,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: t.title,
-        },
-      ],
+      ...social.openGraph,
+      // Campos article:* que buildSocialMetadata no cubre.
       type: 'article',
-      publishedTime: '2026-04-22T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['Barras', 'Presencia Ilegal', 'I-601A', 'Deportación', 'Castigo 10 Años'],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: t.title,
-      description: t.metaDesc,
-      images: [imageUrl],
-      creator: '@AbogadoMSolis',
-    },
+    twitter: social.twitter,
     alternates: {
       canonical: `${SITE_URL}/${lang}/blog/barras-3-10-anos-presencia-ilegal`,
       languages: {

@@ -3,6 +3,7 @@ import type { ElementType } from 'react';
 import Link from 'next/link';
 import { MapPin, Phone, Building2, ChevronDown } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 import { VIRTUAL_OFFICE_SLUGS, isVirtualOffice } from '../../lib/officesRegistry';
 import { OFFICES_NAP, OFFICE_NAP_SLUGS, type OfficeNapSlug } from '../../components/officesPhoneMap';
 import Header from '../../components/Header';
@@ -92,8 +93,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Our Offices in ${STATE_COUNT} States`;
 
   const description = isEs
-    ? `Encuentre la oficina del Abogado Manuel Solis mas cercana. ${STAFFED_OFFICES} oficinas atendidas y ${APPOINTMENT_LOCATIONS} direcciones con cita previa en Texas, California, Illinois, Colorado y Tennessee. Abogados de inmigracion y accidentes.`
-    : `Find the nearest Manuel Solis Law Office. ${STAFFED_OFFICES} staffed offices and ${APPOINTMENT_LOCATIONS} by-appointment locations across Texas, California, Illinois, Colorado, and Tennessee. Immigration and accident attorneys.`;
+    ? `Encuentre la oficina de Manuel Solis mas cercana: ${STAFFED_OFFICES} oficinas atendidas y ${APPOINTMENT_LOCATIONS} direcciones con cita previa en Texas, California, Illinois, Colorado y Tennessee.`
+    : `Find your nearest Manuel Solis Law Office: ${STAFFED_OFFICES} staffed offices and ${APPOINTMENT_LOCATIONS} by-appointment locations in Texas, California, Illinois, Colorado, and Tennessee.`;
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -107,15 +108,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/oficinas`,
       },
     },
-    openGraph: {
+    // El índice no tiene foto propia: se queda con la imagen de marca que el
+    // helper pone por defecto.
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/oficinas`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/oficinas`,
-      type: 'website',
-      siteName: 'Manuel Solis Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: title }],
-    },
+    }),
   };
 }
 

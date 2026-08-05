@@ -4,6 +4,8 @@ import Hero from '../components/Hero';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FraudWarningBanner from '../components/FraudWarningBanner';
+import { buildSocialMetadata } from '../lib/seoMetadata';
+import { buildPageVideoSchemas, HOME_PAGE_VIDEOS } from '../lib/videoSchema';
 
 // ISR: regenerar cada hora para mantener fresh sin SSR cost
 export const revalidate = 3600;
@@ -22,14 +24,31 @@ export async function generateMetadata({
     ? 'Abogados de Inmigración y Accidentes en Houston, TX'
     : 'Immigration & Accident Attorneys in Houston, TX';
 
+  // 160 caracteres es lo que Google muestra antes de truncar; la anterior tenía
+  // 175 y perdía justo el listado de oficinas.
   const description = isEs
-    ? 'Más de 35 años defendiendo los derechos de inmigrantes. 50,000+ casos ganados. Inmigración, accidentes, ley criminal y familia. Oficinas en Houston, Dallas, Chicago, LA y más.'
-    : 'Over 35 years defending immigrant rights. 50,000+ cases won. Immigration, accidents, criminal defense & family law. Offices in Houston, Dallas, Chicago, LA & more.';
+    ? 'Abogados de inmigración y accidentes con más de 35 años de experiencia. Oficinas en Houston, Dallas, Chicago, Los Ángeles, Denver y Memphis.'
+    : 'Immigration and accident attorneys with over 35 years of experience. Offices in Houston, Dallas, Chicago, Los Angeles, Denver and Memphis.';
+
+  const social = buildSocialMetadata({
+    lang: isEs ? 'es' : 'en',
+    path: `/${lang}`,
+    title,
+    description,
+    images: [
+      {
+        url: '/og-default.jpg',
+        alt: isEs ? 'Oficinas Legales de Manuel Solís' : 'Manuel Solis Law Offices',
+      },
+    ],
+  });
 
   return {
-    title: { absolute: isEs
-      ? 'Manuel Solís — Abogados de Inmigración y Accidentes | Houston, TX'
-      : 'Manuel Solis — Immigration & Accident Attorneys | Houston, TX',
+    // 60 caracteres: la versión anterior llegaba a 65 y Google la cortaba.
+    title: {
+      absolute: isEs
+        ? 'Abogados de Inmigración y Accidentes | Manuel Solís'
+        : 'Immigration & Accident Attorneys | Manuel Solis',
     },
     description,
     alternates: {
@@ -40,27 +59,7 @@ export async function generateMetadata({
         'x-default': `${SITE_URL}/es`,
       },
     },
-    openGraph: {
-      title,
-      description,
-      url: `${SITE_URL}/${lang}`,
-      type: 'website',
-      images: [
-        {
-          url: '/og-default.jpg',
-          width: 1200,
-          height: 630,
-          alt: isEs
-            ? 'Oficinas Legales de Manuel Solís'
-            : 'Manuel Solis Law Offices',
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
+    ...social,
   };
 }
 
@@ -99,9 +98,25 @@ export default async function Home({
 }) {
   const { lang } = await params;
   const currentLang = lang === 'en' ? 'en' : 'es';
+  // El episodio de "Uniendo Familias" y el testimonio que la portada incrusta
+  // son vídeos reales de YouTube: VideoObject los hace elegibles para el
+  // carrusel de vídeo de Google.
+  const videoSchemas = buildPageVideoSchemas({
+    videos: HOME_PAGE_VIDEOS,
+    lang: currentLang,
+    pagePath: `/${currentLang}`,
+  });
 
   return (
     <div className="min-h-screen bg-[#001540] grain">
+      {videoSchemas.map((schema, i) => (
+        <script
+          key={i}
+          id={`home-video-schema-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <Header />
       <main id="main-content" tabIndex={-1}>
         <Hero lang={currentLang} />

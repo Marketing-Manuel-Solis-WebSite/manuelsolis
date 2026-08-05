@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import NewsletterSignup from '../../components/NewsletterSignup';
 import { newsletters } from '../../lib/newsletterData';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 import { Reveal, Stagger, StaggerItem } from '../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -18,13 +19,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  const title = isEs ? 'Newsletter de Inmigración' : 'Immigration Newsletter';
+  const description = isEs
+    ? 'Suscríbete al boletín gratuito de inmigración: actualizaciones de TPS, DACA y VAWA, cambios de política migratoria y consejos legales de nuestros abogados.'
+    : 'Subscribe to our free immigration newsletter. Get updates on TPS, DACA, VAWA, immigration policy changes, and legal tips from our attorneys.';
+
   return {
-    title: isEs
-      ? 'Newsletter de Inmigración'
-      : 'Immigration Newsletter',
-    description: isEs
-      ? 'Suscríbete a nuestro newsletter gratuito de inmigración. Recibe actualizaciones sobre TPS, DACA, VAWA, cambios de política migratoria y consejos legales de nuestros abogados.'
-      : 'Subscribe to our free immigration newsletter. Get updates on TPS, DACA, VAWA, immigration policy changes, and legal tips from our attorneys.',
+    title,
+    description,
     alternates: {
       canonical: `${SITE_URL}/${lang}/newsletter`,
       languages: {
@@ -33,18 +35,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/newsletter`,
       },
     },
-    openGraph: {
-      title: isEs
-        ? 'Newsletter de Inmigración | Manuel Solis Law'
-        : 'Immigration Newsletter | Manuel Solis Law',
-      description: isEs
-        ? 'Actualizaciones legales de inmigración directamente en tu correo'
-        : 'Immigration legal updates delivered to your inbox',
-      url: `${SITE_URL}/${lang}/newsletter`,
-      siteName: 'Manuel Solis Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      type: 'website',
-    },
+    // El helper aporta la imagen de marca: el openGraph escrito a mano que había
+    // aquí no declaraba ninguna, así que el índice se compartía sin og:image.
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/newsletter`,
+      title,
+      description,
+    }),
   };
 }
 

@@ -20,6 +20,11 @@ export interface Attorney {
   role: { es: string; en: string };
   practice?: AttorneyPractice;
   bio: { es: string[]; en: string[] };
+  // Meta description del perfil. Existe porque `bio[0]` es un párrafo visible
+  // que en varios abogados pasa de los 300 caracteres y Google corta a ~160:
+  // aquí va la versión de 140-160 con los mismos datos de la bio, sin tocarla.
+  // Sin este campo el metadato sigue cayendo a `bio[0]`.
+  seoDescription?: { es: string; en: string };
   quote: { es: string; en: string };
   education: TranslatableString[];
   admissions: TranslatableString[];
@@ -84,6 +89,10 @@ export const attorneys: Attorney[] = [
         "Many immigrants risk their own lives in order to fight for the well-being of their families. I feel enormously blessed to serve as a tool to fulfill their dreams and goals in this great country of opportunity."
       ]
     },
+    seoDescription: {
+      es: 'Manuel Solís, abogado fundador con casi tres décadas defendiendo a inmigrantes en EE. UU. Conozca su trayectoria, su formación y cómo contactarlo.',
+      en: 'Manuel Solis, founding attorney with nearly three decades defending immigrants in the U.S. See his career, his credentials and how to reach him.'
+    },
     quote: {
       es: "Me siento enormemente bendecido por servir de herramienta para cumplir sus sueños.",
       en: "I feel enormously blessed to serve as a tool to fulfill their dreams."
@@ -109,6 +118,10 @@ export const attorneys: Attorney[] = [
         "Manuel E. Solís III primarily handles immigration law at the Law Offices of Manuel Solís. He graduated from the University of Houston Downtown and completed his law degree at South Texas College of Law Houston.",
         "Manuel E. Solís III is passionate about helping the community and people in need."
       ]
+    },
+    seoDescription: {
+      es: 'Manuel E. Solís III se dedica a la ley de inmigración en Houston. Graduado de South Texas College of Law: vea su formación y cómo contactarlo.',
+      en: 'Manuel E. Solis III handles immigration law in Houston. A South Texas College of Law graduate: see his background, his focus and how to reach him.'
     },
     education: ["Universidad de Houston Downtown", "South Texas College of Law Houston"],
     admissions: ["Texas"],
@@ -163,6 +176,10 @@ export const attorneys: Attorney[] = [
         "National litigation partner. Focuses his practice on personal injury, accidents, and medical malpractice. He has been lead counsel in approximately 50 jury trials.",
         "He believes in integrity, hard work, passion, competence, and humility."
       ]
+    },
+    seoDescription: {
+      es: 'Andrew Fink, socio de litigio en Chicago: lesiones personales, accidentes y negligencia médica. Abogado principal en unos 50 juicios con jurado.',
+      en: 'Andrew Fink, litigation partner in Chicago: personal injury, accidents and medical malpractice. Lead counsel in approximately 50 jury trials.'
     },
     education: ["Juris Doctor - Marquette University (1994)", "MBA Lake Superior State Univ"],
     admissions: ["Illinois", "Wisconsin", "American Association of Justice"],
@@ -245,6 +262,10 @@ export const attorneys: Attorney[] = [
         "His focus is on family-based immigration and defense against deportation."
       ]
     },
+    seoDescription: {
+      es: 'Mark McBroom ejerce inmigración en Dallas: casos familiares y defensa contra la deportación. Doctorado por la Universidad Metodista del Sur.',
+      en: 'Mark McBroom practices immigration law in Dallas: family-based cases and deportation defense. Juris Doctor from Southern Methodist University.'
+    },
     education: ["Southern Methodist University Dedman School of Law", "University of North Texas"],
     admissions: ["Texas"],
     quote: {
@@ -297,6 +318,10 @@ export const attorneys: Attorney[] = [
         "He primarily practices immigration and deportation law in the Arvada office, in the Denver metro area. He takes the time to give an honest assessment of each situation."
       ]
     },
+    seoDescription: {
+      es: 'Edwin Zavala atiende casos de inmigración y deportación en Arvada, área de Denver. Es Juris Doctor cum laude por Loyola University New Orleans.',
+      en: 'Edwin Zavala handles immigration and deportation cases in Arvada, in the Denver metro area. Juris Doctor cum laude from Loyola University New Orleans.'
+    },
     education: ["Loyola University New Orleans College of Law", "Louisiana State University"],
     admissions: ["Colorado Bar Association", { es: "Tribunal de Distrito de EE. UU. (Colorado)", en: "United States District Court (Colorado)" }],
     quote: {
@@ -322,6 +347,10 @@ export const attorneys: Attorney[] = [
         "Committed to the immigrant community, Alejandro practices in the Houston office. He grew up in the Rio Grande Valley, strengthening his connection to the communities he defends.",
         "He obtained his degree from South Texas College of Law in 2017. His practice focuses primarily on Immigration Law and defense before the EOIR."
       ]
+    },
+    seoDescription: {
+      es: 'Alejandro Manzano ejerce inmigración en Houston y defiende casos ante la EOIR. Creció en el Valle del Río Grande, cerca de la comunidad que defiende.',
+      en: 'Alejandro Manzano practices immigration law in Houston and defends cases before the EOIR. He grew up in the Rio Grande Valley, close to those he defends.'
     },
     education: [
       "South Texas College of Law (2017)",
@@ -357,6 +386,10 @@ export const attorneys: Attorney[] = [
         "He joined the firm in 2019, bringing extensive experience in criminal litigation and rights defense."
       ]
     },
+    seoDescription: {
+      es: 'Victor Rojas, abogado penal y de inmigración en El Paso. Fue Defensor Público y se unió a la firma en 2019 con amplio recorrido en litigio penal.',
+      en: 'Victor Rojas, criminal and immigration attorney in El Paso. A former Public Defender, he joined the firm in 2019 with extensive trial experience.'
+    },
     education: ["La Interamericana Law School of Puerto Rico (2003)"],
     admissions: [
       { es: "Puerto Rico (Litigante)", en: "Puerto Rico (Litigator)" },
@@ -385,6 +418,10 @@ export const attorneys: Attorney[] = [
         "His practice focuses on representing those injured in maritime and motor vehicle accidents. He has prior experience in insurance defense, which gives him a strategic advantage in negotiations.",
         "Deep knowledge of maritime law and civil litigation."
       ]
+    },
+    seoDescription: {
+      es: 'Austen Gunnels representa desde Houston a heridos en accidentes marítimos y de vehículos. Su experiencia previa en defensa de seguros da ventaja.',
+      en: 'Austen Gunnels represents people injured in maritime and vehicle accidents from Houston. His prior insurance defense experience is an advantage.'
     },
     education: [
       { es: "Doctor en Jurisprudencia - South Texas College of Law Houston", en: "Juris Doctor - South Texas College of Law Houston" },
@@ -419,6 +456,10 @@ export const attorneys: Attorney[] = [
         "He graduated from South Texas College of Law in 2019. He specializes in personal injury, insurance, and immigration."
       ]
     },
+    seoDescription: {
+      es: 'Gabriel Perez, abogado de lesiones personales, seguros e inmigración en Houston. Empezó como asistente legal y se graduó de South Texas College of Law.',
+      en: 'Gabriel Perez, personal injury, insurance and immigration attorney in Houston. He started as a legal assistant and graduated from South Texas College of Law.'
+    },
     education: [
       "South Texas College of Law Houston (2019)",
       { es: "Universidad de Houston", en: "University of Houston" }
@@ -443,6 +484,10 @@ export const attorneys: Attorney[] = [
         "She practices in Memphis with a passion for the Hispanic community. She was President of the Hispanic Law Student Association and winner of the 2021 Champion of Justice award.",
         "Her vocation stems from the desire to provide representation to those who cannot defend themselves."
       ]
+    },
+    seoDescription: {
+      es: 'Sara James ejerce en Memphis con pasión por la comunidad hispana. Ganó el premio Champion of Justice 2021 y tiene un JD por la University of Memphis.',
+      en: 'Sara James practices in Memphis with a passion for the Hispanic community. 2021 Champion of Justice award and a JD from the University of Memphis.'
     },
     education: [
       "University of Memphis Cecil C. Humphreys School of Law (JD)",
@@ -469,6 +514,10 @@ export const attorneys: Attorney[] = [
         "He was an Equal Justice Works Fellow, committed to serving historically marginalized communities."
       ]
     },
+    seoDescription: {
+      es: 'Eduardo Garcia ejerce en Chicago. Fue profesor de Historia y becario de Equal Justice Works; tiene un JD por la University of New Mexico School of Law.',
+      en: 'Eduardo Garcia practices in Chicago. A former History teacher and Equal Justice Works Fellow, he holds a JD from University of New Mexico School of Law.'
+    },
     education: [
       "University of New Mexico School of Law (JD)",
       "University of Texas at El Paso (UTEP)"
@@ -493,6 +542,10 @@ export const attorneys: Attorney[] = [
         "Native of the Rio Grande Valley, Texas. Daughter of migrant farm workers. This family history gave her a deep admiration for the immigrant community.",
         "She obtained her JD from the University of Denver Sturm College of Law."
       ]
+    },
+    seoDescription: {
+      es: 'Alexis Alvarez, abogada en Houston e hija de trabajadores agrícolas migrantes. Obtuvo su JD en la Universidad de Denver (Sturm College of Law).',
+      en: 'Alexis Alvarez, attorney in Houston and daughter of migrant farm workers. She earned her JD at the University of Denver Sturm College of Law.'
     },
     education: [
       { es: "Universidad de Denver (Sturm College of Law)", en: "University of Denver (Sturm College of Law)" },
@@ -523,6 +576,10 @@ export const attorneys: Attorney[] = [
         "He holds a degree in History and Russian Studies."
       ]
     },
+    seoDescription: {
+      es: 'Edward S. Reisman ejerce inmigración en Los Ángeles. JD de Georgetown y experiencia previa en el INS, que le da una visión única del sistema.',
+      en: 'Edward S. Reisman practices immigration law in Los Angeles. A Georgetown JD with prior INS experience that gives him unique insight into the system.'
+    },
     education: [
       "Georgetown University Law Center (JD)",
       "University of Rochester"
@@ -539,7 +596,11 @@ export const attorneys: Attorney[] = [
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Stephanie.png',
     role: { es: 'Abogada', en: 'Attorney' },
     practice: {
-      label: { es: 'Abogada de Inmigración y Litigio Civil', en: 'Immigration and Civil Litigation Attorney' },
+      // Etiqueta recortada a propósito: con un nombre de 25 caracteres, la
+      // versión larga ("Abogada de Inmigración y Litigio Civil") dejaba el
+      // título de la página en 81 caracteres y Google lo cortaba antes de la
+      // especialidad. Sigue nombrando sus dos áreas reales.
+      label: { es: 'Abogada Civil y de Inmigración', en: 'Civil and Immigration Attorney' },
       topics: ['Immigration Law', 'Civil Litigation', 'Family Law']
     },
     bio: {
@@ -557,6 +618,10 @@ export const attorneys: Attorney[] = [
         "She is admitted to the Puerto Rico Bar and is authorized to practice before the U.S. District Court for the District of Puerto Rico.",
         "Stephanie represents her clients with dedication, knowing that each case represents a story, a family, and a future full of possibilities. Her vocation is to fight for those who need a firm voice by their side."
       ]
+    },
+    seoDescription: {
+      es: 'Stephanie L. García Vidal ejerce en Dallas: 17+ años en litigio civil, administrativo y de familia, y especialización en derecho migratorio.',
+      en: 'Stephanie L. Garcia Vidal practices in Dallas: 17+ years in civil, administrative and family litigation, plus a specialization in immigration law.'
     },
     education: [
       { es: "University of Rochester (Licenciatura en Ciencias Políticas con concentración en Estudios Legales)", en: "University of Rochester (Bachelor's in Political Science with concentration in Legal Studies)" },
@@ -592,6 +657,10 @@ export const attorneys: Attorney[] = [
         "She combines her legal training with a special sensitivity to her clients' needs. Her warm and strategic approach turns each representation into a true alliance in pursuit of justice."
       ]
     },
+    seoDescription: {
+      es: 'Lupita Valenzuela Martinez ejerce en Memphis. JD y Certificado en Abogacía por la University of Memphis; autorizada en Tennessee y Missouri.',
+      en: 'Lupita Valenzuela Martinez practices in Memphis. JD and Certificate in Advocacy from the University of Memphis; licensed in Tennessee and Missouri.'
+    },
     education: [
       { es: "University of Memphis Cecil C. Humphreys School of Law (JD y Certificado en Abogacía)", en: "University of Memphis Cecil C. Humphreys School of Law (JD and Certificate in Advocacy)" }
     ],
@@ -620,6 +689,10 @@ export const attorneys: Attorney[] = [
         "Roberto García was born and raised in Memphis, Tennessee, in an immigrant household. That experience shaped his calling and led him to dedicate his career to families seeking stability and a place to call home in the United States.",
         "He graduated from Cecil C. Humphreys School of Law and began practicing law in 2019. He hopes to help as many people as he can to remain where they feel safe and at home."
       ]
+    },
+    seoDescription: {
+      es: 'Roberto García creció en un hogar de inmigrantes en Memphis y ejerce allí desde 2019, tras graduarse de la Cecil C. Humphreys School of Law.',
+      en: 'Roberto Garcia grew up in an immigrant household in Memphis and has practiced there since 2019, after graduating from Cecil C. Humphreys School of Law.'
     },
     quote: {
       es: "Es un privilegio acompañarte a alcanzar tu sueño americano.",

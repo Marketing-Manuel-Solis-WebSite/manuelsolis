@@ -522,8 +522,8 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     h1: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
     metaTitle: { es: 'Abogado de Inmigración en Houston, TX', en: 'Immigration Lawyer in Houston, TX' },
     metaDescription: {
-      es: 'Abogados de inmigración en Houston con 35+ años de experiencia. Residencia, ciudadanía, deportación, Visa U, VAWA y asilo. 3 oficinas en Houston. Llame: (713) 701-1731.',
-      en: 'Immigration lawyers in Houston with 35+ years of experience. Residency, citizenship, deportation, U Visa, VAWA and asylum. 3 offices in Houston. Call: (713) 701-1731.',
+      es: 'Abogados de inmigración en Houston: residencia, ciudadanía, deportación, Visa U, VAWA y asilo. 3 oficinas propias y 35+ años. Llame: (713) 701-1731.',
+      en: 'Immigration lawyers in Houston: residency, citizenship, deportation, U Visa, VAWA and asylum. 3 offices, 35+ years of experience. Call: (713) 701-1731.',
     },
     intro: {
       es: 'Houston es el hogar de una de las comunidades inmigrantes más grandes de Estados Unidos. En Manuel Solís, hemos representado a miles de familias del área metropolitana de Houston desde 1990. Con tres oficinas propias en la ciudad —dos en Navigation Blvd y una en Bellaire Blvd— estamos cerca de usted para ofrecer asesoría legal migratoria personalizada. Nuestro equipo bilingüe entiende los desafíos únicos que enfrentan los inmigrantes en el área de Houston y trabaja incansablemente para proteger sus derechos.',

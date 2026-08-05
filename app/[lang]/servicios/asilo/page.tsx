@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import AsiloClient from './AsiloClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -17,8 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'Political Asylum Lawyers in the U.S.';
 
   const description = isEs
-    ? 'Abogados de asilo con experiencia en persecución por raza, religión, grupo social y opinión política. Representación en entrevistas de miedo creíble y corte de inmigración.'
-    : 'Asylum attorneys experienced in persecution by race, religion, social group, and political opinion. Representation at credible fear interviews and immigration court.';
+    ? 'Abogados de asilo político: persecución por raza, religión, grupo social u opinión política. Entrevistas de miedo creíble y corte de inmigración.'
+    : 'Political asylum attorneys: persecution by race, religion, social group, or political opinion. Credible fear interviews and immigration court.';
 
   return {
     title,
@@ -31,12 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/servicios/asilo`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/servicios/asilo`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/servicios/asilo`,
-      images: ['/og-default.jpg'],
-    },
+    }),
   };
 }
 

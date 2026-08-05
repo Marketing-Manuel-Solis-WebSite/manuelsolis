@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SLUG = 'losangeles';
 
@@ -46,13 +47,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `https://www.manuelsolis.com/es/oficinas/losangeles`,
       },
     },
-    openGraph: {
+    // Dimensiones = las del PNG real en public/offices (no el 1200x630 nominal).
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/oficinas/losangeles`,
       title,
       description,
-      url: `https://www.manuelsolis.com/${lang}/oficinas/losangeles`,
-      images: ['/offices/los-angeles.png'],
-      type: 'website', 
-    }
+      images: [{ url: '/offices/los-angeles.png', width: 1200, height: 900 }],
+    }),
   };
 }
 

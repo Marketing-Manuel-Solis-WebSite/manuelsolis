@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 import AbogadosClient from './AbogadosClient';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? 'Nuestro Equipo de Abogados — 35+ Años'
     : 'Our Attorney Team — 35+ Years';
   const description = isEs
-    ? 'Conozca al equipo legal de Manuel Solís. Abogados bilingües especializados en inmigración, accidentes, defensa criminal y derecho de familia. Más de 50,000 casos ganados.'
+    ? 'Conozca al equipo legal de Manuel Solís: abogados bilingües en inmigración, accidentes, defensa criminal y derecho de familia. 50,000+ casos ganados.'
     : 'Meet the Manuel Solis legal team. Bilingual attorneys specializing in immigration, accidents, criminal defense and family law. Over 50,000 cases won.';
 
   return {
@@ -33,6 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/abogados`,
       },
     },
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/abogados`,
+      title,
+      description,
+    }),
   };
 }
 
