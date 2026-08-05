@@ -260,7 +260,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     authors: [{ name: 'Manuel Solis Law Firm' }],
     creator: 'Manuel Solis',
     publisher: 'Manuel Solis Law Firm',
-    
+
+    // Verificación de propiedad para Search Console y Bing, por meta etiqueta.
+    //
+    // Existe porque la vía del registro TXT está fuera de nuestro alcance: el
+    // DNS de manuelsolis.com no está en Vercel sino en GoDaddy
+    // (ns07/ns08.domaincontrol.com), así que ni el CLI de Vercel ni este repo
+    // pueden tocar los registros. La meta etiqueta verifica una propiedad de
+    // tipo "prefijo de URL", que es lo que hace falta para leer datos de
+    // rendimiento en Search Console, y se despliega con el sitio.
+    //
+    // Para activarla basta poner la variable en Vercel; sin ella no se emite
+    // ninguna etiqueta, así que no deja rastro en el HTML mientras esté vacía.
+    // El token lo da Search Console en Configuración → Propiedad → Etiqueta HTML
+    // (el valor del atributo `content`, no la etiqueta entera).
+    verification: {
+      ...(process.env.GOOGLE_SITE_VERIFICATION
+        ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+        : {}),
+      ...(process.env.BING_SITE_VERIFICATION
+        ? { other: { 'msvalidate.01': process.env.BING_SITE_VERIFICATION } }
+        : {}),
+    },
+
+
     icons: {
       icon: [
         { url: '/favicon.ico', sizes: 'any' },
