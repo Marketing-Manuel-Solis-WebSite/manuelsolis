@@ -20,7 +20,8 @@ export default function Footer() {
     { name: language === 'es' ? 'ABOGADOS' : 'ATTORNEYS', href: `/${language}/abogados` },
     { name: language === 'es' ? 'COLABORADORES' : 'COLLABORATORS', href: `/${language}/colaboradores` },
     { name: language === 'es' ? 'OFICINAS' : 'OFFICES', href: `/${language}/oficinas` },
-    { name: language === 'es' ? 'INFORMACIÓN' : 'INFORMATION', href: `/${language}/nosotros` },
+    // El anchor nombra el destino (/nosotros); "INFORMACIÓN" no decía a dónde llevaba.
+    { name: language === 'es' ? 'NOSOTROS' : 'ABOUT US', href: `/${language}/nosotros` },
     { name: language === 'es' ? 'BLOG' : 'BLOG', href: `/${language}/blog` },
     { name: 'NEWSLETTER', href: `/${language}/newsletter` },
   ]
@@ -58,9 +59,12 @@ export default function Footer() {
           <Link href={`/${language}`} className="inline-block mb-10 group relative">
             {/* Blur reducido */}
             <div className={`absolute -inset-4 bg-[#B2904D]/10 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+            {/* El enlace no tiene texto: este alt es su único nombre accesible y el
+                único anchor que Google lee, así que nombra el destino (la portada),
+                no solo la marca. */}
             <Image
               src="/logo-manuel-solis.png"
-              alt="Logo Manuel Solis"
+              alt={language === 'es' ? 'Manuel Solis Law Firm — Página de inicio' : 'Manuel Solis Law Firm — Home page'}
               width={300}
               height={90}
               className="h-24 w-auto relative z-10 drop-shadow-lg"

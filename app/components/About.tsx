@@ -97,7 +97,9 @@ export default function About({ lang }: { lang: Language }) {
               >
                 <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out" />
                 <span className="relative flex items-center gap-3">
-                  {isEs ? 'Conozca Más' : 'Learn More'}
+                  {/* El anchor dice a dónde lleva: "Conozca más" no aporta nada
+                      ni a Google ni a quien navega por enlaces con un lector. */}
+                  {isEs ? 'Ver testimonios de clientes' : 'See client testimonials'}
                   <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#B2904D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </span>
               </a>

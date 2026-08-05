@@ -5,6 +5,7 @@ import Footer from '../../../components/Footer'
 import ContactForm from '../../../components/ContactForm' 
 import { ChevronDown } from 'lucide-react'
 import React from 'react'
+import Link from 'next/link'
 import { useLanguage } from '../../../context/LanguageContext'
 import { m } from 'framer-motion';
 import Image from 'next/image';
@@ -548,6 +549,24 @@ export default function FAQClient() {
             {faqDataBilingual.immigrationLaw.map((item, index) => (
               <Accordion key={index} item={item} lang={lang} />
             ))}
+
+            {/* Único enlace en contenido a /informacion/recursos: hasta ahora esa
+                página solo se alcanzaba por el sitemap, y este es el bloque del
+                sitio con el mismo formato pregunta-respuesta. */}
+            <div className="mt-8 border-l-4 border-[#B2904D] pl-5 py-1">
+              <p className="text-blue-100/70 font-light leading-relaxed mb-2">
+                {lang === 'es'
+                  ? 'Sobre la ciudadanía: el examen de civismo tiene su propio banco de preguntas, con las respuestas aceptadas en español e inglés.'
+                  : 'About citizenship: the civics test has its own question bank, with the accepted answers in English and Spanish.'}
+              </p>
+              <Link
+                href={`/${lang}/informacion/recursos`}
+                className="inline-flex items-center gap-2 text-[#B2904D] font-medium hover:text-white transition-colors"
+              >
+                {lang === 'es' ? 'Preguntas del examen de ciudadanía' : 'Citizenship test questions'}
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
           </div>
         
           {/* LEY SEGUROS */}

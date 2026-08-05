@@ -12,6 +12,16 @@ type Message = {
   content: string;
 };
 
+// Cuando el asistente no puede responder, la salida útil es una vía de contacto
+// real, no un "error de conexión": quien escribe aquí tiene una duda legal y el
+// despacho pierde la consulta si el chat solo se disculpa. El teléfono es el de
+// la oficina principal (officesPhoneMap: houston-principal) y el WhatsApp el
+// mismo del botón flotante.
+const FALLBACK_MESSAGE = {
+  es: 'Ahora mismo no puedo responder por aquí, pero no se quede sin respuesta: llámenos al (713) 701-1731 o escríbanos por WhatsApp al (713) 876-3560 y un miembro del equipo le atiende. También puede dejar sus datos en el formulario de consulta y le contactamos nosotros.',
+  en: 'I cannot reply here right now, but do not stay without an answer: call us at (713) 701-1731 or message us on WhatsApp at (713) 876-3560 and a team member will help you. You can also leave your details in the consultation form and we will contact you.',
+} as const;
+
 export default function AIChatButton() {
   const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
@@ -100,20 +110,10 @@ export default function AIChatButton() {
       if (data.success) {
         setMessages(prev => [...prev, { role: 'assistant', content: data.message }]);
       } else {
-        setMessages(prev => [...prev, { 
-          role: 'assistant', 
-          content: language === 'es' 
-            ? 'Lo siento, hubo un error de conexión. Por favor intenta de nuevo.' 
-            : 'Sorry, there was a connection error. Please try again.' 
-        }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: FALLBACK_MESSAGE[language === 'es' ? 'es' : 'en'] }]);
       }
-    } catch (error) {
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: language === 'es'
-          ? 'Error de conexión. Verifica tu internet.'
-          : 'Connection error. Please check your internet.'
-      }]);
+    } catch {
+      setMessages(prev => [...prev, { role: 'assistant', content: FALLBACK_MESSAGE[language === 'es' ? 'es' : 'en'] }]);
     } finally {
       setLoading(false);
     }

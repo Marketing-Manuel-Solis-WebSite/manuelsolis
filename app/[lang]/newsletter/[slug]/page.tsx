@@ -5,12 +5,24 @@ import { notFound } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import NewsletterSignup from '../../../components/NewsletterSignup';
-import { getNewsletterBySlug, getAllNewsletterSlugs } from '../../../lib/newsletterData';
+import { getNewsletterBySlug, getAllNewsletterSlugs, NEWSLETTER_IMAGE } from '../../../lib/newsletterData';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import { Stagger, StaggerItem } from '../../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
+
+/**
+ * Firma del boletín. Las ediciones no llevan autor individual —las escribe el
+ * despacho, no un abogado concreto—, así que `author` y `publisher` referencian
+ * por @id el nodo Organization que el layout emite en todas las páginas, en vez
+ * de declarar aquí una entidad anónima que Google contaría como otra empresa.
+ */
+const PUBLISHING_ORG = {
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'Manuel Solis Law Firm',
+};
 
 type Bilingual = { es: string; en: string };
 
@@ -94,7 +106,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: nl.description[locale],
       type: 'article',
       publishedTime: nl.date,
-      images: [{ url: '/og-default.jpg', width: 1200, height: 630, alt: nl.title[locale] }],
+      images: [{ url: NEWSLETTER_IMAGE, width: 1200, height: 630, alt: nl.title[locale] }],
     }),
   };
 }
@@ -110,9 +122,13 @@ export default async function NewsletterEditionPage({ params }: Props) {
   const topics = nl.topics[isEs ? 'es' : 'en'];
   const sections = nl.content[isEs ? 'es' : 'en'];
 
+  // `timeZone: 'UTC'` (mismo criterio que BlogCard): `nl.date` es una fecha de
+  // calendario y se parsea como medianoche UTC, así que sin fijar la zona el
+  // build la formateaba en la del servidor y restaba un día — la edición de
+  // abril salía fechada "31 de marzo de 2026", en contra de su datePublished.
   const dateFormatted = new Date(nl.date).toLocaleDateString(
     isEs ? 'es-US' : 'en-US',
-    { year: 'numeric', month: 'long', day: 'numeric' },
+    { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' },
   );
 
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -121,29 +137,26 @@ export default async function NewsletterEditionPage({ params }: Props) {
     { name: title, url: `${SITE_URL}/${lang}/newsletter/${slug}` },
   ]);
 
-  // publisher/author apuntan por @id al nodo Organization que emite el layout,
-  // en vez de redeclarar la firma como entidad anónima en cada edición.
-  // `image`: og-default.jpg es la única imagen real de estas ediciones — el
-  // campo `image` de newsletterData apunta a /newsletter/*.jpg, que no existe
-  // en public/, y un NewsArticle no puede declarar una imagen 404.
+  // `Article` y no `NewsArticle`: NewsArticle describe la pieza de un medio de
+  // noticias, y esto es el boletín mensual del despacho — recopila actualidad
+  // migratoria, pero la mezcla con orientación legal y CTAs de consulta, y lo
+  // publica un LegalService, no una redacción. Google pide las mismas
+  // propiedades a los dos tipos, así que precisar el tipo no cuesta nada.
   const articleSchema = {
     '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
+    '@type': 'Article',
+    // Mismo @id que usa el índice /newsletter en su hasPart: una sola entidad
+    // por edición en el grafo, en vez de dos fichas parciales de lo mismo.
+    '@id': `${SITE_URL}/${lang}/newsletter/${slug}#article`,
     headline: title,
     description,
     datePublished: nl.date,
     dateModified: nl.date,
     url: `${SITE_URL}/${lang}/newsletter/${slug}`,
     inLanguage: isEs ? 'es' : 'en',
-    image: [`${SITE_URL}/og-default.jpg`],
-    publisher: {
-      '@type': 'Organization',
-      '@id': `${SITE_URL}/#organization`,
-    },
-    author: {
-      '@type': 'Organization',
-      '@id': `${SITE_URL}/#organization`,
-    },
+    image: [`${SITE_URL}${NEWSLETTER_IMAGE}`],
+    publisher: PUBLISHING_ORG,
+    author: PUBLISHING_ORG,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `${SITE_URL}/${lang}/newsletter/${slug}`,

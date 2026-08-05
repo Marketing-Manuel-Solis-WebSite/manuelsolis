@@ -199,17 +199,22 @@ export default function HeaderProfessional() {
       href: '', 
       type: 'dropdown',
       key: 'attorneys',
+      // /informacion/recursos (el banco de preguntas de civismo) vive aquí junto a
+      // sus hermanas de /informacion: era la única página pública sin ningún
+      // enlace interno que la alcanzara, así que solo se descubría por sitemap.
       submenu: language === 'es'
         ? [
             { name: 'Nuestro Equipo', href: `/${language}/abogados` },
             { name: 'Sobre Nosotros', href: `/${language}/nosotros` },
             { name: 'Preguntas Frecuentes', href: `/${language}/informacion/faq` },
+            { name: 'Examen de Ciudadanía', href: `/${language}/informacion/recursos` },
             { name: 'Noticias Legales', href: `/${language}/informacion/noticias` },
           ]
         : [
             { name: 'Our Team', href: `/${language}/abogados` },
             { name: 'About Us', href: `/${language}/nosotros` },
             { name: 'FAQ', href: `/${language}/informacion/faq` },
+            { name: 'Citizenship Test', href: `/${language}/informacion/recursos` },
             { name: 'Legal News', href: `/${language}/informacion/noticias` },
           ]
     },
@@ -325,9 +330,12 @@ export default function HeaderProfessional() {
           <div className="container mx-auto px-6 lg:px-12 flex items-center">
             
             <Link href={`/${language}`} className="relative z-50 mr-6 xl:mr-12 block">
+              {/* El enlace no tiene texto: este alt es su único nombre accesible y el
+                  único anchor que Google lee, así que nombra el destino (la portada),
+                  no solo la marca. */}
               <Image
                 src="/logo-manuel-solis.png"
-                alt="Logo Manuel Solis"
+                alt={language === 'es' ? 'Manuel Solis Law Firm — Página de inicio' : 'Manuel Solis Law Firm — Home page'}
                 width={200}
                 height={65}
                 className="object-contain transition-all duration-500 ease-in-out"

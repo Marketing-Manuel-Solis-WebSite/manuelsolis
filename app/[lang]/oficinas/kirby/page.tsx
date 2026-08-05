@@ -32,9 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `Abogados en Houston, TX (Kirby Dr)`
     : `Lawyers in Houston, TX (Kirby Dr)`;
 
+  // Dirección virtual (VIRTUAL_OFFICE_SLUGS): la description NO puede prometer
+  // "24 horas" de atención presencial — lo que abre 24 h es la línea telefónica.
   const description = isEs
-    ? `Oficina de Manuel Solís en 3730 Kirby Dr, Houston. Abogados de inmigración, familia y accidentes sirviendo a la comunidad las 24 horas.`
-    : `Manuel Solis Law Office at 3730 Kirby Dr, Houston. Immigration, family, and accident attorneys serving the community 24/7.`;
+    ? `Manuel Solís en 3730 Kirby Dr, Houston: dirección que se atiende solo con cita previa; atención telefónica 24 horas. Inmigración, familia y accidentes.`
+    : `Manuel Solis at 3730 Kirby Dr, Houston: a by-appointment location with 24-hour phone support. Immigration, family law, and accident attorneys.`;
 
   return {
     title,
@@ -59,7 +61,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // LegalService + Attorney schema is built centrally — see app/lib/officeSchema.ts.
-// Kirby is a 24/7 office.
+// Kirby es una de las direcciones virtuales (VIRTUAL_OFFICE_SLUGS): no se pasa
+// `openingHours` porque buildOfficeSchema los descarta para estas direcciones, y
+// dejarlos aquí volvería a declarar una sede atendida 24 h que no existe.
 export default async function KirbyPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
@@ -68,12 +72,9 @@ export default async function KirbyPage({ params }: Props) {
       slug: SLUG,
       officeInfo: OFFICE_INFO,
       description: {
-        es: 'Oficina legal en Houston Kirby especializada en inmigración, familia y accidentes. Abierto 24h.',
-        en: 'Law office in Houston Kirby specializing in immigration, family, and accidents. Open 24h.',
+        es: 'Dirección de Manuel Solís en Houston (Kirby Dr) que se atiende solo con cita previa, sin personal del despacho en el sitio. Inmigración, familia y accidentes.',
+        en: 'Manuel Solis by-appointment location in Houston (Kirby Dr), with no firm staff on site. Immigration, family law, and accident cases.',
       },
-      openingHours: [
-        { dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
-      ],
     },
     localeLang,
   );

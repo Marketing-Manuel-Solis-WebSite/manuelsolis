@@ -5,6 +5,7 @@ import FloatingCtas from '../components/FloatingCtas';
 import PageViewTracker, { TrackingSurfaces } from '../components/PageViewTracker';
 import AttributionCapture from '../components/AttributionCapture';
 import type { Language } from '../lib/translations';
+import { OFFICES_NAP } from '../components/officesPhoneMap';
 import { LangSetter } from '../components/LangSetter';
 import MotionProvider from '../components/MotionProvider';
 
@@ -32,6 +33,10 @@ export const dynamicParams = false;
 // panel can be excluded from every analytics surface.
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
+// Sede principal, leída de la fuente única de NAP para no crear otra copia (hay
+// un test que compara las fuentes entre sí: __tests__/napConsistency.test.ts).
+const HQ = OFFICES_NAP['houston-principal'];
+
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': ['LegalService', 'LawFirm'],
@@ -39,6 +44,18 @@ const organizationSchema = {
   name: 'Manuel Solis Law Firm',
   alternateName: ['Abogados Manuel Solis', 'Law Offices of Manuel Solis'],
   url: SITE_URL,
+  // `address` es obligatoria para LocalBusiness y sus subtipos, y este nodo se
+  // emite en las 292 páginas: sin ella la entidad principal del despacho estaba
+  // incompleta en todo el sitio. Es la dirección de la sede, no de las 15.
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: HQ.street,
+    addressLocality: HQ.city,
+    addressRegion: HQ.state,
+    postalCode: HQ.zip,
+    addressCountry: 'US',
+  },
+  telephone: `+1${HQ.phone.replace(/\D/g, '')}`,
   logo: `${SITE_URL}/logo-manuel-solis.png`,
   image: `${SITE_URL}/og-default.jpg`,
   foundingDate: '1990',

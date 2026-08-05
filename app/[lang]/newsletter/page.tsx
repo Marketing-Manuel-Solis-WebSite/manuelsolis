@@ -4,12 +4,23 @@ import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import NewsletterSignup from '../../components/NewsletterSignup';
-import { newsletters } from '../../lib/newsletterData';
+import { newsletters, NEWSLETTER_IMAGE } from '../../lib/newsletterData';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
 import { Reveal, Stagger, StaggerItem } from '../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
+
+/**
+ * Firma del boletín: el despacho, no un abogado concreto. Se referencia por @id
+ * el nodo Organization que el layout emite en todas las páginas, en vez de
+ * declarar aquí una entidad anónima que Google contaría como otra empresa.
+ */
+const PUBLISHING_ORG = {
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'Manuel Solis Law Firm',
+};
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -63,16 +74,20 @@ export default async function NewsletterPage({ params }: Props) {
       ? 'Archivo de newsletters sobre leyes de inmigración y actualizaciones legales'
       : 'Archive of newsletters about immigration law and legal updates',
     url: `${SITE_URL}/${lang}/newsletter`,
-    publisher: {
-      '@type': 'LegalService',
-      name: 'Manuel Solis Law Firm',
-      url: SITE_URL,
-    },
+    publisher: PUBLISHING_ORG,
+    // Cada edición se declara con el mismo @id que emite su página de detalle,
+    // así el índice no crea una segunda entidad para el mismo artículo. Aun
+    // siendo una lista, estos nodos llevan `image` y `author`: son propiedades
+    // que Google exige a un Article en cualquier página donde aparezca, y sin
+    // ellas eran seis artículos incompletos en el HTML de los dos índices.
     hasPart: newsletters.map((nl) => ({
-      '@type': 'NewsArticle',
+      '@type': 'Article',
+      '@id': `${SITE_URL}/${lang}/newsletter/${nl.slug}#article`,
       headline: nl.title[isEs ? 'es' : 'en'],
       datePublished: nl.date,
       url: `${SITE_URL}/${lang}/newsletter/${nl.slug}`,
+      image: [`${SITE_URL}${NEWSLETTER_IMAGE}`],
+      author: PUBLISHING_ORG,
     })),
   };
 
@@ -137,9 +152,13 @@ export default async function NewsletterPage({ params }: Props) {
                 const title = nl.title[isEs ? 'es' : 'en'];
                 const desc = nl.description[isEs ? 'es' : 'en'];
                 const topics = nl.topics[isEs ? 'es' : 'en'];
+                // `timeZone: 'UTC'` (mismo criterio que BlogCard): `nl.date` es
+                // una fecha de calendario y se parsea como medianoche UTC, así
+                // que sin fijar la zona el build restaba un día y la tarjeta de
+                // la edición de abril anunciaba "marzo de 2026".
                 const dateFormatted = new Date(nl.date).toLocaleDateString(
                   isEs ? 'es-US' : 'en-US',
-                  { year: 'numeric', month: 'long' },
+                  { year: 'numeric', month: 'long', timeZone: 'UTC' },
                 );
 
                 return (

@@ -307,10 +307,14 @@ export default function AdminClient({
                             </span>
                             <span className="inline-flex items-center gap-1">
                               <Calendar className="w-3 h-3" />
+                              {/* timeZone UTC: las fechas son 'YYYY-MM-DD', que se
+                                  parsea como medianoche UTC. Sin fijar la zona, al
+                                  editor le aparecía un día menos. */}
                               {new Date(b.date).toLocaleDateString(lang === 'es' ? 'es-MX' : 'en-US', {
                                 year: 'numeric',
                                 month: 'short',
                                 day: 'numeric',
+                                timeZone: 'UTC',
                               })}
                             </span>
                             <span>· {b.readTime}</span>
@@ -352,6 +356,7 @@ export default function AdminClient({
                               year: 'numeric',
                               month: 'long',
                               day: 'numeric',
+                              timeZone: 'UTC',
                             })}
                           </div>
                           <div className="font-semibold text-[#001540] text-sm md:text-base">

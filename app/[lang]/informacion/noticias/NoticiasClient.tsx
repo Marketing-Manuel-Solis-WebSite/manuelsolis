@@ -42,6 +42,11 @@ const copy = {
     en: 'The changes in law, case law and enforcement that actually affect your case: birthright citizenship, DACA in the courts, TPS, asylum at the border, Advance Parole and ICE raids. Each item links to the full analysis.',
   },
   updated: { es: 'Última actualización', en: 'Last updated' },
+  // Encabezado de sección del listado. No es decorativo: sin él la página salta
+  // del <h1> a los <h3> de <BlogCard> (que asume una sección por encima, como en
+  // el índice del blog) y el esquema del documento queda roto para lectores de
+  // pantalla y para Google.
+  latest: { es: 'Últimas noticias', en: 'Latest news' },
   viewAll: { es: 'Ver todo el blog', en: 'View the full blog' },
   rights: { es: 'Derechos de migrantes', en: 'Migrant rights' },
 };
@@ -122,6 +127,13 @@ export default function NoticiasClient({ lang }: { lang: 'es' | 'en' }) {
           </div>
 
           {/* --- GRID DE NOTICIAS --- */}
+          {posts.length > 0 && (
+            <div className="flex items-center gap-4 mb-10 px-2">
+              <div className="w-1.5 h-8 bg-[#B2904D]" />
+              <h2 className="text-3xl font-serif text-white">{copy.latest[lang]}</h2>
+            </div>
+          )}
+
           <Stagger
             gap={0.1}
             className="w-full grid gap-8 sm:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"

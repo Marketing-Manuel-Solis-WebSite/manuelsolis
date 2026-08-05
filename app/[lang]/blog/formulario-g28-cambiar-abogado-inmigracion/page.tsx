@@ -293,20 +293,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
     { name: t.title, url: `/${lang}/blog/formulario-g28-cambiar-abogado-inmigracion` },
   ]);
 
-  const howToSchema = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": lang === 'es'
-      ? 'Cómo cambiar de abogado de inmigración con el Formulario G-28'
-      : 'How to Change Your Immigration Attorney Using Form G-28',
-    "description": t.metaDesc,
-    "step": t.sections.requirements.list.map((step: string, i: number) => ({
-      "@type": "HowToStep",
-      "position": i + 1,
-      "name": step,
-      "text": step,
-    })),
-  };
+  // La sección "cómo cambiar de abogado paso a paso" NO emite HowTo: Google retiró
+  // los resultados enriquecidos de HowTo en 2023, así que ese marcado ya no produce
+  // ninguna apariencia y solo arriesga contradecir al artículo si este cambia.
+  // Los pasos siguen en t.sections.requirements.list, que es lo que se renderiza.
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -346,12 +336,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
-      />
-
-      <script
-        id="howto-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       <script

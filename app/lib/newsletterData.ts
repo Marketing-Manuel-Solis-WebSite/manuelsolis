@@ -16,6 +16,17 @@ export interface NewsletterSection {
   cta?: { text: string; href: string };
 }
 
+/**
+ * Imagen de las ediciones, para og:image y para el `image` del Article.
+ *
+ * Ninguna edición tiene ilustración propia: el campo `image` que existía aquí
+ * apuntaba a /newsletter/*.jpg, un directorio que no existe en public/. Google
+ * exige `image` en un Article, y una imagen 404 no cumple mejor que su ausencia,
+ * así que todas las ediciones usan la imagen de marca, que sí existe. Vive en
+ * este módulo para que la etiqueta social y el schema no puedan divergir.
+ */
+export const NEWSLETTER_IMAGE = '/og-default.jpg';
+
 export const newsletters: NewsletterEdition[] = [
   {
     slug: 'abril-2026-actualizaciones-migratorias',

@@ -8,9 +8,13 @@ const officeData: OfficeData = {
   state: 'TX',
   title: { es: 'League City, TX', en: 'League City, TX' },
   quote: { es: 'Más de 35 años de experiencia y 50,000 casos ganados.', en: 'Over 35 years of experience and 50,000 cases won.' },
+  // El blurb genérico del despacho describía esta dirección como una sede más;
+  // aquí solo se atiende con cita (VIRTUAL_OFFICE_SLUGS). Houston es la ciudad de
+  // las oficinas con personal más cercanas: las demás de Texas (Dallas, El Paso,
+  // Harlingen) están a cientos de kilómetros.
   description: {
-    es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.',
-    en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.'
+    es: 'Esta dirección de S Shore Blvd, en League City, es un punto de atención con cita previa: no hay personal del despacho en el sitio, así que la visita se agenda antes por teléfono y la línea se contesta las 24 horas. Con la cita hecha se atienden aquí casos de inmigración, derecho familiar y accidentes con el equipo de Manuel Solís, en español o en inglés, y el despacho representa clientes en todo Estados Unidos. Las oficinas con personal más cercanas están en Houston: Principal, Bellaire y Accidentes.',
+    en: 'This S Shore Blvd address in League City is a by-appointment location: the firm keeps no staff on site, so visits are booked in advance by phone and the line is answered 24 hours a day. Once the appointment is set, immigration, family law, and accident cases are handled here with the Manuel Solis team, in Spanish or English, and the firm represents clients throughout the United States. The nearest staffed offices are in Houston: Principal, Bellaire, and Accidents.'
   },
   address: '2600 S Shore Blvd, League City, TX 77573, United States',
   phone: '(832) 598-3782',

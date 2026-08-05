@@ -27,6 +27,11 @@ const copy = {
     es: 'Tus derechos frente a ICE, durante un proceso de deportación y después de un accidente o una lesión de trabajo, explicados por nuestros abogados.',
     en: 'Your rights before ICE, during a deportation case, and after an accident or a work injury, explained by our attorneys.',
   },
+  // Encabezado de sección del listado. No es decorativo: sin él la página salta
+  // del <h1> a los <h3> de <BlogCard> (que asume una sección por encima, como en
+  // el índice del blog) y el esquema del documento queda roto para lectores de
+  // pantalla y para Google.
+  articles: { es: 'Artículos sobre tus derechos', en: 'Articles about your rights' },
   viewAll: { es: 'Ver todos los artículos', en: 'View all articles' },
 };
 
@@ -99,6 +104,13 @@ export default function DerechosMigrantesClient({ lang }: { lang: 'es' | 'en' })
           </div>
 
           {/* --- GRID DE ARTÍCULOS --- */}
+          {posts.length > 0 && (
+            <div className="flex items-center gap-4 mb-10 px-2">
+              <div className="w-1.5 h-8 bg-[#B2904D]" />
+              <h2 className="text-3xl font-serif text-white">{copy.articles[lang]}</h2>
+            </div>
+          )}
+
           <Stagger
             gap={0.1}
             className="w-full grid gap-8 sm:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"

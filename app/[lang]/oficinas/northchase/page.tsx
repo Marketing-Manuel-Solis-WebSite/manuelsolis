@@ -32,9 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `Abogados en Houston, TX (Northchase Dr)`
     : `Lawyers in Houston, TX (Northchase Dr)`;
 
+  // Dirección virtual (VIRTUAL_OFFICE_SLUGS): la description NO puede prometer
+  // "24 horas" de atención presencial — lo que abre 24 h es la línea telefónica.
   const description = isEs
-    ? `Oficina de Manuel Solís en Northchase Dr, Houston. Abogados de inmigración, criminal y familia sirviendo a la comunidad 24 horas.`
-    : `Manuel Solis Law Office at Northchase Dr, Houston. Immigration, criminal, and family attorneys serving the community 24/7.`;
+    ? `Manuel Solís en 16510 Northchase Dr, Houston: dirección que se atiende solo con cita previa; atención telefónica 24 horas. Inmigración, criminal y familia.`
+    : `Manuel Solis at 16510 Northchase Dr, Houston: a by-appointment location with 24-hour phone support. Immigration, criminal, and family law.`;
 
   return {
     title,
@@ -59,7 +61,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // LegalService + Attorney schema is built centrally — see app/lib/officeSchema.ts.
-// 24/7 office.
+// Northchase es una de las direcciones virtuales (VIRTUAL_OFFICE_SLUGS): no se
+// pasa `openingHours` porque buildOfficeSchema los descarta para estas
+// direcciones, y dejarlos aquí volvería a declarar una sede atendida 24 h que no
+// existe.
 export default async function NorthchasePage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
@@ -68,12 +73,9 @@ export default async function NorthchasePage({ params }: Props) {
       slug: SLUG,
       officeInfo: OFFICE_INFO,
       description: {
-        es: 'Oficina legal en Houston Northchase especializada en inmigración, criminal y familia. Abierto 24h.',
-        en: 'Law office in Houston Northchase specializing in immigration, criminal, and family law. Open 24h.',
+        es: 'Dirección de Manuel Solís en Houston (16510 Northchase Dr) que se atiende solo con cita previa, sin personal del despacho en el sitio. Inmigración, criminal y familia.',
+        en: 'Manuel Solis by-appointment location in Houston (16510 Northchase Dr), with no firm staff on site. Immigration, criminal, and family law cases.',
       },
-      openingHours: [
-        { dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
-      ],
     },
     localeLang,
   );

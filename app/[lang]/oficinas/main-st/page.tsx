@@ -32,9 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `Abogados en Houston, TX (Main St)`
     : `Lawyers in Houston, TX (Main St)`;
 
+  // Dirección virtual (VIRTUAL_OFFICE_SLUGS): la description NO puede prometer
+  // "24 horas" de atención presencial — lo que abre 24 h es la línea telefónica.
   const description = isEs
-    ? `Oficina de Manuel Solís en 708 Main St, Houston. Abogados de inmigración, familia y accidentes sirviendo a la comunidad 24 horas.`
-    : `Manuel Solis Law Office at 708 Main St, Houston. Immigration, family, and accident attorneys serving the community 24/7.`;
+    ? `Manuel Solís en 708 Main St, Houston: dirección que se atiende solo con cita previa; atención telefónica 24 horas. Inmigración, familia y accidentes.`
+    : `Manuel Solis at 708 Main St, Houston: a by-appointment location with 24-hour phone support. Immigration, family law, and accident attorneys.`;
 
   return {
     title,
@@ -59,7 +61,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // LegalService + Attorney schema is built centrally — see app/lib/officeSchema.ts.
-// 24/7 office.
+// Main St es una de las direcciones virtuales (VIRTUAL_OFFICE_SLUGS): no se pasa
+// `openingHours` porque buildOfficeSchema los descarta para estas direcciones, y
+// dejarlos aquí volvería a declarar una sede atendida 24 h que no existe.
 export default async function MainStPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
@@ -68,12 +72,9 @@ export default async function MainStPage({ params }: Props) {
       slug: SLUG,
       officeInfo: OFFICE_INFO,
       description: {
-        es: 'Oficina legal en Houston Main St especializada en inmigración, familia y accidentes. Abierto 24h.',
-        en: 'Law office in Houston Main St specializing in immigration, family, and accidents. Open 24h.',
+        es: 'Dirección de Manuel Solís en Houston (708 Main St) que se atiende solo con cita previa, sin personal del despacho en el sitio. Inmigración, familia y accidentes.',
+        en: 'Manuel Solis by-appointment location in Houston (708 Main St), with no firm staff on site. Immigration, family law, and accident cases.',
       },
-      openingHours: [
-        { dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
-      ],
     },
     localeLang,
   );
