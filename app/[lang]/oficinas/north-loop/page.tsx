@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SLUG = 'north-loop';
 
@@ -46,13 +47,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `https://www.manuelsolis.com/es/oficinas/north-loop`,
       },
     },
-    openGraph: {
+    // Dimensiones = las del PNG real en public/offices (no el 1200x630 nominal).
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/oficinas/north-loop`,
       title,
       description,
-      url: `https://www.manuelsolis.com/${lang}/oficinas/north-loop`,
-      images: ['/offices/ofLoop.png'],
-      type: 'website', 
-    }
+      images: [{ url: '/offices/ofLoop.png', width: 1063, height: 601 }],
+    }),
   };
 }
 

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 import ClientesDetenidosClient from './ClientesDetenidosClient';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -21,11 +22,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // disponibilidad que la línea no tiene destruye la confianza.
   const title = isEs
     ? 'Detenidos por ICE — Ayuda Legal de Emergencia'
-    : 'ICE Detainee Emergency Legal Help — Bond, Locator, Defense';
+    : 'ICE Detainee Emergency Legal Help';
 
   const description = isEs
-    ? '¿Su familiar fue detenido por ICE? Actuamos inmediatamente: localizador ICE, audiencia de fianza, defensa en corte de inmigración. 35+ años de experiencia. Abogados bilingües en Houston, Dallas, Chicago, Los Ángeles, El Paso y más. Línea de ayuda 832-598-0914, lunes a viernes de 9AM a 9PM CST.'
-    : 'Family member detained by ICE? We respond immediately: ICE detainee locator, bond hearings, immigration court defense and stays of removal. 35+ years of experience. Bilingual attorneys in Houston, Dallas, Chicago, Los Angeles, El Paso and more. Help line 832-598-0914, Monday to Friday 9AM to 9PM CST.';
+    ? '¿Su familiar fue detenido por ICE? Actuamos de inmediato: localizador ICE, audiencia de fianza y defensa en corte. Línea 832-598-0914, L-V 9AM-9PM CST.'
+    : 'Family member detained by ICE? We act immediately: ICE detainee locator, bond hearings and court defense. Help line 832-598-0914, Mon-Fri 9AM-9PM CST.';
 
   return {
     title,
@@ -63,20 +64,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           'urgent immigration lawyer',
           'ICE online detainee locator'
         ],
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/clientes-detenidos`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/clientes-detenidos`,
-      type: 'website',
-      locale: isEs ? 'es_US' : 'en_US',
-      siteName: 'Manuel Solis Law Firm',
       images: [{ url: '/immigration-hero.png', width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
+    }),
   };
 }
 

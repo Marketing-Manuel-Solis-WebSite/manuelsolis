@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import InversionistasClient from './InversionistasClient';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -12,12 +13,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  // Intención informativa (requisitos y proceso), frente a la ficha de servicio
+  // /servicios/visa-e2, que va a por la comercial ("abogado de visa E-2").
   const title = isEs
-    ? 'Visa E-2 para Inversionistas: Requisitos, Proceso y Evaluación'
-    : 'E-2 Investor Visa: Requirements, Process & Evaluation';
+    ? 'Visa E-2: Requisitos y Proceso Completo'
+    : 'E-2 Visa: Requirements & Full Process';
 
   const description = isEs
-    ? 'Invierta y viva legalmente en EE.UU. con la Visa E-2. Abogados con mas de 35 anos de experiencia en visas de inversion.'
+    ? 'Invierta y viva legalmente en EE.UU. con la Visa E-2. Abogados con más de 35 años de experiencia en visas de inversión.'
     : 'Invest and live legally in the U.S. with the E-2 Visa. Attorneys with 35+ years of experience in investment visas.';
 
   return {
@@ -31,12 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/inversionistas`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/inversionistas`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/inversionistas`,
-      images: ['/og-default.jpg'],
-    },
+    }),
   };
 }
 

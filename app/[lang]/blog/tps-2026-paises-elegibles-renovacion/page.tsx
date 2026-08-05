@@ -12,6 +12,7 @@ import {
 
 // IMPORTACIONES
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -36,7 +37,7 @@ const IMAGES = {
 const blogContent = {
   es: {
     metaTitle: 'TPS 2026: Países Elegibles, Renovación y Si se Cancela',
-    metaDesc: 'Guía completa TPS 2026: qué países siguen con TPS, cuáles fueron terminados, cómo renovar tu permiso de trabajo, y qué hacer si perdiste el estatus. Abogado Manuel Solís.',
+    metaDesc: 'Guía TPS 2026: qué países siguen con TPS, cuáles fueron terminados, cómo renovar tu permiso de trabajo y qué hacer si perdiste el estatus. Abogado Manuel Solís.',
     ui: {
       back: 'Volver al blog',
       share: 'Compartir artículo',
@@ -246,7 +247,7 @@ const blogContent = {
   },
   en: {
     metaTitle: 'TPS 2026: Eligible Countries, Renewal & If It Ends',
-    metaDesc: 'Complete TPS 2026 guide: which countries still have TPS, which were terminated, how to renew your work permit, and what to do if you lost status. Attorney Manuel Solís.',
+    metaDesc: 'TPS 2026 guide: which countries still have TPS, which were terminated, how to renew your work permit, and what to do if you lost status. Attorney Manuel Solís.',
     ui: {
       back: 'Back to blog',
       share: 'Share article',
@@ -460,36 +461,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const imageUrl = `${SITE_URL}${IMAGES.article}`;
+  const social = buildSocialMetadata({
+    lang: lang === 'en' ? 'en' : 'es',
+    path: `/${lang}/blog/tps-2026-paises-elegibles-renovacion`,
+    title: t.title,
+    description: t.metaDesc,
+    images: [{ url: IMAGES.article, alt: t.title }],
+    type: 'article',
+    publishedTime: '2026-04-10T08:00:00.000Z',
+  });
 
   return {
     title: { absolute: t.metaTitle },
     description: t.metaDesc,
     openGraph: {
-      title: t.title,
-      description: t.metaDesc,
-      url: `${SITE_URL}/${lang}/blog/tps-2026-paises-elegibles-renovacion`,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: t.title,
-        },
-      ],
+      ...social.openGraph,
+      // Campos article:* que buildSocialMetadata no cubre.
       type: 'article',
-      publishedTime: '2026-04-10T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['TPS', 'Estatus de Protección Temporal', 'Venezuela', 'El Salvador', 'Honduras'],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: t.title,
-      description: t.metaDesc,
-      images: [imageUrl],
-      creator: '@AbogadoMSolis',
-    },
+    twitter: social.twitter,
     alternates: {
       canonical: `${SITE_URL}/${lang}/blog/tps-2026-paises-elegibles-renovacion`,
       languages: {

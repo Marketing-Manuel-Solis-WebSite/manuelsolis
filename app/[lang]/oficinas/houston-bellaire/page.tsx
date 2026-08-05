@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SLUG = 'houston-bellaire';
 
@@ -27,9 +28,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
-  const title = isEs 
-    ? `Abogados en Houston Bellaire, TX (Servicio en Chino)`
-    : `Lawyers in Houston Bellaire, TX (Chinese Service)`;
+  // "(Servicio en Chino)" dejaba el title en 67 caracteres; el dato sigue en la
+  // description, que es donde se lee completo en los resultados.
+  const title = isEs
+    ? `Abogados de Inmigración en Houston Bellaire`
+    : `Immigration Lawyers in Houston Bellaire`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en Bellaire Blvd, Houston. Abogada Ni Yan ofrece servicios de inmigración en chino, español e inglés.`
@@ -46,13 +49,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `https://www.manuelsolis.com/es/oficinas/houston-bellaire`,
       },
     },
-    openGraph: {
+    // Dimensiones = las del PNG real en public/offices (no el 1200x630 nominal).
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/oficinas/houston-bellaire`,
       title,
       description,
-      url: `https://www.manuelsolis.com/${lang}/oficinas/houston-bellaire`,
-      images: ['/offices/Houston.png'],
-      type: 'website', 
-    }
+      images: [{ url: '/offices/Houston.png', width: 1200, height: 900 }],
+    }),
   };
 }
 

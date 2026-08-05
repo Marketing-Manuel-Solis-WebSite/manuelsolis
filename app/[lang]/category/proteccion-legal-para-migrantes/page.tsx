@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import ProteccionLegalClient from './ProteccionLegalClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -14,11 +15,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  const title = isEs ? 'Protección Legal para Migrantes: Visa U, VAWA' : 'Legal Protection for Migrants: U Visa, VAWA';
+  const description = isEs
+    ? 'Artículos sobre las protecciones humanitarias para migrantes: Visa U, VAWA, Visa T, asilo y estatus juvenil (SIJS). Guías del Abogado Manuel Solís.'
+    : 'Articles on humanitarian protections for migrants: U Visa, VAWA, T Visa, asylum, and juvenile status (SIJS). Guides from Attorney Manuel Solis.';
+
   return {
-    title: isEs ? 'Protección Legal para Migrantes: Artículos y Guías' : 'Legal Protection for Migrants: Articles & Guides',
-    description: isEs
-      ? 'Artículos sobre las protecciones humanitarias para migrantes: Visa U, VAWA, Visa T, asilo y estatus juvenil (SIJS). Guías del Abogado Manuel Solís.'
-      : 'Articles on humanitarian protections for migrants: U Visa, VAWA, T Visa, asylum, and juvenile status (SIJS). Guides from Attorney Manuel Solis.',
+    title,
+    description,
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/category/proteccion-legal-para-migrantes`,
+      title,
+      description,
+    }),
     alternates: {
       canonical: `${SITE_URL}/${lang}/category/proteccion-legal-para-migrantes`,
       languages: {

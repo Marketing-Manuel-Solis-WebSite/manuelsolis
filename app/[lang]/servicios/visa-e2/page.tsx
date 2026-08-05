@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import VisaE2Client from './VisaE2Client';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -12,9 +13,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  // Empieza por "Abogado": esta ficha resuelve la intención comercial, mientras
+  // /inversionistas resuelve la informativa (requisitos y proceso). Con ambos
+  // títulos en "Visa E-2 para Inversionistas" las dos competían por la misma
+  // consulta y se repartían las señales.
   const title = isEs
-    ? 'Visa E-2 para Inversionistas'
-    : 'E-2 Investor Visa';
+    ? 'Abogado de Visa E-2 para Inversionistas'
+    : 'E-2 Visa Attorney for Investors';
 
   const description = isEs
     ? 'Abogados expertos en Visa E-2 para inversionistas. Asesoría completa para invertir y vivir en Estados Unidos legalmente.'
@@ -31,12 +36,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/servicios/visa-e2`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/servicios/visa-e2`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/servicios/visa-e2`,
-      images: ['/og-default.jpg'],
-    },
+    }),
   };
 }
 

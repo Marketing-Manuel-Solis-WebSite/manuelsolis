@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import FAQClient from './FAQClient';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -33,6 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/informacion/faq`,
       },
     },
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/informacion/faq`,
+      title,
+      description,
+    }),
   };
 }
 

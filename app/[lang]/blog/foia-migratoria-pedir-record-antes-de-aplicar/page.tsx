@@ -11,6 +11,7 @@ import {
 
 // IMPORTACIONES
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -275,36 +276,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const imageUrl = `${SITE_URL}${IMAGES.article}`;
+  const social = buildSocialMetadata({
+    lang: lang === 'en' ? 'en' : 'es',
+    path: `/${lang}/blog/foia-migratoria-pedir-record-antes-de-aplicar`,
+    title: t.title,
+    description: t.metaDesc,
+    images: [{ url: IMAGES.article, alt: t.title }],
+    type: 'article',
+    publishedTime: '2026-03-12T08:00:00.000Z',
+  });
 
   return {
     title: { absolute: t.metaTitle },
     description: t.metaDesc,
     openGraph: {
-      title: t.title,
-      description: t.metaDesc,
-      url: `${SITE_URL}/${lang}/blog/foia-migratoria-pedir-record-antes-de-aplicar`,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: t.title,
-        },
-      ],
+      ...social.openGraph,
+      // Campos article:* que buildSocialMetadata no cubre.
       type: 'article',
-      publishedTime: '2026-03-12T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['FOIA','Récord migratorio','Freedom of Information Act','CBP','USCIS','ICE','Historial migratorio'],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: t.title,
-      description: t.metaDesc,
-      images: [imageUrl],
-      creator: '@AbogadoMSolis',
-    },
+    twitter: social.twitter,
     alternates: {
       canonical: `${SITE_URL}/${lang}/blog/foia-migratoria-pedir-record-antes-de-aplicar`,
       languages: {

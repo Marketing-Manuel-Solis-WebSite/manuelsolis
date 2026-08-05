@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import DerechosMigrantesClient from './DerechosMigrantesClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -14,11 +15,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  const title = isEs ? 'Derechos de Migrantes: Guías y Recursos' : 'Migrant Rights: Legal Guides & Resources';
+  const description = isEs
+    ? 'Conozca sus derechos como migrante en EE. UU.: qué hacer en una redada de ICE, cómo localizar a un detenido y cómo defenderse de la deportación.'
+    : 'Know your rights as a migrant in the U.S.: what to do in an ICE raid, how to locate a detained relative, and how to defend against deportation.';
+
   return {
-    title: isEs ? 'Derechos de Migrantes: Guías y Recursos Legales' : 'Migrant Rights: Legal Guides & Resources',
-    description: isEs
-      ? 'Conozca sus derechos como migrante en Estados Unidos: qué hacer en una redada de ICE, cómo localizar a un detenido, defensa contra la deportación y sus derechos tras un accidente o lesión de trabajo.'
-      : 'Know your rights as a migrant in the United States: what to do in an ICE raid, how to locate a detained relative, deportation defense, and your rights after an accident or work injury.',
+    title,
+    description,
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/category/derechos-de-migrantes`,
+      title,
+      description,
+    }),
     alternates: {
       canonical: `${SITE_URL}/${lang}/category/derechos-de-migrantes`,
       languages: {

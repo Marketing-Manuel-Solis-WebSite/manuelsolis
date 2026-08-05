@@ -12,6 +12,7 @@ import {
 
 // IMPORTACIONES
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -36,7 +37,7 @@ const IMAGES = {
 const blogContent = {
   es: {
     metaTitle: 'Crímenes que Causan Deportación: Guía de Vileza Moral (CIMT)',
-    metaDesc: 'Guía sobre cómo los delitos afectan tu estatus migratorio. Vileza moral (CIMT), deportabilidad vs inadmisibilidad, petty offense, y por qué un récord sellado no desaparece para inmigración.',
+    metaDesc: 'Cómo los delitos afectan tu estatus migratorio: vileza moral (CIMT), deportabilidad vs inadmisibilidad y por qué un récord sellado no desaparece.',
     ui: {
       back: 'Volver al blog',
       share: 'Compartir artículo',
@@ -238,7 +239,7 @@ const blogContent = {
   },
   en: {
     metaTitle: 'Crimes That Cause Deportation: Moral Turpitude (CIMT) Guide',
-    metaDesc: 'Guide on how crimes affect your immigration status. Moral turpitude (CIMT), deportability vs inadmissibility, petty offense exception, and why an expunged record does not disappear for immigration.',
+    metaDesc: 'How crimes affect your immigration status: moral turpitude (CIMT), deportability vs inadmissibility, and why an expunged record still counts.',
     ui: {
       back: 'Back to blog',
       share: 'Share article',
@@ -444,36 +445,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
 
-  const imageUrl = `${SITE_URL}${IMAGES.article}`;
+  const social = buildSocialMetadata({
+    lang: lang === 'en' ? 'en' : 'es',
+    path: `/${lang}/blog/crimenes-deportacion-vileza-moral`,
+    title: t.title,
+    description: t.metaDesc,
+    images: [{ url: IMAGES.article, alt: t.title }],
+    type: 'article',
+    publishedTime: '2026-04-14T08:00:00.000Z',
+  });
 
   return {
     title: { absolute: t.metaTitle },
     description: t.metaDesc,
     openGraph: {
-      title: t.title,
-      description: t.metaDesc,
-      url: `${SITE_URL}/${lang}/blog/crimenes-deportacion-vileza-moral`,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: t.title,
-        },
-      ],
+      ...social.openGraph,
+      // Campos article:* que buildSocialMetadata no cubre.
       type: 'article',
-      publishedTime: '2026-04-14T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Ley Criminal',
       tags: ['Crímenes', 'Deportación', 'Vileza Moral', 'CIMT', 'Defensa Criminal'],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: t.title,
-      description: t.metaDesc,
-      images: [imageUrl],
-      creator: '@AbogadoMSolis',
-    },
+    twitter: social.twitter,
     alternates: {
       canonical: `${SITE_URL}/${lang}/blog/crimenes-deportacion-vileza-moral`,
       languages: {

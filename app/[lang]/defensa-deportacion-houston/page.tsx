@@ -4,6 +4,7 @@ import { getPageData, getSiblingCities, getRelatedServiceLinks, SITE_URL } from 
 import { getLocalFAQ, getTypicalCases } from '../../lib/cityServiceLocalContent';
 import { buildLandingSchema, LANDING_TO_OFFICE_FOR_REVIEWS } from '../../lib/landingSchema';
 import CityServiceLanding from '../../components/CityServiceLanding';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const PAGE_SLUG = 'defensa-deportacion-houston';
 const data = getPageData(PAGE_SLUG)!;
@@ -31,22 +32,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         'x-default': `${SITE_URL}/es/${PAGE_SLUG}`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/${PAGE_SLUG}`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/${PAGE_SLUG}`,
-      type: 'website',
-      siteName: 'Manuel Solís Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      images: [{ url: `${SITE_URL}/og-default.jpg`, width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [`${SITE_URL}/og-default.jpg`],
-      creator: '@AbogadoMSolis',
-    },
+    }),
     keywords: isEs ? service.keywords.es : service.keywords.en,
   };
 }

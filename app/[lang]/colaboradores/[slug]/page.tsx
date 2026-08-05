@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { collaborators, getCollaborator } from '../../../lib/collaboratorData';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
+import type { Language } from '../../../lib/translations';
 import CollaboratorProfile from './CollaboratorProfile';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -24,14 +26,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
   const isEs = lang === 'es';
+  const language: Language = isEs ? 'es' : 'en';
   const collaborator = getCollaborator(slug);
 
   if (!collaborator) return { title: 'Not Found' };
 
-  const role = collaborator.role[isEs ? 'es' : 'en'];
+  const role = collaborator.role[language];
   // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
   const title = `${collaborator.name} | ${role}`;
-  const description = collaborator.description[isEs ? 'es' : 'en'][0];
+  const description = collaborator.description[language][0];
 
   return {
     title,
@@ -44,13 +47,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/colaboradores/${slug}`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: language,
+      path: `/${lang}/colaboradores/${slug}`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/colaboradores/${slug}`,
-      images: [collaborator.image],
-      type: 'profile',
-    },
+      images: [{ url: collaborator.image, alt: `${collaborator.name} — ${role}` }],
+    }),
   };
 }
 
@@ -61,9 +64,15 @@ function getPersonSchema(collaborator: typeof collaborators[number], lang: strin
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    // Mismo patrón de @id que /abogados/[slug] y que el autor del blog
+    // (blogSchema.ts): consolida la persona en una sola entidad del grafo.
+    '@id': `${SITE_URL}/#person-${collaborator.id}`,
     name: collaborator.name,
     jobTitle: collaborator.role[isEs ? 'es' : 'en'],
-    image: `${SITE_URL}${collaborator.image}`,
+    // Absoluta siempre: la foto puede venir de public/ o de blob storage.
+    image: collaborator.image.startsWith('http')
+      ? collaborator.image
+      : `${SITE_URL}${collaborator.image}`,
     email: `mailto:${collaborator.email}`,
     description: collaborator.description[isEs ? 'es' : 'en'][0],
     url: `${SITE_URL}/${lang}/colaboradores/${collaborator.id}`,
@@ -102,14 +111,17 @@ export default async function CollaboratorPage({ params }: Props) {
 
   return (
     <>
+      {/* `type` antes de `id`: React serializa los atributos en el orden de las
+          props y varias herramientas de auditoría (la nuestra incluida) buscan
+          `<script type="application/ld+json"` literal y no veían estos bloques. */}
       <script
-        id={`person-schema-${slug}`}
         type="application/ld+json"
+        id={`person-schema-${slug}`}
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
       <script
-        id={`breadcrumb-schema-${slug}`}
         type="application/ld+json"
+        id={`breadcrumb-schema-${slug}`}
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <CollaboratorProfile slug={slug} lang={lang} />

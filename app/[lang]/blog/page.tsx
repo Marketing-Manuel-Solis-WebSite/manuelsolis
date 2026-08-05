@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 
 // Utilidades
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 // Componentes
 import Header from '../../components/Header';
@@ -759,9 +760,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  // Sin "Noticias": /informacion/noticias cubre la actualidad y con ambos
+  // títulos hablando de noticias legales las dos páginas competían por la misma
+  // consulta. Este índice es el de guías y trámites explicados.
   const title = isEs
-    ? 'Blog de Inmigración y Noticias Legales'
-    : 'Immigration Blog & Legal News';
+    ? 'Blog de Inmigración: Guías y Trámites'
+    : 'Immigration Blog: Guides & Filings';
   
   const description = isEs
     ? 'Manténgase informado con las últimas noticias de inmigración, cambios en la Visa U, consejos para la residencia y guías legales del Abogado Manuel Solís.'
@@ -778,34 +782,39 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         'x-default': `${SITE_URL}/es/blog`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/blog`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/blog`,
-      type: 'website',
-      siteName: 'Manuel Solís Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      images: [{
-        url: DEFAULT_OG_IMAGE, 
-        width: 1200,
-        height: 630,
-        alt: title
-      }]
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [DEFAULT_OG_IMAGE], 
-      creator: '@AbogadoMSolis'
-    },
-    keywords: isEs 
+      images: [{ url: DEFAULT_OG_IMAGE, alt: title }],
+    }),
+    keywords: isEs
       ? ['blog inmigración', 'noticias visa u', 'abogado manuel solis', 'permiso trabajo', 'noticias legales usa', 'bona fide visa u']
       : ['immigration blog', 'u visa news', 'attorney manuel solis', 'work permit', 'legal news usa', 'bona fide u visa'],
   };
 }
 
 // --- SCHEMA.ORG (JSON-LD) PARA BLOG ---
+// Nombre del autor → slug de su ficha en /abogados. Solo los abogados del
+// despacho tienen perfil: cualquier otro nombre queda como Person sin url.
+const AUTHOR_PROFILES: Record<string, string> = {
+  'Manuel Solís': 'manuel-solis',
+};
+
+// El @id y la url replican los que emite /abogados/[slug]: así el autor de cada
+// post y su ficha son la misma entidad para Google (E-E-A-T en contenido YMYL).
+const getPostAuthor = (name: string, lang: string) => {
+  const slug = AUTHOR_PROFILES[name];
+  if (!slug) return { "@type": "Person", "name": name };
+  return {
+    "@type": "Person",
+    "@id": `${SITE_URL}/#person-${slug}`,
+    "name": name,
+    "url": `${SITE_URL}/${lang}/abogados/${slug}`,
+  };
+};
+
 const getBlogSchema = (lang: string) => {
   return {
     "@context": "https://schema.org",
@@ -826,10 +835,7 @@ const getBlogSchema = (lang: string) => {
       "headline": post.title[lang as 'es'|'en'],
       "description": post.excerpt[lang as 'es'|'en'],
       "datePublished": post.date,
-      "author": {
-        "@type": "Person",
-        "name": post.author
-      },
+      "author": getPostAuthor(post.author, lang),
       "url": `${SITE_URL}/${lang}/blog/${post.slug}`,
       "image": `${SITE_URL}${post.image}`
     }))

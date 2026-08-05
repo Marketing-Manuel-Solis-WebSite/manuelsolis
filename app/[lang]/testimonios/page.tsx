@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 import { getPlaceData } from '../../lib/googleReviews';
 import { MAIN_FIRM_PLACE_ID } from '../../lib/officesRegistry';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
+import {
+  buildPageVideoSchemas,
+  TESTIMONIOS_PAGE_VIDEOS,
+  type VideoLang,
+} from '../../lib/videoSchema';
 import TestimoniosClient from './TestimoniosClient';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -33,9 +39,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = isEs
     ? `Testimonios de Clientes${rating ? ` ★${rating}` : ''} — Casos Reales`
     : `Client Testimonials${rating ? ` ★${rating}` : ''} — Real Cases`;
+  // Largo pensado para los dos caminos: sin rating queda en 142/141 caracteres
+  // y con el rating vivo intercalado no pasa de 160.
   const description = isEs
-    ? `Reseñas verificadas de Google${rating ? ` ★${rating} estrellas` : ''}. Más de 50,000 familias reunidas. Historias reales de clientes en Houston, Dallas, Chicago, Los Angeles, Memphis, Denver y El Paso. Casos de inmigración, Visa U, VAWA y accidentes.`
-    : `Verified Google reviews${rating ? ` ★${rating} stars` : ''}. Over 50,000 families reunited. Real client stories in Houston, Dallas, Chicago, Los Angeles, Memphis, Denver & El Paso. Immigration, U Visa, VAWA & accident cases.`;
+    ? `Reseñas verificadas de Google${rating ? ` ★${rating} estrellas` : ''} de clientes en Houston, Dallas, Chicago, Los Angeles y El Paso. Casos de inmigración, Visa U, VAWA y accidentes.`
+    : `Verified Google reviews${rating ? ` ★${rating} stars` : ''} from real clients in Houston, Dallas, Chicago, Los Angeles and El Paso. Immigration, U Visa, VAWA and accident cases.`;
 
   return {
     title,
@@ -48,15 +56,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/testimonios`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/testimonios`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/testimonios`,
-      type: 'website',
-      siteName: 'Manuel Solis Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      images: ['/og-default.jpg'],
-    },
+    }),
   };
 }
 
@@ -91,8 +96,17 @@ async function generateRatingSchema(): Promise<Record<string, unknown> | null> {
   };
 }
 
-export default async function TestimoniosPage() {
+export default async function TestimoniosPage({ params }: Props) {
+  const { lang } = await params;
+  const videoLang: VideoLang = lang === 'en' ? 'en' : 'es';
   const ratingSchema = await generateRatingSchema();
+  // Los 6 testimonios son vídeos de YouTube que la página ya incrusta: con
+  // VideoObject pasan a ser elegibles para el carrusel de vídeo de Google.
+  const videoSchemas = buildPageVideoSchemas({
+    videos: TESTIMONIOS_PAGE_VIDEOS,
+    lang: videoLang,
+    pagePath: `/${videoLang}/testimonios`,
+  });
 
   return (
     <>
@@ -103,6 +117,14 @@ export default async function TestimoniosPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ratingSchema) }}
         />
       )}
+      {videoSchemas.map((schema, i) => (
+        <script
+          key={i}
+          id={`video-schema-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <TestimoniosClient googleRating={await getLiveRating()} />
     </>
   );

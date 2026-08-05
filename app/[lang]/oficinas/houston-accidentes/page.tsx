@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SLUG = 'houston-accidentes';
 
@@ -26,9 +27,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   const isEs = lang === 'es';
 
+  // La dirección completa dejaba el title en 75 caracteres. El diferenciador
+  // frente a la otra oficina de Navigation Blvd (houston-principal) pasa a ser
+  // el horario real de esta: abierta 24 horas.
   const title = isEs
-    ? `Abogados de Accidentes en Houston, TX (6705 Navigation Blvd)`
-    : `Accident Lawyers in Houston, TX (6705 Navigation Blvd)`;
+    ? `Abogados de Accidentes en Houston (24 Horas)`
+    : `Accident Lawyers in Houston (24 Hours)`;
 
   const description = isEs
     ? `Oficina de Manuel Solís en 6705 Navigation Blvd, Houston. Abogados de accidentes e inmigración listos para defender sus derechos. ¡Llámenos!`
@@ -45,13 +49,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `https://www.manuelsolis.com/es/oficinas/houston-accidentes`,
       },
     },
-    openGraph: {
+    // Dimensiones = las del PNG real en public/offices (no el 1200x630 nominal).
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/oficinas/houston-accidentes`,
       title,
       description,
-      url: `https://www.manuelsolis.com/${lang}/oficinas/houston-accidentes`,
-      images: ['/offices/Houston.png'],
-      type: 'website',
-    }
+      images: [{ url: '/offices/Houston.png', width: 1200, height: 900 }],
+    }),
   };
 }
 

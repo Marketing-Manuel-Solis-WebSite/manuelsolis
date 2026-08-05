@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import SmsTerminosClient from './SmsTerminosClient';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -16,9 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs ? 'Términos de SMS' : 'SMS Terms';
+  // Nombre del programa, tipo de mensajes y palabras clave STOP/HELP: los tres
+  // datos que la página declara (secciones 1, 2, 3 y 5) y los que busca quien
+  // llega aquí para darse de baja.
   const description = isEs
-    ? 'Términos y condiciones del servicio de mensajes SMS de Manuel Solís.'
-    : 'Terms and conditions for Manuel Solis SMS messaging service.';
+    ? 'Programa Solís Law Notifications: recordatorios de citas, avances de su caso y respuestas por SMS. Envíe STOP para darse de baja o HELP para pedir ayuda.'
+    : 'Solís Law Notifications program: appointment reminders, case updates and replies by text. Text STOP to unsubscribe or HELP to request assistance.';
 
   return {
     title,
@@ -31,6 +35,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/sms-terminos`,
       },
     },
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/sms-terminos`,
+      title,
+      description,
+    }),
   };
 }
 

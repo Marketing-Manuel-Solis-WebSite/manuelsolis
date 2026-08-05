@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 import ColaboradoresClient from './ColaboradoresClient';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? 'Colaboradores — Equipo Manuel Solís'
     : 'Collaborators — Manuel Solís Team';
   const description = isEs
-    ? 'Conozca a los colaboradores del Law Offices of Manuel Solís. Profesionales dedicados a la experiencia del cliente, con enlaces oficiales y reseñas verificadas en Google.'
+    ? 'Conozca a los colaboradores del Law Offices of Manuel Solís: profesionales dedicados a la experiencia del cliente, con reseñas verificadas en Google.'
     : 'Meet the collaborators of the Law Offices of Manuel Solís. Professionals dedicated to the client experience, with official links and verified Google reviews.';
 
   return {
@@ -33,6 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/colaboradores`,
       },
     },
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/colaboradores`,
+      title,
+      description,
+    }),
   };
 }
 

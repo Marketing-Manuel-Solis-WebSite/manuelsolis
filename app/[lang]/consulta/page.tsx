@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import ConsultaClient from './ConsultaClient';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -35,15 +36,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/consulta`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/consulta`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/consulta`,
-      type: 'website',
-      siteName: 'Manuel Solis Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      images: ['/og-default.jpg'],
-    },
+    }),
   };
 }
 

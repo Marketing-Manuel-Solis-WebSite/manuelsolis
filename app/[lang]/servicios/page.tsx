@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Scale, Car, ShieldCheck, Heart, FileText, TrendingUp, MapPin, Flag, Gavel, UserCheck, FileCheck } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { LANDING_PAGES, OFFICES, SERVICES as CITY_SERVICES } from '../../lib/cityServiceData';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../components/motion';
@@ -138,29 +139,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         'x-default': `${SITE_URL}/es/servicios`,
       },
     },
-    openGraph: {
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/servicios`,
       title,
       description,
-      url: `${SITE_URL}/${lang}/servicios`,
-      type: 'website',
-      siteName: 'Manuel Solís Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      images: [
-        {
-          url: `${SITE_URL}/og-default.jpg`,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [`${SITE_URL}/og-default.jpg`],
-      creator: '@AbogadoMSolis',
-    },
+    }),
     keywords: isEs
       ? ['servicios legales', 'abogado inmigración', 'accidentes personales', 'defensa criminal', 'derecho de familia', 'reclamos seguros', 'visa e-2', 'manuel solis']
       : ['legal services', 'immigration lawyer', 'personal injury', 'criminal defense', 'family law', 'insurance claims', 'e-2 visa', 'manuel solis'],

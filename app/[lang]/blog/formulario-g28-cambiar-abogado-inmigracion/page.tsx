@@ -10,6 +10,7 @@ import {
 
 // IMPORTACIONES
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -33,7 +34,7 @@ const IMAGES = {
 const blogContent = {
   es: {
     metaTitle: 'Formulario G-28: cómo cambiar de abogado sin afectar tu caso',
-    metaDesc: '¿Quieres cambiar de abogado en inmigración? Aprende cómo funciona el Formulario G-28 y cómo notificar a USCIS correctamente sin poner en riesgo tu proceso migratorio.',
+    metaDesc: '¿Quieres cambiar de abogado de inmigración? Aprende cómo funciona el Formulario G-28 y cómo notificar a USCIS sin poner en riesgo tu proceso migratorio.',
     ui: {
       back: 'Volver al blog',
       share: 'Compartir artículo',
@@ -137,7 +138,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Form G-28: How to Change Your Immigration Attorney Without Hurting Your Case',
+    metaTitle: 'Form G-28: How to Change Your Immigration Attorney Safely',
     metaDesc: 'Want to change your immigration attorney? Learn how Form G-28 works and how to properly notify USCIS without putting your immigration case at risk.',
     ui: {
       back: 'Back to blog',
@@ -247,36 +248,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
   
-  const imageUrl = `${SITE_URL}${IMAGES.article}`;
+  const social = buildSocialMetadata({
+    lang: lang === 'en' ? 'en' : 'es',
+    path: `/${lang}/blog/formulario-g28-cambiar-abogado-inmigracion`,
+    title: t.title,
+    description: t.metaDesc,
+    images: [{ url: IMAGES.article, alt: t.title }],
+    type: 'article',
+    publishedTime: '2026-02-12T08:00:00.000Z',
+  });
 
   return {
     title: { absolute: t.metaTitle },
     description: t.metaDesc,
     openGraph: {
-      title: t.title,
-      description: t.metaDesc,
-      url: `${SITE_URL}/${lang}/blog/formulario-g28-cambiar-abogado-inmigracion`,
-      images: [
-        {
-          url: imageUrl, 
-          width: 1200,
-          height: 630,
-          alt: t.title,
-        },
-      ],
+      ...social.openGraph,
+      // Campos article:* que buildSocialMetadata no cubre.
       type: 'article',
-      publishedTime: '2026-02-12T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['Formulario G-28', 'Cambio de abogado', 'Abogado de inmigración', 'USCIS', 'Proceso migratorio'],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: t.title,
-      description: t.metaDesc,
-      images: [imageUrl],
-      creator: '@AbogadoMSolis',
-    },
+    twitter: social.twitter,
     alternates: {
       canonical: `${SITE_URL}/${lang}/blog/formulario-g28-cambiar-abogado-inmigracion`,
       languages: {

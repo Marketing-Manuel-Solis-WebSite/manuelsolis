@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -33,6 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/politica-editorial`,
       },
     },
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/politica-editorial`,
+      title,
+      description,
+    }),
   };
 }
 

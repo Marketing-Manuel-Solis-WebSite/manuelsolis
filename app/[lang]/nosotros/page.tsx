@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../lib/officesRegistry';
+import { attorneys } from '../../lib/attorneyData';
+import { buildSocialMetadata } from '../../lib/seoMetadata';
 import NosotrosClient from './NosotrosClient';
 
 const SITE_URL = 'https://www.manuelsolis.com';
+
+const FOUNDER_ID = 'manuel-solis';
 
 // Solo los locales propios: las direcciones virtuales (centros Regus/IWG) están
 // marcadas en officesRegistry y no se anuncian como oficinas. La cifra debe
@@ -40,11 +44,57 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/nosotros`,
       },
     },
+    ...buildSocialMetadata({
+      lang: isEs ? 'es' : 'en',
+      path: `/${lang}/nosotros`,
+      title,
+      description,
+    }),
+  };
+}
+
+/**
+ * Añade `founder` al MISMO nodo `#organization` que emite app/[lang]/layout.tsx
+ * (mismo @id ⇒ una sola entidad, como hace /testimonios con el rating). Esta es
+ * la página que declara visiblemente quién fundó la firma, así que es donde el
+ * dato corresponde. `foundingDate` (1990) y `sameAs` a los perfiles oficiales ya
+ * los emite el layout en ese nodo y no se repiten aquí.
+ * Los datos del fundador salen de lib/attorneyData; si ese id desapareciera, no
+ * se emite nada en lugar de inventar el nombre.
+ */
+function buildFounderSchema(lang: 'es' | 'en'): Record<string, unknown> | null {
+  const founder = attorneys.find((attorney) => attorney.id === FOUNDER_ID);
+  if (!founder) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['LegalService', 'LawFirm'],
+    '@id': `${SITE_URL}/#organization`,
+    founder: {
+      '@type': 'Person',
+      name: founder.name,
+      jobTitle: founder.role[lang],
+      url: `${SITE_URL}/${lang}/abogados/${FOUNDER_ID}`,
+      image: founder.image,
+    },
   };
 }
 
 export default async function NosotrosPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
-  return <NosotrosClient lang={localeLang} />;
+  const founderSchema = buildFounderSchema(localeLang);
+
+  return (
+    <>
+      {founderSchema && (
+        <script
+          id="founder-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(founderSchema) }}
+        />
+      )}
+      <NosotrosClient lang={localeLang} />
+    </>
+  );
 }

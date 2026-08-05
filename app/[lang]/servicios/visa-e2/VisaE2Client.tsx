@@ -79,6 +79,15 @@ export default function VisaE2Client({ lang }: { lang: Language }) {
                     {ui.ctaConsultation}
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </MagneticButton>
+                  {/* Único enlace interno hacia /inversionistas: sin él la guía
+                      de requisitos era huérfana y solo se descubría por sitemap. */}
+                  <a
+                    href={`/${lang}/inversionistas`}
+                    className="inline-flex items-center gap-2 px-6 py-4 border border-white/25 hover:border-[#B2904D]/50 rounded-xl text-white font-semibold transition-colors backdrop-blur-xl bg-[#001540]/40 text-base"
+                  >
+                    {lang === 'es' ? 'Requisitos y proceso paso a paso' : 'Requirements and step-by-step process'}
+                    <ArrowRight size={18} />
+                  </a>
                   <div className="inline-flex items-center gap-3 px-5 py-3 border border-[#B2904D]/30 rounded-xl backdrop-blur-xl bg-[#001540]/40">
                     <Star className="w-5 h-5 text-[#B2904D] fill-[#B2904D]" />
                     <div className="flex items-baseline text-white">

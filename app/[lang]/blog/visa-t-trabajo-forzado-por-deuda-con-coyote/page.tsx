@@ -10,6 +10,7 @@ import {
 
 // IMPORTACIONES
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
@@ -33,7 +34,7 @@ const IMAGES = {
 const blogContent = {
   es: {
     metaTitle: 'Visa T: papeles si trabajaste para pagar deuda a un coyote',
-    metaDesc: '¿Te obligaron a trabajar para pagarle a un coyote bajo amenazas? Descubre cómo la Visa T puede protegerte como víctima de trata laboral y ayudarte a arreglar papeles legalmente.',
+    metaDesc: '¿Te obligaron a trabajar para pagarle a un coyote bajo amenazas? Descubre cómo la Visa T protege a víctimas de trata laboral y te ayuda a arreglar papeles.',
     ui: {
       back: 'Volver al blog',
       share: 'Compartir artículo',
@@ -139,7 +140,7 @@ const blogContent = {
   },
   en: {
     metaTitle: 'T Visa: Immigration Relief for Forced Labor by Smuggling Debt',
-    metaDesc: 'Were you forced to work to repay a smuggler under threats? Learn how the T Visa may protect victims of labor trafficking and help you obtain legal status in the U.S.',
+    metaDesc: 'Were you forced to work to repay a smuggler under threats? Learn how the T Visa protects victims of labor trafficking and can lead to legal status.',
     ui: {
       back: 'Back to blog',
       share: 'Share Article',
@@ -249,36 +250,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
   
-  const imageUrl = `${SITE_URL}${IMAGES.article}`;
+  const social = buildSocialMetadata({
+    lang: lang === 'en' ? 'en' : 'es',
+    path: `/${lang}/blog/visa-t-trabajo-forzado-por-deuda-con-coyote`,
+    title: t.title,
+    description: t.metaDesc,
+    images: [{ url: IMAGES.article, alt: t.title }],
+    type: 'article',
+    publishedTime: '2026-02-03T08:00:00.000Z',
+  });
 
   return {
     title: { absolute: t.metaTitle },
     description: t.metaDesc,
     openGraph: {
-      title: t.title,
-      description: t.metaDesc,
-      url: `${SITE_URL}/${lang}/blog/visa-t-trabajo-forzado-por-deuda-con-coyote`,
-      images: [
-        {
-          url: imageUrl, 
-          width: 1200,
-          height: 630,
-          alt: t.title,
-        },
-      ],
+      ...social.openGraph,
+      // Campos article:* que buildSocialMetadata no cubre.
       type: 'article',
-      publishedTime: '2026-02-03T08:00:00.000Z',
       authors: ['Manuel Solís'],
       section: 'Inmigración',
       tags: ['Visa T', 'Trata laboral', 'Trabajo forzado', 'Deuda con coyote', 'Inmigración USA'],
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: t.title,
-      description: t.metaDesc,
-      images: [imageUrl],
-      creator: '@AbogadoMSolis',
-    },
+    twitter: social.twitter,
     alternates: {
       canonical: `${SITE_URL}/${lang}/blog/visa-t-trabajo-forzado-por-deuda-con-coyote`,
       languages: {
