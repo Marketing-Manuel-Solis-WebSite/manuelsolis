@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
 import ColaboradoresClient from './ColaboradoresClient';
@@ -46,5 +47,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ColaboradoresPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
-  return <ColaboradoresClient lang={localeLang} />;
+  return (
+    <>
+      <BreadcrumbSchema lang={localeLang} trail={[{ es: 'Colaboradores', en: 'Collaborators', path: '/colaboradores' }]} />
+      <ColaboradoresClient lang={localeLang} />
+    </>
+  );
 }

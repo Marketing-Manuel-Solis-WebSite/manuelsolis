@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import AccesoClientesClient from './AccesoClientesClient';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
@@ -44,6 +45,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function AccesoClientesPage() {
-  return <AccesoClientesClient />;
+export default async function AccesoClientesPage({ params }: Props) {
+  const { lang } = await params;
+  return (
+    <>
+      <BreadcrumbSchema
+        lang={lang === 'en' ? 'en' : 'es'}
+        trail={[{ es: 'Acceso a Clientes', en: 'Client Access', path: '/acceso-clientes' }]}
+      />
+      <AccesoClientesClient />
+    </>
+  );
 }

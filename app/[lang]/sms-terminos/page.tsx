@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import SmsTerminosClient from './SmsTerminosClient';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
@@ -47,5 +48,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SmsTerminosPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
-  return <SmsTerminosClient lang={localeLang} />;
+  return (
+    <>
+      <BreadcrumbSchema lang={localeLang} trail={[{ es: 'Términos de SMS', en: 'SMS Terms', path: '/sms-terminos' }]} />
+      <SmsTerminosClient lang={localeLang} />
+    </>
+  );
 }

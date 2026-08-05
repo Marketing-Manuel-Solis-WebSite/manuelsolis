@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import FAQClient from './FAQClient';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
@@ -44,5 +45,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function FAQPage({ params }: Props) {
-  return <FAQClient />;
+  const { lang } = await params;
+  return (
+    <>
+      {/* Sin nivel "/informacion": esa carpeta no tiene page.tsx y responde 404. */}
+      <BreadcrumbSchema
+        lang={lang === 'en' ? 'en' : 'es'}
+        trail={[{ es: 'Preguntas Frecuentes', en: 'Frequently Asked Questions', path: '/informacion/faq' }]}
+      />
+      <FAQClient />
+    </>
+  );
 }

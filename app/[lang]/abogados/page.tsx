@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
 import AbogadosClient from './AbogadosClient';
@@ -46,5 +47,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function AbogadosPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
-  return <AbogadosClient lang={localeLang} />;
+  return (
+    <>
+      <BreadcrumbSchema lang={localeLang} trail={[{ es: 'Abogados', en: 'Attorneys', path: '/abogados' }]} />
+      <AbogadosClient lang={localeLang} />
+    </>
+  );
 }

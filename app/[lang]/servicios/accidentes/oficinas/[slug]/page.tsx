@@ -8,6 +8,7 @@ import {
   type BiText,
 } from '../../accidentesOfficesData';
 import { generateBreadcrumbSchema } from '../../../../../lib/breadcrumbSchema';
+import { buildOfficeFaqSchema } from '../../../../../lib/officeFaq';
 import { buildSocialMetadata } from '../../../../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -152,6 +153,18 @@ export default async function AccidenteOficinaPage({ params }: Props) {
     },
   };
 
+  // FAQPage de las preguntas visibles de esta oficina. Google restringió los
+  // resultados enriquecidos de FAQ a sitios de gobierno y salud en agosto de
+  // 2023, así que esto no busca un adorno en la SERP: declara la entidad que ya
+  // está en la página para que el contenido propio de cada ficha sea legible
+  // también como datos.
+  const faqSchema = buildOfficeFaqSchema(
+    slug,
+    localeLang,
+    `${SITE_URL}/${localeLang}/servicios/accidentes/oficinas/${slug}`,
+    office.seoZone?.[localeLang],
+  );
+
   return (
     <>
       <script
@@ -162,6 +175,14 @@ export default async function AccidenteOficinaPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({ '@context': 'https://schema.org', ...faqSchema }),
+          }}
+        />
+      )}
       <AccidenteOfficePageView office={office} lang={localeLang} />
     </>
   );

@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import RecursosClient from './RecursosClient';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
@@ -43,6 +44,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // RecursosClient resuelve el idioma con useLanguage, así que la página no
 // necesita `params` más allá de la metadata.
-export default async function RecursosPage() {
-  return <RecursosClient />;
+export default async function RecursosPage({ params }: Props) {
+  const { lang } = await params;
+  return (
+    <>
+      {/* Sin nivel "/informacion": esa carpeta no tiene page.tsx y responde 404. */}
+      <BreadcrumbSchema
+        lang={lang === 'en' ? 'en' : 'es'}
+        trail={[{ es: 'Recursos', en: 'Resources', path: '/informacion/recursos' }]}
+      />
+      <RecursosClient />
+    </>
+  );
 }

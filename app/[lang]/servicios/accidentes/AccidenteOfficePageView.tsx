@@ -9,6 +9,7 @@ import TrackedPhoneLink from '../../../components/TrackedPhoneLink';
 import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../components/motion';
 import { allServices, processSteps, ui, getText } from './accidentesData';
 import { officesUi, OFFICE_NAME, type AccidentOffice } from './accidentesOfficesData';
+import { buildOfficeFaqs } from '../../../lib/officeFaq';
 import type { Language } from '../../../lib/translations';
 
 /**
@@ -38,6 +39,12 @@ export default function AccidenteOfficePageView({
     office.mapLink && !office.mapLink.includes('your_map_link_here')
       ? office.mapLink
       : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.address)}`;
+
+  // `office.id` es el mismo slug que la clave de OFFICES_NAP (lo garantiza
+  // __tests__/napConsistency.test.ts), así que las respuestas salen del NAP real.
+  // La zona fina (`seoZone`) entra en las preguntas: es lo que distingue a las
+  // cuatro direcciones con cita previa, que están todas en Houston.
+  const faqs = buildOfficeFaqs(office.id, lang, office.seoZone?.[lang]);
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-500 text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
@@ -174,6 +181,62 @@ export default function AccidenteOfficePageView({
             </Reveal>
           </div>
         </section>
+
+        {/*
+          PREGUNTAS DE ESTA OFICINA
+
+          Es la única sección con texto propio de cada ficha, y está aquí por una
+          razón medida: las 15 páginas de /servicios/accidentes/oficinas/*
+          comparten "Especialidades" y "Proceso" palabra por palabra, y salían
+          entre 0.72 y 0.79 de similitud entre sí (Jaccard sobre shingles de 6
+          palabras del HTML prerenderizado, descontando el boilerplate). Eso es
+          el patrón de doorway page. Las respuestas se derivan de OFFICES_NAP
+          —horario, atención con o sin cita, huso, teléfono—, así que son
+          verdaderas por construcción y distintas en cada oficina; en las cinco
+          direcciones con cita previa cambian por completo.
+        */}
+        {faqs.length > 0 && (
+          <section className="relative py-16 md:py-20 px-4 z-10" aria-labelledby="office-faq-title">
+            <div className="container mx-auto max-w-3xl">
+              <Reveal variant="up" className="text-center mb-10" amount={0.3}>
+                <h2
+                  id="office-faq-title"
+                  className="text-2xl sm:text-3xl md:text-4xl font-thin text-white mb-4"
+                >
+                  {isEs ? 'Preguntas sobre esta oficina' : 'Questions about this office'}
+                </h2>
+                <p className="text-white/60 text-sm md:text-base">
+                  {isEs
+                    ? `Lo que más nos preguntan quienes buscan atención en ${office.city}.`
+                    : `What people looking for help in ${office.city} ask us most.`}
+                </p>
+              </Reveal>
+
+              <div className="space-y-4">
+                {faqs.map((faq, i) => (
+                  <Reveal key={i} variant="up" delay={i * 0.08} amount={0.2}>
+                    {/* <details> nativo: el contenido va en el HTML del servidor
+                        (indexable y legible sin JS) y no necesita hidratación. */}
+                    <details className="group rounded-2xl border border-white/10 bg-white/5 px-5 py-4 open:bg-white/[0.07]">
+                      <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-white font-medium text-base md:text-lg [&::-webkit-details-marker]:hidden">
+                        <span>{faq.q}</span>
+                        <span
+                          aria-hidden="true"
+                          className="mt-1 shrink-0 text-[#B2904D] transition-transform group-open:rotate-45"
+                        >
+                          +
+                        </span>
+                      </summary>
+                      <p className="mt-3 text-white/75 text-sm md:text-base leading-relaxed">
+                        {faq.a}
+                      </p>
+                    </details>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ESPECIALIDADES DE ACCIDENTES */}
         <section className="relative py-16 md:py-24 px-4 z-10" aria-labelledby="office-cases-title">

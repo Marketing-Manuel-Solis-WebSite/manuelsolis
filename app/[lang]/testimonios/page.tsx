@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import { getPlaceData } from '../../lib/googleReviews';
 import { MAIN_FIRM_PLACE_ID } from '../../lib/officesRegistry';
@@ -110,6 +111,7 @@ export default async function TestimoniosPage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbSchema lang={videoLang} trail={[{ es: 'Testimonios', en: 'Testimonials', path: '/testimonios' }]} />
       {ratingSchema && (
         <script
           id="review-schema"

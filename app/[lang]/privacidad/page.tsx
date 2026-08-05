@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import PrivacidadClient from './PrivacidadClient';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
@@ -47,5 +48,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PrivacidadPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
-  return <PrivacidadClient lang={localeLang} />;
+  return (
+    <>
+      <BreadcrumbSchema lang={localeLang} trail={[{ es: 'Política de Privacidad', en: 'Privacy Policy', path: '/privacidad' }]} />
+      <PrivacidadClient lang={localeLang} />
+    </>
+  );
 }

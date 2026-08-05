@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../lib/officesRegistry';
 import { attorneys } from '../../lib/attorneyData';
@@ -87,6 +88,7 @@ export default async function NosotrosPage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbSchema lang={localeLang} trail={[{ es: 'Nosotros', en: 'About Us', path: '/nosotros' }]} />
       {founderSchema && (
         <script
           id="founder-schema"

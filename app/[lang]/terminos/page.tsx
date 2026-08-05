@@ -1,3 +1,4 @@
+import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import TermsOfService from '../../components/TermsOfService';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
@@ -42,5 +43,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function TerminosPage({ params }: Props) {
-  return <TermsOfService />;
+  const { lang } = await params;
+  return (
+    <>
+      <BreadcrumbSchema
+        lang={lang === 'en' ? 'en' : 'es'}
+        trail={[{ es: 'Términos de Servicio', en: 'Terms of Service', path: '/terminos' }]}
+      />
+      <TermsOfService />
+    </>
+  );
 }

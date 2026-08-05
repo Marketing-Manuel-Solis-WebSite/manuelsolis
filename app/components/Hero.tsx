@@ -218,7 +218,15 @@ export default function Hero({ lang }: { lang: Language }) {
               return (
                 <div key={idx} className={`flex items-center justify-center opacity-50 ${extraMargin}`}>
                   <div className={`relative ${size.containerHeight} w-auto flex-shrink-0 filter grayscale brightness-[1.5] contrast-[1.2]`}>
-                    <Image src={assoc.logo} alt={assoc.name} height={size.height} width={size.width} className="h-full w-auto object-contain drop-shadow-sm" loading="lazy" />
+                    {/* sizes + quality bajos a propósito. Sin `sizes`, Next arma
+                        el srcset solo con deviceSizes —cuyo menor valor es 640—
+                        así que estos logos se descargaban a 640 px de ancho para
+                        pintarse a ~224: Lighthouse los marcaba y sumaban 63 KB
+                        entre los tres más grandes. Con `sizes` entran también los
+                        imageSizes (256, 384). La calidad 50 es imperceptible aquí
+                        porque el logo va en escala de grises, al 50 % de opacidad
+                        y detrás de la máscara de desvanecido del marquee. */}
+                    <Image src={assoc.logo} alt={assoc.name} height={size.height} width={size.width} sizes="(max-width: 1024px) 224px, 280px" quality={50} className="h-full w-auto object-contain drop-shadow-sm" loading="lazy" />
                   </div>
                 </div>
               );
