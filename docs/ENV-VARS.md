@@ -16,7 +16,8 @@ Vercel (Settings → Environment Variables).
 | `LEAD_CAPTURE_ENDPOINT` | URL destino de los leads. | Se usa el endpoint de `bos.manuelsolis.com` por defecto. |
 | `RESEND_API_KEY` | Envío de todos los correos (boletín, bienvenida, respaldo de leads). | No se envía ningún correo. |
 | `RESEND_AUDIENCE_ID` | Lista de suscriptores del boletín. | Las altas y bajas fallan. |
-| `GEMINI_API_KEY` | Modelo del asistente del sitio (`/api/chat`). | El chat responde error. |
+| `ANTHROPIC_API_KEY` | Modelo del asistente del sitio (`/api/chat`, Claude Haiku 4.5). | El chat no responde y ofrece el teléfono; el fallo se registra como `chat_misconfigured` o `chat_auth_failed`. |
+| ~~`GEMINI_API_KEY`~~ | **Ya no se usa.** El asistente corría sobre Gemini hasta el 2026-08-05; la clave se filtró en docs commiteados y Google la revocó el 2026-06-16 por su cuenta. Ningún archivo la lee. | Ninguna: se puede borrar de Vercel. |
 | `GOOGLE_PLACES_API_KEY` | Rating y reseñas en vivo de las fichas de Google. | Las páginas omiten el rating en vez de mostrar un valor fijo (comportamiento deseado). |
 | `NEWSLETTER_BLAST_SECRET` | Bearer de automatización de `POST /api/newsletter/blast`. **Ya no es la contraseña del panel.** | El envío masivo por API queda inaccesible. |
 

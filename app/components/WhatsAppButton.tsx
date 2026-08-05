@@ -4,15 +4,15 @@ import { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { fireConversion } from '../lib/conversion';
+import { WHATSAPP_NUMBER } from './officesPhoneMap';
 
 export default function WhatsAppButton() {
   const [showTooltip, setShowTooltip] = useState(false);
   // Se sigue usando useLanguage para el tooltip y manejo de texto general
   const { t, language } = useLanguage();
 
-  // 📞 NÚMERO DE WHATSAPP (+1 713-876-3560)
-  const whatsappNumber = '17138763560';
-  
+  const whatsappNumber = WHATSAPP_NUMBER;
+
   // Mensaje predeterminado con el texto solicitado, codificado para URL
   const rawMessage = 'Website: ¡Hola! Quisiera saber más sobre cómo puedo regularizar mi situación migratoria en EE.UU. ¿Podrían asesorarme?';
   const defaultMessage = encodeURIComponent(rawMessage);

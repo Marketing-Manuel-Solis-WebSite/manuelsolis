@@ -32,9 +32,9 @@ export type SecurityHeader = { key: string; value: string };
 
 // NOTE: keep CSP allow-list in sync with the third-party origins the
 // site actually loads (GA/GTM, Meta Pixel, TikTok, Vercel, YouTube,
-// Google Fonts, Gemini API). Adding a new external script/iframe/fetch
-// origin requires adding it to the matching directive below, otherwise
-// the browser (and Zoom's embedded browser) will block it.
+// Google Fonts). Adding a new external script/iframe/fetch origin
+// requires adding it to the matching directive below, otherwise the
+// browser (and Zoom's embedded browser) will block it.
 const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com",
@@ -52,7 +52,11 @@ const CONTENT_SECURITY_POLICY = [
   //     analytics-ipv6.tiktokw.us para resolver la IP del visitante. Sin ese
   //     dominio, Lighthouse registraba el bloqueo en consola en producción y esa
   //     parte de la medición no llegaba.
-  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://*.tiktokw.us https://va.vercel-scripts.com https://vitals.vercel-insights.com https://generativelanguage.googleapis.com",
+  //   - El asistente del sitio NO aparece aquí a propósito: /api/chat habla con
+  //     el proveedor de IA desde el servidor, así que esa llamada nunca pasa por
+  //     la CSP del navegador. Estaba abierto `generativelanguage.googleapis.com`
+  //     sin que ningún script del cliente lo usara; se quitó al migrar el chat.
+  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://*.tiktokw.us https://va.vercel-scripts.com https://vitals.vercel-insights.com",
   "frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com",
   "media-src 'self' https:",
   "worker-src 'self' blob:",

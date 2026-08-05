@@ -6,10 +6,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '../context/LanguageContext';
 import { fireConversion } from '../lib/conversion';
-import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap';
-
-// +1 713-876-3560 (formato wa.me sin "+", sin guiones)
-const WHATSAPP_NUMBER = '17138763560';
+import {
+  officesPhoneMap,
+  DEFAULT_PHONE,
+  DEFAULT_PHONE_LINK,
+  WHATSAPP_NUMBER,
+} from './officesPhoneMap';
 
 const WHATSAPP_MESSAGE_ES =
   'Website: ¡Hola! Quisiera saber más sobre cómo puedo regularizar mi situación migratoria en EE.UU. ¿Podrían asesorarme?';

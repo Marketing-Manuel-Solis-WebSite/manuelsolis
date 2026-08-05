@@ -448,3 +448,18 @@ export const officesPhoneMap: Record<string, string> = Object.fromEntries(
 // Número por defecto (global)
 export const DEFAULT_PHONE = '1-888-676-1238';
 export const DEFAULT_PHONE_LINK = 'tel:+18886761238';
+
+/**
+ * WhatsApp del despacho, en el formato que exige wa.me: solo dígitos, con
+ * código de país y sin "+" ni separadores.
+ *
+ * Vive aquí porque lo usan a la vez MobileStickyBar, WhatsAppButton y el
+ * asistente del chat. Estaba copiado a mano en cada uno de esos sitios, que es
+ * la misma forma de romperse que ya tuvo el NAP de las oficinas: cambiar el
+ * número en un botón y dejar los otros dos apuntando al viejo no da ningún
+ * error, solo pierde los mensajes que llegan al número muerto.
+ */
+export const WHATSAPP_NUMBER = '17138763560';
+
+/** El mismo número en formato legible, para mostrarlo dentro de un texto. */
+export const WHATSAPP_DISPLAY = '(713) 876-3560';
