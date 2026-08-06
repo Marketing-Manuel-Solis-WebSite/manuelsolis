@@ -79,7 +79,7 @@ function pathsFor(slug: string): string[] {
  * igualmente: el endpoint conserva su comprobación de siempre y no se le abre
  * una puerta trasera.
  */
-async function sendBlast(slug: string, language: Language, origin: string) {
+async function sendBlast(slug: string, language: Language, origin: string, dryRun: boolean) {
   const secret = process.env.NEWSLETTER_BLAST_SECRET;
   if (!secret) throw new Error('NEWSLETTER_BLAST_SECRET no está configurado');
 
@@ -89,7 +89,7 @@ async function sendBlast(slug: string, language: Language, origin: string) {
       'content-type': 'application/json',
       authorization: `Bearer ${secret}`,
     },
-    body: JSON.stringify({ slug, language, contentType: 'blog', variant: 'cta' }),
+    body: JSON.stringify({ slug, language, contentType: 'blog', variant: 'cta', dryRun }),
   });
 
   const response = await runBlast(request);
@@ -124,6 +124,13 @@ export async function GET(request: NextRequest) {
   const today = firmToday();
   const origin = new URL(request.url).origin;
 
+  // ?dryRun=1 recorre todo —elige el artículo, arma el correo, cuenta los
+  // destinatarios— pero no manda nada ni deja marca en el registro. Sin esto,
+  // la única forma de comprobar que el cron funciona sería mandarle un correo
+  // de verdad a la lista entera, que es exactamente lo que no se puede probar
+  // dos veces.
+  const dryRun = new URL(request.url).searchParams.get('dryRun') === '1';
+
   // --- 1. Publicar ---
   // Se revalida lo que ha salido en los últimos días, no solo lo de hoy: si el
   // cron no corrió ayer, el artículo de ayer seguiría oculto. revalidatePath es
@@ -152,18 +159,22 @@ export async function GET(request: NextRequest) {
     const next = pending[0];
 
     if (next) {
-      // Reservar antes de mandar: ver blogBlastLedger.
-      if (!(await claimBlast(next.slug, language))) {
+      // En seco no se reserva: dejar la marca puesta haría que el envío de
+      // verdad se saltara este artículo para siempre.
+      if (!dryRun && !(await claimBlast(next.slug, language))) {
         newsletter = { sent: false, slug: next.slug, reason: 'ya reservado por otra ejecución' };
       } else {
-        const result = await sendBlast(next.slug, language, origin);
-        await recordBlastResult(next.slug, language, result).catch(() => {
-          // El correo ya salió; que no se pueda cerrar el registro no lo
-          // deshace. La reserva sigue puesta, así que no se reenviará.
-          console.error(JSON.stringify({ event: 'cron_ledger_write_failed', slug: next.slug }));
-        });
+        const result = await sendBlast(next.slug, language, origin, dryRun);
+        if (!dryRun) {
+          await recordBlastResult(next.slug, language, result).catch(() => {
+            // El correo ya salió; que no se pueda cerrar el registro no lo
+            // deshace. La reserva sigue puesta, así que no se reenviará.
+            console.error(JSON.stringify({ event: 'cron_ledger_write_failed', slug: next.slug }));
+          });
+        }
         newsletter = {
-          sent: true,
+          sent: !dryRun,
+          dryRun,
           slug: next.slug,
           language,
           scheduledFor: newsletterDateOf(next),
@@ -182,6 +193,7 @@ export async function GET(request: NextRequest) {
   const summary = {
     ok: true,
     today,
+    dryRun,
     published: ALL_BLOG_POSTS.filter((post) => isPublished(post, today)).length,
     scheduled: ALL_BLOG_POSTS.filter((post) => !isPublished(post, today)).length,
     revalidated: revalidated.length,
