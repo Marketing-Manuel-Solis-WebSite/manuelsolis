@@ -11,6 +11,20 @@ export interface ServiceLink {
 }
 
 const blogServiceMap: Record<string, ServiceLink> = {
+  'ley-laken-riley-detencion-obligatoria-2026': { path: '/servicios/ley-criminal', label: { es: 'Defensa Criminal e Inmigración', en: 'Criminal Defense & Immigration' } },
+  'impuesto-1-por-ciento-remesas-2026-como-evitarlo': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'cuanto-cuesta-arreglar-papeles-tarifas-uscis-2026': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'autodeportacion-salida-voluntaria-riesgos-2026': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'parole-humanitario-terminado-opciones-2026': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'perdi-el-tps-opciones-legales-2026': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'caso-desestimado-corte-inmigracion-trampa-deportacion-expedita': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'cita-supervision-ice-check-in-riesgo-arresto-2026': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'muerte-accidente-trabajo-texas-derechos-familia': { path: '/servicios/accidentes', label: { es: 'Abogados de Accidentes', en: 'Accident Attorneys' } },
+  'hijo-ciudadano-21-anos-pedir-padres-2026': { path: '/servicios/familia', label: { es: 'Derecho Familiar e Inmigración', en: 'Family Law & Immigration' } },
+  'uscis-revisa-redes-sociales-caso-migratorio-2026': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'ciudadania-2026-nuevo-examen-buen-caracter-moral': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'auditoria-i9-redada-trabajo-derechos-2026': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'accidente-conductor-sin-seguro-fuga-texas': { path: '/servicios/accidentes', label: { es: 'Abogados de Accidentes', en: 'Accident Attorneys' } },
   'registro-obligatorio-extranjeros-g325r-2026': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
   'audiencia-fianza-90-dias-quinto-circuito-texas-2026': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
   'tarifa-anual-asilo-100-dolares-regla-2026': { path: '/servicios/asilo', label: { es: 'Servicios de Asilo', en: 'Asylum Services' } },

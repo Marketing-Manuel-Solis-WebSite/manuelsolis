@@ -23,6 +23,272 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
 export const BLOG_DATA = {
   posts: [
     {
+      id: 'ley_laken_riley_detencion_obligatoria_2026',
+      slug: 'ley-laken-riley-detencion-obligatoria-2026',
+      title: {
+        es: 'Ley Laken Riley: por qué un cargo de robo puede dejarte detenido sin fianza',
+        en: 'The Laken Riley Act: Why a Theft Charge Can Leave You Detained Without Bond'
+      },
+      excerpt: {
+        es: 'La ley obliga a detener a personas indocumentadas con ciertos cargos aunque no haya condena. Quién está en riesgo, qué dicen las cortes y qué defensas existen.',
+        en: 'The law requires detaining undocumented people with certain charges even without a conviction. Who is at risk, what courts are saying, and what defenses exist.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '10 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'impuesto_1_por_ciento_remesas_2026_como_evitarlo',
+      slug: 'impuesto-1-por-ciento-remesas-2026-como-evitarlo',
+      title: {
+        es: 'Impuesto del 1% a las remesas: quién lo paga y cómo enviar dinero sin pagarlo',
+        en: 'The 1% Remittance Tax: Who Pays It and How to Send Money Without It'
+      },
+      excerpt: {
+        es: 'Desde enero de 2026 hay un impuesto del 1% a remesas pagadas en efectivo. Quién lo paga, quién queda exento y las formas 100% legales de evitarlo.',
+        en: 'Since January 2026 there is a 1% tax on remittances funded with cash. Who pays, who is exempt, and the fully legal ways to avoid it.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '9 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'cuanto_cuesta_arreglar_papeles_tarifas_uscis_2026',
+      slug: 'cuanto-cuesta-arreglar-papeles-tarifas-uscis-2026',
+      title: {
+        es: '¿Cuánto cuesta arreglar papeles en 2026? La tabla real de tarifas de USCIS',
+        en: 'What Does It Cost to Fix Your Papers in 2026? The Real USCIS Fee Table'
+      },
+      excerpt: {
+        es: 'Tarifas de inmigración 2026: residencia, ciudadanía, permisos de trabajo y las nuevas tarifas de asilo, TPS y parole que no se pueden exonerar.',
+        en: '2026 immigration fees: residency, citizenship, work permits, and the new asylum, TPS and parole fees that cannot be waived.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '12 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'autodeportacion_salida_voluntaria_riesgos_2026',
+      slug: 'autodeportacion-salida-voluntaria-riesgos-2026',
+      title: {
+        es: '"Autodeportación": lo que el gobierno no te dice antes de que firmes tu salida',
+        en: 'Self-Deportation: What the Government Does Not Tell You Before You Sign'
+      },
+      excerpt: {
+        es: 'Antes de aceptar dinero por irte solo, entiende qué pierdes: barras de reingreso, casos pendientes cancelados y derechos que no regresan.',
+        en: 'Before accepting money to leave on your own, understand what you lose: reentry bars, cancelled pending cases, and rights that do not come back.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '10 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'parole_humanitario_terminado_opciones_2026',
+      slug: 'parole-humanitario-terminado-opciones-2026',
+      title: {
+        es: 'Mi parole humanitario terminó: opciones legales antes de quedarte sin estatus',
+        en: 'My Humanitarian Parole Ended: Legal Options Before You Lose Status'
+      },
+      excerpt: {
+        es: 'Miles perdieron el permiso y el estatus al terminar los programas de parole. Qué opciones reales existen y qué plazos no puedes dejar pasar.',
+        en: 'Thousands lost permission and status when parole programs ended. What real options exist and which deadlines you cannot let slip.'
+      },
+      categoryId: 'visa-humanitaria',
+      category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '11 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'perdi_el_tps_opciones_legales_2026',
+      slug: 'perdi-el-tps-opciones-legales-2026',
+      title: {
+        es: 'Perdí el TPS: 5 caminos legales que podrían mantenerte en Estados Unidos',
+        en: 'I Lost TPS: 5 Legal Paths That Could Keep You in the United States'
+      },
+      excerpt: {
+        es: 'Con las designaciones terminadas, miles perdieron estatus y permiso de trabajo. Estas son las 5 rutas que un abogado revisa primero.',
+        en: 'With designations ended, thousands lost status and work permits. These are the 5 routes an attorney reviews first.'
+      },
+      categoryId: 'visa-humanitaria',
+      category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '11 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'caso_desestimado_corte_inmigracion_trampa_deportacion_expedita',
+      slug: 'caso-desestimado-corte-inmigracion-trampa-deportacion-expedita',
+      title: {
+        es: '"Desestimaron" mi caso en la corte de inmigración: por qué puede ser una trampa',
+        en: 'They "Dismissed" My Immigration Court Case: Why That Can Be a Trap'
+      },
+      excerpt: {
+        es: 'Que el gobierno cierre tu caso suena a buena noticia, pero puede dejarte expuesto a deportación expedita sin ver a un juez. Cómo oponerte.',
+        en: 'The government closing your case sounds like good news, but it can expose you to expedited removal without seeing a judge. How to oppose it.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '9 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'cita_supervision_ice_check_in_riesgo_arresto_2026',
+      slug: 'cita-supervision-ice-check-in-riesgo-arresto-2026',
+      title: {
+        es: 'Cita de supervisión con ICE: cómo prepararte y qué hacer ante el riesgo de arresto',
+        en: 'ICE Check-In: How to Prepare and What to Do If You Are Arrested'
+      },
+      excerpt: {
+        es: 'Debes ir a tu check-in, pero no debes ir sin plan: documentos, abogado, poder notarial para tus hijos y estrategia antes de la cita.',
+        en: 'You must attend your check-in, but not without a plan: documents, attorney, power of attorney for your children, and strategy beforehand.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '10 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'muerte_accidente_trabajo_texas_derechos_familia',
+      slug: 'muerte-accidente-trabajo-texas-derechos-familia',
+      title: {
+        es: 'Murió mi familiar en un accidente de trabajo en Texas: los derechos de la familia',
+        en: 'My Relative Died in a Workplace Accident in Texas: The Family Rights'
+      },
+      excerpt: {
+        es: 'En Texas la familia puede tener derecho a compensación por muerte injusta sin importar el estatus migratorio de nadie. Quién puede reclamar y qué plazos corren.',
+        en: 'In Texas the family may have a wrongful death claim regardless of anyone immigration status. Who can claim and what deadlines apply.'
+      },
+      categoryId: 'accidentes',
+      category: { es: 'Accidentes', en: 'Accidents' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '11 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'hijo_ciudadano_21_anos_pedir_padres_2026',
+      slug: 'hijo-ciudadano-21-anos-pedir-padres-2026',
+      title: {
+        es: 'Mi hijo ciudadano cumplió 21: cómo puede pedirme y qué pasa si entré sin papeles',
+        en: 'My Citizen Child Turned 21: How They Can Petition and What If I Entered Illegally'
+      },
+      excerpt: {
+        es: 'El proceso real: quién califica de inmediato, qué cambia si entraste sin inspección y cuándo necesitas el perdón I-601A.',
+        en: 'The real process: who qualifies immediately, what changes if you entered without inspection, and when you need the I-601A waiver.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '11 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'uscis_revisa_redes_sociales_caso_migratorio_2026',
+      slug: 'uscis-revisa-redes-sociales-caso-migratorio-2026',
+      title: {
+        es: 'USCIS revisa tus redes sociales: publicaciones que pueden dañar tu caso',
+        en: 'USCIS Reviews Your Social Media: Posts That Can Damage Your Case'
+      },
+      excerpt: {
+        es: 'Qué buscan exactamente en visas, residencia, asilo y ciudadanía, qué publicaciones hunden casos y cómo proteger tu proceso sin mentir.',
+        en: 'What they look for in visa, residency, asylum and citizenship cases, which posts sink cases, and how to protect yours without lying.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '9 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'ciudadania_2026_nuevo_examen_buen_caracter_moral',
+      slug: 'ciudadania-2026-nuevo-examen-buen-caracter-moral',
+      title: {
+        es: 'Ciudadanía en 2026: el examen más largo y la revisión más estricta',
+        en: 'Citizenship in 2026: A Longer Test and a Stricter Review'
+      },
+      excerpt: {
+        es: 'El examen cívico volvió a la versión de 128 preguntas y el "buen carácter moral" se revisa con más dureza. Cómo llegar blindado al N-400.',
+        en: 'The civics test returned to the 128-question version and "good moral character" is reviewed more strictly. How to arrive prepared for the N-400.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '10 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'auditoria_i9_redada_trabajo_derechos_2026',
+      slug: 'auditoria-i9-redada-trabajo-derechos-2026',
+      title: {
+        es: 'Auditorías I-9 y operativos en el trabajo: derechos del trabajador',
+        en: 'I-9 Audits and Worksite Operations: Workers Rights'
+      },
+      excerpt: {
+        es: 'Qué puede pedir el gobierno, qué derechos tienes como trabajador y qué errores de tu patrón te ponen en riesgo durante una inspección.',
+        en: 'What the government can request, what rights you have as a worker, and which employer mistakes put you at risk during an inspection.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '10 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'accidente_conductor_sin_seguro_fuga_texas',
+      slug: 'accidente-conductor-sin-seguro-fuga-texas',
+      title: {
+        es: 'Me chocó un conductor sin seguro o se dio a la fuga en Texas: cómo cobrar',
+        en: 'Hit by an Uninsured or Hit-and-Run Driver in Texas: How to Recover'
+      },
+      excerpt: {
+        es: 'Si te chocaron y huyeron o no tienen póliza, aún hay formas de cobrar: cobertura UM/UIM, PIP y demandas directas. Guía completa.',
+        en: 'If you were hit by someone who fled or has no policy, there are still ways to recover: UM/UIM coverage, PIP and direct claims.'
+      },
+      categoryId: 'accidentes',
+      category: { es: 'Accidentes', en: 'Accidents' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '10 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
       id: 'registro_obligatorio_extranjeros_g325r_2026',
       slug: 'registro-obligatorio-extranjeros-g325r-2026',
       title: {

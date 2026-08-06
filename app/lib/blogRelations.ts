@@ -20,6 +20,20 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'ley-laken-riley-detencion-obligatoria-2026',
+    'impuesto-1-por-ciento-remesas-2026-como-evitarlo',
+    'cuanto-cuesta-arreglar-papeles-tarifas-uscis-2026',
+    'autodeportacion-salida-voluntaria-riesgos-2026',
+    'parole-humanitario-terminado-opciones-2026',
+    'perdi-el-tps-opciones-legales-2026',
+    'caso-desestimado-corte-inmigracion-trampa-deportacion-expedita',
+    'cita-supervision-ice-check-in-riesgo-arresto-2026',
+    'muerte-accidente-trabajo-texas-derechos-familia',
+    'hijo-ciudadano-21-anos-pedir-padres-2026',
+    'uscis-revisa-redes-sociales-caso-migratorio-2026',
+    'ciudadania-2026-nuevo-examen-buen-caracter-moral',
+    'auditoria-i9-redada-trabajo-derechos-2026',
+    'accidente-conductor-sin-seguro-fuga-texas',
     'registro-obligatorio-extranjeros-g325r-2026',
     'audiencia-fianza-90-dias-quinto-circuito-texas-2026',
     'tarifa-anual-asilo-100-dolares-regla-2026',
@@ -106,6 +120,11 @@ const clusters: Record<string, string[]> = {
     'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
   ],
   deportation: [
+    'ley-laken-riley-detencion-obligatoria-2026',
+    'autodeportacion-salida-voluntaria-riesgos-2026',
+    'caso-desestimado-corte-inmigracion-trampa-deportacion-expedita',
+    'cita-supervision-ice-check-in-riesgo-arresto-2026',
+    'auditoria-i9-redada-trabajo-derechos-2026',
     'audiencia-fianza-90-dias-quinto-circuito-texas-2026',
     'arrestos-ice-corte-inmigracion-fallo-2026',
     'redadas-ice-2026-derechos-plan-emergencia-familiar',
@@ -119,6 +138,10 @@ const clusters: Record<string, string[]> = {
     'daca-2026-estado-legal-tribunales',
   ],
   process: [
+    'impuesto-1-por-ciento-remesas-2026-como-evitarlo',
+    'cuanto-cuesta-arreglar-papeles-tarifas-uscis-2026',
+    'uscis-revisa-redes-sociales-caso-migratorio-2026',
+    'ciudadania-2026-nuevo-examen-buen-caracter-moral',
     'registro-obligatorio-extranjeros-g325r-2026',
     'green-card-detenido-aeropuerto-viajar-2026',
     'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados',
@@ -138,11 +161,13 @@ const clusters: Record<string, string[]> = {
     'daca-2026-estado-legal-tribunales',
   ],
   daca_tps: [
+    'perdi-el-tps-opciones-legales-2026',
     'daca-2026-estado-legal-tribunales',
     'tps-2026-paises-elegibles-renovacion',
     'advance-parole-2026-viajar-con-daca-tps-visa-u',
   ],
   humanitarian: [
+    'parole-humanitario-terminado-opciones-2026',
     'tarifa-anual-asilo-100-dolares-regla-2026',
     'visa-t-trabajo-forzado-por-deuda-con-coyote',
     'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
@@ -153,6 +178,7 @@ const clusters: Record<string, string[]> = {
     'tps-2026-paises-elegibles-renovacion',
   ],
   family_marriage: [
+    'hijo-ciudadano-21-anos-pedir-padres-2026',
     'entrevista-matrimonio-uscis-senales-alerta',
     'perdon-i601a-arreglar-papeles-entrada-ilegal',
     'ciudadania-en-espanol-reglas-50-20-55-15',
@@ -162,6 +188,8 @@ const clusters: Record<string, string[]> = {
     'entrevista-inmigracion-errores-evitar',
   ],
   accidents: [
+    'muerte-accidente-trabajo-texas-derechos-familia',
+    'accidente-conductor-sin-seguro-fuga-texas',
     'golpe-de-calor-trabajo-texas-derechos',
     'accidente-trabajo-indocumentado-texas-compensacion',
     'accidente-camion-18-ruedas-texas-compensacion',
