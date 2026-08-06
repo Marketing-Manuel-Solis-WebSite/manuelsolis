@@ -129,9 +129,16 @@ export async function POST(request: NextRequest) {
       utm_term: body.utm_term,
       gclid: body.gclid,
       fbclid: body.fbclid,
+      fbp: body.fbp,
+      fbc: body.fbc,
       session_id: body.session_id,
       device_type: detectDeviceTypeFromUA(userAgent),
       country,
+      // Match keys de Meta CAPI: la IP y el UA del LEAD en el submit —
+      // los eventos Lead Qualified/Purchase los dispara luego un agente
+      // desde BOS, y su IP no sirve para el matching (reparo de Oscar).
+      client_ip: ip !== 'anonymous' ? ip : null,
+      client_user_agent: userAgent,
     };
 
     let payload;

@@ -34,6 +34,53 @@ const VALID_INPUT: LeadFormInput = {
   language: 'es',
 };
 
+describe('Meta CAPI match keys — fbp/fbc/client_ip/client_user_agent', () => {
+  const FBP = 'fb.1.1754100000000.1234567890';
+  const FBC = 'fb.1.1754100000000.IwAR2xYzAbC';
+
+  it('pasa fbp/fbc válidos al payload para que BOS los adjunte a CAPI', () => {
+    const payload = mapFormToPayload({ ...VALID_INPUT, fbp: FBP, fbc: FBC });
+    expect(payload.fbp).toBe(FBP);
+    expect(payload.fbc).toBe(FBC);
+  });
+
+  it('degrada fbp/fbc malformados a null (Meta penaliza basura)', () => {
+    const payload = mapFormToPayload({
+      ...VALID_INPUT,
+      fbp: 'no-es-cookie',
+      fbc: 'fb.9.x.y',
+    });
+    expect(payload.fbp).toBeNull();
+    expect(payload.fbc).toBeNull();
+  });
+
+  it('ausentes → null explícito (contrato estable para BOS)', () => {
+    const payload = mapFormToPayload(VALID_INPUT);
+    expect(payload.fbp).toBeNull();
+    expect(payload.fbc).toBeNull();
+    expect(payload.client_ip_address).toBeNull();
+    expect(payload.client_user_agent).toBeNull();
+  });
+
+  it('client_ip y user agent del lead llegan al payload', () => {
+    const payload = mapFormToPayload({
+      ...VALID_INPUT,
+      client_ip: '187.190.10.20',
+      client_user_agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0)',
+    });
+    expect(payload.client_ip_address).toBe('187.190.10.20');
+    expect(payload.client_user_agent).toBe('Mozilla/5.0 (iPhone; CPU iPhone OS 17_0)');
+  });
+
+  it('recorta user agents anómalamente largos a 300 chars', () => {
+    const payload = mapFormToPayload({
+      ...VALID_INPUT,
+      client_user_agent: 'X'.repeat(1000),
+    });
+    expect(payload.client_user_agent).toHaveLength(300);
+  });
+});
+
 describe('normalizeUtm* — defaults to GA4 sentinels', () => {
   it("emits '(direct)' when utm_source is missing/empty/null/undefined", () => {
     expect(normalizeUtmSource(undefined)).toBe('(direct)');

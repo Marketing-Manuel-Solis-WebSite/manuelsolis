@@ -7,6 +7,7 @@ import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCirc
 import { fireConversion } from '../lib/conversion'
 import { fetchWithTimeout, FetchTimeoutError } from '../lib/fetchTimeout'
 import { getEffectiveUtms, effectiveUtmsToLeadFields } from '../lib/attribution'
+import { collectMetaBrowserParams } from '../lib/metaPixel'
 
 // Client island: the interactive lead-capture form. La sección y el encabezado
 // viven en el wrapper de servidor (ContactForm.tsx); aquí quedan el submit, la
@@ -264,11 +265,19 @@ export default function ContactFormClient() {
       fbclid: urlParams?.get('fbclid') || eff.fbclid || null,
     };
 
+    // Match keys de Meta (cookies _fbp/_fbc del Pixel): solo existen en el
+    // navegador del lead y solo en este momento — viajan con el lead para
+    // que BOS los adjunte a los eventos CAPI de Lead Qualified/Purchase,
+    // que un agente dispara días después desde otra máquina.
+    const metaKeys = collectMetaBrowserParams();
+
     try {
       const payload = {
         ...formData,
         ...utmData,
         ...clickIds,
+        fbp: metaKeys.fbp || null,
+        fbc: metaKeys.fbc || null,
         [HONEYPOT_FIELD]: honeypot,
         page_url: pageUrl,
         language: lang,

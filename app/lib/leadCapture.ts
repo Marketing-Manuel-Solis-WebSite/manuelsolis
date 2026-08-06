@@ -56,12 +56,19 @@ export interface LeadFormInput {
   gclid?: string | null;
   fbclid?: string | null;
 
+  // Meta match keys del navegador (cookies _fbp/_fbc del Pixel),
+  // capturadas por el cliente en el momento del submit.
+  fbp?: string | null;
+  fbc?: string | null;
+
   // Session
   session_id?: string | null;
 
   // Server-enriched (server fills these in)
   device_type?: DeviceType;
   country?: string | null;
+  client_ip?: string | null;
+  client_user_agent?: string | null;
 }
 
 export interface LeadPayload {
@@ -95,6 +102,20 @@ export interface LeadPayload {
   utm_term: string | null;
   gclid: string | null;
   fbclid: string | null;
+
+  /**
+   * Match keys para Meta CAPI (pedidos por marketing 2026-08-05): BOS/CRM
+   * debe adjuntarlos a los eventos Lead Qualified y Purchase de este lead.
+   * fbp/fbc son las cookies del Pixel en el navegador del LEAD;
+   * client_ip_address/client_user_agent son los del lead AL MOMENTO DEL
+   * SUBMIT — no los del agente que después cambia el status en BOS (ese
+   * fue justo el reparo de Oscar: la IP del agente estorba al matching;
+   * esta es la del cliente real).
+   */
+  fbp: string | null;
+  fbc: string | null;
+  client_ip_address: string | null;
+  client_user_agent: string | null;
 
   // Inference (new in v3.0)
   practice_area_inferred: string | null;
@@ -134,6 +155,16 @@ function trimOrNull(v: unknown): string | null {
   if (typeof v !== 'string') return null;
   const t = v.trim();
   return t === '' ? null : t;
+}
+
+// _fbp/_fbc: `fb.<subdomainIndex>.<timestamp>.<valor>` — mismo formato que
+// valida app/lib/metaCapi.ts. Basura malformada se degrada a null: Meta
+// penaliza la calidad del evento (EMQ) cuando recibe parámetros inválidos.
+const FB_COOKIE_RE = /^fb\.[0-2]\.\d{6,}\.\S{4,}$/;
+
+function normalizeFbCookie(raw: unknown): string | null {
+  const value = trimOrNull(raw);
+  return value && FB_COOKIE_RE.test(value) ? value : null;
 }
 
 export function normalizeUtmSource(raw: unknown): string {
@@ -452,6 +483,10 @@ export function mapFormToPayload(input: LeadFormInput): LeadPayload {
     utm_term: trimOrNull(input.utm_term),
     gclid: trimOrNull(input.gclid),
     fbclid: trimOrNull(input.fbclid),
+    fbp: normalizeFbCookie(input.fbp),
+    fbc: normalizeFbCookie(input.fbc),
+    client_ip_address: trimOrNull(input.client_ip),
+    client_user_agent: trimOrNull(input.client_user_agent)?.slice(0, 300) ?? null,
     practice_area_inferred: inferPracticeArea(pathname),
     office_inferred: inferOffice(pathname),
     session_id: trimOrNull(input.session_id),
@@ -685,6 +720,7 @@ function formatFallbackBody(payload: LeadPayload, failure: PostLeadResult): stri
     `Página:    ${payload.page_url}`,
     `Origen:    ${payload.source} / ${payload.medium} / ${payload.campaign}`,
     `Click IDs: gclid=${payload.gclid ?? '-'} fbclid=${payload.fbclid ?? '-'}`,
+    `Meta CAPI: fbp=${payload.fbp ?? '-'} fbc=${payload.fbc ?? '-'} ip=${payload.client_ip_address ?? '-'}`,
     `Servicio:  ${payload.practice_area_inferred ?? '-'}`,
     `Oficina:   ${payload.office_inferred ?? '-'}`,
     `Sesión:    ${payload.session_id ?? '-'} · ${payload.device_type} · ${payload.country ?? '-'}`,
