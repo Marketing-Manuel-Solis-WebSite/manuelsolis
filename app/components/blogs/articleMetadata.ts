@@ -5,6 +5,19 @@ import type { BlogArticleContent } from './articleModel';
 const SITE_URL = 'https://www.manuelsolis.com';
 
 /**
+ * Tamaño real de las portadas del blog, en public/blog/covers/.
+ *
+ * Se declaran los píxeles que el archivo tiene de verdad, no los 1200x630
+ * nominales de una imagen social genérica: `og:image:width` y `height`
+ * describen el archivo que se sirve, y anunciar unas medidas que no son las
+ * suyas hace que Facebook y WhatsApp reserven un hueco con la proporción
+ * equivocada. Todas las portadas se normalizan a 16:9 al colocarlas, así que
+ * esta constante vale para todas.
+ */
+const COVER_WIDTH = 1600;
+const COVER_HEIGHT = 900;
+
+/**
  * Metadatos de un artículo del blog.
  *
  * Pasa por `buildSocialMetadata` y no por un objeto `openGraph` escrito a mano
@@ -44,7 +57,9 @@ export function buildArticleMetadata({
       path: `/${lang}/blog/${slug}`,
       title: content.metaTitle,
       description: content.metaDesc,
-      images: [{ url: `${SITE_URL}${image}`, width: 1200, height: 630, alt: content.title }],
+      images: [
+        { url: `${SITE_URL}${image}`, width: COVER_WIDTH, height: COVER_HEIGHT, alt: content.title },
+      ],
       type: 'article',
       publishedTime: isoDate,
       modifiedTime: isoModified,

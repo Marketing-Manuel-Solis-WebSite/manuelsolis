@@ -5,8 +5,7 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 
 const SLUG = 'autodeportacion-salida-voluntaria-riesgos-2026';
 const ISO_DATE = '2026-08-06';
-// TODO(portada): sustituir cuando marketing entregue la imagen definitiva.
-const IMAGE = '/og-default.jpg';
+const IMAGE = '/blog/covers/autodeportacion-salida-voluntaria-riesgos-2026.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {

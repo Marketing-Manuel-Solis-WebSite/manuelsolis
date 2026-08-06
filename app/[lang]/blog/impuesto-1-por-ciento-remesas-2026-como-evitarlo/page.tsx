@@ -5,8 +5,7 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 
 const SLUG = 'impuesto-1-por-ciento-remesas-2026-como-evitarlo';
 const ISO_DATE = '2026-08-06';
-// TODO(portada): sustituir cuando marketing entregue la imagen definitiva.
-const IMAGE = '/og-default.jpg';
+const IMAGE = '/blog/covers/impuesto-1-por-ciento-remesas-2026-como-evitarlo.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {

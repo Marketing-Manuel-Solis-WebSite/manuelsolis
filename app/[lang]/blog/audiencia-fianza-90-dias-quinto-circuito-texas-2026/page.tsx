@@ -5,8 +5,7 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 
 const SLUG = 'audiencia-fianza-90-dias-quinto-circuito-texas-2026';
 const ISO_DATE = '2026-08-05';
-// TODO(portada): sustituir cuando marketing entregue la imagen definitiva.
-const IMAGE = '/og-default.jpg';
+const IMAGE = '/blog/covers/audiencia-fianza-90-dias-quinto-circuito-texas-2026.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {

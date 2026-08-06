@@ -38,7 +38,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '20 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/ley-laken-riley-detencion-obligatoria-2026.jpg',
       featured: false
     },
     {
@@ -57,7 +57,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '16 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/impuesto-1-por-ciento-remesas-2026-como-evitarlo.jpg',
       featured: false
     },
     {
@@ -76,7 +76,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '21 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/cuanto-cuesta-arreglar-papeles-tarifas-uscis-2026.jpg',
       featured: false
     },
     {
@@ -95,7 +95,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '19 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/autodeportacion-salida-voluntaria-riesgos-2026.jpg',
       featured: false
     },
     {
@@ -114,7 +114,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '20 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/parole-humanitario-terminado-opciones-2026.jpg',
       featured: false
     },
     {
@@ -133,7 +133,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '23 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/perdi-el-tps-opciones-legales-2026.jpg',
       featured: false
     },
     {
@@ -152,7 +152,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '19 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/caso-desestimado-corte-inmigracion-trampa-deportacion-expedita.jpg',
       featured: false
     },
     {
@@ -171,7 +171,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '20 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/cita-supervision-ice-check-in-riesgo-arresto-2026.jpg',
       featured: false
     },
     {
@@ -190,7 +190,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '21 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/muerte-accidente-trabajo-texas-derechos-familia.jpg',
       featured: false
     },
     {
@@ -209,7 +209,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '23 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/hijo-ciudadano-21-anos-pedir-padres-2026.jpg',
       featured: false
     },
     {
@@ -228,7 +228,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '19 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/uscis-revisa-redes-sociales-caso-migratorio-2026.jpg',
       featured: false
     },
     {
@@ -247,7 +247,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '19 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/ciudadania-2026-nuevo-examen-buen-caracter-moral.jpg',
       featured: false
     },
     {
@@ -266,7 +266,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '21 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/auditoria-i9-redada-trabajo-derechos-2026.jpg',
       featured: false
     },
     {
@@ -285,7 +285,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '22 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/accidente-conductor-sin-seguro-fuga-texas.jpg',
       featured: false
     },
     {
@@ -304,7 +304,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-04',
       readTime: '12 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/registro-obligatorio-extranjeros-g325r-2026.jpg',
       featured: false
     },
     {
@@ -323,7 +323,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-05',
       readTime: '9 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/audiencia-fianza-90-dias-quinto-circuito-texas-2026.jpg',
       featured: false
     },
     {
@@ -342,7 +342,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '9 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/tarifa-anual-asilo-100-dolares-regla-2026.jpg',
       featured: false
     },
     {
@@ -361,7 +361,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '9 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/arrestos-ice-corte-inmigracion-fallo-2026.jpg',
       featured: false
     },
     {
@@ -380,7 +380,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '11 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/green-card-detenido-aeropuerto-viajar-2026.jpg',
       featured: false
     },
     {
@@ -399,7 +399,7 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-08-06',
       readTime: '10 min',
-      image: '/og-default.jpg',
+      image: '/blog/covers/golpe-de-calor-trabajo-texas-derechos.jpg',
       featured: false
     },
     {

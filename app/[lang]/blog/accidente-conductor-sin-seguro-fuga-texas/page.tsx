@@ -5,8 +5,7 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 
 const SLUG = 'accidente-conductor-sin-seguro-fuga-texas';
 const ISO_DATE = '2026-08-06';
-// TODO(portada): sustituir cuando marketing entregue la imagen definitiva.
-const IMAGE = '/og-default.jpg';
+const IMAGE = '/blog/covers/accidente-conductor-sin-seguro-fuga-texas.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {

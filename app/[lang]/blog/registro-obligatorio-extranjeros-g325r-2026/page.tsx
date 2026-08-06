@@ -8,7 +8,7 @@ const ISO_DATE = '2026-08-04';
 // TODO(portada): sustituir por la imagen definitiva en /blog/blog_37/ cuando la
 // entregue marketing. Mientras tanto se usa la imagen social de marca, que
 // existe en public/ y es válida para compartir en redes.
-const IMAGE = '/og-default.jpg';
+const IMAGE = '/blog/covers/registro-obligatorio-extranjeros-g325r-2026.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {
