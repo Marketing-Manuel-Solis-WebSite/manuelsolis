@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'El impuesto del 1% a las remesas solo grava los envíos en efectivo. Desde cuenta, débito, crédito o app digital no se cobra. Qué es cierto y qué es mito.',
     title: 'Impuesto del 1% a las remesas: quién lo paga de verdad y cómo enviar dinero sin pagarlo',
     displayDate: '06 Ago, 2026',
-    readTime: '9 min',
+    readTime: '16 min',
     categoryLabel: 'Procesos Migratorios',
     lastUpdated: '6 de agosto de 2026',
     summary: {
@@ -308,7 +308,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'The 1% remittance tax only applies to cash-funded transfers. Sending from a bank account, debit, credit or a digital app is exempt. Facts versus myths.',
     title: 'The 1% Remittance Tax: Who Actually Pays It and How to Send Money Without It',
     displayDate: 'Aug 06, 2026',
-    readTime: '9 min',
+    readTime: '16 min',
     categoryLabel: 'Immigration Process',
     lastUpdated: 'August 6, 2026',
     summary: {

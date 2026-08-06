@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'No pagar la Tarifa Anual de Asilo de $100 en 30 días puede costar el rechazo del I-589, el permiso de trabajo y exponerte a deportación. Cómo protegerte.',
     title: 'Tarifa Anual de Asilo de $100: el pago de 30 días que puede costarte el caso y el permiso de trabajo',
     displayDate: '06 Ago, 2026',
-    readTime: '10 min',
+    readTime: '9 min',
     categoryLabel: 'Visa Humanitaria',
     lastUpdated: '6 de agosto de 2026',
     summary: {
@@ -222,7 +222,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Missing the $100 Asylum Annual Fee within 30 days can cost you the I-589, your work permit and expose you to removal. How to protect your case.',
     title: 'The $100 Asylum Annual Fee: The 30-Day Payment That Can Cost You Your Case and Your Work Permit',
     displayDate: 'Aug 06, 2026',
-    readTime: '10 min',
+    readTime: '9 min',
     categoryLabel: 'Humanitarian Relief',
     lastUpdated: 'August 6, 2026',
     summary: {

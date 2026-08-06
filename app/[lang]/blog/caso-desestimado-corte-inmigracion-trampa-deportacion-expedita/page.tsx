@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Cuando el gobierno pide cerrar su caso de inmigración puede buscar arrestarlo al salir y aplicarle remoción expedita. Cómo oponerse y qué hacer después.',
     title: 'Desestimaron mi caso en la corte de inmigración: por qué puede ser una trampa',
     displayDate: '06 Ago, 2026',
-    readTime: '9 min',
+    readTime: '19 min',
     categoryLabel: 'Defensa contra Deportación',
     lastUpdated: '6 de agosto de 2026',
     summary: {
@@ -24,7 +24,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     },
     intro: [
       'Hay una frase que en la corte de inmigración suena a alivio y cada vez más no lo es: «el gobierno pide desestimar el caso». Mucha gente sale de la sala pensando que ganó y no entiende lo que ocurre veinte minutos después, cuando la detienen a la salida del edificio.',
-      'Desde 2025 se documenta una táctica concreta: los abogados del gobierno piden al juez que cierre el caso y, una vez cerrado, la persona queda fuera del proceso judicial y puede ser colocada en <strong>remoción expedita</strong>. Esa práctica fue parte central del litigio sobre arrestos en cortes que terminó en el fallo del 23 de junio de 2026.',
+      'Desde 2025 se documenta una táctica concreta: los abogados del gobierno piden al juez que cierre el caso y la persona queda fuera del proceso judicial, donde puede ser colocada en <strong>remoción expedita</strong>. Esa práctica fue parte central del litigio sobre arrestos en cortes que terminó en el fallo del 23 de junio de 2026.',
       'Este artículo explica en lenguaje llano qué es una moción de desestimación, por qué el gobierno querría presentarla, qué derechos se pierden al salir del proceso ante un juez y, sobre todo, qué puede hacer usted antes, durante y después de esa audiencia.',
     ],
     sections: [
@@ -35,7 +35,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Su caso en la corte empezó con un documento: la Notificación de Comparecencia (Formulario I-862, el <strong>NTA</strong>). Cuando ese documento se presenta ante la corte se abre un procedimiento de remoción ante un juez de inmigración, y del otro lado de la sala hay un abogado que representa al gobierno. Los dos lados pueden presentar mociones, es decir, peticiones para que el juez decida algo.',
+            text: 'Su caso en la corte empezó con un documento: la Notificación de Comparecencia (Formulario I-862, el <strong>NTA</strong>). Cuando se presenta ante la corte se abre un procedimiento de remoción ante un juez de inmigración, y del otro lado de la sala hay un abogado que representa al gobierno. Los dos lados pueden presentar mociones: peticiones para que el juez decida algo.',
           },
           {
             kind: 'text',
@@ -60,7 +60,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Ninguna de las tres le da papeles. Si usted estaba indocumentado antes de la audiencia, sigue estándolo después. Lo único que cambia —y cambia mucho— es que ya no hay un juez con jurisdicción sobre su caso.',
+            text: 'Ninguna de las tres le da papeles. Si usted estaba indocumentado antes de la audiencia, sigue estándolo después. Lo único que cambia, y cambia mucho, es que ya no hay un juez con jurisdicción sobre su caso.',
           },
         ],
       },
@@ -71,7 +71,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'La reacción de cualquiera es lógica: si el gobierno me llevó a la corte, ¿por qué ahora quiere cerrar el caso? A veces la desestimación conviene. Si usted tiene una petición familiar aprobada y su ajuste de estatus se resuelve ante USCIS, cerrar el caso puede ser el paso correcto, y normalmente lo pide su propio abogado. El problema aparece cuando la pide el gobierno, usted no la solicitó y nadie le explica qué sigue al salir del edificio.',
+            text: 'La reacción de cualquiera es lógica: si el gobierno me llevó a la corte, ¿por qué ahora quiere cerrar el caso? A veces conviene: si tiene una petición familiar aprobada y su ajuste de estatus se resuelve ante USCIS, cerrar el caso puede ser el paso correcto, y normalmente lo pide su propio abogado. El problema aparece cuando la pide el gobierno, usted no la solicitó y nadie le explica qué sigue.',
           },
           {
             kind: 'cards',
@@ -103,7 +103,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'La remoción expedita está prevista en la sección 235(b)(1) de la Ley de Inmigración y Nacionalidad. Permite que un oficial de inmigración ordene la deportación de ciertas personas <strong>sin llevarlas ante un juez</strong>, sobre todo cuando concluye que entraron sin documentos válidos o mediante documentos o declaraciones falsas. Durante años se aplicó casi solo en la frontera y a recién llegados; el gobierno ha buscado ampliarla hacia el interior del país y esa ampliación sigue en litigio.',
+            text: 'La remoción expedita está prevista en la sección 235(b)(1) de la Ley de Inmigración y Nacionalidad. Permite que un oficial ordene la deportación de ciertas personas <strong>sin llevarlas ante un juez</strong>, cuando concluye que entraron sin documentos válidos o mediante documentos o declaraciones falsas. Durante años se aplicó casi solo en la frontera y a recién llegados; el gobierno ha buscado ampliarla hacia el interior del país y eso sigue en litigio.',
           },
           {
             kind: 'table',
@@ -122,7 +122,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               'Por regla general no está sujeto a este procedimiento un <strong>residente permanente legal</strong>.',
               'Tampoco quien ya tiene <strong>asilo concedido</strong> o estatus de refugiado, ni un ciudadano estadounidense, aunque se han documentado errores de identificación.',
               'Los <strong>menores no acompañados</strong> cuentan con protecciones especiales previstas en la ley.',
-              'Y el elemento que casi nadie conoce: la <strong>presencia física continua</strong>. Quien demuestra que ha vivido aquí de manera continua por más de dos años no debería quedar dentro de este procedimiento. La carga de demostrarlo recae en usted, esposado y sin acceso a sus papeles.',
+              'Y el elemento que casi nadie conoce: la <strong>presencia física continua</strong>. Quien demuestra que ha vivido aquí de manera continua por más de dos años no debería quedar dentro de este procedimiento, pero la carga de demostrarlo recae en usted, esposado y sin acceso a sus papeles.',
             ],
           },
           {
@@ -146,7 +146,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               '<strong>Dígalo desde el primer momento</strong>: que tiene miedo de regresar a su país o que quiere pedir asilo. No espere a que se lo pregunten, porque puede que nadie lo haga.',
               '<strong>Repítalo a cada oficial</strong> con el que hable y pida que quede anotado en su expediente.',
               '<strong>No firme nada que no entienda</strong>, aunque le digan que es un trámite o que así sale más rápido. Pida intérprete en su idioma.',
-              '<strong>Cuente hechos concretos</strong> de lo que les pasó a usted y a su familia. No es el lugar para ser discreto ni para omitir detalles dolorosos.',
+              '<strong>Cuente hechos concretos</strong> de lo que les pasó a usted y a su familia. No es el lugar para omitir detalles dolorosos.',
               '<strong>Si la decisión es negativa</strong>, puede pedir que un juez de inmigración la revise, y avise a su familia dónde está y cuál es su número de registro de extranjero (A-number).',
             ],
           },
@@ -163,7 +163,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Que el gobierno pida cerrar el caso no significa que el caso se cierre: la desestimación la decide el juez, y usted es parte del procedimiento. Tiene derecho a manifestar su oposición y a que el juez la escuche antes de resolver. El silencio, en cambio, se lee como conformidad, y muchas personas sin abogado no dicen nada porque no entienden lo que está ocurriendo.',
+            text: 'Que el gobierno pida cerrar el caso no significa que el caso se cierre: la desestimación la decide el juez, y usted es parte del procedimiento. Tiene derecho a manifestar su oposición y a que el juez la escuche antes de resolver. El silencio, en cambio, se lee como conformidad.',
           },
           {
             kind: 'steps',
@@ -188,7 +188,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Si este artículo debiera dejarle una sola recomendación práctica, sería esta: <strong>tenga siempre a la mano prueba de que lleva más de dos años viviendo en Estados Unidos</strong>, y no guardada en una caja en su casa. La presencia continua es justo lo que se discute cuando alguien intenta colocarlo en remoción expedita, y ese momento nunca llega con aviso.',
+            text: 'Si este artículo debiera dejarle una sola recomendación práctica, sería esta: <strong>tenga siempre a la mano prueba de que lleva más de dos años viviendo en Estados Unidos</strong>, no guardada en una caja en su casa. La presencia continua es justo lo que se discute cuando alguien intenta colocarlo en remoción expedita, y ese momento nunca llega con aviso.',
           },
           {
             kind: 'list',
@@ -196,20 +196,18 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               'Contratos y recibos de renta, o cartas del casero, con fechas visibles.',
               'Recibos de luz, agua, gas, teléfono o internet a su nombre.',
               'Talones de pago, cartas de empleadores, declaraciones de impuestos y formularios W-2 o 1099.',
-              'Constancias escolares y boletas de sus hijos.',
-              'Expedientes médicos, comprobantes de citas y recetas con fecha.',
-              'Estados de cuenta, recibos de envíos de dinero y pagos con tarjeta.',
-              'Registro y seguro del vehículo, licencias o identificaciones estatales.',
+              'Constancias escolares y boletas de sus hijos, y expedientes médicos con fecha.',
+              'Estados de cuenta, recibos de envíos de dinero y registro del vehículo.',
               'Cartas de su iglesia, de organizaciones comunitarias o de vecinos, fechadas y firmadas.',
             ],
           },
           {
             kind: 'text',
-            text: 'La forma de cargarlo importa tanto como el contenido. Lleve <strong>copias</strong>, nunca los originales; guarde una versión digital en su teléfono y en un correo al que pueda entrar desde cualquier lugar; y deje un juego completo con una persona de confianza que pueda llevárselo a un abogado el mismo día.',
+            text: 'La forma de cargarlo importa tanto como el contenido. Lleve <strong>copias</strong>, nunca los originales; guarde una versión digital en su teléfono; y deje un juego completo con una persona de confianza que pueda llevárselo a un abogado el mismo día.',
           },
           {
             kind: 'warning',
-            text: 'Nunca cargue documentos falsos ni firme declaraciones sobre su fecha de entrada que no sean exactas. Una mentira documentada hace más daño que cualquier vacío en su expediente y puede cerrarle puertas de forma permanente.',
+            text: 'Nunca cargue documentos falsos ni firme declaraciones inexactas sobre su fecha de entrada. Una mentira documentada hace más daño que cualquier vacío en su expediente y puede cerrarle puertas de forma permanente.',
           },
         ],
       },
@@ -234,7 +232,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Los plazos para reabrir son estrictos. Cuando existe una orden final de remoción, la regla general es de 90 días desde la orden, con excepciones importantes como las órdenes dictadas en ausencia o los cambios en las condiciones del país. Verifique su situación cuanto antes.',
+            text: 'Los plazos para reabrir son estrictos. Cuando existe una orden final de remoción, la regla general es de 90 días desde la orden, con excepciones importantes como las órdenes en ausencia o los cambios en las condiciones del país. Verifique su situación cuanto antes.',
           },
         ],
       },
@@ -256,11 +254,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Ante cualquiera de estas señales hay tres preguntas que usted puede hacer en la sala y que el intérprete debe traducir: ¿se está cerrando mi caso y por qué?, ¿tengo derecho a oponerme?, ¿en qué situación migratoria quedo cuando salga hoy de este edificio?',
+            text: 'Ante cualquiera de estas señales hay tres preguntas que usted puede hacer en la sala y que el intérprete debe traducir: ¿se está cerrando mi caso y por qué?, ¿tengo derecho a oponerme?, ¿en qué situación quedo al salir hoy de este edificio?',
           },
           {
             kind: 'warning',
-            text: 'No vaya solo a su audiencia si puede evitarlo. Que alguien de confianza lo espere afuera, sepa su número A y tenga el teléfono de su abogado convierte una desaparición de varios días en una llamada de una hora.',
+            text: 'No vaya solo a su audiencia si puede evitarlo. Que alguien de confianza lo espere afuera, sepa su número A y tenga el teléfono de su abogado convierte una desaparición de días en una llamada de una hora.',
           },
         ],
       },
@@ -271,13 +269,13 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Cerrar el caso y detener a la persona al salir no es una anécdota aislada: fue parte central del litigio sobre los arrestos en las cortes de inmigración que terminó en el fallo del <strong>23 de junio de 2026</strong>, en el que un juez federal anuló las políticas que habilitaban esos arrestos. En este mismo blog hay un artículo dedicado a ese fallo y a lo que sí y no cambió con él. Conviene leerlo sin exagerarlo: una decisión así puede apelarse o modificarse, las prácticas varían de una corte a otra y las facultades generales de arresto no desaparecieron.',
+            text: 'Cerrar el caso y detener a la persona al salir no es una anécdota aislada: fue parte central del litigio sobre los arrestos en las cortes de inmigración que terminó en el fallo del <strong>23 de junio de 2026</strong>, en el que un juez federal anuló las políticas que habilitaban esos arrestos. En este mismo blog hay un artículo dedicado a ese fallo. Conviene leerlo sin exagerarlo: una decisión así puede apelarse o modificarse, las prácticas varían de una corte a otra y las facultades generales de arresto no desaparecieron.',
           },
           {
             kind: 'list',
             items: [
               'Vaya a <strong>todas</strong> sus audiencias. Faltar produce una orden de deportación en ausencia, sin que nadie escuche su caso.',
-              'Llegue con abogado. Si no lo tiene, llegue temprano y pregunte por los programas de orientación legal disponibles en el edificio de la corte.',
+              'Llegue con abogado. Si no lo tiene, llegue temprano y pregunte por los programas de orientación legal en el edificio de la corte.',
               'Lleve su carpeta de presencia continua y memorice —no solo guarde— el teléfono de un contacto de emergencia.',
             ],
           },
@@ -293,7 +291,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       items: [
         {
           q: '¿Que desestimen mi caso no es una victoria?',
-          a: 'A veces sí y a veces no. Es una buena noticia cuando su abogado la pidió como parte de una estrategia, por ejemplo para resolver su ajuste de estatus ante USCIS. Es un riesgo cuando la pide el gobierno sin que usted la solicitara, porque lo saca de la protección de un juez sin darle nada a cambio.',
+          a: 'A veces sí y a veces no. Es buena noticia cuando su abogado la pidió como parte de una estrategia, por ejemplo para resolver su ajuste de estatus ante USCIS. Es un riesgo cuando la pide el gobierno sin que usted la solicitara: lo saca de la protección de un juez sin darle nada a cambio.',
         },
         {
           q: '¿Puedo negarme a que cierren mi caso?',
@@ -301,11 +299,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: '¿La remoción expedita se aplica a alguien que lleva años aquí?',
-          a: 'La presencia física continua es un elemento central de ese procedimiento, y quien demuestra más de dos años viviendo en el país no debería quedar dentro de él. El problema es práctico: la prueba se la piden en el momento del arresto, no después. Por eso insistimos en cargar copias de su documentación.',
-        },
-        {
-          q: '¿Qué pasa si firmo algo que no entiendo?',
-          a: 'Puede estar renunciando a derechos importantes o aceptando salir del país sin saberlo. Usted puede pedir un intérprete y puede negarse a firmar. Diga que quiere hablar con un abogado antes de firmar cualquier documento, aunque le aseguren que es un simple trámite.',
+          a: 'La presencia física continua es un elemento central de ese procedimiento, y quien demuestra más de dos años viviendo en el país no debería quedar dentro de él. El problema es práctico: la prueba se la piden en el momento del arresto, no después.',
         },
         {
           q: '¿Puedo pedir asilo después de que cerraron mi caso?',
@@ -319,17 +313,17 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     },
     conclusion: {
       title: 'Una palabra que suena a alivio y puede no serlo',
-      text: 'La diferencia entre estar dentro de un proceso ante un juez y estar fuera de él no es un tecnicismo: es la diferencia entre poder pedir asilo, cancelación de remoción o un ajuste de estatus, con tiempo y con abogado, y que un oficial firme su deportación en cuestión de horas. Por eso conviene decidir de antemano qué va a decir usted si un día, en su audiencia, escucha que el gobierno pide cerrar su caso.',
+      text: 'La diferencia entre estar dentro de un proceso ante un juez y estar fuera de él no es un tecnicismo: es la diferencia entre poder pedir asilo, cancelación de remoción o un ajuste de estatus, con tiempo y con abogado, y que un oficial firme su deportación en horas. Decida de antemano qué va a decir si un día, en su audiencia, escucha que el gobierno pide cerrar su caso.',
       advice: 'Hable con un abogado antes de su próxima audiencia, no después. Vaya siempre a la corte, lleve copias de su prueba de presencia continua y no firme nada que no entienda.',
     },
     sources: {
       title: 'Fuentes y referencias',
       list: [
-        'Ley de Inmigración y Nacionalidad, sección 235(b)(1) — remoción expedita y entrevista de miedo creíble',
+        'Ley de Inmigración y Nacionalidad, sección 235(b)(1) — remoción expedita y miedo creíble',
         'Reglamento federal 8 CFR 1239.2 — desestimación y terminación de procedimientos de remoción',
-        'Reglamento federal 8 CFR parte 1003 — mociones para reabrir y apelaciones ante la Junta de Apelaciones de Inmigración (BIA)',
-        'EOIR — Manual de la corte de inmigración y sistema automatizado de información de casos',
-        'Departamento de Seguridad Nacional (DHS) — Notificación de Comparecencia (Formulario I-862) y procedimientos de detención migratoria',
+        '8 CFR parte 1003 — mociones para reabrir y apelaciones ante la BIA',
+        'EOIR — Manual de la corte de inmigración y sistema de información de casos',
+        'DHS — Notificación de Comparecencia (Formulario I-862) y procedimientos de detención migratoria',
       ],
     },
     ui: ARTICLE_UI.es,
@@ -340,15 +334,15 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'When the government asks to dismiss your immigration case, it may plan to arrest you outside and use expedited removal. How to object and what to do next.',
     title: 'They Dismissed My Immigration Court Case: Why That Can Be a Trap',
     displayDate: 'Aug 06, 2026',
-    readTime: '9 min',
+    readTime: '19 min',
     categoryLabel: 'Deportation Defense',
     lastUpdated: 'August 6, 2026',
     summary: {
       title: 'Initial Summary',
-      text: 'Hearing that your case was “dismissed” sounds like a victory, and sometimes it is. But since 2025 something else has been documented: the government attorney asks the judge to close the case and, minutes later, the person is arrested leaving the building and placed in <strong>expedited removal</strong>, a process where an officer — not a judge — signs the deportation order. The difference is not procedural: inside court proceedings you can seek asylum, cancellation of removal or other relief, with time and with a lawyer; outside them, those doors close almost completely. Here we explain why the government would want your case closed, how to <strong>object to the dismissal</strong>, what to do if it has already been closed, and what evidence you should always carry.',
+      text: 'Hearing that your case was “dismissed” sounds like a victory, and sometimes it is. But since 2025 something else has been documented: the government attorney asks the judge to close the case and, minutes later, the person is arrested leaving the building and placed in <strong>expedited removal</strong>, a process where an officer — not a judge — signs the deportation order. Inside court proceedings you can seek asylum, cancellation of removal or other relief, with time and with a lawyer; outside them, those doors close almost completely. Here we explain how to <strong>object to the dismissal</strong>, what to do if it has already been closed, and what evidence you should always carry.',
     },
     intro: [
-      'There is a phrase in immigration court that sounds like relief and increasingly is not: “the government moves to dismiss the case.” Many people walk out of the courtroom believing they won, call their family to share the news, and cannot understand what happens twenty minutes later, when they are detained at the exit of the building.',
+      'There is a phrase in immigration court that sounds like relief and increasingly is not: “the government moves to dismiss the case.” Many people walk out of the courtroom believing they won, and cannot understand what happens twenty minutes later, when they are detained at the exit of the building.',
       'Since 2025 a specific tactic has been documented: government attorneys ask the judge to close the case and, once it is closed, the person is outside the court process and can be placed in <strong>expedited removal</strong>. That practice was a central part of the litigation over courthouse arrests that ended in the June 23, 2026 ruling.',
       'This article explains in plain language what a motion to dismiss is, why the government would file one, what rights are lost when you leave the process before a judge, and above all what you can do before, during and after that hearing.',
     ],
@@ -360,7 +354,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Your court case began with a document: the Notice to Appear (Form I-862, the <strong>NTA</strong>). When that document is filed with the court, removal proceedings open before an immigration judge, and on the other side of the courtroom sits an attorney representing the government. Both sides can file motions — requests asking the judge to decide something.',
+            text: 'Your court case began with a document: the Notice to Appear (Form I-862, the <strong>NTA</strong>). When it is filed with the court, removal proceedings open before an immigration judge, and on the other side of the courtroom sits an attorney representing the government. Both sides can file motions: requests asking the judge to decide something.',
           },
           {
             kind: 'text',
@@ -396,7 +390,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Anyone’s reaction is logical: if the government took me to court, why does it now want the case closed? Sometimes dismissal is the right move. If you have an approved family petition and your adjustment of status will be decided by USCIS, closing the court case may be the correct step, and it is normally your own attorney who asks for it. The problem appears when the government asks, you did not request it, and nobody explains what happens when you walk out.',
+            text: 'Anyone’s reaction is logical: if the government took me to court, why does it now want the case closed? Sometimes it is the right move: if you have an approved family petition and your adjustment of status will be decided by USCIS, closing the court case may be the correct step, and it is normally your own attorney who asks for it. The problem appears when the government asks, you did not request it, and nobody explains what comes next.',
           },
           {
             kind: 'cards',
@@ -428,7 +422,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Expedited removal comes from section 235(b)(1) of the Immigration and Nationality Act. It allows an immigration officer to order the deportation of certain people <strong>without bringing them before a judge</strong>, mainly when the officer concludes they entered without valid documents or through false documents or statements. For years it was applied almost only at the border and to recent arrivals; the government has sought to extend it into the interior of the country, and that expansion remains in litigation.',
+            text: 'Expedited removal comes from section 235(b)(1) of the Immigration and Nationality Act. It allows an officer to order the deportation of certain people <strong>without bringing them before a judge</strong>, when the officer concludes they entered without valid documents or through false documents or statements. For years it was applied almost only at the border and to recent arrivals; the government has sought to extend it into the interior, and that remains in litigation.',
           },
           {
             kind: 'table',
@@ -447,7 +441,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               'As a general rule, a <strong>lawful permanent resident</strong> is not subject to this procedure.',
               'Neither is someone already <strong>granted asylum</strong> or refugee status, nor a U.S. citizen, although misidentifications have been documented.',
               '<strong>Unaccompanied children</strong> have special protections written into the law.',
-              'And the element almost nobody knows: <strong>continuous physical presence</strong>. Someone who can show they have lived here continuously for more than two years should not fall inside this procedure. The burden of showing it falls on you, handcuffed and with no access to your papers.',
+              'And the element almost nobody knows: <strong>continuous physical presence</strong>. Someone who can show they have lived here continuously for more than two years should not fall inside this procedure, but the burden of showing it falls on you, handcuffed and with no access to your papers.',
             ],
           },
           {
@@ -488,7 +482,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'The government asking to close your case does not mean the case closes: dismissal is the judge’s decision, and you are a party to the proceeding. You have the right to state your objection and to have the judge hear it before ruling. Silence, by contrast, reads as agreement, and many people without a lawyer say nothing because they do not understand what is happening.',
+            text: 'The government asking to close your case does not mean the case closes: dismissal is the judge’s decision, and you are a party to the proceeding. You have the right to state your objection and to have the judge hear it before ruling. Silence, by contrast, reads as agreement.',
           },
           {
             kind: 'steps',
@@ -513,7 +507,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'If this article should leave you with one practical recommendation, it is this: <strong>always keep proof that you have lived in the United States for more than two years within reach</strong>, not stored in a box at home. Continuous presence is exactly what is disputed when someone tries to place you in expedited removal, and that moment never arrives with warning.',
+            text: 'If this article should leave you with one practical recommendation, it is this: <strong>keep proof that you have lived in the United States for more than two years within reach</strong>, not stored in a box at home. Continuous presence is exactly what is disputed when someone tries to place you in expedited removal, and that moment never arrives with warning.',
           },
           {
             kind: 'list',
@@ -521,16 +515,14 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               'Leases and rent receipts, or letters from your landlord, with visible dates.',
               'Electric, water, gas, phone or internet bills in your name.',
               'Pay stubs, letters from employers, tax returns and W-2 or 1099 forms.',
-              'School records and report cards for your children.',
-              'Medical records, appointment slips and dated prescriptions.',
-              'Bank statements, money transfer receipts and card payments.',
-              'Vehicle registration and insurance, licenses or state IDs.',
+              'School records and report cards for your children, and dated medical records.',
+              'Bank statements, money transfer receipts and vehicle registration.',
               'Letters from your church, community organizations or neighbors, dated and signed.',
             ],
           },
           {
             kind: 'text',
-            text: 'How you carry it matters as much as what it contains. Carry <strong>copies</strong>, never originals; keep a digital version on your phone and in an email account you can reach from anywhere; and leave a full set with someone you trust who can take it to an attorney the same day.',
+            text: 'How you carry it matters as much as what it contains. Carry <strong>copies</strong>, never originals; keep a digital version on your phone; and leave a full set with someone you trust who can take it to an attorney the same day.',
           },
           {
             kind: 'warning',
@@ -596,7 +588,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Closing the case and detaining the person on the way out is not an isolated anecdote: it was a central part of the litigation over immigration courthouse arrests that ended in the ruling of <strong>June 23, 2026</strong>, in which a federal judge struck down the policies that enabled those arrests. This blog has an article devoted to that ruling and to what did and did not change with it. It is worth reading without overstating it: a decision like that can be appealed or modified, practices vary from one court to another, and general arrest authority did not disappear.',
+            text: 'Closing the case and detaining the person on the way out is not an isolated anecdote: it was a central part of the litigation over immigration courthouse arrests that ended in the ruling of <strong>June 23, 2026</strong>, in which a federal judge struck down the policies that enabled those arrests. This blog has an article devoted to that ruling. It is worth reading without overstating it: a decision like that can be appealed or modified, practices vary from one court to another, and general arrest authority did not disappear.',
           },
           {
             kind: 'list',
@@ -618,7 +610,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       items: [
         {
           q: 'Isn’t having my case dismissed a victory?',
-          a: 'Sometimes yes and sometimes no. It is good news when your attorney requested it as part of a strategy, for example to resolve your adjustment of status at USCIS. It is a risk when the government requests it without you asking, because it removes you from a judge’s protection without giving you anything in return.',
+          a: 'Sometimes yes and sometimes no. It is good news when your attorney requested it as part of a strategy, for example to resolve your adjustment of status at USCIS. It is a risk when the government requests it without you asking: it removes you from a judge’s protection without giving you anything in return.',
         },
         {
           q: 'Can I refuse to let them close my case?',
@@ -626,11 +618,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'Does expedited removal apply to someone who has been here for years?',
-          a: 'Continuous physical presence is a central element of that procedure, and someone who can show more than two years living in the country should not fall inside it. The problem is practical: the proof is demanded at the moment of arrest, not afterward. That is why we insist on carrying copies of your documentation.',
-        },
-        {
-          q: 'What happens if I sign something I do not understand?',
-          a: 'You may be waiving important rights or agreeing to leave the country without knowing it. You can ask for an interpreter and you can decline to sign. Say that you want to speak with an attorney before signing any document, even if you are assured it is just routine.',
+          a: 'Continuous physical presence is a central element of that procedure, and someone who can show more than two years living in the country should not fall inside it. The problem is practical: the proof is demanded at the moment of arrest, not afterward.',
         },
         {
           q: 'Can I apply for asylum after my case was closed?',
@@ -644,7 +632,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     },
     conclusion: {
       title: 'A word that sounds like relief and may not be',
-      text: 'The difference between being inside a process before a judge and being outside it is not a technicality: it is the difference between being able to seek asylum, cancellation of removal or adjustment of status, with time and with a lawyer, and having an officer sign your deportation within hours. That is why it is worth deciding in advance what you will say if one day, at your hearing, you hear the government ask to close your case.',
+      text: 'The difference between being inside a process before a judge and being outside it is not a technicality: it is the difference between being able to seek asylum, cancellation of removal or adjustment of status, with time and with a lawyer, and having an officer sign your deportation within hours. Decide in advance what you will say if one day, at your hearing, you hear the government ask to close your case.',
       advice: 'Talk to an attorney before your next hearing, not after. Always go to court, carry copies of your proof of continuous presence, and never sign anything you do not understand.',
     },
     sources: {

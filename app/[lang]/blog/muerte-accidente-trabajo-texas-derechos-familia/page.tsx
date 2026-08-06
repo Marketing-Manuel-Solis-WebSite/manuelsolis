@@ -15,16 +15,16 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Si su familiar murió en un accidente de trabajo en Texas, la familia tiene derechos aunque no tengan papeles. Las dos rutas de reclamo y los plazos que corren.',
     title: 'Murió mi familiar en un accidente de trabajo en Texas: los derechos de la familia',
     displayDate: '06 Ago, 2026',
-    readTime: '11 min',
+    readTime: '21 min',
     categoryLabel: 'Accidentes',
     summary: {
       title: 'Resumen inicial',
-      text: 'Perder a alguien en un accidente de trabajo deja a la familia con un dolor enorme y, encima, con papeles y decisiones que nadie le explicó. Texas encabeza al país en muertes laborales, y la construcción y los trabajadores hispanos están sobrerrepresentados en esas cifras. Lo que sigue es lo que la ley de Texas le reconoce a la familia. El <strong>estatus migratorio no le quita esos derechos</strong>. Hay dos caminos muy distintos según el patrón tuviera o no seguro de compensación laboral, la ley señala con nombre y apellido quién puede reclamar —aunque viva en México— y la evidencia que sostiene el caso empieza a desaparecer en días.',
+      text: 'Perder a alguien en un accidente de trabajo deja a la familia con un dolor enorme y, encima, con papeles y decisiones que nadie le explicó. Texas encabeza al país en muertes laborales, con la construcción y los trabajadores hispanos sobrerrepresentados. Lo que sigue es lo que la ley de Texas le reconoce a la familia: el <strong>estatus migratorio no le quita esos derechos</strong>, hay dos caminos muy distintos según el patrón tuviera o no seguro, la ley señala quién puede reclamar —aunque viva en México— y la evidencia empieza a desaparecer en días.',
     },
     intro: [
       'Sentimos mucho su pérdida. Si está leyendo esto, es probable que hayan pasado pocos días desde la llamada y que ya le estén pidiendo firmas y decisiones que nadie en la familia sabe cómo tomar.',
-      'Este artículo no le vende nada. Existe porque vemos siempre el mismo patrón: la aseguradora del patrón se mueve el mismo día del accidente, con investigadores y abogados; la familia se mueve semanas después, cuando ya no hay video, no hay testigos localizables y ya se firmó algo que no se debió firmar.',
-      'Aquí le explicamos, en lenguaje claro, qué derechos tiene la familia bajo la ley de Texas, quién puede reclamar, qué se puede recuperar y qué plazos corren. Hoy no tiene que decidir nada, pero sí conviene saber qué está en juego.',
+      'Este artículo no le vende nada. Existe porque vemos siempre el mismo patrón: la aseguradora del patrón se mueve el mismo día del accidente; la familia se mueve semanas después, cuando ya no hay video, no hay testigos localizables y ya se firmó algo que no se debió firmar.',
+      'Aquí le explicamos qué derechos tiene la familia bajo la ley de Texas, quién puede reclamar, qué se puede recuperar y qué plazos corren. Hoy no tiene que decidir nada.',
     ],
     sections: [
       {
@@ -34,25 +34,21 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'En los primeros días la familia organiza un funeral, avisa a parientes en otro país y trata de entender qué pasó. Nadie está en condiciones de evaluar un ofrecimiento de dinero ni de leer un documento en inglés lleno de términos legales. Eso es normal, y nada de lo que la ley le reconoce se pierde por tomarse unos días para respirar.',
-          },
-          {
-            kind: 'text',
-            text: 'Lo que sí conviene es no cerrar puertas sin querer. Hay unas pocas cosas que cambian el resto del caso y no requieren dinero, abogado ni saber de leyes: solo cuidado.',
+            text: 'En los primeros días la familia organiza un funeral y avisa a parientes en otro país. Nadie está en condiciones de evaluar un ofrecimiento de dinero ni de leer un documento en inglés lleno de términos legales, y eso es normal: nada de lo que la ley le reconoce se pierde por tomarse unos días. Lo que sí conviene es no cerrar puertas sin querer.',
           },
           {
             kind: 'list',
             items: [
-              '<strong>No firme nada</strong> que le lleven de parte del patrón o de una aseguradora, aunque le digan que es «solo para el trámite» o «para que salga el pago del funeral».',
-              '<strong>No dé declaración grabada</strong> a ningún investigador ni ajustador. Puede decir con toda educación que la familia hablará después.',
+              '<strong>No firme nada</strong> del patrón ni de una aseguradora, aunque le digan que es «solo para el trámite» o «para que salga el pago del funeral».',
+              '<strong>No dé declaración grabada</strong> a ningún investigador ni ajustador; puede decir con educación que la familia hablará después.',
               '<strong>Guarde todo</strong>: recibos de pago, mensajes con supervisores, fotos, el nombre de la empresa y de la obra, y cualquier papel que le entreguen.',
               '<strong>Anote los teléfonos personales</strong> de los compañeros que estaban ahí ese día; los celulares, no los de la oficina.',
-              '<strong>Conserve el teléfono</strong> de su familiar sin borrarlo ni reiniciarlo: a veces ahí están los últimos mensajes con el supervisor.',
+              '<strong>Conserve el teléfono</strong> de su familiar sin borrarlo ni reiniciarlo: ahí pueden estar los últimos mensajes con el supervisor.',
             ],
           },
           {
             kind: 'note',
-            text: 'Si ya firmó algo, no se castigue y no lo esconda: enséñeselo a un abogado. Hay documentos que no tienen el efecto que la familia teme y otros que sí se pueden cuestionar según cómo se obtuvo la firma.',
+            text: 'Si ya firmó algo, no se castigue y no lo esconda: enséñeselo a un abogado. Hay documentos que no tienen el efecto que la familia teme y otros que sí se pueden cuestionar.',
           },
         ],
       },
@@ -70,8 +66,8 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             items: [
               'Un trabajador <strong>indocumentado sigue siendo un trabajador</strong> para efectos de la responsabilidad del patrón por un lugar inseguro.',
               'Los familiares pueden reclamar aunque <strong>no vivan en Estados Unidos</strong> y nunca hayan pisado el país.',
-              'Que le pagaran <strong>en efectivo o sin contrato</strong> no borra la relación de trabajo; hace más importante probarla con mensajes, testigos y transferencias.',
-              'La etiqueta de <strong>«contratista independiente»</strong> tampoco cierra el caso: se cuestiona mirando quién daba las órdenes, quién ponía la herramienta y quién fijaba el horario.',
+              'Que le pagaran <strong>en efectivo o sin contrato</strong> no borra la relación de trabajo; hace más importante probarla con mensajes y testigos.',
+              'La etiqueta de <strong>«contratista independiente»</strong> tampoco cierra el caso: se mira quién daba las órdenes, quién ponía la herramienta y quién fijaba el horario.',
             ],
           },
           {
@@ -87,22 +83,22 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Texas es una rareza en el país: <strong>el seguro de compensación laboral es opcional</strong> para la mayoría de los patrones privados. Una empresa puede decidir no comprarlo, y esa decisión, tomada mucho antes del accidente, determina por qué camino va el caso de su familia.',
+            text: 'Texas es una rareza en el país: <strong>el seguro de compensación laboral es opcional</strong> para la mayoría de los patrones privados. Esa decisión, tomada mucho antes del accidente, determina por qué camino va el caso de su familia.',
           },
           {
             kind: 'cards',
             items: [
               {
                 title: 'Patrón CON compensación laboral',
-                desc: 'La familia puede reclamar beneficios por muerte: una parte del salario que su familiar aportaba, pagada a los beneficiarios legales, y un beneficio para gastos funerarios sujeto a un tope legal. No hay que probar culpa. A cambio, por regla general no se puede demandar al patrón por negligencia.',
+                desc: 'La familia puede reclamar beneficios por muerte: una parte del salario que su familiar aportaba, pagada a los beneficiarios legales, y un beneficio funerario sujeto a un tope legal. No hay que probar culpa, pero por regla general no se puede demandar al patrón por negligencia.',
               },
               {
                 title: 'Patrón SIN seguro (non-subscriber)',
-                desc: 'La familia puede demandarlo directamente por muerte injusta, y ese patrón <strong>pierde las defensas clásicas</strong>: no puede alegar que el trabajador se descuidó, que asumió el riesgo o que la culpa fue de un compañero. Suelen ser los casos de mayor valor.',
+                desc: 'La familia puede demandarlo directamente por muerte injusta, y ese patrón <strong>pierde las defensas clásicas</strong>: no puede alegar que el trabajador se descuidó, que asumió el riesgo o que la culpa fue de un compañero.',
               },
               {
                 title: 'Un tercero responsable',
-                desc: 'Aunque el patrón directo tenga seguro, puede haber demanda contra quien creó el peligro: el contratista general, otro subcontratista, el dueño del terreno, el fabricante de una máquina o el conductor que embistió la cuadrilla.',
+                desc: 'Aunque el patrón directo tenga seguro, puede haber demanda contra quien creó el peligro: el contratista general, otro subcontratista, el dueño del terreno o el fabricante de una máquina.',
               },
             ],
           },
@@ -112,7 +108,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Averiguar si la empresa tenía cobertura no es tarea de la familia: es de las primeras cosas que verifica un abogado, junto con quién más estaba en la obra ese día. Muchas veces el patrón directo es una empresa pequeña sin bienes y el caso real está contra quien la contrató.',
+            text: 'Averiguar si la empresa tenía cobertura es de las primeras cosas que verifica un abogado, junto con quién más estaba en la obra ese día. Muchas veces el patrón directo es una empresa pequeña sin bienes y el caso real está contra quien la contrató.',
           },
         ],
       },
@@ -123,7 +119,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'La ley de muerte injusta de Texas —el <em>Wrongful Death Act</em>— no permite que reclame cualquier persona que quería al fallecido. Señala tres grupos, y esa lista es cerrada. Es duro leerlo así, pero conviene saberlo desde el principio.',
+            text: 'La ley de muerte injusta de Texas —el <em>Wrongful Death Act</em>— no permite que reclame cualquier persona que quería al fallecido: señala tres grupos, y esa lista es cerrada.',
           },
           {
             kind: 'list',
@@ -135,11 +131,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Los <strong>hermanos no son beneficiarios</strong> bajo esta ley, por cercanos que fueran; tampoco los abuelos, los tíos ni las parejas que no califican como cónyuge. No es una valoración del cariño: es cómo está redactada la ley. Existe además una acción distinta y complementaria, la <em>survival action</em>, que ejerce el patrimonio del fallecido por lo que él mismo sufrió antes de morir; las dos suelen llevarse juntas en el mismo caso.',
+            text: 'Los <strong>hermanos no son beneficiarios</strong> bajo esta ley, por cercanos que fueran; tampoco los abuelos ni las parejas que no califican como cónyuge. No es una valoración del cariño: es cómo está redactada la ley. Existe además una acción complementaria, la <em>survival action</em>, que ejerce el patrimonio del fallecido por lo que él mismo sufrió antes de morir.',
           },
           {
             kind: 'note',
-            text: 'Vivir en México, Guatemala, Honduras o El Salvador no descalifica a nadie. Una madre en su pueblo, una esposa que se quedó allá o hijos que su familiar mantenía desde acá pueden ser beneficiarios; lo que hará falta es documentar el parentesco con actas, apostillas y traducciones.',
+            text: 'Vivir en México, Guatemala, Honduras o El Salvador no descalifica a nadie. Una madre en su pueblo o hijos que su familiar mantenía desde acá pueden ser beneficiarios; hará falta documentar el parentesco con actas, apostillas y traducciones.',
           },
         ],
       },
@@ -150,40 +146,40 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Una de las cosas que más sorprende es descubrir cuánto queda fuera cuando se acepta un cheque rápido «para los gastos». Un caso bien llevado no repara la pérdida, pero sí reconoce categorías de daño que la primera oferta casi nunca incluye.',
+            text: 'Una de las cosas que más sorprende es descubrir cuánto queda fuera cuando se acepta un cheque rápido «para los gastos». Un caso bien llevado no repara la pérdida, pero sí reconoce daños que la primera oferta casi nunca incluye.',
           },
           {
             kind: 'cards',
             items: [
               {
                 title: 'El apoyo económico que ya no llegará',
-                desc: 'Lo que su familiar habría ganado y aportado durante el resto de su vida laboral, incluidas prestaciones y su capacidad de ganar más con el tiempo. En una persona joven suele ser la partida más grande.',
+                desc: 'Lo que su familiar habría ganado y aportado durante el resto de su vida laboral, incluidas prestaciones y su capacidad de ganar más con el tiempo.',
               },
               {
                 title: 'Gastos funerarios y médicos',
-                desc: 'Servicios funerarios, entierro o cremación y, cuando aplica, la repatriación del cuerpo. También la atención médica y de ambulancia entre el accidente y el fallecimiento.',
+                desc: 'Servicios funerarios, entierro o cremación y, cuando aplica, la repatriación del cuerpo. También la atención médica entre el accidente y el fallecimiento.',
               },
               {
                 title: 'Pérdida de compañía y angustia mental',
-                desc: 'La ley de Texas reconoce el valor del amor, el consejo, el consuelo y la compañía que se perdieron, y el sufrimiento emocional de los beneficiarios. No es un extra: es parte central del caso.',
+                desc: 'La ley de Texas reconoce el valor del amor, el consejo, el consuelo y la compañía que se perdieron, y el sufrimiento emocional de los beneficiarios.',
               },
               {
                 title: 'Lo que él sufrió antes de morir',
-                desc: 'A través de la survival action: el dolor físico y la angustia mental del trabajador entre el accidente y su muerte, más los gastos médicos de ese lapso. También puede reclamarse la pérdida de herencia.',
+                desc: 'Por la survival action: el dolor físico y la angustia mental del trabajador entre el accidente y su muerte. También puede reclamarse la pérdida de herencia.',
               },
               {
                 title: 'Daños punitivos por negligencia grave',
-                desc: 'Cuando la conducta no fue un descuido sino indiferencia consciente ante un peligro extremo y conocido, la ley permite pedir daños ejemplares para castigar esa conducta y disuadir a otros.',
+                desc: 'Cuando la conducta no fue un descuido sino indiferencia consciente ante un peligro extremo y conocido, la ley permite daños ejemplares para castigar y disuadir.',
               },
             ],
           },
           {
             kind: 'text',
-            text: 'La diferencia entre negligencia común y <strong>negligencia grave</strong> suele estar en lo que la empresa sabía. Un andamio mal armado por prisa es una cosa; una empresa a la que ya le habían señalado ese mismo riesgo, que quitó una protección para ahorrar tiempo o que mandó a alguien sin capacitación a una zanja sin apuntalar es otra muy distinta.',
+            text: 'La diferencia entre negligencia común y <strong>negligencia grave</strong> suele estar en lo que la empresa sabía. Un andamio mal armado por prisa es una cosa; una empresa a la que ya le habían señalado ese riesgo o que quitó una protección para ahorrar tiempo es otra muy distinta.',
           },
           {
             kind: 'note',
-            text: 'Ningún abogado serio le puede decir por teléfono cuánto vale su caso, y desconfíe de quien lo haga. El valor depende de la edad y el ingreso del fallecido, de cuántos dependían de él, de la gravedad de la falta y de contra quién se litiga.',
+            text: 'Ningún abogado serio le puede decir por teléfono cuánto vale su caso. El valor depende de la edad y el ingreso del fallecido, de cuántos dependían de él, de la gravedad de la falta y de contra quién se litiga.',
           },
         ],
       },
@@ -194,7 +190,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'El día del accidente, mientras la familia recibe la peor noticia de su vida, del otro lado ya se está trabajando: la aseguradora manda investigadores, los abogados de la empresa piden fotos y la obra vuelve a operar. No es maldad, es su rutina. El problema es que esa rutina cambia el escenario.',
+            text: 'El día del accidente, mientras la familia recibe la peor noticia de su vida, del otro lado ya se está trabajando: la aseguradora manda investigadores y la obra vuelve a operar. No es maldad, es su rutina; el problema es que esa rutina cambia el escenario.',
           },
           {
             kind: 'list',
@@ -202,26 +198,25 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               'Las <strong>cámaras</strong> de la obra o de la bodega suelen sobrescribirse solas en días o pocas semanas.',
               'La <strong>máquina o el equipo</strong> que falló se repara, se devuelve al arrendador o se manda a chatarra.',
               'Los <strong>testigos</strong> se van a otra obra, cambian de número o son despedidos, y después nadie los encuentra.',
-              'Las <strong>bitácoras</strong>, listas de asistencia, permisos de trabajo y registros de mantenimiento se archivan o se pierden.',
-              'La memoria se contamina: a las semanas todos recuerdan la versión que se repitió, no la que vieron.',
+              'Las <strong>bitácoras</strong>, listas de asistencia y registros de mantenimiento se archivan o se pierden.',
             ],
           },
           {
             kind: 'text',
-            text: 'Cuando hay una muerte en el trabajo, el patrón está obligado por ley federal a reportarla a OSHA de inmediato y suele abrirse una inspección. Ese expediente es útil, pero no sustituye una investigación propia: OSHA busca infracciones de seguridad, no construye el caso civil de la familia.',
+            text: 'Cuando hay una muerte en el trabajo, el patrón está obligado por ley federal a reportarla a OSHA de inmediato y suele abrirse una inspección. Ese expediente es útil, pero OSHA busca infracciones de seguridad: no construye el caso civil de la familia.',
           },
           {
             kind: 'steps',
             items: [
-              '<strong>Escriba todo lo que le contaron</strong> en las primeras horas, con nombres y hora aproximada, aunque suene confuso.',
+              '<strong>Escriba lo que le contaron</strong> en las primeras horas, con nombres y hora aproximada.',
               '<strong>Reúna los teléfonos personales</strong> de los compañeros y de quien haya llamado a la familia.',
-              '<strong>No devuelva</strong> herramientas, casco, arnés, ropa de trabajo ni el teléfono de su familiar sin consultarlo.',
+              '<strong>No devuelva</strong> herramientas, casco, arnés ni el teléfono de su familiar sin consultarlo.',
               '<strong>Hable con un abogado pronto</strong>, aunque todavía no haya decidido si quiere demandar.',
             ],
           },
           {
             kind: 'note',
-            text: 'Un abogado puede enviar una carta formal exigiendo que se conserven videos, registros y equipo, y destruir esa prueba después tiene consecuencias serias para la empresa dentro del juicio. Pero la carta solo sirve si sale a tiempo, y aquí «a tiempo» significa días.',
+            text: 'Un abogado puede enviar una carta formal exigiendo que se conserven videos, registros y equipo; destruir esa prueba después tiene consecuencias serias dentro del juicio. Pero la carta solo sirve si sale a tiempo, y aquí «a tiempo» significa días.',
           },
         ],
       },
@@ -232,13 +227,13 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'A veces la oferta llega muy rápido, incluso antes del funeral, y envuelta en amabilidad: alguien de la empresa que habla español, que acompaña a la familia, que ofrece cubrir el servicio funerario. Esa persona puede ser sincera; la aseguradora que está detrás no está de su lado. Su trabajo es cerrar el asunto por la cantidad más baja y lo más pronto posible.',
+            text: 'A veces la oferta llega muy rápido, incluso antes del funeral, y envuelta en amabilidad: alguien de la empresa que habla español y ofrece cubrir el servicio funerario. Esa persona puede ser sincera; la aseguradora que está detrás no está de su lado. Su trabajo es cerrar el asunto por la cantidad más baja y lo más pronto posible.',
           },
           {
             kind: 'list',
             items: [
               'Piden una <strong>declaración grabada</strong> «para agilizar» y después usan frases sueltas fuera de contexto.',
-              'Ofrecen pagar el funeral <strong>a cambio de una firma</strong> que en realidad libera de responsabilidad a la empresa para siempre.',
+              'Ofrecen pagar el funeral <strong>a cambio de una firma</strong> que libera de responsabilidad a la empresa para siempre.',
               'Presentan el documento como un <strong>trámite administrativo</strong> y no como lo que es: un acuerdo definitivo.',
               'Aprovechan que <strong>no hay traducción</strong> y que la familia está aturdida por el duelo.',
               'Sugieren que <strong>un abogado solo va a retrasar</strong> el pago, o insinúan que el trabajador tuvo la culpa.',
@@ -246,7 +241,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'La primera oferta es baja por definición, porque se hace antes de saber cuánto aportaba el trabajador, cuántas personas dependían de él y qué falló realmente en la obra. Una vez firmada una liberación de responsabilidad no hay vuelta atrás, aunque después aparezca evidencia de que la empresa sabía del peligro.',
+            text: 'La primera oferta es baja por definición: se hace antes de saber cuánto aportaba el trabajador y qué falló realmente en la obra. Una vez firmada una liberación de responsabilidad no hay vuelta atrás.',
           },
           {
             kind: 'warning',
@@ -261,25 +256,21 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Muchos de estos casos tienen a la viuda, a los hijos o a los padres en otro país. Eso complica la logística, no el derecho: un caso de muerte laboral se puede llevar con la familia entera fuera de Estados Unidos, y se hace con frecuencia.',
+            text: 'Muchos de estos casos tienen a la viuda, a los hijos o a los padres en otro país. Eso complica la logística, no el derecho: un caso de muerte laboral se puede llevar con la familia entera fuera de Estados Unidos.',
           },
           {
             kind: 'list',
             items: [
-              'La comunicación se lleva por <strong>teléfono, video y mensajería</strong>, en español, con la familia designando a una persona de contacto.',
+              'La comunicación se lleva por <strong>teléfono, video y mensajería</strong>, en español, con una persona de contacto designada por la familia.',
               'Los <strong>poderes y firmas</strong> se otorgan ante notario en el país de residencia y, cuando hace falta, se apostillan.',
               'Hay que reunir <strong>actas de nacimiento, matrimonio y defunción</strong>, con traducción certificada al inglés.',
-              'El <strong>consulado</strong> del país de origen suele orientar sobre repatriación del cuerpo y documentos.',
-              'La <strong>repatriación</strong> es un gasto que puede formar parte de lo reclamado: guarde todos los comprobantes.',
+              'El <strong>consulado</strong> suele orientar sobre repatriación del cuerpo y documentos.',
+              'La <strong>repatriación</strong> es un gasto que puede formar parte de lo reclamado: guarde los comprobantes.',
             ],
           },
           {
-            kind: 'text',
-            text: 'También pasa lo contrario: el trabajador vivía en Texas y su familia inmediata está aquí, pero sus padres siguen en el pueblo. Como los padres sí son beneficiarios, conviene ubicarlos y documentar el parentesco desde temprano.',
-          },
-          {
             kind: 'note',
-            text: 'Cuando hay beneficiarios en varios países y de varias relaciones, la parte más delicada no es demandar: es ordenar quién es quién y evitar que la familia termine peleando entre sí. Ese trabajo se hace mejor al principio, con todos informados, que al final frente a un cheque.',
+            text: 'Cuando hay beneficiarios en varios países y de varias relaciones, la parte más delicada no es demandar: es ordenar quién es quién y evitar que la familia termine peleando entre sí. Ese trabajo se hace mejor al principio que al final, frente a un cheque.',
           },
         ],
       },
@@ -290,7 +281,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'En Texas, la regla general para las demandas por lesiones personales y por muerte injusta es de <strong>dos años</strong>, contados normalmente desde la fecha del fallecimiento. Suena a mucho tiempo y no lo es: para cuando la familia se recupera lo suficiente para pensar en esto ya pasaron meses, y un caso serio requiere investigación, peritos y documentos que tardan.',
+            text: 'En Texas, la regla general para las demandas por lesiones personales y por muerte injusta es de <strong>dos años</strong>, contados normalmente desde la fecha del fallecimiento. Suena a mucho y no lo es: para cuando la familia se recupera lo suficiente para pensar en esto ya pasaron meses, y un caso serio requiere investigación, peritos y documentos que tardan.',
           },
           {
             kind: 'list',
@@ -317,7 +308,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'Mi hijo era indocumentado. ¿La empresa puede usar eso para no pagar?',
-          a: 'El estatus migratorio no elimina la responsabilidad del patrón por un lugar de trabajo inseguro ni borra el derecho de la familia a reclamar. La defensa a veces intenta usar el tema para presionar, y por eso importa tener a alguien que sepa responder a esa táctica.',
+          a: 'El estatus migratorio no elimina la responsabilidad del patrón por un lugar de trabajo inseguro ni borra el derecho de la familia a reclamar. La defensa a veces usa el tema para presionar, y por eso importa tener a alguien que sepa responder.',
         },
         {
           q: 'La empresa nos ofreció pagar el funeral. ¿Lo aceptamos?',
@@ -325,21 +316,21 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'Vivimos en México. ¿Tenemos que viajar a Texas?',
-          a: 'Por lo general no. La mayor parte del trabajo se hace a distancia, con poderes notariados y comunicación en español. Si en algún momento hiciera falta una comparecencia, se planea con tiempo y se buscan alternativas remotas.',
+          a: 'Por lo general no. La mayor parte del trabajo se hace a distancia, con poderes notariados y comunicación en español. Si hiciera falta una comparecencia, se planea con tiempo y se buscan alternativas remotas.',
         },
         {
-          q: 'Nos dijeron que la empresa sí tiene seguro y que eso es todo lo que hay. ¿Es cierto?',
-          a: 'No necesariamente. Aun con seguro puede haber demanda contra un tercero que causó el accidente, como el contratista general o el fabricante de un equipo, y en casos de negligencia grave del patrón la ley permite reclamar daños ejemplares.',
+          q: 'Nos dijeron que la empresa sí tiene seguro y que eso es todo. ¿Es cierto?',
+          a: 'No necesariamente. Aun con seguro puede haber demanda contra un tercero que causó el accidente, y en casos de negligencia grave del patrón la ley permite reclamar daños ejemplares. Vale la pena que alguien revise los hechos.',
         },
         {
           q: '¿Cuánto cobra un abogado por un caso así?',
-          a: 'La evaluación es gratuita y se trabaja por honorarios de contingencia: la familia no paga nada por adelantado y el despacho solo cobra si se obtiene una recuperación. Pida que le expliquen el acuerdo por escrito y en español antes de firmarlo.',
+          a: 'La evaluación es gratuita y se trabaja por honorarios de contingencia: la familia no paga nada por adelantado y el despacho solo cobra si se obtiene una recuperación. Pida que le expliquen el acuerdo por escrito y en español.',
         },
       ],
     },
     conclusion: {
       title: 'Su familiar no era un número en una estadística',
-      text: 'Texas encabeza el país en muertes en el trabajo, y detrás de cada cifra hay una casa donde alguien ya no llega. La mayoría de esas muertes no fueron accidentes inevitables: fueron riesgos conocidos que a alguien le pareció más barato no corregir. La familia no puede cambiar lo que pasó, pero sí puede exigir que se investigue de verdad y que quienes dependían de esa persona no queden desamparados.',
+      text: 'Texas encabeza el país en muertes en el trabajo, y detrás de cada cifra hay una casa donde alguien ya no llega. La mayoría no fueron accidentes inevitables: fueron riesgos conocidos que a alguien le pareció más barato no corregir. La familia no puede cambiar lo que pasó, pero sí exigir que se investigue de verdad y que quienes dependían de esa persona no queden desamparados.',
       advice: 'Hablar con un abogado no la obliga a demandar. La evaluación de su caso es gratuita, se hace en español y no se cobra nada si no se gana.',
     },
     sources: {
@@ -360,16 +351,16 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'If your relative died in a workplace accident in Texas, the family has rights even without papers. The two claim routes and the deadlines already running.',
     title: 'My Relative Died in a Workplace Accident in Texas: The Family’s Rights',
     displayDate: 'Aug 06, 2026',
-    readTime: '11 min',
+    readTime: '21 min',
     categoryLabel: 'Accidents',
     summary: {
       title: 'Initial Summary',
-      text: 'Losing someone in a workplace accident leaves a family with enormous grief and, on top of it, paperwork and decisions nobody explained. Texas leads the country in workplace deaths, and construction work and Hispanic workers are overrepresented in those numbers. What follows is what Texas law recognizes for the family. <strong>Immigration status does not take those rights away</strong>. There are two very different paths depending on whether the employer carried workers’ compensation insurance, the law names exactly who may claim —even relatives living in Mexico— and the evidence that holds a case together starts disappearing within days.',
+      text: 'Losing someone in a workplace accident leaves a family with enormous grief and, on top of it, paperwork and decisions nobody explained. Texas leads the country in workplace deaths, with construction work and Hispanic workers overrepresented. What follows is what Texas law recognizes for the family: <strong>immigration status does not take those rights away</strong>, there are two very different paths depending on whether the employer had insurance, the law names who may claim —even relatives living in Mexico— and the evidence starts disappearing within days.',
     },
     intro: [
       'We are very sorry for your loss. If you are reading this, it has probably been only days since the phone call, and someone is already asking you for signatures and decisions nobody in the family knows how to make.',
-      'This article is not selling you anything. It exists because we see the same pattern over and over: the employer’s insurance company moves on the day of the accident, with investigators and lawyers; the family moves weeks later, when there is no video left, no witnesses anyone can find, and something has already been signed that should never have been signed.',
-      'Here we explain, in plain language, what rights the family has under Texas law, who may claim, what can be recovered, and what deadlines are running. You do not have to decide anything today, but you should know what is at stake.',
+      'This article is not selling you anything. It exists because we see the same pattern over and over: the employer’s insurance company moves on the day of the accident; the family moves weeks later, when there is no video left, no witnesses anyone can find, and something has already been signed that should never have been signed.',
+      'Here we explain what rights the family has under Texas law, who may claim, what can be recovered, and what deadlines are running. You do not have to decide anything today.',
     ],
     sections: [
       {
@@ -379,25 +370,21 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'In the first days the family is arranging a funeral, calling relatives in another country and trying to understand what happened. Nobody is in any condition to evaluate a money offer or read an English document full of legal terms. That is normal, and nothing the law recognizes for you is lost by taking a few days to breathe.',
-          },
-          {
-            kind: 'text',
-            text: 'What does matter is not closing doors by accident. There are a few things that change the rest of the case, and they require no money, no lawyer and no legal knowledge: only care.',
+            text: 'In the first days the family is arranging a funeral and calling relatives in another country. Nobody is in any condition to evaluate a money offer or read an English document full of legal terms, and that is normal: nothing the law recognizes for you is lost by taking a few days. What does matter is not closing doors by accident.',
           },
           {
             kind: 'list',
             items: [
-              '<strong>Do not sign anything</strong> brought to you by the employer or an insurance company, even if you are told it is «just for the paperwork» or «so the funeral payment can go through».',
-              '<strong>Do not give a recorded statement</strong> to any investigator or adjuster. You can politely say the family will speak later.',
+              '<strong>Do not sign anything</strong> from the employer or an insurance company, even if you are told it is «just for the paperwork» or «so the funeral payment can go through».',
+              '<strong>Do not give a recorded statement</strong> to any investigator or adjuster; you can politely say the family will speak later.',
               '<strong>Keep everything</strong>: pay stubs, messages with supervisors, photos, the name of the company and the jobsite, and any paper handed to you.',
               '<strong>Write down the personal phone numbers</strong> of the coworkers who were there that day; cell phones, not office lines.',
-              '<strong>Keep your relative’s phone</strong> without erasing or resetting it: sometimes the last messages with the supervisor are in there.',
+              '<strong>Keep your relative’s phone</strong> without erasing or resetting it: the last messages with the supervisor may be in there.',
             ],
           },
           {
             kind: 'note',
-            text: 'If you already signed something, do not blame yourself and do not hide it: show it to an attorney. Some documents do not have the effect families fear, and others can be challenged depending on how the signature was obtained.',
+            text: 'If you already signed something, do not blame yourself and do not hide it: show it to an attorney. Some documents do not have the effect families fear, and others can be challenged.',
           },
         ],
       },
@@ -415,8 +402,8 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             items: [
               'An <strong>undocumented worker is still a worker</strong> for purposes of an employer’s responsibility for an unsafe workplace.',
               'Relatives can claim even if they <strong>do not live in the United States</strong> and have never set foot in the country.',
-              'Being paid <strong>in cash or without a contract</strong> does not erase the employment relationship; it makes it more important to prove it with messages, witnesses and transfers.',
-              'The <strong>«independent contractor»</strong> label does not close the case either: it is tested by looking at who gave the orders, who supplied the tools and who set the hours.',
+              'Being paid <strong>in cash or without a contract</strong> does not erase the employment relationship; it makes it more important to prove it with messages and witnesses.',
+              'The <strong>«independent contractor»</strong> label does not close the case either: what counts is who gave the orders, who supplied the tools and who set the hours.',
             ],
           },
           {
@@ -432,22 +419,22 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Texas is unusual in this country: <strong>workers’ compensation insurance is optional</strong> for most private employers. A company can simply decide not to buy it, and that decision, made long before the accident, determines which path your family’s case takes.',
+            text: 'Texas is unusual in this country: <strong>workers’ compensation insurance is optional</strong> for most private employers. That decision, made long before the accident, determines which path your family’s case takes.',
           },
           {
             kind: 'cards',
             items: [
               {
                 title: 'Employer WITH workers’ comp',
-                desc: 'The family can claim death benefits: a portion of the wages your relative contributed, paid to the legal beneficiaries, plus a burial benefit subject to a statutory cap. No one has to prove fault. In exchange, as a general rule the employer cannot be sued for negligence.',
+                desc: 'The family can claim death benefits: a portion of the wages your relative contributed, paid to the legal beneficiaries, plus a burial benefit subject to a statutory cap. No one has to prove fault, but as a general rule the employer cannot be sued for negligence.',
               },
               {
                 title: 'Employer WITHOUT insurance (non-subscriber)',
-                desc: 'The family can sue directly for wrongful death, and that employer <strong>loses the classic defenses</strong>: it cannot argue the worker was careless, assumed the risk, or that a coworker was to blame. These tend to be the higher-value cases.',
+                desc: 'The family can sue directly for wrongful death, and that employer <strong>loses the classic defenses</strong>: it cannot argue the worker was careless, assumed the risk, or that a coworker was to blame.',
               },
               {
                 title: 'A responsible third party',
-                desc: 'Even when the direct employer is insured, there may be a claim against whoever created the danger: the general contractor, another subcontractor, the property owner, the maker of a machine, or the driver who struck the crew.',
+                desc: 'Even when the direct employer is insured, there may be a claim against whoever created the danger: the general contractor, another subcontractor, the property owner or the maker of a machine.',
               },
             ],
           },
@@ -457,7 +444,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Finding out whether the company had coverage is not the family’s job: it is one of the first things an attorney verifies, along with who else was on that jobsite that day. Very often the direct employer is a small company with no assets and the real case lies against whoever hired it.',
+            text: 'Finding out whether the company had coverage is one of the first things an attorney verifies, along with who else was on that jobsite that day. Very often the direct employer is a small company with no assets and the real case lies against whoever hired it.',
           },
         ],
       },
@@ -468,7 +455,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'The Texas Wrongful Death Act does not let just anyone who loved the deceased bring a claim. It names three groups, and that list is closed. It is hard to read it that way, but it is better to know from the start.',
+            text: 'The Texas Wrongful Death Act does not let just anyone who loved the deceased bring a claim: it names three groups, and that list is closed.',
           },
           {
             kind: 'list',
@@ -480,11 +467,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: '<strong>Siblings are not beneficiaries</strong> under this statute, however close they were; neither are grandparents, aunts and uncles, or partners who do not qualify as a spouse. It is not a measure of love: it is how the statute is written. There is also a separate, complementary claim, the <em>survival action</em>, brought by the deceased’s estate for what he himself suffered before dying; the two are usually pursued together in the same case.',
+            text: '<strong>Siblings are not beneficiaries</strong> under this statute, however close they were; neither are grandparents or partners who do not qualify as a spouse. It is not a measure of love: it is how the statute is written. There is also a complementary claim, the <em>survival action</em>, brought by the deceased’s estate for what he himself suffered before dying.',
           },
           {
             kind: 'note',
-            text: 'Living in Mexico, Guatemala, Honduras or El Salvador disqualifies no one. A mother back home, a wife who stayed there, or children your relative supported from here can all be beneficiaries; what will be needed is documenting the relationship with certificates, apostilles and translations.',
+            text: 'Living in Mexico, Guatemala, Honduras or El Salvador disqualifies no one. A mother back home, or children your relative supported from here, can be beneficiaries; what will be needed is documenting the relationship with certificates, apostilles and translations.',
           },
         ],
       },
@@ -495,40 +482,40 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'One of the things that most surprises families is discovering how much is left out when a quick check «for expenses» is accepted. A well-handled case does not repair the loss, but it does recognize categories of harm that the first offer almost never includes.',
+            text: 'One of the things that most surprises families is discovering how much is left out when a quick check «for expenses» is accepted. A well-handled case does not repair the loss, but it does recognize harm the first offer almost never includes.',
           },
           {
             kind: 'cards',
             items: [
               {
                 title: 'The financial support that will never arrive',
-                desc: 'What your relative would have earned and contributed across the rest of his working life, including benefits and his capacity to earn more over time. For a young person this is often the largest item.',
+                desc: 'What your relative would have earned and contributed across the rest of his working life, including benefits and his capacity to earn more over time.',
               },
               {
                 title: 'Funeral and medical expenses',
-                desc: 'Funeral services, burial or cremation and, where it applies, repatriation of the body. Also the medical and ambulance care incurred between the accident and the death.',
+                desc: 'Funeral services, burial or cremation and, where it applies, repatriation of the body. Also the medical care between the accident and the death.',
               },
               {
                 title: 'Loss of companionship and mental anguish',
-                desc: 'Texas law recognizes the value of the love, counsel, comfort and companionship that were lost, and the beneficiaries’ emotional suffering. This is not an add-on: it is a central part of the case.',
+                desc: 'Texas law recognizes the value of the love, counsel, comfort and companionship that were lost, and the beneficiaries’ emotional suffering.',
               },
               {
                 title: 'What he suffered before dying',
-                desc: 'Through the survival action: the worker’s physical pain and mental anguish between the accident and his death, plus the medical expenses of that period. Loss of inheritance can also be claimed.',
+                desc: 'Through the survival action: the worker’s physical pain and mental anguish between the accident and his death. Loss of inheritance can also be claimed.',
               },
               {
                 title: 'Punitive damages for gross negligence',
-                desc: 'When the conduct was not carelessness but conscious indifference to an extreme and known danger, the law allows exemplary damages to punish that conduct and deter others.',
+                desc: 'When the conduct was not carelessness but conscious indifference to an extreme and known danger, the law allows exemplary damages to punish and deter.',
               },
             ],
           },
           {
             kind: 'text',
-            text: 'The difference between ordinary negligence and <strong>gross negligence</strong> usually lies in what the company knew. Scaffolding assembled badly in a rush is one thing; a company that had already been warned about that same hazard, that removed a guard to save time, or that sent someone untrained into an unshored trench is something else entirely.',
+            text: 'The difference between ordinary negligence and <strong>gross negligence</strong> usually lies in what the company knew. Scaffolding assembled badly in a rush is one thing; a company already warned about that hazard, or that removed a guard to save time, is something else entirely.',
           },
           {
             kind: 'note',
-            text: 'No serious attorney can tell you over the phone what your case is worth, and be wary of anyone who does. Value depends on the age and income of the person who died, how many depended on him, how serious the wrongdoing was, and who the defendant is.',
+            text: 'No serious attorney can tell you over the phone what your case is worth. Value depends on the age and income of the person who died, how many depended on him, how serious the wrongdoing was, and who the defendant is.',
           },
         ],
       },
@@ -539,7 +526,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'On the day of the accident, while the family receives the worst news of their lives, the other side is already working: the insurer sends investigators, company lawyers ask for photos, and the jobsite goes back into operation. It is not malice, it is their routine. The problem is that the routine changes the scene.',
+            text: 'On the day of the accident, while the family receives the worst news of their lives, the other side is already working: the insurer sends investigators and the jobsite goes back into operation. It is not malice, it is their routine; the problem is that the routine changes the scene.',
           },
           {
             kind: 'list',
@@ -547,26 +534,25 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               '<strong>Cameras</strong> at the jobsite or warehouse usually overwrite themselves within days or a few weeks.',
               'The <strong>machine or equipment</strong> that failed gets repaired, returned to the rental company, or scrapped.',
               '<strong>Witnesses</strong> move to another job, change numbers or are let go, and afterward nobody can find them.',
-              '<strong>Logs</strong>, sign-in sheets, work permits and maintenance records get archived or lost.',
-              'Memory gets contaminated: within weeks everyone remembers the version that was repeated, not the one they saw.',
+              '<strong>Logs</strong>, sign-in sheets and maintenance records get archived or lost.',
             ],
           },
           {
             kind: 'text',
-            text: 'When there is a death at work, federal law requires the employer to report it to OSHA right away and an inspection usually follows. That file is useful, but it does not replace an investigation of your own: OSHA looks for safety violations, it does not build the family’s civil case.',
+            text: 'When there is a death at work, federal law requires the employer to report it to OSHA right away and an inspection usually follows. That file is useful, but OSHA looks for safety violations: it does not build the family’s civil case.',
           },
           {
             kind: 'steps',
             items: [
-              '<strong>Write down everything you were told</strong> in the first hours, with names and approximate times, even if it sounds confusing.',
+              '<strong>Write down what you were told</strong> in the first hours, with names and approximate times.',
               '<strong>Collect personal phone numbers</strong> for coworkers and for whoever called the family.',
-              '<strong>Do not return</strong> tools, hard hat, harness, work clothes or your relative’s phone without asking first.',
+              '<strong>Do not return</strong> tools, hard hat, harness or your relative’s phone without asking first.',
               '<strong>Talk to an attorney soon</strong>, even if you have not decided whether you want to sue.',
             ],
           },
           {
             kind: 'note',
-            text: 'An attorney can send a formal letter demanding that video, records and equipment be preserved, and destroying that evidence afterward carries serious consequences for the company inside the lawsuit. But the letter only works if it goes out in time, and here «in time» means days.',
+            text: 'An attorney can send a formal letter demanding that video, records and equipment be preserved; destroying that evidence afterward carries serious consequences inside the lawsuit. But the letter only works if it goes out in time, and here «in time» means days.',
           },
         ],
       },
@@ -577,13 +563,13 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Sometimes the offer comes very fast, even before the funeral, and wrapped in kindness: someone from the company who speaks Spanish, who stays with the family, who offers to cover the funeral service. That person may be sincere; the insurance company behind them is not on your side. Its job is to close the matter for the lowest possible amount, as soon as possible.',
+            text: 'Sometimes the offer comes very fast, even before the funeral, and wrapped in kindness: someone from the company who speaks Spanish and offers to cover the funeral service. That person may be sincere; the insurance company behind them is not on your side. Its job is to close the matter for the lowest possible amount, as soon as possible.',
           },
           {
             kind: 'list',
             items: [
               'They ask for a <strong>recorded statement</strong> «to speed things up», then use isolated phrases out of context.',
-              'They offer to pay for the funeral <strong>in exchange for a signature</strong> that actually releases the company from liability forever.',
+              'They offer to pay for the funeral <strong>in exchange for a signature</strong> that releases the company from liability forever.',
               'They present the document as <strong>administrative paperwork</strong> rather than what it is: a final agreement.',
               'They take advantage of the fact that <strong>there is no translation</strong> and the family is numb with grief.',
               'They suggest that <strong>a lawyer will only delay</strong> payment, or imply the worker was at fault.',
@@ -591,7 +577,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'The first offer is low by definition, because it is made before anyone knows how much the worker contributed, how many people depended on him, and what actually failed on that job. Once a release of liability is signed there is no going back, even if evidence later surfaces that the company knew about the danger.',
+            text: 'The first offer is low by definition: it is made before anyone knows how much the worker contributed and what actually failed on that job. Once a release of liability is signed, there is no going back.',
           },
           {
             kind: 'warning',
@@ -606,25 +592,21 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Many of these cases involve a widow, children or parents in another country. That complicates logistics, not rights: a workplace death case can be handled with the entire family outside the United States, and it is done often.',
+            text: 'Many of these cases involve a widow, children or parents in another country. That complicates logistics, not rights: a workplace death case can be handled with the entire family outside the United States.',
           },
           {
             kind: 'list',
             items: [
-              'Communication runs by <strong>phone, video and messaging</strong>, in Spanish, with the family naming one contact person.',
+              'Communication runs by <strong>phone, video and messaging</strong>, in Spanish, with one contact person named by the family.',
               '<strong>Powers of attorney and signatures</strong> are executed before a notary in the country of residence and, when needed, apostilled.',
               'You will need to gather <strong>birth, marriage and death certificates</strong>, with certified English translations.',
-              'The <strong>consulate</strong> of the home country usually gives guidance on repatriation of the body and documents.',
-              '<strong>Repatriation</strong> is an expense that may form part of the claim: keep every receipt.',
+              'The <strong>consulate</strong> usually gives guidance on repatriation of the body and documents.',
+              '<strong>Repatriation</strong> is an expense that may form part of the claim: keep the receipts.',
             ],
           },
           {
-            kind: 'text',
-            text: 'The reverse also happens: the worker lived in Texas and his immediate family is here, but his parents are still back home. Because parents are beneficiaries, it is worth locating them and documenting the relationship early.',
-          },
-          {
             kind: 'note',
-            text: 'When there are beneficiaries in several countries and from several relationships, the delicate part is not filing suit: it is sorting out who is who and keeping the family from turning on itself. That work goes far better at the beginning, with everyone informed, than at the end in front of a check.',
+            text: 'When there are beneficiaries in several countries and from several relationships, the delicate part is not filing suit: it is sorting out who is who and keeping the family from turning on itself. That work goes far better at the beginning than at the end, in front of a check.',
           },
         ],
       },
@@ -635,7 +617,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'In Texas, the general rule for personal injury and wrongful death lawsuits is <strong>two years</strong>, normally counted from the date of death. That sounds like a long time and it is not: by the time a family has recovered enough to think about this, months have gone by, and a serious case requires investigation, experts and documents that take time.',
+            text: 'In Texas, the general rule for personal injury and wrongful death lawsuits is <strong>two years</strong>, normally counted from the date of death. That sounds like a lot and it is not: by the time a family has recovered enough to think about this, months have gone by, and a serious case requires investigation, experts and documents that take time.',
           },
           {
             kind: 'list',
@@ -662,7 +644,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'My son was undocumented. Can the company use that to avoid paying?',
-          a: 'Immigration status does not eliminate an employer’s responsibility for an unsafe workplace, nor does it erase the family’s right to claim. The defense sometimes tries to use the subject to apply pressure, which is why it matters to have someone who knows how to answer that tactic.',
+          a: 'Immigration status does not eliminate an employer’s responsibility for an unsafe workplace, nor does it erase the family’s right to claim. The defense sometimes uses the subject to apply pressure, which is why it matters to have someone who knows how to answer it.',
         },
         {
           q: 'The company offered to pay for the funeral. Should we accept?',
@@ -670,21 +652,21 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'We live in Mexico. Do we have to travel to Texas?',
-          a: 'Generally no. Most of the work is done remotely, with notarized powers of attorney and communication in Spanish. If an appearance becomes necessary at some point, it is planned well in advance and remote options are explored.',
+          a: 'Generally no. Most of the work is done remotely, with notarized powers of attorney and communication in Spanish. If an appearance becomes necessary, it is planned well in advance and remote options are explored.',
         },
         {
-          q: 'We were told the company has insurance and that is all there is. Is that true?',
-          a: 'Not necessarily. Even with insurance there may be a claim against a third party who caused the accident, such as the general contractor or the maker of a piece of equipment, and in cases of an employer’s gross negligence the law allows a claim for exemplary damages.',
+          q: 'We were told the company has insurance and that is all. Is that true?',
+          a: 'Not necessarily. Even with insurance there may be a claim against a third party who caused the accident, and in cases of an employer’s gross negligence the law allows a claim for exemplary damages. It is worth having someone review the facts.',
         },
         {
           q: 'What does an attorney charge for a case like this?',
-          a: 'The evaluation is free and the work is done on a contingency fee: the family pays nothing up front and the firm is paid only if there is a recovery. Ask to have the agreement explained to you in writing and in Spanish before you sign it.',
+          a: 'The evaluation is free and the work is done on a contingency fee: the family pays nothing up front and the firm is paid only if there is a recovery. Ask to have the agreement explained to you in writing and in Spanish.',
         },
       ],
     },
     conclusion: {
       title: 'Your relative was not a number in a statistic',
-      text: 'Texas leads the country in workplace deaths, and behind every figure is a home where someone no longer comes back. Most of those deaths were not unavoidable accidents: they were known risks that somebody found cheaper not to fix. A family cannot change what happened, but it can demand a real investigation and insist that the people who depended on that person are not left with nothing.',
+      text: 'Texas leads the country in workplace deaths, and behind every figure is a home where someone no longer comes back. Most were not unavoidable accidents: they were known risks that somebody found cheaper not to fix. A family cannot change what happened, but it can demand a real investigation and insist that the people who depended on that person are not left with nothing.',
       advice: 'Talking to an attorney does not commit you to filing suit. The evaluation of your case is free, it is done in Spanish, and nothing is charged unless the case is won.',
     },
     sources: {

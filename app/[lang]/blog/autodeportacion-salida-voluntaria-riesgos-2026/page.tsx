@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Antes de aceptar irse por su cuenta: barras de 3 y 10 años, barra permanente y solicitudes que se pierden al salir de Estados Unidos.',
     title: 'Autodeportación: lo que el gobierno no te dice antes de que firmes tu salida',
     displayDate: '06 Ago, 2026',
-    readTime: '10 min',
+    readTime: '19 min',
     categoryLabel: 'Defensa contra Deportación',
     lastUpdated: '6 de agosto de 2026',
     summary: {
@@ -25,7 +25,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     intro: [
       'Cada semana llegan a nuestras oficinas personas con la misma pregunta hecha en voz baja: «¿me conviene irme por mi cuenta antes de que me agarren?». Vienen con una carta, con un mensaje en el teléfono o con lo que vieron en un video de treinta segundos. Casi todos escucharon la parte de la oferta: una aplicación oficial, un estipendio y apoyo con el viaje. Casi ninguno escuchó la otra parte.',
       'La otra parte es la ley de inmigración, y esa no cambia por una campaña de comunicación. Salir de Estados Unidos después de haber vivido aquí sin estatus <strong>no borra su historial: lo activa</strong>. Es el acto de salir el que enciende castigos que estaban dormidos mientras usted permanecía adentro, y algunos duran una década o no tienen fecha de término.',
-      'Este artículo no le dirá que se quede ni que se vaya: eso depende de fechas y documentos que solo un abogado que revise su expediente puede evaluar. Lo que sí haremos es poner sobre la mesa qué está aceptando realmente quien dice que sí, cuándo salir forma parte de una estrategia legítima y qué revisar antes de decidir.',
+      'Este artículo no le dirá que se quede ni que se vaya: eso depende de fechas y documentos que solo un abogado que revise su expediente puede evaluar. Lo que sí haremos es explicar qué está aceptando realmente quien dice que sí, cuándo salir forma parte de una estrategia legítima y qué revisar antes de decidir.',
     ],
     sections: [
       {
@@ -35,7 +35,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'La propuesta se resume así: una persona sin estatus se registra en una aplicación oficial, declara que saldrá del país por su cuenta y, a cambio, recibe un estipendio y apoyo con el boleto de avión. Alrededor hay una campaña de presión que sube de tono: cartas, mensajes de texto, llamadas y operativos que hacen que quedarse se sienta insostenible.',
+            text: 'La propuesta se resume así: una persona sin estatus se registra en una aplicación oficial, declara que saldrá del país por su cuenta y, a cambio, recibe un estipendio y apoyo con el boleto. Alrededor hay una campaña de presión que sube de tono: cartas, mensajes, llamadas y operativos que hacen que quedarse se sienta insostenible.',
           },
           {
             kind: 'text',
@@ -46,13 +46,13 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             items: [
               '<strong>Los términos cambian.</strong> Condiciones, requisitos y alcance se han modificado más de una vez y pueden volver a cambiar. Lo que le contaron hace tres meses puede ya no ser cierto.',
               '<strong>Registrarse es entregar información.</strong> Al inscribirse confirma al gobierno quién es, dónde está y que reconoce no tener estatus. Eso no desaparece si después cambia de opinión.',
-              '<strong>Nadie le está regalando un perdón.</strong> El apoyo es logístico. No borra una orden de deportación previa, no cancela barras de reingreso y no le concede ningún derecho a volver.',
-              '<strong>Circulan estafas idénticas.</strong> Hay quien cobra por «inscribirlo» en programas oficiales que no cobran, y páginas falsas que copian el diseño oficial. Nunca pague a un particular por un trámite del gobierno.',
+              '<strong>Nadie le regala un perdón.</strong> El apoyo es logístico: no borra una orden de deportación previa, no cancela barras de reingreso y no le concede derecho a volver.',
+              '<strong>Circulan estafas.</strong> Hay quien cobra por «inscribirlo» en programas oficiales que no cobran, y páginas falsas que copian el diseño oficial. Nunca pague a un particular por un trámite del gobierno.',
             ],
           },
           {
             kind: 'note',
-            text: 'Este artículo se escribió con la información disponible al 6 de agosto de 2026 y describe el programa en términos generales a propósito: montos, requisitos y condiciones han cambiado y pueden volver a cambiar sin aviso. Verifique el estado vigente en fuentes oficiales y con un abogado antes de actuar, no con lo que circula en redes.',
+            text: 'Este artículo se escribió con la información disponible al 6 de agosto de 2026 y describe el programa en términos generales a propósito: montos, requisitos y condiciones han cambiado y pueden volver a cambiar sin aviso. Verifique el estado vigente en fuentes oficiales y con un abogado antes de actuar.',
           },
         ],
       },
@@ -84,11 +84,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'La salida voluntaria del juez no es un favor: exige presencia física previa, buen carácter moral durante el periodo requerido, medios para pagar su propio viaje y ausencia de ciertas condenas, y normalmente una fianza. A cambio, evita cargar con una orden de remoción.',
+            text: 'La salida voluntaria del juez no es un favor: exige presencia física previa, buen carácter moral, medios para pagar su propio viaje y ausencia de ciertas condenas, y normalmente una fianza.',
           },
           {
             kind: 'warning',
-            text: 'Tiene una trampa que arruina casos: si no sale dentro del plazo exacto concedido, la salida voluntaria se convierte automáticamente en una orden de deportación, se impone una multa civil y usted queda inelegible por diez años para varias formas de alivio, entre ellas la cancelación de remoción y el ajuste de estatus. El plazo no se estira porque el vuelo salió caro o porque un familiar se enfermó.',
+            text: 'Tiene una trampa que arruina casos: si no sale dentro del plazo exacto concedido, la salida voluntaria se convierte automáticamente en una orden de deportación, se impone una multa civil y usted queda inelegible por diez años para varias formas de alivio, entre ellas la cancelación de remoción y el ajuste de estatus. El plazo no se estira por un vuelo caro ni por una emergencia familiar.',
           },
         ],
       },
@@ -112,11 +112,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'El tiempo corre desde que su estancia autorizada venció o desde que entró sin inspección, con excepciones que importan: los periodos siendo menor de edad y ciertos periodos con solicitudes pendientes de buena fe no siempre se computan igual. Son cálculos técnicos que se hacen con el expediente y con fechas verificadas, nunca de memoria.',
+            text: 'El tiempo corre desde que su estancia autorizada venció o desde que entró sin inspección, con excepciones que importan: los periodos siendo menor de edad y ciertos periodos con solicitudes pendientes de buena fe no siempre se computan igual. Son cálculos que se hacen con el expediente y con fechas verificadas, nunca de memoria.',
           },
           {
             kind: 'note',
-            text: 'Diez años de barra no significan diez años haciendo fila. Significan diez años fuera de Estados Unidos antes de siquiera poder pedir la visa que hoy no puede pedir. En ese tiempo su hijo ciudadano cumple dieciocho, la casa se pierde y el negocio cierra. Ese es el precio real detrás de «me voy tantito y luego arreglo».',
+            text: 'Diez años de barra no significan diez años haciendo fila. Significan diez años fuera de Estados Unidos antes de siquiera poder pedir la visa que hoy no puede pedir. En ese tiempo su hijo ciudadano cumple dieciocho y el negocio cierra. Ese es el precio real detrás de «me voy tantito y luego arreglo».',
           },
         ],
       },
@@ -139,7 +139,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Además, si ya existe una orden de remoción en su contra, la salida activa por separado las barras de la INA § 212(a)(9)(A), cuya duración depende del tipo de orden y de si hubo más de una. Se suman a las de presencia ilegal; no se eligen.',
+            text: 'Además, si ya existe una orden de remoción en su contra, la salida activa por separado las barras de la INA § 212(a)(9)(A), cuya duración depende del tipo de orden. Se suman a las de presencia ilegal; no se eligen.',
           },
         ],
       },
@@ -156,16 +156,16 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             kind: 'list',
             items: [
               '<strong>Asilo pendiente.</strong> Salir con una solicitud de asilo en trámite normalmente se trata como abandono. Los años de espera acumulados se pierden y no se recuperan.',
-              '<strong>Cancelación de remoción.</strong> Exige presencia física continua por un periodo largo. Las ausencias rompen esa continuidad, e irse mientras el caso está en corte equivale a abandonar la solicitud. Es de los alivios más valiosos que existen y desaparece con un vuelo.',
+              '<strong>Cancelación de remoción.</strong> Exige presencia física continua por un periodo largo. Las ausencias rompen esa continuidad, e irse mientras el caso está en corte equivale a abandonar la solicitud. Desaparece con un vuelo.',
               '<strong>Petición U como víctima de un delito.</strong> Salir no siempre la cancela, pero cambia el camino: el trámite pasa a un consulado en el extranjero, se alarga y suma motivos de inadmisibilidad que hay que perdonar antes de volver.',
               '<strong>Autopetición VAWA.</strong> La elegibilidad y la posibilidad de ajustar estatus dentro del país dependen de requisitos de residencia y presencia. Salir puede desbaratar la ruta que ya tenía.',
-              '<strong>TPS o cualquier estatus que exija permiso de viaje.</strong> Salir sin la autorización de viaje correcta puede costarle el estatus que sí tenía.',
+              '<strong>TPS o cualquier estatus que exija permiso de viaje.</strong> Salir sin la autorización correcta puede costarle el estatus que sí tenía.',
               '<strong>Petición familiar aprobada o en trámite.</strong> Puede ser la base de una ruta legal futura. Irse sin analizar cómo interactúa con las barras puede volverla inservible por una década.',
             ],
           },
           {
             kind: 'note',
-            text: 'Antes de decidir hay que saber con certeza qué tiene abierto. Muchas personas creen que «no tienen nada» y en realidad tienen una petición aprobada hace años o una audiencia programada de la que nunca se enteraron porque el aviso llegó a una dirección vieja.',
+            text: 'Antes de decidir hay que saber con certeza qué tiene abierto. Muchas personas creen que «no tienen nada» y en realidad tienen una petición aprobada hace años o una audiencia programada de la que nunca se enteraron.',
           },
         ],
       },
@@ -176,7 +176,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'El argumento que más convence es este: váyase ahora, por su propia voluntad, y regrese después por la vía legal. Suena razonable. El problema es que «la vía legal» no es una puerta que se cruza cuando uno decide: es un sistema con requisitos que la mayoría de las personas en esta situación no cumple.',
+            text: 'El argumento que más convence es este: váyase ahora, por su propia voluntad, y regrese después por la vía legal. Suena razonable. El problema es que «la vía legal» no es una puerta que se cruza cuando uno decide: es un sistema con requisitos que la mayoría no cumple.',
           },
           {
             kind: 'text',
@@ -188,7 +188,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'warning',
-            text: 'Hemos visto a familias vender el carro y cerrar su negocio confiando en un regreso «en unos meses» que nadie les prometió por escrito. El apoyo para el viaje no incluye ningún compromiso de dejarlo volver ni acelera trámite alguno. Un beneficio migratorio futuro solo existe si alguien con autoridad lo aprueba en un caso concreto.',
+            text: 'Hemos visto a familias vender el carro y cerrar su negocio confiando en un regreso «en unos meses» que nadie les prometió por escrito. El apoyo para el viaje no incluye compromiso alguno de dejarlo volver ni acelera ningún trámite.',
           },
         ],
       },
@@ -221,7 +221,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'El perdón provisional cubre la presencia ilegal, no todo lo demás. Antecedentes penales, fraude previo, entradas repetidas después de haber acumulado más de un año de presencia ilegal u órdenes de deportación anteriores pueden dejarlo fuera de esta ruta. Por eso el análisis previo es la decisión completa, no un trámite.',
+            text: 'El perdón provisional cubre la presencia ilegal, no todo lo demás. Antecedentes penales, fraude previo, entradas repetidas tras acumular más de un año de presencia ilegal u órdenes de deportación anteriores pueden dejarlo fuera de esta ruta.',
           },
         ],
       },
@@ -237,15 +237,15 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           {
             kind: 'steps',
             items: [
-              '<strong>Pida su expediente por FOIA.</strong> Una solicitud bajo la Ley de Libertad de Información a USCIS (Formulario G-639) le entrega lo que el gobierno tiene sobre usted: solicitudes anteriores, entradas y salidas, peticiones presentadas a su nombre. Según su historia, conviene pedirlo también a ICE y a CBP.',
+              '<strong>Pida su expediente por FOIA.</strong> Una solicitud bajo la Ley de Libertad de Información a USCIS (Formulario G-639) le entrega lo que el gobierno tiene sobre usted: solicitudes anteriores, entradas y salidas y peticiones presentadas a su nombre. Según su historia, conviene pedirlo también a ICE y a CBP.',
               '<strong>Confirme si tiene un caso abierto en corte.</strong> El sistema de información de casos de la corte de inmigración permite verificar si hay audiencias programadas o si ya se dictó una orden en ausencia sin que usted se enterara.',
-              '<strong>Reúna sus documentos.</strong> Pasaporte, sellos de entrada y salida, actas de nacimiento y matrimonio, comprobantes de domicilio y de tiempo en el país, expedientes médicos y escolares de sus hijos, y cualquier papel que le haya dado inmigración.',
+              '<strong>Reúna sus documentos.</strong> Pasaporte, sellos de entrada y salida, actas de nacimiento y matrimonio, comprobantes de domicilio y de tiempo en el país, expedientes escolares y médicos de sus hijos y cualquier papel de inmigración.',
               '<strong>Consulte con un abogado antes de inscribirse o firmar nada.</strong> Con el expediente en la mano la conversación deja de ser una opinión y se vuelve un cálculo: cuánta presencia ilegal acumuló, qué barras activaría, qué tiene abierto y si existe una ruta con perdón.',
             ],
           },
           {
             kind: 'warning',
-            text: 'No firme documentos en inglés que no entienda, no acepte una «salida» sin saber si es la del juez o una orden de remoción disfrazada, y no pague a un notario ni a nadie que le prometa un resultado. En inmigración, la promesa de un resultado garantizado es la señal más confiable de fraude.',
+            text: 'No firme documentos en inglés que no entienda, no acepte una «salida» sin saber si es la del juez o una orden de remoción disfrazada, y no pague a un notario ni a nadie que le prometa un resultado. En inmigración, prometer un resultado garantizado es la señal más confiable de fraude.',
           },
           {
             kind: 'note',
@@ -259,7 +259,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       items: [
         {
           q: 'Si me voy por mi cuenta, ¿evito que quede una deportación en mi récord?',
-          a: 'Depende de qué firme. Salir cuando no hay proceso en corte no genera una orden de remoción, pero sí activa las barras por presencia ilegal. Si en cambio firma una renuncia a su audiencia o acepta una orden estipulada, queda una deportación formal. Antes de firmar, alguien tiene que leerle exactamente qué documento le están poniendo enfrente.',
+          a: 'Depende de qué firme. Salir cuando no hay proceso en corte no genera una orden de remoción, pero sí activa las barras por presencia ilegal. Si firma una renuncia a su audiencia o acepta una orden estipulada, queda una deportación formal. Antes de firmar, alguien tiene que leerle qué documento es.',
         },
         {
           q: '¿El estipendio o el apoyo con el boleto me da algún derecho a volver?',
@@ -275,27 +275,27 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'Tengo miedo de ser detenido y no me siento seguro quedándome. ¿Qué hago?',
-          a: 'El miedo es legítimo y no hay que minimizarlo, pero decidir bajo presión en una semana mala suele costar años. Hay medidas de protección que se preparan sin salir del país: un plan familiar de emergencia, poderes notariales, cartas sobre el cuidado de los hijos y saber qué hacer si tocan la puerta. Eso se organiza en días.',
+          a: 'El miedo es legítimo, pero decidir bajo presión en una semana mala suele costar años. Hay medidas de protección que se preparan sin salir del país: un plan familiar de emergencia, poderes notariales, cartas sobre el cuidado de los hijos y saber qué hacer si tocan la puerta.',
         },
         {
           q: 'Mi esposa y mis hijos son ciudadanos. ¿Ellos me pueden pedir si me voy?',
-          a: 'Un familiar ciudadano puede presentar una petición, pero la petición sola no vence las barras de tres o diez años. Si ya salió con presencia ilegal acumulada, el consulado lo encontrará inadmisible y hará falta un perdón aprobado. Por eso la secuencia es analizar y perdonar primero, viajar después.',
+          a: 'Un familiar ciudadano puede presentar una petición, pero la petición sola no vence las barras de tres o diez años. Si ya salió con presencia ilegal acumulada, el consulado lo encontrará inadmisible y hará falta un perdón aprobado. Por eso conviene analizar y perdonar primero, y viajar después.',
         },
       ],
     },
     conclusion: {
       title: 'La decisión más cara es la que se toma con prisa',
-      text: 'Nadie debería decidir el futuro de su familia con un mensaje reenviado o un video de treinta segundos. Irse puede ser la salida correcta para algunas personas y el error definitivo para otras, y la diferencia casi nunca está en las ganas de cumplir la ley: está en fechas, en documentos y en si existe o no un perdón aprobado antes del vuelo. La ley de inmigración no premia la buena intención; premia la secuencia correcta.',
+      text: 'Nadie debería decidir el futuro de su familia con un mensaje reenviado o un video de treinta segundos. Irse puede ser la salida correcta para algunas personas y el error definitivo para otras, y la diferencia casi nunca está en las ganas de cumplir la ley: está en fechas, en documentos y en si existe un perdón aprobado antes del vuelo.',
       advice: 'Antes de inscribirse en cualquier programa, firmar cualquier documento o comprar cualquier boleto, pida su expediente y hable con un abogado de inmigración sobre su caso concreto.',
     },
     sources: {
       title: 'Fuentes y referencias',
       list: [
-        'Ley de Inmigración y Nacionalidad (INA) § 212(a)(9)(B) — inadmisibilidad por presencia ilegal: barras de 3 y de 10 años',
+        'INA § 212(a)(9)(B) — inadmisibilidad por presencia ilegal: barras de 3 y de 10 años',
         'INA § 212(a)(9)(C) — presencia ilegal seguida de reingreso sin admisión (barra permanente)',
         'INA § 240B — salida voluntaria: requisitos, plazos y consecuencias por incumplimiento',
-        'USCIS — Formulario I-601A (perdón provisional por presencia ilegal) y Formulario I-212 (permiso para volver a solicitar admisión)',
-        'USCIS — Formulario G-639 (solicitud FOIA); EOIR — información sobre casos ante la corte de inmigración',
+        'USCIS — Formulario I-601A (perdón provisional) y Formulario I-212 (permiso para volver a solicitar admisión)',
+        'USCIS — Formulario G-639 (solicitud FOIA); EOIR — información sobre casos en corte de inmigración',
       ],
     },
     ui: ARTICLE_UI.es,
@@ -306,7 +306,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Before agreeing to leave on your own: the 3- and 10-year bars, the permanent bar, and the pending applications you lose by departing.',
     title: 'Self-Deportation: What the Government Does Not Tell You Before You Sign',
     displayDate: 'Aug 06, 2026',
-    readTime: '10 min',
+    readTime: '19 min',
     categoryLabel: 'Deportation Defense',
     lastUpdated: 'August 6, 2026',
     summary: {
@@ -316,7 +316,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     intro: [
       'Every week people come into our offices with the same question, asked quietly: «is it better if I just leave on my own before they catch me?». They arrive with a letter, a message on their phone, or something they saw in a thirty-second video. Almost all of them heard the offer: an official application, a stipend and help with the trip. Almost none of them heard the other half.',
       'The other half is immigration law, and that does not change because of a communications campaign. Leaving the United States after living here without status <strong>does not erase your history: it activates it</strong>. It is the act of departing that switches on penalties that lay dormant while you were inside, and some of them last a decade or have no end date at all.',
-      'This article will not tell you to stay or to go: that depends on dates and documents only an attorney who reviews your file can weigh. What it will do is lay out what a person is actually agreeing to when they say yes, when leaving is part of a legitimate strategy, and what to check before deciding.',
+      'This article will not tell you to stay or to go: that depends on dates and documents only an attorney who reviews your file can weigh. What it will do is explain what a person is actually agreeing to when they say yes, when leaving is part of a legitimate strategy, and what to check before deciding.',
     ],
     sections: [
       {
@@ -326,7 +326,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'The proposal comes down to this: a person without status registers through an official application, states that they will leave the country on their own and, in exchange, receives a stipend and help with the plane ticket. Around it sits an escalating pressure campaign: letters, text messages, phone calls and enforcement operations that make staying feel unsustainable.',
+            text: 'The proposal comes down to this: a person without status registers through an official application, states that they will leave the country on their own and, in exchange, receives a stipend and help with the ticket. Around it sits an escalating pressure campaign: letters, messages, phone calls and enforcement operations that make staying feel unsustainable.',
           },
           {
             kind: 'text',
@@ -337,13 +337,13 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             items: [
               '<strong>The terms change.</strong> Conditions, requirements and scope have been modified more than once and can change again. What someone told you three months ago may no longer be true.',
               '<strong>Registering means handing over information.</strong> By signing up you confirm to the government who you are, where you are, and that you acknowledge having no status. That does not disappear if you later change your mind.',
-              '<strong>Nobody is giving you a waiver.</strong> The assistance is logistical. It does not erase a prior removal order, does not cancel reentry bars, and grants you no right to return.',
-              '<strong>Identical scams are circulating.</strong> People charge to «enroll you» in official programs that charge nothing, and fake pages copy the official design. Never pay a private individual for a government process.',
+              '<strong>Nobody is giving you a waiver.</strong> The assistance is logistical: it does not erase a prior removal order, does not cancel reentry bars, and grants no right to return.',
+              '<strong>Scams are circulating.</strong> People charge to «enroll you» in official programs that charge nothing, and fake pages copy the official design. Never pay a private individual for a government process.',
             ],
           },
           {
             kind: 'note',
-            text: 'This article was written with the information available as of August 6, 2026, and deliberately describes the program in general terms: amounts, requirements and conditions have changed and can change again without notice. Verify the current status through official sources and with an attorney before acting, not through social media.',
+            text: 'This article was written with the information available as of August 6, 2026, and deliberately describes the program in general terms: amounts, requirements and conditions have changed and can change again without notice. Verify the current status through official sources and with an attorney before acting.',
           },
         ],
       },
@@ -375,11 +375,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Voluntary departure from a judge is not a favor: it requires prior physical presence, good moral character during the required period, the means to pay for your own travel and the absence of certain convictions, and it normally requires a bond. In exchange, you avoid carrying a removal order.',
+            text: 'Voluntary departure from a judge is not a favor: it requires prior physical presence, good moral character, the means to pay for your own travel and the absence of certain convictions, and it normally requires a bond.',
           },
           {
             kind: 'warning',
-            text: 'It carries a trap that destroys cases: if you do not depart within the exact period granted, the grant automatically converts into a removal order, a civil penalty is imposed, and you become ineligible for ten years for several forms of relief, including cancellation of removal and adjustment of status. The deadline does not stretch because the flight was expensive or because a relative got sick.',
+            text: 'It carries a trap that destroys cases: if you do not depart within the exact period granted, the grant automatically converts into a removal order, a civil penalty is imposed, and you become ineligible for ten years for several forms of relief, including cancellation of removal and adjustment of status. The deadline does not stretch for an expensive flight or a family emergency.',
           },
         ],
       },
@@ -403,11 +403,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Time runs from when your authorized stay expired or from when you entered without inspection, with exceptions that matter: periods when the person was a minor and certain periods with bona fide pending applications are not always counted the same way. These are technical calculations made with the file and with verified dates, never from memory.',
+            text: 'Time runs from when your authorized stay expired or from when you entered without inspection, with exceptions that matter: periods when the person was a minor and certain periods with bona fide pending applications are not always counted the same way. These are calculations made with the file and with verified dates, never from memory.',
           },
           {
             kind: 'note',
-            text: 'A ten-year bar does not mean ten years standing in line. It means ten years outside the United States before you can even apply for the visa you cannot apply for today. In that time your citizen child turns eighteen, the house is lost and the business closes. That is the real price behind «I will just go for a while and fix it from there».',
+            text: 'A ten-year bar does not mean ten years standing in line. It means ten years outside the United States before you can even apply for the visa you cannot apply for today. In that time your citizen child turns eighteen and the business closes. That is the real price behind «I will just go for a while and fix it from there».',
           },
         ],
       },
@@ -430,7 +430,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'On top of that, if a removal order already exists against you, departing separately triggers the bars under INA § 212(a)(9)(A), whose length depends on the type of order and whether there was more than one. They stack with the unlawful presence bars; you do not get to choose.',
+            text: 'On top of that, if a removal order already exists against you, departing separately triggers the bars under INA § 212(a)(9)(A), whose length depends on the type of order. They stack with the unlawful presence bars; you do not get to choose.',
           },
         ],
       },
@@ -447,16 +447,16 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             kind: 'list',
             items: [
               '<strong>Pending asylum.</strong> Leaving with an asylum application pending is normally treated as abandonment. The years of waiting already accrued are lost and are not recovered.',
-              '<strong>Cancellation of removal.</strong> It requires continuous physical presence over a long period. Absences break that continuity, and leaving while the case is in court amounts to abandoning the application. It is one of the most valuable forms of relief there is, and it disappears with a single flight.',
+              '<strong>Cancellation of removal.</strong> It requires continuous physical presence over a long period. Absences break that continuity, and leaving while the case is in court amounts to abandoning the application. It disappears with a single flight.',
               '<strong>U petition as a crime victim.</strong> Leaving does not always cancel it, but it changes the path: the process moves to a consulate abroad, takes longer, and adds grounds of inadmissibility that must be waived before you can return.',
               '<strong>VAWA self-petition.</strong> Eligibility and the ability to adjust status inside the country depend on residence and presence requirements. Leaving can dismantle the route you had.',
-              '<strong>TPS or any status requiring travel permission.</strong> Departing without the correct travel authorization can cost you the status you did have.',
+              '<strong>TPS or any status requiring travel permission.</strong> Departing without the correct authorization can cost you the status you did have.',
               '<strong>An approved or pending family petition.</strong> It can be the foundation of a future legal route. Leaving without analyzing how it interacts with the bars can render it useless for a decade.',
             ],
           },
           {
             kind: 'note',
-            text: 'Before deciding anything you have to know with certainty what is open. Many people believe they «have nothing» when in fact they have a petition approved years ago, or a scheduled hearing they never learned about because the notice went to an old address.',
+            text: 'Before deciding anything you have to know with certainty what is open. Many people believe they «have nothing» when in fact they have a petition approved years ago, or a scheduled hearing they never learned about.',
           },
         ],
       },
@@ -467,7 +467,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'The most persuasive argument is this: leave now, of your own accord, and come back the legal way. It sounds reasonable. The problem is that «the legal way» is not a door you walk through when you decide to: it is a system with requirements most people in this situation do not meet.',
+            text: 'The most persuasive argument is this: leave now, of your own accord, and come back the legal way. It sounds reasonable. The problem is that «the legal way» is not a door you walk through when you decide to: it is a system with requirements most people do not meet.',
           },
           {
             kind: 'text',
@@ -479,7 +479,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'warning',
-            text: 'We have seen families sell the car and close the business trusting in a return «in a few months» that nobody promised them in writing. Travel assistance includes no commitment that you will be allowed back and accelerates no process. A future immigration benefit exists only when someone with authority approves it in a specific case.',
+            text: 'We have seen families sell the car and close the business trusting in a return «in a few months» that nobody promised them in writing. Travel assistance includes no commitment that you will be allowed back and accelerates no process.',
           },
         ],
       },
@@ -512,7 +512,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'The provisional waiver covers unlawful presence, not everything else. Criminal history, prior fraud, repeated entries after accruing more than one year of unlawful presence, or earlier removal orders can put you outside this route. That is why the up-front analysis is the whole decision, not paperwork.',
+            text: 'The provisional waiver covers unlawful presence, not everything else. Criminal history, prior fraud, repeated entries after accruing more than one year of unlawful presence, or earlier removal orders can put you outside this route.',
           },
         ],
       },
@@ -528,9 +528,9 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           {
             kind: 'steps',
             items: [
-              '<strong>Request your file through FOIA.</strong> A Freedom of Information Act request to USCIS (Form G-639) gives you what the government has on record about you: prior applications, entries and departures, petitions filed on your behalf. Depending on your history, it is worth requesting from ICE and CBP as well.',
+              '<strong>Request your file through FOIA.</strong> A Freedom of Information Act request to USCIS (Form G-639) gives you what the government has on record about you: prior applications, entries and departures and petitions filed on your behalf. Depending on your history, it is worth requesting from ICE and CBP as well.',
               '<strong>Confirm whether you have an open case in court.</strong> The immigration court case information system lets you verify whether hearings are scheduled or whether an in-absentia order was already entered without your knowledge.',
-              '<strong>Gather your documents.</strong> Passport, entry and exit stamps, birth and marriage certificates, proof of address and of time in the country, your children’s medical and school records, and any paper immigration ever gave you.',
+              '<strong>Gather your documents.</strong> Passport, entry and exit stamps, birth and marriage certificates, proof of address and of time in the country, your children’s school and medical records, and any paper from immigration.',
               '<strong>Talk to an attorney before enrolling in or signing anything.</strong> With the file in hand the conversation stops being an opinion and becomes a calculation: how much unlawful presence accrued, which bars departure would trigger, what is still open, and whether a waiver route exists.',
             ],
           },
@@ -550,7 +550,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       items: [
         {
           q: 'If I leave on my own, do I avoid having a deportation on my record?',
-          a: 'It depends on what you sign. Leaving when there is no case in court does not create a removal order, but it does trigger the unlawful presence bars. If instead you waive your hearing or accept a stipulated order, a formal deportation remains. Before you sign, someone has to read you exactly what document is in front of you.',
+          a: 'It depends on what you sign. Leaving when there is no case in court does not create a removal order, but it does trigger the unlawful presence bars. If you waive your hearing or accept a stipulated order, a formal deportation remains. Before you sign, someone has to read you what the document actually is.',
         },
         {
           q: 'Does the stipend or the ticket assistance give me any right to come back?',
@@ -566,23 +566,23 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'I am afraid of being detained and I do not feel safe staying. What do I do?',
-          a: 'The fear is legitimate and should not be minimized, but deciding under pressure during one bad week usually costs years. There are protective steps you can take without leaving: a family emergency plan, powers of attorney, letters about the care of your children, and knowing what to do if someone knocks. That can be organized in days.',
+          a: 'The fear is legitimate, but deciding under pressure during one bad week usually costs years. There are protective steps you can take without leaving: a family emergency plan, powers of attorney, letters about the care of your children, and knowing what to do if someone knocks.',
         },
         {
           q: 'My wife and children are citizens. Can they petition for me if I leave?',
-          a: 'A citizen relative can file a petition, but the petition alone does not overcome the three- or ten-year bars. If you have already departed with unlawful presence accrued, the consulate will find you inadmissible and an approved waiver will be required. That is why the sequence is analyze and obtain the waiver first, travel afterward.',
+          a: 'A citizen relative can file a petition, but the petition alone does not overcome the three- or ten-year bars. If you have already departed with unlawful presence accrued, the consulate will find you inadmissible and an approved waiver will be required. Analyze and obtain the waiver first, travel afterward.',
         },
       ],
     },
     conclusion: {
       title: 'The most expensive decision is the one made in a hurry',
-      text: 'No one should decide their family’s future on a forwarded message or a thirty-second video. Leaving can be the right way out for some people and the final mistake for others, and the difference almost never lies in willingness to follow the law: it lies in dates, in documents, and in whether an approved waiver exists before the flight. Immigration law does not reward good intentions; it rewards the correct sequence.',
+      text: 'No one should decide their family’s future on a forwarded message or a thirty-second video. Leaving can be the right way out for some people and the final mistake for others, and the difference almost never lies in willingness to follow the law: it lies in dates, in documents, and in whether an approved waiver exists before the flight.',
       advice: 'Before enrolling in any program, signing any document or buying any ticket, request your file and speak with an immigration attorney about your specific case.',
     },
     sources: {
       title: 'Sources and references',
       list: [
-        'Immigration and Nationality Act (INA) § 212(a)(9)(B) — inadmissibility for unlawful presence: the 3-year and 10-year bars',
+        'INA § 212(a)(9)(B) — inadmissibility for unlawful presence: the 3-year and 10-year bars',
         'INA § 212(a)(9)(C) — unlawful presence followed by reentry without admission (permanent bar)',
         'INA § 240B — voluntary departure: requirements, deadlines and consequences of failure to depart',
         'USCIS — Form I-601A (provisional unlawful presence waiver) and Form I-212 (permission to reapply for admission)',

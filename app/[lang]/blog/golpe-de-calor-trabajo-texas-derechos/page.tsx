@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Si el calor te lesionó trabajando en Texas puedes tener un caso, sin importar tu estatus migratorio. Las dos rutas de compensación y qué hacer el mismo día.',
     title: 'Golpe de calor en el trabajo: los derechos de los trabajadores en Texas que nadie les explica',
     displayDate: '06 Ago, 2026',
-    readTime: '9 min',
+    readTime: '10 min',
     categoryLabel: 'Accidentes',
     summary: {
       title: 'Resumen inicial',
@@ -239,7 +239,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'If heat injured you working in Texas you may have a case, regardless of immigration status. The two compensation routes and what to do the same day.',
     title: 'Heat Stroke at Work: The Rights Texas Workers Are Never Told About',
     displayDate: 'Aug 06, 2026',
-    readTime: '9 min',
+    readTime: '10 min',
     categoryLabel: 'Accidents',
     summary: {
       title: 'Initial Summary',

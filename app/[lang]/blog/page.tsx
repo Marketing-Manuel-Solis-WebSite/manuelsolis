@@ -37,7 +37,7 @@ export const BLOG_DATA = {
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '10 min',
+      readTime: '20 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -56,7 +56,7 @@ export const BLOG_DATA = {
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '9 min',
+      readTime: '16 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -75,7 +75,7 @@ export const BLOG_DATA = {
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '12 min',
+      readTime: '21 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -94,7 +94,7 @@ export const BLOG_DATA = {
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '10 min',
+      readTime: '19 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -113,7 +113,7 @@ export const BLOG_DATA = {
       category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '11 min',
+      readTime: '20 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -132,7 +132,7 @@ export const BLOG_DATA = {
       category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '11 min',
+      readTime: '23 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -151,7 +151,7 @@ export const BLOG_DATA = {
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '9 min',
+      readTime: '19 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -170,7 +170,7 @@ export const BLOG_DATA = {
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '10 min',
+      readTime: '20 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -189,7 +189,7 @@ export const BLOG_DATA = {
       category: { es: 'Accidentes', en: 'Accidents' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '11 min',
+      readTime: '21 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -208,7 +208,7 @@ export const BLOG_DATA = {
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '11 min',
+      readTime: '23 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -227,7 +227,7 @@ export const BLOG_DATA = {
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '9 min',
+      readTime: '19 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -246,7 +246,7 @@ export const BLOG_DATA = {
       category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '10 min',
+      readTime: '19 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -265,7 +265,7 @@ export const BLOG_DATA = {
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '10 min',
+      readTime: '21 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -284,7 +284,7 @@ export const BLOG_DATA = {
       category: { es: 'Accidentes', en: 'Accidents' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '10 min',
+      readTime: '22 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -322,7 +322,7 @@ export const BLOG_DATA = {
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
       date: '2026-08-05',
-      readTime: '11 min',
+      readTime: '9 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -341,7 +341,7 @@ export const BLOG_DATA = {
       category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '10 min',
+      readTime: '9 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -360,7 +360,7 @@ export const BLOG_DATA = {
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '10 min',
+      readTime: '9 min',
       image: '/og-default.jpg',
       featured: false
     },
@@ -398,7 +398,7 @@ export const BLOG_DATA = {
       category: { es: 'Accidentes', en: 'Accidents' },
       author: 'Manuel Solís',
       date: '2026-08-06',
-      readTime: '9 min',
+      readTime: '10 min',
       image: '/og-default.jpg',
       featured: false
     },

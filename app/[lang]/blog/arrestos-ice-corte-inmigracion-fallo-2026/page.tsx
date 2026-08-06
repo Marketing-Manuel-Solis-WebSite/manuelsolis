@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Un juez federal anuló la política de arrestos de ICE en cortes de inmigración. Qué cambió, qué no cambió y por qué faltar a tu audiencia sigue siendo lo peor.',
     title: '¿Te pueden arrestar al salir de tu audiencia de inmigración? Lo que cambió con el fallo de junio 2026',
     displayDate: '06 Ago, 2026',
-    readTime: '10 min',
+    readTime: '9 min',
     categoryLabel: 'Defensa contra Deportación',
     lastUpdated: '6 de agosto de 2026',
     summary: {
@@ -222,7 +222,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'A federal judge vacated ICE courthouse arrest policies. What changed, what did not, and why missing your hearing is still the worst possible decision.',
     title: 'Can ICE Arrest You Leaving Your Immigration Hearing? What Changed With the June 2026 Ruling',
     displayDate: 'Aug 06, 2026',
-    readTime: '10 min',
+    readTime: '9 min',
     categoryLabel: 'Deportation Defense',
     lastUpdated: 'August 6, 2026',
     summary: {

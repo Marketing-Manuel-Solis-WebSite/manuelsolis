@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Si el otro conductor no tenía seguro o se dio a la fuga en Texas, su propia póliza UM/UIM puede pagar. Cómo se cobra y qué errores lo arruinan todo.',
     title: 'Me chocó un conductor sin seguro o se dio a la fuga en Texas: cómo cobrar',
     displayDate: '06 Ago, 2026',
-    readTime: '10 min',
+    readTime: '22 min',
     categoryLabel: 'Accidentes',
     summary: {
       title: 'Resumen inicial',
@@ -59,7 +59,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Antes de dar su caso por perdido, alguien tiene que verificar tres cosas: si el otro tenía cobertura y de cuánto, si hay otro responsable además del conductor, y qué coberturas tiene la póliza de usted.',
+            text: 'Antes de dar su caso por perdido, hay que verificar tres cosas: si el otro tenía cobertura y de cuánto, si hay otro responsable además del conductor, y qué coberturas tiene la póliza de usted.',
           },
         ],
       },
@@ -77,15 +77,15 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             items: [
               {
                 title: 'UM — Motorista sin seguro',
-                desc: 'Entra cuando el responsable no tiene póliza o huyó sin ser identificado. Cubre lesiones y, según cómo esté contratada, el vehículo.',
+                desc: 'Entra cuando el responsable no tiene póliza o huyó sin ser identificado. Cubre lesiones y, según el contrato, el vehículo.',
               },
               {
                 title: 'UIM — Seguro insuficiente',
-                desc: 'Cubre la diferencia entre lo que ya se cobró del culpable y el valor real de su caso, hasta su límite. No se suma sin más.',
+                desc: 'Cubre la diferencia entre lo cobrado del culpable y el valor real de su caso, hasta su límite. No se suma sin más.',
               },
               {
                 title: 'PIP — Gastos médicos',
-                desc: 'Paga atención médica y parte de los ingresos perdidos sin discutir culpa. Suele ser el primer dinero que realmente llega.',
+                desc: 'Paga atención médica y parte de los ingresos perdidos sin discutir culpa. Suele ser el primer dinero que llega.',
               },
               {
                 title: 'Colisión y Med Pay',
@@ -144,8 +144,8 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             kind: 'steps',
             items: [
               '<strong>Llame al 911 y quédese en el lugar.</strong> Aunque no sepa quién lo chocó, el reporte fija la hora, el punto exacto y los daños.',
-              '<strong>Anote lo que recuerde del otro vehículo</strong> antes de que se le borre: color, tipo, calcomanías, golpes previos, placa parcial y hacia dónde huyó.',
-              '<strong>Busque testigos de inmediato</strong> y pida nombre y teléfono personal. La gente se va en minutos y nunca vuelve a aparecer.',
+              '<strong>Anote lo que recuerde del otro vehículo</strong>: color, tipo, calcomanías, golpes previos, placa parcial y hacia dónde huyó.',
+              '<strong>Busque testigos de inmediato</strong> y pida nombre y teléfono personal. La gente se va en minutos y no vuelve a aparecer.',
               '<strong>Camine el perímetro buscando cámaras</strong>: gasolineras, tiendas, talleres, restaurantes, casas con timbre inteligente. Anote cada dirección y pida el video el mismo día.',
               '<strong>Fotografíe todo</strong>: su carro desde varios ángulos, los restos en el pavimento, las marcas de frenado y la pintura ajena en su carrocería.',
               '<strong>Atiéndase el mismo día</strong>, aunque se sienta bien. El dolor de cuello y espalda suele aparecer entre 24 y 72 horas después.',
@@ -178,7 +178,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Conviene saber qué es ese documento. El reporte de choque que llena un oficial en Texas registra vehículos, hora, lugar, daños y la versión de cada parte: es un documento de tránsito, no un trámite migratorio. Usted puede pedir intérprete, puede decir que no recuerda algo en vez de inventarlo y puede limitarse a describir lo que pasó. Si el temor es demasiado, hay opciones parciales: que llame otra persona presente o que lo acompañe un familiar. Ninguna sustituye el reporte hecho en el lugar, pero todas son mejores que el silencio.',
+            text: 'Conviene saber qué es ese documento. El reporte de choque que llena un oficial en Texas registra vehículos, hora, lugar, daños y la versión de cada parte: es un documento de tránsito, no un trámite migratorio. Usted puede pedir intérprete, decir que no recuerda algo en vez de inventarlo y limitarse a describir lo que pasó. Si el temor es demasiado, hay opciones parciales: que llame otra persona presente o que lo acompañe un familiar. Ninguna sustituye el reporte hecho en el lugar, pero son mejores que el silencio.',
           },
           {
             kind: 'warning',
@@ -223,10 +223,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           {
             kind: 'list',
             items: [
-              'Si su patrón <strong>sí tiene compensación laboral</strong>, esa cobertura puede pagar atención médica y parte del salario perdido sin discutir culpa, mientras el reclamo contra el otro conductor avanza.',
-              'Si su patrón <strong>no tiene</strong> (non-subscriber), puede ser demandado directamente por negligencia y pierde defensas legales clásicas.',
-              'La <strong>póliza comercial del vehículo</strong> muchas veces trae su propia cobertura UM/UIM, y puede protegerlo a usted como ocupante.',
-              'Sigue existiendo el <strong>reclamo contra terceros</strong>: el conductor que lo chocó o la empresa dueña de su vehículo, aunque su patrón esté asegurado.',
+              'Si su patrón <strong>sí tiene compensación laboral</strong>, puede pagar atención médica y parte del salario perdido sin discutir culpa, mientras el reclamo contra el otro conductor avanza.',
+              'Si su patrón <strong>no tiene</strong> (non-subscriber), puede ser demandado por negligencia y pierde defensas legales clásicas.',
+              'La <strong>póliza comercial del vehículo</strong> muchas veces trae su propia cobertura UM/UIM y puede protegerlo como ocupante.',
+              'Sigue existiendo el <strong>reclamo contra terceros</strong>: el conductor que lo chocó o la empresa dueña de su vehículo.',
             ],
           },
           {
@@ -243,13 +243,12 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           {
             kind: 'list',
             items: [
-              '<strong>Dar declaración grabada</strong> a los dos días, sin abogado y sin saber todavía qué tan lesionado está.',
+              '<strong>Dar declaración grabada</strong> a los dos días, sin abogado y sin saber qué tan lesionado está.',
               '<strong>Firmar el primer cheque</strong> porque hacía falta el dinero. Una liberación cierra el caso para siempre, aunque la cirugía aparezca después.',
-              '<strong>Transar con el conductor culpable</strong> sin el consentimiento previo de su propia aseguradora, y perder el UIM.',
+              '<strong>Transar con el conductor culpable</strong> sin el consentimiento de su propia aseguradora, y perder el UIM.',
               '<strong>Dejar pasar semanas sin atención médica.</strong> Ese vacío es el argumento favorito de cualquier ajustador.',
-              '<strong>Suspender el tratamiento a la mitad</strong> porque ya se sentía algo mejor o porque no tenía cómo pagarlo.',
+              '<strong>Suspender el tratamiento a la mitad</strong> porque ya se sentía mejor o no tenía cómo pagarlo.',
               '<strong>Publicar en redes</strong> fotos de una fiesta o un viaje mientras se reclama por dolor y limitación física.',
-              '<strong>Esperar «a terminar el tratamiento»</strong> para buscar abogado y descubrir tarde que los plazos ya corrieron.',
             ],
           },
           {
@@ -267,11 +266,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             kind: 'list',
             items: [
               '<strong>Gastos médicos pasados y futuros</strong>: ambulancia, emergencias, estudios, terapia y cirugías previsibles.',
-              '<strong>Ingresos perdidos</strong> por los días o meses sin trabajar, incluido el trabajo pagado en efectivo si se puede acreditar.',
-              '<strong>Pérdida de capacidad de ganar</strong> cuando la lesión le impide volver al mismo trabajo físico de antes.',
-              '<strong>Dolor, sufrimiento y afectación física</strong>, incluidas las limitaciones que cambian su vida diaria.',
+              '<strong>Ingresos perdidos</strong> por los días o meses sin trabajar, incluido el trabajo pagado en efectivo que se pueda acreditar.',
+              '<strong>Pérdida de capacidad de ganar</strong> cuando la lesión le impide volver al mismo trabajo físico.',
+              '<strong>Dolor, sufrimiento y afectación física</strong>, incluidas limitaciones que cambian su vida diaria.',
               '<strong>Daños al vehículo</strong>, pérdida total, grúa y transporte mientras no tuvo carro.',
-              '<strong>Angustia mental</strong> documentada, en los casos en que corresponde.',
             ],
           },
           {
@@ -286,43 +284,43 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       items: [
         {
           q: 'Nunca se supo quién me chocó. ¿De verdad me puede pagar mi propio seguro?',
-          a: 'Sí, para eso existe la cobertura de motorista sin seguro (UM): un choque con fuga suele tratarse como si el responsable no tuviera póliza. Los requisitos importan mucho, porque normalmente se exige que haya habido contacto físico entre los vehículos y que el hecho se haya reportado pronto a la policía.',
+          a: 'Sí, para eso existe la cobertura de motorista sin seguro (UM): un choque con fuga suele tratarse como si el responsable no tuviera póliza. Los requisitos importan, porque normalmente se exige que haya habido contacto físico entre los vehículos y que el hecho se haya reportado pronto a la policía.',
         },
         {
           q: 'Si reclamo con mi propia aseguradora, ¿me van a subir la prima?',
-          a: 'Usar una cobertura que usted compró y pagó es el propósito de esa cobertura, y un reclamo UM/UIM por un choque que no fue culpa suya no equivale a un siniestro propio. Si su compañía reacciona con una cancelación o un aumento que parezca represalia, dígaselo a su abogado.',
+          a: 'Usar una cobertura que usted compró y pagó es el propósito de esa cobertura, y un reclamo UM/UIM por un choque que no fue culpa suya no equivale a un siniestro propio. Si su compañía reacciona con un aumento que parezca represalia, dígaselo a su abogado.',
         },
         {
           q: 'Soy indocumentado y no tengo licencia de Texas. ¿Puedo reclamar?',
-          a: 'Sí. Su estatus migratorio no le quita el derecho a que le paguen las lesiones y los daños que otro le causó, y no tener licencia no convierte el choque en culpa suya. Lo que sí necesita, como cualquiera, es prueba: reporte, expediente médico, fotos y testigos.',
+          a: 'Sí. Su estatus migratorio no le quita el derecho a que le paguen las lesiones y los daños que otro le causó, y no tener licencia no convierte el choque en culpa suya. Lo que sí necesita, como cualquiera, es prueba.',
         },
         {
           q: 'La aseguradora del otro me ofreció un cheque rápido. ¿Lo acepto?',
-          a: 'Antes de firmar, entienda que ese cheque casi siempre viene con una liberación que cierra su caso para siempre. Si semanas después necesita una resonancia o una cirugía, ya no hay a quién reclamarle. Y transar sin el consentimiento de su propia aseguradora puede eliminar su cobertura UIM.',
+          a: 'Antes de firmar, entienda que ese cheque casi siempre viene con una liberación que cierra su caso para siempre. Si semanas después necesita una cirugía, ya no hay a quién reclamarle. Y transar sin el consentimiento de su propia aseguradora puede eliminar el UIM.',
         },
         {
           q: 'Yo iba de pasajero en el carro de un amigo. ¿Qué cobertura me toca?',
-          a: 'Puede tener varias. Suele aplicar la póliza del vehículo en el que iba, con su UM/UIM y su PIP, y en muchos casos también la póliza propia del pasajero. Determinar qué pólizas se apilan y en qué orden es justo el tipo de análisis que conviene no hacer solo.',
+          a: 'Puede tener varias. Suele aplicar la póliza del vehículo en el que iba, con su UM/UIM y su PIP, y en muchos casos también la póliza propia del pasajero. Determinar qué pólizas se apilan es justo el análisis que conviene no hacer solo.',
         },
         {
           q: '¿Cuánto tiempo tengo para actuar en Texas?',
-          a: 'El plazo general para demandar por lesiones personales es de dos años desde la fecha del choque, pero su póliza puede exigirle avisos y trámites mucho antes. Y la evidencia que decide estos casos se pierde en semanas, no en años.',
+          a: 'El plazo general para demandar por lesiones personales es de dos años desde la fecha del choque, pero su póliza puede exigirle avisos mucho antes. Y la evidencia que decide estos casos se pierde en semanas, no en años.',
         },
       ],
     },
     conclusion: {
       title: 'Que el otro no tenga nada no significa que usted no tenga nada',
-      text: 'La frase que más repiten las víctimas de estos choques es «no se puede hacer nada», y casi siempre está equivocada. Hay coberturas que ya se pagaron, pólizas comerciales detrás de vehículos que parecían particulares, videos que todavía existen y plazos que todavía no se vencen. Lo único que sí se pierde con seguridad es lo que nadie reclama.',
-      advice: 'Si lo chocó alguien sin seguro o que se dio a la fuga, la evaluación de su caso es gratuita y no cobramos honorarios si no se recupera nada. Traiga su póliza, el reporte si lo tiene y las fotos de su teléfono.',
+      text: 'La frase que más repiten las víctimas de estos choques es «no se puede hacer nada», y casi siempre está equivocada. Hay coberturas ya pagadas, pólizas comerciales detrás de vehículos que parecían particulares, videos que todavía existen y plazos que todavía no se vencen. Lo único que sí se pierde con seguridad es lo que nadie reclama.',
+      advice: 'Si lo chocó alguien sin seguro o que se dio a la fuga, la evaluación de su caso es gratuita y no cobramos honorarios si no se recupera nada. Traiga su póliza, el reporte y las fotos de su teléfono.',
     },
     sources: {
       title: 'Fuentes y referencias',
       list: [
-        'Texas Insurance Code — cobertura de motorista sin seguro y con seguro insuficiente (UM/UIM) y requisito de rechazo por escrito',
-        'Texas Insurance Code — cobertura de protección contra lesiones personales (PIP) y su ofrecimiento obligatorio',
-        'Texas Transportation Code — deberes del conductor tras un choque y reporte de accidente de tránsito (CR-3)',
-        'Texas Civil Practice and Remedies Code — plazo de prescripción de dos años y responsabilidad proporcional',
-        'Texas Department of Insurance — guía del consumidor sobre coberturas del seguro de auto',
+        'Texas Insurance Code — cobertura UM/UIM y requisito de rechazo por escrito',
+        'Texas Insurance Code — cobertura PIP y su ofrecimiento obligatorio',
+        'Texas Transportation Code — deberes tras un choque y reporte de accidente (CR-3)',
+        'Texas Civil Practice and Remedies Code — prescripción de dos años y responsabilidad proporcional',
+        'Texas Department of Insurance — guía del consumidor sobre el seguro de auto',
       ],
     },
     ui: ARTICLE_UI.es,
@@ -333,16 +331,16 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'If the other driver had no insurance or fled the scene in Texas, your own UM/UIM coverage may pay. How to recover and the mistakes that kill these claims.',
     title: 'Hit by an Uninsured or Hit-and-Run Driver in Texas: How to Recover',
     displayDate: 'Aug 06, 2026',
-    readTime: '10 min',
+    readTime: '22 min',
     categoryLabel: 'Accidents',
     summary: {
       title: 'Initial Summary',
-      text: 'There is a crash worse than the crash: the one where the driver at fault takes off, or stays but has nothing to pay with. In Texas that happens every day, and the natural reaction — «then there is nothing I can do» — is almost always wrong. In most of these cases <strong>the one who pays is your own policy</strong>, through coverages you may already have without knowing it: uninsured and underinsured motorist coverage (UM/UIM) and personal injury protection (PIP). The problem is that your insurer then stops selling you peace of mind and becomes the opposing party. Here is how that claim works, what to do in the first 48 hours after a hit-and-run, and why reporting protects you even if you are undocumented.',
+      text: 'There is a crash worse than the crash: the one where the driver at fault takes off, or stays but has nothing to pay with. In Texas that happens every day, and the natural reaction — «then there is nothing I can do» — is almost always wrong. In most of these cases <strong>the one who pays is your own policy</strong>, through coverages you may already have without knowing it: uninsured and underinsured motorist coverage (UM/UIM) and personal injury protection (PIP). The problem is that your insurer then becomes the opposing party. Here is how that claim works, what to do in the first 48 hours after a hit-and-run, and why reporting protects you even if you are undocumented.',
     },
     intro: [
       'Texas has one of the highest shares in the country of drivers on the road without insurance, and crashes where the driver at fault flees the scene are rising in Houston and Dallas. If one of those happened to you, you are not in an unusual situation: you are in one of the most common ones in the state.',
-      'The most common reaction is to give up. If the other driver had no insurance, or nobody ever found out who it was, people assume there is no one to claim against. That belief is why thousands of people pay out of pocket for medical bills, weeks out of work, and repairs to a car they did not wreck.',
-      'The legal reality is different: Texas has a system built for exactly this scenario, and it runs through your own policy. Here you will see which coverages protect you, how the claim is built, what to do when the driver flees, and why the fear of calling the police usually finishes off the case.',
+      'The most common reaction is to give up: if the other driver had no insurance, or nobody ever found out who it was, people assume there is no one to claim against. That belief is why thousands of people pay out of pocket for medical bills, weeks out of work, and repairs to a car they did not wreck.',
+      'The legal reality is different: Texas has a system built for this scenario, and it runs through your own policy. Here you will see which coverages protect you, how the claim is built, what to do when the driver flees, and why the fear of calling the police usually finishes off the case.',
     ],
     sections: [
       {
@@ -352,7 +350,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Driving uninsured is illegal in Texas, but illegal does not mean rare. And there is a second problem almost nobody sees coming: the minimum liability limits state law requires are low compared with the real cost of an ambulance, an emergency room and a few weeks out of work. Alongside the driver with absolutely nothing sits an equally common and more deceptive category.',
+            text: 'Driving uninsured is illegal in Texas, but illegal does not mean rare. And there is a second problem: the minimum liability limits state law requires are low compared with the real cost of an ambulance, an emergency room and a few weeks out of work. Alongside the driver with nothing sits an equally common and more deceptive category.',
           },
           {
             kind: 'cards',
@@ -377,7 +375,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Before you write your case off, somebody has to verify three things: whether the other driver had coverage and how much, whether anyone besides the driver is responsible, and what coverages your own policy carries.',
+            text: 'Before you write your case off, three things have to be verified: whether the other driver had coverage and how much, whether anyone besides the driver is responsible, and what coverages your own policy carries.',
           },
         ],
       },
@@ -388,14 +386,14 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'In Texas, insurers are required to <strong>offer</strong> you uninsured and underinsured motorist coverage (UM/UIM) and personal injury protection (PIP). You may reject them, but the rejection has to be <strong>in writing</strong>. That detail is enormous: if no signed rejection appears in your file, there is a strong argument that the coverage should be treated as included even if the company says you never bought it.',
+            text: 'In Texas, insurers are required to <strong>offer</strong> you uninsured and underinsured motorist coverage (UM/UIM) and personal injury protection (PIP). You may reject them, but the rejection has to be <strong>in writing</strong>. That detail is enormous: if no signed rejection appears in your file, there is a strong argument that the coverage should be treated as included.',
           },
           {
             kind: 'cards',
             items: [
               {
                 title: 'UM — Uninsured motorist',
-                desc: 'Applies when the at-fault driver has no policy or fled without being identified. Covers injuries and, depending on the policy, your vehicle.',
+                desc: 'Applies when the at-fault driver has no policy or fled unidentified. Covers injuries and, depending on the policy, your vehicle.',
               },
               {
                 title: 'UIM — Underinsured motorist',
@@ -403,7 +401,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               },
               {
                 title: 'PIP — Medical protection',
-                desc: 'Pays medical care and part of lost income without arguing fault. It is usually the first money that actually arrives.',
+                desc: 'Pays medical care and part of lost income without arguing fault. It is usually the first money that arrives.',
               },
               {
                 title: 'Collision and Med Pay',
@@ -413,11 +411,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'In a hit-and-run, UM coverage is the centerpiece, but one requirement catches people off guard: when the vehicle is never identified, the policy normally requires that there was <strong>actual physical contact</strong> between the cars. If another driver ran you off the road without touching you, the claim is not impossible, but it becomes far more demanding in witnesses and video.',
+            text: 'In a hit-and-run, UM coverage is the centerpiece, but one requirement catches people off guard: when the vehicle is never identified, the policy normally requires <strong>actual physical contact</strong> between the cars. If another driver ran you off the road without touching you, the claim is not impossible, but it becomes far more demanding in witnesses and video.',
           },
           {
             kind: 'note',
-            text: 'Ask your agent today for the <strong>declarations page</strong> of your policy and, if they say you have no UM/UIM or PIP, ask for a copy of the signed rejection. Those two documents are the first evidence in your case.',
+            text: 'Ask your agent today for the <strong>declarations page</strong> of your policy and, if they say you have no UM/UIM or PIP, ask for a copy of the signed rejection. Those documents are the first evidence in your case.',
           },
         ],
       },
@@ -428,7 +426,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'A UM/UIM claim is a first-party claim: you are asking for money from the company you have been paying for years. Many people treat it as a formality between acquaintances, and it is not. Every dollar they pay comes out of their pocket, and the adjuster handling you works for them.',
+            text: 'A UM/UIM claim is a first-party claim: you are asking for money from the company you have been paying for years. Many people treat it as a formality between acquaintances, and it is not. Every dollar comes out of their pocket, and the adjuster works for them.',
           },
           {
             kind: 'list',
@@ -436,17 +434,16 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               'They ask for a <strong>recorded statement</strong> very early, when you still do not know how badly you are hurt, and later use your words against you.',
               'They have you sign a <strong>broad medical authorization</strong> to hunt for any old pain and blame your current injury on that.',
               'They argue <strong>shared fault</strong>. In Texas, if they pin more than half the blame on you, you recover nothing.',
-              'They offer a <strong>quick number</strong> while you are out of work with bills piling up, because financial pressure makes people sign.',
               'They tell you to <strong>exhaust the at-fault policy first</strong>, without warning you that settling without permission can wipe out your UIM coverage.',
             ],
           },
           {
             kind: 'text',
-            text: 'One technical point explains a lot of frustration: in Texas an insurer generally <strong>is not obligated to pay UIM benefits</strong> until the other driver’s liability and the amount of your damages are legally established. Sometimes you have to sue your own company just to fix that number. It is not personal hostility: it is how the system is built.',
+            text: 'One technical point explains a lot of frustration: in Texas an insurer generally <strong>is not obligated to pay UIM benefits</strong> until the other driver’s liability and the amount of your damages are legally established. Sometimes you have to sue your own company just to fix that number.',
           },
           {
             kind: 'warning',
-            text: 'Do not give a recorded statement to any insurer — including your own — before speaking with an attorney, and do not sign any release with the at-fault driver without your own company’s <strong>prior consent</strong>. Signing first and asking later is the quietest way to lose the UIM coverage you already paid for.',
+            text: 'Do not give a recorded statement to any insurer — including your own — before speaking with an attorney, and do not sign any release with the at-fault driver without your own company’s <strong>prior consent</strong>. Signing first and asking later is the quietest way to lose the UIM you already paid for.',
           },
         ],
       },
@@ -463,10 +460,9 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             kind: 'steps',
             items: [
               '<strong>Call 911 and stay at the scene.</strong> Even if you have no idea who hit you, the report fixes the time, the exact spot and the damage.',
-              '<strong>Write down what you remember about the other vehicle</strong> before it fades: color, type, decals, prior dents, partial plate and which way it fled.',
-              '<strong>Find witnesses immediately</strong> and get names and personal phone numbers. People leave within minutes and never surface again.',
-              '<strong>Walk the perimeter looking for cameras</strong>: gas stations, stores, repair shops, restaurants, homes with video doorbells. Note every address.',
-              '<strong>Request that footage the same day</strong>, in writing if you can. Many systems overwrite themselves within days.',
+              '<strong>Write down what you remember about the other vehicle</strong>: color, type, decals, prior dents, partial plate and which way it fled.',
+              '<strong>Find witnesses immediately</strong> and get names and personal phone numbers. People leave within minutes and do not surface again.',
+              '<strong>Walk the perimeter looking for cameras</strong>: gas stations, stores, repair shops, restaurants, homes with video doorbells. Note every address and request the footage the same day.',
               '<strong>Photograph everything</strong>: your car from several angles, debris on the pavement, skid marks and foreign paint on your body panels.',
               '<strong>Get medical care the same day</strong>, even if you feel fine. Neck and back pain often shows up 24 to 72 hours later.',
               '<strong>Notify your own insurer</strong> of the hit-and-run, without giving a recorded statement, and save the claim number.',
@@ -474,7 +470,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Video from nearby businesses has resolved more hit-and-run cases than anything else, and it is what disappears fastest. An attorney can demand in writing that it be preserved, but the letter only works if it arrives before the system records over it.',
+            text: 'Video from nearby businesses has resolved more hit-and-run cases than anything else, and it is what disappears fastest. An attorney can demand in writing that it be preserved, but only if the letter arrives before the system records over it.',
           },
         ],
       },
@@ -485,7 +481,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Let us talk about this directly, because it is the number one reason good cases are lost before they ever reach a firm. After a crash, many undocumented people decide not to call the police and go home hurting, with no report and no witnesses. We are not going to tell you that any interaction with an authority carries zero risk, because that would be a lie. What we can tell you is what you lose when you do not report, and that part is measurable:',
+            text: 'Let us talk about this directly, because it is the number one reason good cases are lost before they ever reach a firm. After a crash, many undocumented people decide not to call the police and go home hurting, with no report and no witnesses. We are not going to tell you that any interaction with an authority carries zero risk, because that would be a lie. What we can tell you is what you lose by not reporting:',
           },
           {
             kind: 'list',
@@ -498,11 +494,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'It helps to know what that document is. The crash report an officer fills out in Texas records vehicles, time, location, damage and each side’s account: it is a traffic document, not an immigration proceeding. You can ask for an interpreter, you can say you do not remember something instead of making it up, and you can stick to describing what happened. If the fear is too much, there are partial options: have another person present make the call, bring a family member, or report shortly afterward at a station. None replaces a report made at the scene, but all of them beat silence.',
+            text: 'It helps to know what that document is. The crash report an officer fills out in Texas records vehicles, time, location, damage and each side’s account: it is a traffic document, not an immigration proceeding. You can ask for an interpreter, say you do not remember something instead of making it up, and stick to describing what happened. If the fear is too much, there are partial options: have another person present make the call, or bring a family member. None replaces a report made at the scene, but they beat silence.',
           },
           {
             kind: 'warning',
-            text: 'The most expensive mistake is not talking to the police: it is leaving the scene with nothing. A crash with no report, no photos and no witnesses almost always ends in a denial that can no longer be fought, no matter how right you were.',
+            text: 'The most expensive mistake is not talking to the police: it is leaving the scene with nothing. A crash with no report, no photos and no witnesses almost always ends in a denial that can no longer be fought.',
           },
         ],
       },
@@ -513,7 +509,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'When the driver at fault is identified and turns out to have had no insurance, the instinct is to sue that person. Sometimes it makes sense, and sometimes it means paying for a piece of paper that never becomes a check. The question is not whether you are right, but whether the other side has anything to pay with and whether someone else is legally responsible.',
+            text: 'When the driver at fault is identified and turns out to have had no insurance, the instinct is to sue that person. Sometimes it makes sense, and sometimes it means paying for a piece of paper that never becomes a check. The question is not whether you are right, but whether the other side has anything to pay with.',
           },
           {
             kind: 'table',
@@ -527,7 +523,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'The last row saves more cases than any other. If the driver was in a company truck, making deliveries or running a work errand, there may be a commercial policy behind them even though they personally own nothing. Finding out who the registered owner of the vehicle is ranks among the first serious steps.',
+            text: 'The last row saves more cases than any other. If the driver was in a company truck, making deliveries or running a work errand, there may be a commercial policy behind them even though they own nothing. Finding out who the registered owner of the vehicle is ranks among the first serious steps.',
           },
         ],
       },
@@ -538,20 +534,20 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'If the crash happened while you were doing something for work — driving a company unit, making deliveries, moving between jobsites — then on top of the crash claim there may be a work-injury route. In Texas, workers’ compensation insurance is optional for most private employers, so the first thing to find out is whether yours carries it.',
+            text: 'If the crash happened while you were doing something for work — driving a company unit, making deliveries, moving between jobsites — then on top of the crash claim there may be a work-injury route. In Texas, workers’ compensation is optional for most private employers, so the first thing to find out is whether yours carries it.',
           },
           {
             kind: 'list',
             items: [
               'If your employer <strong>does have workers’ compensation</strong>, it can pay medical care and part of your lost wages without arguing fault, while the claim against the other driver moves forward.',
-              'If your employer <strong>does not</strong> (a non-subscriber), they can be sued directly for negligence and lose classic legal defenses.',
+              'If your employer <strong>does not</strong> (a non-subscriber), they can be sued for negligence and lose classic legal defenses.',
               'The <strong>commercial policy on the company vehicle</strong> often carries its own UM/UIM coverage, which can protect you as an occupant.',
-              'The <strong>third-party claim</strong> still exists: the driver who hit you or the company that owns their vehicle, even if your employer is insured.',
+              'The <strong>third-party claim</strong> still exists: the driver who hit you or the company that owns their vehicle.',
             ],
           },
           {
             kind: 'note',
-            text: 'Watch a detail that surprises people at the end: if workers’ compensation paid your medical bills, it generally has a right to recover part of whatever you later collect from the party responsible for the crash. That reimbursement is negotiated, and negotiating it well changes how much you keep.',
+            text: 'Watch a detail that surprises people at the end: if workers’ compensation paid your medical bills, it generally has a right to recover part of whatever you collect from the party responsible for the crash. That reimbursement is negotiated, and negotiating it well changes how much you keep.',
           },
         ],
       },
@@ -563,13 +559,12 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           {
             kind: 'list',
             items: [
-              '<strong>Giving a recorded statement</strong> two days in, with no attorney and no idea yet how badly injured you are.',
+              '<strong>Giving a recorded statement</strong> two days in, with no attorney and no idea how badly injured you are.',
               '<strong>Cashing the first check</strong> because the money was needed. A release closes the case forever, even if surgery shows up later.',
-              '<strong>Settling with the at-fault driver</strong> without your own insurer’s prior consent, and losing UIM coverage.',
+              '<strong>Settling with the at-fault driver</strong> without your own insurer’s consent, and losing UIM coverage.',
               '<strong>Letting weeks pass with no medical care.</strong> That gap is every adjuster’s favorite argument.',
-              '<strong>Stopping treatment halfway</strong> because you felt somewhat better or could not pay for it.',
+              '<strong>Stopping treatment halfway</strong> because you felt better or could not pay for it.',
               '<strong>Posting on social media</strong> photos of a party or a trip while claiming pain and physical limitation.',
-              '<strong>Waiting «until treatment is done»</strong> to find an attorney, and learning too late that the deadlines already ran.',
             ],
           },
           {
@@ -587,11 +582,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             kind: 'list',
             items: [
               '<strong>Past and future medical expenses</strong>: ambulance, emergency room, imaging, therapy and foreseeable surgeries.',
-              '<strong>Lost income</strong> for the days or months you could not work, including cash-paid work when it can be documented.',
-              '<strong>Loss of earning capacity</strong> when the injury keeps you from the same physical work you did before.',
+              '<strong>Lost income</strong> for the days or months you could not work, including cash-paid work that can be documented.',
+              '<strong>Loss of earning capacity</strong> when the injury keeps you from the same physical work.',
               '<strong>Pain, suffering and physical impairment</strong>, including limitations that change your daily life.',
               '<strong>Vehicle damage</strong>, total loss, towing and transportation while you had no car.',
-              '<strong>Documented mental anguish</strong>, in the cases where it applies.',
             ],
           },
           {
@@ -606,43 +600,43 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       items: [
         {
           q: 'Nobody ever found out who hit me. Can my own insurance really pay?',
-          a: 'Yes, that is what uninsured motorist (UM) coverage is for: a hit-and-run is generally treated as if the at-fault driver had no policy. The requirements matter a great deal, because there normally must have been physical contact between the vehicles and the incident must have been reported to police promptly.',
+          a: 'Yes, that is what uninsured motorist (UM) coverage is for: a hit-and-run is generally treated as if the at-fault driver had no policy. The requirements matter, because there normally must have been physical contact between the vehicles and the incident must have been reported to police promptly.',
         },
         {
           q: 'If I claim against my own insurer, will my premium go up?',
-          a: 'Using coverage you bought and paid for is the entire point of that coverage, and a UM/UIM claim for a crash that was not your fault is not the same as an at-fault loss. If your company responds with a cancellation or an increase that looks like retaliation, tell your attorney.',
+          a: 'Using coverage you bought and paid for is the entire point of that coverage, and a UM/UIM claim for a crash that was not your fault is not the same as an at-fault loss. If your company responds with an increase that looks like retaliation, tell your attorney.',
         },
         {
           q: 'I am undocumented and have no Texas license. Can I still claim?',
-          a: 'Yes. Your immigration status does not take away your right to be paid for injuries and damage someone else caused, and not having a license does not make the crash your fault. What you do need, like anyone else, is proof: a report, medical records, photos and witnesses.',
+          a: 'Yes. Your immigration status does not take away your right to be paid for injuries and damage someone else caused, and not having a license does not make the crash your fault. What you do need, like anyone else, is proof.',
         },
         {
           q: 'The other driver’s insurer offered me a quick check. Should I take it?',
-          a: 'Before signing, understand that the check almost always comes with a release that closes your case forever. If weeks later you need an MRI or surgery, there is no one left to ask. And settling without your own insurer’s consent can wipe out your UIM coverage.',
+          a: 'Before signing, understand that the check almost always comes with a release that closes your case forever. If weeks later you need surgery, there is no one left to ask. And settling without your own insurer’s consent can wipe out the UIM.',
         },
         {
           q: 'I was a passenger in a friend’s car. Which coverage applies to me?',
-          a: 'Possibly several. The policy on the vehicle you were riding in often applies, with its UM/UIM and PIP, and in many cases the passenger’s own policy does too. Working out which policies stack and in what order is exactly the analysis you should not attempt alone.',
+          a: 'Possibly several. The policy on the vehicle you were riding in often applies, with its UM/UIM and PIP, and in many cases the passenger’s own policy does too. Working out which policies stack is exactly the analysis you should not attempt alone.',
         },
         {
           q: 'How long do I have to act in Texas?',
-          a: 'The general deadline to sue for personal injury is two years from the date of the crash, but your policy can require notices and steps far sooner. And the evidence that decides these cases is lost in weeks, not years.',
+          a: 'The general deadline to sue for personal injury is two years from the date of the crash, but your policy can require notices far sooner. And the evidence that decides these cases is lost in weeks, not years.',
         },
       ],
     },
     conclusion: {
       title: 'The other driver having nothing does not mean you have nothing',
       text: 'The phrase victims of these crashes repeat most is «there is nothing to be done», and it is almost always wrong. There are coverages already paid for, commercial policies behind vehicles that looked personal, video that still exists and deadlines that have not yet run. The only thing certainly lost is whatever nobody claims.',
-      advice: 'If an uninsured or hit-and-run driver hit you, the evaluation of your case is free and we charge no fees unless there is a recovery. Bring your policy, the report if you have it, and the photos on your phone.',
+      advice: 'If an uninsured or hit-and-run driver hit you, the evaluation of your case is free and we charge no fees unless there is a recovery. Bring your policy, the report and the photos on your phone.',
     },
     sources: {
       title: 'Sources and references',
       list: [
-        'Texas Insurance Code — uninsured and underinsured motorist coverage (UM/UIM) and the written rejection requirement',
-        'Texas Insurance Code — personal injury protection (PIP) coverage and the mandatory offer',
-        'Texas Transportation Code — driver duties after a crash and the traffic crash report (CR-3)',
-        'Texas Civil Practice and Remedies Code — two-year statute of limitations and proportionate responsibility',
-        'Texas Department of Insurance — consumer guide to auto insurance coverages',
+        'Texas Insurance Code — UM/UIM coverage and the written rejection requirement',
+        'Texas Insurance Code — personal injury protection (PIP) and the mandatory offer',
+        'Texas Transportation Code — driver duties after a crash and the crash report (CR-3)',
+        'Texas Civil Practice and Remedies Code — two-year limitations and proportionate responsibility',
+        'Texas Department of Insurance — consumer guide to auto insurance coverage',
       ],
     },
     ui: ARTICLE_UI.en,

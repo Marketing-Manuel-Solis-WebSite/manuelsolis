@@ -15,17 +15,17 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Desde finales de 2025 rige el examen cívico con banco de 128 preguntas y USCIS revisa el buen carácter moral con más dureza. Qué sigue vigente en 2026.',
     title: 'Ciudadanía en 2026: el examen más largo y la revisión más estricta',
     displayDate: '06 Ago, 2026',
-    readTime: '10 min',
+    readTime: '19 min',
     categoryLabel: 'Procesos Migratorios',
     lastUpdated: '6 de agosto de 2026',
     summary: {
       title: 'Resumen inicial',
-      text: 'Presentar el N-400 en 2026 no se parece a presentarlo hace tres años. Desde finales de 2025 se aplica la <strong>versión 2025 del examen cívico</strong>, con un banco de <strong>128 preguntas</strong> y más aciertos exigidos para aprobar, y USCIS endureció la forma de evaluar el <strong>buen carácter moral</strong>: ya no basta con no tener delitos, porque el oficial pesa el expediente completo. Parte de esa guía interna fue <strong>anulada por una corte federal el 5 de junio de 2026</strong>, así que hoy conviven una ley que no cambió y unas instrucciones administrativas en movimiento. Aquí le explicamos qué examen le toca según su fecha de solicitud, qué mira de verdad un oficial, qué sigue aplicando después del fallo y cuándo conviene esperar en lugar de aplicar.',
+      text: 'Presentar el N-400 en 2026 no se parece a presentarlo hace tres años. Desde finales de 2025 se aplica la <strong>versión 2025 del examen cívico</strong>, con un banco de <strong>128 preguntas</strong> y más aciertos exigidos para aprobar, y USCIS endureció la forma de evaluar el <strong>buen carácter moral</strong>: ya no basta con no tener delitos, porque el oficial pesa el expediente completo. Parte de esa guía interna fue <strong>anulada por una corte federal el 5 de junio de 2026</strong>, así que hoy conviven una ley que no cambió y unas instrucciones administrativas en movimiento. Aquí le explicamos qué examen le toca, qué mira de verdad un oficial, qué sigue aplicando después del fallo y cuándo conviene esperar.',
     },
     intro: [
       'Durante años, la naturalización se vivió como el trámite tranquilo al final del camino: usted ya era residente, ya había pasado lo difícil, y el N-400 era casi una formalidad con examen de historia. Esa idea ya no describe la realidad de 2026.',
       'Cambiaron dos cosas a la vez y conviene no confundirlas. La primera es el <strong>examen</strong>: desde finales de 2025 se aplica la versión 2025 del examen de civismo, con un banco de preguntas más grande y un umbral de aprobación más alto. La segunda, la que más casos está costando, es la <strong>revisión del buen carácter moral</strong>: USCIS instruyó a sus oficiales a hacer una evaluación holística, es decir, a mirar la conducta completa del solicitante y no solo si aparece una condena en el sistema.',
-      'Hay un tercer elemento que obliga a desconfiar de casi todo lo que encuentre en internet sobre este tema: <strong>parte de esos memorandos fue anulada por una corte federal el 5 de junio de 2026</strong>. La ley no cambió, pero la guía interna sí se movió y puede seguir moviéndose. Este artículo separa lo estable de lo que está en disputa.',
+      'Hay un tercer elemento que obliga a desconfiar de lo que encuentre en internet: <strong>parte de esos memorandos fue anulada por una corte federal el 5 de junio de 2026</strong>. La ley no cambió, pero la guía interna sí se movió y puede seguir moviéndose. Este artículo separa lo estable de lo que está en disputa.',
     ],
     sections: [
       {
@@ -35,7 +35,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'La primera pregunta no es qué estudiar, sino <strong>cuál examen le corresponde</strong>. USCIS no cambia de versión para todos el mismo día: lo que manda es la fecha en que su N-400 quedó presentado. Desde finales de 2025, las solicitudes nuevas se examinan con la versión 2025; las anteriores siguen bajo la versión previa, aunque la entrevista sea ya entrado 2026.',
+            text: 'La primera pregunta no es qué estudiar, sino <strong>cuál examen le corresponde</strong>. Lo que manda es la fecha en que su N-400 quedó presentado: desde finales de 2025 las solicitudes nuevas se examinan con la versión 2025, y las anteriores siguen bajo la versión previa, aunque la entrevista sea ya entrado 2026.',
           },
           {
             kind: 'list',
@@ -48,11 +48,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'El documento que resuelve la duda ya lo tiene usted: el <strong>aviso de recibo</strong> de USCIS trae la fecha de recepción, y esa fecha determina la versión del examen y el periodo de buen carácter moral que se le revisará. Guárdelo y llévelo a su consulta.',
+            text: 'El documento que resuelve la duda ya lo tiene usted: el <strong>aviso de recibo</strong> de USCIS trae la fecha de recepción, y esa fecha determina la versión del examen y el periodo de buen carácter moral que se le revisará.',
           },
           {
             kind: 'note',
-            text: 'Antes de comprar materiales o pagar clases, confirme qué versión le toca. Estudiar el banco equivocado es un error caro y evitable: son exámenes distintos, no una versión ampliada del mismo.',
+            text: 'Antes de comprar materiales o pagar clases, confirme qué versión le toca: estudiar el banco equivocado es un error caro y perfectamente evitable.',
           },
         ],
       },
@@ -78,11 +78,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'El examen de inglés no desapareció: se le pide <strong>leer una oración en voz alta</strong> y <strong>escribir otra al dictado</strong>, y la parte hablada se evalúa durante toda la entrevista, mientras el oficial repasa su formulario con usted. Por eso quien memorizó las 128 respuestas pero no entiende las preguntas del N-400 puede tener problemas.',
+            text: 'El examen de inglés no desapareció: se le pide <strong>leer una oración en voz alta</strong> y <strong>escribir otra al dictado</strong>, y la parte hablada se evalúa durante toda la entrevista. Por eso quien memorizó las 128 respuestas pero no entiende las preguntas del N-400 puede tener problemas.',
           },
           {
             kind: 'note',
-            text: 'El formato del examen y sus materiales pueden ajustarse de un año a otro. Antes de organizar su preparación, verifique con USCIS o con su abogado qué versión y qué materiales están vigentes en la fecha de su caso.',
+            text: 'El formato del examen y sus materiales pueden ajustarse de un año a otro. Verifique con USCIS o con su abogado qué versión y qué materiales están vigentes en la fecha de su caso.',
           },
         ],
       },
@@ -93,7 +93,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'La ley exige <strong>buen carácter moral</strong> durante todo el periodo estatutario: por regla general los <strong>cinco años</strong> anteriores a la solicitud, o <strong>tres</strong> si aplica como cónyuge de un ciudadano estadounidense y cumple los demás requisitos. La sección 101(f) de la Ley de Inmigración y Nacionalidad enumera conductas que impiden encontrar buen carácter moral, y esa lista no es exhaustiva.',
+            text: 'La ley exige <strong>buen carácter moral</strong> durante todo el periodo estatutario: por regla general los <strong>cinco años</strong> anteriores a la solicitud, o <strong>tres</strong> si aplica como cónyuge de un ciudadano y cumple los demás requisitos. La sección 101(f) de la Ley de Inmigración y Nacionalidad enumera conductas que lo impiden, y esa lista no es exhaustiva.',
           },
           {
             kind: 'cards',
@@ -104,7 +104,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               },
               {
                 title: 'Impedimentos temporales',
-                desc: 'Bloquean mientras estén dentro del periodo estatutario: ciertas condenas y encarcelamientos, infracciones de sustancias controladas, dar testimonio falso para obtener un beneficio migratorio o no sostener a los dependientes de forma deliberada.',
+                desc: 'Bloquean mientras estén dentro del periodo estatutario: ciertas condenas y encarcelamientos, infracciones de sustancias controladas, testimonio falso para obtener un beneficio migratorio o no sostener a los dependientes deliberadamente.',
               },
               {
                 title: 'Actos ilícitos sin condena',
@@ -118,11 +118,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Eso significa «holístico»: en lugar de revisar una casilla y seguir, el oficial arma un retrato del solicitante con todo el expediente. Un incidente aislado hace ocho años, con impuestos al día y una vida estable después, no pesa igual que tres incidentes en dos años. Y la ley permite mirar conducta <strong>anterior</strong> al periodo estatutario como contexto.',
+            text: 'Eso significa «holístico»: el oficial arma un retrato del solicitante con todo el expediente. Un incidente aislado hace ocho años, con impuestos al día y una vida estable después, no pesa igual que tres incidentes en dos años. La ley incluso permite mirar conducta <strong>anterior</strong> al periodo estatutario como contexto.',
           },
           {
             kind: 'warning',
-            text: 'Mentir u omitir en el formulario suele hacer más daño que el hecho original. Muchas negativas no se deben al arresto de hace seis años, sino a haber contestado «no» a la pregunta que preguntaba por ese arresto. El testimonio falso para obtener un beneficio migratorio es, por sí solo, un impedimento.',
+            text: 'Mentir u omitir en el formulario suele hacer más daño que el hecho original: muchas negativas no se deben al arresto de hace seis años, sino a haber contestado «no» a la pregunta que preguntaba por él. El testimonio falso es, por sí solo, un impedimento.',
           },
         ],
       },
@@ -140,7 +140,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             items: [
               {
                 title: 'Impuestos sin declarar o deuda con el IRS',
-                desc: 'No haber presentado declaraciones que le correspondían, o declararse «soltero» estando casado, son señales que el oficial toma en serio. Una deuda con plan de pagos formal y al corriente es muy distinta a una deuda ignorada.',
+                desc: 'No haber presentado declaraciones que le correspondían, o declararse «soltero» estando casado, son señales que el oficial toma en serio. Una deuda con plan de pagos al corriente es muy distinta a una deuda ignorada.',
               },
               {
                 title: 'Manutención de hijos atrasada',
@@ -167,7 +167,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'warning',
-            text: 'El N-400 no revisa solo los últimos cinco años: es una auditoría de todo su expediente migratorio, incluida la forma en que obtuvo la residencia. Si en su solicitud original hubo un dato inexacto, la entrevista de ciudadanía es donde suele salir a la luz.',
+            text: 'El N-400 no revisa solo los últimos cinco años: es una auditoría de todo su expediente, incluida la forma en que obtuvo la residencia. Si en su solicitud original hubo un dato inexacto, la entrevista es donde sale a la luz.',
           },
         ],
       },
@@ -196,7 +196,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'En la práctica, una anulación así no se siente igual en todas las oficinas ni de inmediato: las agencias tardan en ajustar instrucciones y una decisión de este tipo puede apelarse o modificarse. Lo prudente no es apostar a qué guía estará vigente el día de su entrevista, sino <strong>preparar un expediente que se sostenga bajo cualquiera de las dos</strong>.',
+            text: 'En la práctica, una anulación así no se siente igual en todas las oficinas ni de inmediato: las agencias tardan en ajustar instrucciones y la decisión puede apelarse. Lo prudente no es apostar a qué guía regirá el día de su entrevista, sino <strong>preparar un expediente que se sostenga bajo cualquiera de las dos</strong>.',
           },
           {
             kind: 'note',
@@ -211,7 +211,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Una de las preguntas más frecuentes desde que cambió el examen es si desaparecieron las exenciones de inglés. <strong>No desaparecieron.</strong> Siguen siendo parte del marco legal de la naturalización y benefician sobre todo a residentes mayores y a personas con discapacidades médicas.',
+            text: 'Desde que cambió el examen, muchos preguntan si desaparecieron las exenciones de inglés. <strong>No desaparecieron.</strong> Siguen en el marco legal de la naturalización y benefician sobre todo a residentes mayores y a personas con discapacidades médicas.',
           },
           {
             kind: 'cards',
@@ -236,11 +236,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Estas reglas se cuentan con la fecha de presentación del N-400, no con la de la entrevista, así que unos meses cambian si califica o no. En el blog del despacho hay un artículo dedicado a las reglas 50/20 y 55/15 y a cómo se documenta bien una N-648.',
+            text: 'Estas reglas se cuentan con la fecha de presentación del N-400, no con la de la entrevista, así que unos meses cambian si califica o no. En el blog hay un artículo dedicado a las reglas 50/20 y 55/15 y a cómo se documenta bien una N-648.',
           },
           {
             kind: 'note',
-            text: 'La exención de inglés no exenta del resto: aunque se examine en su idioma, sigue teniendo que demostrar buen carácter moral, residencia continua, presencia física y apego a la Constitución, y en la mayoría de los casos sigue habiendo examen de civismo.',
+            text: 'La exención de inglés no exenta del resto: aunque se examine en su idioma, sigue teniendo que demostrar buen carácter moral, residencia continua, presencia física y apego a la Constitución, y casi siempre sigue habiendo civismo.',
           },
         ],
       },
@@ -251,7 +251,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Hay una diferencia enorme entre un N-400 que se niega y un N-400 que abre una puerta cerrada. Una negativa se apela o se vuelve a presentar más adelante. Pero si el expediente revela que la persona es removible, USCIS puede referir el caso a un proceso de remoción, y entonces lo que estaba en juego no era la ciudadanía: era la residencia.',
+            text: 'Hay una diferencia enorme entre un N-400 que se niega y uno que abre una puerta cerrada. Una negativa se apela o se vuelve a presentar. Pero si el expediente revela que la persona es removible, USCIS puede referir el caso a remoción, y entonces lo que estaba en juego no era la ciudadanía: era la residencia.',
           },
           {
             kind: 'cards',
@@ -272,11 +272,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'La lógica del tiempo es sencilla: muchos impedimentos son <strong>temporales</strong> y dejan de bloquear cuando la conducta sale del periodo estatutario de cinco o tres años. Esperar unos meses puede convertir un caso difícil en uno normal. Pero <strong>esperar no borra nada</strong> cuando el impedimento es permanente.',
+            text: 'La lógica del tiempo es sencilla: muchos impedimentos son <strong>temporales</strong> y dejan de bloquear cuando la conducta sale del periodo estatutario. Esperar unos meses puede convertir un caso difícil en uno normal. Pero <strong>esperar no borra nada</strong> cuando el impedimento es permanente.',
           },
           {
             kind: 'warning',
-            text: 'No presente un N-400 «a ver qué pasa» si hay cualquier antecedente penal, aunque sea antiguo, desestimado o de otro estado. Un abogado puede pedir sus registros judiciales y su expediente migratorio antes de presentar nada, y esa revisión previa es lo que evita las sorpresas caras.',
+            text: 'No presente un N-400 «a ver qué pasa» si hay cualquier antecedente penal, aunque sea antiguo, desestimado o de otro estado. Un abogado puede pedir sus registros judiciales y su expediente migratorio antes de presentar nada: esa revisión previa evita las sorpresas caras.',
           },
         ],
       },
@@ -287,7 +287,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'El banco de 128 preguntas se estudia solo; la entrevista, no. Lo que más gente falla no es la historia de Estados Unidos: es responder con claridad, en inglés y bajo juramento, preguntas sobre su propia vida que llevaba años sin repasar.',
+            text: 'El banco de 128 preguntas se estudia solo; la entrevista, no. Lo que más gente falla no es la historia de Estados Unidos: es responder con claridad, en inglés y bajo juramento, preguntas sobre su propia vida.',
           },
           {
             kind: 'steps',
@@ -303,7 +303,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Si en el ensayo aparece un tema incómodo, eso es exactamente lo que se buscaba. Es mejor descubrirlo en la oficina de su abogado, con tiempo para documentarlo, que frente al oficial de USCIS con el formulario abierto.',
+            text: 'Si en el ensayo aparece un tema incómodo, eso es exactamente lo que se buscaba: mejor descubrirlo en la oficina de su abogado, con tiempo para documentarlo, que frente al oficial de USCIS.',
           },
         ],
       },
@@ -339,7 +339,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     },
     conclusion: {
       title: 'La ciudadanía sigue siendo alcanzable; la improvisación ya no',
-      text: 'Nada de lo que cambió en 2025 y 2026 cierra la puerta de la naturalización. Lo que cambió es el margen de error: un banco de preguntas más grande, un umbral más alto y una revisión del carácter moral que mira el expediente entero en lugar de una casilla. Quien llega con impuestos al día, papeles ordenados y respuestas honestas sigue naturalizándose con normalidad.',
+      text: 'Nada de lo que cambió en 2025 y 2026 cierra la puerta de la naturalización. Lo que cambió es el margen de error: un banco más grande, un umbral más alto y una revisión que mira el expediente entero en lugar de una casilla. Quien llega con impuestos al día, papeles ordenados y respuestas honestas sigue naturalizándose con normalidad.',
       advice: 'Si tiene cualquier antecedente, ausencia larga o duda sobre cómo obtuvo su residencia, revise su caso con un abogado antes de presentar el N-400, no después de recibir la cita.',
     },
     sources: {
@@ -360,7 +360,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Since late 2025 the civics test draws on a 128-question bank and USCIS reviews good moral character far more strictly. What still applies in 2026.',
     title: 'Citizenship in 2026: A Longer Civics Test and Stricter Review',
     displayDate: 'Aug 06, 2026',
-    readTime: '10 min',
+    readTime: '19 min',
     categoryLabel: 'Immigration Process',
     lastUpdated: 'August 6, 2026',
     summary: {
@@ -393,11 +393,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'The document that settles the question is already in your hands: the <strong>receipt notice</strong> from USCIS carries the received date, and that date sets the test version and the good moral character period that will be reviewed. Keep it and bring it to your consultation.',
+            text: 'The document that settles the question is already in your hands: the <strong>receipt notice</strong> from USCIS carries the received date, and that date sets the test version and the good moral character period that will be reviewed.',
           },
           {
             kind: 'note',
-            text: 'Before buying study materials or paying for classes, confirm which version applies. Studying the wrong bank is an expensive, avoidable mistake: these are different tests, not an expanded edition of the same one.',
+            text: 'Before buying study materials or paying for classes, confirm which version applies: studying the wrong bank is an expensive and entirely avoidable mistake.',
           },
         ],
       },
@@ -423,11 +423,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'The English test did not go away: you are asked to <strong>read a sentence aloud</strong> and <strong>write another from dictation</strong>, and the speaking portion is assessed throughout the interview, while the officer walks through your form with you. That is why someone who memorized all 128 answers but cannot follow the N-400 questions can still run into trouble.',
+            text: 'The English test did not go away: you are asked to <strong>read a sentence aloud</strong> and <strong>write another from dictation</strong>, and the speaking portion is assessed throughout the interview. That is why someone who memorized all 128 answers but cannot follow the N-400 questions can still run into trouble.',
           },
           {
             kind: 'note',
-            text: 'Test format and study materials can be adjusted from one year to the next. Before organizing your preparation, verify with USCIS or your attorney which version and which materials are in effect as of your case date.',
+            text: 'Test format and study materials can be adjusted from one year to the next. Verify with USCIS or your attorney which version and which materials are in effect as of your case date.',
           },
         ],
       },
@@ -438,7 +438,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'The law requires <strong>good moral character</strong> throughout the statutory period: as a general rule the <strong>five years</strong> before filing, or <strong>three</strong> for someone applying as the spouse of a U.S. citizen who meets the other requirements. Section 101(f) of the Immigration and Nationality Act lists conduct that prevents a finding of good moral character, and that list is not exhaustive.',
+            text: 'The law requires <strong>good moral character</strong> throughout the statutory period: as a general rule the <strong>five years</strong> before filing, or <strong>three</strong> for someone applying as the spouse of a citizen who meets the other requirements. Section 101(f) of the Immigration and Nationality Act lists conduct that prevents such a finding, and that list is not exhaustive.',
           },
           {
             kind: 'cards',
@@ -463,11 +463,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'That is what “holistic” means: instead of checking one box and moving on, the officer builds a portrait of the applicant from the whole file. An isolated incident eight years ago, followed by current taxes and a stable life, does not weigh the same as three incidents in two years. And the law allows conduct from <strong>before</strong> the statutory period to be considered as context.',
+            text: 'That is what “holistic” means: the officer builds a portrait of the applicant from the whole file. An isolated incident eight years ago, followed by current taxes and a stable life, does not weigh the same as three incidents in two years. The law even allows conduct from <strong>before</strong> the statutory period to be weighed as context.',
           },
           {
             kind: 'warning',
-            text: 'Lying or leaving something out on the form usually does more damage than the underlying event. Many denials are not caused by an arrest six years ago, but by answering “no” to the question that asked about that arrest. False testimony to obtain an immigration benefit is, on its own, a bar.',
+            text: 'Lying or leaving something out on the form usually does more damage than the underlying event: many denials are caused not by an arrest six years ago, but by answering “no” to the question that asked about it. False testimony is, on its own, a bar.',
           },
         ],
       },
@@ -512,7 +512,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'warning',
-            text: 'The N-400 does not review only the last five years: it is an audit of your entire immigration file, including how you obtained residency. If your original petition contained an inaccuracy, the citizenship interview is usually where it surfaces.',
+            text: 'The N-400 does not review only the last five years: it is an audit of your entire file, including how you obtained residency. If your original petition contained an inaccuracy, the interview is where it surfaces.',
           },
         ],
       },
@@ -541,7 +541,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'On the ground, a vacatur like this is not felt identically at every office, and not immediately: agencies take time to adjust instructions, and a decision of this kind can be appealed or modified. The prudent move is not to bet on which guidance will be in force the day of your interview, but to <strong>build a file that holds up under either one</strong>.',
+            text: 'On the ground, a vacatur like this is not felt identically at every office, and not immediately: agencies take time to adjust instructions, and the decision can be appealed. The prudent move is not to bet on which guidance governs the day of your interview, but to <strong>build a file that holds up under either one</strong>.',
           },
           {
             kind: 'note',
@@ -556,7 +556,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'One of the most frequent questions since the test changed is whether the English exemptions disappeared. <strong>They did not.</strong> They remain part of the legal framework of naturalization and mainly benefit older residents and people with medical disabilities.',
+            text: 'Since the test changed, many people ask whether the English exemptions disappeared. <strong>They did not.</strong> They remain in the legal framework of naturalization and mainly benefit older residents and people with medical disabilities.',
           },
           {
             kind: 'cards',
@@ -585,7 +585,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'An English exemption does not exempt you from the rest: even testing in your own language, you must still show good moral character, continuous residence, physical presence and attachment to the Constitution, and in most cases there is still a civics test.',
+            text: 'An English exemption does not exempt you from the rest: even testing in your own language, you must still show good moral character, continuous residence, physical presence and attachment to the Constitution, and civics almost always remains.',
           },
         ],
       },
@@ -596,7 +596,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'There is an enormous difference between an N-400 that gets denied and an N-400 that opens a door that had been closed. A denial can be appealed or refiled later. But if the file reveals that the person is removable, USCIS can refer the case to removal proceedings — and then what was at stake was never citizenship: it was the green card.',
+            text: 'There is an enormous difference between an N-400 that gets denied and one that opens a door that had been closed. A denial can be appealed or refiled. But if the file reveals that the person is removable, USCIS can refer the case to removal — and then what was at stake was never citizenship: it was the green card.',
           },
           {
             kind: 'cards',
@@ -621,7 +621,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'warning',
-            text: 'Do not file an N-400 “just to see what happens” if there is any criminal history, even old, dismissed, or from another state. An attorney can obtain your court records and your immigration file before anything is filed, and that advance review is what prevents the expensive surprises.',
+            text: 'Do not file an N-400 “just to see what happens” if there is any criminal history, even old, dismissed, or from another state. An attorney can obtain your court records and your immigration file before anything is filed: that advance review prevents the expensive surprises.',
           },
         ],
       },
@@ -648,7 +648,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'If an uncomfortable topic surfaces during the rehearsal, that is exactly the point. It is better to find it in your attorney’s office, with time to document it, than in front of a USCIS officer with the form open.',
+            text: 'If an uncomfortable topic surfaces during the rehearsal, that is exactly the point: better to find it in your attorney’s office, with time to document it, than in front of a USCIS officer.',
           },
         ],
       },
@@ -684,7 +684,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     },
     conclusion: {
       title: 'Citizenship is still reachable; improvising is not',
-      text: 'Nothing that changed in 2025 and 2026 closes the door to naturalization. What changed is the margin for error: a larger question bank, a higher threshold, and a moral character review that looks at the whole file instead of a single box. People who arrive with taxes current, papers in order and honest answers still naturalize routinely.',
+      text: 'Nothing that changed in 2025 and 2026 closes the door to naturalization. What changed is the margin for error: a larger bank, a higher threshold, and a review that looks at the whole file instead of a single box. People who arrive with taxes current, papers in order and honest answers still naturalize routinely.',
       advice: 'If you have any record, any long absence, or any doubt about how you obtained your residency, review your case with an attorney before filing the N-400 — not after the interview notice arrives.',
     },
     sources: {

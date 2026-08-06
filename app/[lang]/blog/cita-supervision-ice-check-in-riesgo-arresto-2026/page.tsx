@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Los arrestos en citas de supervisión aumentaron. Por qué debe ir igual, qué preparar antes y qué hacer si ICE lo detiene ese día.',
     title: 'Cita de supervisión con ICE: cómo prepararte y qué hacer ante el riesgo de arresto',
     displayDate: '06 Ago, 2026',
-    readTime: '10 min',
+    readTime: '20 min',
     categoryLabel: 'Defensa contra Deportación',
     lastUpdated: '6 de agosto de 2026',
     summary: {
@@ -54,11 +54,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Mucha gente vive así durante años, con permiso de trabajo renovado y una vida establecida: casa, hijos en la escuela, impuestos al día. Eso da una sensación de normalidad real en lo cotidiano y engañosa en lo legal: <strong>la orden final sigue ahí</strong>, dormida, y puede ejecutarse sin que un juez decida nada nuevo.',
+            text: 'Mucha gente vive así durante años, con permiso de trabajo renovado y una vida establecida. Esa normalidad es real en lo cotidiano y engañosa en lo legal: <strong>la orden final sigue ahí</strong>, dormida, y puede ejecutarse sin que un juez decida nada nuevo.',
           },
           {
             kind: 'warning',
-            text: 'Faltar a la cita no pospone nada: lo agrava todo. Incumplir la orden de supervisión suele traducirse en una orden de arresto, en una detención en su casa o su trabajo delante de sus hijos, y en la pérdida de casi todo margen de negociación. También destruye su mejor argumento: años de cumplimiento impecable.',
+            text: 'Faltar a la cita no pospone nada: lo agrava todo. Incumplirla suele traducirse en una orden de arresto, en una detención en su casa o su trabajo delante de sus hijos, y en la pérdida de casi todo margen de negociación. Y destruye su mejor argumento: años de cumplimiento impecable.',
           },
         ],
       },
@@ -69,11 +69,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Durante años, las oficinas locales trataron las órdenes finales antiguas como casos de baja prioridad: si no había condenas graves y la persona se reportaba puntualmente, la cita terminaba con una firma y una fecha nueva. Eso se apoyaba en criterios internos de prioridad, no en la ley: <strong>la orden nunca dejó de ser ejecutable</strong>.',
+            text: 'Durante años, las oficinas locales trataron las órdenes finales antiguas como casos de baja prioridad: sin condenas graves y con reportes puntuales, la cita terminaba con una firma y una fecha nueva. Eso se apoyaba en criterios internos, no en la ley: <strong>la orden nunca dejó de ser ejecutable</strong>.',
           },
           {
             kind: 'text',
-            text: 'Desde 2025, y con más intensidad en 2026, esos criterios se estrecharon. Lo que reportan familias en todo Texas es que hoy una cita de rutina puede terminar en detención, incluso con años de check-ins limpios, permiso de trabajo vigente e hijos ciudadanos.',
+            text: 'Desde 2025, y con más intensidad en 2026, esos criterios se estrecharon: hoy una cita de rutina puede terminar en detención, incluso con años de check-ins limpios, permiso vigente e hijos ciudadanos.',
           },
           {
             kind: 'cards',
@@ -173,14 +173,14 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Preparar un plan por si lo detienen no es aceptar que va a pasar. Es evitar que, si pasa, su familia pierda las primeras cuarenta y ocho horas —las más valiosas— averiguando dónde está usted y quién puede firmar por sus hijos.',
+            text: 'Preparar un plan por si lo detienen no es aceptar que va a pasar. Es evitar que, si pasa, su familia pierda las primeras cuarenta y ocho horas averiguando dónde está usted y quién puede firmar por sus hijos.',
           },
           {
             kind: 'steps',
             items: [
-              '<strong>Avise a su abogado antes de la cita</strong> y asegúrese de que presente el <strong>formulario G-28</strong>, la notificación oficial de representación. Con ese documento en el expediente, la agencia debe reconocerlo.',
+              '<strong>Avise a su abogado antes de la cita</strong> y asegúrese de que presente el <strong>formulario G-28</strong>, la notificación oficial de representación que obliga a la agencia a reconocerlo.',
               '<strong>Firme un poder notarial</strong> para el cuidado de sus hijos menores, designando a alguien de confianza que pueda autorizar atención médica y tratar con la escuela; y otro para lo práctico: cuentas, carro, renta, negocio.',
-              '<strong>Reúna sus documentos</strong> en una carpeta que su familia sepa dónde está: pasaportes, actas de nacimiento, acta de matrimonio, su número de expediente (A-number) y sus recetas médicas.',
+              '<strong>Reúna sus documentos</strong> en una carpeta que su familia sepa dónde está: pasaportes, actas de nacimiento y de matrimonio, su número de expediente (A-number) y sus recetas.',
               '<strong>Escriba una hoja de contactos</strong>: abogado con teléfono directo, dos familiares, el consulado de su país, la escuela y su patrón.',
               '<strong>Memorice el teléfono de su abogado</strong> y el de un familiar. En detención no va a tener su celular.',
               '<strong>Deje resuelto el dinero.</strong> Una cuenta a la que otra persona tenga acceso evita que la familia se quede sin nada el primer mes.',
@@ -189,7 +189,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'El poder notarial para el cuidado de menores es el documento que más falta hace y el que casi nadie tiene firmado. Sin él, un familiar puede tener problemas para autorizar una cirugía o recoger a los niños en la escuela, y en el peor escenario interviene el sistema de protección infantil.',
+            text: 'El poder notarial para el cuidado de menores es el documento que más falta hace y el que casi nadie tiene firmado. Sin él, un familiar puede tener problemas para autorizar una cirugía o recoger a los niños en la escuela.',
           },
         ],
       },
@@ -226,22 +226,22 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Si usted no sale de la oficina, su familia no tiene por qué improvisar. Este es el orden en que conviene moverse, escrito y conocido por más de una persona.',
+            text: 'Si usted no sale de la oficina, su familia no tiene por qué improvisar. Este es el orden en que conviene moverse.',
           },
           {
             kind: 'steps',
             items: [
               '<strong>Primera hora:</strong> el acompañante llama al abogado y le dice la oficina exacta, la hora de entrada y lo que le informaron en la ventanilla.',
-              '<strong>Primeras horas:</strong> el abogado confirma que el G-28 está en el expediente y empieza a ubicarlo. El sistema público de localización de detenidos de ICE permite buscar por número de expediente (A-number) o por nombre, país y fecha de nacimiento.',
-              '<strong>Primer día:</strong> puede tardar en aparecer en el sistema y puede ser trasladado a otro centro, incluso en otro estado. Que no aparezca de inmediato no significa que algo malo haya pasado.',
+              '<strong>Primeras horas:</strong> el abogado confirma que el G-28 está en el expediente y empieza a ubicarlo. El localizador público de detenidos de ICE permite buscar por número de expediente (A-number) o por nombre, país y fecha de nacimiento.',
+              '<strong>Primer día:</strong> puede tardar en aparecer en el sistema y ser trasladado a otro centro, incluso en otro estado. Que no aparezca de inmediato no significa nada malo.',
               '<strong>Primer día:</strong> active el poder notarial de los niños, avise a la escuela quién los recoge y hable con el patrón.',
-              '<strong>Primeras 48 horas:</strong> el abogado evalúa qué se puede hacer de inmediato según cómo se dictó la orden: solicitud o renovación de suspensión, moción de emergencia o los pasos que correspondan.',
+              '<strong>Primeras 48 horas:</strong> el abogado evalúa qué se puede hacer de inmediato: solicitud o renovación de suspensión, moción de emergencia o los pasos que correspondan.',
               '<strong>Después:</strong> guarde cada papel, cada número de recibo y cada nombre de agente, con fechas y horas.',
             ],
           },
           {
             kind: 'text',
-            text: 'Cuando pueda hablar por teléfono con la persona detenida, recuerde que <strong>las llamadas desde detención suelen grabarse</strong>, salvo las llamadas con su abogado. No discuta detalles del caso por esa vía.',
+            text: 'Recuerde que <strong>las llamadas desde detención suelen grabarse</strong>, salvo las que se hacen con el abogado. No discuta detalles del caso por esa vía.',
           },
           {
             kind: 'warning',
@@ -256,14 +256,14 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Tener un trámite pendiente no detiene por sí solo una orden final. Pero puede ser la base más fuerte para pedir una suspensión, para reabrir el caso o para que la agencia ejerza discreción. Si está en alguna de estas situaciones, dígaselo a su abogado antes de la cita.',
+            text: 'Un trámite pendiente no detiene por sí solo una orden final. Pero puede ser la base más fuerte para pedir una suspensión, reabrir el caso o lograr que la agencia ejerza discreción. Si está en alguna de estas situaciones, dígaselo a su abogado antes de la cita.',
           },
           {
             kind: 'cards',
             items: [
               {
                 title: 'Visa U (víctimas de delito)',
-                desc: 'Si fue víctima de un delito grave y colaboró con la policía o la fiscalía, puede existir una petición de Visa U. USCIS puede otorgar acción diferida y permiso de trabajo a quienes reciben una determinación de buena fe o quedan en lista de espera.',
+                desc: 'Si fue víctima de un delito grave y colaboró con la policía, puede existir una petición de Visa U. USCIS puede otorgar acción diferida y permiso de trabajo a quienes reciben una determinación de buena fe o quedan en lista de espera.',
               },
               {
                 title: 'VAWA (violencia doméstica)',
@@ -281,7 +281,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'También hay programas de protección temporal que dependen del país y de fechas de registro concretas. Si su país fue designado o redesignado, o si hay litigio abierto sobre esa designación, revíselo antes de la cita.',
+            text: 'También hay programas de protección temporal que dependen del país y de fechas de registro concretas. Si su país fue designado o redesignado, revíselo antes de la cita.',
           },
           {
             kind: 'note',
@@ -299,7 +299,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: '¿Mi abogado puede entrar conmigo a la cita?',
-          a: 'Depende de la oficina y de la práctica local; algunas lo permiten y otras no. Lo que sí puede hacer siempre es presentar el G-28 con anticipación, acompañarlo hasta el edificio y quedar disponible por teléfono. Pregúntele qué se acostumbra en la oficina que le corresponde.',
+          a: 'Depende de la oficina y de la práctica local; algunas lo permiten y otras no. Lo que sí puede hacer siempre es presentar el G-28 con anticipación, acompañarlo hasta el edificio y quedar disponible por teléfono.',
         },
         {
           q: '¿Un permiso de trabajo vigente me protege ese día?',
@@ -307,7 +307,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: '¿Cuánto tarda una solicitud con el formulario I-246?',
-          a: 'No hay un plazo garantizado y varía según la oficina y su carga de trabajo. Por eso conviene presentarla con semanas de anticipación y no en la fecha de la cita. Su abogado puede dar seguimiento y dejar constancia de que se presentó a tiempo.',
+          a: 'No hay un plazo garantizado y varía según la oficina y su carga de trabajo. Por eso conviene presentarla con semanas de anticipación y no en la fecha de la cita, y dejar constancia de que se presentó a tiempo.',
         },
         {
           q: '¿Qué pasa con mis hijos si me detienen y dependen solo de mí?',
@@ -342,7 +342,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Arrests at ICE check-ins are up. Why you must still go, what to prepare beforehand and what to do if you are detained that day.',
     title: 'ICE Check-In Appointment: How to Prepare and What to Do If You Are Arrested',
     displayDate: 'Aug 06, 2026',
-    readTime: '10 min',
+    readTime: '20 min',
     categoryLabel: 'Deportation Defense',
     lastUpdated: 'August 6, 2026',
     summary: {
@@ -350,7 +350,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       text: 'Thousands of people in Texas live under an <strong>order of supervision</strong>: they have a final removal order that was never carried out and, in exchange for staying free, they report to ICE at set intervals. Since 2025, and more sharply in 2026, arrests <strong>at those very appointments</strong> have intensified, including of people with years of clean check-ins and U.S. citizen children. The result is panic before every appointment and the temptation not to show up. This article says the opposite as plainly as possible: <strong>you have to go</strong>, because not going turns a risk into a certainty. But not without a plan. Here is that plan: what to review beforehand, what papers to sign in advance, how to conduct yourself that day, and what your family does if you are detained.',
     },
     intro: [
-      'For many families the ICE check-in is the tensest day of the year. Time off is requested at work, the car is left with someone trusted, and the person walks out the door not knowing whether they will come back that afternoon. That anxiety is not exaggerated, and over the last two years it has become far more concrete.',
+      'For many families the ICE check-in is the tensest day of the year. Time off is requested at work, and the person walks out the door not knowing whether they will come back that afternoon. That anxiety is not exaggerated, and over the last two years it has become far more concrete.',
       'Since 2025, and more intensely during 2026, reports have multiplied of people arrested <strong>during their own supervision appointment</strong>. Not only people with recent criminal history: people with <strong>old final orders</strong>, years of punctual check-ins, renewed work permits and citizen family. That is what changed, and that is why the fear spiked.',
       'The natural reaction is not to go. It is also the worst possible decision: it violates the order, triggers a search, and strips your attorney of nearly every tool for negotiating. The message of this article is simple: <strong>go to your appointment, but do not go without a plan</strong>. What follows is that plan.',
     ],
@@ -381,11 +381,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Many people live this way for years, with a renewed work permit and a settled life: a home, children in school, taxes filed. That creates a sense of normalcy that is real day to day and misleading legally: <strong>the final order is still there</strong>, dormant, and it can be executed without a judge deciding anything new.',
+            text: 'Many people live this way for years, with a renewed work permit and a settled life. That normalcy is real day to day and misleading legally: <strong>the final order is still there</strong>, dormant, and it can be executed without a judge deciding anything new.',
           },
           {
             kind: 'warning',
-            text: 'Skipping the appointment postpones nothing: it makes everything worse. Violating the order of supervision usually means an arrest warrant, a detention at home or at work in front of your children, and the loss of almost all room to negotiate. It also destroys your best argument: years of spotless compliance.',
+            text: 'Skipping the appointment postpones nothing: it makes everything worse. Violating it usually means an arrest warrant, a detention at home or at work in front of your children, and the loss of almost all room to negotiate. And it destroys your best argument: years of spotless compliance.',
           },
         ],
       },
@@ -400,7 +400,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'Since 2025, and more intensely in 2026, those criteria narrowed. What families across Texas report is that today a routine appointment can end in detention, even with years of clean check-ins, a valid work permit and citizen children.',
+            text: 'Since 2025, and more intensely in 2026, those criteria narrowed: today a routine appointment can end in detention, even with years of clean check-ins, a valid permit and citizen children.',
           },
           {
             kind: 'cards',
@@ -500,12 +500,12 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Preparing a plan in case you are detained is not accepting that it will happen. It is making sure that, if it does, your family does not lose the first forty-eight hours — the most valuable ones — figuring out where you are and who can sign for your children.',
+            text: 'Preparing a plan in case you are detained is not accepting that it will happen. It is making sure that, if it does, your family does not lose the first forty-eight hours figuring out where you are and who can sign for your children.',
           },
           {
             kind: 'steps',
             items: [
-              '<strong>Notify your attorney before the appointment</strong> and make sure they file <strong>Form G-28</strong>, the official notice of representation. With that in the file, the agency must recognize them.',
+              '<strong>Notify your attorney before the appointment</strong> and make sure they file <strong>Form G-28</strong>, the official notice of representation that requires the agency to recognize them.',
               '<strong>Sign a power of attorney</strong> for the care of your minor children, naming a trusted person who can authorize medical care and deal with the school; and another for practical matters: accounts, car, lease, business.',
               '<strong>Gather your documents</strong> in one folder your family knows how to find: passports, birth certificates, marriage certificate, your case number (A-number) and your prescriptions.',
               '<strong>Write out a contact sheet</strong>: attorney with a direct line, two relatives, your country’s consulate, the school and your employer.',
@@ -516,7 +516,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'The power of attorney for the care of minors is the document most needed and the one almost nobody has signed. Without it, a relative can struggle to authorize surgery or pick the children up at school, and in the worst case the child protection system steps in.',
+            text: 'The power of attorney for the care of minors is the document most needed and the one almost nobody has signed. Without it, a relative can struggle to authorize surgery or pick the children up at school.',
           },
         ],
       },
@@ -553,22 +553,22 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'If you do not walk out of the office, your family should not have to improvise. This is the order in which to move — written down and known by more than one person.',
+            text: 'If you do not walk out of the office, your family should not have to improvise. This is the order in which to move.',
           },
           {
             kind: 'steps',
             items: [
               '<strong>First hour:</strong> the companion calls the attorney and reports the exact office, the time you went in, and anything said at the window.',
               '<strong>First hours:</strong> the attorney confirms the G-28 is in the file and starts locating you. ICE’s public detainee locator allows searches by case number (A-number) or by name, country and date of birth.',
-              '<strong>First day:</strong> the person may take time to appear in the system and may be transferred to another facility, even in another state. Not appearing right away does not mean something bad happened.',
+              '<strong>First day:</strong> the person may take time to appear in the system and be transferred to another facility, even in another state. Not appearing right away does not mean something bad happened.',
               '<strong>First day:</strong> activate the children’s power of attorney, tell the school who will pick them up, and speak with the employer.',
-              '<strong>First 48 hours:</strong> the attorney assesses what can be done immediately depending on how the order was entered: a stay request or renewal, an emergency motion, or whatever steps apply.',
+              '<strong>First 48 hours:</strong> the attorney assesses what can be done immediately: a stay request or renewal, an emergency motion, or whatever steps apply.',
               '<strong>Afterward:</strong> keep every paper, every receipt number and every officer’s name, with dates and times.',
             ],
           },
           {
             kind: 'text',
-            text: 'When you are able to speak by phone with the detained person, remember that <strong>calls from detention are usually recorded</strong>, except calls with their attorney. Do not discuss case details that way.',
+            text: 'Remember that <strong>calls from detention are usually recorded</strong>, except calls made with the attorney. Do not discuss case details that way.',
           },
           {
             kind: 'warning',
@@ -590,7 +590,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
             items: [
               {
                 title: 'U visa (crime victims)',
-                desc: 'If you were the victim of a serious crime and cooperated with police or prosecutors, a U visa petition may exist. USCIS can grant deferred action and a work permit to those who receive a bona fide determination or are placed on the waiting list.',
+                desc: 'If you were the victim of a serious crime and cooperated with police, a U visa petition may exist. USCIS can grant deferred action and a work permit to those who receive a bona fide determination or are placed on the waiting list.',
               },
               {
                 title: 'VAWA (domestic violence)',
@@ -608,7 +608,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'There are also temporary protection programs that depend on the country of origin and on specific registration dates. If your country was designated or redesignated, or if there is open litigation about it, review that before the appointment.',
+            text: 'There are also temporary protection programs that depend on the country of origin and on specific registration dates. If your country was designated or redesignated, review that before the appointment.',
           },
           {
             kind: 'note',
@@ -626,7 +626,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'Can my attorney come in with me to the appointment?',
-          a: 'It depends on the office and on local practice; some allow it and others do not. What an attorney can always do is file the G-28 in advance, accompany you to the building and stay reachable by phone. Ask what the practice is at the office assigned to you.',
+          a: 'It depends on the office and on local practice; some allow it and others do not. What an attorney can always do is file the G-28 in advance, accompany you to the building and stay reachable by phone.',
         },
         {
           q: 'Does a valid work permit protect me that day?',
@@ -634,7 +634,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'How long does a Form I-246 request take?',
-          a: 'There is no guaranteed timeframe and it varies by office and workload. That is why it should be filed weeks in advance rather than on the appointment date. Your attorney can follow up and create a record that it was filed on time.',
+          a: 'There is no guaranteed timeframe and it varies by office and workload. That is why it should be filed weeks in advance rather than on the appointment date, with a record that it was filed on time.',
         },
         {
           q: 'What happens to my children if I am detained and they depend only on me?',

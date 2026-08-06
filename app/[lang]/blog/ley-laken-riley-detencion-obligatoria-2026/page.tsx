@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Basta un cargo de robo en tienda, no una condena, para activar la detención obligatoria. Qué dice la Ley Laken Riley y qué están resolviendo las cortes.',
     title: 'Ley Laken Riley: por qué un cargo de robo en tienda puede dejarte detenido sin fianza',
     displayDate: '06 Ago, 2026',
-    readTime: '10 min',
+    readTime: '20 min',
     categoryLabel: 'Defensa contra Deportación',
     lastUpdated: '6 de agosto de 2026',
     summary: {
@@ -39,7 +39,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'En la práctica, el gobierno sostiene que una persona no ciudadana a la que la ley trata como inadmisible y que es arrestada o acusada por alguno de los delitos cubiertos debe permanecer bajo custodia migratoria mientras se resuelve su caso. No importa que el caso penal siga abierto ni que nunca se haya valorado una prueba. La categoría se activa con el papel de la acusación.',
+            text: 'En la práctica, el gobierno sostiene que una persona no ciudadana a la que la ley trata como inadmisible y que es arrestada o acusada por alguno de los delitos cubiertos debe permanecer bajo custodia migratoria mientras se resuelve su caso. No importa que el caso penal siga abierto. La categoría se activa con el papel de la acusación.',
           },
           {
             kind: 'list',
@@ -84,7 +84,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'De ahí viene el golpe que muchas familias no ven venir. Reúnen con esfuerzo la fianza del condado, van por su familiar y no se lo entregan: hay una retención de inmigración —un <strong>detainer</strong>— y la persona pasa de una custodia a la otra sin poner un pie en la calle.',
+            text: 'De ahí viene el golpe que muchas familias no ven venir: reúnen con esfuerzo la fianza del condado y no les entregan a su familiar, porque hay una retención de inmigración —un <strong>detainer</strong>— y la persona pasa de una custodia a la otra.',
           },
           {
             kind: 'warning',
@@ -112,7 +112,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'El nombre exacto del delito cambia de estado a estado, y esa es una de las discusiones vivas: si un cargo estatal encaja dentro de la categoría federal se litiga caso por caso, comparando los elementos del delito estatal con la definición federal. No es automático, aunque muchas veces se aplique como si lo fuera.',
+            text: 'El nombre exacto del delito cambia de estado a estado, y esa es una de las discusiones vivas: si un cargo estatal encaja dentro de la categoría federal se litiga caso por caso, comparando sus elementos con la definición federal. No es automático, aunque se aplique como si lo fuera.',
           },
           {
             kind: 'table',
@@ -121,7 +121,6 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               ['«Es solo una falta»', 'La gravedad penal del cargo no determina por sí sola la consecuencia migratoria.'],
               ['«No lo condenaron, no cuenta»', 'La acusación puede bastar para activar la detención obligatoria.'],
               ['«Pagué la fianza, hoy sale»', 'Si hay retención de inmigración, pasa a custodia de ICE al salir.'],
-              ['«El abogado penal ya lo arregló»', 'Un arreglo penal favorable puede ser desastroso en migración si nadie lo revisó.'],
             ],
           },
           {
@@ -141,7 +140,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: '<strong>Primer frente: la duración.</strong> Al menos una corte ha ordenado la liberación de una persona por detención prolongada cuando lo que la mantenía encerrada era una alegación menor de robo en tienda. El razonamiento va por el debido proceso: una cosa es detener a alguien mientras su caso avanza y otra muy distinta mantenerlo encerrado mes tras mes sobre la base de una acusación que nunca se ha probado.',
+            text: '<strong>Primer frente: la duración.</strong> Al menos una corte ha ordenado la liberación de una persona por detención prolongada cuando lo que la mantenía encerrada era una alegación menor de robo en tienda. El razonamiento va por el debido proceso: una cosa es detener a alguien mientras su caso avanza y otra mantenerlo encerrado mes tras mes sobre una acusación que nunca se ha probado.',
           },
           {
             kind: 'text',
@@ -157,7 +156,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'No se apoye en jurisprudencia de oídas ni en lo que le contaron en la sala de espera. Este artículo describe el panorama a la fecha de su última actualización; <strong>antes de actuar, confirme con un abogado el estado vigente de estas decisiones</strong> en su jurisdicción.',
+            text: 'No se apoye en jurisprudencia de oídas. Este artículo describe el panorama a la fecha de su última actualización; <strong>antes de actuar, confirme con un abogado el estado vigente de estas decisiones</strong> en su jurisdicción.',
           },
         ],
       },
@@ -168,7 +167,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'Si su caso está en Texas, Luisiana o Misisipi hay una segunda pieza que encaja aquí. En julio de 2026, el Tribunal de Apelaciones del Quinto Circuito resolvió que, aun bajo la etiqueta de detención obligatoria, el gobierno no puede mantener detenida a una persona indefinidamente sin darle una <strong>audiencia individualizada de custodia dentro de 90 días</strong>, y que en esa audiencia le toca al gobierno demostrar peligro concreto o riesgo de fuga. A ese fallo le dedicamos un artículo completo en este blog.',
+            text: 'Si su caso está en Texas, Luisiana o Misisipi hay una segunda pieza que encaja aquí. En julio de 2026, el Quinto Circuito resolvió que, aun bajo la etiqueta de detención obligatoria, el gobierno no puede mantener detenida a una persona indefinidamente sin darle una <strong>audiencia individualizada de custodia dentro de 90 días</strong>, y que en esa audiencia le toca al gobierno demostrar peligro concreto o riesgo de fuga. A ese fallo le dedicamos un artículo completo en este blog.',
           },
           {
             kind: 'text',
@@ -184,7 +183,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Marque en un calendario la fecha exacta en que empezó la detención y cuente los días. Muchas familias descubren tarde que su familiar lleva bastante más de 90 días encerrado y nadie ha pedido nada. El tiempo corre desde el primer día de custodia, no desde que usted contrató abogado.',
+            text: 'Marque en un calendario la fecha exacta en que empezó la detención y cuente los días. Muchas familias descubren tarde que su familiar lleva bastante más de 90 días encerrado y nadie ha pedido nada. El tiempo corre desde el primer día de custodia.',
           },
         ],
       },
@@ -199,7 +198,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'La ley reconoce esto desde hace años: el abogado de defensa penal tiene el <strong>deber de advertir sobre las consecuencias migratorias</strong> de declararse culpable. No es una cortesía; es parte de la defensa efectiva a la que la persona tiene derecho. Un consejo equivocado puede ser motivo para atacar después esa declaración, pero deshacer un arreglo es mucho más difícil que hacerlo bien la primera vez.',
+            text: 'La ley reconoce esto desde hace años: el abogado de defensa penal tiene el <strong>deber de advertir sobre las consecuencias migratorias</strong> de declararse culpable. No es una cortesía; es parte de la defensa efectiva a la que la persona tiene derecho. Y deshacer después un arreglo es mucho más difícil que hacerlo bien la primera vez.',
           },
           {
             kind: 'cards',
@@ -256,7 +255,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'warning',
-            text: 'No permita que su familiar firme una <strong>salida voluntaria</strong> ni una renuncia a su audiencia solo para terminar con el encierro. Es una decisión que se toma con un abogado y con toda la información, nunca en un pasillo y bajo presión.',
+            text: 'No permita que su familiar firme una <strong>salida voluntaria</strong> ni una renuncia a su audiencia solo para terminar con el encierro. Esa decisión se toma con un abogado y con toda la información, nunca bajo presión.',
           },
         ],
       },
@@ -312,13 +311,13 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: '¿Cuánto tiempo puede estar detenido mi familiar?',
-          a: 'Depende del caso, de la jurisdicción y de qué tan pronto se pidan las revisiones que correspondan. Lo que sí sabemos es que la detención prolongada sin revisión individual es precisamente lo que están cuestionando las cortes. Cuente los días desde el primer día de custodia.',
+          a: 'Depende del caso, de la jurisdicción y de qué tan pronto se pidan las revisiones que correspondan. Lo que sí sabemos es que la detención prolongada sin revisión individual es precisamente lo que están cuestionando las cortes.',
         },
       ],
     },
     conclusion: {
       title: 'Una acusación no es una sentencia',
-      text: 'La Ley Laken Riley movió una línea que la mayoría de la gente no sabía que existía, y hoy hay personas encerradas durante meses por acusaciones que la corte penal considera menores. Entender que basta el cargo no sirve para asustarse: sirve para actuar distinto. Significa cuidar cada paso del caso penal desde el primer día, contar los días de detención, reunir la evidencia de arraigo antes de que la pidan y no aceptar «no hay fianza» como respuesta final.',
+      text: 'La Ley Laken Riley movió una línea que la mayoría de la gente no sabía que existía, y hoy hay personas encerradas durante meses por acusaciones que la corte penal considera menores. Entender que basta el cargo no sirve para asustarse: sirve para actuar distinto. Significa cuidar cada paso del caso penal, contar los días de detención, reunir la evidencia de arraigo antes de que la pidan y no aceptar «no hay fianza» como respuesta final.',
       advice: 'Si a un familiar suyo lo detuvieron por un cargo menor, reúna hoy el número A, el expediente penal y los documentos de arraigo, y busque asesoría antes de que nadie firme nada.',
     },
     sources: {
@@ -339,7 +338,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'A charge for shoplifting, not a conviction, can trigger mandatory detention. What the Laken Riley Act does and what the courts are now deciding.',
     title: 'The Laken Riley Act: Why a Shoplifting Charge Can Leave You Detained Without Bond',
     displayDate: 'Aug 06, 2026',
-    readTime: '10 min',
+    readTime: '20 min',
     categoryLabel: 'Deportation Defense',
     lastUpdated: 'August 6, 2026',
     summary: {
@@ -363,7 +362,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'In practice, the government maintains that a non-citizen whom the law treats as inadmissible and who is arrested for or charged with one of the covered offenses must remain in immigration custody while the case is resolved. It does not matter that the criminal case is still open, or that no evidence has ever been weighed. The category is triggered by the charging paper itself.',
+            text: 'In practice, the government maintains that a non-citizen whom the law treats as inadmissible and who is arrested for or charged with one of the covered offenses must remain in immigration custody while the case is resolved. It does not matter that the criminal case is still open. The category is triggered by the charging paper itself.',
           },
           {
             kind: 'list',
@@ -408,7 +407,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'That is where the blow so many families never see coming lands. They scrape together the county bond, go to pick up their relative, and he is not released: there is an immigration hold — a <strong>detainer</strong> — and the person moves from one custody to the other without setting foot outside.',
+            text: 'That is where the blow so many families never see coming lands: they scrape together the county bond and their relative is still not released, because there is an immigration hold — a <strong>detainer</strong> — and the person moves from one custody to the other.',
           },
           {
             kind: 'warning',
@@ -436,7 +435,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'The exact name of the offense changes from state to state, and that is one of the live disputes: whether a state charge fits within the federal category is litigated case by case, comparing the elements of the state offense with the federal definition. It is not automatic, even when it is applied as if it were.',
+            text: 'The exact name of the offense changes from state to state, and that is one of the live disputes: whether a state charge fits within the federal category is litigated case by case, comparing its elements with the federal definition. It is not automatic, even when applied as if it were.',
           },
           {
             kind: 'table',
@@ -445,7 +444,6 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               ['“It is only a misdemeanor”', 'The criminal severity of the charge alone does not determine the immigration consequence.'],
               ['“He was never convicted, so it does not count”', 'The accusation alone can be enough to trigger mandatory detention.'],
               ['“I posted the bond, he gets out today”', 'If there is an immigration hold, he passes into ICE custody upon release.'],
-              ['“The criminal attorney already handled it”', 'A favorable criminal deal can be a disaster in immigration if nobody reviewed it.'],
             ],
           },
           {
@@ -465,7 +463,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: '<strong>First front: duration.</strong> At least one court has ordered a person released because of prolonged detention where what kept them locked up was a minor shoplifting allegation. The reasoning runs through due process: it is one thing to detain someone while a case moves along, and quite another to keep them confined month after month on the basis of an accusation that has never been proven.',
+            text: '<strong>First front: duration.</strong> At least one court has ordered a person released because of prolonged detention where what kept them locked up was a minor shoplifting allegation. The reasoning runs through due process: it is one thing to detain someone while a case moves along, and another to keep them confined month after month on an accusation that has never been proven.',
           },
           {
             kind: 'text',
@@ -481,7 +479,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Do not rely on secondhand case law or on what you were told in the waiting room. This article describes the landscape as of its last update; <strong>before acting, confirm with an attorney the current state of these decisions</strong> in your jurisdiction.',
+            text: 'Do not rely on secondhand case law. This article describes the landscape as of its last update; <strong>before acting, confirm with an attorney the current state of these decisions</strong> in your jurisdiction.',
           },
         ],
       },
@@ -492,7 +490,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         blocks: [
           {
             kind: 'text',
-            text: 'If your case is in Texas, Louisiana or Mississippi, a second piece fits here. In July 2026, the Fifth Circuit Court of Appeals held that, even under the mandatory detention label, the government cannot keep a person detained indefinitely without an <strong>individualized custody hearing within 90 days</strong>, and that at that hearing it is the government that must show concrete danger or flight risk. We devoted a full article to that ruling on this blog.',
+            text: 'If your case is in Texas, Louisiana or Mississippi, a second piece fits here. In July 2026, the Fifth Circuit held that, even under the mandatory detention label, the government cannot keep a person detained indefinitely without an <strong>individualized custody hearing within 90 days</strong>, and that at that hearing it is the government that must show concrete danger or flight risk. We devoted a full article to that ruling on this blog.',
           },
           {
             kind: 'text',
@@ -508,7 +506,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'note',
-            text: 'Mark the exact date detention began on a calendar and count the days. Many families find out too late that their relative has been locked up well past 90 days and nobody has requested anything. The clock runs from the first day of custody, not from the day you hired an attorney.',
+            text: 'Mark the exact date detention began on a calendar and count the days. Many families find out too late that their relative has been locked up well past 90 days and nobody has requested anything. The clock runs from the first day of custody.',
           },
         ],
       },
@@ -523,7 +521,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'The law has recognized this for years: criminal defense counsel has a <strong>duty to advise about the immigration consequences</strong> of pleading guilty. It is not a courtesy; it is part of the effective defense the person is entitled to. Wrong advice can be grounds to challenge that plea later, but undoing a deal is far harder than getting it right the first time.',
+            text: 'The law has recognized this for years: criminal defense counsel has a <strong>duty to advise about the immigration consequences</strong> of pleading guilty. It is not a courtesy; it is part of the effective defense the person is entitled to. And undoing a deal later is far harder than getting it right the first time.',
           },
           {
             kind: 'cards',
@@ -580,7 +578,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'warning',
-            text: 'Do not let your relative sign a <strong>voluntary departure</strong> or a waiver of their hearing simply to end the confinement. That decision is made with an attorney and with all the information, never in a hallway and under pressure.',
+            text: 'Do not let your relative sign a <strong>voluntary departure</strong> or a waiver of their hearing simply to end the confinement. That decision is made with an attorney and with all the information, never under pressure.',
           },
         ],
       },
@@ -636,13 +634,13 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
         },
         {
           q: 'How long can my relative be detained?',
-          a: 'It depends on the case, the jurisdiction and how soon the appropriate reviews are requested. What we do know is that prolonged detention without individual review is exactly what courts are questioning. Count the days from the first day of custody.',
+          a: 'It depends on the case, the jurisdiction and how soon the appropriate reviews are requested. What we do know is that prolonged detention without individual review is exactly what the courts are questioning.',
         },
       ],
     },
     conclusion: {
       title: 'An accusation is not a judgment',
-      text: 'The Laken Riley Act moved a line most people did not know existed, and today there are people confined for months over accusations criminal courts consider minor. Understanding that the charge alone is enough is not a reason to panic: it is a reason to act differently. It means guarding every step of the criminal case from day one, counting the days of detention, gathering equities evidence before anyone asks for it, and refusing to accept “there is no bond” as a final answer.',
+      text: 'The Laken Riley Act moved a line most people did not know existed, and today there are people confined for months over accusations criminal courts consider minor. Understanding that the charge alone is enough is not a reason to panic: it is a reason to act differently. It means guarding every step of the criminal case, counting the days of detention, gathering equities evidence before anyone asks for it, and refusing to accept “there is no bond” as a final answer.',
       advice: 'If a relative of yours was detained over a minor charge, gather the A-number, the criminal file and the equities documents today, and get advice before anyone signs anything.',
     },
     sources: {

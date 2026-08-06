@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'El Quinto Circuito exige audiencia de fianza dentro de 90 días en Texas, Luisiana y Misisipi, con la carga de la prueba del gobierno. Qué preparar y qué hacer hoy.',
     title: 'Detenido por ICE en Texas: el nuevo fallo que obliga a darte una audiencia de fianza en 90 días',
     displayDate: '05 Ago, 2026',
-    readTime: '11 min',
+    readTime: '9 min',
     categoryLabel: 'Defensa contra Deportación',
     lastUpdated: '5 de agosto de 2026',
     summary: {
@@ -192,7 +192,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'The Fifth Circuit requires a bond hearing within 90 days in Texas, Louisiana and Mississippi, with the burden on the government. What to prepare and do today.',
     title: 'Detained by ICE in Texas: The New Ruling That Requires a Bond Hearing Within 90 Days',
     displayDate: 'Aug 05, 2026',
-    readTime: '11 min',
+    readTime: '9 min',
     categoryLabel: 'Deportation Defense',
     lastUpdated: 'August 5, 2026',
     summary: {

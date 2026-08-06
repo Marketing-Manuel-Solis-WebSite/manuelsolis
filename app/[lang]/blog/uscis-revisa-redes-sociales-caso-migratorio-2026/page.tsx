@@ -15,7 +15,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'USCIS revisa redes sociales en más trámites y pide sus identificadores en los formularios. Qué buscan, qué daña su caso y qué nunca debe hacer.',
     title: 'USCIS revisa tus redes sociales: publicaciones que pueden dañar tu caso',
     displayDate: '06 Ago, 2026',
-    readTime: '9 min',
+    readTime: '19 min',
     categoryLabel: 'Procesos Migratorios',
     lastUpdated: '6 de agosto de 2026',
     summary: {
@@ -315,7 +315,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'USCIS reviews social media in more filings and asks for your account identifiers on forms. What officers look for and what you must never do.',
     title: 'USCIS Reviews Your Social Media: Posts That Can Damage Your Case',
     displayDate: 'Aug 06, 2026',
-    readTime: '9 min',
+    readTime: '19 min',
     categoryLabel: 'Immigration Process',
     lastUpdated: 'August 6, 2026',
     summary: {
