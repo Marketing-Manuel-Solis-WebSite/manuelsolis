@@ -23,6 +23,120 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
 export const BLOG_DATA = {
   posts: [
     {
+      id: 'registro_obligatorio_extranjeros_g325r_2026',
+      slug: 'registro-obligatorio-extranjeros-g325r-2026',
+      title: {
+        es: 'Registro obligatorio de extranjeros (G-325R): quién debe registrarse y qué riesgos tiene',
+        en: 'Alien Registration (G-325R): Who Must Register and What the Risks Are'
+      },
+      excerpt: {
+        es: 'El gobierno exige que extranjeros con 30 días o más en EE.UU. se registren con el formulario G-325R. Quién ya está registrado, quién debe hacerlo y el dilema real de registrarse.',
+        en: 'The government requires noncitizens present 30 days or more to register using Form G-325R. Who is already registered, who must file, and the real dilemma of registering.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-08-04',
+      readTime: '12 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'audiencia_fianza_90_dias_quinto_circuito_texas_2026',
+      slug: 'audiencia-fianza-90-dias-quinto-circuito-texas-2026',
+      title: {
+        es: 'Detenido por ICE en Texas: el fallo que obliga a una audiencia de fianza en 90 días',
+        en: 'Detained by ICE in Texas: The Ruling Requiring a Bond Hearing Within 90 Days'
+      },
+      excerpt: {
+        es: 'El Quinto Circuito decidió que el gobierno no puede detenerte indefinidamente sin audiencia de fianza en Texas, Luisiana y Misisipi. Qué significa si tu familiar está detenido.',
+        en: 'The Fifth Circuit held the government cannot detain you indefinitely without a bond hearing in Texas, Louisiana and Mississippi. What it means if your relative is detained.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-08-05',
+      readTime: '11 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'tarifa_anual_asilo_100_dolares_regla_2026',
+      slug: 'tarifa-anual-asilo-100-dolares-regla-2026',
+      title: {
+        es: 'Tarifa Anual de Asilo de $100: el pago de 30 días que puede costarte el caso',
+        en: 'The $100 Asylum Annual Fee: The 30-Day Payment That Can Cost You Your Case'
+      },
+      excerpt: {
+        es: 'No pagar la Tarifa Anual de Asilo dentro de 30 días puede significar el rechazo del I-589, la cancelación del permiso de trabajo y riesgo de deportación. Cómo protegerte.',
+        en: 'Failing to pay the Asylum Annual Fee within 30 days can mean rejection of your I-589, cancellation of your work permit and exposure to removal. How to protect yourself.'
+      },
+      categoryId: 'visa-humanitaria',
+      category: { es: 'Visa Humanitaria', en: 'Humanitarian Relief' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '10 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'arrestos_ice_corte_inmigracion_fallo_2026',
+      slug: 'arrestos-ice-corte-inmigracion-fallo-2026',
+      title: {
+        es: '¿Te pueden arrestar al salir de tu audiencia? Lo que cambió con el fallo de junio 2026',
+        en: 'Can ICE Arrest You Leaving Your Hearing? What Changed With the June 2026 Ruling'
+      },
+      excerpt: {
+        es: 'Un juez federal anuló la política que permitía a ICE arrestar personas al salir de la corte de inmigración. Qué significa, qué no significa y cómo prepararte para tu audiencia.',
+        en: 'A federal judge vacated the policy allowing ICE to arrest people leaving immigration court. What it means, what it does not mean, and how to prepare for your hearing.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '10 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'green_card_detenido_aeropuerto_viajar_2026',
+      slug: 'green-card-detenido-aeropuerto-viajar-2026',
+      title: {
+        es: 'Tengo green card y me detuvieron en el aeropuerto: el nuevo riesgo al viajar',
+        en: 'Green Card Holder Detained at the Airport: The New Risk for Residents Who Travel'
+      },
+      excerpt: {
+        es: 'CBP puede tratar a residentes acusados de ciertos delitos como solicitantes de admisión al regresar. Quién está en riesgo, qué nunca firmar y qué revisar antes de viajar.',
+        en: 'CBP may treat residents accused of certain crimes as applicants for admission on return. Who is at risk, what never to sign, and what to review before traveling.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '11 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
+      id: 'golpe_de_calor_trabajo_texas_derechos',
+      slug: 'golpe-de-calor-trabajo-texas-derechos',
+      title: {
+        es: 'Golpe de calor en el trabajo: los derechos de los trabajadores en Texas',
+        en: 'Heat Stroke at Work: The Rights Texas Workers Are Never Told About'
+      },
+      excerpt: {
+        es: 'Construcción, techos, bodegas sin clima: el calor de Texas lesiona y mata cada verano. Si sufriste un golpe de calor trabajando puedes tener un caso, sin importar tu estatus.',
+        en: 'Construction, roofing, warehouses with no AC: Texas heat injures and kills every summer. If heat hurt you at work you may have a case, regardless of your status.'
+      },
+      categoryId: 'accidentes',
+      category: { es: 'Accidentes', en: 'Accidents' },
+      author: 'Manuel Solís',
+      date: '2026-08-06',
+      readTime: '9 min',
+      image: '/og-default.jpg',
+      featured: false
+    },
+    {
       id: 'ciudadania_por_nacimiento_2026_hijos_padres_indocumentados',
       slug: 'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados',
       title: {

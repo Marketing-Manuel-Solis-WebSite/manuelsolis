@@ -20,6 +20,12 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'registro-obligatorio-extranjeros-g325r-2026',
+    'audiencia-fianza-90-dias-quinto-circuito-texas-2026',
+    'tarifa-anual-asilo-100-dolares-regla-2026',
+    'arrestos-ice-corte-inmigracion-fallo-2026',
+    'green-card-detenido-aeropuerto-viajar-2026',
+    'golpe-de-calor-trabajo-texas-derechos',
     'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados',
     'redadas-ice-2026-derechos-plan-emergencia-familiar',
     'como-encontrar-detenido-ice-localizador-pasos',
@@ -100,6 +106,8 @@ const clusters: Record<string, string[]> = {
     'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
   ],
   deportation: [
+    'audiencia-fianza-90-dias-quinto-circuito-texas-2026',
+    'arrestos-ice-corte-inmigracion-fallo-2026',
     'redadas-ice-2026-derechos-plan-emergencia-familiar',
     'como-encontrar-detenido-ice-localizador-pasos',
     'ley-de-los-10-anos-cancelacion-de-deportacion',
@@ -111,6 +119,8 @@ const clusters: Record<string, string[]> = {
     'daca-2026-estado-legal-tribunales',
   ],
   process: [
+    'registro-obligatorio-extranjeros-g325r-2026',
+    'green-card-detenido-aeropuerto-viajar-2026',
     'ciudadania-por-nacimiento-2026-hijos-padres-indocumentados',
     'formulario-g28-cambiar-abogado-inmigracion',
     'residencia-laboral-eb3-ley-245i-entrada-indocumentada',
@@ -133,6 +143,7 @@ const clusters: Record<string, string[]> = {
     'advance-parole-2026-viajar-con-daca-tps-visa-u',
   ],
   humanitarian: [
+    'tarifa-anual-asilo-100-dolares-regla-2026',
     'visa-t-trabajo-forzado-por-deuda-con-coyote',
     'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria',
     'vawa-para-hombres-maltratados-por-pareja-ciudadana-o-residente',
@@ -151,6 +162,7 @@ const clusters: Record<string, string[]> = {
     'entrevista-inmigracion-errores-evitar',
   ],
   accidents: [
+    'golpe-de-calor-trabajo-texas-derechos',
     'accidente-trabajo-indocumentado-texas-compensacion',
     'accidente-camion-18-ruedas-texas-compensacion',
     'accidente-auto-indocumentado-derechos',

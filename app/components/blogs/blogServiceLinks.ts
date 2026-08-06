@@ -11,6 +11,12 @@ export interface ServiceLink {
 }
 
 const blogServiceMap: Record<string, ServiceLink> = {
+  'registro-obligatorio-extranjeros-g325r-2026': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'audiencia-fianza-90-dias-quinto-circuito-texas-2026': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'tarifa-anual-asilo-100-dolares-regla-2026': { path: '/servicios/asilo', label: { es: 'Servicios de Asilo', en: 'Asylum Services' } },
+  'arrestos-ice-corte-inmigracion-fallo-2026': { path: '/servicios/defensa-deportacion', label: { es: 'Defensa de Deportación', en: 'Deportation Defense' } },
+  'green-card-detenido-aeropuerto-viajar-2026': { path: '/servicios/inmigracion', label: { es: 'Servicios de Inmigración', en: 'Immigration Services' } },
+  'golpe-de-calor-trabajo-texas-derechos': { path: '/servicios/accidentes', label: { es: 'Abogados de Accidentes', en: 'Accident Attorneys' } },
   // Visa U cluster → /servicios/visa-u
   'permiso-de-trabajo-visa-u': { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
   'que-hacer-si-la-policia-no-firma-la-certificacion-visa-u': { path: '/servicios/visa-u', label: { es: 'Servicios de Visa U', en: 'U Visa Services' } },
