@@ -9,7 +9,10 @@ import {
   Users, Wallet,
 } from 'lucide-react';
 
+import { notFound } from 'next/navigation';
+
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { isPublished } from '../../lib/blogSchedule';
 import Header from '../Header';
 import Footer from '../Footer';
 import ContactForm from '../ContactForm';
@@ -174,6 +177,14 @@ export default function BlogArticleLayout({
   servicePath: string;
   trackerCategory: string;
 }) {
+  // Un artículo programado no existe hasta su fecha. Sin este 404 la URL
+  // seguiría respondiendo 200 aunque el post no aparezca en el índice ni en el
+  // sitemap, y bastaría con adivinar el slug —o que Google lo hubiera visto una
+  // vez— para leer algo que todavía no se ha revisado.
+  if (!isPublished({ slug, date: isoDate })) {
+    notFound();
+  }
+
   const t = content;
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },

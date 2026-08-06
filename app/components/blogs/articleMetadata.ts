@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
+import { isPublished } from '../../lib/blogSchedule';
 import type { BlogArticleContent } from './articleModel';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -41,6 +42,15 @@ export function buildArticleMetadata({
   isoDate: string;
   isoModified?: string;
 }): Metadata {
+  // Un artículo programado responde 404 (lo corta BlogArticleLayout), pero
+  // `generateMetadata` se ejecuta igual y esa página de error acababa
+  // publicando el titular, el resumen y la portada del artículo en sus
+  // etiquetas og — o sea, filtrando por adelantado justo lo que se comparte en
+  // redes. Aquí no se devuelve nada del contenido.
+  if (!isPublished({ slug, date: isoDate })) {
+    return { title: lang === 'es' ? 'Artículo no disponible' : 'Article not available', robots: { index: false, follow: false } };
+  }
+
   return {
     title: content.metaTitle,
     description: content.metaDesc,

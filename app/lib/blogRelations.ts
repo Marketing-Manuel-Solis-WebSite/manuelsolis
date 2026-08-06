@@ -209,11 +209,17 @@ const clusters: Record<string, string[]> = {
 export function getRelatedArticles(currentSlug: string, lang: 'es' | 'en'): { title: string; slug: string; image: string; category: string }[] {
   const related = new Set<string>();
 
-  // Find clusters this post belongs to
+  // Find clusters this post belongs to.
+  //
+  // `clusters` es una lista de slugs escrita a mano y `allArticles` solo tiene
+  // los publicados, así que un slug del cluster puede no existir: porque el
+  // artículo está programado para más adelante, porque se retiró, o porque
+  // alguien lo escribió mal. Sin esta comprobación el `.map()` de abajo lee
+  // `.title` de undefined y **revienta el build entero**, no solo este bloque.
   for (const clusterSlugs of Object.values(clusters)) {
     if (clusterSlugs.includes(currentSlug)) {
       for (const slug of clusterSlugs) {
-        if (slug !== currentSlug) related.add(slug);
+        if (slug !== currentSlug && allArticles[slug]) related.add(slug);
       }
     }
   }

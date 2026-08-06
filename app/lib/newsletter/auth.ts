@@ -42,6 +42,22 @@ export function verifyBlastSecret(providedToken: string | null): boolean {
   return digestEquals(expected, providedToken);
 }
 
+/**
+ * Bearer que Vercel Cron manda en cada disparo.
+ *
+ * Va con su propia variable y no con NEWSLETTER_BLAST_SECRET por el mismo
+ * motivo que los tres de arriba: quien pueda invocar el cron puede mandar un
+ * correo a toda la lista, y un secreto compartido obliga a rotar las dos cosas
+ * a la vez. Sin CRON_SECRET definido devuelve false, así que el endpoint queda
+ * cerrado en vez de abierto.
+ */
+export function verifyCronSecret(authHeader: string | null): boolean {
+  const expected = process.env.CRON_SECRET;
+  const provided = extractBearer(authHeader);
+  if (!expected || !provided) return false;
+  return digestEquals(expected, provided);
+}
+
 /** Contraseña del formulario de login del panel. */
 export function verifyAdminPassword(providedPassword: string | null): boolean {
   const expected = adminPassword();

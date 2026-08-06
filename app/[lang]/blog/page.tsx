@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 // Utilidades
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
+import { isPublished } from '../../lib/blogSchedule';
 
 // Componentes
 import Header from '../../components/Header';
@@ -20,11 +21,20 @@ const SITE_URL = 'https://www.manuelsolis.com';
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
 
 // --- DATOS CENTRALIZADOS DEL BLOG (CMS Simulado) ---
-export const BLOG_DATA = {
-  posts: [
+
+/**
+ * Todos los artículos, incluidos los que todavía no han salido.
+ *
+ * Casi nadie debería leer esta lista: lo que se publica es `BLOG_DATA.posts`,
+ * que es esta misma filtrada por fecha. Está expuesta como `ALL_BLOG_POSTS`
+ * para el cron de publicación, que necesita ver los programados justamente
+ * porque aún no son públicos.
+ */
+const ALL_POSTS = [
     {
       id: 'ley_laken_riley_detencion_obligatoria_2026',
       slug: 'ley-laken-riley-detencion-obligatoria-2026',
+      newsletterAt: '2026-08-25',
       title: {
         es: 'Ley Laken Riley: por qué un cargo de robo puede dejarte detenido sin fianza',
         en: 'The Laken Riley Act: Why a Theft Charge Can Leave You Detained Without Bond'
@@ -44,6 +54,7 @@ export const BLOG_DATA = {
     {
       id: 'impuesto_1_por_ciento_remesas_2026_como_evitarlo',
       slug: 'impuesto-1-por-ciento-remesas-2026-como-evitarlo',
+      newsletterAt: '2026-08-28',
       title: {
         es: 'Impuesto del 1% a las remesas: quién lo paga y cómo enviar dinero sin pagarlo',
         en: 'The 1% Remittance Tax: Who Pays It and How to Send Money Without It'
@@ -63,6 +74,7 @@ export const BLOG_DATA = {
     {
       id: 'cuanto_cuesta_arreglar_papeles_tarifas_uscis_2026',
       slug: 'cuanto-cuesta-arreglar-papeles-tarifas-uscis-2026',
+      newsletterAt: '2026-08-31',
       title: {
         es: '¿Cuánto cuesta arreglar papeles en 2026? La tabla real de tarifas de USCIS',
         en: 'What Does It Cost to Fix Your Papers in 2026? The Real USCIS Fee Table'
@@ -82,6 +94,7 @@ export const BLOG_DATA = {
     {
       id: 'autodeportacion_salida_voluntaria_riesgos_2026',
       slug: 'autodeportacion-salida-voluntaria-riesgos-2026',
+      newsletterAt: '2026-09-03',
       title: {
         es: '"Autodeportación": lo que el gobierno no te dice antes de que firmes tu salida',
         en: 'Self-Deportation: What the Government Does Not Tell You Before You Sign'
@@ -101,6 +114,7 @@ export const BLOG_DATA = {
     {
       id: 'parole_humanitario_terminado_opciones_2026',
       slug: 'parole-humanitario-terminado-opciones-2026',
+      newsletterAt: '2026-09-06',
       title: {
         es: 'Mi parole humanitario terminó: opciones legales antes de quedarte sin estatus',
         en: 'My Humanitarian Parole Ended: Legal Options Before You Lose Status'
@@ -120,6 +134,7 @@ export const BLOG_DATA = {
     {
       id: 'perdi_el_tps_opciones_legales_2026',
       slug: 'perdi-el-tps-opciones-legales-2026',
+      newsletterAt: '2026-09-09',
       title: {
         es: 'Perdí el TPS: 5 caminos legales que podrían mantenerte en Estados Unidos',
         en: 'I Lost TPS: 5 Legal Paths That Could Keep You in the United States'
@@ -139,6 +154,7 @@ export const BLOG_DATA = {
     {
       id: 'caso_desestimado_corte_inmigracion_trampa_deportacion_expedita',
       slug: 'caso-desestimado-corte-inmigracion-trampa-deportacion-expedita',
+      newsletterAt: '2026-09-12',
       title: {
         es: '"Desestimaron" mi caso en la corte de inmigración: por qué puede ser una trampa',
         en: 'They "Dismissed" My Immigration Court Case: Why That Can Be a Trap'
@@ -158,6 +174,7 @@ export const BLOG_DATA = {
     {
       id: 'cita_supervision_ice_check_in_riesgo_arresto_2026',
       slug: 'cita-supervision-ice-check-in-riesgo-arresto-2026',
+      newsletterAt: '2026-09-15',
       title: {
         es: 'Cita de supervisión con ICE: cómo prepararte y qué hacer ante el riesgo de arresto',
         en: 'ICE Check-In: How to Prepare and What to Do If You Are Arrested'
@@ -177,6 +194,7 @@ export const BLOG_DATA = {
     {
       id: 'muerte_accidente_trabajo_texas_derechos_familia',
       slug: 'muerte-accidente-trabajo-texas-derechos-familia',
+      newsletterAt: '2026-09-18',
       title: {
         es: 'Murió mi familiar en un accidente de trabajo en Texas: los derechos de la familia',
         en: 'My Relative Died in a Workplace Accident in Texas: The Family Rights'
@@ -196,6 +214,7 @@ export const BLOG_DATA = {
     {
       id: 'hijo_ciudadano_21_anos_pedir_padres_2026',
       slug: 'hijo-ciudadano-21-anos-pedir-padres-2026',
+      newsletterAt: '2026-09-21',
       title: {
         es: 'Mi hijo ciudadano cumplió 21: cómo puede pedirme y qué pasa si entré sin papeles',
         en: 'My Citizen Child Turned 21: How They Can Petition and What If I Entered Illegally'
@@ -215,6 +234,7 @@ export const BLOG_DATA = {
     {
       id: 'uscis_revisa_redes_sociales_caso_migratorio_2026',
       slug: 'uscis-revisa-redes-sociales-caso-migratorio-2026',
+      newsletterAt: '2026-09-24',
       title: {
         es: 'USCIS revisa tus redes sociales: publicaciones que pueden dañar tu caso',
         en: 'USCIS Reviews Your Social Media: Posts That Can Damage Your Case'
@@ -234,6 +254,7 @@ export const BLOG_DATA = {
     {
       id: 'ciudadania_2026_nuevo_examen_buen_caracter_moral',
       slug: 'ciudadania-2026-nuevo-examen-buen-caracter-moral',
+      newsletterAt: '2026-09-27',
       title: {
         es: 'Ciudadanía en 2026: el examen más largo y la revisión más estricta',
         en: 'Citizenship in 2026: A Longer Test and a Stricter Review'
@@ -253,6 +274,7 @@ export const BLOG_DATA = {
     {
       id: 'auditoria_i9_redada_trabajo_derechos_2026',
       slug: 'auditoria-i9-redada-trabajo-derechos-2026',
+      newsletterAt: '2026-09-30',
       title: {
         es: 'Auditorías I-9 y operativos en el trabajo: derechos del trabajador',
         en: 'I-9 Audits and Worksite Operations: Workers Rights'
@@ -272,6 +294,7 @@ export const BLOG_DATA = {
     {
       id: 'accidente_conductor_sin_seguro_fuga_texas',
       slug: 'accidente-conductor-sin-seguro-fuga-texas',
+      newsletterAt: '2026-10-03',
       title: {
         es: 'Me chocó un conductor sin seguro o se dio a la fuga en Texas: cómo cobrar',
         en: 'Hit by an Uninsured or Hit-and-Run Driver in Texas: How to Recover'
@@ -291,6 +314,7 @@ export const BLOG_DATA = {
     {
       id: 'registro_obligatorio_extranjeros_g325r_2026',
       slug: 'registro-obligatorio-extranjeros-g325r-2026',
+      newsletterAt: '2026-08-07',
       title: {
         es: 'Registro obligatorio de extranjeros (G-325R): quién debe registrarse y qué riesgos tiene',
         en: 'Alien Registration (G-325R): Who Must Register and What the Risks Are'
@@ -310,6 +334,7 @@ export const BLOG_DATA = {
     {
       id: 'audiencia_fianza_90_dias_quinto_circuito_texas_2026',
       slug: 'audiencia-fianza-90-dias-quinto-circuito-texas-2026',
+      newsletterAt: '2026-08-10',
       title: {
         es: 'Detenido por ICE en Texas: el fallo que obliga a una audiencia de fianza en 90 días',
         en: 'Detained by ICE in Texas: The Ruling Requiring a Bond Hearing Within 90 Days'
@@ -329,6 +354,7 @@ export const BLOG_DATA = {
     {
       id: 'tarifa_anual_asilo_100_dolares_regla_2026',
       slug: 'tarifa-anual-asilo-100-dolares-regla-2026',
+      newsletterAt: '2026-08-13',
       title: {
         es: 'Tarifa Anual de Asilo de $100: el pago de 30 días que puede costarte el caso',
         en: 'The $100 Asylum Annual Fee: The 30-Day Payment That Can Cost You Your Case'
@@ -348,6 +374,7 @@ export const BLOG_DATA = {
     {
       id: 'arrestos_ice_corte_inmigracion_fallo_2026',
       slug: 'arrestos-ice-corte-inmigracion-fallo-2026',
+      newsletterAt: '2026-08-16',
       title: {
         es: '¿Te pueden arrestar al salir de tu audiencia? Lo que cambió con el fallo de junio 2026',
         en: 'Can ICE Arrest You Leaving Your Hearing? What Changed With the June 2026 Ruling'
@@ -367,6 +394,7 @@ export const BLOG_DATA = {
     {
       id: 'green_card_detenido_aeropuerto_viajar_2026',
       slug: 'green-card-detenido-aeropuerto-viajar-2026',
+      newsletterAt: '2026-08-19',
       title: {
         es: 'Tengo green card y me detuvieron en el aeropuerto: el nuevo riesgo al viajar',
         en: 'Green Card Holder Detained at the Airport: The New Risk for Residents Who Travel'
@@ -386,6 +414,7 @@ export const BLOG_DATA = {
     {
       id: 'golpe_de_calor_trabajo_texas_derechos',
       slug: 'golpe-de-calor-trabajo-texas-derechos',
+      newsletterAt: '2026-08-22',
       title: {
         es: 'Golpe de calor en el trabajo: los derechos de los trabajadores en Texas',
         en: 'Heat Stroke at Work: The Rights Texas Workers Are Never Told About'
@@ -1098,10 +1127,22 @@ export const BLOG_DATA = {
       author: 'Manuel Solís',
       date: '2026-01-16',
       readTime: '8 min',
-      image: '/blog/visa-u.png', 
+      image: '/blog/visa-u.png',
       featured: false
     }
-  ],
+];
+
+/** Lista sin filtrar, solo para el cron de publicación. Ver ALL_POSTS. */
+export const ALL_BLOG_POSTS = ALL_POSTS;
+
+export const BLOG_DATA = {
+  /**
+   * Solo lo que ya salió. Un post con `date` en el futuro está programado y no
+   * existe para nadie hasta su día: ni aquí, ni en el sitemap, ni en el RSS, ni
+   * en los relacionados. Filtrar en la fuente y no en cada pantalla es lo que
+   * hace que los once módulos que leen BLOG_DATA lo respeten sin tocarlos.
+   */
+  posts: ALL_POSTS.filter((post) => isPublished(post)),
   categories: [
     { id: 'all', es: 'Todos', en: 'All' },
     { id: 'visa-u', es: 'Visa U', en: 'U Visa' },
