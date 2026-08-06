@@ -4,7 +4,12 @@ import { revalidatePath } from 'next/cache';
 import { ALL_BLOG_POSTS } from '../../../[lang]/blog/page';
 import { firmToday, isPublished, newsletterDue, newsletterDateOf } from '../../../lib/blogSchedule';
 import { verifyCronSecret } from '../../../lib/newsletter/auth';
-import { claimBlast, listClaimedSlugs, recordBlastResult } from '../../../lib/newsletter/blogBlastLedger';
+import {
+  claimBlast,
+  listClaimedSlugs,
+  recordBlastResult,
+  releaseClaim,
+} from '../../../lib/newsletter/blogBlastLedger';
 import type { BlastProgressEvent, Language } from '../../../lib/newsletter/types';
 import { POST as runBlast } from '../../newsletter/blast/route';
 
@@ -79,6 +84,16 @@ function pathsFor(slug: string): string[] {
  * igualmente: el endpoint conserva su comprobación de siempre y no se le abre
  * una puerta trasera.
  */
+/**
+ * El blast se negó a empezar, así que consta que no se mandó nada.
+ *
+ * La distinción importa mucho más de lo que parece: es lo único que separa
+ * "se puede reintentar mañana" de "no se puede reintentar nunca". Un fallo a
+ * mitad del recorrido deja gente que ya recibió el correo, y ahí reintentar es
+ * peor que no hacer nada.
+ */
+class BlastRejected extends Error {}
+
 async function sendBlast(slug: string, language: Language, origin: string, dryRun: boolean) {
   const secret = process.env.NEWSLETTER_BLAST_SECRET;
   if (!secret) throw new Error('NEWSLETTER_BLAST_SECRET no está configurado');
@@ -94,8 +109,10 @@ async function sendBlast(slug: string, language: Language, origin: string, dryRu
 
   const response = await runBlast(request);
   if (!response.ok || !response.body) {
+    // Rechazo antes de abrir el flujo: 401, 404, 409… Consta que no salió ni un
+    // correo, así que la reserva se puede soltar y reintentar mañana.
     const detail = await response.text().catch(() => '');
-    throw new Error(`blast respondió ${response.status}: ${detail.slice(0, 200)}`);
+    throw new BlastRejected(`blast respondió ${response.status}: ${detail.slice(0, 200)}`);
   }
 
   // El blast emite SSE ("data: {...}\n\n"). Interesa el último evento: es el
@@ -131,6 +148,11 @@ export async function GET(request: NextRequest) {
   // dos veces.
   const dryRun = new URL(request.url).searchParams.get('dryRun') === '1';
 
+  // ?slug= solo se obedece en seco. Fuera del ensayo, quién recibe correo y
+  // cuándo lo decide el calendario y nadie más: un parámetro de URL que
+  // dispare un envío real es una forma de mandar el boletín equivocado.
+  const forcedSlug = dryRun ? new URL(request.url).searchParams.get('slug') : null;
+
   // --- 1. Publicar ---
   // Se revalida lo que ha salido en los últimos días, no solo lo de hoy: si el
   // cron no corrió ayer, el artículo de ayer seguiría oculto. revalidatePath es
@@ -156,15 +178,35 @@ export async function GET(request: NextRequest) {
   try {
     const claimed = await listClaimedSlugs();
     const pending = newsletterDue(ALL_BLOG_POSTS, today).filter((post) => !claimed.has(post.slug));
-    const next = pending[0];
 
-    if (next) {
+    // En seco se puede forzar un artículo concreto. Es la única forma de
+    // recorrer el camino del correo un día en que no toca ninguno, que es justo
+    // cuando conviene comprobarlo: antes del primer envío de verdad.
+    const next = forcedSlug
+      ? ALL_BLOG_POSTS.find((post) => post.slug === forcedSlug && isPublished(post, today))
+      : pending[0];
+
+    if (forcedSlug && !next) {
+      newsletter = { sent: false, reason: `no hay artículo publicado con slug ${forcedSlug}` };
+    } else if (next) {
       // En seco no se reserva: dejar la marca puesta haría que el envío de
       // verdad se saltara este artículo para siempre.
       if (!dryRun && !(await claimBlast(next.slug, language))) {
         newsletter = { sent: false, slug: next.slug, reason: 'ya reservado por otra ejecución' };
       } else {
-        const result = await sendBlast(next.slug, language, origin, dryRun);
+        let result: { processed: number; errors: number };
+        try {
+          result = await sendBlast(next.slug, language, origin, dryRun);
+        } catch (error) {
+          // Solo se suelta la reserva si consta que no salió ni un correo. Si
+          // el fallo fue a mitad del recorrido, se queda puesta: reintentar
+          // duplicaría el envío a quien ya lo recibió.
+          if (!dryRun && error instanceof BlastRejected) {
+            await releaseClaim(next.slug).catch(() => {});
+          }
+          throw error;
+        }
+
         if (!dryRun) {
           await recordBlastResult(next.slug, language, result).catch(() => {
             // El correo ya salió; que no se pueda cerrar el registro no lo
@@ -179,7 +221,7 @@ export async function GET(request: NextRequest) {
           language,
           scheduledFor: newsletterDateOf(next),
           ...result,
-          remaining: pending.length - 1,
+          remaining: Math.max(0, pending.length - 1),
         };
       }
     }

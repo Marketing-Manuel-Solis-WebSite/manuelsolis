@@ -1,4 +1,4 @@
-import { list, put } from '@vercel/blob';
+import { del, list, put } from '@vercel/blob';
 
 /**
  * Registro de qué artículos ya se anunciaron por correo.
@@ -83,6 +83,21 @@ export async function claimBlast(slug: string, language: string): Promise<boolea
     // debe impedir el envío: sin registro no hay forma de evitar el duplicado.
     return false;
   }
+}
+
+/**
+ * Suelta una reserva. **Solo si consta que no salió ni un correo.**
+ *
+ * Sin esto, un fallo antes de empezar a mandar —el endpoint devuelve 401, o el
+ * artículo no aparece— dejaría la reserva puesta para siempre y ese boletín no
+ * se enviaría nunca, en silencio. Con la reserva suelta, la ejecución del día
+ * siguiente lo reintenta.
+ *
+ * Lo que no se puede soltar es un envío que ya empezó: reintentarlo mandaría el
+ * correo por segunda vez a todos los que sí lo recibieron.
+ */
+export async function releaseClaim(slug: string): Promise<void> {
+  await del(pathFor(slug));
 }
 
 /** Cierra el registro con el resultado. Que esto falle no invalida el envío. */
