@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { buildEventsPayload, type MetaServerEvent } from '../app/lib/metaCapi';
+import {
+  buildEventsPayload,
+  resolveCapiDestinations,
+  type MetaServerEvent,
+} from '../app/lib/metaCapi';
 import {
   buildFbcFromFbclid,
   generateMetaEventId,
@@ -108,6 +112,73 @@ describe('buildEventsPayload', () => {
     const after = Math.floor(Date.now() / 1000);
     expect(body.data[0].event_time).toBeGreaterThanOrEqual(before);
     expect(body.data[0].event_time).toBeLessThanOrEqual(after);
+  });
+});
+
+describe('resolveCapiDestinations — transición dual-dataset', () => {
+  const PRIMARY = {
+    META_DATASET_ID: '1679590710105917',
+    META_CAPI_ACCESS_TOKEN: 'token-viejo',
+  };
+  const SECONDARY = {
+    META_DATASET_ID_2: '1021648410635727',
+    META_CAPI_ACCESS_TOKEN_2: 'token-nuevo',
+  };
+
+  it('sin env → sin destinos (no-op total)', () => {
+    expect(resolveCapiDestinations({})).toEqual([]);
+  });
+
+  it('solo primario configurado → un destino', () => {
+    const dests = resolveCapiDestinations({ ...PRIMARY });
+    expect(dests).toHaveLength(1);
+    expect(dests[0].datasetId).toBe('1679590710105917');
+    expect(dests[0].token).toBe('token-viejo');
+  });
+
+  it('primario + secundario → dos destinos en orden, cada uno con su token', () => {
+    const dests = resolveCapiDestinations({ ...PRIMARY, ...SECONDARY });
+    expect(dests).toHaveLength(2);
+    expect(dests[0]).toMatchObject({ datasetId: '1679590710105917', token: 'token-viejo' });
+    expect(dests[1]).toMatchObject({ datasetId: '1021648410635727', token: 'token-nuevo' });
+  });
+
+  it('secundario sin token → se excluye (nunca un envío a medias)', () => {
+    const dests = resolveCapiDestinations({
+      ...PRIMARY,
+      META_DATASET_ID_2: '1021648410635727',
+    });
+    expect(dests).toHaveLength(1);
+  });
+
+  it('secundario duplicado del primario → se excluye (no doble envío al mismo dataset)', () => {
+    const dests = resolveCapiDestinations({
+      ...PRIMARY,
+      META_DATASET_ID_2: PRIMARY.META_DATASET_ID,
+      META_CAPI_ACCESS_TOKEN_2: 'token-nuevo',
+    });
+    expect(dests).toHaveLength(1);
+  });
+
+  it('cae a NEXT_PUBLIC_META_PIXEL_ID(_2) cuando faltan los META_DATASET_ID', () => {
+    const dests = resolveCapiDestinations({
+      NEXT_PUBLIC_META_PIXEL_ID: '111.111',
+      META_CAPI_ACCESS_TOKEN: 't1',
+      NEXT_PUBLIC_META_PIXEL_ID_2: '222.222',
+      META_CAPI_ACCESS_TOKEN_2: 't2',
+    });
+    expect(dests.map((d) => d.datasetId)).toEqual(['111.111', '222.222']);
+  });
+
+  it('los test event codes viajan por dataset, no compartidos', () => {
+    const dests = resolveCapiDestinations({
+      ...PRIMARY,
+      ...SECONDARY,
+      META_CAPI_TEST_EVENT_CODE: 'TEST54296',
+      META_CAPI_TEST_EVENT_CODE_2: 'TEST99999',
+    });
+    expect(dests[0].testEventCode).toBe('TEST54296');
+    expect(dests[1].testEventCode).toBe('TEST99999');
   });
 });
 

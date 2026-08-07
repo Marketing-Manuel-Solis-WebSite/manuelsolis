@@ -182,38 +182,79 @@ let testEventCodeWarned = false;
  * datos reales del dataset. En Production eso solo puede ser deliberado, así
  * que exige el flag explícito META_CAPI_ALLOW_TEST_EVENTS=1; en cualquier caso
  * deja un aviso en los logs para que la variable olvidada sea detectable.
+ * Aplica igual al código del dataset primario y al del secundario.
  */
-function resolveTestEventCode(): string | undefined {
-  const code = process.env.META_CAPI_TEST_EVENT_CODE || undefined;
-  if (!code) return undefined;
-  if (process.env.VERCEL_ENV !== 'production') return code;
+function gateTestEventCode(rawCode: string | undefined): string | undefined {
+  if (!rawCode) return undefined;
+  if (process.env.VERCEL_ENV !== 'production') return rawCode;
 
   const allowed = process.env.META_CAPI_ALLOW_TEST_EVENTS === '1';
   if (!testEventCodeWarned) {
     testEventCodeWarned = true;
     console.warn(
       allowed
-        ? '[META-CAPI] META_CAPI_TEST_EVENT_CODE ACTIVO en Production (META_CAPI_ALLOW_TEST_EVENTS=1): el tráfico real va a "Test events", NO al dataset.'
-        : '[META-CAPI] META_CAPI_TEST_EVENT_CODE está definida en Production y se IGNORA (falta META_CAPI_ALLOW_TEST_EVENTS=1). Bórrala del entorno Production de Vercel.',
+        ? '[META-CAPI] test event code ACTIVO en Production (META_CAPI_ALLOW_TEST_EVENTS=1): el tráfico real va a "Test events", NO al dataset.'
+        : '[META-CAPI] hay un test event code definido en Production y se IGNORA (falta META_CAPI_ALLOW_TEST_EVENTS=1). Bórralo del entorno Production de Vercel.',
     );
   }
-  return allowed ? code : undefined;
+  return allowed ? rawCode : undefined;
+}
+
+export interface CapiDestination {
+  datasetId: string;
+  token: string;
+  /** Código crudo del env — el gate de producción se aplica al enviar. */
+  testEventCode?: string;
 }
 
 /**
- * Envía eventos a la Conversions API. Nunca lanza: los fallos se
- * loggean y se devuelven en el resultado (el caller — un after() del
- * route — no debe romper nada del request original).
+ * Datasets destino, en orden: primario y (durante la transición dual)
+ * secundario. Pura (recibe env) para unit tests.
+ *
+ * Transición 2026-08-07: marketing corre campañas en el dataset nuevo en
+ * paralelo con el viejo, así que el sitio dispara a AMBOS — el Pixel del
+ * navegador hace doble init (ver layout.tsx) y aquí se duplica el envío
+ * server-side. El mismo event_id viaja a los dos: el dedup Pixel ↔ CAPI
+ * es por dataset, así que funciona en cada uno por separado. Cuando el
+ * dataset nuevo pase a ser el primario, se eliminan las vars *_2 y este
+ * código queda inerte.
  */
-export async function sendMetaCapiEvents(
+export function resolveCapiDestinations(
+  env: Record<string, string | undefined> = process.env,
+): CapiDestination[] {
+  const destinations: CapiDestination[] = [];
+
+  const primaryDataset = env.META_DATASET_ID || env.NEXT_PUBLIC_META_PIXEL_ID;
+  if (primaryDataset && env.META_CAPI_ACCESS_TOKEN) {
+    destinations.push({
+      datasetId: primaryDataset,
+      token: env.META_CAPI_ACCESS_TOKEN,
+      testEventCode: env.META_CAPI_TEST_EVENT_CODE || undefined,
+    });
+  }
+
+  // Los test event codes son POR DATASET — el secundario usa el suyo.
+  const secondaryDataset = env.META_DATASET_ID_2 || env.NEXT_PUBLIC_META_PIXEL_ID_2;
+  if (
+    secondaryDataset &&
+    env.META_CAPI_ACCESS_TOKEN_2 &&
+    secondaryDataset !== primaryDataset
+  ) {
+    destinations.push({
+      datasetId: secondaryDataset,
+      token: env.META_CAPI_ACCESS_TOKEN_2,
+      testEventCode: env.META_CAPI_TEST_EVENT_CODE_2 || undefined,
+    });
+  }
+
+  return destinations;
+}
+
+async function postEventsToDataset(
+  dest: CapiDestination,
   events: MetaServerEvent[],
 ): Promise<CapiSendResult> {
-  const token = process.env.META_CAPI_ACCESS_TOKEN;
-  const datasetId =
-    process.env.META_DATASET_ID || process.env.NEXT_PUBLIC_META_PIXEL_ID;
-  if (!token || !datasetId) return { ok: false, attempted: false };
-
-  const testEventCode = resolveTestEventCode();
+  const testEventCode = gateTestEventCode(dest.testEventCode);
   const payload = buildEventsPayload(events, { testEventCode });
   if (payload.data.length === 0) return { ok: true, attempted: false };
 
@@ -221,7 +262,7 @@ export async function sendMetaCapiEvents(
   const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
     const res = await fetch(
-      `https://graph.facebook.com/${GRAPH_API_VERSION}/${datasetId}/events?access_token=${encodeURIComponent(token)}`,
+      `https://graph.facebook.com/${GRAPH_API_VERSION}/${dest.datasetId}/events?access_token=${encodeURIComponent(dest.token)}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -233,21 +274,42 @@ export async function sendMetaCapiEvents(
     if (!res.ok) {
       // El token va en la query, nunca en el body → seguro de loggear.
       console.error(
-        `[META-CAPI] HTTP ${res.status} al enviar ${payload.data.length} evento(s): ${body.slice(0, 300)}`,
+        `[META-CAPI] dataset ${dest.datasetId}: HTTP ${res.status} al enviar ${payload.data.length} evento(s): ${body.slice(0, 300)}`,
       );
     } else if (testEventCode) {
       // Solo en modo test (pestaña "Test events" del Events Manager):
       // deja rastro en los logs de Vercel para la verificación manual.
-      console.log(`[META-CAPI] test event aceptado: ${body.slice(0, 200)}`);
+      console.log(
+        `[META-CAPI] dataset ${dest.datasetId}: test event aceptado: ${body.slice(0, 200)}`,
+      );
     }
     return { ok: res.ok, attempted: true, status: res.status, body };
   } catch (e) {
     console.error(
-      '[META-CAPI] fallo de red/timeout:',
+      `[META-CAPI] dataset ${dest.datasetId}: fallo de red/timeout:`,
       e instanceof Error ? e.message : e,
     );
     return { ok: false, attempted: true };
   } finally {
     clearTimeout(timer);
   }
+}
+
+/**
+ * Envía eventos a la Conversions API — a todos los datasets configurados,
+ * en paralelo. Nunca lanza: los fallos se loggean por dataset y el caller
+ * (un after() del route) no debe romper nada del request original.
+ *
+ * El resultado devuelto es el del dataset PRIMARIO (contrato del smoke
+ * test); un fallo del secundario queda en los logs pero no lo altera.
+ */
+export async function sendMetaCapiEvents(
+  events: MetaServerEvent[],
+): Promise<CapiSendResult> {
+  const destinations = resolveCapiDestinations();
+  if (destinations.length === 0) return { ok: false, attempted: false };
+  const results = await Promise.all(
+    destinations.map((dest) => postEventsToDataset(dest, events)),
+  );
+  return results[0];
 }

@@ -11,6 +11,11 @@ import { trackPageView, whenAnalyticsReady } from '../lib/tracking';
 // tocar código. Cada script se renderiza solo si su ID está definido.
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+// Dataset nuevo de Meta (transición dual 2026-08-07): mientras esté
+// definido, el Pixel hace doble init y cada evento del navegador llega a
+// AMBOS datasets. El espejo server-side hace lo mismo (ver metaCapi.ts).
+// Al terminar la transición se elimina la env var y el init extra muere solo.
+const META_PIXEL_ID_2 = process.env.NEXT_PUBLIC_META_PIXEL_ID_2;
 const TIKTOK_PIXEL_ID = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID;
 
 type TiktokPixel = { page?: () => void };
@@ -157,6 +162,7 @@ export function TrackingSurfaces() {
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '${META_PIXEL_ID}');
+              ${META_PIXEL_ID_2 ? `fbq('init', '${META_PIXEL_ID_2}');` : ''}
               window.dispatchEvent(new Event('msl:fbq-ready'));
             `,
           }}
