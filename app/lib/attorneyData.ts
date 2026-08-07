@@ -40,7 +40,7 @@ export function getText(obj: TranslatableString, language: 'es' | 'en'): string 
 export const locationGroups: { label: { es: string; en: string }; ids: string[] }[] = [
   { label: { es: 'Houston, Texas', en: 'Houston, Texas' }, ids: ['manuel-solis', 'manuel-solis-iii', 'juan-solis', 'gregory-finney', 'alejandro-manzano', 'austen-gunnels', 'gabriel-perez', 'alexis-alvarez'] },
   { label: { es: 'Bellaire, Texas', en: 'Bellaire, Texas' }, ids: ['ni-yan'] },
-  { label: { es: 'Dallas, Texas', en: 'Dallas, Texas' }, ids: ['mark-mcbroom', 'stephanie-l-garcia-vidal'] },
+  { label: { es: 'Dallas, Texas', en: 'Dallas, Texas' }, ids: ['mark-mcbroom'] },
   { label: { es: 'El Paso, Texas', en: 'El Paso, Texas' }, ids: ['victor-rojas'] },
   { label: { es: 'Chicago, Illinois', en: 'Chicago, Illinois' }, ids: ['andrew-fink', 'ana-patricia-rueda', 'eduardo-garcia'] },
   { label: { es: 'Memphis, Tennessee', en: 'Memphis, Tennessee' }, ids: ['sara-james', 'lupita-valenzuela-martinez', 'roberto-garcia'] },
@@ -588,52 +588,6 @@ export const attorneys: Attorney[] = [
     quote: {
       es: "Guiando a sus clientes con conocimiento, responsabilidad y humanidad.",
       en: "Guiding his clients with knowledge, responsibility, and humanity."
-    }
-  },
-  {
-    id: 'stephanie-l-garcia-vidal',
-    name: 'Stephanie L. Garcia Vidal',
-    image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Stephanie.png',
-    role: { es: 'Abogada', en: 'Attorney' },
-    practice: {
-      // Etiqueta recortada a propósito: con un nombre de 25 caracteres, la
-      // versión larga ("Abogada de Inmigración y Litigio Civil") dejaba el
-      // título de la página en 81 caracteres y Google lo cortaba antes de la
-      // especialidad. Sigue nombrando sus dos áreas reales.
-      label: { es: 'Abogada Civil y de Inmigración', en: 'Civil and Immigration Attorney' },
-      topics: ['Immigration Law', 'Civil Litigation', 'Family Law']
-    },
-    bio: {
-      es: [
-        "Ejerce en la oficina de Dallas del Bufete de Abogados Manuel Solís, donde brinda representación legal comprometida y empática a personas y familias inmigrantes. Su pasión por la abogacía nace del deseo de apoyar a quienes emprendieron un viaje transformador para construir un futuro más seguro y digno.",
-        "Obtuvo su Licenciatura en Ciencias Políticas con una concentración menor en Estudios Legales en la University of Rochester, y su título de Juris Doctor en la Escuela de Derecho de la Universidad Interamericana de Puerto Rico en 2006. Durante sus estudios, se destacó como directora de Relaciones Públicas del capítulo estudiantil de la Federal Bar Association.",
-        "Con más de 17 años de experiencia en litigios civiles, administrativos y de derecho de familia, la abogada García Vidal también cuenta con más de dos años de especialización en derecho migratorio. Su enfoque es estratégico y humano, brindando apoyo eficaz a quienes enfrentan procesos legales complejos.",
-        "Está admitida en el Colegio de Abogados de Puerto Rico y tiene autorización para ejercer ante el Tribunal Federal de Distrito para el Distrito de Puerto Rico.",
-        "Stephanie representa a sus clientes con dedicación, sabiendo que cada caso representa una historia, una familia y un futuro lleno de posibilidades. Su vocación es luchar por quienes necesitan una voz firme a su lado."
-      ],
-      en: [
-        "She practices at the Dallas office of the Law Offices of Manuel Solís, where she provides committed and empathetic legal representation to immigrant individuals and families. Her passion for advocacy stems from the desire to support those who have embarked on a transformative journey to build a safer and more dignified future.",
-        "She obtained her Bachelor's degree in Political Science with a minor in Legal Studies from the University of Rochester, and her Juris Doctor degree from the Interamerican University of Puerto Rico School of Law in 2006. During her studies, she served as Public Relations Director for the student chapter of the Federal Bar Association.",
-        "With over 17 years of experience in civil, administrative, and family law litigation, Attorney García Vidal also has over two years of specialization in immigration law. Her approach is strategic and humane, providing effective support to those facing complex legal processes.",
-        "She is admitted to the Puerto Rico Bar and is authorized to practice before the U.S. District Court for the District of Puerto Rico.",
-        "Stephanie represents her clients with dedication, knowing that each case represents a story, a family, and a future full of possibilities. Her vocation is to fight for those who need a firm voice by their side."
-      ]
-    },
-    seoDescription: {
-      es: 'Stephanie L. García Vidal ejerce en Dallas: 17+ años en litigio civil, administrativo y de familia, y especialización en derecho migratorio.',
-      en: 'Stephanie L. Garcia Vidal practices in Dallas: 17+ years in civil, administrative and family litigation, plus a specialization in immigration law.'
-    },
-    education: [
-      { es: "University of Rochester (Licenciatura en Ciencias Políticas con concentración en Estudios Legales)", en: "University of Rochester (Bachelor's in Political Science with concentration in Legal Studies)" },
-      { es: "Universidad Interamericana de Puerto Rico - Escuela de Derecho (JD, 2006)", en: "Interamerican University of Puerto Rico - School of Law (JD, 2006)" }
-    ],
-    admissions: [
-      "Puerto Rico Bar",
-      { es: "Tribunal de Distrito de EE. UU. (Puerto Rico)", en: "U.S. District Court (Puerto Rico)" }
-    ],
-    quote: {
-      es: "Un compromiso con la esperanza.",
-      en: "A commitment to hope."
     }
   },
   {

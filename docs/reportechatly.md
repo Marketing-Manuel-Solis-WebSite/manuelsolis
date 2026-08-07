@@ -199,7 +199,7 @@ Fuente: `app/lib/cityServiceData.ts:109-383`.
 | **Ni Yan** | Bellaire (Houston) | Inmigración, comunidad asiática; 5,000+ casos; trilingüe (inglés/español/chino) | `:172-193` |
 
 ### 5.3 Abogados por sede
-- **Dallas:** Mark McBroom (`:194-215`), Stephanie L. Garcia Vidal (`:470-502`).
+- **Dallas:** Mark McBroom (`:194-215`).
 - **El Paso:** Victor Rojas (`:290-314`).
 - **Chicago:** Andrew Fink, Ana Patricia Rueda (`:217-237`), Eduardo Garcia (`:394-418`).
 - **Memphis:** Sara James (`:370-393`), Lupita Valenzuela Martinez (`:504-537`), Roberto García (`:539-562`).

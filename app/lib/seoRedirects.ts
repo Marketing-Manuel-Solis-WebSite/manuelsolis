@@ -39,6 +39,7 @@ const DEFUNCT_ATTORNEYS = [
   'stephen-walker',
   'danatayri-morales-vidal-esq',
   'edward-s-reisman',
+  'stephanie-l-garcia-vidal',
 ];
 
 const defunctAttorneyRedirects: Redirect[] = DEFUNCT_ATTORNEYS.flatMap((slug) => [

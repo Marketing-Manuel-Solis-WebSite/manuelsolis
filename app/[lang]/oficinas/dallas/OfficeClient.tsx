@@ -31,14 +31,8 @@ const officeData: OfficeData = {
       image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Mark%20McBroom.png',
       quote: { es: "Representación eficiente y precisa con compasión y comprensión.", en: "Efficient and accurate representation with compassion and understanding." }
     },
-    { 
-      name: 'Stephanie L. García Vidal', 
-      role: { es: 'Abogada', en: 'Attorney' }, 
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Stephanie.png',
-      quote: { es: "Un compromiso con la esperanza.", en: "A commitment to hope." }
-    },
-    { 
-      name: 'Michael Salas', 
+    {
+      name: 'Michael Salas',
       role: { es: 'Abogado', en: 'Attorney' }, 
       image: '/LogoInformacion.png', // Placeholder
       quote: { es: "Defendiendo el futuro de su familia.", en: "Defending your family's future." }
