@@ -130,6 +130,37 @@ export const seoRedirects: Redirect[] = [
   // ============================================================
   { source: '/:lang(es|en)/about', destination: '/:lang/nosotros', permanent: true },
   { source: '/:lang(es|en)/about-us', destination: '/:lang/nosotros', permanent: true },
+
+  // ── Añadidas el 2026-08-10 leyendo los 404 REALES de producción ──
+  // No son slugs hipotéticos: son las rutas que estaban devolviendo 404 en las
+  // últimas 24 horas, con su volumen. Varias ya tenían una variante cubierta
+  // pero no la larga (existía /about-us y faltaba el slug completo del sitio
+  // anterior, que es el que sigue enlazado desde fuera y el que más pega).
+  { source: '/:lang(es|en)/about-us-manuel-solis-law-firm', destination: '/:lang/nosotros', permanent: true }, // 14/día
+  { source: '/:lang(es|en)/locations-law-offices', destination: '/:lang/oficinas', permanent: true }, // 5/día
+  { source: '/:lang(es|en)/locations', destination: '/:lang/oficinas', permanent: true },
+  { source: '/:lang(es|en)/our-offices', destination: '/:lang/oficinas', permanent: true },
+  { source: '/:lang(es|en)/team', destination: '/:lang/abogados', permanent: true },
+  { source: '/:lang(es|en)/our-team', destination: '/:lang/abogados', permanent: true },
+  { source: '/:lang(es|en)/staff', destination: '/:lang/abogados', permanent: true },
+  { source: '/:lang(es|en)/reach-us', destination: '/:lang/consulta', permanent: true },
+  { source: '/:lang(es|en)/get-in-touch', destination: '/:lang/consulta', permanent: true },
+  { source: '/:lang(es|en)/info', destination: '/:lang/informacion/recursos', permanent: true },
+  // Existía /manuel-solis-live-2 y no la versión sin sufijo, que es la que se pide.
+  { source: '/:lang(es|en)/manuel-solis-live', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/live', destination: '/:lang', permanent: true },
+  { source: '/:lang(es|en)/abogados-de-inmigracion', destination: '/:lang/servicios/inmigracion', permanent: true },
+  // El sitio no tiene una página de ciudadanía como servicio; el contenido vivo
+  // sobre el tema está en el blog, así que se manda ahí y no a un genérico.
+  {
+    source: '/:lang(es|en)/como-se-puede-obtener-la-ciudadania-americana',
+    destination: '/:lang/blog/ciudadania-en-espanol-reglas-50-20-55-15',
+    permanent: true,
+  },
+  // Segmentos inventados colgando de una oficina real (/oficinas/chicago/contact,
+  // y una URL malformada con "description:" pegado al slug). Se recoge el
+  // sobrante en vez de dejar la ficha en 404.
+  { source: '/:lang(es|en)/oficinas/:slug/:rest+', destination: '/:lang/oficinas/:slug', permanent: true },
   // Intención de contacto → /consulta (misma intención que /contacto), no /nosotros.
   { source: '/:lang(es|en)/contact', destination: '/:lang/consulta', permanent: true },
   { source: '/:lang(es|en)/contact-us', destination: '/:lang/consulta', permanent: true },
