@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { checkBotId } from 'botid/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { rateLimit } from '../../lib/rateLimit';
+import { reserveChatMessage } from '../../lib/chatBudget';
 import { STREAM_ERROR_MARKER } from '../../lib/chatFormat';
 import {
   DEFAULT_PHONE,
@@ -249,6 +250,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Techo diario global. Va aquí y no antes porque los dos límites de arriba
+    // son gratis y este consulta un almacén compartido; y va antes de hablar
+    // con Anthropic, que es lo único que cuesta dinero.
+    //
+    // Los de arriba son por IP y por instancia: frenan a un visitante insistente
+    // y no frenan mil IPs distintas. Este es el que pone un tope al gasto.
+    const budget = await reserveChatMessage();
+    if (!budget.allowed) {
+      console.error(
+        JSON.stringify({
+          event: 'chat_budget_exhausted',
+          used: budget.used,
+          budget: budget.budget,
+          degraded: budget.degraded,
+        }),
+      );
+      // Se manda al teléfono, que además convierte mejor que el chat.
+      return badRequest(
+        `El asistente ha alcanzado su límite de consultas por hoy. Llámenos al ${DEFAULT_PHONE} y le atendemos en español.`,
+        429,
+        { 'Retry-After': '3600' },
+      );
+    }
+
     // Vercel BotID — Basic Detection, en report-only salvo que se pida bloquear.
     const botMode = process.env.BOTID_MODE ?? 'report-only';
     const verification = await checkBotId();
@@ -397,6 +422,11 @@ export async function POST(request: NextRequest) {
               stop_reason: finished.stop_reason,
               input_tokens: finished.usage.input_tokens,
               output_tokens: finished.usage.output_tokens,
+              // Consumo del día frente al techo, en cada respuesta: es lo que
+              // permite ver cuánto margen queda sin abrir la consola de
+              // Anthropic, y saber si el tope está bien puesto o estorba.
+              budget_used: budget.used,
+              budget_limit: budget.budget,
               timestamp: new Date().toISOString(),
             }),
           );

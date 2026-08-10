@@ -13,7 +13,7 @@ import { LANDING_PAGES } from './cityServiceData';
 import { newsletters } from './newsletterData';
 import { seoRedirects } from './seoRedirects';
 import { accidentOffices } from '../[lang]/servicios/accidentes/accidentesOfficesData';
-import { OFFICES_PLACE_IDS } from './officesRegistry';
+import { OFFICES_PLACE_IDS, isVirtualOffice } from './officesRegistry';
 import { BLOG_DATA } from '../[lang]/blog/page';
 
 export const BASE_URL = 'https://www.manuelsolis.com';
@@ -281,7 +281,15 @@ export function getServiciosEntries(): SitemapURL[] {
   ];
   // Páginas de accidentes por-oficina (/servicios/accidentes/oficinas/<slug>).
   // Derivadas de la fuente de datos: una oficina nueva entra sola al sitemap.
-  const accidentOfficeSlugs = accidentOffices.map((o) => o.id);
+  //
+  // Se excluyen las de dirección virtual, que van con `noindex` (ver el
+  // page.tsx de la plantilla). Un <loc> en el sitemap es una petición explícita
+  // de indexar, así que anunciar una URL que además dice "no me indexes" es una
+  // contradicción que Search Console reporta como error — y gasta rastreo en
+  // páginas que no van a entrar.
+  const accidentOfficeSlugs = accidentOffices
+    .map((o) => o.id)
+    .filter((slug) => !isVirtualOffice(slug));
   for (const slug of accidentOfficeSlugs) {
     entries.push({
       route: `/servicios/accidentes/oficinas/${slug}`,

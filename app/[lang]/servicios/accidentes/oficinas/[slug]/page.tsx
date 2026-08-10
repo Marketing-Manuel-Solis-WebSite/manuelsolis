@@ -10,6 +10,7 @@ import {
 import { generateBreadcrumbSchema } from '../../../../../lib/breadcrumbSchema';
 import { buildOfficeFaqSchema } from '../../../../../lib/officeFaq';
 import { buildSocialMetadata } from '../../../../../lib/seoMetadata';
+import { isVirtualOffice } from '../../../../../lib/officesRegistry';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -94,9 +95,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const base = `/${lang}/servicios/accidentes/oficinas/${slug}`;
   const imageSize = OFFICE_IMAGE_SIZE[office.image];
+
+  /**
+   * Las cinco direcciones virtuales (Regus/IWG) salen del índice.
+   *
+   * Estas 30 fichas comparten "Especialidades" y "Proceso" palabra por palabra
+   * y solo cambian en la tarjeta de contacto: medido sobre el HTML
+   * prerenderizado daban entre 0,72 y 0,79 de similitud entre sí, que es el
+   * patrón que Google llama *doorway pages* — muchas páginas casi iguales
+   * apuntadas a variantes locales de la misma búsqueda. Las FAQ por oficina
+   * bajaron algo esa cifra, pero no la arreglan solas.
+   *
+   * Se eligen las virtuales y no otras cinco porque son las que menos tienen
+   * que decir: son un domicilio de Regus sin personal del despacho en el sitio,
+   * así que una ficha de "oficina de accidentes" ahí no aporta nada que la
+   * página general de la sede no diga ya. Las diez que se retiran son las más
+   * débiles del grupo, no las mejores.
+   *
+   * `follow: true` a propósito: la página se deja de indexar pero sus enlaces
+   * siguen pasando señal hacia la sede y hacia el servicio.
+   *
+   * Lo que NO se toca es /oficinas/<slug> de esas mismas cinco: ahí vive el NAP,
+   * el mapa y las preguntas de la sede, y responde a una intención real ("dónde
+   * queda"). Retirar eso perdería cobertura local de verdad.
+   */
+  const virtual = isVirtualOffice(slug);
+
   return {
     title,
     description,
+    ...(virtual ? { robots: { index: false, follow: true } } : {}),
     alternates: {
       canonical: `${SITE_URL}${base}`,
       languages: {
