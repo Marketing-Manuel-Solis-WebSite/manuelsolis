@@ -131,9 +131,13 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
 
               {/* Name + Role in H1 for SEO */}
               <h1 className="mb-3 leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                {/* Separador invisible: los dos <span> son `block`, así que el
+                    salto lo da el layout y no hay espacio en el texto. Sin él
+                    el H1 se extrae como "Jennifer OlveraMarketing Operations
+                    Manager". Mismo patrón que el hero de la portada. */}
                 <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-white">
                   {collaborator.name}
-                </span>
+                </span>{' '}
                 <span className="block text-[#B2904D] text-lg md:text-xl font-medium mt-2">
                   {collaborator.role[language]}
                 </span>

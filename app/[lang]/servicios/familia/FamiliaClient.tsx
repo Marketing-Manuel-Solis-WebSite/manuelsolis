@@ -82,7 +82,7 @@ export default function FamiliaClient({ lang }: { lang: Language }) {
                   <span className="text-[#B2904D] text-xs font-bold tracking-widest uppercase">{ui.badge}</span>
                 </div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-thin text-white tracking-tight leading-none">
-                  <span className="block text-white/90 font-extralight mb-2">{ui.heroTitle1}</span>
+                  <span className="block text-white/90 font-extralight mb-2">{ui.heroTitle1}</span>{' '}
                   <span className="block font-medium text-[#B2904D] drop-shadow-xl">{ui.heroTitle2}</span>
                 </h1>
                 <Reveal as="div" variant="up" delay={0.15} className="relative pl-6 border-l-2 border-[#B2904D]/50">

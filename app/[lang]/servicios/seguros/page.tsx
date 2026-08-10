@@ -37,6 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/servicios/seguros`,
       title,
       description,
+      images: [
+        {
+          url: '/insurance-hero.png',
+          alt: isEs ? 'Abogados de reclamos de seguros Manuel Solís' : 'Manuel Solis insurance claim lawyers',
+        },
+      ],
     }),
   };
 }

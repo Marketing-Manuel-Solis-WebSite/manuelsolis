@@ -70,7 +70,7 @@ export type BuildOfficeSchemaInput = {
   officeInfo: OfficeInfo;
   description: { es: string; en: string };
   openingHours?: OfficeOpeningHours[];
-  /** Optional override for offices with non-default language support. */
+  /** Sobrescribe la base ['Spanish','English'] cuando una sede suma idiomas. */
   knowsLanguage?: string[];
 };
 
@@ -112,6 +112,29 @@ export async function buildOfficeSchema(
     },
     areaServed: { '@type': 'City', name: input.officeInfo.city },
     sameAs: SAME_AS_BASE,
+    /**
+     * Relación con el despacho.
+     *
+     * Sin esto cada oficina era una entidad suelta con dirección: quien lee el
+     * schema veía quince negocios que se llaman parecido, no quince sedes de
+     * uno. Es lo que permite atribuir a esta dirección los 35 años y los casos
+     * ganados que declara #organization, en vez de dejarla sin historial.
+     *
+     * Se usa `parentOrganization` y no `branchOf` porque es la propiedad viva y
+     * la que más consumidores entienden; las dos serían redundantes.
+     */
+    parentOrganization: {
+      '@type': ['LegalService', 'LawFirm'],
+      '@id': `${SITE_URL}/#organization`,
+      name: ORG_NAME,
+    },
+    /**
+     * Bilingüe en las quince sedes: es un hecho del despacho, no una promesa
+     * por oficina, y es literalmente lo que se pregunta ("abogado de
+     * inmigración que hable español"). Bellaire lo sobrescribe para añadir
+     * chino — ver su page.tsx.
+     */
+    knowsLanguage: ['Spanish', 'English'],
   };
 
   const mapLink = input.officeInfo.mapUrl ?? placeData?.url;
@@ -129,6 +152,8 @@ export async function buildOfficeSchema(
     }));
   }
 
+  // Sustituye la base bilingüe de arriba. Solo lo usa Bellaire, que añade
+  // chino; el resto se queda con Spanish/English.
   if (input.knowsLanguage?.length) {
     schema.knowsLanguage = input.knowsLanguage;
   }

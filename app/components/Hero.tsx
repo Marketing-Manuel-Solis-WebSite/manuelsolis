@@ -169,11 +169,18 @@ export default function Hero({ lang }: { lang: Language }) {
             <div className="space-y-6 sm:space-y-8">
               <h1 className="hero-copy-settle flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 md:gap-6">
                 {/* Prefijo solo para lectores/crawlers: el H1 indexable es
-                    "Abogados de Inmigración & Accidentes" sin tocar el diseño. */}
-                <span className="sr-only">{isEs ? 'Abogados de' : 'Attorneys for'}</span>
+                    "Abogados de Inmigración & Accidentes" sin tocar el diseño.
+                    El espacio final NO es decorativo: la separación visible la
+                    da el `gap` del flex, que no existe en el texto. Sin él,
+                    quien extrae el H1 concatenando nodos —muchos rastreadores y
+                    la mayoría de los extractores de IA— lee "Abogados
+                    deInmigración". Se ve pegado en el titular más importante
+                    del sitio sin que nada falle en pantalla. */}
+                <span className="sr-only">{isEs ? 'Abogados de ' : 'Attorneys for '}</span>
                 <span className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                   {isEs ? 'Inmigración' : 'Immigration'}
                 </span>
+                {/* El span del & ya trae sus propios espacios, no hace falta separador. */}
                 <span className="text-3xl sm:text-4xl md:text-5xl font-thin text-gold-500"> & </span>
                 <span className="relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
                   {isEs ? 'Accidentes' : 'Accidents'}

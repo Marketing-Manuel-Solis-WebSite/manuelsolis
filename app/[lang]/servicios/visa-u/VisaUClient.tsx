@@ -82,7 +82,7 @@ export default function VisaUClient({ lang }: { lang: Language }) {
                   <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">{ui.badge}</span>
                 </div>
                 <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-thin text-white tracking-tight leading-[1.1]">
-                  <span className="block text-white/90">{ui.heroTitle1}</span>
+                  <span className="block text-white/90">{ui.heroTitle1}</span>{' '}
                   <span className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">{ui.heroTitle2}</span>
                 </h1>
                 <div className="h-1 w-24 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full" />

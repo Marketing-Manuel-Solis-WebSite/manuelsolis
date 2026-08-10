@@ -5,6 +5,7 @@ import { getLocalFAQ, getTypicalCases } from '../../lib/cityServiceLocalContent'
 import { buildLandingSchema, LANDING_TO_OFFICE_FOR_REVIEWS } from '../../lib/landingSchema';
 import CityServiceLanding from '../../components/CityServiceLanding';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
+import { landingOgImage } from '../../lib/officePhotos';
 
 const PAGE_SLUG = 'abogado-inmigracion-el-paso';
 const data = getPageData(PAGE_SLUG)!;
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
   const title = config.metaTitle[isEs ? 'es' : 'en'];
   const description = config.metaDescription[isEs ? 'es' : 'en'];
+  const ogImage = landingOgImage(PAGE_SLUG, isEs ? 'es' : 'en');
 
   return {
     title,
@@ -37,6 +39,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       path: `/${lang}/${PAGE_SLUG}`,
       title,
       description,
+      // Foto de la sede de esta ciudad en lugar de la tarjeta genérica: es lo
+      // que se ve al compartir el enlace por WhatsApp. Ver app/lib/officePhotos.ts.
+      images: ogImage ? [ogImage] : undefined,
     }),
     keywords: isEs ? service.keywords.es : service.keywords.en,
   };

@@ -92,7 +92,7 @@ export default function ProteccionLegalClient({ lang }: { lang: 'es' | 'en' }) {
             </span>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white mb-4 tracking-tighter leading-tight px-4">
-              <span className="font-extrabold text-[#B2904D] drop-shadow-lg">{titleFirstWord}</span>
+              <span className="font-extrabold text-[#B2904D] drop-shadow-lg">{titleFirstWord}</span>{' '}
               <span className="block text-white/90">{titleRestWords.join(' ')}</span>
             </h1>
 

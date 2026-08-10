@@ -37,6 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/servicios/familia`,
       title,
       description,
+      images: [
+        {
+          url: '/family-hero.png',
+          alt: isEs ? 'Abogados de inmigración familiar Manuel Solís' : 'Manuel Solis family immigration lawyers',
+        },
+      ],
     }),
   };
 }

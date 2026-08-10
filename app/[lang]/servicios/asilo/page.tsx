@@ -37,6 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/servicios/asilo`,
       title,
       description,
+      images: [
+        {
+          url: '/immigration-hero.png',
+          alt: isEs ? 'Abogados de asilo Manuel Solís' : 'Manuel Solis asylum lawyers',
+        },
+      ],
     }),
   };
 }

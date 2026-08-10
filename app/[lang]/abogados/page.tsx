@@ -40,6 +40,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/abogados`,
       title,
       description,
+      // La foto real del equipo, no la tarjeta genérica: es la página de
+      // "quiénes son", y al compartirla se ve a quiénes.
+      images: [
+        {
+          url: '/MSTeam.png',
+          alt: isEs ? 'Equipo legal de Manuel Solís' : 'Manuel Solis legal team',
+        },
+      ],
     }),
   };
 }

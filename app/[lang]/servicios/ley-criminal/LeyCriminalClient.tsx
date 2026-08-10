@@ -83,7 +83,7 @@ export default function LeyCriminalClient({ lang }: { lang: Language }) {
                   <span className="text-[#B2904D] text-xs font-bold tracking-widest uppercase">{ui.badge}</span>
                 </div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-thin text-white tracking-tight leading-[0.9]">
-                  <span className="block text-white/90 pb-2">{ui.heroTitle1}</span>
+                  <span className="block text-white/90 pb-2">{ui.heroTitle1}</span>{' '}
                   <span className="block font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] pb-4">{ui.heroTitle2}</span>
                 </h1>
                 <Reveal as="p" variant="up" delay={0.15} className="text-lg md:text-xl text-blue-100/70 font-light max-w-xl leading-relaxed border-l border-white/10 pl-4 md:pl-6">

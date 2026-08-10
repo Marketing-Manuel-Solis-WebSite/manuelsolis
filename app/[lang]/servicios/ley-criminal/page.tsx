@@ -37,6 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/servicios/ley-criminal`,
       title,
       description,
+      images: [
+        {
+          url: '/criminal-hero.png',
+          alt: isEs ? 'Abogados de defensa criminal Manuel Solís' : 'Manuel Solis criminal defense lawyers',
+        },
+      ],
     }),
   };
 }

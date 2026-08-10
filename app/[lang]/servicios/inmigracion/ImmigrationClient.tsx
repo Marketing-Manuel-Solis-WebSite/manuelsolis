@@ -105,7 +105,7 @@ export default function ImmigrationClient({ lang }: { lang: Language }) {
 
                 {/* H1 — static server text (LCP), not opacity-gated */}
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-thin text-white tracking-tight leading-[0.9]">
-                  <span className="block text-white/90 pb-2">{t('title1')}</span>
+                  <span className="block text-white/90 pb-2">{t('title1')}</span>{' '}
                   <span className="block font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] pb-4">{t('title2')}</span>
                 </h1>
 

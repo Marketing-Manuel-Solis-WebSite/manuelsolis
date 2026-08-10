@@ -102,7 +102,7 @@ export default function AccidenteOfficePageView({
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-thin text-white tracking-tight leading-none">
                   <span className="block text-white/90 font-extralight mb-2">
                     {isEs ? 'Abogado de Accidentes' : 'Accident Lawyer'}
-                  </span>
+                  </span>{' '}
                   <span className="block font-medium text-[#B2904D] drop-shadow-xl">{tb(office.title)}</span>
                 </h1>
 

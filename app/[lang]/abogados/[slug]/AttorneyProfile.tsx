@@ -116,9 +116,13 @@ export default function AttorneyProfile({ slug, lang }: AttorneyProfileProps) {
 
               {/* Name + Role in H1 for SEO */}
               <h1 className="mb-3 leading-tight drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                {/* Nombre y cargo van en dos `block`, así que el salto lo pone
+                    el layout y no el texto. El separador de abajo no se ve,
+                    pero sin él el H1 se extrae como "Alejandro ManzanoAttorney"
+                    — y este H1 es la señal principal de quién es el experto. */}
                 <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-white">
                   {attorney.name}
-                </span>
+                </span>{' '}
                 <span className="block text-[#B2904D] text-lg md:text-xl font-medium mt-2 flex items-center gap-2">
                   <Scale size={18} />
                   {attorney.role[language]}

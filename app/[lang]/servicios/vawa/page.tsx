@@ -37,6 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/servicios/vawa`,
       title,
       description,
+      images: [
+        {
+          url: '/immigration-hero.png',
+          alt: isEs ? 'Abogados de VAWA Manuel Solís' : 'Manuel Solis VAWA lawyers',
+        },
+      ],
     }),
   };
 }

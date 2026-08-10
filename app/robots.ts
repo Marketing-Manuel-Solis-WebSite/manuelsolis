@@ -91,7 +91,36 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
         allow: '/',
         crawlDelay: 1,
       },
-      // Block AI bots and scrapers
+      // ==========================================================
+      // Agentes de IA. La distinción no es "IA sí / IA no": cada
+      // proveedor usa agentes distintos según para qué, y mezclarlos
+      // hace que uno crea que se está protegiendo cuando en realidad
+      // se está escondiendo, o al revés.
+      //
+      //   · Los de ENTRENAMIENTO leen para alimentar modelos. No
+      //     traen ni una visita, y lo que ingieren no se puede
+      //     retirar después.
+      //   · Los de CONSULTA leen porque alguien acaba de preguntar,
+      //     y de ahí salen la cita y el clic.
+      //
+      // Los de consulta se permiten EXPLÍCITAMENTE. Ya entraban por
+      // el `User-agent: *` de arriba, así que esto no abre nada
+      // nuevo: quita la ambigüedad. Estaban permitidos por descuido
+      // —por no estar nombrados— y así seguirían permitidos a
+      // propósito, aunque mañana alguien añada un bloqueo amplio.
+      // ==========================================================
+      { userAgent: 'OAI-SearchBot', allow: commonAllow, disallow: commonDisallow },
+      { userAgent: 'ChatGPT-User', allow: commonAllow, disallow: commonDisallow },
+      { userAgent: 'Claude-SearchBot', allow: commonAllow, disallow: commonDisallow },
+      { userAgent: 'Claude-User', allow: commonAllow, disallow: commonDisallow },
+      { userAgent: 'PerplexityBot', allow: commonAllow, disallow: commonDisallow },
+      { userAgent: 'Perplexity-User', allow: commonAllow, disallow: commonDisallow },
+      { userAgent: 'Applebot-Extended', allow: commonAllow, disallow: commonDisallow },
+
+      // Entrenamiento: se mantiene el bloqueo. Es una decisión del
+      // despacho y no técnica —un modelo entrenado con estas páginas
+      // puede citar al despacho y equivocarse en materia migratoria, y
+      // eso no se deshace—. Abrirlos es borrar estas cuatro líneas.
       { userAgent: 'GPTBot', disallow: '/' },
       { userAgent: 'CCBot', disallow: '/' },
       { userAgent: 'anthropic-ai', disallow: '/' },

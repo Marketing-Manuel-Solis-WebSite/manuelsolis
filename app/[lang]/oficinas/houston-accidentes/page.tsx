@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import OfficeClient from './OfficeClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
+import { buildMainOfficeFaqs } from '../../../lib/officeFaq';
+import { buildFaqPageSchema } from '../../../lib/faqSchema';
+import FaqSection from '../../../components/FaqSection';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SLUG = 'houston-accidentes';
@@ -79,6 +82,15 @@ export default async function HoustonAccidentesPage({ params }: Props) {
     },
     localeLang,
   );
+  // Preguntas propias de esta sede (dirección, si recibe sin cita, idioma y
+  // sedes hermanas de la misma ciudad). Las MISMAS alimentan el FAQPage, así
+  // que lo marcado es literalmente lo que se lee en la página.
+  const officeFaqs = buildMainOfficeFaqs('houston-accidentes', lang === 'en' ? 'en' : 'es');
+  const faqSchema = buildFaqPageSchema(
+    officeFaqs,
+    `https://www.manuelsolis.com/${lang}/oficinas/houston-accidentes`,
+  );
+
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Oficinas' : 'Offices', url: `/${lang}/oficinas` },
@@ -97,6 +109,17 @@ export default async function HoustonAccidentesPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
       <OfficeClient lang={localeLang} />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+      <FaqSection
+        faqs={officeFaqs}
+        lang={lang === 'en' ? 'en' : 'es'}
+        title={lang === 'en' ? 'About this office' : 'Sobre esta oficina'}
+      />
     </>
   );
 }

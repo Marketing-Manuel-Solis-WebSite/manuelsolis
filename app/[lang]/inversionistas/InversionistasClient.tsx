@@ -378,7 +378,7 @@ export default function InversionistasClient() {
                     <m.span custom={0} variants={textRevealVariant} initial="hidden" animate="visible" className="block text-white/90">
                       {gT(ui.heroTitle1)}
                     </m.span>
-                  </span>
+                  </span>{' '}
                   <span className="block">
                     <m.span custom={1} variants={textRevealVariant} initial="hidden" animate="visible" className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">
                       {gT(ui.heroTitle2)}

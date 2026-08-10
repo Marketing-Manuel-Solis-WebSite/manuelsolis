@@ -37,6 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/servicios/accidentes`,
       title,
       description,
+      images: [
+        {
+          url: '/accident-hero.png',
+          alt: isEs ? 'Abogados de accidentes Manuel Solís' : 'Manuel Solis accident lawyers',
+        },
+      ],
     }),
   };
 }

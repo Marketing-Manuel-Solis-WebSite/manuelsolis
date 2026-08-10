@@ -4,8 +4,11 @@ import Hero from '../components/Hero';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FraudWarningBanner from '../components/FraudWarningBanner';
+import FaqSection from '../components/FaqSection';
 import { buildSocialMetadata } from '../lib/seoMetadata';
 import { buildPageVideoSchemas, HOME_PAGE_VIDEOS } from '../lib/videoSchema';
+import { buildHomeFaqs } from '../lib/homeFaq';
+import { buildFaqPageSchema } from '../lib/faqSchema';
 
 // ISR: regenerar cada hora para mantener fresh sin SSR cost
 export const revalidate = 3600;
@@ -107,6 +110,11 @@ export default async function Home({
     pagePath: `/${currentLang}`,
   });
 
+  // Las mismas preguntas alimentan la sección visible y el FAQPage: no hay dos
+  // listas que puedan desincronizarse, y lo marcado es exactamente lo que se lee.
+  const homeFaqs = buildHomeFaqs(currentLang);
+  const faqSchema = buildFaqPageSchema(homeFaqs, `${SITE_URL}/${currentLang}`);
+
   return (
     <div className="min-h-screen bg-[#001540] grain">
       {videoSchemas.map((schema, i) => (
@@ -117,6 +125,13 @@ export default async function Home({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
+      {faqSchema && (
+        <script
+          id="home-faq-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <Header />
       <main id="main-content" tabIndex={-1}>
         <Hero lang={currentLang} />
@@ -138,6 +153,20 @@ export default async function Home({
         </div>
         <div className="content-auto">
           <Offices lang={currentLang} />
+        </div>
+        {/* FAQ antes del formulario: son las dudas que hacen dudar de rellenarlo
+            —cuánto cuesta, si atienden sin papeles, si esto es el despacho de
+            verdad—, así que van justo antes y no al final de la página. */}
+        <div className="content-auto">
+          <FaqSection
+            faqs={homeFaqs}
+            lang={currentLang}
+            title={
+              currentLang === 'es'
+                ? 'Lo que más nos preguntan'
+                : 'What people ask us most'
+            }
+          />
         </div>
         <div className="content-auto">
           <ContactForm lang={currentLang} />

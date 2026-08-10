@@ -88,7 +88,7 @@ export default function AccidentesClient({ lang }: { lang: Language }) {
 
                 {/* H1 — static server text (LCP) */}
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-thin text-white tracking-tight leading-none">
-                  <span className="block text-white/90 font-extralight mb-2">{t('heroTitle1')}</span>
+                  <span className="block text-white/90 font-extralight mb-2">{t('heroTitle1')}</span>{' '}
                   <span className="block font-medium text-[#B2904D] drop-shadow-xl">{t('heroTitle2')}</span>
                 </h1>
 

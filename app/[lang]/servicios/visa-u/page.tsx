@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import VisaUClient from './VisaUClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
+import { buildFaqPageSchema } from '../../../lib/faqSchema';
+import { resolveFaqs } from './visaUData';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -37,6 +39,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/servicios/visa-u`,
       title,
       description,
+      images: [
+        {
+          url: '/immigration-hero.png',
+          alt: isEs ? 'Abogados de Visa U Manuel Solís' : 'Manuel Solis U visa lawyers',
+        },
+      ],
     }),
   };
 }
@@ -79,6 +87,13 @@ const getServiceSchema = (lang: string) => ({
 export default async function VisaUPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getServiceSchema(lang);
+  // FAQPage sobre las MISMAS preguntas que renderiza el cliente: se leen de
+  // resolveFaqs, no se copian, para que el marcado no pueda divergir del texto.
+  const faqSchema = buildFaqPageSchema(
+    resolveFaqs(lang === 'en' ? 'en' : 'es'),
+    `${SITE_URL}/${lang}/servicios/visa-u`,
+  );
+
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
@@ -96,6 +111,12 @@ export default async function VisaUPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <VisaUClient lang={lang === 'en' ? 'en' : 'es'} />
     </>
   );

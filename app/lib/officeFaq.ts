@@ -23,6 +23,7 @@
 
 import {
   OFFICES_NAP,
+  OFFICE_NAP_SLUGS,
   type OfficeNap,
   type OfficeNapSlug,
   type Weekday,
@@ -173,6 +174,86 @@ export function buildOfficeFaqs(slug: string, lang: 'es' | 'en', zone?: string):
     hoursFaq(nap, lang),
     phoneFaq(nap, lang, zone?.trim() || nap.city),
   ];
+}
+
+/**
+ * Preguntas para la ficha principal de la oficina (/oficinas/<slug>).
+ *
+ * Son OTRAS que las de arriba a propósito. Las quince oficinas tienen dos
+ * plantillas —esta y la de accidentes— y reciclar las mismas tres preguntas
+ * habría trasladado la duplicación de un sitio a otro en vez de quitarla. Así
+ * que estas van enmarcadas en lo que trae a alguien a la ficha general: llegar
+ * al sitio, saber si le van a recibir y saber que ahí se le atiende en su idioma.
+ *
+ * Todo sale de OFFICES_NAP. Lo que no está en el registro —tribunal más cercano,
+ * estacionamiento, transporte público— no se escribe, aunque sería justo el tipo
+ * de contenido local que más ayudaría: habría que inventarlo, y en una ficha de
+ * oficina un dato inventado manda a alguien a la dirección equivocada.
+ */
+export function buildMainOfficeFaqs(slug: string, lang: 'es' | 'en'): OfficeFaq[] {
+  const nap = (OFFICES_NAP as Readonly<Record<string, OfficeNap>>)[slug as OfficeNapSlug];
+  if (!nap) return [];
+
+  const es = lang === 'es';
+  const name = nap.name[lang];
+  const cita = nap.hours.kind === 'appointment';
+  const tz = TZ_LABEL[nap.timeZone];
+
+  // Otras sedes de la misma ciudad. Solo se menciona si existen: en Houston hay
+  // varias y elegir mal cuesta un viaje; en Memphis o Chicago no hay nada que
+  // elegir y la pregunta sobraría.
+  const hermanas = OFFICE_NAP_SLUGS.filter(
+    (s) => s !== slug && OFFICES_NAP[s].city === nap.city,
+  ).map((s) => OFFICES_NAP[s]);
+
+  const faqs: OfficeFaq[] = [
+    {
+      q: es
+        ? `¿Dónde está exactamente la oficina de ${name}?`
+        : `Where exactly is the ${name} office?`,
+      a: es
+        ? `En ${nap.street}, ${nap.city}, ${nap.state} ${nap.zip}. El enlace de mapa de esta página abre la dirección tal como está registrada, que es más fiable que buscar el nombre del despacho: hay negocios con nombres parecidos en varias de estas ciudades.`
+        : `At ${nap.street}, ${nap.city}, ${nap.state} ${nap.zip}. The map link on this page opens the address exactly as registered, which is more reliable than searching the firm's name: several of these cities have businesses with similar names.`,
+    },
+    {
+      q: es
+        ? `¿Puedo ir a ${name} sin cita para un trámite de inmigración?`
+        : `Can I visit ${name} without an appointment for an immigration matter?`,
+      a: cita
+        ? es
+          ? `No. Esta dirección funciona con cita previa: el teléfono ${nap.phone} contesta a cualquier hora, pero en el local no hay personal esperando, así que hay que concertar la visita antes de desplazarse.`
+          : `No. This address works by appointment: the phone ${nap.phone} is answered at any hour, but there is no staff waiting at the location, so the visit has to be arranged before travelling there.`
+        : es
+          ? `Sí, dentro de su horario (${nap.hours.label.es}). Aun así, para un trámite de inmigración conviene llamar antes al ${nap.phone}: así le dicen qué documentos traer y evita un segundo viaje, que es lo que más tiempo cuesta en estos casos.`
+          : `Yes, during opening hours (${nap.hours.label.en}). Even so, for an immigration matter it is worth calling ${nap.phone} first: they will tell you which documents to bring and you avoid a second trip, which is what costs the most time in these cases.`,
+    },
+    {
+      q: es
+        ? `¿Se atiende en español en ${name}?`
+        : `Is service available in Spanish at ${name}?`,
+      a: es
+        ? `Sí. El despacho trabaja en español e inglés en sus quince oficinas, así que no hace falta traer intérprete ni pedir una cita distinta.${
+            slug === 'houston-bellaire' ? ' Esta oficina atiende además en chino.' : ''
+          }${tz ? ` Al llamar, tenga en cuenta que ${nap.city} va en ${tz.es}.` : ''}`
+        : `Yes. The firm works in Spanish and English at all fifteen offices, so there is no need to bring an interpreter or book a different appointment.${
+            slug === 'houston-bellaire' ? ' This office also assists in Chinese.' : ''
+          }${tz ? ` When calling, note that ${nap.city} runs on ${tz.en}.` : ''}`,
+    },
+  ];
+
+  if (hermanas.length > 0) {
+    const lista = hermanas.map((h) => `${h.name[lang]} (${h.street})`).join('; ');
+    faqs.push({
+      q: es
+        ? `¿Hay otra oficina del despacho en ${nap.city}?`
+        : `Is there another office of the firm in ${nap.city}?`,
+      a: es
+        ? `Sí, en ${nap.city} hay ${hermanas.length + 1} direcciones en total: ${lista}. Conviene mirar cuál queda más cerca antes de salir, porque no todas atienden con el mismo horario y algunas son solo con cita.`
+        : `Yes, ${nap.city} has ${hermanas.length + 1} addresses in total: ${lista}. It is worth checking which one is closest before setting out, because they do not all keep the same hours and some are appointment-only.`,
+    });
+  }
+
+  return faqs;
 }
 
 /** FAQPage para el grafo de la página. Vacío si la oficina no está en el registro. */
