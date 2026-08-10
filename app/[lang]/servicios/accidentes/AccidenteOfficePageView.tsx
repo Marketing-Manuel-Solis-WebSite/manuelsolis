@@ -26,9 +26,16 @@ import type { Language } from '../../../lib/translations';
 export default function AccidenteOfficePageView({
   office,
   lang,
+  zone,
 }: {
   office: AccidentOffice;
   lang: Language;
+  /**
+   * Zona corta de la sede ("Dallas, TX", "Upper Kirby, Houston"). La calcula el
+   * page.tsx, que es donde vive `officeZone`, y es la misma que usan el <title>
+   * y el nombre del schema — así los tres dicen lo mismo.
+   */
+  zone: string;
 }) {
   const isEs = lang === 'es';
   const t = (k: keyof typeof ui) => ui[k][lang];
@@ -103,7 +110,12 @@ export default function AccidenteOfficePageView({
                   <span className="block text-white/90 font-extralight mb-2">
                     {isEs ? 'Abogado de Accidentes' : 'Accident Lawyer'}
                   </span>{' '}
-                  <span className="block font-medium text-[#B2904D] drop-shadow-xl">{tb(office.title)}</span>
+                  {/* La segunda línea es solo el lugar. Antes era office.title,
+                      que empieza por "Accidentes en…", y el titular quedaba
+                      "Abogado de Accidentes / Accidentes en Dallas, TX". */}
+                  <span className="block font-medium text-[#B2904D] drop-shadow-xl">
+                    {isEs ? `en ${zone}` : `in ${zone}`}
+                  </span>
                 </h1>
 
                 <div className="h-1 w-20 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full" />

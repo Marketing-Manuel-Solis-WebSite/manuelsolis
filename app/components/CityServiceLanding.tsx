@@ -9,6 +9,17 @@ import {
 import type { LandingPageConfig, OfficeInfo, ServiceInfo } from '../lib/cityServiceData'
 import type { FAQItem, TypicalCase } from '../lib/cityServiceLocalContent'
 import type { Language } from '../lib/translations'
+import { OFFICES_PLACE_IDS, isVirtualOffice } from '../lib/officesRegistry'
+
+/**
+ * Sedes con personal propio. Se DERIVA del registro en vez de escribirse: este
+ * componente pinta 25 landings, así que un número a mano aquí es el mismo dato
+ * publicado 50 veces y ninguna se enteraría si abre o cierra una oficina.
+ * Misma derivación que /nosotros y /servicios/inmigracion.
+ */
+const PHYSICAL_OFFICE_COUNT = Object.keys(OFFICES_PLACE_IDS).filter(
+  (slug) => !isVirtualOffice(slug),
+).length
 import Link from 'next/link'
 import { Reveal, Stagger, StaggerItem, MagneticButton } from './motion'
 import PhoneClickTracker from './PhoneClickTracker'
@@ -133,10 +144,16 @@ export default async function CityServiceLanding({
               liveRating
                 ? { Icon: Star, value: `${liveRating.rating.toFixed(1)}★`, label: isEs ? `${liveRating.userRatingCount} reseñas en Google` : `${liveRating.userRatingCount} Google reviews` }
                 : { Icon: CheckCircle2, value: '100%', label: isEs ? 'Atención bilingüe' : 'Bilingual service' },
-              // 10 sedes con personal propio; las otras cinco direcciones de la
-              // firma son centros de negocios (VIRTUAL_OFFICE_SLUGS) y no se
-              // cuentan aquí como oficinas atendidas.
-              { Icon: Building2, value: '10', label: isEs ? 'Oficinas en 5 estados' : 'Offices in 5 states' },
+              {
+                Icon: Building2,
+                value: String(PHYSICAL_OFFICE_COUNT),
+                // "físicas" en la etiqueta: la cifra excluye a propósito las
+                // cinco direcciones de centro de negocios, así que sin el
+                // calificador estas 25 landings dicen 10 mientras el menú lista
+                // 15 sedes, y se lee como un dato viejo en vez de como dos
+                // cosas distintas.
+                label: isEs ? 'Oficinas físicas en 5 estados' : 'Physical offices in 5 states',
+              },
             ].map(({ Icon, value, label }, i) => (
               <StaggerItem key={i} as="div" variant="up" className="flex flex-col items-center">
                 <Icon className="h-8 w-8 text-[#B2904D] mb-2" />
@@ -284,8 +301,8 @@ export default async function CityServiceLanding({
                     </h3>
                     <p className="text-slate-300 mb-4">
                       {isEs
-                        ? 'Manuel Solís es una firma nacional con 10 oficinas en 5 estados. Además de ' + officeInlineLabel + ', tenemos presencia en Texas, California, Illinois, Colorado y Tennessee.'
-                        : 'Manuel Solis is a national firm with 10 offices in 5 states. In addition to ' + officeInlineLabel + ', we have a presence in Texas, California, Illinois, Colorado, and Tennessee.'}
+                        ? `Manuel Solís es una firma nacional con ${PHYSICAL_OFFICE_COUNT} oficinas físicas en 5 estados. Además de ${officeInlineLabel}, tenemos presencia en Texas, California, Illinois, Colorado y Tennessee.`
+                        : `Manuel Solis is a national firm with ${PHYSICAL_OFFICE_COUNT} physical offices in 5 states. In addition to ${officeInlineLabel}, we have a presence in Texas, California, Illinois, Colorado, and Tennessee.`}
                     </p>
                     <div className="mt-4 space-y-2 text-sm text-slate-400">
                       <p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-[#B2904D]" /> Houston, TX (3 {isEs ? 'oficinas' : 'offices'})</p>

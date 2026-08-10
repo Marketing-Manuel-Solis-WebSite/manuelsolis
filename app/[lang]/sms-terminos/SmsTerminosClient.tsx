@@ -209,7 +209,7 @@ export default function SmsTerminosClient({ lang }: { lang: 'es' | 'en' }) {
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-thin text-white tracking-tight leading-none">
                     <span className="block text-white/90 font-extralight mb-2">
                       {t('hero.title').split(' ')[0]}
-                    </span>
+                    </span>{' '}
                     <span className="block font-medium text-[#B2904D] drop-shadow-2xl">
                       {t('hero.title').split(' ').slice(1).join(' ')}
                     </span>

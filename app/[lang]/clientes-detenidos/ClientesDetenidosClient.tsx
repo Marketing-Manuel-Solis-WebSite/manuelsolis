@@ -193,8 +193,8 @@ export default function ClientesDetenidosClient({ lang }: { lang: 'es' | 'en' })
               <h1
                   className="text-4xl md:text-6xl lg:text-8xl font-thin tracking-tight mb-6"
               >
-                  <span className="block text-white/90">{getT(texts.hero.title1)}</span>
-                  <span className="block text-white/80 text-2xl md:text-4xl lg:text-5xl mt-2 tracking-widest">{getT(texts.hero.title2)}</span>
+                  <span className="block text-white/90">{getT(texts.hero.title1)}</span>{' '}
+                  <span className="block text-white/80 text-2xl md:text-4xl lg:text-5xl mt-2 tracking-widest">{getT(texts.hero.title2)}</span>{' '}
                   <span className="block font-black text-[#B2904D] mt-2 drop-shadow-xl">{getT(texts.hero.title3)}</span>
               </h1>
 

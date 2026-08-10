@@ -62,6 +62,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/testimonios`,
       title,
       description,
+      /**
+       * Portada de la serie "Uniendo Familias", que es contenido de testimonio
+       * real y no una tarjeta genérica.
+       *
+       * Se elige esta y no la miniatura del vídeo (/testimonials/YV01.png)
+       * porque esa pesa 1,6 MB: `og:image` apunta al archivo CRUDO, no al que
+       * optimiza next/image, así que es lo que WhatsApp descarga cada vez que
+       * alguien comparte el enlace. Esta pesa 53 KB.
+       */
+      images: [
+        {
+          url: '/UniendoFamilias_ManuelSolis.png',
+          alt: isEs
+            ? 'Testimonios de clientes de Manuel Solís'
+            : 'Manuel Solis client testimonials',
+        },
+      ],
     }),
   };
 }

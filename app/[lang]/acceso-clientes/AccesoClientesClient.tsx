@@ -323,7 +323,10 @@ export default function AccesoClientesClient() {
                 className="block text-white/95 mb-2"
               >
                 {gT(ui.heroTitle1)}
-              </m.span>
+              </m.span>{' '}
+              {/* El separador no se ve —los dos span son `block`, el salto lo da
+                  el layout— pero sin él el H1 se extrae como "Obtenga avances
+                  sobre su casoen tan solo un clic". */}
               <m.span
                 initial={{ y: 60, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}

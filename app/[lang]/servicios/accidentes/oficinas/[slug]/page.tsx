@@ -211,7 +211,12 @@ export default async function AccidenteOficinaPage({ params }: Props) {
           }}
         />
       )}
-      <AccidenteOfficePageView office={office} lang={localeLang} />
+      {/* `zone` se pasa para que el H1 diga lo mismo que el <title> y que el
+          nombre del schema ("Abogado de Accidentes en {zone}"). Antes el
+          titular se armaba con office.title, que ya empieza por "Accidentes
+          en…", así que salía "Abogado de Accidentes / Accidentes en Dallas, TX"
+          — la palabra repetida en el salto de línea, visible en pantalla. */}
+      <AccidenteOfficePageView office={office} lang={localeLang} zone={zone} />
     </>
   );
 }

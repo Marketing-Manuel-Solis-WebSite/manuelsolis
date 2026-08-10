@@ -28,8 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'Immigration Lawyers in the United States';
 
   const description = isEs
-    ? `Abogados de inmigración con 35+ años y 50,000+ casos ganados. Defensa de deportación, asilo, Visa U, VAWA, residencia y ciudadanía. ${PHYSICAL_OFFICE_COUNT} oficinas en 5 estados.`
-    : `Immigration lawyers with 35+ years and 50,000+ cases won. Deportation defense, asylum, U Visa, VAWA, residency and citizenship. ${PHYSICAL_OFFICE_COUNT} offices in 5 states.`;
+    // "oficinas FÍSICAS", igual que /nosotros. El calificador no es adorno:
+    // esta cifra excluye a propósito las 5 direcciones Regus/IWG, así que sin
+    // él la descripción dice "10 oficinas" mientras el menú lista 15 sedes, y
+    // parece un dato viejo cuando en realidad son dos cosas distintas.
+    ? `Abogados de inmigración con 35+ años y 50,000+ casos ganados. Defensa de deportación, asilo, Visa U, VAWA, residencia y ciudadanía. ${PHYSICAL_OFFICE_COUNT} oficinas físicas en 5 estados.`
+    : `Immigration lawyers with 35+ years and 50,000+ cases won. Deportation defense, asylum, U Visa, VAWA, residency and citizenship. ${PHYSICAL_OFFICE_COUNT} physical offices in 5 states.`;
 
   return {
     title,

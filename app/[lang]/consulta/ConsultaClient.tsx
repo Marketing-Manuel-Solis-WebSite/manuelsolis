@@ -135,7 +135,7 @@ export default function ConsultaClient() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-thin text-white tracking-tighter leading-[1.05] mb-6">
               <span className="block text-white/95">
                 {lang === 'es' ? 'Hablemos de tu' : "Let's talk about"}
-              </span>
+              </span>{' '}
               <span className="block font-black bg-clip-text text-transparent bg-[linear-gradient(110deg,#B2904D_0%,#F3E5AB_25%,#FFFFFF_50%,#F3E5AB_75%,#B2904D_100%)] bg-[length:200%_auto] animate-consulta-shine drop-shadow-[0_0_25px_rgba(178,144,77,0.35)]">
                 {lang === 'es' ? 'caso.' : 'your case.'}
               </span>

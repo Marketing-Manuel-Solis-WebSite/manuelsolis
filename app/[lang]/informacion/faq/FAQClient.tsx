@@ -286,6 +286,18 @@ const BACKDROP_CSS = `
   .faq-wordmark { animation: faq-wordmark 80s linear infinite both; }
   .faq-title-sweep { background-position: 150% 0; animation: faq-title-sweep 7s ease-in-out infinite both; }
   .faq-title-sweep-late { animation-delay: 0.5s; }
+  /*
+    El texto del brillo se pinta desde CSS, no desde el DOM.
+    Antes era un span con aria-hidden y la palabra repetida dentro del titular,
+    y aria-hidden la esconde de los lectores de pantalla pero NO de quien extrae
+    texto: el titular se leía "FREQUENTLYASKEDASKEDQUESTIONSQUESTIONS". Con
+    content: attr() la palabra vive en un atributo, el efecto se ve idéntico y
+    el titular vuelve a decir lo que dice.
+
+    (Sin etiquetas literales en este comentario: acaban dentro del <style> del
+    HTML y confunden a cualquier herramienta que busque titulares en el marcado.)
+  */
+  .faq-title-sweep::after { content: attr(data-sweep); }
   @media (prefers-reduced-motion: reduce) {
     .faq-orb-blue, .faq-orb-sky, .faq-wordmark, .faq-title-sweep { animation: none; }
   }
@@ -439,7 +451,7 @@ export default function FAQClient() {
                       >
                         {lang === 'es' ? 'PREGUNTAS' : 'FREQUENTLY'}
                       </m.span>
-                    </span>
+                    </span>{' '}
                   
                     <span className="block overflow-hidden pb-4 perspective-[400px]">
                       <m.span 
@@ -450,13 +462,12 @@ export default function FAQClient() {
                       >
                         <span className="text-[#B2904D] drop-shadow-xl">
                           {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
-                        </span>
+                        </span>{' '}
                         <span
                           aria-hidden="true"
                           className="faq-title-sweep absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
-                        >
-                          {lang === 'es' ? 'FRECUENTES' : 'ASKED'}
-                        </span>
+                         data-sweep={lang === 'es' ? 'FRECUENTES' : 'ASKED'}
+                        />
                       </m.span>
                     </span>
 
@@ -470,13 +481,12 @@ export default function FAQClient() {
                         >
                           <span className="text-[#B2904D] drop-shadow-xl">
                             QUESTIONS
-                          </span>
+                          </span>{' '}
                           <span
                             aria-hidden="true"
                             className="faq-title-sweep faq-title-sweep-late absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-[length:200%_100%] bg-clip-text text-transparent mix-blend-color-dodge pointer-events-none"
-                          >
-                            QUESTIONS
-                          </span>
+                           data-sweep="QUESTIONS"
+                          />
                         </m.span>
                       </span>
                     )}
