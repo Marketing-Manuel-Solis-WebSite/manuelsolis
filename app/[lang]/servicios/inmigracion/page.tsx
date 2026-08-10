@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import ImmigrationClient from './ImmigrationClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
+import { getServiceFaqs } from '../../../lib/serviceFaq';
+import { buildFaqPageSchema } from '../../../lib/faqSchema';
 import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../../lib/officesRegistry';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -108,6 +110,15 @@ const getImmigrationSchema = (lang: string) => {
 export default async function ImmigrationPage({ params }: Props) {
   const { lang } = await params;
   const schemaData = getImmigrationSchema(lang);
+  // Vacío mientras el bloque de serviceFaq.ts no esté aprobado por un
+  // abogado: sin preguntas no se renderiza la sección ni se emite el
+  // FAQPage, así que el contenido queda listo y sin publicar.
+  const serviceFaqs = getServiceFaqs('inmigracion', lang === 'en' ? 'en' : 'es');
+  const faqSchema = buildFaqPageSchema(
+    serviceFaqs,
+    `https://www.manuelsolis.com/${lang}/servicios/inmigracion`,
+  );
+
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: lang === 'es' ? 'Servicios' : 'Services', url: `/${lang}/servicios` },
@@ -125,7 +136,15 @@ export default async function ImmigrationPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <ImmigrationClient lang={lang === 'en' ? 'en' : 'es'} />
+      {/* Solo sale si el bloque está aprobado: sin preguntas,
+          buildFaqPageSchema devuelve null y aquí no se emite nada. */}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+      <ImmigrationClient lang={lang === 'en' ? 'en' : 'es'} faqs={serviceFaqs} />
     </>
   );
 }

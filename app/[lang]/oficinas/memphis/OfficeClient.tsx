@@ -1,4 +1,5 @@
 import OfficePageView, { type OfficeData, type OfficeUIText } from '../../../components/OfficePageView';
+import type { FaqPair } from '../../../lib/faqSchema';
 
 // --- DATOS ESPECÍFICOS: MEMPHIS ---
 const officeData: OfficeData = {
@@ -75,6 +76,13 @@ const uiText: OfficeUIText = {
   services: { es: 'Servicios Disponibles', en: 'Available Services' }
 };
 
-export default function OfficeClient({ lang }: { lang: 'es' | 'en' }) {
-  return <OfficePageView data={officeData} ui={uiText} lang={lang} />;
+export default function OfficeClient({
+  lang,
+  faqs = [],
+}: {
+  lang: 'es' | 'en';
+  /** Preguntas de esta sede; las resuelve el page.tsx, que tiene el slug del NAP. */
+  faqs?: FaqPair[];
+}) {
+  return <OfficePageView data={officeData} ui={uiText} lang={lang} faqs={faqs} />;
 }

@@ -4,7 +4,6 @@ import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildOfficeSchema } from '../../../lib/officeSchema';
 import { buildMainOfficeFaqs } from '../../../lib/officeFaq';
 import { buildFaqPageSchema } from '../../../lib/faqSchema';
-import FaqSection from '../../../components/FaqSection';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
 
 const SLUG = 'harlingen';
@@ -105,18 +104,13 @@ export default async function HarlingenPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
-      <OfficeClient lang={localeLang} />
+      <OfficeClient lang={localeLang} faqs={officeFaqs} />
       {faqSchema && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <FaqSection
-        faqs={officeFaqs}
-        lang={lang === 'en' ? 'en' : 'es'}
-        title={lang === 'en' ? 'About this office' : 'Sobre esta oficina'}
-      />
     </>
   );
 }

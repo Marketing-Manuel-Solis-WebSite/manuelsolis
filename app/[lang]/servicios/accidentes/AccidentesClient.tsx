@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { PhoneCall, ArrowRight, FileText, Star } from 'lucide-react';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import FaqSection from '../../../components/FaqSection';
+import type { FaqPair } from '../../../lib/faqSchema';
 import ContactForm from '../../../components/ContactForm';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../components/motion';
@@ -18,7 +20,14 @@ import type { Language } from '../../../lib/translations';
  * Reveal/Stagger; cards .card-3d; hero CTA magnetic. page.tsx generateMetadata +
  * JSON-LD untouched.
  */
-export default function AccidentesClient({ lang }: { lang: Language }) {
+export default function AccidentesClient({
+  lang,
+  faqs = [],
+}: {
+  lang: Language;
+  /** Preguntas aprobadas; vacío mientras serviceFaq.ts no las apruebe. */
+  faqs?: FaqPair[];
+}) {
   const isEs = lang === 'es';
   const t = (k: keyof typeof ui) => ui[k][lang];
   const gT = (obj: Parameters<typeof getText>[0]) => getText(obj, lang);
@@ -216,6 +225,14 @@ export default function AccidentesClient({ lang }: { lang: Language }) {
 
         {/* OFICINAS DE ACCIDENTES — direcciones (al final, antes del footer) */}
         <AccidentesOffices lang={lang} />
+        {/* Dentro del <main> y antes del Footer: colgada después del
+            componente que trae el pie, la sección se ve debajo de él. */}
+        <FaqSection
+          faqs={faqs}
+          lang={lang === 'en' ? 'en' : 'es'}
+          title={lang === 'en' ? 'Frequently asked questions' : 'Preguntas frecuentes'}
+        />
+
       </main>
 
       <Footer />

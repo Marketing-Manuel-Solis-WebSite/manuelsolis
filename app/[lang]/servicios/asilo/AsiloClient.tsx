@@ -3,6 +3,8 @@ import type { ElementType } from 'react';
 import { ArrowRight, FileText, Shield, PhoneCall, Search, Send, MapPin, Globe } from 'lucide-react';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import FaqSection from '../../../components/FaqSection';
+import type { FaqPair } from '../../../lib/faqSchema';
 import ContactForm from '../../../components/ContactForm';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../components/motion';
@@ -17,7 +19,14 @@ const STEP_ICONS: Record<StepIconKey, ElementType> = { search: Search, fileText:
  * island + linked offices + process + blog. No FAQ. LCP sacred: home-image.jpg
  * priority + H1 static. page.tsx generateMetadata + JSON-LD untouched.
  */
-export default function AsiloClient({ lang }: { lang: Language }) {
+export default function AsiloClient({
+  lang,
+  faqs = [],
+}: {
+  lang: Language;
+  /** Preguntas aprobadas; vacío mientras serviceFaq.ts no las apruebe. */
+  faqs?: FaqPair[];
+}) {
   const isEs = lang === 'es';
   const ui = resolveUi(lang);
   const tabs = resolveTabs(lang);
@@ -218,6 +227,14 @@ export default function AsiloClient({ lang }: { lang: Language }) {
             </Reveal>
           </div>
         </section>
+        {/* Dentro del <main> y antes del Footer: colgada después del
+            componente que trae el pie, la sección se ve debajo de él. */}
+        <FaqSection
+          faqs={faqs}
+          lang={lang === 'en' ? 'en' : 'es'}
+          title={lang === 'en' ? 'Frequently asked questions' : 'Preguntas frecuentes'}
+        />
+
       </main>
 
       <Footer />

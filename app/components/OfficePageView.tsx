@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import Header from './Header';
 import Footer from './Footer';
+import FaqSection from './FaqSection';
+import type { FaqPair } from '../lib/faqSchema';
 import ContactForm from './ContactForm';
 import TrackedPhoneLink from './TrackedPhoneLink';
 import { Reveal, Stagger, StaggerItem } from './motion';
@@ -90,10 +92,18 @@ export default function OfficePageView({
   data,
   ui,
   lang,
+  faqs = [],
 }: {
   data: OfficeData;
   ui: OfficeUIText;
   lang: Lang;
+  /**
+   * Preguntas propias de esta sede. Llegan como prop y no se calculan aquí
+   * porque `data.id` no es el slug del registro NAP (`houston-kirby` frente a
+   * `kirby`), así que derivarlas de él daría la oficina equivocada en siete de
+   * las quince. El page.tsx sí tiene el slug correcto.
+   */
+  faqs?: FaqPair[];
 }) {
   const t = (obj: BiText) => obj[lang] || obj.es;
   // 14 offices ship a real share.google mapLink; northchase only has a
@@ -353,6 +363,15 @@ export default function OfficePageView({
 
           </div>
         </div>
+        {/* La FAQ va DENTRO del <main> y antes del footer. Colgarla después del
+            <Footer /> —como quedó en el primer intento— la deja fuera del
+            contenido principal: se ve debajo del pie de página y los lectores
+            de pantalla la anuncian tras el final del documento. */}
+        <FaqSection
+          faqs={faqs}
+          lang={lang === 'en' ? 'en' : 'es'}
+          title={lang === 'en' ? 'About this office' : 'Sobre esta oficina'}
+        />
       </main>
 
       <Footer />

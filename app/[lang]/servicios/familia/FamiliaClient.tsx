@@ -3,6 +3,8 @@ import type { ElementType } from 'react';
 import { PhoneCall, ArrowRight, FileText, Star, Scale, MessageSquare } from 'lucide-react';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import FaqSection from '../../../components/FaqSection';
+import type { FaqPair } from '../../../lib/faqSchema';
 import ContactForm from '../../../components/ContactForm';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../components/motion';
@@ -17,7 +19,14 @@ const ICONS: Record<IconKey, ElementType> = { phoneCall: PhoneCall, fileText: Fi
  * family-hero.png priority + H1 static. page.tsx generateMetadata + JSON-LD
  * untouched.
  */
-export default function FamiliaClient({ lang }: { lang: Language }) {
+export default function FamiliaClient({
+  lang,
+  faqs = [],
+}: {
+  lang: Language;
+  /** Preguntas aprobadas; vacío mientras serviceFaq.ts no las apruebe. */
+  faqs?: FaqPair[];
+}) {
   const isEs = lang === 'es';
   const ui = resolveUi(lang);
   const cases = resolveCases(lang);
@@ -175,6 +184,14 @@ export default function FamiliaClient({ lang }: { lang: Language }) {
             </Reveal>
           </div>
         </section>
+        {/* Dentro del <main> y antes del Footer: colgada después del
+            componente que trae el pie, la sección se ve debajo de él. */}
+        <FaqSection
+          faqs={faqs}
+          lang={lang === 'en' ? 'en' : 'es'}
+          title={lang === 'en' ? 'Frequently asked questions' : 'Preguntas frecuentes'}
+        />
+
       </main>
 
       <Footer />
