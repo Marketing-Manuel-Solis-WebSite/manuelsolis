@@ -311,13 +311,35 @@ export function getOficinasEntries(): SitemapURL[] {
   // quedaron FUERA del sitemap, invisibles para el rastreo. Detectado
   // comprobando el sitemap en producción tras el despliegue, no en el build.
   const offices = OFFICE_NAP_SLUGS;
+
+  /**
+   * Fecha de alta de cada oficina, cuando no es la del grupo.
+   *
+   * Las cinco del área de Chicago se publicaron el 2026-08-11 y salían con el
+   * lastmod general de abril: cuatro meses ANTES de existir. Un lastmod viejo en
+   * una URL nueva le dice a Google justo lo contrario de lo que pasa —"aquí no
+   * hay nada nuevo"— y es lo que hace que tarde en rastrearla. Al dar de alta
+   * una oficina, añadir su fecha aquí.
+   */
+  const ALTA: Record<string, string> = {
+    'chicago-martingale': '2026-08-11',
+    'chicago-prospect': '2026-08-11',
+    'chicago-wacker': '2026-08-11',
+    'chicago-burr-ridge': '2026-08-11',
+    'chicago-wall': '2026-08-11',
+  };
+
+  // El índice /oficinas cambió el mismo día: lista cinco sedes más y sus
+  // conteos, así que hereda la fecha más reciente de sus fichas.
+  const indiceLastmod = maxDate(['2026-04-11', ...Object.values(ALTA)]);
+
   const entries: Entry[] = [
-    { route: '/oficinas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
+    { route: '/oficinas', priority: 0.8, changeFrequency: 'monthly', lastModified: indiceLastmod },
     ...offices.map((slug) => ({
       route: `/oficinas/${slug}`,
       priority: 0.8,
       changeFrequency: 'monthly' as ChangeFreq,
-      lastModified: '2026-04-11',
+      lastModified: ALTA[slug] ?? '2026-04-11',
     })),
   ];
   return expandLangs(entries);
