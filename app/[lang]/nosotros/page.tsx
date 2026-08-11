@@ -1,9 +1,9 @@
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
-import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../lib/officesRegistry';
 import { attorneys } from '../../lib/attorneyData';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
 import NosotrosClient from './NosotrosClient';
+import { PHYSICAL_OFFICE_COUNT } from '../../components/officesPhoneMap';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -12,8 +12,6 @@ const FOUNDER_ID = 'manuel-solis';
 // Solo los locales propios: las direcciones virtuales (centros Regus/IWG) están
 // marcadas en officesRegistry y no se anuncian como oficinas. La cifra debe
 // coincidir con el cuerpo de NosotrosClient.tsx.
-const PHYSICAL_OFFICE_COUNT = Object.keys(OFFICES_PLACE_IDS)
-  .filter((slug) => !isVirtualOffice(slug)).length;
 
 type Props = {
   params: Promise<{ lang: string }>;

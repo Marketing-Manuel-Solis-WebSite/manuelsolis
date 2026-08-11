@@ -13,7 +13,8 @@ import { LANDING_PAGES } from './cityServiceData';
 import { newsletters } from './newsletterData';
 import { seoRedirects } from './seoRedirects';
 import { accidentOffices } from '../[lang]/servicios/accidentes/accidentesOfficesData';
-import { OFFICES_PLACE_IDS, isVirtualOffice } from './officesRegistry';
+import { isVirtualOffice } from './officesRegistry';
+import { OFFICE_NAP_SLUGS } from '../components/officesPhoneMap';
 import { BLOG_DATA } from '../[lang]/blog/page';
 
 export const BASE_URL = 'https://www.manuelsolis.com';
@@ -303,8 +304,13 @@ export function getServiciosEntries(): SitemapURL[] {
 
 // Office pages
 export function getOficinasEntries(): SitemapURL[] {
-  // Derivadas del registro central de oficinas (una clave por /oficinas/<slug>).
-  const offices = Object.keys(OFFICES_PLACE_IDS);
+  // Derivadas del NAP, que es lo que define qué oficinas existen.
+  //
+  // Antes salían de OFFICES_PLACE_IDS, o sea de quién tiene ficha de Google: las
+  // cinco direcciones del área de Chicago se publicaron con página propia y se
+  // quedaron FUERA del sitemap, invisibles para el rastreo. Detectado
+  // comprobando el sitemap en producción tras el despliegue, no en el build.
+  const offices = OFFICE_NAP_SLUGS;
   const entries: Entry[] = [
     { route: '/oficinas', priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     ...offices.map((slug) => ({

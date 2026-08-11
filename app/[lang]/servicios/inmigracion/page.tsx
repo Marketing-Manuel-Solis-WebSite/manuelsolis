@@ -4,15 +4,10 @@ import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import { getServiceFaqs } from '../../../lib/serviceFaq';
 import { buildFaqPageSchema } from '../../../lib/faqSchema';
-import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../../lib/officesRegistry';
+import { PHYSICAL_OFFICE_COUNT } from '../../../components/officesPhoneMap';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
-// Solo los locales propios: las direcciones virtuales (centros Regus/IWG) están
-// marcadas en officesRegistry y no se anuncian como oficinas. Misma derivación
-// que /nosotros para que las dos páginas no publiquen cifras distintas.
-const PHYSICAL_OFFICE_COUNT = Object.keys(OFFICES_PLACE_IDS)
-  .filter((slug) => !isVirtualOffice(slug)).length;
 
 type Props = {
   params: Promise<{ lang: string }>;

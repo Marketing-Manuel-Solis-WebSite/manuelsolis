@@ -9,23 +9,14 @@ import {
 import type { LandingPageConfig, OfficeInfo, ServiceInfo } from '../lib/cityServiceData'
 import type { FAQItem, TypicalCase } from '../lib/cityServiceLocalContent'
 import type { Language } from '../lib/translations'
-import { OFFICES_PLACE_IDS, isVirtualOffice } from '../lib/officesRegistry'
 
-/**
- * Sedes con personal propio. Se DERIVA del registro en vez de escribirse: este
- * componente pinta 25 landings, así que un número a mano aquí es el mismo dato
- * publicado 50 veces y ninguna se enteraría si abre o cierra una oficina.
- * Misma derivación que /nosotros y /servicios/inmigracion.
- */
-const PHYSICAL_OFFICE_COUNT = Object.keys(OFFICES_PLACE_IDS).filter(
-  (slug) => !isVirtualOffice(slug),
-).length
 import Link from 'next/link'
 import { Reveal, Stagger, StaggerItem, MagneticButton } from './motion'
 import PhoneClickTracker from './PhoneClickTracker'
 import { getPlaceData } from '../lib/googleReviews'
 import { getOfficePlaceId } from '../lib/officesRegistry'
 import { LANDING_TO_OFFICE_FOR_REVIEWS } from '../lib/landingSchema'
+import { PHYSICAL_OFFICE_COUNT } from './officesPhoneMap';
 
 /* Entrance for the above-the-fold intro and CTAs: transform-only, so the phone
    CTA is already painted in the server HTML instead of waiting for hydration

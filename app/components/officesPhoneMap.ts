@@ -492,6 +492,26 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
 /** Orden estable para recorrer el registro (índice, sitemaps, enlaces). */
 export const OFFICE_NAP_SLUGS = Object.keys(OFFICES_NAP) as OfficeNapSlug[];
 
+/**
+ * Sedes con personal propio, es decir todas menos las direcciones que solo
+ * abren con cita.
+ *
+ * Vive aquí, y una sola vez, por dos motivos:
+ *
+ *   · Estaba repetida en cuatro archivos como
+ *     `Object.keys(OFFICES_PLACE_IDS).filter(s => !isVirtualOffice(s)).length`,
+ *     que además contaba mal: derivaba de QUIÉN TIENE FICHA DE GOOGLE, así que
+ *     una oficina física sin ficha no habría contado. Daba 10 por casualidad.
+ *   · Se deriva de `hours.kind`, que es dato de este mismo módulo, así que no
+ *     arrastra `officesRegistry` (server-only) a componentes de cliente.
+ *
+ * napConsistency verifica que las de solo cita sean exactamente
+ * VIRTUAL_OFFICE_SLUGS, así que las dos fuentes no pueden separarse.
+ */
+export const PHYSICAL_OFFICE_COUNT = OFFICE_NAP_SLUGS.filter(
+  (slug) => OFFICES_NAP[slug].hours.kind !== 'appointment',
+).length;
+
 export function getOfficeNap(slug: string): OfficeNap | undefined {
   return (OFFICES_NAP as Readonly<Record<string, OfficeNap>>)[slug];
 }

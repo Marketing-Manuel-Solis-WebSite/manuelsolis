@@ -5,7 +5,7 @@ import ContactForm from '../../components/ContactForm'
 import { Reveal } from '../../components/motion'
 import Image from 'next/image'
 import { Landmark, MapPin, Scale } from 'lucide-react'
-import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../lib/officesRegistry'
+import { PHYSICAL_OFFICE_COUNT } from '../../components/officesPhoneMap';
 
 /**
  * Nosotros — server-first (Fase 2.3). Purely presentational: the only former
@@ -21,8 +21,6 @@ import { OFFICES_PLACE_IDS, isVirtualOffice } from '../../lib/officesRegistry'
 // Conteo derivado de officesRegistry, que distingue las direcciones virtuales
 // (centros de negocios Regus/IWG) de los locales propios del despacho. La cifra
 // debe coincidir con la description de page.tsx.
-const PHYSICAL_OFFICE_COUNT = Object.keys(OFFICES_PLACE_IDS)
-  .filter((slug) => !isVirtualOffice(slug)).length;
 
 // --- COLEGIOS Y ASOCIACIONES ---
 // Los nombres NO se acuñan aquí: son los mismos rótulos que el sitio ya publica
