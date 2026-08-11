@@ -143,8 +143,11 @@ export default function HeaderProfessional() {
           // pidió el despacho al dar de alta las cinco nuevas.
           name: 'Chicago',
           href: `/${language}/oficinas/chicago`,
+          // Etiquetas = nombre de la calle, que es como las pidió el despacho y
+          // además es lo que cabe en la columna de 210 px del desplegable. La
+          // principal va por su calle igual que las demás: está en Cermak Rd.
           subOffices: [
-            { name: 'Chicago (Cermak)', href: `/${language}/oficinas/chicago` },
+            { name: 'Cermak', href: `/${language}/oficinas/chicago` },
             { name: 'Wacker', href: `/${language}/oficinas/chicago-wacker` },
             { name: 'Martingale', href: `/${language}/oficinas/chicago-martingale` },
             { name: 'Prospect', href: `/${language}/oficinas/chicago-prospect` },
@@ -476,16 +479,40 @@ export default function HeaderProfessional() {
                             {/* Separador */}
                             <div className="w-px bg-white/10 self-stretch" />
 
-                            {/* Otros estados - columna derecha */}
-                            <div className="w-[190px] space-y-5 flex-shrink-0">
+                            {/*
+                              Otros estados - columna derecha.
+
+                              Renderiza `subOffices` cuando una ciudad las tiene,
+                              con el mismo patrón anidado que Houston. Antes solo
+                              pintaba `city.name`, así que al dar de alta las
+                              cinco direcciones del área de Chicago quedaron
+                              INVISIBLES en escritorio: estaban en los datos y en
+                              el menú móvil, y aquí se caían sin que nada fallara.
+                            */}
+                            <div className="w-[210px] space-y-5 flex-shrink-0">
                               {officeNav.slice(1).map((stateGroup) => (
                                 <div key={stateGroup.state}>
                                   <p className="text-xs font-bold text-[#B2904D] uppercase tracking-[0.2em] mb-2 pb-1.5 border-b border-[#B2904D]/20">{stateGroup.state}</p>
-                                  {stateGroup.cities.map((city) => (
-                                    <Link key={city.name} href={city.href} className="group/item flex items-center px-3 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
-                                      <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{city.name}</span>
-                                    </Link>
-                                  ))}
+                                  {stateGroup.cities.map((city) =>
+                                    city.subOffices ? (
+                                      <div key={city.name} className="mb-2">
+                                        <span className="block text-xs font-semibold text-white/80 uppercase tracking-[0.15em] px-3 py-1.5 bg-white/5 rounded-lg mb-1.5">
+                                          {city.name}
+                                        </span>
+                                        <div className="ml-2 pl-3 border-l-2 border-[#B2904D]/25 space-y-0.5">
+                                          {city.subOffices.map((sub) => (
+                                            <Link key={sub.name} href={sub.href} className="group/item flex items-center px-3 py-[6px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                              <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{sub.name}</span>
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <Link key={city.name} href={city.href} className="group/item flex items-center px-3 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                        <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{city.name}</span>
+                                      </Link>
+                                    ),
+                                  )}
                                 </div>
                               ))}
                             </div>
