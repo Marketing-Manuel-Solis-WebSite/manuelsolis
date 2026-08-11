@@ -1,5 +1,9 @@
 // VAWA data (enfoque b). Bilingual source + server resolvers (server-only).
 import type { Language } from '../../../lib/translations';
+import { OFFICE_NAP_SLUGS } from '../../../components/officesPhoneMap';
+
+/** Sedes totales, del registro NAP. Nunca a mano: se desfasa. */
+const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
 
 export type TabIconKey = 'shield' | 'checkCircle2' | 'userCheck' | 'heart' | 'scale';
 export type StepIconKey = 'messageSquare' | 'search' | 'fileText' | 'shieldCheck';
@@ -134,7 +138,8 @@ const ui = {
   requestEvaluation: { es: 'Solicitar Evaluación Confidencial', en: 'Request Confidential Evaluation' },
   contactTitle: { es: 'Protéjase Hoy. Consulta 100% Confidencial.', en: 'Protect Yourself Today. 100% Confidential Consultation.' },
   officesTitle: { es: 'Oficinas a Su Servicio', en: 'Offices at Your Service' },
-  officesSubtitle: { es: 'Atendemos casos VAWA en 15 oficinas en Texas, California, Illinois, Colorado y Tennessee.', en: 'We handle VAWA cases in 15 offices across Texas, California, Illinois, Colorado, and Tennessee.' },
+  // Conteo DERIVADO: ver defensaData.
+  officesSubtitle: { es: `Atendemos casos VAWA en ${TOTAL_LOCATIONS} oficinas en Texas, California, Illinois, Colorado y Tennessee.`, en: `We handle VAWA cases in ${TOTAL_LOCATIONS} offices across Texas, California, Illinois, Colorado, and Tennessee.` },
   blogTitle: { es: 'Artículos Relacionados sobre VAWA', en: 'Related VAWA Articles' },
   phoneCta: { es: 'Llame Ahora', en: 'Call Now' },
 };

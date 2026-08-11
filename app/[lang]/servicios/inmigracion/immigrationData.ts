@@ -2,6 +2,7 @@
 // imported by both the Server Component (ImmigrationClient) and the client
 // island (ImmigrationCases). Plain data + a tiny bilingual helper.
 import type { ElementType } from 'react';
+import { OFFICES_NAP, OFFICE_NAP_SLUGS } from '../../../components/officesPhoneMap';
 import {
   PhoneCall,
   FileText,
@@ -35,11 +36,19 @@ export const getText = (obj: ContentDetail | string, lang: Language): string => 
   return obj[lang] || obj.es;
 };
 
-const ALL_OFFICES = [
-  'Arvada (Denver)', 'Chicago', 'Dallas', 'El Paso', 'Harlingen', 'Bellaire',
-  'Los Angeles', 'Houston Principal', 'Houston Accidentes', 'Houston Main St',
-  'Houston NorthLoop', 'Houston NorthChase', 'Houston Kirby', 'Memphis', 'League City, TX',
-];
+/**
+ * Todas las sedes, DERIVADAS del registro NAP.
+ *
+ * Era una lista a mano de 15 nombres, y cada tarjeta de esta página mostraba
+ * "15 oficinas" a partir de su longitud: al dar de alta las cinco del área de
+ * Chicago la página siguió diciendo 15 mientras el menú listaba 20. Nada
+ * fallaba, porque el número sale de `.length` de una constante local.
+ *
+ * Ahora sale del registro y se mueve solo. Los nombres son los del NAP, así que
+ * tampoco pueden escribirse distinto de como se llaman en el resto del sitio
+ * ("Houston NorthLoop" aquí frente a "North Loop" allá).
+ */
+const ALL_OFFICES = OFFICE_NAP_SLUGS.map((slug) => OFFICES_NAP[slug].name.es);
 
 export const mainCases: CaseItem[] = [
   {

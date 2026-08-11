@@ -12,6 +12,7 @@ import Footer from '../../components/Footer';
 import ContactForm from '../../components/ContactForm';
 import { useDialog } from '../../components/useDialog';
 import { useLanguage } from '../../context/LanguageContext';
+import { PHYSICAL_OFFICE_COUNT } from '../../components/officesPhoneMap';
 
 // --- FUENTE ---
 
@@ -477,10 +478,11 @@ export default function TestimoniosClient({ googleRating = null }: TestimoniosCl
               <div key={repeat} className="flex items-center shrink-0">
                 <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">35+</strong> {language === 'es' ? 'Años de Experiencia' : 'Years of Experience'}</span>
                 <span className="text-[#B2904D]/30 text-xs px-3">★</span>
-                {/* 10 sedes con personal propio; las otras cinco direcciones de
-                    la firma son centros de negocios y no se cuentan como
-                    oficinas atendidas (VIRTUAL_OFFICE_SLUGS en officesRegistry). */}
-                <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">10</strong> {language === 'es' ? 'Oficinas en EE.UU.' : 'U.S. Offices'}</span>
+                {/* Conteo DERIVADO y etiqueta con calificador.
+                    Era un "10" a mano con la etiqueta "Oficinas en EE.UU.": el
+                    número es el de sedes CON PERSONAL, pero sin decirlo se leía
+                    como el total y contradecía al menú, que lista 20. */}
+                <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">{PHYSICAL_OFFICE_COUNT}</strong> {language === 'es' ? 'Oficinas atendidas en EE.UU.' : 'Staffed U.S. Offices'}</span>
                 <span className="text-[#B2904D]/30 text-xs px-3">★</span>
                 <span className="flex items-center gap-2 px-6 text-sm md:text-base font-medium text-white/50 uppercase tracking-wider whitespace-nowrap"><strong className="text-2xl md:text-3xl font-bold text-[#B2904D]">50,000+</strong> {language === 'es' ? 'Familias Reunidas' : 'Families Reunited'}</span>
                 <span className="text-[#B2904D]/30 text-xs px-3">★</span>

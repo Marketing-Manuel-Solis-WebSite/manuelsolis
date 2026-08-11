@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { OFFICE_NAP_SLUGS } from '../../../components/officesPhoneMap';
 import type { ElementType } from 'react';
 import { ArrowRight, FileText, Shield, PhoneCall, AlertTriangle, Siren, Target, CheckCircle2, Landmark, BookOpen, HelpCircle, MapPin } from 'lucide-react';
 import Header from '../../../components/Header';
@@ -9,6 +10,9 @@ import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../component
 import DeportacionCases from './DeportacionCases';
 import { resolveTabs, resolveSteps, resolveFaqs, resolveBlog, getOffices, resolveUi, emergencyPhone, type StepIconKey } from './defensaData';
 import type { Language } from '../../../lib/translations';
+
+/** Sedes totales, del registro NAP. Era '15' a mano. */
+const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
 
 const STEP_ICONS: Record<StepIconKey, ElementType> = { siren: Siren, fileText: FileText, target: Target, checkCircle2: CheckCircle2, landmark: Landmark, bookOpen: BookOpen };
 
@@ -26,7 +30,7 @@ export default function DeportacionClient({ lang }: { lang: Language }) {
   const faqs = resolveFaqs(lang);
   const blog = resolveBlog(lang);
   const offices = getOffices();
-  const stats = [{ value: '35+', label: ui.statsYears }, { value: '50K+', label: ui.statsCases }, { value: '15', label: ui.statsOffices }];
+  const stats = [{ value: '35+', label: ui.statsYears }, { value: '50K+', label: ui.statsCases }, { value: String(TOTAL_LOCATIONS), label: ui.statsOffices }];
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-500 text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">

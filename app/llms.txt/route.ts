@@ -44,7 +44,7 @@ const PRACTICE_AREAS: { path: string; es: string }[] = [
 const KEY_PAGES: { path: string; es: string }[] = [
   { path: '/es', es: 'Portada' },
   { path: '/es/abogados', es: 'Abogados del despacho' },
-  { path: '/es/oficinas', es: 'Las 15 oficinas' },
+  { path: '/es/oficinas', es: 'Todas las oficinas' },
   { path: '/es/blog', es: 'Guías y trámites explicados' },
   { path: '/es/testimonios', es: 'Testimonios de clientes' },
   { path: '/es/informacion/faq', es: 'Preguntas frecuentes' },
@@ -64,7 +64,7 @@ function build(): string {
 
   return `# Law Offices of Manuel Solís
 
-> Despacho de abogados de inmigración y accidentes con 15 oficinas en cinco
+> Despacho de abogados de inmigración y accidentes con ${OFFICE_NAP_SLUGS.length} oficinas en cinco
 > estados de EE. UU. (Texas, Illinois, Tennessee, Colorado y California).
 > Atiende en español e inglés en todas sus sedes.
 
@@ -74,7 +74,7 @@ function build(): string {
 - Sitio web: ${SITE_URL}
 - Teléfono principal: ${DEFAULT_PHONE}
 - WhatsApp: ${WHATSAPP_DISPLAY}
-- Idiomas: español e inglés en las 15 oficinas
+- Idiomas: español e inglés en las ${OFFICE_NAP_SLUGS.length} oficinas
 - Fundador: Manuel Solís
 - El sitio es bilingüe: /es y /en son la misma página en dos idiomas
   (declarado con hreflang). La versión por defecto es /es.

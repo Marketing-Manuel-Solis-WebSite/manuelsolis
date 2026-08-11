@@ -1,5 +1,9 @@
 // Deportation Defense data (enfoque b). Bilingual source + server resolvers.
 import type { Language } from '../../../lib/translations';
+import { OFFICES_NAP, OFFICE_NAP_SLUGS } from '../../../components/officesPhoneMap';
+
+/** Sedes totales, del registro NAP. Nunca a mano: se desfasa. */
+const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
 
 export type TabIconKey = 'scale' | 'lock' | 'shieldAlert' | 'gavel' | 'bookOpen';
 export type StepIconKey = 'siren' | 'fileText' | 'target' | 'checkCircle2' | 'landmark' | 'bookOpen';
@@ -9,14 +13,14 @@ interface RawTab {
   content: { intro: Detail; description: Detail; subTitle?: Detail; subPoints?: Detail[]; solution?: Detail };
 }
 
-const officesList = [
-  { name: 'Arvada (Denver)', slug: 'arvada' }, { name: 'Chicago', slug: 'chicago' }, { name: 'Dallas', slug: 'dallas' },
-  { name: 'El Paso', slug: 'el-paso' }, { name: 'Harlingen', slug: 'harlingen' }, { name: 'Houston Principal', slug: 'houston-principal' },
-  { name: 'Houston Bellaire', slug: 'houston-bellaire' }, { name: 'Houston Accidentes', slug: 'houston-accidentes' },
-  { name: 'Kirby (San Antonio)', slug: 'kirby' }, { name: 'League City', slug: 'league-city' }, { name: 'Los Angeles', slug: 'losangeles' },
-  { name: 'Main St (Houston)', slug: 'main-st' }, { name: 'Memphis', slug: 'memphis' }, { name: 'North Loop (Houston)', slug: 'north-loop' },
-  { name: 'Northchase (Houston)', slug: 'northchase' },
-];
+/**
+ * Las sedes con su slug, DERIVADAS del registro NAP.
+ *
+ * La lista a mano tenia el mismo error de hecho que la de visa-u: decia
+ * 'Kirby (San Antonio)' cuando Kirby es una direccion de HOUSTON. El despacho
+ * no tiene oficina en San Antonio, y esta pagina la anunciaba.
+ */
+const officesList = OFFICE_NAP_SLUGS.map((slug) => ({ name: OFFICES_NAP[slug].name.es, slug }));
 
 const infoTabs: RawTab[] = [
   {
@@ -150,7 +154,8 @@ const ui = {
   faqTitle: { es: 'Preguntas Frecuentes', en: 'Frequently Asked Questions' },
   faqSubtitle: { es: 'Resolvemos sus dudas sobre deportación y defensa migratoria.', en: 'We answer your questions about deportation and immigration defense.' },
   contactTitle: { es: 'Proteja su Futuro en EE.UU.', en: 'Protect Your Future in the U.S.' },
-  officesTitle: { es: '15 Oficinas a su Servicio', en: '15 Offices at Your Service' },
+  // Conteo DERIVADO: era '15' a mano y quedo desfasado al pasar a 20 sedes.
+  officesTitle: { es: `${TOTAL_LOCATIONS} Oficinas a su Servicio`, en: `${TOTAL_LOCATIONS} Offices at Your Service` },
   officesSubtitle: { es: 'Representación legal en persona en todo el país', en: 'In-person legal representation nationwide' },
   detainedLink: { es: 'Ver recursos para detenidos', en: 'View resources for detainees' },
   blogTitle: { es: 'Artículos Relacionados', en: 'Related Articles' },

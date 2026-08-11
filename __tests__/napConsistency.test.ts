@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
@@ -348,6 +348,60 @@ describe('NAP de oficinas — fuente única', () => {
       const occurrences = (block ?? '').split(`'${slug}'`).length - 1;
       expect(occurrences, `${slug} aparece ${occurrences} veces en OFFICE_GROUPS`).toBe(1);
     }
+  });
+
+  it('ningún conteo de oficinas está escrito a mano en el copy', () => {
+    /**
+     * El rollout a 20 sedes dejó tres cifras contradictorias en el sitio a la
+     * vez: la meta de /servicios/inmigracion decía 10, sus tarjetas decían 15
+     * (por `.length` de una lista local) y el menú listaba 20. Ninguna prueba
+     * fallaba, porque cada número era correcto en su propio archivo.
+     *
+     * Esta guarda prohíbe la causa, no los síntomas: un número de oficinas
+     * literal en el copy. Todos deben derivarse de OFFICE_NAP_SLUGS o de
+     * PHYSICAL_OFFICE_COUNT.
+     */
+    const dirs = [
+      path.join(process.cwd(), 'app', 'components'),
+      path.join(process.cwd(), 'app', '[lang]'),
+      path.join(process.cwd(), 'app', 'llms.txt'),
+    ];
+
+    const archivos: string[] = [];
+    const recorrer = (dir: string) => {
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        const f = path.join(dir, e.name);
+        if (e.isDirectory()) recorrer(f);
+        else if (/\.(ts|tsx)$/.test(e.name)) archivos.push(f);
+      }
+    };
+    for (const d of dirs) recorrer(d);
+
+    // Cifra pegada a la palabra "oficina(s)"/"office(s)" en texto, no en clases
+    // de CSS ni en comentarios.
+    const PROHIBIDO = /['"`][^'"`]*\b(1[0-9]|2[0-9])\s+(oficinas?|offices?)\b/i;
+    const culpables: string[] = [];
+
+    for (const f of archivos) {
+      // Los comentarios de bloque se quitan del archivo COMPLETO, no línea a
+      // línea: un JSDoc que explique "antes decía 15 oficinas" es documentación,
+      // no copy, y línea a línea se contaba como infracción. Se reemplazan por
+      // saltos de línea para que los números de línea sigan cuadrando.
+      const src = readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, (m) =>
+        m.replace(/[^\n]/g, ' '),
+      );
+      src.split('\n').forEach((linea, i) => {
+        const limpia = linea.replace(/\/\/.*$/, '');
+        if (PROHIBIDO.test(limpia)) {
+          culpables.push(`${path.relative(process.cwd(), f)}:${i + 1}`);
+        }
+      });
+    }
+
+    expect(
+      culpables,
+      `conteo de oficinas escrito a mano (derivarlo del NAP): ${culpables.join(', ')}`,
+    ).toEqual([]);
   });
 
   it('el explorador de la portada lista TODAS las oficinas', () => {

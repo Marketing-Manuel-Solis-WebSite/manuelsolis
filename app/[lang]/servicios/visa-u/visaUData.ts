@@ -1,5 +1,9 @@
 // Visa U data (enfoque b). Bilingual source + server resolvers (server-only).
 import type { Language } from '../../../lib/translations';
+import { OFFICES_NAP, OFFICE_NAP_SLUGS } from '../../../components/officesPhoneMap';
+
+/** Sedes totales, del registro NAP. Nunca a mano: se desfasa. */
+const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
 
 export type TabIconKey = 'shield' | 'fileCheck' | 'gavel' | 'users' | 'clock';
 export type StepIconKey = 'messageSquare' | 'search' | 'scale' | 'send';
@@ -122,12 +126,19 @@ const faqs: { q: Detail; a: Detail }[] = [
   { q: { es: '¿El agresor se enterará de que solicité la Visa U?', en: 'Will the abuser find out I applied for the U Visa?' }, a: { es: 'USCIS tiene políticas estrictas de confidencialidad para proteger a las víctimas de crímenes. La información de su caso no se comparte con el agresor. Además, existen protecciones adicionales bajo la Sección 384 de la ley IIRIRA que prohíben el uso de información proporcionada por un abusador para iniciar procedimientos migratorios contra la víctima.', en: 'USCIS has strict confidentiality policies to protect crime victims. Your case information is not shared with the abuser. Additionally, there are extra protections under Section 384 of the IIRIRA law that prohibit using information provided by an abuser to initiate immigration proceedings against the victim.' } },
 ];
 
-const offices = [
-  'Houston Principal', 'Houston Bellaire', 'Dallas', 'San Antonio (Main St)',
-  'San Antonio (Kirby)', 'El Paso', 'Harlingen', 'League City',
-  'Houston (North Loop)', 'Houston (Northchase)', 'Houston Accidentes',
-  'Arvada (Colorado)', 'Chicago', 'Memphis', 'Los Angeles',
-];
+/**
+ * Las sedes, DERIVADAS del registro NAP.
+ *
+ * La lista anterior estaba a mano y tenía un error de hecho, no solo de cuenta:
+ * decía "San Antonio (Main St)" y "San Antonio (Kirby)". **Main St y Kirby son
+ * direcciones de Houston** — el despacho no tiene oficina en San Antonio. Esa
+ * página anunciaba una ciudad donde no hay sede, y de paso su longitud pintaba
+ * "15 oficinas" cuando ya son 20.
+ *
+ * Derivarla del NAP arregla las dos cosas y hace imposible la tercera: que los
+ * nombres se escriban distinto de como se llaman en el resto del sitio.
+ */
+const offices = OFFICE_NAP_SLUGS.map((slug) => OFFICES_NAP[slug].name.es);
 
 const blogArticles: { slug: string; title: Detail; category: Detail }[] = [
   { slug: 'permiso-de-trabajo-visa-u', title: { es: 'Permiso de Trabajo con Visa U: Cómo Obtenerlo', en: 'U Visa Work Permit: How to Get It' }, category: { es: 'Visa U', en: 'U Visa' } },
@@ -154,7 +165,8 @@ const ui = {
   contactTitle: { es: 'Proteja sus Derechos Hoy', en: 'Protect Your Rights Today' },
   contactSubtitle: { es: 'Si fue víctima de un crimen en Estados Unidos, podemos ayudarle a obtener estatus legal. La consulta es totalmente confidencial.', en: 'If you were a victim of a crime in the United States, we can help you obtain legal status. The consultation is fully confidential.' },
   officesTitle: { es: 'Oficinas a su Servicio', en: 'Offices at Your Service' },
-  officesSubtitle: { es: 'Atendemos víctimas de crímenes en todo el país desde nuestras 15 oficinas.', en: 'We serve crime victims nationwide from our 15 offices.' },
+  // Conteo DERIVADO: ver defensaData.
+  officesSubtitle: { es: `Atendemos víctimas de crímenes en todo el país desde nuestras ${TOTAL_LOCATIONS} oficinas.`, en: `We serve crime victims nationwide from our ${TOTAL_LOCATIONS} offices.` },
   blogTitle: { es: 'Artículos Relacionados', en: 'Related Articles' },
   blogSubtitle: { es: 'Guías legales escritas por nuestros abogados de Visa U.', en: 'Legal guides written by our U Visa attorneys.' },
   eligibilityTitle: { es: 'Requisitos de Elegibilidad', en: 'Eligibility Requirements' },
