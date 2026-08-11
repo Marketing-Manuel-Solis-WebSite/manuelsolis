@@ -79,7 +79,7 @@ export const accidentOffices: AccidentOffice[] = [
     email: 'chicago@manuelsolis.com',
     hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 8:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 8:00 AM - 4:00 PM' },
     mapLink: 'https://share.google/IwdeP5BMwUKl3rB9G',
-    image: '/offices/Chicago.png',
+    image: '/og/oficina-chicago.jpg',
   },
   {
     id: 'dallas',
@@ -275,7 +275,7 @@ export const accidentOffices: AccidentOffice[] = [
     email: 'leaguecity@manuelsolis.com',
     hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
     mapLink: 'https://share.google/8T736Tycmnh4BZw5o',
-    image: '/offices/League.png',
+    image: '/og/oficina-league-city.jpg',
   },
 ];
 

@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: [
         {
-          url: '/immigration-hero.png',
+          url: '/og/inmigracion.jpg',
           alt: isEs ? 'Abogados de defensa contra deportación Manuel Solís' : 'Manuel Solis deportation defense lawyers',
         },
       ],

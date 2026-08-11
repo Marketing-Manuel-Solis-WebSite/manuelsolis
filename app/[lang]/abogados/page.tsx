@@ -40,11 +40,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/abogados`,
       title,
       description,
-      // La foto real del equipo, no la tarjeta genérica: es la página de
-      // "quiénes son", y al compartirla se ve a quiénes.
+      /**
+       * La foto real del equipo, no la tarjeta genérica: es la página de
+       * "quiénes son", y al compartirla se ve a quiénes.
+       *
+       * Se sirve una versión propia para redes (1600x900, 137 KB) y no el PNG
+       * original: ese pesa 1,6 MB y `og:image` apunta al archivo CRUDO, no al
+       * que optimiza next/image, así que era lo que descargaba WhatsApp en cada
+       * comparticón. Mismo criterio por el que se descartó la miniatura de
+       * /testimonios; aquí lo había incumplido yo.
+       */
       images: [
         {
-          url: '/MSTeam.png',
+          url: '/og/abogados.jpg',
+          width: 1600,
+          height: 900,
           alt: isEs ? 'Equipo legal de Manuel Solís' : 'Manuel Solis legal team',
         },
       ],

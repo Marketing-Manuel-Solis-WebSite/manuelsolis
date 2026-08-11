@@ -206,6 +206,23 @@ export default function Footer() {
              <Link href={`/${language}/politica-editorial`} className="hover:text-[#B2904D] transition-colors">
                {language === 'es' ? 'Política Editorial' : 'Editorial Policy'}
              </Link>
+             <span>|</span>
+             {/*
+               Aviso de suplantación en TODAS las páginas.
+               El banner de fraude solo estaba en la portada, y quien llega por
+               búsqueda o por una respuesta de IA aterriza en un artículo o en
+               una ficha de oficina — nunca la ve. Justo esa persona es a la que
+               apunta la estafa del notario.
+
+               Enlaza al artículo que ya existe sobre el tema en vez de a una
+               página nueva: es contenido real y publicado, no un aviso suelto.
+             */}
+             <Link
+               href={`/${language}/blog/fraude-notarios-inmigracion`}
+               className="font-medium text-[#B2904D]/90 hover:text-[#B2904D] transition-colors"
+             >
+               {language === 'es' ? '⚠ Cuidado con el fraude' : '⚠ Beware of fraud'}
+             </Link>
           </div>
 
           {/* Copyright */}

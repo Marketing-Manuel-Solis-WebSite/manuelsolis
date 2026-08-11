@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: [
         {
-          url: '/accident-hero.png',
+          url: '/og/accidentes.jpg',
           alt: isEs ? 'Abogados de accidentes Manuel Solís' : 'Manuel Solis accident lawyers',
         },
       ],

@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/oficinas/league-city`,
       title,
       description,
-      images: [{ url: '/offices/League.png', width: 1000, height: 1000 }],
+      images: [{ url: '/og/oficina-league-city.jpg', width: 1000, height: 1000 }],
     }),
   };
 }

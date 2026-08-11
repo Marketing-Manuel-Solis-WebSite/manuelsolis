@@ -46,6 +46,10 @@ const SEO_ZONE_SHORT: Record<string, BiText | undefined> = {
  * la imagen de marca (varias fotos son 4:3, una es cuadrada).
  */
 const OFFICE_IMAGE_SIZE: Record<string, { width: number; height: number } | undefined> = {
+  // Versiones ligeras para redes: el PNG original de estas dos pasaba de 500 KB
+  // y og:image apunta al archivo crudo (ver __tests__/ogImageWeight.test.ts).
+  '/og/oficina-chicago.jpg': { width: 1600, height: 900 },
+  '/og/oficina-league-city.jpg': { width: 1600, height: 900 },
   '/offices/Chicago.png': { width: 1200, height: 900 },
   '/offices/Dallas.png': { width: 1200, height: 900 },
   '/offices/Denver.png': { width: 1200, height: 900 },

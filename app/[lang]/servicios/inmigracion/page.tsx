@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : 'Protect your future in the U.S. with expert immigration attorneys.',
       images: [
         {
-          url: '/immigration-hero.png',
+          url: '/og/inmigracion.jpg',
           alt: isEs ? 'Abogados de Inmigración Manuel Solís' : 'Manuel Solis Immigration Lawyers',
         },
       ],

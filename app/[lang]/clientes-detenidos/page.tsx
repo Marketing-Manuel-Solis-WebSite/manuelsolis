@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/clientes-detenidos`,
       title,
       description,
-      images: [{ url: '/immigration-hero.png', width: 1200, height: 630, alt: title }],
+      images: [{ url: '/og/inmigracion.jpg', width: 1200, height: 630, alt: title }],
     }),
   };
 }

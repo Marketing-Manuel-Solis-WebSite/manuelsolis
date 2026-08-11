@@ -632,7 +632,7 @@ export const attorneys: Attorney[] = [
   {
     id: 'roberto-garcia',
     name: 'Roberto García',
-    image: '/Roberto%20Garcia.png',
+    image: '/roberto-garcia.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     bio: {
       es: [

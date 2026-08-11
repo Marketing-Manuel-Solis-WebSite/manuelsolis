@@ -25,12 +25,15 @@ export const OFFICE_PHOTO_BY_SLUG: Readonly<Record<OfficeNapSlug, string>> = {
   'main-st': '/offices/main.png',
   'north-loop': '/offices/ofLoop.png',
   northchase: '/offices/ofNorth.png',
-  'league-city': '/offices/League.png',
+  'league-city': '/og/oficina-league-city.jpg',
   dallas: '/offices/Dallas.png',
   'el-paso': '/offices/el-paso.png',
   harlingen: '/offices/Harlingen.png',
   losangeles: '/offices/los-angeles.png',
-  chicago: '/offices/Chicago.png',
+  // Version ligera: el PNG original pesa 665 KB y og:image apunta al archivo
+  // crudo. El hero de la pagina no pierde nada — es 16:9 y next/image lo
+  // reencoda igual.
+  chicago: '/og/oficina-chicago.jpg',
   // Área de Chicago: la portada de cada una es la ENTRADA de su edificio, con
   // el número de la calle a la vista (10, 125 South Wacker, 1333, 1560). Se
   // eligió así porque estas cinco son direcciones dentro de centros de

@@ -124,7 +124,7 @@ export const collaborators: Collaborator[] = [
   {
     id: 'jennifer-olvera',
     name: 'Jennifer Olvera',
-    image: '/openers/Jennifer.png',
+    image: '/openers/Jennifer.jpg',
     role: {
       es: 'Marketing Operations Manager',
       en: 'Marketing Operations Manager',
