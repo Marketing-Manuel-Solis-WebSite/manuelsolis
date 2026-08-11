@@ -60,8 +60,17 @@ export type OfficeInfo = {
   state: string;
   zip: string;
   phone: string;
-  latitude: string;
-  longitude: string;
+  /**
+   * Coordenadas OPCIONALES.
+   *
+   * Sin ficha de Google no hay `placeData`, así que el `geo` saldría de estos
+   * valores. Una sede recién dada de alta no los tiene, y ponerlos a ojo manda
+   * a la gente a la manzana equivocada — en una ficha de oficina eso es peor
+   * que no publicar coordenadas. Cuando faltan, el schema omite `geo`: Google
+   * geocodifica la dirección postal, que sí es exacta.
+   */
+  latitude?: string;
+  longitude?: string;
   mapUrl?: string;
 };
 
@@ -105,11 +114,6 @@ export async function buildOfficeSchema(
       postalCode: input.officeInfo.zip,
       addressCountry: 'US',
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: placeData?.location?.lat ?? input.officeInfo.latitude,
-      longitude: placeData?.location?.lng ?? input.officeInfo.longitude,
-    },
     areaServed: { '@type': 'City', name: input.officeInfo.city },
     sameAs: SAME_AS_BASE,
     /**
@@ -136,6 +140,15 @@ export async function buildOfficeSchema(
      */
     knowsLanguage: ['Spanish', 'English'],
   };
+
+  // `geo` solo si hay coordenadas de verdad: el pin de la ficha de Google si la
+  // hay, o las declaradas en la página. Si no hay ninguna se omite — ver el
+  // comentario de `latitude` en OfficeInfo.
+  const lat = placeData?.location?.lat ?? input.officeInfo.latitude;
+  const lng = placeData?.location?.lng ?? input.officeInfo.longitude;
+  if (lat != null && lng != null) {
+    schema.geo = { '@type': 'GeoCoordinates', latitude: lat, longitude: lng };
+  }
 
   const mapLink = input.officeInfo.mapUrl ?? placeData?.url;
   if (mapLink) schema.hasMap = mapLink;

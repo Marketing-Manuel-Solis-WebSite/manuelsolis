@@ -17,7 +17,7 @@ import { LANDING_TO_OFFICE_FOR_REVIEWS } from './landingSchema';
  * la misma foto del edificio en el propio sitio. Aquí se replica ese hecho en
  * lugar de inventar tres imágenes distintas.
  */
-const OFFICE_PHOTO: Readonly<Record<OfficeNapSlug, string>> = {
+export const OFFICE_PHOTO_BY_SLUG: Readonly<Record<OfficeNapSlug, string>> = {
   'houston-principal': '/offices/Houston.png',
   'houston-accidentes': '/offices/Houston.png',
   'houston-bellaire': '/offices/Houston.png',
@@ -31,6 +31,16 @@ const OFFICE_PHOTO: Readonly<Record<OfficeNapSlug, string>> = {
   harlingen: '/offices/Harlingen.png',
   losangeles: '/offices/los-angeles.png',
   chicago: '/offices/Chicago.png',
+  // Área de Chicago: la portada de cada una es la ENTRADA de su edificio, con
+  // el número de la calle a la vista (10, 125 South Wacker, 1333, 1560). Se
+  // eligió así porque estas cinco son direcciones dentro de centros de
+  // negocios: lo que le sirve a quien va a una cita es reconocer el portal
+  // desde la calle, no ver un interior que podría ser cualquiera.
+  'chicago-martingale': '/offices/chicago-martingale.jpg',
+  'chicago-prospect': '/offices/chicago-prospect.jpg',
+  'chicago-wacker': '/offices/chicago-wacker.jpg',
+  'chicago-burr-ridge': '/offices/chicago-burr-ridge.jpg',
+  'chicago-wall': '/offices/chicago-wall.jpg',
   arvada: '/offices/Denver.png',
   memphis: '/offices/ofAirways.png',
 };
@@ -49,7 +59,7 @@ export function landingOgImage(
 ): { url: string; alt: string } | null {
   const officeSlug = LANDING_TO_OFFICE_FOR_REVIEWS[landingSlug] as OfficeNapSlug | undefined;
   if (!officeSlug) return null;
-  const url = OFFICE_PHOTO[officeSlug];
+  const url = OFFICE_PHOTO_BY_SLUG[officeSlug];
   if (!url) return null;
 
   const nap = OFFICES_NAP[officeSlug];
@@ -67,7 +77,7 @@ export function officeOgImage(
   officeSlug: string,
   lang: 'es' | 'en',
 ): { url: string; alt: string } | null {
-  const url = OFFICE_PHOTO[officeSlug as OfficeNapSlug];
+  const url = OFFICE_PHOTO_BY_SLUG[officeSlug as OfficeNapSlug];
   if (!url) return null;
   const nap = OFFICES_NAP[officeSlug as OfficeNapSlug];
   return {

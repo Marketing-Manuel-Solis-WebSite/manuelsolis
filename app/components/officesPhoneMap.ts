@@ -71,6 +71,15 @@ export type OfficeNapSlug =
   | 'harlingen'
   | 'losangeles'
   | 'chicago'
+  // Direcciones virtuales del área metropolitana de Chicago, alta de
+  // 2026-08-11. Llevan prefijo `chicago-` porque el despacho las agrupa bajo
+  // ese mercado (igual que las `houston-*`) y porque `/oficinas/wall` o
+  // `/oficinas/prospect` a secas no dicen dónde están.
+  | 'chicago-martingale'
+  | 'chicago-prospect'
+  | 'chicago-wacker'
+  | 'chicago-burr-ridge'
+  | 'chicago-wall'
   | 'arvada'
   | 'memphis';
 
@@ -84,6 +93,42 @@ function weekly(label: BiText, weekdays: OpenInterval, saturday?: OpenInterval):
 }
 
 /** Horario común de las 5 direcciones virtuales (VIRTUAL_OFFICE_SLUGS). */
+/**
+ * Línea general del despacho. Se declara aquí arriba porque OFFICES_NAP la
+ * necesita: `DEFAULT_PHONE` la reexporta más abajo para el resto del sitio, y
+ * así el número sigue viviendo en un solo sitio.
+ */
+const FIRM_MAIN_PHONE = '1-888-676-1238';
+
+/**
+ * Número del mercado de Chicago, compartido por las cinco direcciones nuevas.
+ *
+ * Es el mismo que publica la oficina de Chicago (6000 W Cermak Rd), y es cierto:
+ * quien llama llega al equipo que atiende esas cinco direcciones. Se eligió
+ * frente al 1-888 general por dos razones — el resto de las oficinas publica un
+ * número LOCAL y hay un test que lo exige, y un fijo local convierte mejor que
+ * un gratuito en una pagina de sede.
+ *
+ * No crea conflicto de ficha de Google porque ninguna de las cinco tiene GBP
+ * todavia.
+ *
+ * ⚠️ Es provisional: marketing aun no ha asignado lineas de seguimiento por
+ * sede. Cuando lleguen, cambiar el campo phone de cada entrada.
+ */
+const CHICAGO_MARKET_PHONE = '(312) 477-0389';
+
+/**
+ * Enlace de mapa por búsqueda de dirección.
+ *
+ * Las oficinas antiguas traen un `share.google` acortado, que solo se obtiene a
+ * mano desde Maps. Para una sede nueva, una búsqueda por la dirección exacta
+ * lleva al mismo sitio y no depende de que alguien pegue un enlace: es el mismo
+ * recurso que ya usa officeSchema.ts cuando falta el `mapLink`.
+ */
+function mapsSearch(fullAddress: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
+}
+
 const APPOINTMENT_HOURS: OfficeHours = {
   kind: 'appointment',
   label: {
@@ -311,6 +356,87 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
       { opens: '08:00', closes: '16:00' },
     ),
   },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Área metropolitana de Chicago — direcciones virtuales (alta 2026-08-11)
+  //
+  // `city` es el MUNICIPIO REAL, no "Chicago". Es la misma convención que ya
+  // sigue la oficina `chicago`, cuya dirección está en Cicero: el nombre es la
+  // etiqueta de mercado y `city` es el dato que va al `addressLocality` del
+  // schema y a la ficha de Google. Poner "Chicago" en una dirección de
+  // Schaumburg o Naperville rompería el NAP y con él el posicionamiento local.
+  //
+  // ⚠️ TELÉFONO: las cinco publican el número general del despacho porque
+  // marketing todavía no ha asignado líneas de seguimiento por sede. Es un dato
+  // cierto —contesta el despacho— pero no local. Cambiar el campo `phone` de
+  // cada entrada cuando lleguen los números.
+  // ───────────────────────────────────────────────────────────────────────
+  'chicago-martingale': {
+    slug: 'chicago-martingale',
+    name: { es: 'Martingale', en: 'Martingale' },
+    menuLabel: 'Martingale',
+    street: '10 N Martingale Rd, Ste 4137',
+    city: 'Schaumburg',
+    state: 'IL',
+    zip: '60173',
+    phone: CHICAGO_MARKET_PHONE,
+    timeZone: 'America/Chicago',
+    mapLink: mapsSearch('10 N Martingale Rd, Ste 4137, Schaumburg, IL 60173'),
+    hours: APPOINTMENT_HOURS,
+  },
+  'chicago-prospect': {
+    slug: 'chicago-prospect',
+    name: { es: 'Prospect', en: 'Prospect' },
+    menuLabel: 'Prospect',
+    street: '222 S Prospect Ave, Ste 338',
+    city: 'Park Ridge',
+    state: 'IL',
+    zip: '60068',
+    phone: CHICAGO_MARKET_PHONE,
+    timeZone: 'America/Chicago',
+    mapLink: mapsSearch('222 S Prospect Ave, Ste 338, Park Ridge, IL 60068'),
+    hours: APPOINTMENT_HOURS,
+  },
+  'chicago-wacker': {
+    slug: 'chicago-wacker',
+    name: { es: 'Wacker', en: 'Wacker' },
+    menuLabel: 'Wacker',
+    street: '125 S Wacker Dr, Ste 341',
+    city: 'Chicago',
+    state: 'IL',
+    zip: '60606',
+    phone: CHICAGO_MARKET_PHONE,
+    timeZone: 'America/Chicago',
+    mapLink: mapsSearch('125 S Wacker Dr, Ste 341, Chicago, IL 60606'),
+    hours: APPOINTMENT_HOURS,
+  },
+  'chicago-burr-ridge': {
+    slug: 'chicago-burr-ridge',
+    name: { es: 'Burr Ridge', en: 'Burr Ridge' },
+    menuLabel: 'Burr Ridge',
+    street: '1333 Burr Ridge Pkwy, Ste 244',
+    city: 'Burr Ridge',
+    state: 'IL',
+    zip: '60527',
+    phone: CHICAGO_MARKET_PHONE,
+    timeZone: 'America/Chicago',
+    mapLink: mapsSearch('1333 Burr Ridge Pkwy, Ste 244, Burr Ridge, IL 60527'),
+    hours: APPOINTMENT_HOURS,
+  },
+  'chicago-wall': {
+    slug: 'chicago-wall',
+    name: { es: 'Wall', en: 'Wall' },
+    menuLabel: 'Wall',
+    street: '1560 Wall St, Ste 319',
+    city: 'Naperville',
+    state: 'IL',
+    zip: '60563',
+    phone: CHICAGO_MARKET_PHONE,
+    timeZone: 'America/Chicago',
+    mapLink: mapsSearch('1560 Wall St, Ste 319, Naperville, IL 60563'),
+    hours: APPOINTMENT_HOURS,
+  },
+
   arvada: {
     slug: 'arvada',
     name: { es: 'Arvada (Denver)', en: 'Arvada (Denver)' },
@@ -446,7 +572,7 @@ export const officesPhoneMap: Record<string, string> = Object.fromEntries(
 );
 
 // Número por defecto (global)
-export const DEFAULT_PHONE = '1-888-676-1238';
+export const DEFAULT_PHONE = FIRM_MAIN_PHONE;
 export const DEFAULT_PHONE_LINK = 'tel:+18886761238';
 
 /**

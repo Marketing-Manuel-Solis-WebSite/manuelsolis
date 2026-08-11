@@ -1,5 +1,9 @@
 import 'server-only';
 
+// Solo el tipo: officesPhoneMap es seguro para cliente y los tipos se borran al
+// compilar, así que esto no arrastra nada de este módulo server-only hacia allá.
+import type { OfficeNapSlug } from '../components/officesPhoneMap';
+
 /**
  * Google Place IDs por slug de oficina.
  *
@@ -18,7 +22,22 @@ import 'server-only';
  *
  * See DISCOVERY_v3.md §10.5 + Fase 4 parcial prompt.
  */
-export const OFFICES_PLACE_IDS: Readonly<Record<string, string>> = {
+/**
+ * ⚠️ Este mapa es PARCIAL, y tiene que serlo.
+ *
+ * Antes `OfficeSlug` se derivaba de aquí (`keyof typeof OFFICES_PLACE_IDS`), lo
+ * que dejaba una regla implícita y equivocada: **una oficina no podía existir
+ * sin ficha de Google.** Al dar de alta las cinco direcciones del área de
+ * Chicago —que aún no tienen Google Business Profile— no había forma de
+ * declararlas sin inventarles un placeId.
+ *
+ * Ahora el conjunto de oficinas lo define el NAP (`OfficeNapSlug` en
+ * officesPhoneMap.ts), que es la fuente de verdad de qué sedes existen, y este
+ * mapa solo dice cuáles tienen ficha. Las que no la tienen renderizan su schema
+ * sin los campos derivados de Google, que es el comportamiento que ya estaba
+ * documentado y ahora además es expresable en el tipo.
+ */
+export const OFFICES_PLACE_IDS: Readonly<Partial<Record<OfficeNapSlug, string>>> = {
   'houston-principal':  'ChIJaQljAiS8QIYR47Wqon6VsLo',
   'houston-bellaire':   'ChIJM8zmi1nCQIYRbCqQqM1ZVpw',
   'houston-accidentes': 'ChIJcWaLtle9QIYRevi9QwqESqg',
@@ -41,9 +60,13 @@ export const OFFICES_PLACE_IDS: Readonly<Record<string, string>> = {
  * a nivel firma (renderizado en app/[lang]/layout.tsx). Apunta a la
  * oficina histórica principal — Houston Principal.
  */
-export const MAIN_FIRM_PLACE_ID = OFFICES_PLACE_IDS['houston-principal'];
+// El `!` es deliberado: houston-principal SIEMPRE tiene ficha, y si alguien la
+// quita del mapa conviene que falle aquí y no que el rating de la firma
+// desaparezca en silencio de todo el sitio.
+export const MAIN_FIRM_PLACE_ID = OFFICES_PLACE_IDS['houston-principal']!;
 
-export type OfficeSlug = keyof typeof OFFICES_PLACE_IDS;
+/** El slug canónico de una oficina lo define el NAP, no su ficha de Google. */
+export type OfficeSlug = OfficeNapSlug;
 
 /**
  * Lookup helper. Returns null when the slug is not in the registry,
@@ -85,6 +108,16 @@ export const VIRTUAL_OFFICE_SLUGS = [
   'main-st',
   'kirby',
   'league-city',
+  // Área metropolitana de Chicago (alta 2026-08-11). El propio despacho las
+  // pidió como "oficinas virtuales", así que entran aquí desde el primer día:
+  // sin horario estructurado en el schema, sin contar como oficina física y sin
+  // ficha de accidentes propia — que es lo que evita repetir el cúmulo de
+  // casi-duplicados que hubo que retirar del índice en las otras cinco.
+  'chicago-martingale',
+  'chicago-prospect',
+  'chicago-wacker',
+  'chicago-burr-ridge',
+  'chicago-wall',
 ] as const satisfies readonly OfficeSlug[];
 
 /** true si el slug corresponde a una dirección de oficina virtual. */

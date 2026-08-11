@@ -187,16 +187,24 @@ function collectDivergences(): Divergence[] {
     // 1. officesPhoneMap (Header, MobileStickyBar, landings ciudad-servicio).
     compare(slug, 'officesPhoneMap', 'phone', nap.phone, officesPhoneMap[slug], found);
 
-    // 2. accidentesOfficesData (/servicios/accidentes y sus 15 páginas por oficina).
+    // 2. accidentesOfficesData (/servicios/accidentes y sus páginas por oficina).
+    //
+    // No todas las oficinas tienen ficha de accidentes, y es deliberado: ese
+    // grupo era un cúmulo de casi-duplicados del que hubo que retirar del índice
+    // las cinco direcciones virtuales de Houston. Las cinco nuevas de Chicago no
+    // entran para no volver a crearlo. Cuáles quedan fuera se fija más abajo, en
+    // su propio test, para que nadie retire una por descuido.
     const accident = accidentOffices.find((office) => office.id === slug);
     if (!accident) {
-      found.push({
-        slug,
-        field: 'address',
-        source: 'accidentesOfficesData',
-        canonical: address,
-        found: '(oficina ausente)',
-      });
+      if (!SIN_FICHA_DE_ACCIDENTES.has(slug)) {
+        found.push({
+          slug,
+          field: 'address',
+          source: 'accidentesOfficesData',
+          canonical: address,
+          found: '(oficina ausente)',
+        });
+      }
     } else {
       compare(slug, 'accidentesOfficesData', 'phone', nap.phone, accident.phone, found);
       compare(slug, 'accidentesOfficesData', 'address', address, accident.address, found);
@@ -204,6 +212,15 @@ function collectDivergences(): Divergence[] {
       compare(slug, 'accidentesOfficesData', 'hours.en', nap.hours.label.en, accident.hours.en, found);
       compare(slug, 'accidentesOfficesData', 'mapLink', nap.mapLink, accident.mapLink, found);
     }
+
+    // Las oficinas nuevas no COPIAN el NAP: lo leen con getOfficeNap(SLUG), así
+    // que no hay literales que puedan divergir y no hay nada que comparar.
+    //
+    // Este test nació porque las páginas antiguas repiten dirección, teléfono,
+    // horario y mapa en tres archivos cada una, y esas copias se
+    // desincronizaban. Una página derivada no puede desincronizarse: exigirle un
+    // OFFICE_INFO literal sería premiar el patrón que causó el problema.
+    if (derivaDelNap(slug)) continue;
 
     // 3. OfficeClient.tsx (ficha visible de /oficinas/[slug]).
     const client = extractOfficeClient(slug);
@@ -229,6 +246,35 @@ function collectDivergences(): Divergence[] {
   return found;
 }
 
+/**
+ * Oficinas que a propósito NO tienen página de accidentes por sede.
+ *
+ * Las cinco direcciones nuevas del área de Chicago. El grupo de fichas de
+ * accidentes era el cúmulo de casi-duplicados más persistente del sitio —
+ * midió hasta 0,79 de similitud entre sí— y de él ya se retiraron del índice
+ * las cinco virtuales de Houston. Añadir cinco más lo reconstruiría.
+ */
+const SIN_FICHA_DE_ACCIDENTES = new Set<string>([
+  'chicago-martingale',
+  'chicago-prospect',
+  'chicago-wacker',
+  'chicago-burr-ridge',
+  'chicago-wall',
+]);
+
+/**
+ * true si la página de esa oficina lee el NAP en vez de copiarlo.
+ *
+ * Se comprueba en los DOS archivos: si uno derivara y el otro copiara, la copia
+ * seguiría pudiendo divergir y hay que seguir vigilándola.
+ */
+function derivaDelNap(slug: string): boolean {
+  const dir = path.join(OFFICES_DIR, slug);
+  const page = readFileSync(path.join(dir, 'page.tsx'), 'utf8');
+  const client = readFileSync(path.join(dir, 'OfficeClient.tsx'), 'utf8');
+  return page.includes('getOfficeNap(SLUG)') && client.includes('getOfficeNap(SLUG)');
+}
+
 function isKnown(divergence: Divergence): boolean {
   return KNOWN_DIVERGENCES.some(
     (known) =>
@@ -245,8 +291,37 @@ function describeDivergence(divergence: Divergence): string {
 }
 
 describe('NAP de oficinas — fuente única', () => {
-  it('cubre exactamente los slugs registrados en officesRegistry', () => {
-    expect([...OFFICE_NAP_SLUGS].sort()).toEqual(Object.keys(OFFICES_PLACE_IDS).sort());
+  it('toda ficha de Google apunta a una oficina que existe en el NAP', () => {
+    // La comprobación va en ESTA dirección y no al revés.
+    //
+    // Antes exigía igualdad entre los dos conjuntos, lo que imponía una regla
+    // implícita y equivocada: que una oficina no podía existir sin ficha de
+    // Google. Al dar de alta las cinco direcciones del área de Chicago —sin GBP
+    // todavía— no habrían podido declararse sin inventarles un placeId.
+    //
+    // Lo que sí es un error es lo contrario: un placeId apuntando a un slug que
+    // no existe en el NAP significa que alguien renombró o retiró una oficina y
+    // dejó la ficha huérfana, y eso sí se caza aquí.
+    for (const slug of Object.keys(OFFICES_PLACE_IDS)) {
+      expect(
+        (OFFICE_NAP_SLUGS as readonly string[]).includes(slug),
+        `${slug} tiene ficha de Google pero no existe en OFFICES_NAP`,
+      ).toBe(true);
+    }
+  });
+
+  it('las oficinas sin ficha de Google son solo las altas recientes', () => {
+    // No es un requisito técnico: es un recordatorio. Cuando marketing cree la
+    // ficha de una de estas, este test falla y obliga a quitarla de la lista, que
+    // es la forma de no olvidarse de que quedaron pendientes.
+    const sinFicha = OFFICE_NAP_SLUGS.filter((slug) => !(slug in OFFICES_PLACE_IDS)).sort();
+    expect(sinFicha).toEqual([
+      'chicago-burr-ridge',
+      'chicago-martingale',
+      'chicago-prospect',
+      'chicago-wacker',
+      'chicago-wall',
+    ]);
   });
 
   it('officesPhoneMap se deriva del registro NAP', () => {
@@ -273,6 +348,15 @@ describe('NAP de oficinas — fuente única', () => {
       const occurrences = (block ?? '').split(`'${slug}'`).length - 1;
       expect(occurrences, `${slug} aparece ${occurrences} veces en OFFICE_GROUPS`).toBe(1);
     }
+  });
+
+  it('solo las altas de Chicago quedan sin página de accidentes', () => {
+    // Fija el conjunto: si alguien retira la ficha de accidentes de una oficina
+    // existente, o crea una para las nuevas, este test lo dice.
+    const sinFicha = OFFICE_NAP_SLUGS.filter(
+      (slug) => !accidentOffices.some((office) => office.id === slug),
+    ).sort();
+    expect(sinFicha).toEqual([...SIN_FICHA_DE_ACCIDENTES].sort());
   });
 
   it('las oficinas de solo cita son exactamente las direcciones virtuales', () => {

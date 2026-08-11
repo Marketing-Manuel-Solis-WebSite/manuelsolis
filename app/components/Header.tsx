@@ -136,7 +136,23 @@ export default function HeaderProfessional() {
     },
     {
       state: 'Illinois',
-      cities: [{ name: 'Chicago', href: `/${language}/oficinas/chicago` }],
+      cities: [
+        {
+          // Mismo desglose que Houston: la ciudad de referencia abre y las
+          // direcciones del área se listan por su calle. Es literalmente lo que
+          // pidió el despacho al dar de alta las cinco nuevas.
+          name: 'Chicago',
+          href: `/${language}/oficinas/chicago`,
+          subOffices: [
+            { name: 'Chicago (Cermak)', href: `/${language}/oficinas/chicago` },
+            { name: 'Wacker', href: `/${language}/oficinas/chicago-wacker` },
+            { name: 'Martingale', href: `/${language}/oficinas/chicago-martingale` },
+            { name: 'Prospect', href: `/${language}/oficinas/chicago-prospect` },
+            { name: 'Burr Ridge', href: `/${language}/oficinas/chicago-burr-ridge` },
+            { name: 'Wall', href: `/${language}/oficinas/chicago-wall` },
+          ],
+        },
+      ],
     },
     {
       state: 'Colorado',

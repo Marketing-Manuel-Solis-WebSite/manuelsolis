@@ -64,7 +64,25 @@ const OFFICE_GROUPS: StateGroup[] = [
   },
   {
     state: { es: 'Illinois', en: 'Illinois' },
-    slugs: ['chicago'],
+    cityGroups: [
+      {
+        // Igual que Houston: las direcciones del área metropolitana se agrupan
+        // bajo la ciudad de referencia y se distinguen por su calle, que es
+        // como las pidió el despacho. `city` de cada una sigue siendo su
+        // municipio real (Schaumburg, Park Ridge, Burr Ridge, Naperville) —
+        // esta agrupación es de navegación, no de dirección postal.
+        city: { es: 'Chicago', en: 'Chicago' },
+        slugs: [
+          'chicago',
+          'chicago-wacker',
+          'chicago-martingale',
+          'chicago-prospect',
+          'chicago-burr-ridge',
+          'chicago-wall',
+        ],
+      },
+    ],
+    slugs: [],
   },
   {
     state: { es: 'Colorado', en: 'Colorado' },
@@ -76,8 +94,10 @@ const OFFICE_GROUPS: StateGroup[] = [
   },
 ];
 
-// Conteos derivados del registro: 10 oficinas atendidas + 5 direcciones
-// virtuales Regus/IWG que solo abren con cita (VIRTUAL_OFFICE_SLUGS).
+// Conteos DERIVADOS del registro, nunca escritos: hoy son 10 oficinas
+// atendidas + 10 direcciones que solo abren con cita (VIRTUAL_OFFICE_SLUGS),
+// tras dar de alta las cinco del área de Chicago el 2026-08-11. Al añadir una
+// sede estos números se mueven solos — no hay que buscarlos por el sitio.
 const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
 const APPOINTMENT_LOCATIONS = VIRTUAL_OFFICE_SLUGS.length;
 const STAFFED_OFFICES = TOTAL_LOCATIONS - APPOINTMENT_LOCATIONS;
