@@ -350,6 +350,23 @@ describe('NAP de oficinas — fuente única', () => {
     }
   });
 
+  it('el explorador de la portada lista TODAS las oficinas', () => {
+    // OfficesExplorer lleva su lista a mano (necesita foto, título y servicios
+    // por oficina, que no están en el NAP). Por eso las cinco altas de Chicago
+    // aparecieron en el registro, el sitemap, el índice y el menú, y NO en el
+    // explorador de la portada — que es el sitio más visible de todos, y donde
+    // el despacho notó que faltaban.
+    //
+    // Nada fallaba: ni el build, ni tsc, ni seo:check. Solo se veía abriendo la
+    // portada. Esta guarda existe para que la próxima vez falle un test.
+    const src = readFileSync(
+      path.join(process.cwd(), 'app', 'components', 'OfficesExplorer.tsx'),
+      'utf8',
+    );
+    const faltan = OFFICE_NAP_SLUGS.filter((slug) => !src.includes(`slug: '${slug}'`));
+    expect(faltan, `sin entrada en OfficesExplorer: ${faltan.join(', ')}`).toEqual([]);
+  });
+
   it('solo las altas de Chicago quedan sin página de accidentes', () => {
     // Fija el conjunto: si alguien retira la ficha de accidentes de una oficina
     // existente, o crea una para las nuevas, este test lo dice.

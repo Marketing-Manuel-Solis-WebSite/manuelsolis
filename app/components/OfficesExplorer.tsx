@@ -55,6 +55,22 @@ const ORIGINAL_DESC = {
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.'
 };
 
+/**
+ * Servicios de las direcciones con cita del área de Chicago.
+ *
+ * Los mismos cinco para las cinco, y a propósito: son lo que se atiende con
+ * cita en una sala del centro de negocios. La sede de Cermak lista siete
+ * —incluye trámites que necesitan personal en sitio, como tickets o detenidos—
+ * y copiarlos aquí prometería en cinco direcciones algo que no se hace en ellas.
+ */
+const CHICAGO_APPOINTMENT_SERVICES: BiText[] = [
+  { es: 'Inmigración', en: 'Immigration' },
+  { es: 'Defensa contra deportación', en: 'Deportation Defense' },
+  { es: 'Asilo', en: 'Asylum' },
+  { es: 'Familiar', en: 'Family Law' },
+  { es: 'Accidentes', en: 'Accidents' },
+];
+
 // --- DATOS DE PRESENTACIÓN ---
 const officePresentations: OfficePresentation[] = [
   {
@@ -166,6 +182,55 @@ const officePresentations: OfficePresentation[] = [
         { es: 'Detenidos', en: 'Detained' }
     ],
   },
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Área metropolitana de Chicago — direcciones con cita (alta 2026-08-11).
+  //
+  // ⚠️ ESTA LISTA ES A MANO, no derivada del NAP. Es la razón por la que las
+  // cinco no aparecían en el explorador de la portada aunque sí estuvieran en
+  // el registro, en el sitemap, en el índice y en el menú móvil: el resto del
+  // sitio las heredó solas y este archivo no. Al dar de alta una oficina hay
+  // que añadirla AQUÍ además del NAP.
+  //
+  // Los servicios son los que de verdad se atienden en una dirección con cita
+  // del área: no se copian los siete de la sede de Cermak, que tiene personal.
+  // ───────────────────────────────────────────────────────────────────────
+  {
+    slug: 'chicago-wacker',
+    title: { es: 'Wacker (Chicago)', en: 'Wacker (Chicago)' },
+    description: ORIGINAL_DESC,
+    image: '/offices/chicago-wacker.jpg',
+    services: CHICAGO_APPOINTMENT_SERVICES,
+  },
+  {
+    slug: 'chicago-martingale',
+    title: { es: 'Martingale (Schaumburg)', en: 'Martingale (Schaumburg)' },
+    description: ORIGINAL_DESC,
+    image: '/offices/chicago-martingale.jpg',
+    services: CHICAGO_APPOINTMENT_SERVICES,
+  },
+  {
+    slug: 'chicago-prospect',
+    title: { es: 'Prospect (Park Ridge)', en: 'Prospect (Park Ridge)' },
+    description: ORIGINAL_DESC,
+    image: '/offices/chicago-prospect.jpg',
+    services: CHICAGO_APPOINTMENT_SERVICES,
+  },
+  {
+    slug: 'chicago-burr-ridge',
+    title: { es: 'Burr Ridge', en: 'Burr Ridge' },
+    description: ORIGINAL_DESC,
+    image: '/offices/chicago-burr-ridge.jpg',
+    services: CHICAGO_APPOINTMENT_SERVICES,
+  },
+  {
+    slug: 'chicago-wall',
+    title: { es: 'Wall (Naperville)', en: 'Wall (Naperville)' },
+    description: ORIGINAL_DESC,
+    image: '/offices/chicago-wall.jpg',
+    services: CHICAGO_APPOINTMENT_SERVICES,
+  },
+
   {
     slug: 'memphis',
     title: { es: 'Memphis', en: 'Memphis' },
