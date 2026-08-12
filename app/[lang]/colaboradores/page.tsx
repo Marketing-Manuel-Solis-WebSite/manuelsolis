@@ -40,6 +40,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/colaboradores`,
       title,
       description,
+      // la foto real del equipo, la misma que /abogados. 1600x900, ligera: og:image apunta al archivo crudo.
+      images: [
+        {
+          url: '/og/abogados.jpg',
+          width: 1600,
+          height: 900,
+          alt: isEs ? 'Equipo de Manuel Solís' : 'The Manuel Solis team',
+        },
+      ],
     }),
   };
 }

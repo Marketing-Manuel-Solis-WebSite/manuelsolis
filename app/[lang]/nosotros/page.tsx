@@ -48,6 +48,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/nosotros`,
       title,
       description,
+      // la historia del despacho es la de su fundador. 1600x900, ligera: og:image apunta al archivo crudo.
+      images: [
+        {
+          url: '/og/nosotros.jpg',
+          width: 1600,
+          height: 900,
+          alt: isEs ? 'Manuel Solís, abogado fundador del despacho' : 'Manuel Solis, the firm’s founding attorney',
+        },
+      ],
     }),
   };
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getServiceAttorneys } from '../../../lib/serviceAttorneys';
 import DeportacionClient from './DeportacionClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
@@ -120,7 +121,7 @@ export default async function DeportacionPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <DeportacionClient lang={lang === 'en' ? 'en' : 'es'} />
+      <DeportacionClient lang={lang === 'en' ? 'en' : 'es'} serviceAttorneys={getServiceAttorneys('defensa-deportacion', lang === 'en' ? 'en' : 'es')} />
     </>
   );
 }

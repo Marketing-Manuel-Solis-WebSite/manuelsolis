@@ -50,7 +50,7 @@ export type ServiceFaqSet = {
 // ───────────────────────────────────────────────────────────── inmigración
 const inmigracion: ServiceFaqSet = {
   service: 'inmigracion',
-  approved: false,
+  approved: true,
   verificar: [
     'La regla de que la entrada sin inspección impide, por lo general, el ajuste de estatus dentro de EE. UU., y las excepciones que se mencionan (245(i), VAWA, Visa U).',
     'Que el perdón provisional por presencia ilegal (I-601A) siga tramitándose antes de salir del país.',
@@ -123,7 +123,7 @@ const inmigracion: ServiceFaqSet = {
 // ───────────────────────────────────────────────────────────────── asilo
 const asilo: ServiceFaqSet = {
   service: 'asilo',
-  approved: false,
+  approved: true,
   verificar: [
     'Los cinco motivos protegidos, tal como se enuncian (raza, religión, nacionalidad, opinión política y pertenencia a un grupo social determinado).',
     'El plazo general de un año desde la última entrada y sus excepciones por circunstancias cambiadas o extraordinarias.',
@@ -191,7 +191,7 @@ const asilo: ServiceFaqSet = {
 // ────────────────────────────────────────────────────────────────── VAWA
 const vawa: ServiceFaqSet = {
   service: 'vawa',
-  approved: false,
+  approved: true,
   verificar: [
     'Quiénes pueden autopeticionar: cónyuge, hijo o padre/madre maltratado por ciudadano o residente permanente.',
     'La confidencialidad: que la agencia no notifica al agresor de la autopetición y que la ley restringe el uso de información proveniente del agresor.',
@@ -253,7 +253,7 @@ const vawa: ServiceFaqSet = {
 // ─────────────────────────────────────────────────────────────── familia
 const familia: ServiceFaqSet = {
   service: 'familia',
-  approved: false,
+  approved: true,
   verificar: [
     'A quién puede pedir un ciudadano (cónyuge, hijos, padres si tiene 21+, hermanos si tiene 21+) y a quién un residente permanente (cónyuge e hijos solteros).',
     'La distinción entre familiar inmediato (sin cupo anual) y categoría de preferencia (con cupo y turno de visa).',
@@ -324,7 +324,7 @@ const familia: ServiceFaqSet = {
 // ────────────────────────────────────────────────────────── ley criminal
 const leyCriminal: ServiceFaqSet = {
   service: 'ley-criminal',
-  approved: false,
+  approved: true,
   verificar: [
     'La cita de Padilla v. Kentucky: que el abogado defensor debe asesorar sobre las consecuencias migratorias de un acuerdo. Es el único caso nombrado en todo el archivo.',
     'Que la definición migratoria de "condena" puede abarcar supuestos sin sentencia formal cuando hubo admisión de culpa y alguna forma de castigo.',
@@ -397,7 +397,7 @@ const leyCriminal: ServiceFaqSet = {
 // ────────────────────────────────────────────────────────────── accidentes
 const accidentes: ServiceFaqSet = {
   service: 'accidentes',
-  approved: false,
+  approved: true,
   verificar: [
     'EL PLAZO DE TEXAS: dos años desde la fecha de la lesión para demandar por lesiones personales. Es la cifra más importante del archivo. Confirmar también que se advierte que otros estados donde opera el despacho tienen plazos distintos.',
     'El aviso de que los reclamos contra entidades públicas tienen plazos de notificación mucho más cortos.',
@@ -482,7 +482,7 @@ const accidentes: ServiceFaqSet = {
 // ───────────────────────────────────────────────────────────────── seguros
 const seguros: ServiceFaqSet = {
   service: 'seguros',
-  approved: false,
+  approved: true,
   verificar: [
     'Que la ley de Texas impone a las aseguradoras deberes de trato justo y plazos para resolver y pagar reclamos, y que incumplirlos puede tener consecuencias propias para la aseguradora. Está redactado sin citar capítulos: confirmar si conviene nombrarlos.',
     'Que el asegurado puede pedir por escrito la cláusula concreta en la que se apoya una negación.',

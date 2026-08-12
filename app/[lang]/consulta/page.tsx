@@ -41,6 +41,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/consulta`,
       title,
       description,
+      // pedir consulta es el primer contacto. 1600x900, ligera: og:image apunta al archivo crudo.
+      images: [
+        {
+          url: '/og/servicios.jpg',
+          width: 1600,
+          height: 900,
+          alt: isEs ? 'Consulta legal con Manuel Solís' : 'Legal consultation with Manuel Solis',
+        },
+      ],
     }),
   };
 }

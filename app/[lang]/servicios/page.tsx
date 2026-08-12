@@ -144,6 +144,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       path: `/${lang}/servicios`,
       title,
       description,
+      // el índice cubre diez áreas: una foto de una sola sería falsa. 1600x900, ligera: og:image apunta al archivo crudo.
+      images: [
+        {
+          url: '/og/servicios.jpg',
+          width: 1600,
+          height: 900,
+          alt: isEs ? 'Asesoría legal de Manuel Solís' : 'Legal counsel at Manuel Solis',
+        },
+      ],
     }),
     keywords: isEs
       ? ['servicios legales', 'abogado inmigración', 'accidentes personales', 'defensa criminal', 'derecho de familia', 'reclamos seguros', 'visa e-2', 'manuel solis']

@@ -39,6 +39,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/inversionistas`,
       title,
       description,
+      // es una visa de inmigración. 1600x900, ligera: og:image apunta al archivo crudo.
+      images: [
+        {
+          url: '/og/inmigracion.jpg',
+          width: 1600,
+          height: 900,
+          alt: isEs ? 'Abogados de visas de inversionista Manuel Solís' : 'Manuel Solis investor visa attorneys',
+        },
+      ],
     }),
   };
 }

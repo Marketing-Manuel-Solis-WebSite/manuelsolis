@@ -128,13 +128,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'x-default': `${SITE_URL}/es/oficinas`,
       },
     },
-    // El índice no tiene foto propia: se queda con la imagen de marca que el
-    // helper pone por defecto.
     ...buildSocialMetadata({
       lang: isEs ? 'es' : 'en',
       path: `/${lang}/oficinas`,
       title,
       description,
+      // el índice de sedes se representa con la sede principal. 1600x900, ligera: og:image apunta al archivo crudo.
+      images: [
+        {
+          url: '/og/oficinas.jpg',
+          width: 1600,
+          height: 900,
+          alt: isEs ? 'Oficina principal de Manuel Solís en Houston' : 'Manuel Solis main office in Houston',
+        },
+      ],
     }),
   };
 }

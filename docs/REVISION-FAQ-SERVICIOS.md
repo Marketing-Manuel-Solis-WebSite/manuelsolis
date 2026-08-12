@@ -14,7 +14,7 @@ ni emite el marcado FAQPage.
 Para publicar un servicio revisado: poner `approved: true` en su bloque. Se
 aprueban de uno en uno — no hace falta esperar a tener los siete.
 
-Estado actual: **0 de 7 aprobados**.
+Estado actual: **7 de 7 aprobados** (inmigracion, asilo, vawa, familia, ley-criminal, accidentes, seguros).
 
 ## Cómo está escrito
 
@@ -26,13 +26,13 @@ Estado actual: **0 de 7 aprobados**.
 
 ## Índice
 
-- [Inmigración (página pilar)](#inmigracion) — 6 preguntas · ⏳ pendiente
-- [Asilo](#asilo) — 6 preguntas · ⏳ pendiente
-- [VAWA](#vawa) — 6 preguntas · ⏳ pendiente
-- [Inmigración familiar](#familia) — 6 preguntas · ⏳ pendiente
-- [Defensa criminal](#ley-criminal) — 6 preguntas · ⏳ pendiente
-- [Accidentes y lesiones personales](#accidentes) — 7 preguntas · ⏳ pendiente
-- [Reclamos de seguros](#seguros) — 5 preguntas · ⏳ pendiente
+- [Inmigración (página pilar)](#inmigracion) — 6 preguntas · ✅ aprobado
+- [Asilo](#asilo) — 6 preguntas · ✅ aprobado
+- [VAWA](#vawa) — 6 preguntas · ✅ aprobado
+- [Inmigración familiar](#familia) — 6 preguntas · ✅ aprobado
+- [Defensa criminal](#ley-criminal) — 6 preguntas · ✅ aprobado
+- [Accidentes y lesiones personales](#accidentes) — 7 preguntas · ✅ aprobado
+- [Reclamos de seguros](#seguros) — 5 preguntas · ✅ aprobado
 
 ---
 
@@ -41,7 +41,7 @@ Estado actual: **0 de 7 aprobados**.
 ## Inmigración (página pilar)
 
 `/es/servicios/inmigracion` · `/en/servicios/inmigracion`
-**Estado:** ⏳ pendiente de revisión — no publicado
+**Estado:** ✅ aprobado — publicado
 
 ### Puntos a confirmar
 
@@ -128,7 +128,7 @@ Estado actual: **0 de 7 aprobados**.
 ## Asilo
 
 `/es/servicios/asilo` · `/en/servicios/asilo`
-**Estado:** ⏳ pendiente de revisión — no publicado
+**Estado:** ✅ aprobado — publicado
 
 ### Puntos a confirmar
 
@@ -216,7 +216,7 @@ Estado actual: **0 de 7 aprobados**.
 ## VAWA
 
 `/es/servicios/vawa` · `/en/servicios/vawa`
-**Estado:** ⏳ pendiente de revisión — no publicado
+**Estado:** ✅ aprobado — publicado
 
 ### Puntos a confirmar
 
@@ -304,7 +304,7 @@ Estado actual: **0 de 7 aprobados**.
 ## Inmigración familiar
 
 `/es/servicios/familia` · `/en/servicios/familia`
-**Estado:** ⏳ pendiente de revisión — no publicado
+**Estado:** ✅ aprobado — publicado
 
 ### Puntos a confirmar
 
@@ -392,7 +392,7 @@ Estado actual: **0 de 7 aprobados**.
 ## Defensa criminal
 
 `/es/servicios/ley-criminal` · `/en/servicios/ley-criminal`
-**Estado:** ⏳ pendiente de revisión — no publicado
+**Estado:** ✅ aprobado — publicado
 
 ### Puntos a confirmar
 
@@ -479,7 +479,7 @@ Estado actual: **0 de 7 aprobados**.
 ## Accidentes y lesiones personales
 
 `/es/servicios/accidentes` · `/en/servicios/accidentes`
-**Estado:** ⏳ pendiente de revisión — no publicado
+**Estado:** ✅ aprobado — publicado
 
 ### Puntos a confirmar
 
@@ -580,7 +580,7 @@ Estado actual: **0 de 7 aprobados**.
 ## Reclamos de seguros
 
 `/es/servicios/seguros` · `/en/servicios/seguros`
-**Estado:** ⏳ pendiente de revisión — no publicado
+**Estado:** ✅ aprobado — publicado
 
 ### Puntos a confirmar
 

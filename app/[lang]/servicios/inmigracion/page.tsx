@@ -3,6 +3,7 @@ import ImmigrationClient from './ImmigrationClient';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import { getServiceFaqs } from '../../../lib/serviceFaq';
+import { getServiceAttorneys } from '../../../lib/serviceAttorneys';
 import { buildFaqPageSchema } from '../../../lib/faqSchema';
 import { PHYSICAL_OFFICE_COUNT } from '../../../components/officesPhoneMap';
 
@@ -113,6 +114,7 @@ export default async function ImmigrationPage({ params }: Props) {
   // abogado: sin preguntas no se renderiza la sección ni se emite el
   // FAQPage, así que el contenido queda listo y sin publicar.
   const serviceFaqs = getServiceFaqs('inmigracion', lang === 'en' ? 'en' : 'es');
+  const serviceAttorneys = getServiceAttorneys('inmigracion', lang === 'en' ? 'en' : 'es');
   const faqSchema = buildFaqPageSchema(
     serviceFaqs,
     `https://www.manuelsolis.com/${lang}/servicios/inmigracion`,
@@ -143,7 +145,7 @@ export default async function ImmigrationPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <ImmigrationClient lang={lang === 'en' ? 'en' : 'es'} faqs={serviceFaqs} />
+      <ImmigrationClient lang={lang === 'en' ? 'en' : 'es'} faqs={serviceFaqs} serviceAttorneys={serviceAttorneys} />
     </>
   );
 }

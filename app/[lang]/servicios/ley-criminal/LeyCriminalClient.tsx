@@ -4,6 +4,8 @@ import { PhoneCall, ArrowRight, FileText, Star, Scale, CheckCircle2 } from 'luci
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import FaqSection from '../../../components/FaqSection';
+import ServiceAttorneys from '../../../components/ServiceAttorneys';
+import type { ServiceAttorney } from '../../../lib/serviceAttorneys';
 import type { FaqPair } from '../../../lib/faqSchema';
 import ContactForm from '../../../components/ContactForm';
 import Breadcrumbs from '../../../components/Breadcrumbs';
@@ -23,10 +25,13 @@ const ICONS: Record<IconKey, ElementType> = { phoneCall: PhoneCall, fileText: Fi
 export default function LeyCriminalClient({
   lang,
   faqs = [],
+  serviceAttorneys = [],
 }: {
   lang: Language;
   /** Preguntas aprobadas; vacío mientras serviceFaq.ts no las apruebe. */
   faqs?: FaqPair[];
+  /** Abogados que declaran esta área; vacío si ninguno la declara. */
+  serviceAttorneys?: ServiceAttorney[];
 }) {
   const isEs = lang === 'es';
   const ui = resolveUi(lang);
@@ -185,6 +190,7 @@ export default function LeyCriminalClient({
             </Reveal>
           </div>
         </section>
+        <ServiceAttorneys attorneys={serviceAttorneys} lang={lang === 'en' ? 'en' : 'es'} />
         {/* Dentro del <main> y antes del Footer: colgada después del
             componente que trae el pie, la sección se ve debajo de él. */}
         <FaqSection

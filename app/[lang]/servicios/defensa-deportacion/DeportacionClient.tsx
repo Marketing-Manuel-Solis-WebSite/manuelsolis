@@ -10,6 +10,8 @@ import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../component
 import DeportacionCases from './DeportacionCases';
 import { resolveTabs, resolveSteps, resolveFaqs, resolveBlog, getOffices, resolveUi, emergencyPhone, type StepIconKey } from './defensaData';
 import type { Language } from '../../../lib/translations';
+import ServiceAttorneys from '../../../components/ServiceAttorneys';
+import type { ServiceAttorney } from '../../../lib/serviceAttorneys';
 
 /** Sedes totales, del registro NAP. Era '15' a mano. */
 const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
@@ -22,7 +24,14 @@ const STEP_ICONS: Record<StepIconKey, ElementType> = { siren: Siren, fileText: F
  * process + STATIC FAQ + blog. LCP sacred: H1 static (text LCP). page.tsx
  * generateMetadata + JSON-LD untouched.
  */
-export default function DeportacionClient({ lang }: { lang: Language }) {
+export default function DeportacionClient({
+  lang,
+  serviceAttorneys = [],
+}: {
+  lang: Language;
+  /** Abogados que declaran esta área; vacío si ninguno la declara. */
+  serviceAttorneys?: ServiceAttorney[];
+}) {
   const isEs = lang === 'es';
   const ui = resolveUi(lang);
   const tabs = resolveTabs(lang);
@@ -244,6 +253,9 @@ export default function DeportacionClient({ lang }: { lang: Language }) {
             </Reveal>
           </div>
         </section>
+        {/* Dentro del <main> y antes del Footer: quién responde por el área
+            pesa más en E-E-A-T que repetir los años del despacho. */}
+        <ServiceAttorneys attorneys={serviceAttorneys} lang={lang === 'en' ? 'en' : 'es'} />
       </main>
 
       <Footer />
