@@ -23,6 +23,7 @@ import ReadingProgress from './ReadingProgress';
 import RelatedContent from './RelatedContent';
 import BlogSchema from './BlogSchema';
 import { getRelatedArticles } from '../../lib/blogRelations';
+import { addInlineLinks, createInlineLinkState } from '../../lib/blogInlineLinks';
 import type { BlogArticleContent, BlogBlock, BlogIcon } from './articleModel';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -57,10 +58,25 @@ const ICONS: Record<BlogIcon, React.ComponentType<{ size?: number; className?: s
   wallet: Wallet,
 };
 
-function Block({ block }: { block: BlogBlock }) {
+function Block({
+  block,
+  inline,
+}: {
+  block: BlogBlock;
+  /**
+   * Enlazador contextual. Solo se aplica a los bloques `text`: en un título,
+   * una lista o un aviso, un enlace en medio de la frase estorba más que ayuda.
+   */
+  inline?: (html: string) => string;
+}) {
   switch (block.kind) {
     case 'text':
-      return <p className="mb-4" dangerouslySetInnerHTML={{ __html: block.text }} />;
+      return (
+        <p
+          className="mb-4"
+          dangerouslySetInnerHTML={{ __html: inline ? inline(block.text) : block.text }}
+        />
+      );
 
     case 'list':
       return (
@@ -186,6 +202,17 @@ export default function BlogArticleLayout({
   }
 
   const t = content;
+
+  /**
+   * Enlaces contextuales hacia las páginas de servicio, dentro del cuerpo.
+   *
+   * El estado es POR ARTÍCULO y se crea aquí, no dentro de Block: así cada
+   * destino se enlaza una sola vez en todo el texto en vez de una por párrafo,
+   * que es lo que convierte un enlace útil en relleno para buscadores.
+   */
+  const inlineState = createInlineLinkState();
+  const inline = (html: string) => addInlineLinks(html, lang, inlineState);
+
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     { name: 'Blog', url: `/${lang}/blog` },
@@ -326,7 +353,7 @@ export default function BlogArticleLayout({
                           </p>
                         )}
                         {section.blocks.map((block, j) => (
-                          <Block key={j} block={block} />
+                          <Block key={j} block={block} inline={inline} />
                         ))}
                       </section>
                     );
