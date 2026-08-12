@@ -6,7 +6,7 @@ import { toSchemaPhone } from './officeSchema';
 
 /**
  * Centralized builder for the per-landing LegalService schema.org payload,
- * usado por las 25 landings ciudad×servicio (`/[lang]/<slug>`).
+ * usado por las 35 landings ciudad×servicio (`/[lang]/<slug>`).
  *
  * Reglas de esta entidad (la landing describe la MISMA oficina física que
  * /oficinas/<slug>, así que no puede contradecirla):
@@ -48,7 +48,7 @@ export type BuildLandingSchemaInput = {
    * Si se omite (o la oficina no está en el registro / la API falla) el schema
    * se renderiza sin `geo`. Nunca se cae a datos hardcodeados.
    *
-   * El nombre conserva el sufijo `ForReviews` porque las 25 landings lo pasan
+   * El nombre conserva el sufijo `ForReviews` porque las landings lo pasan
    * con esa clave; ya no alimenta reseñas ni rating.
    */
   officeSlugForReviews?: string;
@@ -127,8 +127,9 @@ export async function buildLandingSchema(
 /**
  * Map landing-page slug → office slug cuya ficha de Google aporta el pin
  * (`geo`) del schema. Verified against OFFICES_PLACE_IDS in
- * app/lib/officesRegistry.ts — all 25 landings map to an office with
- * a real placeId.
+ * app/lib/officesRegistry.ts. Si una oficina no tiene placeId el schema se
+ * emite sin `geo` (ver buildLandingSchema): nunca se cae a coordenadas
+ * inventadas.
  *
  * Houston has multiple offices; the accidentes landing points at
  * `houston-accidentes` (the dedicated accident-injury location) while
@@ -167,4 +168,17 @@ export const LANDING_TO_OFFICE_FOR_REVIEWS: Readonly<Record<string, string>> = {
   'vawa-houston':                    'houston-principal',
   'vawa-chicago':                    'chicago',
   'vawa-dallas':                     'dallas',
+  // Ampliación de la matriz ciudad × servicio (2026-08-12). Solo ciudades con
+  // bloque propio en CITY_LOCAL: de ahí salen la FAQ y los casos típicos, que es
+  // lo que diferencia una landing de un duplicado.
+  'vawa-memphis':                    'memphis',
+  'vawa-denver':                     'arvada',
+  'vawa-harlingen':                  'harlingen',
+  'asilo-politico-dallas':           'dallas',
+  'asilo-politico-memphis':          'memphis',
+  'asilo-politico-denver':           'arvada',
+  'asilo-politico-harlingen':        'harlingen',
+  'vawa-los-angeles':                'losangeles',
+  'vawa-el-paso':                    'el-paso',
+  'asilo-politico-el-paso':          'el-paso',
 } as const;

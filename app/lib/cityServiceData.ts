@@ -1000,6 +1000,198 @@ export const LANDING_PAGES: LandingPageConfig[] = [
       en: ['Self-petition that does not require abuser\'s participation or knowledge', 'Complete case documentation with evidence of abuse', 'Working with crisis centers and shelters in the Dallas area', 'Work permit obtained during the process', 'Clear path to permanent residency for victims'],
     },
   },
+
+  // ── Ampliación de la matriz ciudad × servicio (2026-08-12) ──
+  {
+    slug: 'vawa-memphis',
+    officeKey: 'memphis',
+    serviceKey: 'vawa',
+    h1: { es: 'VAWA en Memphis, TN — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Memphis, TN — Protection for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Memphis, TN', en: 'VAWA in Memphis, TN' },
+    metaDescription: {
+      es: 'Abogados de VAWA en Memphis. Auto-petición confidencial sin que su agresor lo sepa.',
+      en: 'VAWA attorneys in Memphis. Confidential self-petition without your abuser knowing.',
+    },
+    intro: {
+      es: 'En Memphis, la auto-petición de VAWA se presenta sin que su cónyuge, padre o hijo agresor participe ni sea notificado: es usted quien pide, no él. Nuestro equipo del condado de Shelby trabaja el caso teniendo en cuenta dos cosas que aquí pesan mucho. La primera es la confidencialidad práctica —a qué dirección llega el correo de USCIS y quién más tiene acceso a ella—, porque en un hogar compartido eso decide si el proceso es seguro o no. La segunda es que los casos de Tennessee que llegan a corte se ven en la Memphis Immigration Court, en 167 N Main St, y que las personas detenidas de esta zona suelen acabar lejos, en LaSalle (Luisiana) o en Etowah (Alabama): si hay una detención de por medio, el plan tiene que contemplar la distancia desde el primer día.',
+      en: 'In Memphis, the VAWA self-petition is filed without your abusive spouse, parent, or child taking part or being notified: you are the one petitioning, not them. Our Shelby County team builds the case around two things that matter especially here. The first is practical confidentiality — which address USCIS mail goes to and who else can reach it — because in a shared home that is what decides whether the process is safe. The second is that Tennessee cases reaching court are heard at the Memphis Immigration Court, at 167 N Main St, and that people detained from this area often end up far away, at LaSalle (Louisiana) or Etowah (Alabama): if detention is involved, the plan has to account for that distance from day one.',
+    },
+    whyChooseUs: {
+      es: ['Auto-petición sin participación ni aviso al agresor', 'Atención en español e inglés en la oficina de Memphis', 'Planificación de la correspondencia para que el proceso sea seguro en casa', 'Experiencia con casos que se ven en la Memphis Immigration Court', 'Coordinación cuando el familiar está detenido fuera del estado (LaSalle, Etowah)'],
+      en: ['Self-petition with no participation or notice to the abuser', 'Service in Spanish and English at the Memphis office', 'Mail planning so the process stays safe at home', 'Experience with cases heard at the Memphis Immigration Court', 'Coordination when the relative is detained out of state (LaSalle, Etowah)'],
+    },
+  },
+  {
+    slug: 'vawa-denver',
+    officeKey: 'denver',
+    serviceKey: 'vawa',
+    h1: { es: 'VAWA en Denver, CO — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Denver, CO — Protection for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Denver, CO', en: 'VAWA in Denver, CO' },
+    metaDescription: {
+      es: 'Abogados de VAWA en el área de Denver. Auto-petición confidencial, sin aviso al agresor.',
+      en: 'VAWA attorneys in the Denver area. Confidential self-petition, no notice to the abuser.',
+    },
+    intro: {
+      es: 'Nuestra oficina del área de Denver está en Arvada y atiende los condados de Adams y Jefferson, además del propio Denver. En VAWA lo primero que preguntan casi todos es si el agresor se va a enterar, y la respuesta es que no: la solicitud la presenta usted y la ley protege esa confidencialidad de forma expresa. Lo segundo que hay que planear en esta zona es la detención. El GEO Aurora ICE Processing Center está a menos de media hora de la oficina, y los casos que llegan a corte se ven en la Denver Immigration Court, en 1961 Stout St: esa cercanía juega a favor cuando hay que actuar rápido para pedir una fianza o presentar pruebas.',
+      en: 'Our Denver-area office is in Arvada and serves Adams and Jefferson counties along with Denver itself. With VAWA, almost everyone first asks whether the abuser will find out, and the answer is no: you file the petition and the law expressly protects that confidentiality. The second thing to plan for in this area is detention. The GEO Aurora ICE Processing Center is less than half an hour from the office, and cases reaching court are heard at the Denver Immigration Court, at 1961 Stout St: that proximity works in your favor when you need to move quickly on a bond or file evidence.',
+    },
+    whyChooseUs: {
+      es: ['Auto-petición confidencial: el agresor no participa ni es notificado', 'Oficina en Arvada para los condados de Adams, Jefferson y Denver', 'Respuesta rápida cuando hay detención en Aurora, a media hora', 'Casos ante la Denver Immigration Court', 'Atención en español e inglés'],
+      en: ['Confidential self-petition: the abuser neither participates nor is notified', 'Arvada office serving Adams, Jefferson, and Denver counties', 'Fast response when detention happens in Aurora, half an hour away', 'Cases before the Denver Immigration Court', 'Service in Spanish and English'],
+    },
+  },
+  {
+    slug: 'vawa-harlingen',
+    officeKey: 'harlingen',
+    serviceKey: 'vawa',
+    h1: { es: 'VAWA en Harlingen, TX — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Harlingen, TX — Protection for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Harlingen, TX', en: 'VAWA in Harlingen, TX' },
+    metaDescription: {
+      es: 'Abogados de VAWA en Harlingen y el Valle. Auto-petición confidencial, sin aviso al agresor.',
+      en: 'VAWA attorneys in Harlingen and the Valley. Confidential self-petition, no notice to the abuser.',
+    },
+    intro: {
+      es: 'En el Valle del Río Grande, VAWA tiene una particularidad práctica: la corte de inmigración y los centros de detención están aquí mismo. La Harlingen Immigration Court está en 1717 Zoy St, y Port Isabel, El Valle (Raymondville) y el centro del condado de Willacy quedan a poca distancia. Eso significa que un caso puede moverse rápido, y también que conviene tener la estrategia lista antes de que se mueva. La auto-petición de VAWA la presenta usted sin que su agresor participe ni sea notificado, y en el condado de Cameron trabajamos el expediente contando con que las pruebas y los testigos suelen estar en la misma comunidad — algo que ayuda a documentar el caso y que a la vez obliga a cuidar la confidencialidad.',
+      en: 'In the Rio Grande Valley, VAWA has a practical peculiarity: the immigration court and the detention centers are right here. The Harlingen Immigration Court is at 1717 Zoy St, and Port Isabel, El Valle (Raymondville), and the Willacy County facility are all nearby. That means a case can move fast, and also that the strategy should be ready before it does. You file the VAWA self-petition without your abuser taking part or being notified, and in Cameron County we build the file knowing that the evidence and witnesses are usually in the same community — which helps document the case and at the same time makes confidentiality more delicate.',
+    },
+    whyChooseUs: {
+      es: ['Auto-petición sin participación ni aviso al agresor', 'Oficina en Harlingen, en el condado de Cameron', 'Cercanía a la Harlingen Immigration Court', 'Experiencia con detenciones en Port Isabel, El Valle y Willacy', 'Atención en español, con conocimiento de la comunidad del Valle'],
+      en: ['Self-petition with no participation or notice to the abuser', 'Harlingen office, in Cameron County', 'Close to the Harlingen Immigration Court', 'Experience with detention at Port Isabel, El Valle, and Willacy', 'Service in Spanish, with knowledge of the Valley community'],
+    },
+  },
+  {
+    slug: 'asilo-politico-dallas',
+    officeKey: 'dallas',
+    serviceKey: 'asilo',
+    h1: { es: 'Asilo Político en Dallas, TX — Abogados de Asilo', en: 'Political Asylum in Dallas, TX — Asylum Attorneys' },
+    metaTitle: { es: 'Asilo Político en Dallas, TX', en: 'Political Asylum in Dallas, TX' },
+    metaDescription: {
+      es: 'Abogados de asilo en Dallas. Plazo de un año desde la llegada, con excepciones. Consulte su caso.',
+      en: 'Asylum attorneys in Dallas. One-year filing deadline from arrival, with exceptions. Ask about your case.',
+    },
+    intro: {
+      es: 'El asilo no depende de haber sufrido pobreza o violencia general, por grave que sea: la ley exige persecución o temor fundado por raza, religión, nacionalidad, opinión política o pertenencia a un grupo social determinado. Ahí se gana o se pierde el caso, y por eso importa cómo se cuenta la historia. En Dallas trabajamos las dos vías: la afirmativa ante USCIS, cuando no hay proceso abierto, y la defensiva ante la Dallas Immigration Court, que se encuentra en 125 E John Carpenter Fwy, en Irving. Si hay detención de por medio, en esta zona suele ser Prairieland (Alvarado), y eso cambia los plazos y la preparación. La regla general es presentar dentro del primer año desde la última entrada, con excepciones que hay que acreditar.',
+      en: 'Asylum does not turn on having suffered poverty or generalized violence, however severe: the law requires persecution or a well-founded fear based on race, religion, nationality, political opinion, or membership in a particular social group. That is where a case is won or lost, which is why how the story is told matters. In Dallas we handle both routes: affirmative before USCIS, when there are no proceedings, and defensive before the Dallas Immigration Court, located at 125 E John Carpenter Fwy in Irving. If detention is involved, in this area it is usually Prairieland (Alvarado), and that changes deadlines and preparation. The general rule is to file within one year of your last entry, with exceptions that must be proven.',
+    },
+    whyChooseUs: {
+      es: ['Los cinco motivos protegidos, explicados sobre su caso concreto', 'Asilo afirmativo ante USCIS y defensivo ante la Dallas Immigration Court', 'Preparación de la entrevista y de la audiencia en español', 'Experiencia con casos detenidos en Prairieland (Alvarado)', 'Revisión del plazo de un año y de sus excepciones'],
+      en: ['The five protected grounds, explained against your actual facts', 'Affirmative asylum before USCIS and defensive before the Dallas Immigration Court', 'Interview and hearing preparation in Spanish', 'Experience with detained cases at Prairieland (Alvarado)', 'Review of the one-year deadline and its exceptions'],
+    },
+  },
+  {
+    slug: 'asilo-politico-memphis',
+    officeKey: 'memphis',
+    serviceKey: 'asilo',
+    h1: { es: 'Asilo Político en Memphis, TN — Abogados de Asilo', en: 'Political Asylum in Memphis, TN — Asylum Attorneys' },
+    metaTitle: { es: 'Asilo Político en Memphis, TN', en: 'Political Asylum in Memphis, TN' },
+    metaDescription: {
+      es: 'Abogados de asilo en Memphis. Plazo de un año desde la llegada, con excepciones. Consulte su caso.',
+      en: 'Asylum attorneys in Memphis. One-year filing deadline from arrival, with exceptions. Ask about your case.',
+    },
+    intro: {
+      es: 'Para pedir asilo hay que acreditar persecución o temor fundado por uno de cinco motivos —raza, religión, nacionalidad, opinión política o pertenencia a un grupo social determinado—, y el peligro puede venir de alguien que no sea el gobierno si el gobierno no puede o no quiere protegerle. En Memphis los casos que llegan a corte se ven en la Memphis Immigration Court, en 167 N Main St, y hay un detalle logístico que conviene saber desde el principio: las personas detenidas de Tennessee suelen ser trasladadas fuera del estado, a LaSalle (Luisiana) o Etowah (Alabama). Preparar el expediente contando con esa distancia evita perder semanas. La regla general es presentar dentro del primer año desde la última entrada.',
+      en: 'To seek asylum you must show persecution or a well-founded fear on one of five grounds — race, religion, nationality, political opinion, or membership in a particular social group — and the danger can come from someone who is not the government, if the government cannot or will not protect you. In Memphis, cases reaching court are heard at the Memphis Immigration Court, at 167 N Main St, and there is one logistical detail worth knowing from the start: people detained in Tennessee are often transferred out of state, to LaSalle (Louisiana) or Etowah (Alabama). Preparing the file with that distance in mind avoids losing weeks. The general rule is to file within one year of your last entry.',
+    },
+    whyChooseUs: {
+      es: ['Los cinco motivos protegidos, aplicados a sus hechos', 'Casos ante la Memphis Immigration Court', 'Coordinación cuando hay traslado a LaSalle o Etowah', 'Preparación de entrevista y audiencia en español', 'Revisión del plazo de un año y de sus excepciones'],
+      en: ['The five protected grounds, applied to your facts', 'Cases before the Memphis Immigration Court', 'Coordination when there is a transfer to LaSalle or Etowah', 'Interview and hearing preparation in Spanish', 'Review of the one-year deadline and its exceptions'],
+    },
+  },
+  {
+    slug: 'asilo-politico-denver',
+    officeKey: 'denver',
+    serviceKey: 'asilo',
+    h1: { es: 'Asilo Político en Denver, CO — Abogados de Asilo', en: 'Political Asylum in Denver, CO — Asylum Attorneys' },
+    metaTitle: { es: 'Asilo Político en Denver, CO', en: 'Political Asylum in Denver, CO' },
+    metaDescription: {
+      es: 'Abogados de asilo en el área de Denver. Plazo de un año desde la llegada, con excepciones.',
+      en: 'Asylum attorneys in the Denver area. One-year filing deadline from arrival, with exceptions.',
+    },
+    intro: {
+      es: 'Nuestra oficina del área de Denver está en Arvada. En asilo, lo que decide el caso no es la gravedad de lo que pasó sino que encaje en uno de los cinco motivos que la ley protege: raza, religión, nacionalidad, opinión política o pertenencia a un grupo social determinado. Los casos que llegan a corte se ven en la Denver Immigration Court, en 1961 Stout St, y las detenciones de esta zona pasan por el GEO Aurora ICE Processing Center, a media hora de la oficina — una cercanía que ayuda cuando hay que preparar una audiencia con poco margen. La regla general es presentar dentro del primer año desde la última entrada, con excepciones que hay que probar.',
+      en: 'Our Denver-area office is in Arvada. In asylum, what decides the case is not how severe what happened was, but whether it fits one of the five grounds the law protects: race, religion, nationality, political opinion, or membership in a particular social group. Cases reaching court are heard at the Denver Immigration Court, at 1961 Stout St, and detentions in this area go through the GEO Aurora ICE Processing Center, half an hour from the office — proximity that helps when a hearing has to be prepared on short notice. The general rule is to file within one year of your last entry, with exceptions that must be proven.',
+    },
+    whyChooseUs: {
+      es: ['Los cinco motivos protegidos, aplicados a sus hechos', 'Casos ante la Denver Immigration Court', 'Respuesta rápida en detenciones en Aurora', 'Preparación de entrevista y audiencia en español', 'Revisión del plazo de un año y de sus excepciones'],
+      en: ['The five protected grounds, applied to your facts', 'Cases before the Denver Immigration Court', 'Fast response for detentions in Aurora', 'Interview and hearing preparation in Spanish', 'Review of the one-year deadline and its exceptions'],
+    },
+  },
+  {
+    slug: 'asilo-politico-harlingen',
+    officeKey: 'harlingen',
+    serviceKey: 'asilo',
+    h1: { es: 'Asilo Político en Harlingen, TX — Abogados de Asilo', en: 'Political Asylum in Harlingen, TX — Asylum Attorneys' },
+    metaTitle: { es: 'Asilo Político en Harlingen, TX', en: 'Political Asylum in Harlingen, TX' },
+    metaDescription: {
+      es: 'Abogados de asilo en Harlingen y el Valle. Corte y centros de detención en la zona.',
+      en: 'Asylum attorneys in Harlingen and the Valley. Court and detention centers in the area.',
+    },
+    intro: {
+      es: 'Harlingen es una de las plazas donde el asilo se decide más rápido, porque la corte y la detención están en la misma zona: la Harlingen Immigration Court está en 1717 Zoy St, y Port Isabel, El Valle (Raymondville) y el centro del condado de Willacy quedan a poca distancia. Eso obliga a llegar con el caso armado. Lo que la ley exige no cambia por estar en el Valle: persecución o temor fundado por raza, religión, nacionalidad, opinión política o pertenencia a un grupo social determinado, y presentar por regla general dentro del primer año desde la última entrada. Lo que sí cambia es el ritmo, y con él la preparación del testimonio y de las pruebas del país de origen.',
+      en: 'Harlingen is one of the places where asylum is decided fastest, because the court and detention are in the same area: the Harlingen Immigration Court is at 1717 Zoy St, and Port Isabel, El Valle (Raymondville), and the Willacy County facility are all nearby. That means arriving with the case already built. What the law requires does not change because you are in the Valley: persecution or a well-founded fear based on race, religion, nationality, political opinion, or membership in a particular social group, and filing as a general rule within one year of your last entry. What does change is the pace, and with it the preparation of testimony and country-condition evidence.',
+    },
+    whyChooseUs: {
+      es: ['Los cinco motivos protegidos, aplicados a sus hechos', 'Cercanía a la Harlingen Immigration Court', 'Experiencia con Port Isabel, El Valle y Willacy', 'Preparación de testimonio y pruebas del país de origen', 'Revisión del plazo de un año y de sus excepciones'],
+      en: ['The five protected grounds, applied to your facts', 'Close to the Harlingen Immigration Court', 'Experience with Port Isabel, El Valle, and Willacy', 'Testimony and country-condition evidence preparation', 'Review of the one-year deadline and its exceptions'],
+    },
+  },
+  {
+    slug: 'vawa-los-angeles',
+    officeKey: 'los-angeles',
+    serviceKey: 'vawa',
+    h1: { es: 'VAWA en Los Ángeles, CA — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in Los Angeles, CA — Protection for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en Los Ángeles, CA', en: 'VAWA in Los Angeles, CA' },
+    metaDescription: {
+      es: 'Abogados de VAWA en Los Ángeles. Auto-petición confidencial, sin aviso al agresor.',
+      en: 'VAWA attorneys in Los Angeles. Confidential self-petition, no notice to the abuser.',
+    },
+    intro: {
+      es: 'California añade a VAWA una capa de protección que no existe en todos los estados, y en el condado de Los Ángeles eso se nota en la práctica: hay órdenes de protección que pueden pedirse sin depender del estatus migratorio, y programas del condado que atienden a víctimas independientemente de su situación. Sobre esa base, la auto-petición federal de VAWA la presenta usted, sin que su cónyuge, padre o hijo agresor participe ni sea notificado. Los casos que llegan a corte se ven en la Los Angeles Immigration Court, en 606 S Olive St, y las detenciones de esta zona pasan por Adelanto o Mesa Verde, ambas a horas de distancia: si hay un familiar detenido, la logística entra en el plan desde el primer día.',
+      en: 'California adds a layer of protection to VAWA that not every state has, and in Los Angeles County that shows up in practice: protective orders can be sought without depending on immigration status, and county programs serve victims regardless of their situation. On that foundation, you file the federal VAWA self-petition yourself, without your abusive spouse, parent, or child taking part or being notified. Cases reaching court are heard at the Los Angeles Immigration Court, at 606 S Olive St, and detentions in this area go through Adelanto or Mesa Verde, both hours away: if a relative is detained, logistics become part of the plan from day one.',
+    },
+    whyChooseUs: {
+      es: ['Protecciones de California combinadas con la auto-petición federal', 'Auto-petición sin participación ni aviso al agresor', 'Casos ante la Los Angeles Immigration Court', 'Coordinación cuando hay detención en Adelanto o Mesa Verde', 'Atención en español en el condado de Los Ángeles'],
+      en: ['California protections combined with the federal self-petition', 'Self-petition with no participation or notice to the abuser', 'Cases before the Los Angeles Immigration Court', 'Coordination when detention happens at Adelanto or Mesa Verde', 'Service in Spanish in Los Angeles County'],
+    },
+  },
+  {
+    slug: 'vawa-el-paso',
+    officeKey: 'el-paso',
+    serviceKey: 'vawa',
+    h1: { es: 'VAWA en El Paso, TX — Protección para Víctimas de Violencia Doméstica', en: 'VAWA in El Paso, TX — Protection for Domestic Violence Victims' },
+    metaTitle: { es: 'VAWA en El Paso, TX', en: 'VAWA in El Paso, TX' },
+    metaDescription: {
+      es: 'Abogados de VAWA en El Paso. Auto-petición confidencial, sin aviso al agresor.',
+      en: 'VAWA attorneys in El Paso. Confidential self-petition, no notice to the abuser.',
+    },
+    intro: {
+      es: 'En El Paso hay un factor que no aparece en otras ciudades: la frontera está a minutos, y muchas familias viven partidas entre los dos lados. Eso importa en VAWA porque el agresor a veces amenaza con impedir el cruce, con quedarse con los hijos del otro lado o con retirar una petición que él controla. La respuesta legal es la misma y no depende de él: la auto-petición de VAWA la presenta usted, y su cónyuge, padre o hijo agresor no participa ni es notificado. En el condado de El Paso los casos que van a corte se ven en la El Paso Immigration Court, en 8915 Montana Ave, y las detenciones pasan por el El Paso Service Processing Center o cruzan a Otero y Torrance, en Nuevo México.',
+      en: 'El Paso has a factor other cities do not: the border is minutes away, and many families live split across both sides. That matters in VAWA because abusers sometimes threaten to block a crossing, to keep the children on the other side, or to withdraw a petition they control. The legal answer is the same and does not depend on them: you file the VAWA self-petition, and your abusive spouse, parent, or child neither participates nor is notified. In El Paso County, cases going to court are heard at the El Paso Immigration Court, at 8915 Montana Ave, and detentions go through the El Paso Service Processing Center or cross into Otero and Torrance, in New Mexico.',
+    },
+    whyChooseUs: {
+      es: ['Auto-petición sin participación ni aviso al agresor', 'Experiencia con familias divididas por la frontera', 'Casos ante la El Paso Immigration Court', 'Detenciones en El Paso, Otero (NM) y Torrance (NM)', 'Atención en español en el condado de El Paso'],
+      en: ['Self-petition with no participation or notice to the abuser', 'Experience with families split by the border', 'Cases before the El Paso Immigration Court', 'Detention at El Paso, Otero (NM), and Torrance (NM)', 'Service in Spanish in El Paso County'],
+    },
+  },
+  {
+    slug: 'asilo-politico-el-paso',
+    officeKey: 'el-paso',
+    serviceKey: 'asilo',
+    h1: { es: 'Asilo Político en El Paso, TX — Abogados de Asilo', en: 'Political Asylum in El Paso, TX — Asylum Attorneys' },
+    metaTitle: { es: 'Asilo Político en El Paso, TX', en: 'Political Asylum in El Paso, TX' },
+    metaDescription: {
+      es: 'Abogados de asilo en El Paso. Corte y centros de detención en la zona fronteriza.',
+      en: 'Asylum attorneys in El Paso. Court and detention centers in the border area.',
+    },
+    intro: {
+      es: 'El Paso es una de las plazas donde más casos de asilo se resuelven del país, y eso tiene dos caras. La buena: los plazos se mueven. La que hay que anticipar: se mueven con o sin usted preparado. Lo que la ley pide no cambia por estar en la frontera — persecución o temor fundado por raza, religión, nacionalidad, opinión política o pertenencia a un grupo social determinado, y presentar por regla general dentro del primer año desde la última entrada. Los casos se ven en la El Paso Immigration Court, en 8915 Montana Ave, y quien está detenido suele estar en el El Paso Service Processing Center o cruzado a Otero o Torrance, en Nuevo México, lo que cambia por completo el calendario de una audiencia.',
+      en: 'El Paso is one of the busiest asylum jurisdictions in the country, and that cuts two ways. The good side: deadlines move. The side to anticipate: they move whether or not you are ready. What the law requires does not change because you are at the border — persecution or a well-founded fear based on race, religion, nationality, political opinion, or membership in a particular social group, and filing as a general rule within one year of your last entry. Cases are heard at the El Paso Immigration Court, at 8915 Montana Ave, and anyone detained is usually at the El Paso Service Processing Center or moved to Otero or Torrance in New Mexico, which changes a hearing calendar entirely.',
+    },
+    whyChooseUs: {
+      es: ['Los cinco motivos protegidos, aplicados a sus hechos', 'Casos ante la El Paso Immigration Court', 'Casos detenidos en El Paso, Otero (NM) y Torrance (NM)', 'Preparación de testimonio y pruebas del país de origen', 'Revisión del plazo de un año y de sus excepciones'],
+      en: ['The five protected grounds, applied to your facts', 'Cases before the El Paso Immigration Court', 'Detained cases at El Paso, Otero (NM), and Torrance (NM)', 'Testimony and country-condition evidence preparation', 'Review of the one-year deadline and its exceptions'],
+    },
+  },
 ];
 
 // Helper to find page config by slug

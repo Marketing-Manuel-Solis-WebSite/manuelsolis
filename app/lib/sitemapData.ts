@@ -358,11 +358,29 @@ export function getAbogadosEntries(): SitemapURL[] {
 }
 
 // City × Service landings
+//
+// Fecha de alta por landing. Sin esto todas declaran '2026-03-25', y una URL que
+// nace hoy anunciando una fecha de hace meses le dice a Google que no corre prisa
+// rastrearla — justo lo contrario de lo que interesa en una página nueva. Es el
+// mismo error que tenían las fichas de oficina, ahí al revés.
+const LANDING_ALTA: Readonly<Record<string, string>> = {
+  'vawa-memphis': '2026-08-12',
+  'vawa-denver': '2026-08-12',
+  'vawa-harlingen': '2026-08-12',
+  'asilo-politico-dallas': '2026-08-12',
+  'asilo-politico-memphis': '2026-08-12',
+  'asilo-politico-denver': '2026-08-12',
+  'asilo-politico-harlingen': '2026-08-12',
+  'vawa-los-angeles': '2026-08-12',
+  'vawa-el-paso': '2026-08-12',
+  'asilo-politico-el-paso': '2026-08-12',
+};
+
 export function getLandingsEntries(): SitemapURL[] {
   return LANDING_PAGES.flatMap((page) =>
     LANGS.map((lang) => ({
       url: `${BASE_URL}/${lang}/${page.slug}`,
-      lastModified: '2026-03-25',
+      lastModified: LANDING_ALTA[page.slug] ?? '2026-03-25',
       changeFrequency: 'monthly' as ChangeFreq,
       priority: 0.85,
     }))
