@@ -187,3 +187,52 @@ De las 44 páginas que aún sirven la `og:image` genérica, la mayoría lo hace 
 5. **Matriz ciudad × servicio** (VAWA y Asilo más allá de Houston/Dallas/Chicago).
 6. **LCP y TBT en móvil**: bundles propios (~2 s) y 190 KB de CSS que bloquea el render. Requiere trabajo sobre el bundle, no un ajuste.
 7. **`<html lang="es">` en las 152 páginas `/en`**: necesita `globalNotFound` experimental.
+
+---
+
+# Addendum — 12 de agosto de 2026
+
+Cierra los cinco puntos que quedaban de la lista §6. Mismo método: todo medido sobre el HTML prerenderizado y con guardián automático donde el fallo era silencioso.
+
+## Estado medido al cerrar
+
+| Métrica | 11-ago | 12-ago |
+|---|---|---|
+| Páginas prerenderizadas | 343 | **363** (391 rutas) |
+| Páginas públicas con SEO completo | 340 / 340 | **360 / 360** |
+| Pruebas automatizadas | 212 | **296** |
+| Landings ciudad × servicio | 25 | **35** |
+| Páginas de servicio con `FAQPage` | 3 | **10** |
+
+## Lo que se hizo
+
+**1 · Las 42 preguntas de servicio, publicadas.** 84 preguntas (es/en) en 7 páginas que no tenían FAQ. Todas verificadas visibles en el HTML y con su `FAQPage` emitido — el error que se encontró al abrir la primera aprobación fue precisamente ese: la sección se renderizaba y el schema no, porque el cableado construía `faqSchema` y nunca lo emitía. Tres cifras legales van marcadas para revisión de un abogado con licencia (plazo de 2 años de lesiones en Texas, VAWA a 2 años del divorcio, plazo de 1 año del asilo).
+
+**2 · Matriz ciudad × servicio, completa para VAWA y asilo.** De 3 ciudades cada uno a las **8** que tienen contenido local real: +20 URLs. El tope no es arbitrario — son las 8 ciudades con bloque propio en `CITY_LOCAL`, de donde salen la FAQ (5–6 preguntas) y los 3 casos típicos de cada página: corte de inmigración con dirección, condado, fiscalía y centros de detención.
+
+Medido antes de publicar (Jaccard sobre shingles de 6 palabras del texto visible, filtrando boilerplate, **dentro de cada familia de servicio**): asilo baja de 0.400 a 0.396 y VAWA de 0.375 a 0.354. Las nuevas son menos plantilla que las que ya estaban indexadas.
+
+> Corrección de método. El primer intento comparó estas páginas contra el 0.275 de las fichas de accidentes y contra un agregado de «las ya publicadas». Las dos comparaciones estaban mal: el 0.275 medía páginas del mismo servicio y la **misma** ciudad, donde solo cambiaba la dirección, y el agregado mezclaba familias con distinto número de ciudades, así que medía la composición de la muestra y no el contenido. La comparación válida es por familia.
+
+**3 · Enlaces contextuales en el cuerpo de los artículos.** 21 enlaces en 14 de los 20 artículos con plantilla de datos, máximo 3 por artículo, primera aparición, uno por destino, nunca anidados. Se aplica **al renderizar**, no editando los 55 posts: quitarlo no deja rastro y 11 pruebas cubren la corrupción de marcado.
+
+**4 · Bloque de abogado con nombre en las páginas de servicio.** 6 servicios lo muestran con foto, área declarada, colegiación y enlace al perfil. Cuatro lo omiten a propósito (asilo, VAWA, Visa U, Visa E-2): **ningún abogado del sitio declara esas áreas**, y poner una cara genérica ahí sería inventar una especialidad. No emite `Person` — la entidad vive en el perfil con su `@id`.
+
+**5 · `og:image` propia en 6 plantillas más** (nosotros, oficinas, servicios, colaboradores, consulta, inversionistas), con un test que rechaza cualquier `og:image` de más de 500 KB. Ese límite existe porque se declaró `/MSTeam.png` (1,6 MB) el mismo día que se rechazó una imagen de ese peso para testimonios.
+
+## Correcciones a este documento
+
+- **«190 KB de CSS que bloquea el render» (§6.6) es falso.** Medido: 192 KB en disco son **20 KB por la red** con Brotli. El CWV móvil de este sitio no es un problema de peso de assets; es JavaScript propio. La cifra se citó varias veces sin medirla.
+- **§6.3 y §6.5 quedan cerrados** por este addendum.
+
+## Lo que sigue sin poder hacerse aquí
+
+| Punto | Qué falta |
+|---|---|
+| Los tres subdominios | Acceso de hosting. Es lo único que perjudica hoy. |
+| Firmar los 20 artículos | Revisión de un abogado con licencia. Ya están públicos. |
+| Las 3 cifras legales de la FAQ | La misma revisión. |
+| `/case-results` con reseñas *first-party* | Resultados reales y autorización para publicarlos. |
+| Landings de Schaumburg, Park Ridge, Burr Ridge, Naperville y League City | Su bloque en `CITY_LOCAL`: nombre y dirección exactos de la corte de inmigración que les toca. Inventarlos mandaría a alguien al edificio equivocado el día de su audiencia. |
+| LCP y TBT en móvil | Trabajo sobre el bundle propio (~2 s), no un ajuste. |
+| `<html lang="es">` en las 152 páginas `/en` | `globalNotFound`, hoy experimental. |
