@@ -112,24 +112,19 @@ vistas, referrers, países, dispositivos) sin que tengas que exportar nada.
 
 ---
 
-## 5. Clave nueva de Gemini — el chat del sitio está caído
+## 5. Tope de gasto en la consola de Anthropic
 
-Los logs de producción devuelven, con último registro de esta madrugada:
+El chat del sitio **ya no usa Gemini**: se migró a Claude y funciona. Esta sección decía
+que estaba caído por la clave revocada de Google, y eso quedó resuelto.
 
-> `[403 Forbidden] Your API key was reported as leaked. Please use another API key.`
+Lo que falta ahora es distinto: el chat corre con una `ANTHROPIC_API_KEY` que se pegó en
+texto plano en una conversación. Decidiste no rotarla, y esa decisión se respeta. Pero
+mientras siga viva, cualquiera que la tenga puede gastar contra tu cuenta.
 
-Google detectó la filtración de la clave y la **revocó**. No es un aviso de seguridad
-teórico: el asistente del sitio no responde a nadie. Aquí no hay decisión que tomar
-sobre rotar o no — la clave vieja ya no funciona.
-
-**Pasos:** <https://aistudio.google.com/apikey> → *Create API key* → pégala en Vercel
-como `GEMINI_API_KEY` (Production y Preview) y en tu `.env.local`. Es gratis.
-
-Mientras no exista, el chat ya no muestra un «error de conexión» sin salida: ahora
-responde con el teléfono de la oficina principal y el WhatsApp, para no perder la
-consulta.
-
----
+**Lo que sí puedes hacer sin rotar nada, en dos minutos:**
+<https://console.anthropic.com/settings/limits> → fija un **tope de gasto mensual**. Eso
+acota el daño a una cifra que tú eliges, en vez de dejarlo abierto. El chat ya tiene
+límites por sesión y usa Haiku, así que un tope holgado no le afecta.
 
 ## 6. Meta Events Manager — comprobar que el dedup funciona
 
@@ -191,10 +186,32 @@ Ninguno requiere accesos técnicos, solo una respuesta:
 
 ---
 
+## 10. Lo que bloquea el SEO ahora mismo (12-ago-2026)
+
+El trabajo técnico está cerrado: 296 pruebas, 363 páginas, `seo:check` limpio en las 360
+públicas. Todo lo que queda depende de algo que no está en el repo. Ordenado por lo que
+más pesa:
+
+| Qué falta | Qué desbloquea | Cómo se entrega |
+|---|---|---|
+| **Firma de un abogado con licencia** en los 20 artículos del plan editorial y en 3 cifras de la FAQ (plazo de 2 años de lesiones en Texas, VAWA a 2 años del divorcio, plazo de 1 año del asilo) | Es lo único **ya publicado** sin revisar. No es SEO, es responsabilidad profesional. Las 3 cifras están marcadas en `app/lib/serviceFaq.ts` → `verificar[]` | Un «sí» o una corrección por cada una. Nada más |
+| **Acceso de hosting de los tres subdominios** | Lo único que perjudica hoy el posicionamiento del dominio principal | Panel del hosting donde vivan, o confirmar que se pueden apagar |
+| **Nombre y dirección exactos de la corte de inmigración** de Schaumburg, Park Ridge, Burr Ridge, Naperville y League City | Sus landings ciudad × servicio. Sin ese dato la página sale sin FAQ ni casos locales y es la plantilla con otra ciudad puesta — y **no se inventa**: mandaría a alguien al edificio equivocado el día de su audiencia | Dos líneas por ciudad |
+| **Resultados reales de casos + autorización para publicarlos** | `/case-results` con reseñas *first-party*. Hoy la SERP de marca la fijan Glassdoor y Yelp | Lista de casos con lo que se puede decir de cada uno |
+| **Quien administre el Google Business Profile** | Revisar el riesgo de las 5 fichas en direcciones virtuales antes de invertir en ellas. Ver el aviso de GBP en el historial del programa | Confirmación de que se revisó |
+
+Y lo de siempre, que sigue siendo el número uno: **Search Console** (punto 1). Sin él el
+SEO se trabaja midiendo el HTML prerenderizado, que sirve para el técnico pero no dice
+qué consultas traen tráfico ni qué páginas lo pierden.
+
+---
+
 ## Orden que te recomiendo
 
-1. **Clave de Gemini** (punto 5): el chat está caído ahora mismo.
-2. **Habilitar Vercel Web Analytics** (punto 4): un clic, y me da datos de tráfico.
+1. **Firmar los 20 artículos y las 3 cifras legales** (punto 10): es lo único ya
+   público sin revisar por un abogado.
+2. **Tope de gasto en Anthropic** (punto 5) y **habilitar Vercel Web Analytics**
+   (punto 4): dos minutos cada uno.
 3. **Verificar Search Console** (punto 1, opción A): 5 minutos, y desbloquea el análisis
    que de verdad falta.
 4. **Cuenta de servicio para GSC + GA4** (puntos 1B y 2): media hora, y a partir de ahí
