@@ -1,0 +1,87 @@
+[
+  {
+    "nombre": "Houston — Navigation Blvd (matriz)",
+    "query": "Abogado de Inmigración Manuel Solis, 6657 Navigation Blvd, Houston, TX",
+    "placeId": "ChIJaQljAiS8QIYR47Wqon6VsLo"
+  },
+  {
+    "nombre": "Houston — Bellaire Blvd",
+    "query": "Law Office Manuel Solis, 9144 Bellaire Blvd, Houston, TX",
+    "placeId": "ChIJM8zmi1nCQIYRbCqQqM1ZVpw"
+  },
+  {
+    "nombre": "Cicero, IL (Chicago)",
+    "query": "Abogado de Inmigración Manuel Solis, 6000 Cermak Rd, Cicero, IL",
+    "placeId": "ChIJJ0d2AYczDogRrg7jc-23fOw"
+  },
+  {
+    "nombre": "Arvada, CO (Denver)",
+    "query": "Abogado de Inmigración Manuel Solis, 5400 Ward Rd, Arvada, CO",
+    "placeId": "ChIJU6L4zqN4bIcREfiN8ltyi1M"
+  },
+  {
+    "nombre": "Dallas — Empire Central",
+    "query": "Abogado de Inmigración Manuel Solis, 1120 Empire Central Pl, Dallas, TX",
+    "placeId": "ChIJS8sz5Y6ZToYRpCt7AviSKSs"
+  },
+  {
+    "nombre": "Houston — Navigation Blvd (accidentes)",
+    "query": "Law Offices of Manuel Solis, 6705 Navigation Blvd, Houston, TX 77011"
+  },
+  {
+    "nombre": "Houston — Kirby Dr",
+    "query": "Law Offices of Manuel Solis, 3730 Kirby Dr Suite 1200, Houston, TX 77098"
+  },
+  {
+    "nombre": "Houston — Main St",
+    "query": "Law Offices of Manuel Solis, 708 Main St, Houston, TX 77002"
+  },
+  {
+    "nombre": "Houston — North Loop W",
+    "query": "Law Offices of Manuel Solis, 2950 North Loop W, Houston, TX 77092"
+  },
+  {
+    "nombre": "Houston — Northchase Dr",
+    "query": "Law Offices of Manuel Solis, 16510 Northchase Dr, Houston, TX 77060"
+  },
+  {
+    "nombre": "League City, TX — S Shore Blvd",
+    "query": "Law Offices of Manuel Solis, 2600 S Shore Blvd, League City, TX 77573"
+  },
+  {
+    "nombre": "El Paso, TX — Admiral St",
+    "query": "Law Offices of Manuel Solis, 3632 Admiral St, El Paso, TX 79925"
+  },
+  {
+    "nombre": "Harlingen, TX — E Jackson St",
+    "query": "Law Offices of Manuel Solis, 320 E Jackson St, Harlingen, TX 78550"
+  },
+  {
+    "nombre": "Pico Rivera, CA (Los Ángeles)",
+    "query": "Law Offices of Manuel Solis, 8337 Telegraph Rd STE 115, Pico Rivera, CA 90660"
+  },
+  {
+    "nombre": "Memphis, TN — Airways Blvd",
+    "query": "Law Offices of Manuel Solis, 3385 Airways Blvd STE 320, Memphis, TN 38116"
+  },
+  {
+    "nombre": "Schaumburg, IL — Martingale Rd",
+    "query": "Law Offices of Manuel Solis, 10 N Martingale Rd Ste 4137, Schaumburg, IL 60173"
+  },
+  {
+    "nombre": "Park Ridge, IL — S Prospect Ave",
+    "query": "Law Offices of Manuel Solis, 222 S Prospect Ave Ste 338, Park Ridge, IL 60068"
+  },
+  {
+    "nombre": "Chicago, IL — S Wacker Dr",
+    "query": "Law Offices of Manuel Solis, 125 S Wacker Dr Ste 341, Chicago, IL 60606"
+  },
+  {
+    "nombre": "Burr Ridge, IL — Burr Ridge Pkwy",
+    "query": "Law Offices of Manuel Solis, 1333 Burr Ridge Pkwy Ste 244, Burr Ridge, IL 60527"
+  },
+  {
+    "nombre": "Naperville, IL — Wall St",
+    "query": "Law Offices of Manuel Solis, 1560 Wall St Ste 319, Naperville, IL 60563"
+  }
+]

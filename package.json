@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "seo:check": "node scripts/seo-check.mjs",
     "new-blog": "node scripts/new-blog.mjs",
-    "faq:review": "node scripts/faq-review.mjs"
+    "faq:review": "node scripts/faq-review.mjs",
+    "gbp:check": "node scripts/check-fichas-gbp.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
