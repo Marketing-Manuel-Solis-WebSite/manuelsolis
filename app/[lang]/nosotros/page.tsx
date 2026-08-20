@@ -1,13 +1,10 @@
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
-import { attorneys } from '../../lib/attorneyData';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
 import NosotrosClient from './NosotrosClient';
 import { PHYSICAL_OFFICE_COUNT } from '../../components/officesPhoneMap';
 
 const SITE_URL = 'https://www.manuelsolis.com';
-
-const FOUNDER_ID = 'manuel-solis';
 
 // Solo los locales propios: las direcciones virtuales (centros Regus/IWG) están
 // marcadas en officesRegistry y no se anuncian como oficinas. La cifra debe
@@ -61,48 +58,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-/**
- * Añade `founder` al MISMO nodo `#organization` que emite app/[lang]/layout.tsx
- * (mismo @id ⇒ una sola entidad, como hace /testimonios con el rating). Esta es
- * la página que declara visiblemente quién fundó la firma, así que es donde el
- * dato corresponde. `foundingDate` (1990) y `sameAs` a los perfiles oficiales ya
- * los emite el layout en ese nodo y no se repiten aquí.
- * Los datos del fundador salen de lib/attorneyData; si ese id desapareciera, no
- * se emite nada en lugar de inventar el nombre.
- */
-function buildFounderSchema(lang: 'es' | 'en'): Record<string, unknown> | null {
-  const founder = attorneys.find((attorney) => attorney.id === FOUNDER_ID);
-  if (!founder) return null;
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': ['LegalService', 'LawFirm'],
-    '@id': `${SITE_URL}/#organization`,
-    founder: {
-      '@type': 'Person',
-      name: founder.name,
-      jobTitle: founder.role[lang],
-      url: `${SITE_URL}/${lang}/abogados/${FOUNDER_ID}`,
-      image: founder.image,
-    },
-  };
-}
+// EL NODO `founder` YA NO SE EMITE AQUÍ.
+//
+// Esta página declaraba un segundo bloque JSON-LD reusando el `@id`
+// `#organization` para colgarle `founder`. La idea era enriquecer la entidad
+// desde la página que visiblemente cuenta quién fundó la firma, pero el efecto
+// medido era otro: /es/nosotros y /en/nosotros emitían el nodo de la
+// organización DOS veces, con conjuntos de propiedades distintos. Un `@id`
+// repetido se fusiona, y con él los valores en conflicto — la auditoría de
+// schema de 2026-08 lo listó como entidad duplicada, y eran las dos únicas
+// páginas del sitio con ese problema.
+//
+// `founder` se movió al nodo canónico de app/[lang]/layout.tsx, que es donde se
+// DEFINE la entidad. La regla del sitio a partir de aquí: la firma se define
+// una sola vez y todo lo demás la referencia por `@id` pelado (ORG_REF en
+// app/lib/schemaOrg.ts). Si hace falta añadirle una propiedad, va al layout, no
+// a un segundo bloque en la página que la muestra.
 
 export default async function NosotrosPage({ params }: Props) {
   const { lang } = await params;
   const localeLang = lang === 'en' ? 'en' : 'es';
-  const founderSchema = buildFounderSchema(localeLang);
 
   return (
     <>
       <BreadcrumbSchema lang={localeLang} trail={[{ es: 'Nosotros', en: 'About Us', path: '/nosotros' }]} />
-      {founderSchema && (
-        <script
-          id="founder-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(founderSchema) }}
-        />
-      )}
       <NosotrosClient lang={localeLang} />
     </>
   );

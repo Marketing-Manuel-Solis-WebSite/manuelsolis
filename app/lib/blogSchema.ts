@@ -1,3 +1,5 @@
+import { ORG_REF } from './schemaOrg';
+
 const SITE_URL = 'https://www.manuelsolis.com';
 
 interface BlogSchemaInput {
@@ -5,7 +7,14 @@ interface BlogSchemaInput {
   description: string;
   slug: string;
   date: string; // ISO date string e.g. '2026-04-04'
-  /** Fecha de última actualización real; si se omite, se usa `date`. */
+  /**
+   * Fecha de una revisión real del contenido. Si se omite, la propiedad NO se
+   * emite: no se cae a `date`. (El comentario anterior decía lo contrario y no
+   * coincidía con el código de abajo.) Rellenarla con la fecha de publicación
+   * —o con la del build— declararía una revisión que nunca ocurrió, y en
+   * contenido legal que caduca esa fecha es justo la que el lector usa para
+   * decidir si fiarse.
+   */
   dateModified?: string;
   image: string; // relative path e.g. '/blog/blog_20/BLOG10_CR1.png'
   lang: string;
@@ -55,15 +64,10 @@ export function generateBlogPostingSchema(input: BlogSchemaInput) {
         'Asylum',
       ],
     },
-    publisher: {
-      '@type': 'Organization',
-      '@id': `${SITE_URL}/#organization`,
-      name: 'Manuel Solis Law Firm',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${SITE_URL}/logo-manuel-solis.png`,
-      },
-    },
+    // Referencia por @id pelado, no una segunda declaración: el nodo completo
+    // (nombre, logo, dirección) lo emite el layout en esta misma página. Ver
+    // app/lib/schemaOrg.ts.
+    publisher: ORG_REF,
     ...(input.readTime && {
       timeRequired: `PT${parseInt(input.readTime)}M`,
     }),

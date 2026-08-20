@@ -1,6 +1,7 @@
 import 'server-only';
 import { getPlaceData, type GooglePlaceData } from './googleReviews';
 import { getOfficePlaceId, isVirtualOffice } from './officesRegistry';
+import { ORG_REF } from './schemaOrg';
 
 /**
  * Centralized builder for the per-office LegalService + Attorney
@@ -92,7 +93,18 @@ export async function buildOfficeSchema(
     ? await getPlaceData(placeId)
     : null;
 
-  const url = `${SITE_URL}/${lang}/oficinas/${input.slug}`;
+  /**
+   * URL neutra de idioma, a juego con el `@id`.
+   *
+   * El `@id` de abajo ya era neutro a propósito —es la misma oficina física en
+   * /es y en /en—, pero la `url` sí llevaba locale, así que las dos versiones
+   * emitían el mismo nodo con `url` distinta. La auditoría de schema de 2026-08
+   * lo contó dentro de las 110 URLs con `@id` ciego al locale. Se apunta al
+   * locale canónico (`/es`, el mismo del `x-default`); el
+   * `<link rel="canonical">` de cada documento no cambia — esta propiedad
+   * describe la oficina, no la página.
+   */
+  const url = `${SITE_URL}/es/oficinas/${input.slug}`;
   const virtual = isVirtualOffice(input.slug);
 
   const schema: Record<string, unknown> = {
@@ -126,12 +138,11 @@ export async function buildOfficeSchema(
      *
      * Se usa `parentOrganization` y no `branchOf` porque es la propiedad viva y
      * la que más consumidores entienden; las dos serían redundantes.
+     *
+     * Referencia por `@id` pelado: el nodo completo lo emite el layout en esta
+     * misma página. Ver app/lib/schemaOrg.ts.
      */
-    parentOrganization: {
-      '@type': ['LegalService', 'LawFirm'],
-      '@id': `${SITE_URL}/#organization`,
-      name: ORG_NAME,
-    },
+    parentOrganization: ORG_REF,
     /**
      * Bilingüe en las quince sedes: es un hecho del despacho, no una promesa
      * por oficina, y es literalmente lo que se pregunta ("abogado de

@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 // Utilidades
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
+import { ORG_REF } from '../../lib/schemaOrg';
 import { isPublished } from '../../lib/blogSchedule';
 
 // Componentes
@@ -1243,14 +1244,10 @@ const getBlogSchema = (lang: string) => {
     "name": lang === 'es' ? "Blog Legal Manuel Solís" : "Manuel Solis Legal Blog",
     "description": lang === 'es' ? "Recursos y noticias legales de inmigración." : "Immigration legal resources and news.",
     "url": `${SITE_URL}/${lang}/blog`,
-    "publisher": {
-      "@type": "Organization",
-      "name": "Manuel Solis Law Firm",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${SITE_URL}/logo-manuel-solis.png`
-      }
-    },
+    // Antes esto era un `Organization` SIN @id: una empresa anónima que no era
+    // la firma, publicando el blog de la firma. Ahora referencia por @id el
+    // nodo que el layout ya emite en esta página. Ver app/lib/schemaOrg.ts.
+    "publisher": ORG_REF,
     "blogPost": BLOG_POSTS_BY_DATE_DESC.map(post => ({
       "@type": "BlogPosting",
       "headline": post.title[lang as 'es'|'en'],

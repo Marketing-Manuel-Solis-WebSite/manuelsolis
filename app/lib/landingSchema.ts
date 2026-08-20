@@ -3,6 +3,7 @@ import { getPlaceData, type GooglePlaceData } from './googleReviews';
 import { getOfficePlaceId } from './officesRegistry';
 import { getPageData, SITE_URL } from './cityServiceData';
 import { toSchemaPhone } from './officeSchema';
+import { ORG_REF } from './schemaOrg';
 
 /**
  * Centralized builder for the per-landing LegalService schema.org payload,
@@ -21,14 +22,17 @@ import { toSchemaPhone } from './officeSchema';
  *     ficha de oficina; mientras no exista una fuente única de NAP con horario
  *     por sucursal, la propiedad se omite en lugar de inventarse.
  *   - Sin `aggregateRating` ni `review`: las reseñas son de Google (terceros) y
- *     el rating ya lo emite el nodo #organization del layout en esta misma URL;
- *     duplicarlo por página lo convierte en dos entidades con el mismo rating.
+ *     describen a la propia firma, así que marcarlas aquí junta reagregación de
+ *     un tercero y reseña auto-referida. Desde 2026-08 NINGUNA página del sitio
+ *     las marca —/testimonios era la última y se retiró—, y
+ *     __tests__/schemaRatingPolicy.test.ts falla si vuelven.
  *
  * Mirrors the design of app/lib/officeSchema.ts:buildOfficeSchema.
  */
 
-const ORG_ID = `${SITE_URL}/#organization`;
-const ORG_NAME = 'Manuel Solis Law Firm';
+// ORG_ID / ORG_NAME locales eliminados: la referencia a la firma es ORG_REF y
+// vive en app/lib/schemaOrg.ts, para que los cinco sitios que la emitían no
+// puedan volver a divergir.
 
 export type LandingOpeningHours = {
   dayOfWeek: string | string[];
@@ -79,11 +83,22 @@ export async function buildLandingSchema(
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'LegalService',
-    // @id estable y neutro de idioma para consolidar señales entre es/en.
+    /**
+     * @id estable y neutro de idioma: /es y /en describen el MISMO servicio en
+     * la misma ciudad, no dos negocios.
+     *
+     * `url` tiene que ser igualmente neutra, y antes no lo era. Con un `@id`
+     * compartido y una `url` localizada, las dos versiones de la página
+     * emitían el mismo nodo con valores distintos de `url` — la auditoría de
+     * schema de 2026-08 lo listó en 110 URLs. Se resuelve apuntando siempre al
+     * locale canónico del sitio, que es el mismo que declara el `x-default` de
+     * hreflang (`/es`). El `<link rel="canonical">` de cada documento sigue
+     * siendo el suyo: esta propiedad describe el servicio, no el documento.
+     */
     '@id': `${SITE_URL}/${input.pageSlug}#legalservice`,
     name: `Manuel Solis - ${service.title[input.lang]}`,
     description: config.metaDescription[input.lang],
-    url: `${SITE_URL}/${input.lang}/${input.pageSlug}`,
+    url: `${SITE_URL}/es/${input.pageSlug}`,
     telephone: toSchemaPhone(office.phone),
     address: {
       '@type': 'PostalAddress',
@@ -97,11 +112,8 @@ export async function buildLandingSchema(
     },
     areaServed: { '@type': 'City', name: office.city },
     priceRange: '$$',
-    parentOrganization: {
-      '@type': 'LawFirm',
-      '@id': ORG_ID,
-      name: ORG_NAME,
-    },
+    // Referencia por @id pelado — ver app/lib/schemaOrg.ts.
+    parentOrganization: ORG_REF,
   };
 
   if (placeData?.location) {

@@ -6,6 +6,7 @@ import PageViewTracker, { TrackingSurfaces } from '../components/PageViewTracker
 import AttributionCapture from '../components/AttributionCapture';
 import type { Language } from '../lib/translations';
 import { OFFICES_NAP } from '../components/officesPhoneMap';
+import { attorneys } from '../lib/attorneyData';
 import { LangSetter } from '../components/LangSetter';
 import MotionProvider from '../components/MotionProvider';
 
@@ -38,6 +39,14 @@ const META_PIXEL_ID_2 = process.env.NEXT_PUBLIC_META_PIXEL_ID_2;
 // Sede principal, leída de la fuente única de NAP para no crear otra copia (hay
 // un test que compara las fuentes entre sí: __tests__/napConsistency.test.ts).
 const HQ = OFFICES_NAP['houston-principal'];
+
+/**
+ * El fundador sale de lib/attorneyData, no copiado a mano: es el mismo dato que
+ * renderiza su perfil y /nosotros. Si ese id desapareciera, `founder` se omite
+ * en lugar de emitir un nombre inventado (mismo criterio que tenía /nosotros).
+ */
+const FOUNDER_ID = 'manuel-solis';
+const FOUNDER = attorneys.find((attorney) => attorney.id === FOUNDER_ID);
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -141,6 +150,36 @@ const organizationSchema = {
     '@type': 'QuantitativeValue',
     minValue: 50
   },
+  /**
+   * `founder` vive aquí, en el nodo canónico, y no en /nosotros.
+   *
+   * Antes lo emitía app/[lang]/nosotros/page.tsx en un SEGUNDO bloque JSON-LD
+   * que reusaba este mismo `@id`. La intención era buena —una sola entidad
+   * enriquecida desde la página que declara visiblemente quién fundó la
+   * firma—, pero en la práctica las dos páginas de "Nosotros" emitían el nodo
+   * de la organización dos veces, con conjuntos de propiedades distintos. La
+   * auditoría de schema de 2026-08 lo marcó como entidad duplicada: un `@id`
+   * repetido se fusiona, y con él los valores en conflicto. Definir la entidad
+   * UNA vez y referenciarla por `@id` en todo lo demás es la regla; esta
+   * propiedad es parte de la definición, así que su sitio es este.
+   *
+   * Sin `@id` a propósito: es un valor de propiedad de la organización, no una
+   * entidad suelta. Consolidarlo con el nodo `#person-manuel-solis` que emite
+   * blogSchema como autor se hará junto con `sameAs` y `hasCredential` de los
+   * 38 perfiles, cuando el despacho entregue los enlaces de colegio — hacerlo
+   * ahora crearía justo el duplicado que este cambio elimina.
+   */
+  ...(FOUNDER
+    ? {
+        founder: {
+          '@type': 'Person',
+          name: FOUNDER.name,
+          jobTitle: FOUNDER.role.en,
+          url: `${SITE_URL}/es/abogados/${FOUNDER_ID}`,
+          image: FOUNDER.image,
+        },
+      }
+    : {}),
   // No aggregateRating / review here: Google does not accept third-party
   // (Google Places) reviews nor self-serving reviews in Organization /
   // LocalBusiness markup, and none of it is rendered on the page.

@@ -8,6 +8,7 @@ import NewsletterSignup from '../../../components/NewsletterSignup';
 import { getNewsletterBySlug, getAllNewsletterSlugs, NEWSLETTER_IMAGE } from '../../../lib/newsletterData';
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
+import { ORG_REF } from '../../../lib/schemaOrg';
 import { Stagger, StaggerItem } from '../../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -18,11 +19,7 @@ const SITE_URL = 'https://www.manuelsolis.com';
  * por @id el nodo Organization que el layout emite en todas las páginas, en vez
  * de declarar aquí una entidad anónima que Google contaría como otra empresa.
  */
-const PUBLISHING_ORG = {
-  '@type': 'Organization',
-  '@id': `${SITE_URL}/#organization`,
-  name: 'Manuel Solis Law Firm',
-};
+const PUBLISHING_ORG = ORG_REF;
 
 type Bilingual = { es: string; en: string };
 

@@ -83,41 +83,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// Schema.org — el aggregateRating vivo de Google Places (MAIN_FIRM_PLACE_ID,
-// Houston Principal, caché 24h) se adjunta al MISMO nodo `#organization` que
-// emite app/[lang]/layout.tsx: declarar aquí una segunda entidad LegalService
-// con nombre y dirección propios hacía que la misma URL describiera dos
-// negocios con idéntico rating. Con el @id compartido, es una sola entidad.
+// POR QUÉ ESTA PÁGINA NO MARCA EL RATING DE GOOGLE
 //
-// Esta es la única página que puede marcar el rating porque es la única que lo
-// renderiza visible. Si Places no responde, no se emite nada — nunca se cae a
-// datos hardcodeados (misma política que officeSchema.ts y landingSchema.ts).
-// El `review[]` hardcodeado se removió (Wave 1 SEO) por la política
-// anti-reseñas-fabricadas: para volver a marcar reseñas deben venir de un CMS
-// con consentimiento + timestamp documentados.
-async function generateRatingSchema(): Promise<Record<string, unknown> | null> {
-  const mainPlaceData = await getPlaceData(MAIN_FIRM_PLACE_ID);
-  if (!mainPlaceData || mainPlaceData.userRatingCount === 0) return null;
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': ['LegalService', 'LawFirm'],
-    '@id': `${SITE_URL}/#organization`,
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: mainPlaceData.rating.toFixed(1),
-      bestRating: '5',
-      worstRating: '1',
-      ratingCount: mainPlaceData.userRatingCount,
-      reviewCount: mainPlaceData.userRatingCount,
-    },
-  };
-}
+// Hasta ahora esta era la única página del sitio que convertía el rating vivo
+// de Google Places en `aggregateRating`, colgándolo del nodo `#organization`.
+// Se retiró tras la auditoría de schema del 2026-08 (Irina Shvaya), y la razón
+// es de política, no de implementación:
+//
+//   · El rating sale de Google Places, o sea de un tercero. Las guías de
+//     review snippets piden que las valoraciones se recojan directamente de los
+//     usuarios, no que se reagreguen desde otra plataforma.
+//   · Aunque no lo fueran, es marcado auto-referido: la propia firma
+//     publicando su propia calificación en el markup de su propia entidad.
+//
+// Las dos cosas a la vez, sobre `Organization`/`LegalService`/`LocalBusiness`,
+// son el disparador más común de acción manual por structured data en el
+// sector legal. El resto del sitio (officeSchema.ts, landingSchema.ts,
+// layout.tsx) ya seguía esta política; esta página era la excepción.
+//
+// EL NÚMERO SIGUE SIENDO VISIBLE. `getLiveRating()` continúa alimentando el
+// título, la meta description y <TestimoniosClient>, siempre rotulado como
+// reseñas de Google. Mostrarlo con atribución clara está permitido; traducirlo
+// a markup de la entidad, no.
+//
+// ⚠ NO REVIVIR ESTO. Hoy la key de Places devuelve 403 y el rating no se
+// emitiría de todos modos, así que el borrado parece inocuo — no lo es: en
+// cuanto la key se restablezca para el monitor de fichas GBP, cualquier código
+// que vuelva a colgar `aggregateRating` del `@id` de la firma empieza a
+// publicarlo solo. __tests__/schemaRatingPolicy.test.ts falla si vuelve.
 
 export default async function TestimoniosPage({ params }: Props) {
   const { lang } = await params;
   const videoLang: VideoLang = lang === 'en' ? 'en' : 'es';
-  const ratingSchema = await generateRatingSchema();
   // Los 6 testimonios son vídeos de YouTube que la página ya incrusta: con
   // VideoObject pasan a ser elegibles para el carrusel de vídeo de Google.
   const videoSchemas = buildPageVideoSchemas({
@@ -129,13 +126,6 @@ export default async function TestimoniosPage({ params }: Props) {
   return (
     <>
       <BreadcrumbSchema lang={videoLang} trail={[{ es: 'Testimonios', en: 'Testimonials', path: '/testimonios' }]} />
-      {ratingSchema && (
-        <script
-          id="review-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(ratingSchema) }}
-        />
-      )}
       {videoSchemas.map((schema, i) => (
         <script
           key={i}

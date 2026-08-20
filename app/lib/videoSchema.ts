@@ -14,6 +14,8 @@
 // marca: es preferible no ser elegible a declarar una fecha falsa.
 // ============================================================
 
+import { ORG_REF } from './schemaOrg';
+
 const SITE_URL = 'https://www.manuelsolis.com';
 
 export type VideoLang = 'es' | 'en';
@@ -78,12 +80,10 @@ export function buildVideoObjectSchema(input: VideoObjectInput): Record<string, 
           mainEntityOfPage: { '@type': 'WebPage', '@id': absolute(input.pagePath) },
         }
       : {}),
-    publisher: {
-      '@type': 'Organization',
-      // Mismo @id que emite app/[lang]/layout.tsx: una sola entidad firma.
-      '@id': `${SITE_URL}/#organization`,
-      name: 'Manuel Solis Law Firm',
-    },
+    // @id pelado: el nodo de la firma ya lo define el layout en esta página.
+    // Repetir aquí `@type: Organization` la declaraba por segunda vez con un
+    // tipo más genérico que el canónico. Ver app/lib/schemaOrg.ts.
+    publisher: ORG_REF,
   };
 }
 

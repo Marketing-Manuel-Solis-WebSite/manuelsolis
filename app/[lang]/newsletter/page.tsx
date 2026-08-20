@@ -7,20 +7,21 @@ import NewsletterSignup from '../../components/NewsletterSignup';
 import { newsletters, NEWSLETTER_IMAGE } from '../../lib/newsletterData';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
+import { ORG_REF } from '../../lib/schemaOrg';
 import { Reveal, Stagger, StaggerItem } from '../../components/motion';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
 /**
- * Firma del boletín: el despacho, no un abogado concreto. Se referencia por @id
- * el nodo Organization que el layout emite en todas las páginas, en vez de
- * declarar aquí una entidad anónima que Google contaría como otra empresa.
+ * Firma del boletín: el despacho, no un abogado concreto.
+ *
+ * La intención ya era referenciar el nodo del layout, pero al llevar `@type` y
+ * `name` propios seguía siendo una segunda DECLARACIÓN de la entidad —y con un
+ * tipo (`Organization`) más genérico que el canónico
+ * (`['LegalService','LawFirm']`). Ahora es una referencia de verdad: solo el
+ * `@id`. Ver app/lib/schemaOrg.ts.
  */
-const PUBLISHING_ORG = {
-  '@type': 'Organization',
-  '@id': `${SITE_URL}/#organization`,
-  name: 'Manuel Solis Law Firm',
-};
+const PUBLISHING_ORG = ORG_REF;
 
 type Props = {
   params: Promise<{ lang: string }>;
