@@ -145,8 +145,23 @@ async function descubrirPorBusqueda(of_) {
   const lugares = data.places || [];
   const match = lugares.find((p) => esNuestra(p.displayName?.text)) || null;
 
+  // Sedes que SABEMOS que no tienen ficha (las cinco del área de Chicago): no
+  // encontrarlas es el resultado esperado, no una alarma. Lo que sí es noticia
+  // es lo contrario — que alguien haya dado una de alta sin avisar.
+  const sinFichaEsperada = !of_.storeCode && !of_.direccionPanel;
+
   if (!match) {
-    return fila(of_, 'ROJO', '🔴', 'NO aparece en Maps con esta búsqueda (posible borrado/suspensión dura — confirmar en el panel)');
+    return sinFichaEsperada
+      ? fila(of_, 'GRIS', '⚪', 'Sin ficha en Google — esperado (pendiente de decisión sobre oficinas virtuales)')
+      : fila(of_, 'ROJO', '🔴', 'NO aparece en Maps con esta búsqueda (posible borrado/suspensión dura — confirmar en el panel)');
+  }
+  if (sinFichaEsperada) {
+    const res = clasificarLugar(of_, match);
+    res.estado = 'NARANJA';
+    res.icono = '🟠';
+    res.detalle = 'FICHA NUEVA NO AUTORIZADA: esta sede no debía tener ficha · ' + res.detalle;
+    res.placeIdDescubierto = match.id;
+    return res;
   }
   const res = clasificarLugar(of_, match);
   res.placeIdDescubierto = match.id;
@@ -177,20 +192,104 @@ function clasificarLugar(of_, p) {
     nivel = 'GRIS'; icono = '⚪'; detalle = `Estado ${status} · ${rating}`;
   }
 
-  const alertaNombre = nombreGoogle && !esNombreConsistente(nombreGoogle) ? ' · ⚠ revisar nombre en Google: "' + nombreGoogle + '"' : '';
+  const avisos = [riesgoNombre(nombreGoogle), derivaDireccion(of_, p.formattedAddress)].filter(Boolean);
 
-  return { ...fila(of_, nivel, icono, detalle + alertaNombre), nombreGoogle, rating: p.rating ?? null, resenas: p.userRatingCount ?? null, direccion: p.formattedAddress || '', mapsUri: p.googleMapsUri || '', placeId: p.id || of_.placeId || '' };
+  return {
+    ...fila(of_, nivel, icono, detalle + avisos.map((a) => ' · ' + a).join('')),
+    nombreGoogle,
+    rating: p.rating ?? null,
+    resenas: p.userRatingCount ?? null,
+    direccion: p.formattedAddress || '',
+    avisos: avisos.join(' | '),
+    mapsUri: p.googleMapsUri || '',
+    placeId: p.id || of_.placeId || '',
+  };
 }
 
-function esNombreConsistente(nombre) {
-  // Ajusta aquí el/los nombres oficiales aprobados para las fichas:
-  const oficiales = ['law offices of manuel solis', 'abogado de inmigracion manuel solis'];
-  const n = nombre.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
-  return oficiales.some((o) => n === o);
+/**
+ * Nombre del negocio: politica de Google, no gusto propio.
+ *
+ * La guia exige que el nombre de la ficha sea el nombre REAL del negocio —el de
+ * la senalizacion y los documentos legales—, sin descriptores de servicio ni
+ * ciudades pegadas. "Abogado de Inmigracion Manuel Solis" mete el servicio
+ * dentro del nombre, y eso es keyword stuffing: en la vertical legal es la
+ * violacion mas reportada por la competencia, y Google la castiga con reset de
+ * nombre o con suspension si viene acompanada de otra —por ejemplo direccion en
+ * centro de negocios sin personal, que es el caso de cinco de nuestras sedes.
+ *
+ * Panel del 2026-08-18: 14 de 15 fichas llevan el nombre con keyword. La unica
+ * con el nombre limpio es Amarillo, que ademas es la que esta cerrada.
+ */
+const NOMBRES_APROBADOS = ['law offices of manuel solis', 'abogados manuel solis'];
+const DESCRIPTORES_PROHIBIDOS =
+  /\b(abogad[oa]s?|attorney|lawyer|law firm|inmigracion|immigration|accidentes?|accident|criminal|familia|family)\b/i;
+
+function riesgoNombre(nombre) {
+  if (!nombre) return '';
+  const n = normalizar(nombre);
+  if (NOMBRES_APROBADOS.includes(n)) return '';
+
+  // "Abogados Manuel Solis" esta aprobado, asi que el descriptor solo es
+  // problema cuando aparece ADEMAS de la marca, no como parte del nombre legal.
+  const sinMarca = n.replace(/manuel sol[ii]s?/g, '').trim();
+  if (DESCRIPTORES_PROHIBIDOS.test(sinMarca)) {
+    return `KEYWORD STUFFING en el nombre: "${nombre}" — viola la guia de nombre de negocio, reportable por cualquier competidor`;
+  }
+  return `nombre fuera del aprobado: "${nombre}"`;
+}
+
+/**
+ * Deriva de direccion a tres bandas: lo que devuelve Google hoy, lo que
+ * publicaba el panel cuando se levanto este registro, y lo que publica el sitio
+ * (OFFICES_NAP). Las tres tienen que decir lo mismo o el NAP local se degrada.
+ */
+function derivaDireccion(of_, direccionGoogle) {
+  if (!direccionGoogle) return '';
+  const g = normalizarDireccion(direccionGoogle);
+  const avisos = [];
+
+  if (of_.direccionSitio && normalizarDireccion(of_.direccionSitio) !== g) {
+    avisos.push(`NAP ROTO: sitio dice "${of_.direccionSitio}" · Google dice "${direccionGoogle}"`);
+  }
+  if (of_.direccionPanel && normalizarDireccion(of_.direccionPanel) !== g) {
+    avisos.push(`cambio desde el panel del 2026-08-18 (era "${of_.direccionPanel}")`);
+  }
+  if (!of_.direccionSitio) {
+    avisos.push('SEDE FANTASMA: ficha sin pagina en el sitio');
+  }
+  return avisos.join(' · ');
+}
+
+/** Compara direcciones ignorando ruido de formato: puntuacion, ste/suite, estado largo vs corto. */
+function normalizarDireccion(s) {
+  const ESTADOS = { texas: 'tx', california: 'ca', illinois: 'il', colorado: 'co', tennessee: 'tn' };
+  let n = normalizar(s)
+    .replace(/,/g, ' ')
+    .replace(/\./g, '')
+    .replace(/#/g, 'ste ')
+    .replace(/\b(suite|ste|bldg|building)\b/g, 'ste')
+    .replace(/\bunited states\b/g, '');
+  for (const [largo, corto] of Object.entries(ESTADOS)) {
+    n = n.replace(new RegExp(`\\b${largo}\\b`, 'g'), corto);
+  }
+  return n.replace(/\s+/g, ' ').trim();
+}
+
+function normalizar(s) {
+  return String(s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 }
 
 function fila(of_, estado, icono, detalle) {
-  return { estado, icono, nombre: of_.nombre, query: of_.query || '', detalle };
+  return {
+    estado,
+    icono,
+    nombre: of_.nombre,
+    storeCode: of_.storeCode || '-',
+    slug: of_.slug || '',
+    query: of_.query || '',
+    nota: of_.nota || '',
+    detalle,
+  };
 }
 
 /* --------------------------------- helpers ---------------------------------- */
@@ -208,8 +307,8 @@ async function validarRespuesta(r) {
 }
 
 function imprimirTabla(filas) {
-  const cab = ['', 'ESTADO', 'OFICINA', 'DETALLE'];
-  const datos = filas.map((f) => [f.icono, f.estado, recortar(f.nombre, 34), recortar(f.detalle, 78)]);
+  const cab = ['', 'ESTADO', 'CODIGO', 'OFICINA', 'DETALLE'];
+  const datos = filas.map((f) => [f.icono, f.estado, f.storeCode, recortar(f.nombre, 32), recortar(f.detalle, 96)]);
   const anchos = cab.map((c, i) => Math.max(c.length, ...datos.map((d) => [...d[i]].length)));
   const linea = (cols) => cols.map((c, i) => c.padEnd(anchos[i])).join('  ');
   console.log(linea(cab));
@@ -219,7 +318,7 @@ function imprimirTabla(filas) {
 
 function aCsv(filas) {
   const esc = (v) => '"' + String(v ?? '').replace(/"/g, '""') + '"';
-  const cab = ['estado', 'nombre', 'nombreGoogle', 'direccion', 'detalle', 'rating', 'resenas', 'placeId', 'mapsUri'];
+  const cab = ['estado', 'storeCode', 'slug', 'nombre', 'nombreGoogle', 'direccion', 'avisos', 'detalle', 'rating', 'resenas', 'placeId', 'mapsUri', 'nota'];
   return '\uFEFF' + cab.join(',') + '\n' + filas.map((f) => cab.map((c) => esc(f[c])).join(',')).join('\n') + '\n';
 }
 

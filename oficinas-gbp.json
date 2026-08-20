@@ -1,87 +1,212 @@
 [
   {
     "nombre": "Houston — Navigation Blvd (matriz)",
+    "slug": "houston-principal",
+    "storeCode": "HOU-INM-01",
     "query": "Abogado de Inmigración Manuel Solis, 6657 Navigation Blvd, Houston, TX",
-    "placeId": "ChIJaQljAiS8QIYR47Wqon6VsLo"
-  },
-  {
-    "nombre": "Houston — Bellaire Blvd",
-    "query": "Law Office Manuel Solis, 9144 Bellaire Blvd, Houston, TX",
-    "placeId": "ChIJM8zmi1nCQIYRbCqQqM1ZVpw"
-  },
-  {
-    "nombre": "Cicero, IL (Chicago)",
-    "query": "Abogado de Inmigración Manuel Solis, 6000 Cermak Rd, Cicero, IL",
-    "placeId": "ChIJJ0d2AYczDogRrg7jc-23fOw"
-  },
-  {
-    "nombre": "Arvada, CO (Denver)",
-    "query": "Abogado de Inmigración Manuel Solis, 5400 Ward Rd, Arvada, CO",
-    "placeId": "ChIJU6L4zqN4bIcREfiN8ltyi1M"
-  },
-  {
-    "nombre": "Dallas — Empire Central",
-    "query": "Abogado de Inmigración Manuel Solis, 1120 Empire Central Pl, Dallas, TX",
-    "placeId": "ChIJS8sz5Y6ZToYRpCt7AviSKSs"
+    "placeId": "ChIJaQljAiS8QIYR47Wqon6VsLo",
+    "direccionSitio": "6657 Navigation Blvd, Houston, TX 77011",
+    "direccionPanel": "6657 Navigation Blvd, Houston, Texas 77011",
+    "nota": "Panel 2026-08-18: edicion pendiente sin resolver (punto rojo en el lapiz)."
   },
   {
     "nombre": "Houston — Navigation Blvd (accidentes)",
-    "query": "Law Offices of Manuel Solis, 6705 Navigation Blvd, Houston, TX 77011"
+    "slug": "houston-accidentes",
+    "storeCode": null,
+    "query": "Law Offices of Manuel Solis, 6705 Navigation Blvd, Houston, TX 77011",
+    "placeId": "ChIJcWaLtle9QIYRevi9QwqESqg",
+    "direccionSitio": "6705 Navigation Blvd, Houston, TX 77011",
+    "direccionPanel": null,
+    "nota": "NO APARECE en el panel del 2026-08-18 pese a tener placeId en el repo. Borrada o fusionada con 6657 (edificio contiguo). El 404 vs 200 del placeId lo decide."
+  },
+  {
+    "nombre": "Houston — Bellaire Blvd",
+    "slug": "houston-bellaire",
+    "storeCode": "HOU-INM-02",
+    "query": "Abogado de Inmigración Manuel Solis, 9144 Bellaire Blvd, Houston, TX",
+    "placeId": "ChIJM8zmi1nCQIYRbCqQqM1ZVpw",
+    "direccionSitio": "9188 Bellaire Blvd, STE E, Houston, TX 77036",
+    "direccionPanel": "9144 Bellaire Blvd, STE E, Houston, Texas 77036",
+    "nota": "CONFLICTO DURO: 9188 (sitio) vs 9144 (Google). Requiere verificacion fisica o del contrato de arrendamiento."
   },
   {
     "nombre": "Houston — Kirby Dr",
-    "query": "Law Offices of Manuel Solis, 3730 Kirby Dr Suite 1200, Houston, TX 77098"
+    "slug": "kirby",
+    "storeCode": "HOS-INM-06",
+    "query": "Abogado de Inmigración Manuel Solis, 3730 Kirby Dr, Houston, TX 77098",
+    "placeId": "ChIJ6Tfpy6rBQIYRR14_1WwRNYs",
+    "direccionSitio": "3730 Kirby Dr Suite 1200, Houston, TX 77098",
+    "direccionPanel": "3730 Kirby Dr, Houston, Texas 77098",
+    "nota": "Regus River Oaks Tower. El sitio publica Suite 1200; Google no publica suite."
   },
   {
     "nombre": "Houston — Main St",
-    "query": "Law Offices of Manuel Solis, 708 Main St, Houston, TX 77002"
+    "slug": "main-st",
+    "storeCode": "HOS-INM-04",
+    "query": "Abogado de Inmigración Manuel Solis, 708 Main St, Houston, TX 77002",
+    "placeId": "ChIJXx2j59O_QIYR019C2kVlIGg",
+    "direccionSitio": "708 Main St, Houston, TX 77002",
+    "direccionPanel": "708 Main St, Houston, Texas 77002",
+    "nota": "WeWork/Spaces. Direccion coincide."
   },
   {
     "nombre": "Houston — North Loop W",
-    "query": "Law Offices of Manuel Solis, 2950 North Loop W, Houston, TX 77092"
+    "slug": "north-loop",
+    "storeCode": "HOS-INM-07",
+    "query": "Abogado de Inmigración Manuel Solis, 2950 North Loop W, Houston, TX 77092",
+    "placeId": "ChIJ-_DxzPDHQIYRgXaZ4k13ZQ0",
+    "direccionSitio": "2950 North Loop W, Houston, TX 77092",
+    "direccionPanel": "2950 North Loop W, STE 551, Houston, Texas 77092",
+    "nota": "Regus Brookhollow Central III. Google publica STE 551; el registro interno documentaba Ste 500 y el sitio no publica suite. TRES valores distintos."
   },
   {
     "nombre": "Houston — Northchase Dr",
-    "query": "Law Offices of Manuel Solis, 16510 Northchase Dr, Houston, TX 77060"
+    "slug": "northchase",
+    "storeCode": "HOS-INM-05",
+    "query": "Abogado de Inmigración Manuel Solis, 16510 Northchase Dr, Houston, TX 77060",
+    "placeId": "ChIJ-_hX9rnJQIYR8mnRCeMOMBs",
+    "direccionSitio": "16510 Northchase Dr, Houston, TX 77060",
+    "direccionPanel": "16510 Northchase Dr, STE 218, Houston, Texas 77060",
+    "nota": "Regus/HQ (IWG). Google publica STE 218; el sitio no publica suite."
   },
   {
     "nombre": "League City, TX — S Shore Blvd",
-    "query": "Law Offices of Manuel Solis, 2600 S Shore Blvd, League City, TX 77573"
+    "slug": "league-city",
+    "storeCode": "HOS-INM-03",
+    "query": "Abogado de Inmigración Manuel Solis, 2600 S Shore Blvd, League City, TX 77573",
+    "placeId": "ChIJzbHqcnudQIYRCVyPjnmy0d4",
+    "direccionSitio": "2600 S Shore Blvd, League City, TX 77573",
+    "direccionPanel": "2600 S Shore Blvd, League City, Texas 77573",
+    "nota": "Regus. Direccion coincide."
+  },
+  {
+    "nombre": "Dallas — Empire Central",
+    "slug": "dallas",
+    "storeCode": "DAL-INM-01",
+    "query": "Abogado de Inmigración Manuel Solis, 1120 Empire Central Pl, Dallas, TX",
+    "placeId": "ChIJS8sz5Y6ZToYRpCt7AviSKSs",
+    "direccionSitio": "1120 Empire Central Pl, Dallas, TX 75247",
+    "direccionPanel": "1120 Empire Central Pl, Dallas, Texas 75247",
+    "nota": null
   },
   {
     "nombre": "El Paso, TX — Admiral St",
-    "query": "Law Offices of Manuel Solis, 3632 Admiral St, El Paso, TX 79925"
+    "slug": "el-paso",
+    "storeCode": "ELP-INM-01",
+    "query": "Abogado de Inmigración Manuel Solis, 3632 Admiral St, El Paso, TX 79925",
+    "placeId": "ChIJo_QmqMRa54YRGvMqpNYfD1c",
+    "direccionSitio": "3632 Admiral St, El Paso, TX 79925",
+    "direccionPanel": "3632 Admiral St, El Paso, Texas 79925",
+    "nota": null
   },
   {
     "nombre": "Harlingen, TX — E Jackson St",
-    "query": "Law Offices of Manuel Solis, 320 E Jackson St, Harlingen, TX 78550"
+    "slug": "harlingen",
+    "storeCode": "HAR-INM-01",
+    "query": "Abogado de Inmigración Manuel Solis, 320 E Jackson St, Harlingen, TX 78550",
+    "placeId": "ChIJPR1wKR-Cb4YRcpf4p0CiN6c",
+    "direccionSitio": "320 E Jackson St, Harlingen, TX 78550",
+    "direccionPanel": "320 E Jackson St, Harlingen, Texas 78550",
+    "nota": null
   },
   {
     "nombre": "Pico Rivera, CA (Los Ángeles)",
-    "query": "Law Offices of Manuel Solis, 8337 Telegraph Rd STE 115, Pico Rivera, CA 90660"
+    "slug": "losangeles",
+    "storeCode": "LAX-INM-01",
+    "query": "Abogado de Inmigración Manuel Solis, 8337 Telegraph Rd STE 115, Pico Rivera, CA 90660",
+    "placeId": "ChIJIb3goj7JwoARtuYr_Fb8ThU",
+    "direccionSitio": "8337 Telegraph Rd, STE 115, Pico Rivera, CA 90660",
+    "direccionPanel": "8337 Telegraph Rd., Ste 115, Pico Rivera, California 90660",
+    "nota": null
+  },
+  {
+    "nombre": "Cicero, IL (Chicago)",
+    "slug": "chicago",
+    "storeCode": "CHI-INM-01",
+    "query": "Abogado de Inmigración Manuel Solis, 6000 Cermak Rd, Cicero, IL",
+    "placeId": "ChIJJ0d2AYczDogRrg7jc-23fOw",
+    "direccionSitio": "6000 W Cermak Rd, Cicero, IL 60804",
+    "direccionPanel": "6000 W Cermak Rd, Cicero, IL 60804",
+    "nota": null
+  },
+  {
+    "nombre": "Arvada, CO (Denver)",
+    "slug": "arvada",
+    "storeCode": "DEN-INM-01",
+    "query": "Abogado de Inmigración Manuel Solis, 5400 Ward Rd, Arvada, CO",
+    "placeId": "ChIJU6L4zqN4bIcREfiN8ltyi1M",
+    "direccionSitio": "5400 Ward Rd, Bldg IV, Arvada, CO 80002",
+    "direccionPanel": "5400 Ward Rd, BLDG IV, Arvada, Colorado 80002",
+    "nota": null
   },
   {
     "nombre": "Memphis, TN — Airways Blvd",
-    "query": "Law Offices of Manuel Solis, 3385 Airways Blvd STE 320, Memphis, TN 38116"
+    "slug": "memphis",
+    "storeCode": "MEM-INM-01",
+    "query": "Abogado de Inmigración Manuel Solis, 3385 Airways Blvd STE 320, Memphis, TN 38116",
+    "placeId": "ChIJK_RRhsGHf4gRkT3D4gvjV9c",
+    "direccionSitio": "3385 Airways Blvd, STE 320, Memphis, TN 38116",
+    "direccionPanel": "3385 Airways Blvd, Suite 320, Memphis, Tennessee 38116",
+    "nota": "Sigue faltando el share-link de la ficha en officesPhoneMap.ts."
+  },
+  {
+    "nombre": "Amarillo, TX — Chase Tower  [NO ESTA EN EL SITIO]",
+    "slug": null,
+    "storeCode": "AMA-IMG-01",
+    "query": "Abogados Manuel Solis, 600 S Tyler St #1306, Amarillo, TX 79101",
+    "placeId": null,
+    "direccionSitio": null,
+    "direccionPanel": "Chase Tower, 600 South Tyler Street #1306, Amarillo, Texas 79101",
+    "nota": "SEDE FANTASMA: existe en Google, no existe en el sitio ni en OFFICES_NAP. Marcada 'Temporarily closed' + edicion pendiente. Store code usa IMG en vez de INM. Unica ficha con el nombre limpio ('Abogados Manuel Solis'). Decision de negocio pendiente: reabrir y publicar, o cerrar en definitiva."
   },
   {
     "nombre": "Schaumburg, IL — Martingale Rd",
-    "query": "Law Offices of Manuel Solis, 10 N Martingale Rd Ste 4137, Schaumburg, IL 60173"
+    "slug": "chicago-martingale",
+    "storeCode": null,
+    "query": "Law Offices of Manuel Solis, 10 N Martingale Rd Ste 4137, Schaumburg, IL 60173",
+    "placeId": null,
+    "direccionSitio": "10 N Martingale Rd, Ste 4137, Schaumburg, IL 60173",
+    "direccionPanel": null,
+    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
   },
   {
     "nombre": "Park Ridge, IL — S Prospect Ave",
-    "query": "Law Offices of Manuel Solis, 222 S Prospect Ave Ste 338, Park Ridge, IL 60068"
+    "slug": "chicago-prospect",
+    "storeCode": null,
+    "query": "Law Offices of Manuel Solis, 222 S Prospect Ave Ste 338, Park Ridge, IL 60068",
+    "placeId": null,
+    "direccionSitio": "222 S Prospect Ave, Ste 338, Park Ridge, IL 60068",
+    "direccionPanel": null,
+    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
   },
   {
     "nombre": "Chicago, IL — S Wacker Dr",
-    "query": "Law Offices of Manuel Solis, 125 S Wacker Dr Ste 341, Chicago, IL 60606"
+    "slug": "chicago-wacker",
+    "storeCode": null,
+    "query": "Law Offices of Manuel Solis, 125 S Wacker Dr Ste 341, Chicago, IL 60606",
+    "placeId": null,
+    "direccionSitio": "125 S Wacker Dr, Ste 341, Chicago, IL 60606",
+    "direccionPanel": null,
+    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
   },
   {
     "nombre": "Burr Ridge, IL — Burr Ridge Pkwy",
-    "query": "Law Offices of Manuel Solis, 1333 Burr Ridge Pkwy Ste 244, Burr Ridge, IL 60527"
+    "slug": "chicago-burr-ridge",
+    "storeCode": null,
+    "query": "Law Offices of Manuel Solis, 1333 Burr Ridge Pkwy Ste 244, Burr Ridge, IL 60527",
+    "placeId": null,
+    "direccionSitio": "1333 Burr Ridge Pkwy, Ste 244, Burr Ridge, IL 60527",
+    "direccionPanel": null,
+    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
   },
   {
     "nombre": "Naperville, IL — Wall St",
-    "query": "Law Offices of Manuel Solis, 1560 Wall St Ste 319, Naperville, IL 60563"
+    "slug": "chicago-wall",
+    "storeCode": null,
+    "query": "Law Offices of Manuel Solis, 1560 Wall St Ste 319, Naperville, IL 60563",
+    "placeId": null,
+    "direccionSitio": "1560 Wall St, Ste 319, Naperville, IL 60563",
+    "direccionPanel": null,
+    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
   }
 ]
