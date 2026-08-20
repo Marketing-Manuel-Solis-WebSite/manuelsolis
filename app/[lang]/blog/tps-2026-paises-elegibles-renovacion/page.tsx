@@ -514,7 +514,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         image={IMAGES.article}
         lang={lang as string}
         readTime="12"
-      />
+      
+        faqs={t.sections.faq.items.map((item) => ({
+          question: item.q,
+          answer: item.a.replace(/<[^>]+>/g, ''),
+        }))}/>
       <script
         id="breadcrumb-schema"
         type="application/ld+json"

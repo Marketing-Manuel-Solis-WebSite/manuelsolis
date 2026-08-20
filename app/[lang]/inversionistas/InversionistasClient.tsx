@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { m, AnimatePresence, Variants } from 'framer-motion';
+import { inversionistasFaqs } from '../../lib/inversionistasFaq';
 import {
   Phone,
   ArrowRight,
@@ -124,12 +125,11 @@ const processSteps = [
   { id: 6, title: { es: 'Presentación y Seguimiento', en: 'Submission & Follow-up' }, icon: Send, desc: { es: 'Gestionamos la solicitud ante USCIS o el Consulado y te preparamos para entrevista.', en: 'We manage the application with USCIS or the Consulate and prepare you for the interview.' } },
 ];
 
-const faqs = [
-  { q: { es: '¿Cuánto dinero necesito invertir?', en: 'How much money do I need to invest?' }, a: { es: 'No hay un mínimo legal fijo, pero la inversión debe ser "sustancial". En la práctica, recomendamos montos a partir de $100,000 USD para tener un caso sólido, aunque montos menores pueden funcionar según el tipo de negocio.', en: 'There is no fixed legal minimum, but the investment must be "substantial". In practice, we recommend amounts starting at $100,000 USD to have a strong case, although smaller amounts may work depending on the business type.' } },
-  { q: { es: '¿La Visa E-2 da Residencia (Green Card)?', en: 'Does the E-2 Visa give Residency (Green Card)?' }, a: { es: 'No directamente. Es una visa de no inmigrante. Sin embargo, puede renovarse indefinidamente y existen estrategias legales para transicionar a otras visas que sí otorgan residencia.', en: 'Not directly. It is a non-immigrant visa. However, it can be renewed indefinitely and there are legal strategies to transition to other visas that do grant residency.' } },
-  { q: { es: '¿Puede trabajar mi esposa/o?', en: 'Can my spouse work?' }, a: { es: 'Sí. El cónyuge del titular obtiene un permiso de trabajo general que le permite trabajar en cualquier lugar de EE.UU. sin restricciones.', en: 'Yes. The holder\'s spouse obtains a general work permit allowing them to work anywhere in the U.S. without restrictions.' } },
-  { q: { es: '¿Puedo comprar un negocio existente?', en: 'Can I buy an existing business?' }, a: { es: 'Sí, y a menudo es recomendable. Comprar un negocio con historial operativo facilita demostrar que la inversión no es marginal y que el negocio es real.', en: 'Yes, and it is often recommended. Buying a business with operational history makes it easier to demonstrate that the investment is not marginal and the business is real.' } },
-];
+// Las preguntas viven en app/lib/inversionistasFaq.ts para que la página
+// servidor pueda emitir el FAQPage desde el MISMO array que se pinta aquí.
+// Antes estaban en este archivo `'use client'` y por eso la sección se veía
+// sin marcar.
+const faqs = inversionistasFaqs;
 
 const ui = {
   badge: { es: 'Visa de Inversionista', en: 'Investor Visa' },

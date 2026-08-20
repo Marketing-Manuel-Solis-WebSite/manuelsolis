@@ -11,6 +11,7 @@ import { generateBreadcrumbSchema } from '../../../../../lib/breadcrumbSchema';
 import { buildOfficeFaqSchema } from '../../../../../lib/officeFaq';
 import { buildSocialMetadata } from '../../../../../lib/seoMetadata';
 import { isVirtualOffice } from '../../../../../lib/officesRegistry';
+import { OFFICES_NAP, type OfficeNapSlug } from '../../../../../components/officesPhoneMap';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -67,6 +68,59 @@ const OFFICE_IMAGE_SIZE: Record<string, { width: number; height: number } | unde
 
 function officeZone(office: AccidentOffice, lang: 'es' | 'en'): string {
   return SEO_ZONE_SHORT[office.id]?.[lang] ?? office.seoZone?.[lang] ?? office.name[lang];
+}
+
+/**
+ * `description` del nodo Service.
+ *
+ * El nodo salía con `name` y sin `description` en las 30 páginas (15 sedes × 2
+ * idiomas). La auditoría de schema de 2026-08 contó 20 porque rastreó el
+ * sitemap, y las cinco sedes con cita van `noindex` y fuera de él; el criterio
+ * era el mismo: un Service sin descripción no aporta elegibilidad y sí invita a
+ * un hallazgo de contenido no coincidente.
+ *
+ * CADA FRASE SALE DE ALGO QUE LA PÁGINA MUESTRA. No se inventa nada:
+ *   · el tipo de accidente y la promesa de indemnización son el
+ *     `heroDescription` que se pinta bajo el H1 (accidentesData.ts);
+ *   · la zona es la segunda línea del propio H1;
+ *   · la modalidad —solo con cita, o 24 horas— es el horario que la ficha
+ *     publica en el bloque de contacto, leído del NAP canónico y no de una
+ *     cadena repetida aquí;
+ *   · el bilingüismo ya lo declara el `availableChannel` de este mismo nodo.
+ *
+ * La modalidad se explicita solo donde distingue. En las cinco direcciones con
+ * cita es lo más importante que puede decir la descripción: sin ella, un
+ * extractor leería "abogado de accidentes en Upper Kirby" como una oficina
+ * donde se puede entrar sin avisar, que es justo la lectura que hay que evitar.
+ */
+function serviceDescription(office: AccidentOffice, lang: 'es' | 'en'): string {
+  const zone = officeZone(office, lang);
+  const nap = OFFICES_NAP[office.id as OfficeNapSlug];
+
+  const base =
+    lang === 'es'
+      ? `Abogados de accidentes de trabajo y de carretera en ${zone}. Luchamos por la indemnización máxima sin importar su estatus migratorio, con atención en español e inglés.`
+      : `Work and road accident attorneys in ${zone}. We fight for maximum compensation regardless of immigration status, with service in Spanish and English.`;
+
+  if (isVirtualOffice(office.id)) {
+    return (
+      base +
+      (lang === 'es'
+        ? ' Esta dirección atiende únicamente con cita previa; la línea telefónica responde las 24 horas.'
+        : ' This address is by appointment only; the phone line is answered 24 hours a day.')
+    );
+  }
+
+  if (nap?.hours.kind === 'always') {
+    return (
+      base +
+      (lang === 'es'
+        ? ' Centro de accidentes abierto las 24 horas.'
+        : ' Accident center open 24 hours.')
+    );
+  }
+
+  return base;
 }
 
 type Props = {
@@ -172,6 +226,7 @@ export default async function AccidenteOficinaPage({ params }: Props) {
       localeLang === 'es'
         ? `Abogado de Accidentes en ${zone}`
         : `Accident Lawyer in ${zone}`,
+    description: serviceDescription(office, localeLang),
     serviceType: 'Personal Injury Law',
     provider: { '@id': `${SITE_URL}/#organization` },
     areaServed: { '@type': 'City', name: office.city },

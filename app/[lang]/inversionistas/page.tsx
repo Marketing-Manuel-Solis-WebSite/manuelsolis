@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import InversionistasClient from './InversionistasClient';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
+import { generateFAQSchema } from '../../lib/blogSchema';
+import { inversionistasFaqs } from '../../lib/inversionistasFaq';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
 
 const SITE_URL = 'https://www.manuelsolis.com';
@@ -80,7 +82,18 @@ const getServiceSchema = (lang: string) => ({
 
 export default async function InversionistasPage({ params }: Props) {
   const { lang } = await params;
+  const isEs = lang !== 'en';
   const schemaData = getServiceSchema(lang);
+
+  // FAQPage de las cuatro preguntas que la página ya muestra. Se construye
+  // desde el mismo array que renderiza <InversionistasClient>, así que el
+  // marcado y el texto visible no pueden divergir.
+  const faqSchema = generateFAQSchema(
+    inversionistasFaqs.map((faq) => ({
+      question: isEs ? faq.q.es : faq.q.en,
+      answer: isEs ? faq.a.es : faq.a.en,
+    })),
+  );
   const breadcrumbData = generateBreadcrumbSchema([
     { name: lang === 'es' ? 'Inicio' : 'Home', url: `/${lang}` },
     {
@@ -99,6 +112,13 @@ export default async function InversionistasPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
       />
+      {faqSchema && (
+        <script
+          id="faq-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <InversionistasClient />
     </>
   );
