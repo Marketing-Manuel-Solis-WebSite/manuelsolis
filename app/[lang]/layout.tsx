@@ -134,9 +134,11 @@ const organizationSchema = {
   },
   location: [
     { '@type': 'Place', name: 'Houston Principal Office', address: { '@type': 'PostalAddress', streetAddress: '6657 Navigation Blvd', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77011', addressCountry: 'US' }, telephone: '(713) 701-1731' },
-    { '@type': 'Place', name: 'Houston Accidentes Office', address: { '@type': 'PostalAddress', streetAddress: '6705 Navigation Blvd', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77011', addressCountry: 'US' }, telephone: '(713) 231-5384' },
-    // Nota: las direcciones virtuales (Regus/IWG: north-loop, kirby, main-st,
-    // league-city, northchase) se omiten a propósito — ver officesRegistry.ts.
+    // Nota: aquí solo van las sedes con ATENCIÓN PRESENCIAL. Se omiten a
+    // propósito las direcciones virtuales (Regus/IWG: north-loop, kirby,
+    // main-st, league-city, northchase) y, desde el 2026-08-22, también
+    // Houston Accidentes (6705 Navigation Blvd), que el despacho reclasificó
+    // como satélite. Ver officesRegistry.ts y officesPhoneMap.ts.
     { '@type': 'Place', name: 'Houston Bellaire Office', address: { '@type': 'PostalAddress', streetAddress: '9188 Bellaire Blvd E', addressLocality: 'Houston', addressRegion: 'TX', postalCode: '77036', addressCountry: 'US' } },
     { '@type': 'Place', name: 'Dallas Office', address: { '@type': 'PostalAddress', streetAddress: '1120 Empire Central Pl', addressLocality: 'Dallas', addressRegion: 'TX', postalCode: '75247', addressCountry: 'US' }, telephone: '(214) 753-8315' },
     { '@type': 'Place', name: 'El Paso Office', address: { '@type': 'PostalAddress', streetAddress: '3632 Admiral St', addressLocality: 'El Paso', addressRegion: 'TX', postalCode: '79925', addressCountry: 'US' }, telephone: '(915) 233-7127' },

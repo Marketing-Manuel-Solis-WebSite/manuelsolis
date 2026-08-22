@@ -32,6 +32,18 @@ export type OfficeHours =
   /** Local físico abierto 24/7 (centro de accidentes). */
   | { kind: 'always'; label: BiText }
   /**
+   * OFICINA SATÉLITE (decisión del despacho, 2026-08-22).
+   *
+   * Tiene horario real de operación —el mismo que publica su ficha de Google—
+   * pero NO es una sede de atención presencial: no se recibe sin aviso. Es una
+   * categoría distinta de `weekly` justamente por eso: comparten la forma del
+   * dato pero no lo que se le puede prometer al visitante, y mezclarlas fue lo
+   * que produjo el problema anterior. La UI no debe pintar "Abierto ahora" en
+   * una satélite, porque invita a presentarse en una dirección donde no van a
+   * poder atender.
+   */
+  | { kind: 'satellite'; label: BiText; open: WeeklyOpen }
+  /**
    * Dirección virtual Regus/IWG: sin personal en sitio, se atiende con cita y
    * el 24/7 publicado es el enrutamiento del call-center. No hay franjas que
    * evaluar, así que la UI muestra el horario en vez de un estado abierto/cerrado.
@@ -137,6 +149,33 @@ const APPOINTMENT_HOURS: OfficeHours = {
   },
 };
 
+/**
+ * Horario de las oficinas SATÉLITE de Houston (decisión del despacho,
+ * 2026-08-22): Houston Accidentes, Kirby, Main St, North Loop y Northchase.
+ *
+ * Sustituye a dos afirmaciones distintas que el despacho retiró el mismo día:
+ * el "Abierto las 24 horas" de Houston Accidentes y el "atención telefónica 24
+ * horas" de las otras cuatro. Es el horario que publica la ficha de Google, y
+ * es el mismo de la oficina principal.
+ *
+ * Domingo no aparece porque en este modelo un día ausente es día cerrado.
+ */
+const SATELLITE_HOURS: OfficeHours = {
+  kind: 'satellite',
+  label: {
+    es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM',
+    en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM',
+  },
+  open: {
+    1: { opens: '09:00', closes: '19:00' },
+    2: { opens: '09:00', closes: '19:00' },
+    3: { opens: '09:00', closes: '19:00' },
+    4: { opens: '09:00', closes: '19:00' },
+    5: { opens: '09:00', closes: '19:00' },
+    6: { opens: '09:00', closes: '16:00' },
+  },
+};
+
 export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
   'houston-principal': {
     slug: 'houston-principal',
@@ -169,10 +208,9 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     phone: '(713) 231-5384',
     timeZone: 'America/Chicago',
     mapLink: 'https://share.google/wEP84RY0RqTOqR787',
-    hours: {
-      kind: 'always',
-      label: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
-    },
+    // Era `always` ("Abierto las 24 horas"). El despacho retiró esa afirmación
+    // el 2026-08-22 y reclasificó la sede como satélite.
+    hours: SATELLITE_HOURS,
   },
   'houston-bellaire': {
     slug: 'houston-bellaire',
@@ -205,7 +243,7 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     phone: '(713) 903-7875',
     timeZone: 'America/Chicago',
     mapLink: 'https://share.google/R85nYwhTFqoxLctD4',
-    hours: APPOINTMENT_HOURS,
+    hours: SATELLITE_HOURS,
   },
   'main-st': {
     slug: 'main-st',
@@ -218,7 +256,7 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     phone: '(713) 842-9575',
     timeZone: 'America/Chicago',
     mapLink: 'https://share.google/Fc3ISgQAihcayfmws',
-    hours: APPOINTMENT_HOURS,
+    hours: SATELLITE_HOURS,
   },
   'north-loop': {
     slug: 'north-loop',
@@ -231,7 +269,7 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     phone: '(713) 429-0237',
     timeZone: 'America/Chicago',
     mapLink: 'https://share.google/aKTPwIvhMmw7JfRcY',
-    hours: APPOINTMENT_HOURS,
+    hours: SATELLITE_HOURS,
   },
   northchase: {
     slug: 'northchase',
@@ -244,7 +282,7 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     phone: '(346) 522-4848',
     timeZone: 'America/Chicago',
     mapLink: 'https://share.google/wSptYM5hcuGigC3aS',
-    hours: APPOINTMENT_HOURS,
+    hours: SATELLITE_HOURS,
   },
   'league-city': {
     slug: 'league-city',
@@ -509,8 +547,38 @@ export const OFFICE_NAP_SLUGS = Object.keys(OFFICES_NAP) as OfficeNapSlug[];
  * VIRTUAL_OFFICE_SLUGS, así que las dos fuentes no pueden separarse.
  */
 export const PHYSICAL_OFFICE_COUNT = OFFICE_NAP_SLUGS.filter(
-  (slug) => OFFICES_NAP[slug].hours.kind !== 'appointment',
+  (slug) => isWalkInOffice(slug),
 ).length;
+
+/**
+ * Las tres categorías, derivadas de `hours.kind` y de nada más.
+ *
+ * Antes solo había dos —atendida o con cita— y el conteo se hacía negando
+ * `appointment`. Al reclasificar las cinco de Houston como satélite el
+ * 2026-08-22 esa negación habría contado a las satélite como oficinas
+ * atendidas, que es justo lo contrario de lo que el despacho decidió publicar.
+ *
+ * `isWalkInOffice` es la pregunta que importa para el visitante: ¿puedo
+ * presentarme sin avisar? Solo `weekly` y `always` responden que sí.
+ */
+export function isSatelliteOffice(slug: string): boolean {
+  return getOfficeNap(slug)?.hours.kind === 'satellite';
+}
+
+export function isAppointmentOnlyOffice(slug: string): boolean {
+  return getOfficeNap(slug)?.hours.kind === 'appointment';
+}
+
+export function isWalkInOffice(slug: string): boolean {
+  const kind = getOfficeNap(slug)?.hours.kind;
+  return kind === 'weekly' || kind === 'always';
+}
+
+/** Sedes satélite: horario real, pero sin atención presencial. */
+export const SATELLITE_OFFICE_SLUGS = OFFICE_NAP_SLUGS.filter(isSatelliteOffice);
+
+/** Direcciones que solo abren con cita previa. */
+export const APPOINTMENT_OFFICE_SLUGS = OFFICE_NAP_SLUGS.filter(isAppointmentOnlyOffice);
 
 export function getOfficeNap(slug: string): OfficeNap | undefined {
   return (OFFICES_NAP as Readonly<Record<string, OfficeNap>>)[slug];
@@ -521,7 +589,7 @@ export function formatOfficeAddress(nap: OfficeNap): string {
   return `${nap.street}, ${nap.city}, ${nap.state} ${nap.zip}, United States`;
 }
 
-export type OfficeOpenState = 'open' | 'closed' | 'always-open' | 'appointment';
+export type OfficeOpenState = 'open' | 'closed' | 'always-open' | 'appointment' | 'satellite';
 
 const officeClocks = new Map<string, Intl.DateTimeFormat>();
 
@@ -576,6 +644,10 @@ export function getOfficeOpenState(slug: string, now: Date = new Date()): Office
   if (!nap) return null;
   if (nap.hours.kind === 'appointment') return 'appointment';
   if (nap.hours.kind === 'always') return 'always-open';
+  // Satélite: tiene franjas, pero NO se evalúa abierto/cerrado a propósito.
+  // Pintar "Abierto ahora" en una dirección sin atención presencial invita a
+  // presentarse allí, que es exactamente lo que la reclasificación evita.
+  if (nap.hours.kind === 'satellite') return 'satellite';
 
   const local = officeLocalNow(nap.timeZone, now);
   if (!local) return null;

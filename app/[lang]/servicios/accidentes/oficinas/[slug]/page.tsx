@@ -102,21 +102,25 @@ function serviceDescription(office: AccidentOffice, lang: 'es' | 'en'): string {
       ? `Abogados de accidentes de trabajo y de carretera en ${zone}. Luchamos por la indemnización máxima sin importar su estatus migratorio, con atención en español e inglés.`
       : `Work and road accident attorneys in ${zone}. We fight for maximum compensation regardless of immigration status, with service in Spanish and English.`;
 
+  // Orden deliberado: satélite ANTES que virtual. Cuatro de las cinco satélite
+  // son además direcciones Regus, así que si se preguntara primero por virtual
+  // se anunciarían como "solo con cita" sedes que el despacho reclasificó el
+  // 2026-08-22 y que ahora publican horario real.
+  if (nap?.hours.kind === 'satellite') {
+    return (
+      base +
+      (lang === 'es'
+        ? ' Es una oficina satélite: no hay atención presencial y la visita se coordina antes por teléfono. Opera de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 9:00 AM a 4:00 PM.'
+        : ' This is a satellite office: there is no walk-in service and visits are arranged in advance by phone. It operates Monday to Friday from 9:00 AM to 7:00 PM and Saturday from 9:00 AM to 4:00 PM.')
+    );
+  }
+
   if (isVirtualOffice(office.id)) {
     return (
       base +
       (lang === 'es'
         ? ' Esta dirección atiende únicamente con cita previa; la línea telefónica responde las 24 horas.'
         : ' This address is by appointment only; the phone line is answered 24 hours a day.')
-    );
-  }
-
-  if (nap?.hours.kind === 'always') {
-    return (
-      base +
-      (lang === 'es'
-        ? ' Centro de accidentes abierto las 24 horas.'
-        : ' Accident center open 24 hours.')
     );
   }
 

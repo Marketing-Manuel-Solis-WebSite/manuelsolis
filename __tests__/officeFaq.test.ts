@@ -1,6 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { buildOfficeFaqs, buildOfficeFaqSchema } from '../app/lib/officeFaq';
-import { OFFICE_NAP_SLUGS, OFFICES_NAP } from '../app/components/officesPhoneMap';
+import {
+  OFFICE_NAP_SLUGS,
+  OFFICES_NAP,
+  SATELLITE_OFFICE_SLUGS,
+} from '../app/components/officesPhoneMap';
 
 /**
  * Estas preguntas existen para bajar la duplicación de las 15 fichas de
@@ -48,9 +52,22 @@ describe('buildOfficeFaqs — dice la verdad sobre cada oficina', () => {
     expect(walkIn.a).not.toMatch(/no hay personal/i);
   });
 
-  it('dice que el centro de accidentes abre 24 horas', () => {
-    const [walkIn] = buildOfficeFaqs('houston-accidentes', 'es');
-    expect(walkIn.a).toMatch(/24 horas/i);
+  /**
+   * Houston Accidentes era "el centro 24 horas" hasta el 2026-08-22, cuando el
+   * despacho lo reclasificó como satélite y retiró esa afirmación.
+   *
+   * La pregunta es "¿puedo llegar sin cita?", así que es la respuesta donde una
+   * equivocación cuesta un viaje en balde. Se comprueba en las CINCO satélite,
+   * no solo en esta: cuatro de ellas tienen franjas horarias reales y por eso
+   * caían antes en la rama de "sí atiende sin cita".
+   */
+  it('ninguna satélite dice que atiende sin cita, ni anuncia 24 horas', () => {
+    for (const slug of SATELLITE_OFFICE_SLUGS) {
+      const [walkIn] = buildOfficeFaqs(slug, 'es');
+      expect(walkIn.a, slug).toMatch(/^No\./);
+      expect(walkIn.a, slug).toMatch(/sat[ée]lite/i);
+      expect(walkIn.a, slug).not.toMatch(/24 horas/i);
+    }
   });
 
   it('menciona el huso solo donde difiere del de la sede', () => {

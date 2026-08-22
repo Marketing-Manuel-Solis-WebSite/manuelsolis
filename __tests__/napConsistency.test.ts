@@ -4,6 +4,10 @@ import { describe, expect, it } from 'vitest';
 import {
   OFFICES_NAP,
   OFFICE_NAP_SLUGS,
+  APPOINTMENT_OFFICE_SLUGS,
+  SATELLITE_OFFICE_SLUGS,
+  PHYSICAL_OFFICE_COUNT,
+  isWalkInOffice,
   officesPhoneMap,
   formatOfficeAddress,
   getOfficeOpenState,
@@ -430,11 +434,64 @@ describe('NAP de oficinas — fuente única', () => {
     expect(sinFicha).toEqual([...SIN_FICHA_DE_ACCIDENTES].sort());
   });
 
-  it('las oficinas de solo cita son exactamente las direcciones virtuales', () => {
-    const appointmentOnly = OFFICE_NAP_SLUGS.filter(
-      (slug) => OFFICES_NAP[slug].hours.kind === 'appointment',
+  /**
+   * Antes este test decía que las de solo cita eran EXACTAMENTE las direcciones
+   * virtuales. Dejó de ser cierto el 2026-08-22, cuando el despacho reclasificó
+   * cinco sedes de Houston como satélite: cuatro de ellas son direcciones
+   * virtuales (Regus) pero ya no publican "con cita", sino horario real.
+   *
+   * Las dos listas dejan de ser la misma cosa a propósito:
+   *   · VIRTUAL_OFFICE_SLUGS = qué EDIFICIO es (centro de negocios Regus/IWG).
+   *     Es un hecho de la dirección y no cambia porque cambie la operación.
+   *   · el `hours.kind` = cómo SE ATIENDE. Es lo que se le promete al visitante.
+   *
+   * Confundirlas fue lo que permitió que una sede sin atención presencial
+   * publicara horario de oficina atendida, así que el test ahora fija las tres
+   * categorías por separado.
+   */
+  it('las tres categorías de atención son exactamente las esperadas', () => {
+    const porTipo = (kind: string) =>
+      OFFICE_NAP_SLUGS.filter((slug) => OFFICES_NAP[slug].hours.kind === kind).sort();
+
+    // Satélite: horario real, sin atención presencial (decisión 2026-08-22).
+    expect(porTipo('satellite')).toEqual(
+      ['houston-accidentes', 'kirby', 'main-st', 'north-loop', 'northchase'].sort(),
     );
-    expect(appointmentOnly.sort()).toEqual([...VIRTUAL_OFFICE_SLUGS].sort());
+
+    // Solo cita: League City y las cinco del área de Chicago. Son las
+    // direcciones virtuales que NO se reclasificaron.
+    expect(porTipo('appointment')).toEqual(
+      [
+        'league-city',
+        'chicago-martingale',
+        'chicago-prospect',
+        'chicago-wacker',
+        'chicago-burr-ridge',
+        'chicago-wall',
+      ].sort(),
+    );
+
+    // Toda sede sin atención presencial tiene que ser satélite o de solo cita:
+    // nadie puede quedarse en tierra de nadie.
+    const sinPresencial = [...porTipo('satellite'), ...porTipo('appointment')].sort();
+    const walkIn = OFFICE_NAP_SLUGS.filter((slug) => isWalkInOffice(slug)).sort();
+    expect([...sinPresencial, ...walkIn].sort()).toEqual([...OFFICE_NAP_SLUGS].sort());
+
+    // Y ninguna satélite ni de solo cita puede contar como oficina física.
+    expect(PHYSICAL_OFFICE_COUNT).toBe(walkIn.length);
+  });
+
+  it('ya no queda ninguna sede anunciando 24 horas', () => {
+    // El despacho retiró la afirmación el 2026-08-22. Cubre las dos formas que
+    // existían: el "Abierto las 24 horas" del centro de accidentes y el
+    // "atención telefónica 24 horas" de las direcciones con cita de Houston.
+    const con24h = OFFICE_NAP_SLUGS.filter((slug) => {
+      const { es, en } = OFFICES_NAP[slug].hours.label;
+      return /24\s*(horas|hours|-hour)/i.test(es) || /24\s*(horas|hours|-hour)/i.test(en);
+    });
+    // Las de solo cita conservan la línea telefónica 24 h, que sí es cierta.
+    expect(con24h.sort()).toEqual([...APPOINTMENT_OFFICE_SLUGS].sort());
+    expect(con24h).not.toContain('houston-accidentes');
   });
 
   it('no hay divergencias de NAP entre las fuentes salvo las documentadas', () => {
@@ -487,11 +544,25 @@ describe('Estado operativo por oficina (OFI-5)', () => {
     expect(getOfficeOpenState('houston-principal', SUNDAY_MORNING)).toBe('closed');
   });
 
-  it('no inventa estado para las direcciones virtuales ni para el centro 24 h', () => {
-    for (const slug of VIRTUAL_OFFICE_SLUGS) {
+  it('no inventa estado para las que no atienden sin cita', () => {
+    for (const slug of APPOINTMENT_OFFICE_SLUGS) {
       expect(getOfficeOpenState(slug, SUNDAY_MORNING), slug).toBe('appointment');
     }
-    expect(getOfficeOpenState('houston-accidentes', SUNDAY_MORNING)).toBe('always-open');
+
+    /**
+     * Las satélite NUNCA devuelven abierto/cerrado, ni siquiera en pleno
+     * horario. Tienen franjas reales, así que la tentación de evaluarlas como
+     * una oficina normal es justo el error a evitar: un "ABIERTO" en una sede
+     * sin atención presencial manda a alguien hasta la puerta para nada.
+     */
+    for (const slug of SATELLITE_OFFICE_SLUGS) {
+      expect(getOfficeOpenState(slug, SUNDAY_MORNING), slug).toBe('satellite');
+      expect(getOfficeOpenState(slug, WEEKDAY_MORNING), slug).toBe('satellite');
+      expect(getOfficeOpenState(slug, SATURDAY_MORNING), slug).toBe('satellite');
+    }
+
+    // Houston Accidentes dejó de ser el centro 24 h el 2026-08-22.
+    expect(getOfficeOpenState('houston-accidentes', SUNDAY_MORNING)).toBe('satellite');
   });
 
   it('devuelve null para un slug desconocido', () => {

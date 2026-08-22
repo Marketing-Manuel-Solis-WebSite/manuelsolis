@@ -1,6 +1,7 @@
 import 'server-only';
 import { getPlaceData, type GooglePlaceData } from './googleReviews';
 import { getOfficePlaceId, isVirtualOffice } from './officesRegistry';
+import { isSatelliteOffice } from '../components/officesPhoneMap';
 import { ORG_REF } from './schemaOrg';
 
 /**
@@ -106,6 +107,58 @@ export async function buildOfficeSchema(
    */
   const url = `${SITE_URL}/es/oficinas/${input.slug}`;
   const virtual = isVirtualOffice(input.slug);
+  const satellite = isSatelliteOffice(input.slug);
+
+  /**
+   * SEDES SATÉLITE: `Place`, no `LegalService`/`Attorney`.
+   *
+   * Es la recomendación literal de la auditoría de schema de 2026-08 para su
+   * único hallazgo crítico. Google espera que un `LocalBusiness` sea una
+   * ubicación física atendida durante el horario que publica; declarar una
+   * entidad de negocio completa —con `telephone`, `priceRange`, `geo`— en una
+   * dirección que el propio texto describe como no presencial documenta la
+   * infracción en su propio marcado, y es el patrón por el que Google retira
+   * fichas de despachos.
+   *
+   * Hasta ahora no se podía aplicar porque hacía falta que el despacho
+   * clasificara cada sede; lo hizo el 2026-08-22. Un `Place` describe la
+   * dirección con honestidad —existe, está aquí, pertenece a la firma— sin
+   * afirmar que es una sucursal atendida.
+   *
+   * Sin `openingHoursSpecification` a propósito, aunque la satélite SÍ tenga
+   * horario real y la página lo muestre: esa propiedad es la que le dice a
+   * Google "hay personal aquí en estas franjas". Omitir una propiedad nunca es
+   * una discrepancia; afirmar de más, sí.
+   */
+  if (satellite) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Place',
+      '@id': `${SITE_URL}/oficinas/${input.slug}#place`,
+      name: input.officeInfo.name ?? ORG_NAME,
+      description: lang === 'es' ? input.description.es : input.description.en,
+      url,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: input.officeInfo.address,
+        addressLocality: input.officeInfo.city,
+        addressRegion: input.officeInfo.state,
+        postalCode: input.officeInfo.zip,
+        addressCountry: 'US',
+      },
+      ...(placeData?.location
+        ? {
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: placeData.location.lat,
+              longitude: placeData.location.lng,
+            },
+          }
+        : {}),
+      hasMap: input.officeInfo.mapUrl ?? placeData?.url,
+      containedInPlace: ORG_REF,
+    };
+  }
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',

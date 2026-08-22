@@ -4,7 +4,13 @@ import Link from 'next/link';
 import { MapPin, Phone, Building2, ChevronDown } from 'lucide-react';
 import { generateBreadcrumbSchema } from '../../lib/breadcrumbSchema';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
-import { VIRTUAL_OFFICE_SLUGS, isVirtualOffice } from '../../lib/officesRegistry';
+import {
+  APPOINTMENT_OFFICE_SLUGS,
+  SATELLITE_OFFICE_SLUGS,
+  PHYSICAL_OFFICE_COUNT,
+  isSatelliteOffice,
+  isAppointmentOnlyOffice,
+} from '../../components/officesPhoneMap';
 import { OFFICES_NAP, OFFICE_NAP_SLUGS, type OfficeNapSlug } from '../../components/officesPhoneMap';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -94,13 +100,17 @@ const OFFICE_GROUPS: StateGroup[] = [
   },
 ];
 
-// Conteos DERIVADOS del registro, nunca escritos: hoy son 10 oficinas
-// atendidas + 10 direcciones que solo abren con cita (VIRTUAL_OFFICE_SLUGS),
-// tras dar de alta las cinco del área de Chicago el 2026-08-11. Al añadir una
-// sede estos números se mueven solos — no hay que buscarlos por el sitio.
+// Conteos DERIVADOS del registro, nunca escritos. Al añadir o reclasificar una
+// sede se mueven solos — no hay que buscarlos por el sitio.
+//
+// Desde el 2026-08-22 hay TRES categorías, no dos: el despacho reclasificó
+// cinco sedes de Houston como satélite (horario real, sin atención presencial),
+// así que ya no vale restar las de cita al total. Restarlas contaría a las
+// satélite como oficinas atendidas, que es justo lo contrario de lo decidido.
 const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
-const APPOINTMENT_LOCATIONS = VIRTUAL_OFFICE_SLUGS.length;
-const STAFFED_OFFICES = TOTAL_LOCATIONS - APPOINTMENT_LOCATIONS;
+const APPOINTMENT_LOCATIONS = APPOINTMENT_OFFICE_SLUGS.length;
+const SATELLITE_LOCATIONS = SATELLITE_OFFICE_SLUGS.length;
+const STAFFED_OFFICES = PHYSICAL_OFFICE_COUNT;
 const STATE_COUNT = new Set(OFFICE_NAP_SLUGS.map((slug) => OFFICES_NAP[slug].state)).size;
 
 // --- SEO METADATA ---
@@ -113,8 +123,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Our Offices in ${STATE_COUNT} States`;
 
   const description = isEs
-    ? `Encuentre la oficina de Manuel Solis mas cercana: ${STAFFED_OFFICES} oficinas atendidas y ${APPOINTMENT_LOCATIONS} direcciones con cita previa en Texas, California, Illinois, Colorado y Tennessee.`
-    : `Find your nearest Manuel Solis Law Office: ${STAFFED_OFFICES} staffed offices and ${APPOINTMENT_LOCATIONS} by-appointment locations in Texas, California, Illinois, Colorado, and Tennessee.`;
+    ? `Encuentre su oficina de Manuel Solis: ${STAFFED_OFFICES} sedes con atención presencial, ${SATELLITE_LOCATIONS} satélite y ${APPOINTMENT_LOCATIONS} con cita en Texas, California, Illinois, Colorado y Tennessee.`
+    : `Find your nearest Manuel Solis office: ${STAFFED_OFFICES} walk-in offices, ${SATELLITE_LOCATIONS} satellite and ${APPOINTMENT_LOCATIONS} by-appointment locations in Texas, California, Illinois, Colorado, and Tennessee.`;
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -163,7 +173,16 @@ function OfficeCard({
 }) {
   const nap = OFFICES_NAP[slug];
   const Heading: ElementType = as;
-  const byAppointment = isVirtualOffice(slug);
+  // Tres estados posibles, y la etiqueta tiene que decir cuál es: una satélite
+  // no se anuncia igual que una dirección de solo cita ni que una sede con
+  // atención presencial.
+  const satellite = isSatelliteOffice(slug);
+  const byAppointment = isAppointmentOnlyOffice(slug);
+  const badge = satellite
+    ? { es: 'Oficina satélite · no presencial', en: 'Satellite office · not walk-in' }
+    : byAppointment
+      ? { es: 'Con cita previa', en: 'By appointment' }
+      : null;
 
   return (
     <StaggerItem
@@ -172,13 +191,13 @@ function OfficeCard({
     >
       <Link href={`/${lang}/oficinas/${slug}`} className="block mb-3">
         <Heading
-          className={`text-xl font-semibold text-white ${byAppointment ? 'mb-2' : 'mb-4'} group-hover/card:text-[#B2904D] transition-colors`}
+          className={`text-xl font-semibold text-white ${badge ? 'mb-2' : 'mb-4'} group-hover/card:text-[#B2904D] transition-colors`}
         >
           {nap.name[lang]}
         </Heading>
-        {byAppointment && (
+        {badge && (
           <span className="inline-block mb-3 px-2.5 py-0.5 rounded-full border border-[#B2904D]/40 text-[10px] font-semibold uppercase tracking-wider text-[#B2904D]">
-            {lang === 'es' ? 'Con cita previa' : 'By appointment'}
+            {badge[lang]}
           </span>
         )}
         <div className="flex items-start gap-3">
@@ -229,8 +248,8 @@ export default async function OficinasPage({ params }: Props) {
               <Building2 className="w-4 h-4 text-[#B2904D]" />
               <span className="text-sm font-medium text-white/90 tracking-wide uppercase">
                 {isEs
-                  ? `${STAFFED_OFFICES} Oficinas y ${APPOINTMENT_LOCATIONS} Direcciones con Cita en ${STATE_COUNT} Estados`
-                  : `${STAFFED_OFFICES} Offices and ${APPOINTMENT_LOCATIONS} By-Appointment Locations in ${STATE_COUNT} States`}
+                  ? `${STAFFED_OFFICES} Oficinas Presenciales · ${SATELLITE_LOCATIONS} Satélite · ${APPOINTMENT_LOCATIONS} con Cita · ${STATE_COUNT} Estados`
+                  : `${STAFFED_OFFICES} Walk-in Offices · ${SATELLITE_LOCATIONS} Satellite · ${APPOINTMENT_LOCATIONS} By Appointment · ${STATE_COUNT} States`}
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">

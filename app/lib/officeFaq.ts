@@ -77,6 +77,22 @@ function walkInFaq(nap: OfficeNap, lang: 'es' | 'en', zone: string): OfficeFaq {
     };
   }
 
+  /**
+   * SATÉLITE. Va antes del caso general a propósito: una satélite SÍ tiene
+   * franjas horarias, así que sin esta rama caería en el "Sí, atiende sin cita
+   * dentro de su horario" de abajo — exactamente la respuesta que la
+   * reclasificación del 2026-08-22 quiere evitar, y en la pregunta donde más
+   * daño hace, porque manda a alguien hasta la puerta.
+   */
+  if (nap.hours.kind === 'satellite') {
+    return {
+      q,
+      a: es
+        ? `No. ${name} es una oficina satélite: tiene horario de operación (${nap.hours.label.es}) pero no da atención presencial sin aviso. Llame antes al ${nap.phone} para coordinar la visita, o acuda a una de las dos oficinas de Houston que sí reciben sin cita: la Principal, en 6657 Navigation Blvd, o Bellaire.`
+        : `No. ${name} is a satellite office: it has operating hours (${nap.hours.label.en}) but does not offer walk-in service. Call ${nap.phone} first to arrange the visit, or go to one of the two Houston offices that do take walk-ins: the Main Office at 6657 Navigation Blvd, or Bellaire.`,
+    };
+  }
+
   const cerrados = closedDays(nap, lang);
   const cierre = cerrados.length
     ? es
@@ -124,6 +140,15 @@ function hoursFaq(nap: OfficeNap, lang: 'es' | 'en'): OfficeFaq {
       a: es
         ? `${nap.hours.label.es}. Es decir: el teléfono contesta a cualquier hora del día, pero la visita a esta dirección hay que concertarla antes porque no hay nadie en el local esperando.`
         : `${nap.hours.label.en}. In other words: the phone is answered at any hour, but a visit to this address has to be arranged in advance because nobody is waiting at the location.`,
+    };
+  }
+
+  if (nap.hours.kind === 'satellite') {
+    return {
+      q,
+      a: es
+        ? `${nap.hours.label.es}; los domingos cierra. Es el horario en el que la sede opera y en el que se puede coordinar una visita, no un horario de puertas abiertas: ${name} es una oficina satélite y no recibe sin aviso previo.`
+        : `${nap.hours.label.en}, closed on Sunday. Those are the hours the location operates and when a visit can be arranged — not open-door hours: ${name} is a satellite office and does not receive visitors without prior notice.`,
     };
   }
 
@@ -196,7 +221,11 @@ export function buildMainOfficeFaqs(slug: string, lang: 'es' | 'en'): OfficeFaq[
 
   const es = lang === 'es';
   const name = nap.name[lang];
-  const cita = nap.hours.kind === 'appointment';
+  // "No se puede ir sin avisar" cubre las dos formas: cita previa y satélite.
+  // Preguntar solo por `appointment` dejaba a las cinco satélite contestando
+  // que sí se puede ir, que es el error más caro de esta ficha.
+  const cita = nap.hours.kind === 'appointment' || nap.hours.kind === 'satellite';
+  const satelite = nap.hours.kind === 'satellite';
   const tz = TZ_LABEL[nap.timeZone];
 
   // Otras sedes de la misma ciudad. Solo se menciona si existen: en Houston hay
@@ -220,9 +249,13 @@ export function buildMainOfficeFaqs(slug: string, lang: 'es' | 'en'): OfficeFaq[
         ? `¿Puedo ir a ${name} sin cita para un trámite de inmigración?`
         : `Can I visit ${name} without an appointment for an immigration matter?`,
       a: cita
-        ? es
-          ? `No. Esta dirección funciona con cita previa: el teléfono ${nap.phone} contesta a cualquier hora, pero en el local no hay personal esperando, así que hay que concertar la visita antes de desplazarse.`
-          : `No. This address works by appointment: the phone ${nap.phone} is answered at any hour, but there is no staff waiting at the location, so the visit has to be arranged before travelling there.`
+        ? satelite
+          ? es
+            ? `No. ${name} es una oficina satélite y no da atención presencial sin aviso. Llame al ${nap.phone} para coordinar la visita dentro de su horario de operación, o vaya a una de las dos oficinas de Houston que sí reciben sin cita: la Principal, en 6657 Navigation Blvd, o Bellaire.`
+            : `No. ${name} is a satellite office and does not offer walk-in service. Call ${nap.phone} to arrange a visit within its operating hours, or go to one of the two Houston offices that do take walk-ins: the Main Office at 6657 Navigation Blvd, or Bellaire.`
+          : es
+            ? `No. Esta dirección funciona con cita previa: el teléfono ${nap.phone} contesta a cualquier hora, pero en el local no hay personal esperando, así que hay que concertar la visita antes de desplazarse.`
+            : `No. This address works by appointment: the phone ${nap.phone} is answered at any hour, but there is no staff waiting at the location, so the visit has to be arranged before travelling there.`
         : es
           ? `Sí, dentro de su horario (${nap.hours.label.es}). Aun así, para un trámite de inmigración conviene llamar antes al ${nap.phone}: así le dicen qué documentos traer y evita un segundo viaje, que es lo que más tiempo cuesta en estos casos.`
           : `Yes, during opening hours (${nap.hours.label.en}). Even so, for an immigration matter it is worth calling ${nap.phone} first: they will tell you which documents to bring and you avoid a second trip, which is what costs the most time in these cases.`,

@@ -431,6 +431,10 @@ const STATUS_LABELS: Record<OfficeOpenState, BiText> = {
   closed: { es: 'CERRADO', en: 'CLOSED' },
   'always-open': { es: 'ABIERTO 24 H', en: 'OPEN 24 H' },
   appointment: { es: 'CON CITA', en: 'BY APPT' },
+  // Satélite: la etiqueta dice lo que ES la sede, no si está abierta. Tiene
+  // horario real, pero no atiende sin aviso, así que un "ABIERTO" aquí llevaría
+  // a alguien hasta la puerta para nada.
+  satellite: { es: 'SATÉLITE', en: 'SATELLITE' },
 };
 
 const STATUS_TONES: Record<OfficeOpenState, { text: string; dot: string }> = {
@@ -438,6 +442,7 @@ const STATUS_TONES: Record<OfficeOpenState, { text: string; dot: string }> = {
   closed: { text: 'text-red-400', dot: 'bg-red-500' },
   'always-open': { text: 'text-green-400', dot: 'bg-green-500' },
   appointment: { text: 'text-[#B2904D]', dot: 'bg-[#B2904D]' },
+  satellite: { text: 'text-[#B2904D]', dot: 'bg-[#B2904D]' },
 };
 
 // --- COMPONENTE PRINCIPAL (client island) ---

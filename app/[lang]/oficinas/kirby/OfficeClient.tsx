@@ -13,8 +13,13 @@ const officeData: OfficeData = {
   // aquí solo se atiende con cita (VIRTUAL_OFFICE_SLUGS), así que el texto dice
   // qué es esta dirección y a qué oficinas con personal se puede acudir sin cita.
   description: {
-    es: 'Esta dirección de Kirby Dr es un punto de atención con cita previa: no hay personal del despacho en el sitio, así que la visita se agenda antes por teléfono y la línea se contesta las 24 horas. Con la cita hecha se atienden aquí casos de inmigración, derecho familiar y accidentes con el equipo de Manuel Solís, en español o en inglés, y el despacho representa clientes en todo Estados Unidos. Si necesita acudir sin cita, hay tres oficinas con personal en Houston: Principal, Bellaire y Accidentes.',
-    en: 'This Kirby Dr address is a by-appointment location: the firm keeps no staff on site, so visits are booked in advance by phone and the line is answered 24 hours a day. Once the appointment is set, immigration, family law, and accident cases are handled here with the Manuel Solis team, in Spanish or English, and the firm represents clients throughout the United States. If you need to walk in, three staffed offices serve Houston: Principal, Bellaire, and Accidents.'
+    // Reclasificada como SATÉLITE el 2026-08-22 por decisión del despacho:
+    // sin atención presencial, con horario real y sin la afirmación de 24 h.
+    // Las sedes con atención sin cita en Houston pasaron de tres a DOS —
+    // Accidentes dejó de serlo—, y este texto es una de las fuentes que lo
+    // decía. Ver app/components/officesPhoneMap.ts → SATELLITE_HOURS.
+    es: "Esta dirección de Kirby Dr es una oficina satélite de Manuel Solís: no es una sede de atención presencial y no se recibe a nadie sin aviso previo. Opera de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 9:00 AM a 4:00 PM; los domingos permanece cerrada. La visita se coordina antes por teléfono y, una vez coordinada, aquí se atienden casos de inmigración, derecho familiar y accidentes con el equipo del despacho, en español o en inglés. Si necesita acudir sin cita, el despacho tiene dos oficinas con atención presencial en Houston: la Principal, en 6657 Navigation Blvd, y Bellaire.",
+    en: "This Kirby Dr address is a Manuel Solis satellite office: it is not a walk-in location and no one is received without prior notice. It operates Monday to Friday from 9:00 AM to 7:00 PM and Saturday from 9:00 AM to 4:00 PM, and is closed on Sunday. Visits are arranged in advance by phone, and once arranged, immigration, family law and accident cases are handled here with the firm's team, in Spanish or English. If you need to walk in, the firm has two staffed offices in Houston: the Main Office at 6657 Navigation Blvd, and Bellaire.",
   },
   address: '3730 Kirby Dr Suite 1200, Houston, TX 77098, United States',
   phone: '(713) 903-7875',
@@ -22,7 +27,7 @@ const officeData: OfficeData = {
   // Dirección virtual (Regus): el despacho atiende aquí solo con cita previa.
   // El "24 horas" publicado es el enrutamiento del call-center, no esta sede
   // (ver VIRTUAL_OFFICE_SLUGS en app/lib/officesRegistry.ts).
-  hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
+  hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
   mapLink: 'https://share.google/R85nYwhTFqoxLctD4',
   image: '/offices/ofhouston.png',
   
