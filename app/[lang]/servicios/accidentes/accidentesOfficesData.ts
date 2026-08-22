@@ -170,9 +170,7 @@ export const accidentOffices: AccidentOffice[] = [
   },
   {
     id: 'houston-accidentes',
-    // El despacho retiró el "24 horas" el 2026-08-22 y reclasificó la sede como
-    // satélite: la zona ya no puede venderse por una disponibilidad que no hay.
-    seoZone: { es: 'el East End de Houston (Navigation Blvd)', en: 'Houston East End (Navigation Blvd)' },
+    seoZone: { es: 'el East End de Houston (Centro de Accidentes 24 Horas)', en: 'Houston East End (24-Hour Accident Center)' },
     name: { es: 'Houston Accidentes', en: 'Houston Accidents' },
     area: 'Houston, TX',
     city: 'Houston',
@@ -181,7 +179,7 @@ export const accidentOffices: AccidentOffice[] = [
     address: '6705 Navigation Blvd, Houston, TX 77011, United States',
     phone: '(713) 231-5384',
     email: 'houston@manuelsolis.com',
-    hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
+    hours: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
     mapLink: 'https://share.google/wEP84RY0RqTOqR787',
     image: '/offices/Houston.png',
   },
@@ -275,7 +273,7 @@ export const accidentOffices: AccidentOffice[] = [
     address: '2600 S Shore Blvd, League City, TX 77573, United States',
     phone: '(832) 598-3782',
     email: 'leaguecity@manuelsolis.com',
-    hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
+    hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
     mapLink: 'https://share.google/8T736Tycmnh4BZw5o',
     image: '/og/oficina-league-city.jpg',
   },

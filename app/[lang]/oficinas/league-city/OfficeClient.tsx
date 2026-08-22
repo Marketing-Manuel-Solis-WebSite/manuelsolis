@@ -14,15 +14,17 @@ const officeData: OfficeData = {
   // las oficinas con personal más cercanas: las demás de Texas (Dallas, El Paso,
   // Harlingen) están a cientos de kilómetros.
   description: {
-    es: 'Esta dirección de S Shore Blvd, en League City, es un punto de atención con cita previa: no hay personal del despacho en el sitio, así que la visita se agenda antes por teléfono y la línea se contesta las 24 horas. Con la cita hecha se atienden aquí casos de inmigración, derecho familiar y accidentes con el equipo de Manuel Solís, en español o en inglés, y el despacho representa clientes en todo Estados Unidos. Las oficinas con personal más cercanas están en Houston: Principal, Bellaire y Accidentes.',
-    en: 'This S Shore Blvd address in League City is a by-appointment location: the firm keeps no staff on site, so visits are booked in advance by phone and the line is answered 24 hours a day. Once the appointment is set, immigration, family law, and accident cases are handled here with the Manuel Solis team, in Spanish or English, and the firm represents clients throughout the United States. The nearest staffed offices are in Houston: Principal, Bellaire, and Accidents.'
+    // Reclasificada como SATÉLITE el 2026-08-22 (segunda pasada: en la
+    // primera se quedó fuera por estar en League City y no en Houston).
+    es: "Esta dirección de S Shore Blvd, en League City, es una oficina satélite de Manuel Solís: no es una sede de atención presencial y no se recibe a nadie sin aviso previo. Opera de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 9:00 AM a 4:00 PM; los domingos permanece cerrada. La visita se coordina antes por teléfono y, una vez coordinada, aquí se atienden casos de inmigración, derecho familiar y accidentes con el equipo del despacho, en español o en inglés. Si necesita acudir sin cita, las oficinas con atención presencial más cercanas están en Houston: la Principal, en 6657 Navigation Blvd, Accidentes y Bellaire.",
+    en: "This S Shore Blvd address in League City is a Manuel Solis satellite office: it is not a walk-in location and no one is received without prior notice. It operates Monday to Friday from 9:00 AM to 7:00 PM and Saturday from 9:00 AM to 4:00 PM, and is closed on Sunday. Visits are arranged in advance by phone, and once arranged, immigration, family law and accident cases are handled here with the firm's team, in Spanish or English. If you need to walk in, the nearest staffed offices are in Houston: the Main Office at 6657 Navigation Blvd, Accidents and Bellaire.",
   },
   address: '2600 S Shore Blvd, League City, TX 77573, United States',
   phone: '(832) 598-3782',
   email: 'leaguecity@manuelsolis.com',
   // Dirección virtual (Regus): atención solo con cita previa; el "24 horas"
   // publicado es el call-center central, no esta sede.
-  hours: { es: 'Con cita previa · atención telefónica 24 horas', en: 'By appointment · 24-hour phone support' },
+  hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
   mapLink: 'https://share.google/8T736Tycmnh4BZw5o',
   image: '/offices/League.png',
 
@@ -97,5 +99,5 @@ export default function OfficeClient({
   /** Preguntas de esta sede; las resuelve el page.tsx, que tiene el slug del NAP. */
   faqs?: FaqPair[];
 }) {
-  return <OfficePageView data={officeData} ui={uiText} lang={lang} faqs={faqs} />;
+  return <OfficePageView data={officeData} ui={uiText} lang={lang} faqs={faqs} napSlug="league-city" />;
 }

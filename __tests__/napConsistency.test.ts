@@ -453,16 +453,22 @@ describe('NAP de oficinas — fuente única', () => {
     const porTipo = (kind: string) =>
       OFFICE_NAP_SLUGS.filter((slug) => OFFICES_NAP[slug].hours.kind === kind).sort();
 
-    // Satélite: horario real, sin atención presencial (decisión 2026-08-22).
+    /**
+     * Satélite: horario real, sin atención presencial (decisión 2026-08-22).
+     *
+     * `houston-accidentes` NO está y no debe estar. Entró por error en la
+     * primera pasada al leer "todas las de Houston menos Principal y Bellaire";
+     * es un local propio de la familia con atención presencial 24/7 y el
+     * despacho lo corrigió el mismo día. `league-city` sí está, aunque no sea
+     * Houston: es la misma operación que Kirby o Main St.
+     */
     expect(porTipo('satellite')).toEqual(
-      ['houston-accidentes', 'kirby', 'main-st', 'north-loop', 'northchase'].sort(),
+      ['kirby', 'league-city', 'main-st', 'north-loop', 'northchase'].sort(),
     );
 
-    // Solo cita: League City y las cinco del área de Chicago. Son las
-    // direcciones virtuales que NO se reclasificaron.
+    // Solo cita: las cinco del área de Chicago, que no se reclasificaron.
     expect(porTipo('appointment')).toEqual(
       [
-        'league-city',
         'chicago-martingale',
         'chicago-prospect',
         'chicago-wacker',
@@ -481,17 +487,27 @@ describe('NAP de oficinas — fuente única', () => {
     expect(PHYSICAL_OFFICE_COUNT).toBe(walkIn.length);
   });
 
-  it('ya no queda ninguna sede anunciando 24 horas', () => {
-    // El despacho retiró la afirmación el 2026-08-22. Cubre las dos formas que
-    // existían: el "Abierto las 24 horas" del centro de accidentes y el
-    // "atención telefónica 24 horas" de las direcciones con cita de Houston.
-    const con24h = OFFICE_NAP_SLUGS.filter((slug) => {
+  it('ninguna satélite anuncia 24 horas', () => {
+    const anuncia24h = (slug: OfficeNapSlug) => {
       const { es, en } = OFFICES_NAP[slug].hours.label;
       return /24\s*(horas|hours|-hour)/i.test(es) || /24\s*(horas|hours|-hour)/i.test(en);
-    });
-    // Las de solo cita conservan la línea telefónica 24 h, que sí es cierta.
-    expect(con24h.sort()).toEqual([...APPOINTMENT_OFFICE_SLUGS].sort());
-    expect(con24h).not.toContain('houston-accidentes');
+    };
+
+    // Las satélite publicaban "atención telefónica 24 horas" como si fuera su
+    // horario. El despacho lo retiró el 2026-08-22 y puso el horario real.
+    for (const slug of SATELLITE_OFFICE_SLUGS) {
+      expect(anuncia24h(slug), slug).toBe(false);
+    }
+
+    // Las otras dos formas de 24 h que quedan en el sitio SÍ son ciertas y se
+    // fijan aquí para que nadie las borre por barrido: la línea telefónica de
+    // las direcciones de solo cita, y el centro de accidentes de Houston, que
+    // es local propio y abre de verdad las 24 horas.
+    for (const slug of APPOINTMENT_OFFICE_SLUGS) {
+      expect(anuncia24h(slug), slug).toBe(true);
+    }
+    expect(anuncia24h('houston-accidentes')).toBe(true);
+    expect(OFFICES_NAP['houston-accidentes'].hours.kind).toBe('always');
   });
 
   it('no hay divergencias de NAP entre las fuentes salvo las documentadas', () => {
@@ -561,8 +577,9 @@ describe('Estado operativo por oficina (OFI-5)', () => {
       expect(getOfficeOpenState(slug, SATURDAY_MORNING), slug).toBe('satellite');
     }
 
-    // Houston Accidentes dejó de ser el centro 24 h el 2026-08-22.
-    expect(getOfficeOpenState('houston-accidentes', SUNDAY_MORNING)).toBe('satellite');
+    // Houston Accidentes sigue siendo el centro 24 h: es local propio con
+    // atención presencial y NO se reclasificó.
+    expect(getOfficeOpenState('houston-accidentes', SUNDAY_MORNING)).toBe('always-open');
   });
 
   it('devuelve null para un slug desconocido', () => {

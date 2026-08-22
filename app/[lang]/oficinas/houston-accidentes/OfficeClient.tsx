@@ -9,19 +9,14 @@ const officeData: OfficeData = {
   state: 'TX',
   title: { es: 'Houston Accidentes, TX', en: 'Houston Accidentes, TX' },
   quote: { es: 'Bendecidos con la fuerza y la gracia de Dios, e inspirados por nuestro deseo de ayudar.', en: 'Blessed with the strength and grace of God, and inspired by our desire to help.' },
-  description: {
-    // Reclasificada como SATÉLITE el 2026-08-22 por decisión del despacho:
-    // sin atención presencial, con horario real y sin la afirmación de 24 h.
-    // Las sedes con atención sin cita en Houston pasaron de tres a DOS —
-    // Accidentes dejó de serlo—, y este texto es una de las fuentes que lo
-    // decía. Ver app/components/officesPhoneMap.ts → SATELLITE_HOURS.
-    es: "Esta dirección de Navigation Blvd (6705) es una oficina satélite de Manuel Solís: no es una sede de atención presencial y no se recibe a nadie sin aviso previo. Opera de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 9:00 AM a 4:00 PM; los domingos permanece cerrada. La visita se coordina antes por teléfono y, una vez coordinada, aquí se atienden casos de inmigración, derecho familiar y accidentes con el equipo del despacho, en español o en inglés. Si necesita acudir sin cita, el despacho tiene dos oficinas con atención presencial en Houston: la Principal, en 6657 Navigation Blvd, y Bellaire.",
-    en: "This Navigation Blvd (6705) address is a Manuel Solis satellite office: it is not a walk-in location and no one is received without prior notice. It operates Monday to Friday from 9:00 AM to 7:00 PM and Saturday from 9:00 AM to 4:00 PM, and is closed on Sunday. Visits are arranged in advance by phone, and once arranged, immigration, family law and accident cases are handled here with the firm's team, in Spanish or English. If you need to walk in, the firm has two staffed offices in Houston: the Main Office at 6657 Navigation Blvd, and Bellaire.",
+  description: { 
+    es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
+    en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
   },
   address: '6705 Navigation Blvd, Houston, TX 77011, United States',
   phone: '(713) 231-5384',
   email: 'houston@manuelsolis.com',
-  hours: { es: 'Lun - Vie 9:00 AM - 7:00 PM | Sáb 9:00 AM - 4:00 PM', en: 'Mon - Fri 9:00 AM - 7:00 PM | Sat 9:00 AM - 4:00 PM' },
+  hours: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
   mapLink: 'https://share.google/wEP84RY0RqTOqR787',
   image: '/offices/Houston.png',
   

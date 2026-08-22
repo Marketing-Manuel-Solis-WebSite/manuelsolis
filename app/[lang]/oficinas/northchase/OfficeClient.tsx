@@ -19,8 +19,8 @@ const officeData: OfficeData = {
     // Las sedes con atención sin cita en Houston pasaron de tres a DOS —
     // Accidentes dejó de serlo—, y este texto es una de las fuentes que lo
     // decía. Ver app/components/officesPhoneMap.ts → SATELLITE_HOURS.
-    es: "Esta dirección de Northchase Dr es una oficina satélite de Manuel Solís: no es una sede de atención presencial y no se recibe a nadie sin aviso previo. Opera de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 9:00 AM a 4:00 PM; los domingos permanece cerrada. La visita se coordina antes por teléfono y, una vez coordinada, aquí se atienden casos de inmigración, derecho familiar y accidentes con el equipo del despacho, en español o en inglés. Si necesita acudir sin cita, el despacho tiene dos oficinas con atención presencial en Houston: la Principal, en 6657 Navigation Blvd, y Bellaire.",
-    en: "This Northchase Dr address is a Manuel Solis satellite office: it is not a walk-in location and no one is received without prior notice. It operates Monday to Friday from 9:00 AM to 7:00 PM and Saturday from 9:00 AM to 4:00 PM, and is closed on Sunday. Visits are arranged in advance by phone, and once arranged, immigration, family law and accident cases are handled here with the firm's team, in Spanish or English. If you need to walk in, the firm has two staffed offices in Houston: the Main Office at 6657 Navigation Blvd, and Bellaire.",
+    es: "Esta dirección de Northchase Dr es una oficina satélite de Manuel Solís: no es una sede de atención presencial y no se recibe a nadie sin aviso previo. Opera de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 9:00 AM a 4:00 PM; los domingos permanece cerrada. La visita se coordina antes por teléfono y, una vez coordinada, aquí se atienden casos de inmigración, derecho familiar y accidentes con el equipo del despacho, en español o en inglés. Si necesita acudir sin cita, el despacho tiene tres oficinas con atención presencial en Houston: la Principal, en 6657 Navigation Blvd, Accidentes y Bellaire.",
+    en: "This Northchase Dr address is a Manuel Solis satellite office: it is not a walk-in location and no one is received without prior notice. It operates Monday to Friday from 9:00 AM to 7:00 PM and Saturday from 9:00 AM to 4:00 PM, and is closed on Sunday. Visits are arranged in advance by phone, and once arranged, immigration, family law and accident cases are handled here with the firm's team, in Spanish or English. If you need to walk in, the firm has three staffed offices in Houston: the Main Office at 6657 Navigation Blvd, Accidents and Bellaire.",
   },
   address: '16510 Northchase Dr, Houston, TX 77060, United States',
   phone: '(346) 522-4848',
@@ -102,5 +102,5 @@ export default function OfficeClient({
   /** Preguntas de esta sede; las resuelve el page.tsx, que tiene el slug del NAP. */
   faqs?: FaqPair[];
 }) {
-  return <OfficePageView data={officeData} ui={uiText} lang={lang} faqs={faqs} />;
+  return <OfficePageView data={officeData} ui={uiText} lang={lang} faqs={faqs} napSlug="northchase" />;
 }

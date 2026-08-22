@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock, User, Quote, Sparkles, Scale, Car } from 'lucide-react';
+import { MapPin, Clock, User, Quote, Sparkles, Scale, Car, Info } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -7,6 +7,7 @@ import Header from './Header';
 import Footer from './Footer';
 import FaqSection from './FaqSection';
 import type { FaqPair } from '../lib/faqSchema';
+import { isSatelliteOffice } from './officesPhoneMap';
 import ContactForm from './ContactForm';
 import TrackedPhoneLink from './TrackedPhoneLink';
 import { Reveal, Stagger, StaggerItem } from './motion';
@@ -93,10 +94,21 @@ export default function OfficePageView({
   ui,
   lang,
   faqs = [],
+  napSlug,
 }: {
   data: OfficeData;
   ui: OfficeUIText;
   lang: Lang;
+  /**
+   * Slug del registro NAP de ESTA sede, para saber si es satélite.
+   *
+   * Llega como prop y no se deriva de `data.id` por la misma razón que las
+   * FAQ: `data.id` es `houston-kirby` donde el registro dice `kirby`, así que
+   * `isSatelliteOffice(data.id)` habría devuelto false en cuatro de las cinco
+   * satélite — y el aviso, que es justo lo que hay que ver, no habría salido
+   * en ninguna, sin que fallara nada.
+   */
+  napSlug?: string;
   /**
    * Preguntas propias de esta sede. Llegan como prop y no se calculan aquí
    * porque `data.id` no es el slug del registro NAP (`houston-kirby` frente a
@@ -106,6 +118,7 @@ export default function OfficePageView({
   faqs?: FaqPair[];
 }) {
   const t = (obj: BiText) => obj[lang] || obj.es;
+  const satellite = napSlug ? isSatelliteOffice(napSlug) : false;
   // 14 offices ship a real share.google mapLink; northchase only has a
   // placeholder, so it falls back to a Google Maps address search (1:1 with
   // the original per-page behavior).
@@ -139,7 +152,9 @@ export default function OfficePageView({
               <div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 mb-6">
                   <Sparkles className="text-[#B2904D]" size={14} />
-                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">{data.badge}</span>
+                  <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">
+                    {satellite ? (lang === 'es' ? 'Oficina satélite' : 'Satellite office') : data.badge}
+                  </span>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-7xl font-thin text-white mb-6 leading-tight">
@@ -147,6 +162,35 @@ export default function OfficePageView({
                 </h1>
 
                 <div className="w-24 h-1 bg-gradient-to-r from-[#B2904D] to-transparent mb-8" />
+
+                {/*
+                  AVISO DE SEDE SATÉLITE.
+                  Va aquí, pegado al H1 y antes de cualquier otro texto, porque
+                  la versión anterior lo dejaba dentro del párrafo de
+                  descripción: técnicamente estaba en la página, pero a 800
+                  caracteres del principio y sin ninguna jerarquía, así que no
+                  lo veía nadie. Quien llega a esta ficha suele venir a
+                  averiguar si puede presentarse, y esa respuesta no puede
+                  estar enterrada en prosa.
+                */}
+                {satellite && (
+                  <div
+                    role="note"
+                    className="flex items-start gap-3 mb-8 rounded-2xl border border-[#B2904D]/40 bg-[#B2904D]/10 px-5 py-4"
+                  >
+                    <Info className="text-[#B2904D] mt-0.5 shrink-0" size={20} aria-hidden="true" />
+                    <p className="text-white text-sm md:text-base leading-relaxed">
+                      <strong className="font-semibold">
+                        {lang === 'es'
+                          ? 'Esta es una oficina satélite: no hay atención presencial.'
+                          : 'This is a satellite office: there is no walk-in service.'}
+                      </strong>{' '}
+                      {lang === 'es'
+                        ? `No se recibe sin aviso previo. Llame al ${data.phone} para coordinar su visita dentro del horario de operación.`
+                        : `Visitors are not received without prior notice. Call ${data.phone} to arrange your visit within its operating hours.`}
+                    </p>
+                  </div>
+                )}
 
                 <p className="text-[#B2904D] font-light italic text-lg md:text-xl border-l-2 border-[#B2904D] pl-6 mb-8">
                   "{t(data.quote)}"
@@ -201,7 +245,17 @@ export default function OfficePageView({
                       <p className="text-xs text-white/40 font-bold uppercase tracking-wider mb-2">{t(ui.hours)}</p>
                       <div className="flex items-start gap-3">
                         <Clock className="text-[#B2904D] mt-1 shrink-0" size={18} />
-                        <p className="text-white text-base">{t(data.hours)}</p>
+                        <div>
+                          <p className="text-white text-base">{t(data.hours)}</p>
+                          {/* El horario, solo, se lee como "puedo ir a esa hora". */}
+                          {satellite && (
+                            <p className="text-[#B2904D] text-sm mt-1 font-medium">
+                              {lang === 'es'
+                                ? 'Horario de operación · sin atención presencial'
+                                : 'Operating hours · no walk-in service'}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -150,13 +150,16 @@ const APPOINTMENT_HOURS: OfficeHours = {
 };
 
 /**
- * Horario de las oficinas SATÉLITE de Houston (decisión del despacho,
- * 2026-08-22): Houston Accidentes, Kirby, Main St, North Loop y Northchase.
+ * Horario de las oficinas SATÉLITE (decisión del despacho, 2026-08-22):
+ * Kirby, Main St, North Loop, Northchase y League City.
  *
- * Sustituye a dos afirmaciones distintas que el despacho retiró el mismo día:
- * el "Abierto las 24 horas" de Houston Accidentes y el "atención telefónica 24
- * horas" de las otras cuatro. Es el horario que publica la ficha de Google, y
- * es el mismo de la oficina principal.
+ * Sustituye al "atención telefónica 24 horas" que publicaban como horario. Es
+ * el horario real de operación —el mismo que muestra su ficha de Google— y
+ * coincide con el de la oficina principal.
+ *
+ * NO incluye a Houston Accidentes: es un local propio con atención presencial
+ * 24/7 y se queda como está. Tampoco a las cinco del área de Chicago, que
+ * siguen siendo direcciones de solo cita.
  *
  * Domingo no aparece porque en este modelo un día ausente es día cerrado.
  */
@@ -208,9 +211,14 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     phone: '(713) 231-5384',
     timeZone: 'America/Chicago',
     mapLink: 'https://share.google/wEP84RY0RqTOqR787',
-    // Era `always` ("Abierto las 24 horas"). El despacho retiró esa afirmación
-    // el 2026-08-22 y reclasificó la sede como satélite.
-    hours: SATELLITE_HOURS,
+    // NO es satélite: es un local propio con atención presencial 24/7. Se
+    // reclasificó por error el 2026-08-22 al leer "todas las de Houston menos
+    // Principal y Bellaire", y el despacho lo corrigió el mismo día: Accidentes
+    // es la tercera sede de Houston que sí recibe sin cita.
+    hours: {
+      kind: 'always',
+      label: { es: 'Abierto las 24 horas', en: 'Open 24 hours' },
+    },
   },
   'houston-bellaire': {
     slug: 'houston-bellaire',
@@ -295,7 +303,7 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     phone: '(832) 598-3782',
     timeZone: 'America/Chicago',
     mapLink: 'https://share.google/8T736Tycmnh4BZw5o',
-    hours: APPOINTMENT_HOURS,
+    hours: SATELLITE_HOURS,
   },
   dallas: {
     slug: 'dallas',

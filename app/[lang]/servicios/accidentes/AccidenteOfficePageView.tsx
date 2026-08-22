@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPin, Clock, Phone, Mail, PhoneCall, ArrowRight, Star, Scale, FileText } from 'lucide-react';
+import { MapPin, Clock, Phone, Mail, PhoneCall, ArrowRight, Star, Scale, FileText, Info } from 'lucide-react';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ContactForm from '../../../components/ContactForm';
@@ -10,6 +10,7 @@ import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../component
 import { allServices, processSteps, ui, getText } from './accidentesData';
 import { officesUi, OFFICE_NAME, type AccidentOffice } from './accidentesOfficesData';
 import { buildOfficeFaqs } from '../../../lib/officeFaq';
+import { isSatelliteOffice } from '../../../components/officesPhoneMap';
 import type { Language } from '../../../lib/translations';
 
 /**
@@ -123,6 +124,32 @@ export default function AccidenteOfficePageView({
                 <p className="text-lg md:text-xl text-white/80 font-light leading-relaxed border-l-2 border-[#B2904D]/50 pl-6">
                   {t('heroDescription')}
                 </p>
+
+                {/*
+                  Mismo aviso que la ficha general de la sede. Va aquí porque
+                  esta es la OTRA página que describe la misma dirección, y
+                  decirlo solo en una deja la mitad de las entradas sin avisar:
+                  quien llega buscando "abogado de accidentes en Upper Kirby"
+                  aterriza aquí, no en /oficinas.
+                */}
+                {isSatelliteOffice(office.id) && (
+                  <div
+                    role="note"
+                    className="flex items-start gap-3 rounded-2xl border border-[#B2904D]/40 bg-[#B2904D]/10 px-5 py-4"
+                  >
+                    <Info className="text-[#B2904D] mt-0.5 shrink-0" size={20} aria-hidden="true" />
+                    <p className="text-white text-sm md:text-base leading-relaxed">
+                      <strong className="font-semibold">
+                        {isEs
+                          ? 'Esta es una oficina satélite: no hay atención presencial.'
+                          : 'This is a satellite office: there is no walk-in service.'}
+                      </strong>{' '}
+                      {isEs
+                        ? `No se recibe sin aviso previo. Llame al ${office.phone} para coordinar su visita.`
+                        : `Visitors are not received without prior notice. Call ${office.phone} to arrange your visit.`}
+                    </p>
+                  </div>
+                )}
 
                 <div className="flex flex-wrap gap-4 pt-2">
                   <MagneticButton as="a" href={`tel:+1${office.phone.replace(/\D/g, '')}`} className="items-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-[#B2904D] hover:bg-white text-[#001540] font-bold rounded-xl transition-colors shadow-[0_0_15px_rgba(178,144,77,0.3)] group text-sm md:text-base">
