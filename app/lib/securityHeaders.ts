@@ -37,7 +37,13 @@ export type SecurityHeader = { key: string; value: string };
 // browser (and Zoom's embedded browser) will block it.
 const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com",
+  // CallRail va con comodín de subdominio a propósito: el snippet que se
+  // instala apunta a cdn.callrail.com, pero swap.js encadena DOS orígenes más
+  // que no aparecen en el snippet y que sin CSP fallan en silencio —
+  // js.callrail.com (swap_session.js, icap.js, poll.js) y app.callrail.com
+  // (form_capture.js). Verificado leyendo el bundle: los tres hosts salen del
+  // objeto `endpoints` que CallRail inlinea en swap.js.
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com https://*.callrail.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https:",
   "font-src 'self' https://fonts.gstatic.com",
@@ -52,11 +58,17 @@ const CONTENT_SECURITY_POLICY = [
   //     analytics-ipv6.tiktokw.us para resolver la IP del visitante. Sin ese
   //     dominio, Lighthouse registraba el bloqueo en consola en producción y esa
   //     parte de la medición no llegaba.
+  //   - CallRail NO se queda en script-src: la asignación del número de pool
+  //     (DNI a nivel de sesión) se negocia por XHR contra js.callrail.com —
+  //     swap.js manda la lista de teléfonos que encontró en el DOM y el
+  //     servidor responde qué número asignar. Sin connect-src el script carga
+  //     pero el pool nunca asigna, que es el modo de fallo más caro: parece
+  //     instalado y no atribuye nada.
   //   - El asistente del sitio NO aparece aquí a propósito: /api/chat habla con
   //     el proveedor de IA desde el servidor, así que esa llamada nunca pasa por
   //     la CSP del navegador. Estaba abierto `generativelanguage.googleapis.com`
   //     sin que ningún script del cliente lo usara; se quitó al migrar el chat.
-  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://*.tiktokw.us https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://*.tiktokw.us https://va.vercel-scripts.com https://vitals.vercel-insights.com https://*.callrail.com",
   "frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com",
   "media-src 'self' https:",
   "worker-src 'self' blob:",

@@ -392,7 +392,18 @@ export default function TermsOfService() {
                 </div>
                 <div className="flex items-center gap-3 text-white/90">
                   <Phone size={18} className="text-sky-400" />
-                  <a href={`tel:+1${interfaceTexts.section10.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
+                  {/* data-calltrk-noswap: este es el teléfono DE REGISTRO del documento,
+                  no un CTA de marketing. CallRail respeta el atributo y excluye
+                  todo el subárbol —del reemplazo y del descubrimiento del pool—,
+                  así que aquí siempre se lee el número real del despacho. Un
+                  número de pool rotando en la cláusula de contacto de un
+                  documento legal es incorrecto, y además quemaría una asignación
+                  en páginas que no reciben tráfico de campaña. */}
+                  <a
+                    data-calltrk-noswap
+                    href={`tel:+1${interfaceTexts.section10.phone.replace(/\D/g, '')}`}
+                    className="hover:text-[#B2904D] transition"
+                  >
                     {interfaceTexts.section10.phone}
                   </a>
                 </div>

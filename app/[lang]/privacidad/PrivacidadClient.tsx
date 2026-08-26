@@ -145,6 +145,7 @@ const interfaceTexts = {
         { es: '**Cookie propia de atribución (msl_attr):** registra cómo llegó a nuestro sitio —fuente, medio, campaña y, si viene de un anuncio, el identificador de clic— para saber qué campañas generan consultas.', en: '**Our own attribution cookie (msl_attr):** records how you reached our site — source, medium, campaign and, if you came from an ad, the click identifier — so we can tell which campaigns generate inquiries.' },
         { es: '**Identificador de sesión:** un número aleatorio guardado en el almacenamiento de sesión de su navegador que agrupa las páginas de una misma visita. Se borra al cerrar la pestaña.', en: '**Session identifier:** a random number stored in your browser\'s session storage that groups the pages of a single visit. It is deleted when you close the tab.' },
         { es: '**Cookies de terceros:** las fijan Meta (_fbp y _fbc), Google Analytics y TikTok cuando cargan sus píxeles.', en: '**Third-party cookies:** set by Meta (_fbp and _fbc), Google Analytics, and TikTok when their pixels load.' },
+        { es: '**Cookies de medición de llamadas (calltrk_*):** las fija CallRail para recordar por qué canal llegó y mostrarle un número de teléfono que identifique esa visita. Duran 180 días.', en: '**Call measurement cookies (calltrk_*):** set by CallRail to remember which channel you arrived from and to show you a phone number that identifies that visit. They last 180 days.' },
       ],
       note: { es: 'Puede borrar o bloquear cookies desde la configuración de su navegador. El sitio seguirá funcionando, aunque algunas funciones pueden verse limitadas.', en: 'You can delete or block cookies from your browser settings. The site will still work, though some features may be limited.' }
     },
@@ -155,6 +156,7 @@ const interfaceTexts = {
         { es: '**Meta (Facebook e Instagram):** a través del píxel que carga en su navegador y también desde nuestro servidor mediante la Conversions API. Meta recibe su dirección IP, la identificación de su navegador (user agent), la dirección de la página visitada y las cookies publicitarias _fbp y _fbc. Finalidad: medir las visitas y conversiones atribuibles a nuestros anuncios.', en: '**Meta (Facebook and Instagram):** through the pixel that loads in your browser and also from our server via the Conversions API. Meta receives your IP address, your browser identification (user agent), the address of the page visited, and the _fbp and _fbc advertising cookies. Purpose: to measure visits and conversions attributable to our ads.' },
         { es: '**Google (Google Analytics 4):** páginas vistas, dirección IP, tipo de dispositivo y navegador, idioma y el sitio desde el que llegó. Finalidad: analítica de uso del sitio web.', en: '**Google (Google Analytics 4):** pages viewed, IP address, device and browser type, language, and the site you came from. Purpose: website usage analytics.' },
         { es: '**TikTok (TikTok Pixel):** datos de navegación y de dispositivo equivalentes. Finalidad: medir el rendimiento de nuestros anuncios en TikTok.', en: '**TikTok (TikTok Pixel):** equivalent browsing and device data. Purpose: to measure the performance of our advertising on TikTok.' },
+        { es: '**CallRail (medición de llamadas):** el número de teléfono que ve en el sitio puede sustituirse por un número de seguimiento asignado a su visita, para saber qué canal generó la llamada. CallRail recibe la dirección de la página, el sitio desde el que llegó y los parámetros de campaña del enlace; cuando llama, recibe además su número de origen, la duración y, si está activada, la grabación de la llamada. Las llamadas se atienden y pueden grabarse conforme a la Sección 4.', en: '**CallRail (call measurement):** the phone number you see on the site may be replaced with a tracking number assigned to your visit, so we can tell which channel generated the call. CallRail receives the page address, the site you came from, and the campaign parameters of the link; when you call, it also receives your originating number, the duration and, if enabled, the call recording. Calls are answered and may be recorded as described in Section 4.' },
         { es: '**Eventos de conversión:** cuando envía un formulario o pulsa un botón de llamada o de WhatsApp, avisamos a estas plataformas de que ocurrió una conversión. Ese aviso indica el tipo de acción, nunca el contenido de su consulta ni sus datos de contacto.', en: '**Conversion events:** when you submit a form or tap a call or WhatsApp button, we notify these platforms that a conversion occurred. That notice indicates the type of action, never the content of your inquiry or your contact details.' },
       ],
       note: { es: 'Estas plataformas tratan los datos conforme a sus propias políticas de privacidad y pueden combinar estos identificadores con la información que ya tienen de usted. No les enviamos información sobre su caso.', en: 'These platforms process the data under their own privacy policies and may combine these identifiers with information they already hold about you. We do not send them any information about your case.' }
@@ -616,7 +618,18 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
                           </div>
                           <div className="flex items-center gap-2 text-[#B2904D]">
                               <Phone size={16} />
-                              <a href={`tel:+1${interfaceTexts.section8.phone.replace(/\D/g, '')}`} className="hover:text-sky-300 transition">
+                              {/* data-calltrk-noswap: este es el teléfono DE REGISTRO del documento,
+                              no un CTA de marketing. CallRail respeta el atributo y excluye
+                              todo el subárbol —del reemplazo y del descubrimiento del pool—,
+                              así que aquí siempre se lee el número real del despacho. Un
+                              número de pool rotando en la cláusula de contacto de un
+                              documento legal es incorrecto, y además quemaría una asignación
+                              en páginas que no reciben tráfico de campaña. */}
+                              <a
+                                data-calltrk-noswap
+                                href={`tel:+1${interfaceTexts.section8.phone.replace(/\D/g, '')}`}
+                                className="hover:text-sky-300 transition"
+                              >
                                 {interfaceTexts.section8.phone}
                               </a>
                           </div>
@@ -665,7 +678,18 @@ export default function PrivacidadClient({ lang }: { lang: 'es' | 'en' }) {
                           </div>
                           <div className="flex items-center gap-3 text-white/90">
                               <Phone size={18} className="text-sky-400" />
-                              <a href={`tel:+1${interfaceTexts.section12.phone.replace(/\D/g, '')}`} className="hover:text-[#B2904D] transition">
+                              {/* data-calltrk-noswap: este es el teléfono DE REGISTRO del documento,
+                              no un CTA de marketing. CallRail respeta el atributo y excluye
+                              todo el subárbol —del reemplazo y del descubrimiento del pool—,
+                              así que aquí siempre se lee el número real del despacho. Un
+                              número de pool rotando en la cláusula de contacto de un
+                              documento legal es incorrecto, y además quemaría una asignación
+                              en páginas que no reciben tráfico de campaña. */}
+                              <a
+                                data-calltrk-noswap
+                                href={`tel:+1${interfaceTexts.section12.phone.replace(/\D/g, '')}`}
+                                className="hover:text-[#B2904D] transition"
+                              >
                                 {interfaceTexts.section12.phone}
                               </a>
                           </div>

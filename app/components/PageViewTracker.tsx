@@ -18,6 +18,36 @@ const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 const META_PIXEL_ID_2 = process.env.NEXT_PUBLIC_META_PIXEL_ID_2;
 const TIKTOK_PIXEL_ID = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID;
 
+/**
+ * CallRail swap.js — DNI (Dynamic Number Insertion) a nivel de sesión.
+ *
+ * Se configura con el `src` completo del snippet porque la URL lleva dentro
+ * el id de compañía, la access key y la versión del bundle: partirla en tres
+ * env vars no gana nada y sí invita a mezclar la key de una cuenta con el id
+ * de otra. Si la var no está definida, el script no se monta y el sitio
+ * enseña los números reales — el mismo contrato que GA/Meta/TikTok.
+ *
+ * `strategy="afterInteractive"` y NO `lazyOnload` como los píxeles, a
+ * propósito: un píxel puede llegar tarde porque solo observa, pero swap.js
+ * REESCRIBE el número que el visitante va a marcar. Con lazyOnload la
+ * MobileStickyBar es tappable bastante antes de que el swap ocurra, y cada
+ * llamada de esa ventana entra sin atribución.
+ */
+const CALLRAIL_SWAP_SRC = process.env.NEXT_PUBLIC_CALLRAIL_SWAP_SRC;
+
+/**
+ * La var es NEXT_PUBLIC_ y se interpola en el `src` de un <script>, así que
+ * es una superficie de inyección si alguien la escribe mal en el panel de
+ * Vercel. Exigir el origen de CallRail cierra eso por un peso: cualquier
+ * otro host se descarta y el script simplemente no se monta.
+ */
+function callRailSrc(): string | null {
+  if (!CALLRAIL_SWAP_SRC) return null;
+  return CALLRAIL_SWAP_SRC.startsWith('https://cdn.callrail.com/')
+    ? CALLRAIL_SWAP_SRC
+    : null;
+}
+
 type TiktokPixel = { page?: () => void };
 
 interface WindowWithTtq extends Window {
@@ -185,6 +215,30 @@ export function TrackingSurfaces() {
               }(window, document, 'ttq');
             `,
           }}
+        />
+      )}
+
+      {/* CallRail: DNI de sesión (number pool). No lleva page view propio —
+          swap.js abre su sesión al cargar leyendo document.URL y
+          document.referrer, así que las UTMs de la landing son las que
+          atribuyen la llamada. Los redirects del sitio preservan el query
+          string (ver proxy.ts), así que ese URL llega completo.
+
+          El pool descubre solo qué números hay en la página: swap.js recorre
+          el DOM, normaliza cada teléfono a sus últimos 10 dígitos y manda la
+          lista al servidor, que responde con la asignación. Dos consecuencias
+          que conviene tener presentes al tocar teléfonos en este repo:
+            - Saltarse <script> es comportamiento del propio walker, así que el
+              `telephone` del JSON-LD de LocalBusiness NUNCA se swapea. El NAP
+              que ve Google no se mueve.
+            - `data-calltrk-noswap` en un elemento excluye todo su subárbol,
+              tanto del reemplazo como del descubrimiento. Es la palanca para
+              blindar un número que no debe rotar (ver páginas legales). */}
+      {callRailSrc() && (
+        <Script
+          id="callrail-swap"
+          src={callRailSrc() as string}
+          strategy="afterInteractive"
         />
       )}
 

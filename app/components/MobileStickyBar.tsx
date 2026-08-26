@@ -99,7 +99,12 @@ export default function MobileStickyBar() {
         </a>
 
         {/* Call — secondary, office-aware */}
+        {/* key={phoneLink}: aquí el número no se pinta como texto, viaja solo
+            en el href — y React también reescribe atributos en sitio, así que
+            el swap de CallRail se pierde igual. Mismo razonamiento detallado
+            en Header.tsx. */}
         <a
+          key={phoneLink}
           href={phoneLink}
           onClick={handlePhoneClick}
           className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-[#B2904D] text-[#001540] font-bold text-sm active:bg-[#967a3f] transition-colors"

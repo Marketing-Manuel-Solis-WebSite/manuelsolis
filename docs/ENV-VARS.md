@@ -53,6 +53,7 @@ Para generar uno nuevo: `node -e "console.log(require('crypto').randomBytes(32).
 | `BLAST_MAX_PER_RUN`, `BLAST_SEND_DELAY_MS` | Límite y ritmo del envío masivo. |
 | `NEWSLETTER_FROM_ADDRESS` | Remitente del boletín. |
 | `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_META_PIXEL_ID`, `NEXT_PUBLIC_TIKTOK_PIXEL_ID` | Identificadores de las tres superficies de medición. Si una falta, su script no se monta y sus eventos se descartan sin error. |
+| `NEXT_PUBLIC_CALLRAIL_SWAP_SRC` | URL completa del `swap.js` de CallRail (DNI de sesión). Se rechaza cualquier valor que no empiece por `https://cdn.callrail.com/`: la var se interpola en el `src` de un `<script>`. Si falta, el script no se monta y el sitio enseña los números reales. Ver `docs/CALLRAIL-ATRIBUCION.md`. |
 | `ANALYZE` | `true` abre el analizador de bundle en el build. |
 
 ## Nota de higiene

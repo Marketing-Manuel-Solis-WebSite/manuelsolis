@@ -668,7 +668,27 @@ export default function HeaderProfessional() {
         <div className="hidden lg:flex justify-center w-full relative z-40">
           <div className="px-16 py-1.5 relative overflow-hidden group border-b-[2px] border-[#009b3a]">
             {/* ✅ AQUÍ AÑADÍ EL EVENTO DE CLICK PARA ESCRITORIO */}
-            <a 
+            {/* key={phoneNumber} — NO es cosmético, sostiene la atribución.
+
+              swap.js se mantiene al día con un MutationObserver configurado
+              {childList:true, subtree:true} y su callback solo recorre
+              addedNodes. React, cuando cambia un texto o un atributo que ya
+              existe, lo MUTA en sitio (nodeValue / setAttribute): ese cambio
+              no es un nodo añadido y CallRail no se entera.
+
+              Aquí el teléfono es estado derivado de la ruta (useMemo sobre el
+              slug de oficina), así que al navegar entre una página de oficina
+              y cualquier otra React reescribe el número de CallRail con el
+              real. La cuenta tiene session_polling activo cada 60 s, así que
+              se recupera solo — pero deja hasta un minuto de ventana en el CTA
+              de mayor intención, y ahí es justo donde se llama.
+
+              Cambiar la key fuerza desmontar/montar: el nodo entra como
+              addedNode, que es la ruta que el observer sí ve, y el swap se
+              rehace en el mismo frame. Se apoya en comportamiento documentado
+              del observer, no en API interna de CallRail. */}
+              <a
+              key={phoneNumber}
               href={phoneLink}
               onClick={handleCallClick}
               className="flex items-center justify-center gap-4 cursor-pointer transition-all duration-300 group/link"
