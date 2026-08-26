@@ -203,6 +203,10 @@ export default function Footer() {
                {language === 'es' ? 'Derechos de migrantes' : 'Migrant Rights'}
              </Link>
              <span>|</span>
+             <Link href={`/${language}/category/procesos-migratorios`} className="hover:text-[#B2904D] transition-colors">
+               {language === 'es' ? 'Procesos migratorios' : 'Immigration Processes'}
+             </Link>
+             <span>|</span>
              <Link href={`/${language}/politica-editorial`} className="hover:text-[#B2904D] transition-colors">
                {language === 'es' ? 'Política Editorial' : 'Editorial Policy'}
              </Link>

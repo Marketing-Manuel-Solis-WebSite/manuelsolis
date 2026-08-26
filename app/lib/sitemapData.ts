@@ -162,6 +162,10 @@ function maxDate(dates: string[]): string {
 const CATEGORY_POST_IDS: Record<string, readonly string[]> = {
   '/category/derechos-de-migrantes': ['defensa-deportacion', 'accidentes'],
   '/category/proteccion-legal-para-migrantes': ['visa-u', 'visa-VAWA', 'visa-T', 'visa-humanitaria'],
+  // `procesos-migratorios` es el grupo más grande del blog (25 de 55 posts) y era
+  // el único sin índice: con estas tres, los 55 posts se alcanzan desde una
+  // categoría y no solo desde el índice de 55 tarjetas.
+  '/category/procesos-migratorios': ['procesos-migratorios'],
 };
 
 function categoryLastmod(route: string): string {
