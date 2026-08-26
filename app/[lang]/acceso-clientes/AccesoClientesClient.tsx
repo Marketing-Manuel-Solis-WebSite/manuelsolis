@@ -27,7 +27,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useLanguage } from '../../context/LanguageContext';
 
-const PORTAL_URL = 'https://solislawfirm.com/login';
+const PORTAL_URL = 'https://client.solislooms.com';
 
 type Bilingual = string | { es: string; en?: string };
 
