@@ -135,19 +135,60 @@ El `telephone` del JSON-LD de `LocalBusiness` **no se toca**: el walker de
 `swap.js` salta `SCRIPT` y `NOSCRIPT`, verificado en el bundle. El NAP que lee
 Google no se mueve aunque el número visible rote.
 
-Para activarlo: definir en Vercel
+`NEXT_PUBLIC_CALLRAIL_SWAP_SRC` ya está definida en Vercel (Production +
+Preview, visibilidad `config`). Sin la variable el script no se monta y el
+sitio enseña los números reales, así que quitarla es el rollback inmediato.
 
-```
-NEXT_PUBLIC_CALLRAIL_SWAP_SRC=https://cdn.callrail.com/companies/307808685/99c81bba28c489f453b6/12/swap.js
+## Estado verificado en producción (2026-08-26)
+
+Comprobado con Chrome real (Playwright sobre el Chrome del sistema) contra
+`https://www.manuelsolis.com/es/abogado-inmigracion-houston` con UTMs de paid.
+No es inferencia: es lo que hace el navegador.
+
+| Comprobación | Resultado |
+| ------------ | --------- |
+| `script[src*=callrail]` en el DOM | sí |
+| `GET cdn.callrail.com/…/swap.js` | **200** |
+| `window.CallTrk` definido | sí |
+| `POST js.callrail.com/…/swap_session.json` | **200** (el `connect-src` funciona) |
+| Violaciones de CSP | **ninguna** |
+| Números sustituidos | **ninguno** |
+
+Y la respuesta del servidor de CallRail, que es la prueba definitiva:
+
+```json
+{"a":{},"r":{},"domless":false,"number_assignment":false,
+ "integration_retry":false,"integration_retries":[]}
 ```
 
-Sin la variable el script no se monta y el sitio enseña los números reales.
+`number_assignment: false` y `a: {}` vacío: **CallRail recibió los 20 números
+del sitio y no asignó ninguno.** Confirma por la vía empírica lo que el cruce
+de `swap_targets` ya indicaba. El lado sitio está completo y funcionando; lo
+único que falta para que se atribuya una llamada es configuración de panel.
+
+El arreglo del remount se verificó por separado: se marcó el `<a>` del teléfono
+del header, se simuló el swap de CallRail reescribiendo texto y `href`, y tras
+una navegación de cliente el elemento marcado **ya no existía** — es decir, el
+nodo se destruye y entra uno nuevo como `addedNode`, que es la ruta que el
+`MutationObserver` de CallRail sí observa. Si React lo hubiera mutado en sitio,
+el elemento marcado seguiría vivo con el número real.
+
+Nota: esas comprobaciones dejaron 3 sesiones de visitante en la cuenta de
+CallRail (2 con landing `localhost`, 1 con
+`utm_campaign=callrail-verificacion`). Son identificables y no tienen llamadas
+asociadas.
 
 ## Pendiente en el panel de CallRail (no se puede hacer desde el repo)
 
-1. **Añadir los números del sitio como objetivos del pool.** El pool los
-   descubre y los reporta, pero la asignación la decide el servidor. Sin esto
-   el script carga y no swapea.
+1. **Añadir los números del sitio como objetivos del pool.** Confirmado en
+   producción: el pool los descubre y los reporta, el servidor responde
+   `number_assignment: false`. Esto es lo único que separa la instalación
+   actual de tener atribución de llamadas real.
+   > Se puede hacer por API en vez de a mano, pero hace falta una **API key de
+   > CallRail** (Account → Settings → Integrations → API Keys). No existe
+   > ninguna en el repo ni en las variables de entorno de Vercel; el
+   > `access_key` que lleva el snippet es público y solo sirve para leer, no
+   > para escribir configuración.
 2. **Dimensionar el pool.** Con `cookie_duration: 180` el pool no cubre
    «visitantes concurrentes» sino **visitantes únicos dentro de la ventana de
    cookie**, que es un orden de magnitud más. Cuando se agota, CallRail recicla
@@ -157,11 +198,17 @@ Sin la variable el script no se monta y el sitio enseña los números reales.
 3. **Retirar o reetiquetar los 15 trackers `all`.** Mientras existan, cualquier
    llamada a esos números entra en un cubo que no distingue canal.
 4. **Dejar `trump_sources` en `false`** y `cookie_duration` idealmente en 30.
-5. **CallRail → BOS.** El snippet mide; no crea el lead. Enlazar la llamada con
+5. **El dato de tráfico para el punto 2 sigue pendiente.** No se pudo obtener:
+   el MCP de Vercel no tenía token OAuth en la sesión y la API de Web Analytics
+   devuelve 404 en los seis endpoints probados con el token del CLI. Hay que
+   leerlo a mano en Vercel → Analytics (visitantes únicos/día del último mes,
+   separando pagado de orgánico) o en GA4. Bajar `cookie_duration` a 30 días
+   reduce el pool necesario ~6× y es la palanca más barata.
+6. **CallRail → BOS.** El snippet mide; no crea el lead. Enlazar la llamada con
    el registro de BOS es trabajo aparte (webhook).
-6. **Google Business Profile:** el número principal de cada ficha se queda con
+7. **Google Business Profile:** el número principal de cada ficha se queda con
    el real. El de seguimiento va como número adicional, nunca al revés.
-7. **`form_capture` seguir apagado.** Los formularios ya postean a BOS vía
+8. **`form_capture` seguir apagado.** Los formularios ya postean a BOS vía
    `leadCapture.ts`; encenderlo duplicaría leads.
 
 ## Riesgo asumido a petición del despacho
