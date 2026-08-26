@@ -10,6 +10,13 @@
  * de un vistazo y una ocasión perfecta para corromper el HTML de un párrafo.
  * Aquí es una función con reglas, se prueba, y quitarla no deja rastro.
  *
+ * **Se aplica en los dos caminos de plantilla que tiene el blog.** Al entrar solo
+ * cubría `BlogArticleLayout` —los posts que son datos—, así que los 35 escritos
+ * a mano en JSX quedaban fuera por arquitectura, no por decisión: 13 de los 55
+ * artículos recibían enlace. Los 35 también renderizan sus párrafos desde
+ * strings HTML, así que reciben la misma función en su bloque `t.intro`, que en
+ * ellos no es un lede de una línea sino el cuerpo de apertura (6 a 10 párrafos).
+ *
  * Las reglas existen para que esto no se convierta en una granja de enlaces:
  *
  *   · Solo en bloques `text`. Nunca en títulos, listas, tablas ni avisos.
@@ -51,6 +58,36 @@ const TERMINOS: { re: RegExp; path: string }[] = [
   { re: /\bdefensa criminal\b/i, path: '/servicios/ley-criminal' },
   { re: /\bcriminal defense\b/i, path: '/servicios/ley-criminal' },
 
+  // ── El inglés no es el español con otras palabras: es otro orden ──
+  // `Visa U` es sensible a mayúsculas y en inglés se escribe "U visa", así que
+  // los cuatro artículos de Visa U no recibían enlace en /en. Lo mismo pasaba
+  // con temas que no tenían ningún término: ciudadanía, residencia familiar,
+  // DACA/TPS y camiones. Van aquí, entre los específicos, para que ganen a los
+  // genéricos del final.
+  { re: /\bU visa\b/i, path: '/servicios/visa-u' },
+  // El nombre del área va antes que el del formulario: "family-based immigration"
+  // le dice al lector a dónde llega y "I-130 petition" no.
+  { re: /\binmigraci[oó]n familiar\b/i, path: '/servicios/inmigracion' },
+  { re: /\bfamily-based immigration\b/i, path: '/servicios/inmigracion' },
+  { re: /\bpetici[oó]n I-130\b/i, path: '/servicios/inmigracion' },
+  { re: /\bI-130 petition\b/i, path: '/servicios/inmigracion' },
+  { re: /\bajuste de estatus\b/i, path: '/servicios/inmigracion' },
+  { re: /\badjustment of status\b/i, path: '/servicios/inmigracion' },
+  { re: /\bresidencia permanente\b/i, path: '/servicios/inmigracion' },
+  { re: /\bpermanent residen(?:cy|ce|t|ts)\b/i, path: '/servicios/inmigracion' },
+  { re: /\bparole humanitario\b/i, path: '/servicios/inmigracion' },
+  { re: /\bhumanitarian parole\b/i, path: '/servicios/inmigracion' },
+  { re: /\bautodeportaci[oó]n\b/i, path: '/servicios/defensa-deportacion' },
+  { re: /\bself-deportation\b/i, path: '/servicios/defensa-deportacion' },
+  { re: /\bsalida voluntaria\b/i, path: '/servicios/defensa-deportacion' },
+  { re: /\bvoluntary departure\b/i, path: '/servicios/defensa-deportacion' },
+  { re: /\baccidente de cami[oó]n\b/i, path: '/servicios/accidentes' },
+  { re: /\btruck accident\b/i, path: '/servicios/accidentes' },
+  { re: /\b18-wheeler\b/i, path: '/servicios/accidentes' },
+  { re: /\bcami[oó]n de 18 ruedas\b/i, path: '/servicios/accidentes' },
+  { re: /\bcompensaci[oó]n de trabajadores\b/i, path: '/servicios/accidentes' },
+  { re: /\bworkers'? compensation\b/i, path: '/servicios/accidentes' },
+
   // ── Términos más frecuentes, al final a propósito ──
   // Van después de los específicos para que "solicitud de asilo" gane a "asilo"
   // y "defensa contra la deportación" gane a "deportación". Con solo los
@@ -72,6 +109,19 @@ const TERMINOS: { re: RegExp; path: string }[] = [
   { re: /\bimmigration attorney\b/i, path: '/servicios/inmigracion' },
   { re: /\baccidente de trabajo\b/i, path: '/servicios/accidentes' },
   { re: /\bworkplace accident\b/i, path: '/servicios/accidentes' },
+
+  // Ciudadanía, DACA y TPS apuntan al pilar de inmigración porque hoy no tienen
+  // página propia. Cuando existan los hubs, se cambia el `path` aquí y los
+  // artículos siguen al destino sin tocar ni un artículo.
+  { re: /\bnaturalizaci[oó]n\b/i, path: '/servicios/inmigracion' },
+  { re: /\bnaturalization\b/i, path: '/servicios/inmigracion' },
+  { re: /\bciudadan[íi]a\b/i, path: '/servicios/inmigracion' },
+  { re: /\bcitizenship\b/i, path: '/servicios/inmigracion' },
+  { re: /\bgreen card\b/i, path: '/servicios/inmigracion' },
+  { re: /\bDACA\b/, path: '/servicios/inmigracion' },
+  { re: /\bTPS\b/, path: '/servicios/inmigracion' },
+  { re: /\btr[aá]mite de inmigraci[oó]n\b/i, path: '/servicios/inmigracion' },
+  { re: /\bimmigration process\b/i, path: '/servicios/inmigracion' },
 ];
 
 /**

@@ -11,6 +11,7 @@ import {
 
 // IMPORTACIONES
 import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
+import { addInlineLinks, createInlineLinkState } from '../../../lib/blogInlineLinks';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
@@ -398,6 +399,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function BlogPostPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const t = blogContent[lang as 'es' | 'en'] || blogContent.es;
+  const enlacesInline = createInlineLinkState();
 
 
 
@@ -521,7 +523,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   {/* Introducción */}
                   <section>
                     {t.intro.map((paragraph, idx) => (
-                      <p key={idx} dangerouslySetInnerHTML={{ __html: paragraph }} className="mb-6" />
+                      <p key={idx} dangerouslySetInnerHTML={{ __html: addInlineLinks(paragraph, lang as 'es' | 'en', enlacesInline) }} className="mb-6" />
                     ))}
                   </section>
 
