@@ -26,6 +26,23 @@ const FlagUS = () => (
   </svg>
 );
 
+type SubmenuItem = { name: string; href: string; group?: string };
+
+/**
+ * Parte un submenú en columnas por `group`, conservando el orden de las entradas.
+ * Un submenú sin `group` —Abogados, Oficinas— sale como una sola columna sin
+ * encabezado, igual que antes de que existiera esto.
+ */
+function agruparSubmenu(submenu: readonly SubmenuItem[]): { label?: string; items: SubmenuItem[] }[] {
+  const grupos: { label?: string; items: SubmenuItem[] }[] = [];
+  for (const entrada of submenu) {
+    const ultimo = grupos[grupos.length - 1];
+    if (ultimo && ultimo.label === entrada.group) ultimo.items.push(entrada);
+    else grupos.push({ label: entrada.group, items: [entrada] });
+  }
+  return grupos;
+}
+
 export default function HeaderProfessional() {
   const { language } = useLanguage();
   const pathname = usePathname();
@@ -173,22 +190,35 @@ export default function HeaderProfessional() {
       href: '', 
       type: 'dropdown',
       key: 'services',
+      // Las cuatro de inmigración que no estaban aquí (deportación, asilo, VAWA,
+      // Visa U) recibían 11-18 enlaces entrantes contra los 173 de las que sí
+      // salen en el menú. Van agrupadas y no en una lista plana de diez porque
+      // el lado de inmigración va a crecer: `group` es lo que parte el
+      // desplegable en columnas, y basta añadir entradas al mismo grupo.
       submenu: language === 'es'
         ? [
-            { name: 'Inmigración', href: `/${language}/servicios/inmigracion` },
-            { name: 'Accidentes', href: `/${language}/servicios/accidentes` },
-            { name: 'Seguros', href: `/${language}/servicios/seguros` },
-            { name: 'Ley Criminal', href: `/${language}/servicios/ley-criminal` },
-            { name: 'Familia', href: `/${language}/servicios/familia` },
-            { name: 'Inversionistas', href: `/${language}/servicios/visa-e2` },
+            { group: 'Inmigración', name: 'Inmigración', href: `/${language}/servicios/inmigracion` },
+            { group: 'Inmigración', name: 'Defensa de Deportación', href: `/${language}/servicios/defensa-deportacion` },
+            { group: 'Inmigración', name: 'Asilo', href: `/${language}/servicios/asilo` },
+            { group: 'Inmigración', name: 'VAWA', href: `/${language}/servicios/vawa` },
+            { group: 'Inmigración', name: 'Visa U', href: `/${language}/servicios/visa-u` },
+            { group: 'Otras áreas', name: 'Accidentes', href: `/${language}/servicios/accidentes` },
+            { group: 'Otras áreas', name: 'Seguros', href: `/${language}/servicios/seguros` },
+            { group: 'Otras áreas', name: 'Ley Criminal', href: `/${language}/servicios/ley-criminal` },
+            { group: 'Otras áreas', name: 'Familia', href: `/${language}/servicios/familia` },
+            { group: 'Otras áreas', name: 'Inversionistas', href: `/${language}/servicios/visa-e2` },
           ]
         : [
-            { name: 'Immigration', href: `/${language}/servicios/inmigracion` },
-            { name: 'Accidents', href: `/${language}/servicios/accidentes` },
-            { name: 'Insurance', href: `/${language}/servicios/seguros` },
-            { name: 'Criminal Law', href: `/${language}/servicios/ley-criminal` },
-            { name: 'Family', href: `/${language}/servicios/familia` },
-            { name: 'Investors', href: `/${language}/servicios/visa-e2` },
+            { group: 'Immigration', name: 'Immigration', href: `/${language}/servicios/inmigracion` },
+            { group: 'Immigration', name: 'Deportation Defense', href: `/${language}/servicios/defensa-deportacion` },
+            { group: 'Immigration', name: 'Asylum', href: `/${language}/servicios/asilo` },
+            { group: 'Immigration', name: 'VAWA', href: `/${language}/servicios/vawa` },
+            { group: 'Immigration', name: 'U Visa', href: `/${language}/servicios/visa-u` },
+            { group: 'Other areas', name: 'Accidents', href: `/${language}/servicios/accidentes` },
+            { group: 'Other areas', name: 'Insurance', href: `/${language}/servicios/seguros` },
+            { group: 'Other areas', name: 'Criminal Law', href: `/${language}/servicios/ley-criminal` },
+            { group: 'Other areas', name: 'Family', href: `/${language}/servicios/familia` },
+            { group: 'Other areas', name: 'Investors', href: `/${language}/servicios/visa-e2` },
           ]
     },
     {
@@ -535,17 +565,32 @@ export default function HeaderProfessional() {
                         id={`desktop-dropdown-${dropdownKey}`}
                         className={`absolute top-full left-0 pt-6 ${isDropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'} group-hover:opacity-100 group-hover:visible transition-all duration-200 perspective-[1000px]`}
                       >
-                        <div className="min-w-[240px] bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl py-3 px-2 border border-white/10 transform origin-top">
-                          {item.submenu.map((subItem) => (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href}
-                              className="group/item flex items-center px-4 py-2.5 rounded-lg hover:bg-white/5 transition-colors duration-200"
-                            >
-                              <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">
-                                {subItem.name}
-                              </span>
-                            </Link>
+                        <div
+                          className={`${
+                            agruparSubmenu(item.submenu).length > 1
+                              ? 'grid grid-cols-2 gap-x-4 min-w-[460px]'
+                              : 'min-w-[240px]'
+                          } bg-[#0b1c33]/95 backdrop-blur-md rounded-xl shadow-xl py-3 px-2 border border-white/10 transform origin-top`}
+                        >
+                          {agruparSubmenu(item.submenu).map((grupo) => (
+                            <div key={grupo.label ?? 'sin-grupo'}>
+                              {grupo.label && (
+                                <p className="px-4 pt-1 pb-2 text-[10px] font-bold text-[#B2904D] uppercase tracking-[0.18em]">
+                                  {grupo.label}
+                                </p>
+                              )}
+                              {grupo.items.map((subItem) => (
+                                <Link
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  className="group/item flex items-center px-4 py-2.5 rounded-lg hover:bg-white/5 transition-colors duration-200"
+                                >
+                                  <span className="text-[11px] font-light text-gray-300 group-hover/item:text-white uppercase tracking-[0.12em] transition-colors duration-200">
+                                    {subItem.name}
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -765,15 +810,27 @@ export default function HeaderProfessional() {
                               ))}
                             </>
                           ) : (
-                            item.submenu.map(sub => (
-                              <Link
-                                key={sub.name}
-                                href={sub.href}
-                                onClick={() => setIsMenuOpen(false)}
-                                className="block text-xs text-gray-400 font-light uppercase tracking-[0.15em] hover:text-white transition-colors"
-                              >
-                                {sub.name}
-                              </Link>
+                            // En móvil los grupos se apilan: dos columnas de cinco
+                            // no caben, y sin encabezado las diez entradas se leen
+                            // como una lista sin jerarquía.
+                            agruparSubmenu(item.submenu).map(grupo => (
+                              <div key={grupo.label ?? 'sin-grupo'} className="space-y-2">
+                                {grupo.label && (
+                                  <p className="text-[10px] font-bold text-[#B2904D] uppercase tracking-[0.18em] pt-1">
+                                    {grupo.label}
+                                  </p>
+                                )}
+                                {grupo.items.map(sub => (
+                                  <Link
+                                    key={sub.name}
+                                    href={sub.href}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="block text-xs text-gray-400 font-light uppercase tracking-[0.15em] hover:text-white transition-colors"
+                                  >
+                                    {sub.name}
+                                  </Link>
+                                ))}
+                              </div>
                             ))
                           )}
                         </m.div>
