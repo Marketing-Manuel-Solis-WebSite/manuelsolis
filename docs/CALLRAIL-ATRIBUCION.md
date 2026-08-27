@@ -5,6 +5,67 @@
 > pidió instalar el snippet de CallRail con tracking de sesión (number pool con
 > DNI) en vez de números de fuente fija.
 
+## ESTADO FINAL 2026-08-27 — funcionando en producción
+
+**19 pools de sesión creados, 108 números, cero fallos.** Uno por cada número
+que el sitio publica (los 20 menos `713-844-2700`, que es el número de registro
+de los documentos legales y va con `data-calltrk-noswap`).
+
+Un pool por destino, porque `call_flow` admite un solo `destination_number` y
+cada oficina reenvía a una línea distinta. Los destinos se copiaron de los
+trackers existentes: **el enrutamiento de las llamadas no cambia**, solo cambia
+el número que ve cada visitante.
+
+| Objetivo (lo que publica el sitio) | Destino (a donde suena) | Pool | Tracker de origen |
+| ---------------------------------- | ----------------------- | ---- | ----------------- |
+| `7137011731` | `7132308482` | 10 | Google My Business Houston |
+| `2147538315` | `2142333054` | 10 | Google My Business Dallas |
+| `3124770389` | `3122888171` | 10 | Google My Business Chicago |
+| `9152337127` | `9152194782` | 6 | Google My Business El Paso |
+| `7203588973` | `7206342738` | 6 | Google My Business Denver |
+| `2137841554` | `2134421018` | 6 | Google My Business LA |
+| `9565977090` | `9566224157` | 6 | Google My Business Harlingen |
+| `7139037875` | `2816577998` | 6 | Google-MB Houston Bellaire |
+| `8886761238` | `8325538784` | 6 | Manuel Solis Website |
+| `9015578357` | `9016650122` | 6 | Google My Business Memphis |
+| `7134290237` | `7132308498` | 4 | Google-MB Kirby |
+| `3465224848` | `2816577996` | 4 | Google-MB Houston Northchase |
+| `7132315384` | `7132777838` | 4 | Google-MB Juridico Main Number |
+| `8325980914` | `7132308455` | 4 | Google-MB Houston N Loop |
+| `8325983782` | `7132308495` | 4 | Google-MB League City |
+| `7138429575` | `3466570405` | 4 | Google-MB MainSt |
+| `8008987180` | `8008987180` | 4 | linea propia del sitio |
+| `8664200405` | `2816577865` | 4 | GA: Landing Page: Es: 18-wheeler a |
+| `8883514024` | `8883514024` | 4 | linea propia del sitio |
+
+Tamaños asignados por volumen real de llamadas (muestra de 10 días): 10 números
+donde hay ≥200 llamadas, 6 donde hay ≥60, 4 en el resto (mínimo de CallRail).
+
+### Verificado en producción con Chrome
+
+```json
+"number_assignment": true
+"a": {"7137011731":"(713) 561-5280", "7132315384":"(713) 364-1195",
+      "7139037875":"(281) 729-8678", "8886761238":"(832) 981-2925"}
+```
+
+En la landing no queda ningún número original (`propios: []`): los cuatro que
+la página publica se sustituyen. Y tras una navegación de cliente a
+`/es/oficinas/houston-principal`, el header muestra el número de pool de Houston
+— o sea que el arreglo del remount (`key={phoneNumber}`) funciona con números
+de pool reales, no solo en la simulación. Cero violaciones de CSP.
+
+### Lo que hay que vigilar
+
+- **Utilización de los pools.** Si un pool se agota, CallRail recicla el número
+  más antiguo y la atribución se degrada **sin avisar**. Houston (509 llamadas /
+  10 días) y Dallas (367) son los candidatos a quedarse cortos primero.
+- **`swap_ppc_override` debe seguir en `false`.** Es el interruptor que hace que
+  un clic de paid search borre el origen previo del visitante.
+- Los 15 `source_trackers` con fuente `all` siguen vivos. Ya no afectan al
+  sitio (ahora los pools se le adelantan), pero mezclan canales allí donde esos
+  números estén publicados.
+
 ## CORRECCIÓN 2026-08-27 — el fallo de raíz es otro
 
 Con acceso a la API de CallRail se pudo leer la cuenta entera (268 trackers,
