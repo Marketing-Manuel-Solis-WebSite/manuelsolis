@@ -5,6 +5,78 @@
 > pidió instalar el snippet de CallRail con tracking de sesión (number pool con
 > DNI) en vez de números de fuente fija.
 
+## CORRECCIÓN 2026-08-27 — el fallo de raíz es otro
+
+Con acceso a la API de CallRail se pudo leer la cuenta entera (268 trackers,
+32.324 llamadas en 90 días). Tres afirmaciones de la versión anterior de este
+documento eran **falsas** y quedan corregidas aquí:
+
+| Afirmación anterior | Realidad |
+| ------------------- | -------- |
+| `cookie_duration: 180` | Es **30**. Se bajó el 2026-08-26. |
+| Los `swap_targets` «pertenecen a otras propiedades» | Son las **líneas reales del despacho** (los números de destino). |
+| «Los 42 trackers no swapean nada aquí» | Cierto, pero por un motivo mucho más grave. |
+
+### 17 de los 20 números del sitio YA son números de CallRail
+
+Y no de un tracker cualquiera: son los de **Google My Business**.
+
+```
+713-701-1731  →  tracker "Google My Business Houston"   →  línea real 713-230-8482
+214-753-8315  →  tracker "Google My Business Dallas"    →  línea real 214-233-3054
+312-477-0389  →  tracker "Google My Business Chicago"   →  línea real 312-288-8171
+832-598-0914  →  tracker "Google-MB Houston N Loop"     →  línea real 713-230-8455
+888-676-1238  →  tracker "Manuel Solis Website"         →  línea real 832-553-8784
+… (16 en total; el mapa completo se saca de la API)
+```
+
+Solo 3 de los 20 son líneas reales: `713-844-2700`, `800-898-7180`, `888-351-4024`.
+
+Esto explica todo lo demás:
+
+1. **Por qué «Google My Business» es el 70,3 % de las llamadas.** No es que el
+   perfil de empresa genere 7 de cada 10 llamadas. Es que sus números de
+   rastreo están impresos por todo el sitio —header, barra fija de móvil,
+   páginas de oficina, páginas de servicio—. Quien llega por búsqueda orgánica,
+   lee un artículo del blog y llama a la oficina de Houston queda registrado
+   como **Google My Business Houston**, porque ese tracker es el dueño del
+   número. El tráfico orgánico, social, del boletín y directo del sitio se
+   acredita sistemáticamente a Google.
+2. **Por qué el sitio solo aparece con el 1,8 %.** Únicamente el 888 del header
+   cae en el tracker «Manuel Solis Website».
+3. **Por qué el DNI no puede sustituir nada.** Un `swap_target` tiene que ser un
+   número que NO sea ya de rastreo. El sitio publica números de rastreo, así que
+   no queda nada que sustituir. Al intentar crear el pool por API, CallRail
+   responde literalmente `"Swap targets invalid"`.
+
+### Reparto real de las llamadas (muestra de 3.000, 18–27 ago 2026)
+
+| Fuente | % |
+| ------ | - |
+| Google My Business | **70,3 %** |
+| Google Ads | 19,8 % |
+| Print Ad | 3,3 % |
+| **Manuel Solis Website** | **1,8 %** |
+| Facebook (todo) | ~1,5 % |
+| Direct | 0,5 % |
+
+~90 % del teléfono acreditado a propiedades de Google. Y los 8 pools de sesión
+de la cuenta se llaman **todos** «Google Ads: Landing Pages», operan sobre
+landings PHP heredadas (`mm.manuelsolis.com`, `mme.manuelsolis.com`,
+`ad.manuelsolis.com`) y ninguno cubre manuelsolis.com. La única atribución a
+nivel de sesión que existe en la cuenta es la de Google Ads.
+
+### La decisión que hace falta (no es técnica)
+
+Para que el sitio pueda medir por canal, tiene que **publicar las líneas reales
+del despacho** y dejar que CallRail haga la sustitución. Hoy publica el número
+final, que es como pegar el resultado del DNI a mano: no queda nada que rotar.
+
+Eso toca el NAP: el número del sitio dejaría de coincidir con el que muestra la
+ficha de Google. Es lo que Google documenta como correcto —número de rastreo
+como principal en la ficha, línea real en el sitio— pero es una decisión del
+despacho, no del repo, y por eso NO se ha ejecutado.
+
 ## Cómo se verificó
 
 No por documentación: descargando el bundle que sirve la propia cuenta y
@@ -23,7 +95,7 @@ Cualquiera puede repetir el comando y confirmar lo que sigue.
 | Campo                          | Valor            | Qué implica |
 | ------------------------------ | ---------------- | ----------- |
 | `id`                           | `307808685`      | Compañía |
-| `cookie_duration`              | **180**          | El número asignado se pega al visitante **180 días** |
+| `cookie_duration`              | ~~180~~ → **30** | Corregido el 2026-08-26 (ver corrección arriba) |
 | `trump_sources`                | **`false`**      | Un clic de paid search **no** sobrescribe el origen ya guardado |
 | `session_number_target_exists` | **`true`**       | **Sí hay pool de sesión configurado** |
 | `session_exact_targets`        | `[]`             | El pool no tiene objetivos fijos: descubre los teléfonos del DOM |

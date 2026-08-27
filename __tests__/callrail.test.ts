@@ -103,6 +103,17 @@ describe('números que no deben rotar', () => {
     'app/[lang]/privacidad/PrivacidadClient.tsx',
   ];
 
+  // sms-terminos pinta el telefono como TEXTO PLANO, sin <a href="tel:">, asi
+  // que la comprobacion de enlaces de abajo no lo veria. CallRail sustituye
+  // nodos de texto igual que atributos, y a esta pagina la auditan las
+  // operadoras: se comprueba aparte para que no se cuele por la forma.
+  it('sms-terminos protege su numero aunque lo pinte como texto plano', () => {
+    const src = read('app/[lang]/sms-terminos/SmsTerminosClient.tsx');
+    const bloques = src.match(/<div[^>]*>\s*<Phone[\s\S]{0,120}?phone'\)\}/g) ?? [];
+    expect(bloques.length).toBeGreaterThan(0);
+    for (const b of bloques) expect(b).toContain('data-calltrk-noswap');
+  });
+
   for (const archivo of legales) {
     it(`${archivo} marca sus teléfonos con data-calltrk-noswap`, () => {
       const src = read(archivo);

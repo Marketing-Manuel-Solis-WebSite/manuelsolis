@@ -266,7 +266,12 @@ export default function SmsTerminosClient({ lang }: { lang: 'es' | 'en' }) {
                       <div dangerouslySetInnerHTML={{ __html: parseText('section3.content') }} />
                   </div>
                   <div className="grid md:grid-cols-2 gap-6 text-lg font-medium">
-                      <div className="flex items-center gap-3 text-[#B2904D] bg-white/5 p-4 rounded-lg">
+                      {/* data-calltrk-noswap: numero de registro del documento de
+                          consentimiento SMS. Aqui el telefono es texto plano, no un
+                          enlace, y CallRail tambien sustituye nodos de texto — el
+                          atributo excluye el subarbol completo. Las operadoras
+                          auditan esta pagina: el numero tiene que ser el real. */}
+                      <div data-calltrk-noswap className="flex items-center gap-3 text-[#B2904D] bg-white/5 p-4 rounded-lg">
                           <Phone size={20} className="text-sky-400" />
                           {t('section3.phone')}
                       </div>
@@ -348,7 +353,7 @@ export default function SmsTerminosClient({ lang }: { lang: 'es' | 'en' }) {
               <div className="p-6 bg-[#001026] rounded-xl border border-white/10 space-y-4 shadow-inner">
                   <p className="text-base text-white font-medium">Law Office of Manuel Solís</p>
                   <div className="flex flex-col gap-3">
-                      <div className="flex items-center gap-3 text-white/90">
+                      <div data-calltrk-noswap className="flex items-center gap-3 text-white/90">
                           <Phone size={18} className="text-sky-400" />
                           {t('contactInfo.phone')}
                       </div>
