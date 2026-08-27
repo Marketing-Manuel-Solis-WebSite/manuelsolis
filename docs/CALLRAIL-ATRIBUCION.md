@@ -44,10 +44,8 @@ Esto explica todo lo demás:
    acredita sistemáticamente a Google.
 2. **Por qué el sitio solo aparece con el 1,8 %.** Únicamente el 888 del header
    cae en el tracker «Manuel Solis Website».
-3. **Por qué el DNI no puede sustituir nada.** Un `swap_target` tiene que ser un
-   número que NO sea ya de rastreo. El sitio publica números de rastreo, así que
-   no queda nada que sustituir. Al intentar crear el pool por API, CallRail
-   responde literalmente `"Swap targets invalid"`.
+3. **Por qué no había ningún pool cubriendo el sitio.** Simplemente nunca se
+   creó: los 8 pools de la cuenta son de las landings de Google Ads.
 
 ### Reparto real de las llamadas (muestra de 3.000, 18–27 ago 2026)
 
@@ -66,16 +64,49 @@ landings PHP heredadas (`mm.manuelsolis.com`, `mme.manuelsolis.com`,
 `ad.manuelsolis.com`) y ninguno cubre manuelsolis.com. La única atribución a
 nivel de sesión que existe en la cuenta es la de Google Ads.
 
-### La decisión que hace falta (no es técnica)
+### NO hace falta cambiar los números del sitio
 
-Para que el sitio pueda medir por canal, tiene que **publicar las líneas reales
-del despacho** y dejar que CallRail haga la sustitución. Hoy publica el número
-final, que es como pegar el resultado del DNI a mano: no queda nada que rotar.
+> Rectificación del mismo 2026-08-27. Una versión anterior de esta sección decía
+> que el sitio tenía que publicar las líneas reales del despacho. **Era falso**,
+> y venía de interpretar mal un error de la API.
 
-Eso toca el NAP: el número del sitio dejaría de coincidir con el que muestra la
-ficha de Google. Es lo que Google documenta como correcto —número de rastreo
-como principal en la ficha, línea real en el sitio— pero es una decisión del
-despacho, no del repo, y por eso NO se ha ejecutado.
+Al crear el pool, CallRail devolvía `{"errors":"Swap targets invalid"}`. Se
+interpretó como «un objetivo no puede ser un número que ya es de rastreo». No lo
+es: probado con destino inválido a propósito —para que la creación no pudiera
+completarse nunca— el error sale **igual** con una línea real que con un número
+de rastreo. La causa era de formato:
+
+| Operación | Forma de `swap_targets` |
+| --------- | ----------------------- |
+| Lo que devuelve el `GET` | `[{"type":"number","target":"+1…"}]` |
+| Lo que exige el `POST`   | `["+1…"]` — **array de strings** |
+
+Con la forma correcta se aceptan un objetivo, dos, o los 20 del sitio a la vez.
+Los números del sitio se quedan como están, y el NAP no se mueve.
+
+Además, el swap **no afecta al NAP frente a Google**: `swap.js` trae detección
+de bots (`is_bot`, y `getSecondScript` no llega a pedir asignación si está
+activa), así que el rastreador ve el número que hay en el HTML. Quien ve un
+número de pool es el visitante humano con JavaScript.
+
+### La restricción real: una llamada por destino
+
+Un pool tiene **un solo** `destination_number`. Como cada oficina reenvía a una
+línea distinta (Houston → 713-230-8482, Dallas → 214-233-3054, …), meter los 20
+números en un pool único **desviaría las llamadas de oficina al destino
+equivocado**. Hace falta un pool por destino.
+
+De ahí el orden recomendado:
+
+1. **Pool del CTA del sitio** — objetivo `+1 888-676-1238`, destino
+   `+1 832-553-8784` (exactamente a donde ya reenvía hoy). Cubre la barra
+   superior de escritorio y la barra fija de móvil en todo el sitio salvo las
+   páginas de oficina. Un objetivo, un destino, cero ambigüedad.
+2. **Después, un pool por oficina**, empezando por las de más volumen (Houston,
+   Dallas, Chicago). Cada uno con su propio destino.
+
+Mínimo por pool: **4 números** (máximo 300). Ese es el coste: cada número del
+pool se factura.
 
 ## Cómo se verificó
 
