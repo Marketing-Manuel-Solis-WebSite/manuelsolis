@@ -21,6 +21,7 @@ Vercel (Settings → Environment Variables).
 | `GOOGLE_PLACES_API_KEY` | Rating y reseñas en vivo de las fichas de Google. | Las páginas omiten el rating en vez de mostrar un valor fijo (comportamiento deseado). |
 | `GOOGLE_SITE_VERIFICATION` | Token de verificación de propiedad de Search Console (solo el valor de `content`, no la etiqueta entera). Emite `<meta name="google-site-verification">` en las 292 páginas. | No se emite ninguna etiqueta. Verifica una propiedad de **prefijo de URL**; una propiedad de **dominio** solo se puede verificar por TXT en el DNS, que está en GoDaddy y no en Vercel. |
 | `BING_SITE_VERIFICATION` | Equivalente para Bing Webmaster Tools (`msvalidate.01`). | No se emite ninguna etiqueta. |
+| `TIKTOK_SITE_VERIFICATION` | Token(s) de verificación de TikTok Developers. Admite **varios separados por coma**: TikTok verifica por prefijo de URL y da un token distinto por prefijo, así que se emite una etiqueta `tiktok-developers-site-verification` por token. Complementa a los ficheros `public/**/tiktok*.txt`, no los sustituye. | No se emite ninguna etiqueta. |
 | `NEWSLETTER_BLAST_SECRET` | Bearer de automatización de `POST /api/newsletter/blast`. **Ya no es la contraseña del panel.** | El envío masivo por API queda inaccesible. |
 
 ## Propias, generables (valores en `.env.local`)

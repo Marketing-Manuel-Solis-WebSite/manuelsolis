@@ -318,13 +318,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // ninguna etiqueta, así que no deja rastro en el HTML mientras esté vacía.
     // El token lo da Search Console en Configuración → Propiedad → Etiqueta HTML
     // (el valor del atributo `content`, no la etiqueta entera).
+    // TikTok verifica por PREFIJO de URL, y cada prefijo trae su propio token
+    // (uno para la raíz, otro para las páginas legales). Por eso la variable
+    // admite varios separados por coma: se emite una etiqueta por token, y así
+    // una sola build cubre todos los prefijos a la vez.
+    //
+    // El fichero .txt en public/ es el otro método que ofrece TikTok y ya está
+    // puesto; esto lo complementa, no lo sustituye. Cuál de los dos mira el
+    // validador no está documentado, así que se sirven ambos.
     verification: {
       ...(process.env.GOOGLE_SITE_VERIFICATION
         ? { google: process.env.GOOGLE_SITE_VERIFICATION }
         : {}),
-      ...(process.env.BING_SITE_VERIFICATION
-        ? { other: { 'msvalidate.01': process.env.BING_SITE_VERIFICATION } }
-        : {}),
+      other: {
+        ...(process.env.BING_SITE_VERIFICATION
+          ? { 'msvalidate.01': process.env.BING_SITE_VERIFICATION }
+          : {}),
+        ...(process.env.TIKTOK_SITE_VERIFICATION
+          ? {
+              'tiktok-developers-site-verification': process.env.TIKTOK_SITE_VERIFICATION
+                .split(',')
+                .map((t) => t.trim())
+                .filter(Boolean),
+            }
+          : {}),
+      },
     },
 
 
