@@ -18,7 +18,10 @@ export default function Footer() {
     { name: language === 'es' ? 'DETENIDOS' : 'DETAINED', href: `/${language}/clientes-detenidos` },
     { name: language === 'es' ? 'TESTIMONIALES' : 'TESTIMONIALS', href: `/${language}/testimonios` },
     { name: language === 'es' ? 'ABOGADOS' : 'ATTORNEYS', href: `/${language}/abogados` },
-    { name: language === 'es' ? 'COLABORADORES' : 'COLLABORATORS', href: `/${language}/colaboradores` },
+    // COLABORADORES retirado del footer (2026-09-01): la sección queda oculta.
+    // Las páginas SIGUEN respondiendo a propósito — los perfiles son tarjetas
+    // de presentación que los colaboradores ya repartieron, y un 404 rompería
+    // enlaces que circulan fuera del sitio. Ver app/lib/sitemapData.ts.
     { name: language === 'es' ? 'OFICINAS' : 'OFFICES', href: `/${language}/oficinas` },
     // El anchor nombra el destino (/nosotros); "INFORMACIÓN" no decía a dónde llevaba.
     { name: language === 'es' ? 'NOSOTROS' : 'ABOUT US', href: `/${language}/nosotros` },

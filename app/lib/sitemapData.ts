@@ -8,7 +8,6 @@
 // ============================================================
 
 import { attorneys } from './attorneyData';
-import { collaborators } from './collaboratorData';
 import { LANDING_PAGES } from './cityServiceData';
 import { newsletters } from './newsletterData';
 import { seoRedirects } from './seoRedirects';
@@ -235,7 +234,6 @@ export function getPagesEntries(): SitemapURL[] {
     { route: '', priority: 1.0, changeFrequency: 'weekly', lastModified: homeLastmod() },
     { route: '/nosotros', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/abogados', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
-    { route: '/colaboradores', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-06-05' },
     { route: '/testimonios', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/consulta', priority: 0.6, changeFrequency: 'monthly', lastModified: '2026-04-11' },
     { route: '/clientes-detenidos', priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-04-11' },
@@ -257,16 +255,11 @@ export function getPagesEntries(): SitemapURL[] {
       lastModified: categoryLastmod(route),
     })),
   ];
-  // Collaborator profile pages (data-driven — scales as more are added).
-  const collaboratorProfiles: SitemapURL[] = collaborators.flatMap((c) =>
-    LANGS.map((lang) => ({
-      url: `${BASE_URL}/${lang}/colaboradores/${c.id}`,
-      lastModified: '2026-06-05',
-      changeFrequency: 'monthly' as ChangeFreq,
-      priority: 0.55,
-    }))
-  );
-  return [...expandLangs(entries), ...collaboratorProfiles];
+  // Colaboradores fuera del sitemap (2026-09-01): la sección está oculta y sus
+  // páginas emiten noindex. La convención de este archivo es que un <loc> que
+  // además dice noindex es un error en Search Console, así que salen del
+  // sitemap a la vez que se marcan. Las URLs siguen respondiendo.
+  return expandLangs(entries);
 }
 
 // Services hub + each service page

@@ -27,6 +27,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    // Sección oculta (2026-09-01): fuera del footer y fuera del sitemap. El
+    // noindex saca de Google las URLs ya indexadas; la página sigue sirviéndose
+    // para no romper los enlaces que ya están repartidos.
+    robots: { index: false, follow: false },
     alternates: {
       canonical: `${SITE_URL}/${lang}/colaboradores`,
       languages: {
