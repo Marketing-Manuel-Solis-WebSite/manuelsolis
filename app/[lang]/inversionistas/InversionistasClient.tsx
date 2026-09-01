@@ -24,6 +24,7 @@ import Image from 'next/image';
 import { useScroll, useMotionValueEvent } from 'framer-motion';
 import ContactForm from '../../components/ContactForm';
 import { useLanguage } from '../../context/LanguageContext';
+import { BRAND_LOGO } from '../../lib/brandLogo';
 
 // ============================================================
 // HELPERS
@@ -188,10 +189,10 @@ function LandingHeader() {
           {/* Logo — NO es un enlace */}
           <div className={`relative transition-all duration-500 ease-in-out ${isScrolled ? 'w-[140px]' : 'w-[190px]'}`}>
             <Image
-              src="/logo-manuel-solis.png"
+              src={BRAND_LOGO.src}
               alt="Manuel Solis - Abogados"
-              width={200}
-              height={65}
+              width={BRAND_LOGO.width}
+              height={BRAND_LOGO.height}
               className="w-full h-auto object-contain"
               priority
             />
@@ -250,10 +251,10 @@ function LandingFooter({ lang }: { lang: 'es' | 'en' }) {
       <div className="container mx-auto px-4 py-16 relative z-10">
         <div className="flex flex-col items-center mb-10">
           <Image
-            src="/logo-manuel-solis.png"
+            src={BRAND_LOGO.src}
             alt="Manuel Solis - Abogados"
-            width={220}
-            height={70}
+            width={BRAND_LOGO.width}
+            height={BRAND_LOGO.height}
             className="h-16 w-auto mb-6"
           />
           <a

@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation'
 import { officesPhoneMap, DEFAULT_PHONE, DEFAULT_PHONE_LINK } from './officesPhoneMap'
 import { fireConversion } from '../lib/conversion'
 import { useDialog } from './useDialog'
+import { BRAND_LOGO } from '../lib/brandLogo';
 
 const FlagES = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="h-3 w-3 rounded-[1px] flex-shrink-0 opacity-90">
@@ -383,10 +384,10 @@ export default function HeaderProfessional() {
                   único anchor que Google lee, así que nombra el destino (la portada),
                   no solo la marca. */}
               <Image
-                src="/logo-manuel-solis.png"
+                src={BRAND_LOGO.src}
                 alt={language === 'es' ? 'Manuel Solis Law Firm — Página de inicio' : 'Manuel Solis Law Firm — Home page'}
-                width={200}
-                height={65}
+                width={BRAND_LOGO.width}
+                height={BRAND_LOGO.height}
                 className="object-contain transition-all duration-500 ease-in-out"
                 style={{
                   height: isScrolled ? '40px' : '52px',

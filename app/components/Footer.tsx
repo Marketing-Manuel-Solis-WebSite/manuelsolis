@@ -6,6 +6,7 @@ import { Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowUp } from 'lucide
 import { useLanguage } from '../context/LanguageContext'
 import { m } from 'framer-motion'
 import NewsletterSignup from './NewsletterSignup'
+import { BRAND_LOGO } from '../lib/brandLogo';
 
 export default function Footer() {
   const { language } = useLanguage();
@@ -66,10 +67,10 @@ export default function Footer() {
                 único anchor que Google lee, así que nombra el destino (la portada),
                 no solo la marca. */}
             <Image
-              src="/logo-manuel-solis.png"
+              src={BRAND_LOGO.src}
               alt={language === 'es' ? 'Manuel Solis Law Firm — Página de inicio' : 'Manuel Solis Law Firm — Home page'}
-              width={300}
-              height={90}
+              width={BRAND_LOGO.width}
+              height={BRAND_LOGO.height}
               className="h-24 w-auto relative z-10 drop-shadow-lg"
             />
           </Link>
