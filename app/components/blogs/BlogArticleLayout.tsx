@@ -315,9 +315,21 @@ export default function BlogArticleLayout({
                   <h2 className="text-[#B2904D] font-bold text-xl mb-4 flex items-center gap-2">
                     <Sparkles size={20} /> {t.summary.title}
                   </h2>
+                  {/*
+                    El sumario TAMBIÉN pasa por el inyector.
+                    Quedaba fuera del conjunto escaneado —`inline()` solo corría
+                    sobre `block.text`— y es el primer párrafo de prosa de la
+                    página. Dos artículos tenían un término vivo aquí, en su
+                    primera frase, sin recibir enlace: `green card` en
+                    registro-obligatorio-extranjeros-g325r-2026 y `permanent
+                    residency` en estatus-juvenil-sijs-…
+                    Se evalúa antes que los bloques del cuerpo, así que el enlace
+                    primario cae en el párrafo de apertura, que es donde la regla
+                    2 de la guía lo quiere.
+                  */}
                   <p
                     className="text-lg text-white leading-relaxed font-light m-0"
-                    dangerouslySetInnerHTML={{ __html: t.summary.text }}
+                    dangerouslySetInnerHTML={{ __html: inline(t.summary.text) }}
                   />
                 </div>
 

@@ -38,11 +38,17 @@ export default function LeyCriminalClient({
   const cases = resolveCases(lang);
   const steps = resolveSteps(lang);
 
-  const articles = [
-    { slug: 'ley-de-los-10-anos-cancelacion-de-deportacion', title: { es: 'Ley de los 10 años: cancelación de deportación', en: '10-Year Rule: Cancellation of Removal' }, image: '/blog/blog_11/BLOG01_CR1.png' },
-    { slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', title: { es: 'Frenar deportación con Visa Humanitaria', en: 'Stop Deportation with Humanitarian Visa' }, image: '/blog/blog_08/B8_CR1.png' },
-    { slug: 'perdon-i-192-como-arreglar-con-la-visa-u-si-tienes-deportaciones-previas', title: { es: 'Perdón I-192: arreglar con Visa U con deportaciones previas', en: 'I-192 Waiver: Fix with U Visa Despite Prior Deportations' }, image: '/blog/blog_03/B3_CR1.png' },
-  ];
+  /**
+   * Vacío a propósito, no pendiente de rellenar.
+   *
+   * Aquí había tres artículos que no son de esta área de práctica. El bloque de
+   * arriba ya no se pinta con menos de dos, así que la página deja de recomendar
+   * lectura fuera de tema en vez de mostrarla por tener el hueco.
+   *
+   * Se rellena cuando existan artículos de defensa penal. Hasta entonces, la
+   * lista vacía es la respuesta correcta.
+   */
+  const articles: { slug: string; title: { es: string; en: string }; image: string }[] = [];
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-500 text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
@@ -149,34 +155,43 @@ export default function LeyCriminalClient({
           </div>
         </section>
 
-        {/* RELATED ARTICLES */}
+        {/*
+          Nada de bloque cuando no hay al menos dos artículos que casen de
+          verdad con el área que vende la página. Una recomendación fuera de
+          tema en una página comercial es peor que una sección ausente: la
+          guía de clústeres del 26-ago-2026 (paso 03) midió que ley-criminal
+          recomendaba tres artículos de inmigración y visa-e2 tres que no
+          tienen nada que ver con visados de inversión.
+        */}
+        {articles.length >= 2 && (
         <section className="py-24 relative bg-navy-500">
-          <div className="max-w-7xl mx-auto px-4 relative z-10">
-            <Reveal variant="up" className="text-center mb-16" amount={0.4}>
-              <h2 className="text-3xl font-black text-white mb-4">{isEs ? 'Recursos Legales Relacionados' : 'Related Legal Resources'}</h2>
-              <p className="text-white/60 max-w-2xl mx-auto">{isEs ? 'Artículos informativos preparados por nuestros abogados para ayudarle a entender sus opciones legales.' : 'Informative articles prepared by our attorneys to help you understand your legal options.'}</p>
-              <div className="h-1 w-20 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6" />
-            </Reveal>
-            <Stagger gap={0.08} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
-              {articles.map((article) => (
-                <StaggerItem key={article.slug} as="div">
-                  <a href={`/${lang}/blog/${article.slug}`} className="card-3d group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-colors duration-300">
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image src={article.image} alt={article.title[lang]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
-                    </div>
-                    <div className="p-4">
-                      <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">{article.title[lang]}</h4>
-                      <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-                        {isEs ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    </div>
-                  </a>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
-        </section>
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+              <Reveal variant="up" className="text-center mb-16" amount={0.4}>
+                <h2 className="text-3xl font-black text-white mb-4">{isEs ? 'Recursos Legales Relacionados' : 'Related Legal Resources'}</h2>
+                <p className="text-white/60 max-w-2xl mx-auto">{isEs ? 'Artículos informativos preparados por nuestros abogados para ayudarle a entender sus opciones legales.' : 'Informative articles prepared by our attorneys to help you understand your legal options.'}</p>
+                <div className="h-1 w-20 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6" />
+              </Reveal>
+              <Stagger gap={0.08} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
+                {articles.map((article) => (
+                  <StaggerItem key={article.slug} as="div">
+                    <a href={`/${lang}/blog/${article.slug}`} className="card-3d group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-colors duration-300">
+                      <div className="relative aspect-[16/10] overflow-hidden">
+                        <Image src={article.image} alt={article.title[lang]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
+                      </div>
+                      <div className="p-4">
+                        <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">{article.title[lang]}</h4>
+                        <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                          {isEs ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                        </span>
+                      </div>
+                    </a>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </div>
+          </section>
+        )}
 
         {/* CONTACT */}
         <section className="relative py-32 z-10 bg-transparent">

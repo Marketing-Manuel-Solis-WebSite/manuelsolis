@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { CITY_FOOTER_LINKS } from './cityFooterLinks'
 import Image from 'next/image'
 import { Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowUp } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
@@ -133,33 +134,7 @@ export default function Footer() {
             {language === 'es' ? 'Abogados por ciudad y servicio' : 'Attorneys by city and service'}
           </p>
           <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2 max-w-5xl mx-auto text-[11px] md:text-xs text-blue-100/60">
-            {[
-              { slug: 'abogado-inmigracion-houston', es: 'Inmigración Houston', en: 'Immigration Houston' },
-              { slug: 'abogado-inmigracion-dallas', es: 'Inmigración Dallas', en: 'Immigration Dallas' },
-              { slug: 'abogado-inmigracion-chicago', es: 'Inmigración Chicago', en: 'Immigration Chicago' },
-              { slug: 'abogado-inmigracion-los-angeles', es: 'Inmigración Los Ángeles', en: 'Immigration Los Angeles' },
-              { slug: 'abogado-inmigracion-el-paso', es: 'Inmigración El Paso', en: 'Immigration El Paso' },
-              { slug: 'abogado-inmigracion-memphis', es: 'Inmigración Memphis', en: 'Immigration Memphis' },
-              { slug: 'abogado-inmigracion-denver', es: 'Inmigración Denver', en: 'Immigration Denver' },
-              { slug: 'abogado-inmigracion-harlingen', es: 'Inmigración Harlingen', en: 'Immigration Harlingen' },
-              { slug: 'abogado-accidentes-houston', es: 'Accidentes Houston', en: 'Accidents Houston' },
-              { slug: 'abogado-accidentes-dallas', es: 'Accidentes Dallas', en: 'Accidents Dallas' },
-              { slug: 'defensa-deportacion-houston', es: 'Deportación Houston', en: 'Deportation Houston' },
-              { slug: 'defensa-deportacion-dallas', es: 'Deportación Dallas', en: 'Deportation Dallas' },
-              { slug: 'defensa-deportacion-chicago', es: 'Deportación Chicago', en: 'Deportation Chicago' },
-              { slug: 'defensa-deportacion-los-angeles', es: 'Deportación Los Ángeles', en: 'Deportation Los Angeles' },
-              { slug: 'defensa-deportacion-el-paso', es: 'Deportación El Paso', en: 'Deportation El Paso' },
-              { slug: 'visa-u-houston', es: 'Visa U Houston', en: 'U Visa Houston' },
-              { slug: 'visa-u-dallas', es: 'Visa U Dallas', en: 'U Visa Dallas' },
-              { slug: 'visa-u-chicago', es: 'Visa U Chicago', en: 'U Visa Chicago' },
-              { slug: 'visa-u-los-angeles', es: 'Visa U Los Ángeles', en: 'U Visa Los Angeles' },
-              { slug: 'vawa-houston', es: 'VAWA Houston', en: 'VAWA Houston' },
-              { slug: 'vawa-dallas', es: 'VAWA Dallas', en: 'VAWA Dallas' },
-              { slug: 'vawa-chicago', es: 'VAWA Chicago', en: 'VAWA Chicago' },
-              { slug: 'asilo-politico-houston', es: 'Asilo Houston', en: 'Asylum Houston' },
-              { slug: 'asilo-politico-chicago', es: 'Asilo Chicago', en: 'Asylum Chicago' },
-              { slug: 'asilo-politico-los-angeles', es: 'Asilo Los Ángeles', en: 'Asylum Los Angeles' },
-            ].map((item) => (
+            {CITY_FOOTER_LINKS.map((item) => (
               <li key={item.slug}>
                 <Link
                   href={`/${language}/${item.slug}`}

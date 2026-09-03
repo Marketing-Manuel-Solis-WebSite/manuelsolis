@@ -19,6 +19,11 @@ interface BlogSchemaInput {
   image: string; // relative path e.g. '/blog/blog_20/BLOG10_CR1.png'
   lang: string;
   readTime?: string;
+  /**
+   * Categoría del artículo (`articleSection`). Se omite si no llega: 0 de 55
+   * posts la declaraban antes, y una cadena vacía sería peor que nada.
+   */
+  articleSection?: string;
 }
 
 interface FAQItem {
@@ -36,6 +41,7 @@ export function generateBlogPostingSchema(input: BlogSchemaInput) {
     headline: input.title,
     description: input.description,
     datePublished: input.date,
+    ...(input.articleSection ? { articleSection: input.articleSection } : {}),
     // Sin dateModified real se omite la propiedad: rellenarla con la fecha de
     // publicación declara una revisión que nunca ocurrió, y en contenido legal
     // que caduca esa fecha es justo lo que el lector usa para confiar.

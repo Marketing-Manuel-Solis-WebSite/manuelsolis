@@ -1,7 +1,6 @@
 import 'server-only';
 import { getPlaceData, type GooglePlaceData } from './googleReviews';
 import { getOfficePlaceId, isVirtualOffice } from './officesRegistry';
-import { isSatelliteOffice } from '../components/officesPhoneMap';
 import { ORG_REF } from './schemaOrg';
 
 /**
@@ -107,10 +106,24 @@ export async function buildOfficeSchema(
    */
   const url = `${SITE_URL}/es/oficinas/${input.slug}`;
   const virtual = isVirtualOffice(input.slug);
-  const satellite = isSatelliteOffice(input.slug);
 
   /**
-   * SEDES SATÉLITE: `Place`, no `LegalService`/`Attorney`.
+   * SEDES SIN ATENCIÓN PRESENCIAL PROPIA: `Place`, no `LegalService`/`Attorney`.
+   *
+   * ⚠️ La condición es `isVirtualOffice`, NO `isSatelliteOffice`. Estuvo mal y
+   * el efecto era el contrario del que se buscaba: `isSatelliteOffice` solo es
+   * cierto para las cinco sedes satélite de Houston (`kind: 'satellite'`, con
+   * horario real de lunes a sábado), así que esas cinco emitían `Place` y las
+   * cinco direcciones del área de Chicago —`kind: 'appointment'`, SIN horario y
+   * descritas en su propio texto como direcciones de solo cita— caían al bloque
+   * de abajo y emitían la entidad de negocio completa. Es decir: las menos
+   * presenciales de las diez eran las únicas que se declaraban como negocio
+   * atendido. Lo midió la verificación de schema del 26-ago-2026 (defecto 1,
+   * "parcial — 10 de 20 URLs") y reproduce sobre el HTML construido.
+   *
+   * `VIRTUAL_OFFICE_SLUGS` contiene exactamente esas diez, satélite y solo-cita,
+   * y es la lista que el despacho clasificó el 2026-08-22. Es la condición
+   * correcta para esta decisión.
    *
    * Es la recomendación literal de la auditoría de schema de 2026-08 para su
    * único hallazgo crítico. Google espera que un `LocalBusiness` sea una
@@ -130,7 +143,7 @@ export async function buildOfficeSchema(
    * Google "hay personal aquí en estas franjas". Omitir una propiedad nunca es
    * una discrepancia; afirmar de más, sí.
    */
-  if (satellite) {
+  if (virtual) {
     return {
       '@context': 'https://schema.org',
       '@type': 'Place',

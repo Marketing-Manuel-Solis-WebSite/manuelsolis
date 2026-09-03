@@ -1,4 +1,5 @@
 import { generateBlogPostingSchema, generateFAQSchema } from '../../lib/blogSchema';
+import { getArticleSection } from '../../lib/blogCategories';
 
 interface BlogSchemaProps {
   title: string;
@@ -28,6 +29,10 @@ export default function BlogSchema({
   readTime,
   faqs,
 }: BlogSchemaProps) {
+  // La categoría se deriva del slug, no se pide como prop: así los 55
+  // artículos la declaran sin tocar 55 ficheros, y no puede quedar a medias.
+  const articleSection = getArticleSection(slug, lang) ?? undefined;
+
   const blogSchema = generateBlogPostingSchema({
     title,
     description,
@@ -37,6 +42,7 @@ export default function BlogSchema({
     image,
     lang,
     readTime,
+    articleSection,
   });
 
   // Sin una fecha de revisión real, omitimos `dateModified`: repetir

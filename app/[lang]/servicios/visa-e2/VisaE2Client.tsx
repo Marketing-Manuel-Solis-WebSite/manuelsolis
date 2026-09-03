@@ -24,11 +24,17 @@ export default function VisaE2Client({ lang }: { lang: Language }) {
   const steps = resolveSteps(lang);
   const faqs = resolveFaqs(lang);
 
-  const articles = [
-    { slug: 'residencia-laboral-eb3-ley-245i-entrada-indocumentada', title: { es: 'Residencia laboral EB-3 y Ley 245(i)', en: 'EB-3 Work Residency & Section 245(i)' }, image: '/blog/blog_13/BLOG03_CR1.png' },
-    { slug: 'advance-parole-2026-viajar-con-daca-tps-visa-u', title: { es: 'Advance Parole 2026: viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' }, image: '/blog/blog_12/BLOG02_CR1.png' },
-    { slug: 'formulario-g28-cambiar-abogado-inmigracion', title: { es: 'Formulario G-28: cómo cambiar de abogado', en: 'Form G-28: How to Change Attorney' }, image: '/blog/blog_09/B9_CR1.png' },
-  ];
+  /**
+   * Vacío a propósito, no pendiente de rellenar.
+   *
+   * Aquí había tres artículos que no son de esta área de práctica. El bloque de
+   * arriba ya no se pinta con menos de dos, así que la página deja de recomendar
+   * lectura fuera de tema en vez de mostrarla por tener el hueco.
+   *
+   * Se rellena cuando existan artículos de visa E-2 e inversión. Hasta entonces, la
+   * lista vacía es la respuesta correcta.
+   */
+  const articles: { slug: string; title: { es: string; en: string }; image: string }[] = [];
 
   return (
     <div className="min-h-screen flex flex-col bg-navy-500 text-white relative selection:bg-[#B2904D] selection:text-white font-sans overflow-x-hidden">
@@ -168,33 +174,42 @@ export default function VisaE2Client({ lang }: { lang: Language }) {
           </div>
         </section>
 
-        {/* RELATED ARTICLES */}
+        {/*
+          Nada de bloque cuando no hay al menos dos artículos que casen de
+          verdad con el área que vende la página. Una recomendación fuera de
+          tema en una página comercial es peor que una sección ausente: la
+          guía de clústeres del 26-ago-2026 (paso 03) midió que ley-criminal
+          recomendaba tres artículos de inmigración y visa-e2 tres que no
+          tienen nada que ver con visados de inversión.
+        */}
+        {articles.length >= 2 && (
         <section className="py-24 relative bg-navy-500">
-          <div className="max-w-7xl mx-auto px-4 relative z-10">
-            <Reveal variant="up" className="text-center mb-16" amount={0.4}>
-              <h2 className="text-3xl font-black text-white mb-4">{ui.resourcesTitle}</h2>
-              <div className="h-1 w-20 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6" />
-            </Reveal>
-            <Stagger gap={0.08} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto" amount={0.1}>
-              {articles.map((article) => (
-                <StaggerItem key={article.slug} as="div">
-                  <a href={`/${lang}/blog/${article.slug}`} className="card-3d group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-colors duration-300">
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image src={article.image} alt={article.title[lang]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
-                    </div>
-                    <div className="p-4">
-                      <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">{article.title[lang]}</h4>
-                      <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-                        {isEs ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    </div>
-                  </a>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
-        </section>
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+              <Reveal variant="up" className="text-center mb-16" amount={0.4}>
+                <h2 className="text-3xl font-black text-white mb-4">{ui.resourcesTitle}</h2>
+                <div className="h-1 w-20 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6" />
+              </Reveal>
+              <Stagger gap={0.08} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto" amount={0.1}>
+                {articles.map((article) => (
+                  <StaggerItem key={article.slug} as="div">
+                    <a href={`/${lang}/blog/${article.slug}`} className="card-3d group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-colors duration-300">
+                      <div className="relative aspect-[16/10] overflow-hidden">
+                        <Image src={article.image} alt={article.title[lang]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
+                      </div>
+                      <div className="p-4">
+                        <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">{article.title[lang]}</h4>
+                        <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                          {isEs ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                        </span>
+                      </div>
+                    </a>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </div>
+          </section>
+        )}
 
         {/* CONTACT */}
         <section id="contacto" className="relative py-32 z-10 bg-transparent">

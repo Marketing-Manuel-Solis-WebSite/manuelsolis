@@ -50,8 +50,16 @@ const TERMINOS: { re: RegExp; path: string }[] = [
   { re: /\bcorte de inmigraci[oó]n\b/i, path: '/servicios/defensa-deportacion' },
   { re: /\bsolicitud de asilo\b/i, path: '/servicios/asilo' },
   { re: /\basylum application\b/i, path: '/servicios/asilo' },
-  { re: /\bpetici[oó]n familiar\b/i, path: '/servicios/familia' },
-  { re: /\bfamily petition\b/i, path: '/servicios/familia' },
+  // ⚠️ `petición familiar` / `family petition` apuntaban a /servicios/familia,
+  // que es la página de DERECHO DE FAMILIA: su H1 es "Expertos en Derecho
+  // Familiar" y vende divorcio, custodia y manutención. Quien lee "petición
+  // familiar" en un artículo de inmigración busca una I-130, no una audiencia
+  // de custodia. Lo midió la guía de clústeres del 26-ago-2026: tres artículos
+  // mandaban ahí (caso-desestimado…, perdi-el-tps…, rfe-responder…).
+  // Cuando exista el hub de residencia familiar, este `path` cambia aquí y los
+  // tres artículos siguen al destino sin tocar ni un artículo.
+  { re: /\bpetici[oó]n familiar\b/i, path: '/servicios/inmigracion' },
+  { re: /\bfamily petition\b/i, path: '/servicios/inmigracion' },
   { re: /\blesiones personales\b/i, path: '/servicios/accidentes' },
   { re: /\bpersonal injury\b/i, path: '/servicios/accidentes' },
   { re: /\bcompensaci[oó]n laboral\b/i, path: '/servicios/accidentes' },
@@ -120,9 +128,41 @@ const TERMINOS: { re: RegExp; path: string }[] = [
   { re: /\bgreen card\b/i, path: '/servicios/inmigracion' },
   { re: /\bDACA\b/, path: '/servicios/inmigracion' },
   { re: /\bTPS\b/, path: '/servicios/inmigracion' },
-  { re: /\btr[aá]mite de inmigraci[oó]n\b/i, path: '/servicios/inmigracion' },
-  { re: /\bimmigration process\b/i, path: '/servicios/inmigracion' },
+  // Plural incluido: `immigration processes` es la forma que aparece en
+  // marihuana-dui-buen-caracter-moral-inmigracion, y la `\b` final del singular
+  // la dejaba fuera. Igual con `trámites de inmigración`.
+  { re: /\btr[aá]mites? de inmigraci[oó]n\b/i, path: '/servicios/inmigracion' },
+  { re: /\bimmigration process(?:es)?\b/i, path: '/servicios/inmigracion' },
 ];
+
+/**
+ * Pliega la tipografía "bonita" a ASCII **conservando la longitud**.
+ *
+ * El apóstrofo tipográfico costaba enlaces medibles: la tabla escribe
+ * `workers' compensation` con U+0027 y golpe-de-calor-trabajo-texas-derechos
+ * escribe `workers’ compensation` con U+2019, así que el término no disparaba
+ * en ese artículo y sí en accidente-trabajo-indocumentado-texas-compensacion,
+ * que usa la recta. Lo mismo puede pasar con guiones largos y comillas.
+ *
+ * **Cada sustitución es de un carácter por un carácter**, y eso es la razón de
+ * que esto funcione: `m.index` sobre el texto plegado apunta al mismo sitio en
+ * el texto original, así que el enlace se inserta con los índices del plegado
+ * pero el texto visible se corta del ORIGINAL y conserva su tipografía. Si
+ * algún día se añade aquí una regla que cambie la longitud, los índices dejan
+ * de corresponder y el HTML se corrompe en silencio: no hacerlo.
+ */
+const PLIEGUES: readonly [RegExp, string][] = [
+  [/[‘’ʼ´`]/g, "'"],
+  [/[“”]/g, '"'],
+  [/[–—−]/g, '-'],
+  [/ /g, ' '],
+];
+
+function plegarParaBuscar(texto: string): string {
+  let out = texto;
+  for (const [re, rep] of PLIEGUES) out = out.replace(re, rep);
+  return out;
+}
 
 /**
  * Divide el HTML en trozos, marcando los que NO se pueden tocar: el interior de
@@ -175,12 +215,15 @@ export function addInlineLinks(
 
     for (const seg of segmentos) {
       if (!seg.editable) continue;
-      const m = re.exec(seg.texto);
+      // Se busca sobre el texto plegado y se corta sobre el original: los
+      // índices coinciden porque `plegarParaBuscar` no cambia la longitud.
+      const m = re.exec(plegarParaBuscar(seg.texto));
       if (!m) continue;
+      const visible = seg.texto.slice(m.index, m.index + m[0].length);
       const href = `/${lang}${path}`;
       seg.texto =
         seg.texto.slice(0, m.index) +
-        `<a href="${href}" class="text-[#B2904D] underline decoration-[#B2904D]/40 hover:decoration-[#B2904D] underline-offset-2">${m[0]}</a>` +
+        `<a href="${href}" class="text-[#B2904D] underline decoration-[#B2904D]/40 hover:decoration-[#B2904D] underline-offset-2">${visible}</a>` +
         seg.texto.slice(m.index + m[0].length);
       // Marcado como no editable para que otro término no vuelva a entrar aquí.
       seg.editable = false;

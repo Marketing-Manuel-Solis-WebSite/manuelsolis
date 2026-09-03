@@ -185,35 +185,44 @@ export default function AccidentesClient({
           </div>
         </section>
 
-        {/* RELATED ARTICLES */}
+        {/*
+          Nada de bloque cuando no hay al menos dos artículos que casen de
+          verdad con el área que vende la página. Una recomendación fuera de
+          tema en una página comercial es peor que una sección ausente: la
+          guía de clústeres del 26-ago-2026 (paso 03) midió que ley-criminal
+          recomendaba tres artículos de inmigración y visa-e2 tres que no
+          tienen nada que ver con visados de inversión.
+        */}
+        {articles.length >= 2 && (
         <section className="py-24 relative bg-navy-500">
-          <div className="max-w-7xl mx-auto px-4 relative z-10">
-            <Reveal variant="up" className="text-center mb-16" amount={0.4}>
-              <h2 className="text-3xl font-black text-white mb-4">{isEs ? 'Recursos Legales Relacionados' : 'Related Legal Resources'}</h2>
-              <p className="text-white/60 max-w-2xl mx-auto">{isEs ? 'Artículos informativos preparados por nuestros abogados para ayudarle a entender sus opciones legales.' : 'Informative articles prepared by our attorneys to help you understand your legal options.'}</p>
-              <div className="h-1 w-20 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6" />
-            </Reveal>
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+              <Reveal variant="up" className="text-center mb-16" amount={0.4}>
+                <h2 className="text-3xl font-black text-white mb-4">{isEs ? 'Recursos Legales Relacionados' : 'Related Legal Resources'}</h2>
+                <p className="text-white/60 max-w-2xl mx-auto">{isEs ? 'Artículos informativos preparados por nuestros abogados para ayudarle a entender sus opciones legales.' : 'Informative articles prepared by our attorneys to help you understand your legal options.'}</p>
+                <div className="h-1 w-20 bg-gradient-to-r from-[#B2904D] to-transparent mx-auto rounded-full mt-6" />
+              </Reveal>
 
-            <Stagger gap={0.08} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
-              {articles.map((article) => (
-                <StaggerItem key={article.slug} as="div">
-                  <a href={`/${lang}/blog/${article.slug}`} className="card-3d group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-colors duration-300">
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image src={article.image} alt={article.title[lang]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">{article.title[lang]}</h3>
-                      <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-                        {isEs ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    </div>
-                  </a>
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
-        </section>
+              <Stagger gap={0.08} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" amount={0.1}>
+                {articles.map((article) => (
+                  <StaggerItem key={article.slug} as="div">
+                    <a href={`/${lang}/blog/${article.slug}`} className="card-3d group block rounded-xl overflow-hidden border border-white/10 hover:border-[#B2904D]/30 bg-[#000a20]/60 transition-colors duration-300">
+                      <div className="relative aspect-[16/10] overflow-hidden">
+                        <Image src={article.image} alt={article.title[lang]} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#000a20] to-transparent opacity-60" />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors line-clamp-2 leading-snug">{article.title[lang]}</h3>
+                        <span className="mt-2 text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                          {isEs ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                        </span>
+                      </div>
+                    </a>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </div>
+          </section>
+        )}
 
         {/* CONTACT (anchor on inner ContactForm section) */}
         <section className="relative py-32 z-10 bg-transparent">
