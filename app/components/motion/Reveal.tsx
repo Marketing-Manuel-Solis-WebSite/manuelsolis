@@ -25,6 +25,21 @@ interface RevealProps {
   style?: CSSProperties;
   href?: string;
   id?: string;
+  /**
+   * Renderiza VISIBLE desde el servidor, sin estado inicial oculto.
+   *
+   * Por defecto este componente emite `style="opacity:0"` en el HTML servido y
+   * solo se hace visible cuando framer-motion hidrata y descarga su chunk
+   * asíncrono, que no está precargado. Para adorno es correcto. Para un
+   * control con el que el visitante tiene que interactuar —un formulario, un
+   * teléfono, un CTA— convierte ese chunk en un punto único de fallo: si no
+   * llega, el elemento queda invisible, funcional y sin error en ningún log.
+   *
+   * `eager` deja el elemento pintado desde el primer byte y renuncia a la
+   * animación de entrada. Es el intercambio correcto en cualquier cosa que
+   * capte un lead.
+   */
+  eager?: boolean;
   children?: ReactNode;
 }
 
@@ -39,6 +54,7 @@ export default function Reveal({
   style,
   href,
   id,
+  eager = false,
   children,
 }: RevealProps) {
   const Comp = m[as] as ElementType;
@@ -50,7 +66,7 @@ export default function Reveal({
       id={id}
       variants={revealVariants(variant, distance)}
       custom={delay}
-      initial="hidden"
+      initial={eager ? false : 'hidden'}
       whileInView="visible"
       viewport={{ once, amount }}
     >

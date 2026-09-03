@@ -215,7 +215,7 @@ export default function VawaClient({
         {/* CONTACT */}
         <section id="contacto" className="relative py-32 z-10 bg-transparent">
           <div className="max-w-4xl mx-auto px-4 relative z-10">
-            <Reveal variant="up" amount={0.2} className="relative z-10 p-5 sm:p-8 md:p-12 bg-white/5 backdrop-blur-2xl rounded-2xl sm:rounded-[3rem] shadow-2xl border border-white/10 overflow-hidden">
+            <Reveal variant="up" amount={0.2} className="relative z-10 p-5 sm:p-8 md:p-12 bg-white/5 backdrop-blur-2xl rounded-2xl sm:rounded-[3rem] shadow-2xl border border-white/10 overflow-hidden" eager>
               <div className="absolute top-0 right-0 w-96 h-96 bg-[#B2904D]/20 rounded-full blur-[100px] pointer-events-none -mr-20 -mt-20"></div>
               <div className="relative z-10 text-white">
                 <div className="text-center mb-8">

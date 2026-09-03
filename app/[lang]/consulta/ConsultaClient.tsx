@@ -115,9 +115,21 @@ export default function ConsultaClient() {
 
         {/* Content */}
         <div className="relative z-20 max-w-3xl mx-auto">
+          {/*
+            Sin estado inicial oculto: /consulta es LA página de conversión y
+            servía CERO caracteres visibles dentro de <main> antes de hidratar
+            —H1, formulario y sus ocho campos, todo tras opacity:0—. El chunk de
+            framer-motion se importa después de hidratar y no está precargado,
+            así que el visitante veía el cuerpo en blanco tras descargar y
+            ejecutar el JS, con delay 0,5s + duración 0,8s encima. Y si el chunk
+            no llegaba, no aparecía nunca.
+            Se conserva el `animate` para que la transición siga existiendo
+            cuando el JS está; lo que se quita es que la página dependa de él
+            para ser legible.
+          */}
           {/* Header */}
           <m.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-10"
@@ -150,7 +162,7 @@ export default function ConsultaClient() {
 
           {/* Reassurance strip */}
           <m.div
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
             className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 mb-10"
@@ -172,7 +184,7 @@ export default function ConsultaClient() {
 
           {/* Form panel */}
           <m.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
             className="relative p-6 md:p-10 rounded-[2rem] bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] overflow-hidden"

@@ -53,31 +53,48 @@ function declaredOgImages(): { file: string; url: string }[] {
  */
 function profileImages(): { file: string; url: string }[] {
   const out: { file: string; url: string }[] = [];
-  // officePhotos alimenta las og:image de las 20 fichas y de las 25 landings
-  // a traves de un mapa, asi que sus rutas tampoco son literales junto a
-  // buildSocialMetadata: por ahi se colaban las fotos de oficina pesadas.
-  for (const rutaRel of ['app/lib/attorneyData.ts', 'app/lib/collaboratorData.ts', 'app/lib/officePhotos.ts']) {
+
+  /**
+   * officePhotos alimenta las og:image de las 20 fichas y de las 25 landings a
+   * traves de un mapa, asi que sus rutas tampoco son literales junto a
+   * buildSocialMetadata: por ahi se colaban las fotos de oficina pesadas.
+   */
+  const mapa = path.join(process.cwd(), 'app/lib/officePhotos.ts');
+  if (existsSync(mapa)) {
+    const src = readFileSync(mapa, 'utf8');
+    for (const m of src.matchAll(/:\s*['"`](\/(?:offices|og)\/[^'"`]+\.(?:jpg|jpeg|png|webp))['"`]/gi)) {
+      out.push({ file: 'app/lib/officePhotos.ts', url: m[1] });
+    }
+  }
+
+  /**
+   * Los perfiles se leen POR BLOQUE, no con un patron plano sobre el fichero.
+   *
+   * Es la correccion de la ceguera que dejo pasar 158,7 MB. La og:image de una
+   * ficha es `socialImage ?? image` —lo que hace app/[lang]/abogados/[slug]—,
+   * asi que la pregunta no es "hay alguna ruta de imagen" sino "cual de las dos
+   * gana en ESTE perfil". Un patron plano no puede responder eso: marcaba la
+   * `image` remota de un abogado que ya tiene su `socialImage` local, y a la vez
+   * se saltaba al que no la tiene.
+   *
+   * Una `image` remota es legitima: es el retrato de alta resolucion y la pagina
+   * lo sirve por next/image. Lo que no puede pasar a og:image es una remota SIN
+   * `socialImage` que la sustituya, porque og:image se sirve cruda.
+   */
+  for (const rutaRel of ['app/lib/attorneyData.ts', 'app/lib/collaboratorData.ts']) {
     const abs = path.join(process.cwd(), rutaRel);
     if (!existsSync(abs)) continue;
     const src = readFileSync(abs, 'utf8');
-    /**
-     * El campo `image:` de un perfil ES su og:image, y los valores del mapa de
-     * officePhotos son las og:image de las fichas de oficina y de las landings.
-     *
-     * El patrón va acotado a esas dos formas y no a "cualquier ruta de imagen":
-     * al ampliarlo empezó a marcar los avatares de `/reviews/*`, que se pintan
-     * en la página por next/image y no son imágenes sociales. Una guarda que
-     * marca lo que no debe se acaba desactivando.
-     */
-    const patrones =
-      rutaRel === 'app/lib/officePhotos.ts'
-        ? [/:\s*['"`](\/(?:offices|og)\/[^'"`]+\.(?:jpg|jpeg|png|webp))['"`]/gi]
-        : [/\bimage:\s*['"`](\/[^'"`]+\.(?:jpg|jpeg|png|webp))['"`]/gi];
-
-    for (const patron of patrones) {
-      for (const m of src.matchAll(patron)) out.push({ file: rutaRel, url: m[1] });
+    for (const bloque of src.split(/\n  \{\n/).slice(1)) {
+      const cuerpo = bloque.split(/\n  \},/)[0];
+      if (!/\bid:\s*['"`]/.test(cuerpo)) continue;
+      const social = cuerpo.match(/\bsocialImage:\s*['"`]([^'"`]+)['"`]/);
+      const imagen = cuerpo.match(/\bimage:\s*['"`]([^'"`]+)['"`]/);
+      const efectiva = social?.[1] ?? imagen?.[1];
+      if (efectiva) out.push({ file: rutaRel, url: efectiva });
     }
   }
+
   return out;
 }
 
@@ -87,10 +104,21 @@ describe('peso de las og:image', () => {
     expect(declaradas.length, 'no se encontró ninguna og:image declarada').toBeGreaterThan(5);
 
     const pesadas: string[] = [];
+    const remotas: string[] = [];
     for (const { file, url } of declaradas) {
       // decodeURIComponent: en la URL un espacio va como %20 ('/Roberto%20Garcia.png'),
       // y en disco el archivo lleva el espacio literal. Sin decodificar, una ruta
       // correcta se reporta como inexistente.
+      /**
+       * Una og:image REMOTA no se puede pesar en disco, y saltársela con un
+       * `continue` es justo cómo esta guarda dejó pasar 18 fotos de 8-11 MB.
+       * Se marcan como no verificables y la aserción de abajo las trata como
+       * fallo: si va a og:image, o vive en public/ y se puede medir, o no va.
+       */
+      if (/^https?:\/\//i.test(url)) {
+        remotas.push(`${file}: ${url} — og:image remota, no se puede medir el peso`);
+        continue;
+      }
       const abs = path.join(process.cwd(), 'public', decodeURIComponent(url));
       if (!existsSync(abs)) continue; // la ausencia la caza contentHygiene
       const kb = Math.round(statSync(abs).size / 1024);
@@ -101,12 +129,21 @@ describe('peso de las og:image', () => {
       pesadas,
       `og:image demasiado pesadas — WhatsApp descarga el archivo crudo:\n  ${pesadas.join('\n  ')}`,
     ).toEqual([]);
+
+    expect(
+      remotas,
+      `og:image alojadas fuera de public/, imposibles de pesar aquí. Genera una versión\n` +
+        `social en public/og/ y apúntala con socialImage — así fue como 18 fotos de\n` +
+        `8-11 MB pasaron esta guarda en verde:\n  ${remotas.join('\n  ')}`,
+    ).toEqual([]);
   });
 
   it('las imágenes sociales declaradas existen en public/', () => {
-    const faltan = [...declaredOgImages(), ...profileImages()].filter(
-      ({ url }) => !existsSync(path.join(process.cwd(), 'public', decodeURIComponent(url))),
-    );
+    const faltan = [...declaredOgImages(), ...profileImages()]
+      // Las remotas las cubre la aserción de peso del test anterior; aquí solo
+      // se comprueba que lo declarado como local exista de verdad.
+      .filter(({ url }) => !/^https?:\/\//i.test(url))
+      .filter(({ url }) => !existsSync(path.join(process.cwd(), 'public', decodeURIComponent(url))));
     expect(
       faltan.map((f) => `${f.url} (en ${f.file})`),
       'og:image declarada que no existe: el enlace compartido saldría sin imagen',

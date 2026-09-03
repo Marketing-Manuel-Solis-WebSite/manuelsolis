@@ -406,7 +406,7 @@ export default function OfficePageView({
             )}
 
             {/* --- FORMULARIO DE CONTACTO --- */}
-            <Reveal variant="up" className="relative max-w-4xl mx-auto" amount={0.1}>
+            <Reveal variant="up" className="relative max-w-4xl mx-auto" amount={0.1} eager>
               <div className="bg-[#001540]/80 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
                 <div className="h-1.5 w-full bg-gradient-to-r from-[#B2904D] via-[#D4AF37] to-[#B2904D]" />
                 <div className="p-6 md:p-12">

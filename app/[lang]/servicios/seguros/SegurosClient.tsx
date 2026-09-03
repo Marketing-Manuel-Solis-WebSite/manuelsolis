@@ -217,7 +217,7 @@ export default function SegurosClient({
         {/* CONTACT */}
         <section className="relative py-32 z-10 bg-transparent">
           <div className="max-w-4xl mx-auto px-4 relative z-10">
-            <Reveal variant="up" amount={0.2} className="relative z-10 p-5 sm:p-8 md:p-12 bg-white/5 backdrop-blur-md rounded-2xl sm:rounded-[2rem] shadow-2xl border border-white/10">
+            <Reveal variant="up" amount={0.2} className="relative z-10 p-5 sm:p-8 md:p-12 bg-white/5 backdrop-blur-md rounded-2xl sm:rounded-[2rem] shadow-2xl border border-white/10" eager>
               <div className="text-white">
                 <h2 className="text-2xl sm:text-3xl font-black mb-6">{ui.requestEvaluation}</h2>
                 <p className="text-white/70 mb-8">{ui.heroDescription}</p>

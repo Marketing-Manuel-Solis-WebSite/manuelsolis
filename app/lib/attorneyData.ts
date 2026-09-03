@@ -17,6 +17,22 @@ export interface Attorney {
   id: string;
   name: string;
   image: string;
+  /**
+   * Imagen para tarjetas sociales, 1200x630 y por debajo de 500 KB.
+   *
+   * Las fotos de `image` son retratos de estudio de 2295x2550 alojados crudos en
+   * Vercel Blob: entre 2,5 y 11,3 MB, 158,7 MB entre las 18. `og:image` NO pasa
+   * por next/image, así que cada scrape descargaba el original. Por encima del
+   * techo de peso el scraper descarta la imagen y el enlace que un cliente
+   * reenvía por WhatsApp sale sin la cara del abogado, que es lo que da
+   * confianza en ese reenvío. Además se anunciaba `og:image:width` 1200x630
+   * sobre ficheros verticales: las dimensiones declaradas eran falsas.
+   *
+   * Estas versiones se generan con recorte por atención (encuentra la cara) y
+   * pesan 40-62 KB. La foto de alta resolución sigue sirviendo a la página vía
+   * next/image; esto es solo para las tarjetas.
+   */
+  socialImage?: string;
   role: { es: string; en: string };
   practice?: AttorneyPractice;
   bio: { es: string[]; en: string[] };
@@ -71,6 +87,7 @@ export const attorneys: Attorney[] = [
     id: 'manuel-solis',
     name: 'Manuel Solis',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20Solis.png',
+    socialImage: '/og/abogados/manuel-solis.jpg',
     role: {
       es: 'Abogado Principal y Fundador',
       en: 'Principal Attorney and Founder'
@@ -104,6 +121,7 @@ export const attorneys: Attorney[] = [
     id: 'manuel-solis-iii',
     name: 'Manuel E. Solis III',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Manuel%20E%20Solis%20III.png',
+    socialImage: '/og/abogados/manuel-solis-iii.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
@@ -134,6 +152,7 @@ export const attorneys: Attorney[] = [
     id: 'juan-solis',
     name: 'Juan Solis',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Juan%20Solis.png',
+    socialImage: '/og/abogados/juan-solis.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Litigio Civil e Inmigración', en: 'Civil Litigation and Immigration Attorney' },
@@ -162,6 +181,7 @@ export const attorneys: Attorney[] = [
     id: 'andrew-fink',
     name: 'Andrew Fink',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Andrew%20Fink.png',
+    socialImage: '/og/abogados/andrew-fink.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Lesiones Personales y Litigio', en: 'Personal Injury and Litigation Attorney' },
@@ -192,6 +212,7 @@ export const attorneys: Attorney[] = [
     id: 'gregory-finney',
     name: 'Gregory Finney',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gregory%20Finney.png',
+    socialImage: '/og/abogados/gregory-finney.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Director de Litigio Civil', en: 'Director of Civil Litigation' },
@@ -221,6 +242,7 @@ export const attorneys: Attorney[] = [
     id: 'ni-yan',
     name: 'Ni Yan',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Ni%20Yan.png',
+    socialImage: '/og/abogados/ni-yan.jpg',
     role: { es: 'Abogada', en: 'Attorney' },
     practice: {
       label: { es: 'Abogada de Inmigración', en: 'Immigration Attorney' },
@@ -247,6 +269,7 @@ export const attorneys: Attorney[] = [
     id: 'mark-mcbroom',
     name: 'Mark McBroom',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Mark%20McBroom.png',
+    socialImage: '/og/abogados/mark-mcbroom.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
@@ -277,6 +300,7 @@ export const attorneys: Attorney[] = [
     id: 'ana-patricia-rueda',
     name: 'Ana Patricia Rueda',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Ana%20Patricia%20Rueda.png',
+    socialImage: '/og/abogados/ana-patricia-rueda.jpg',
     role: { es: 'Abogada', en: 'Attorney' },
     practice: {
       label: { es: 'Abogada de Inmigración', en: 'Immigration Attorney' },
@@ -303,6 +327,7 @@ export const attorneys: Attorney[] = [
     id: 'edwin-zavala',
     name: 'Edwin Zavala',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Edwin%20Zavala.png',
+    socialImage: '/og/abogados/edwin-zavala.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
@@ -333,6 +358,7 @@ export const attorneys: Attorney[] = [
     id: 'alejandro-manzano',
     name: 'Alejandro Manzano',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Alejandro.png',
+    socialImage: '/og/abogados/alejandro-manzano.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
@@ -371,6 +397,7 @@ export const attorneys: Attorney[] = [
     id: 'victor-rojas',
     name: 'Victor Rojas',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Victor%20Rojas.png',
+    socialImage: '/og/abogados/victor-rojas.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Litigio Penal e Inmigración', en: 'Criminal Litigation and Immigration Attorney' },
@@ -404,6 +431,7 @@ export const attorneys: Attorney[] = [
     id: 'austen-gunnels',
     name: 'Austen Gunnels',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Austen%20Gunnels.png',
+    socialImage: '/og/abogados/austen-gunnels.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado Marítimo y de Accidentes', en: 'Maritime and Accident Attorney' },
@@ -441,6 +469,7 @@ export const attorneys: Attorney[] = [
     id: 'gabriel-perez',
     name: 'Gabriel Perez',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Gabriel%20Perez.png',
+    socialImage: '/og/abogados/gabriel-perez.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Lesiones Personales e Inmigración', en: 'Personal Injury and Immigration Attorney' },
@@ -474,6 +503,7 @@ export const attorneys: Attorney[] = [
     id: 'sara-james',
     name: 'Sara James',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Sara%20James.png',
+    socialImage: '/og/abogados/sara-james.jpg',
     role: { es: 'Abogada', en: 'Attorney' },
     bio: {
       es: [
@@ -503,6 +533,7 @@ export const attorneys: Attorney[] = [
     id: 'eduardo-garcia',
     name: 'Eduardo Garcia',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Eduardo.png',
+    socialImage: '/og/abogados/eduardo-garcia.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     bio: {
       es: [
@@ -532,6 +563,7 @@ export const attorneys: Attorney[] = [
     id: 'alexis-alvarez',
     name: 'Alexis Alvarez',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Alexis-Alvarez.png',
+    socialImage: '/og/abogados/alexis-alvarez.jpg',
     role: { es: 'Abogada', en: 'Attorney' },
     bio: {
       es: [
@@ -561,6 +593,7 @@ export const attorneys: Attorney[] = [
     id: 'edward-s-reisman',
     name: 'Edward S. Reisman',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Edward-Steven-Reisman.png',
+    socialImage: '/og/abogados/edward-s-reisman.jpg',
     role: { es: 'Abogado', en: 'Attorney' },
     practice: {
       label: { es: 'Abogado de Inmigración', en: 'Immigration Attorney' },
@@ -594,6 +627,7 @@ export const attorneys: Attorney[] = [
     id: 'lupita-valenzuela-martinez',
     name: 'Lupita Valenzuela Martinez',
     image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Lupita.png',
+    socialImage: '/og/abogados/lupita-valenzuela-martinez.jpg',
     role: { es: 'Abogada', en: 'Attorney' },
     bio: {
       es: [

@@ -66,7 +66,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/abogados/${slug}`,
       title,
       description,
-      images: [{ url: attorney.image, alt: `${attorney.name} — ${attorney.role[language]}` }],
+      // `socialImage` y no `image`: la foto de perfil es un retrato vertical de
+      // hasta 11,3 MB en el blob, y og:image se sirve crudo (no pasa por
+      // next/image). Ver el comentario de socialImage en attorneyData.ts.
+      images: [{ url: attorney.socialImage ?? attorney.image, alt: `${attorney.name} — ${attorney.role[language]}` }],
     }),
   };
 }

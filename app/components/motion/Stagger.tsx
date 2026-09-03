@@ -23,6 +23,8 @@ interface StaggerProps {
   amount?: number;
   className?: string;
   style?: CSSProperties;
+  /** Ver `eager` en Reveal.tsx: pinta desde el servidor y renuncia a la entrada. */
+  eager?: boolean;
   children?: ReactNode;
 }
 
@@ -34,6 +36,7 @@ function Stagger({
   amount = 0.2,
   className,
   style,
+  eager = false,
   children,
 }: StaggerProps) {
   const Comp = m[as] as ElementType;
@@ -42,7 +45,7 @@ function Stagger({
       className={className}
       style={style}
       variants={staggerContainer(gap, delayChildren)}
-      initial="hidden"
+      initial={eager ? false : 'hidden'}
       whileInView="visible"
       viewport={{ once, amount }}
     >

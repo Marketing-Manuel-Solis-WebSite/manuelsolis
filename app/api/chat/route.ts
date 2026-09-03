@@ -275,19 +275,38 @@ export async function POST(request: NextRequest) {
     }
 
     // Vercel BotID — Basic Detection, en report-only salvo que se pida bloquear.
-    const botMode = process.env.BOTID_MODE ?? 'report-only';
+    //
+    // Misma degradación que /api/lead-capture y /api/newsletter/subscribe, que
+    // este endpoint no tenía. Bloquear exige que el cliente esté inicializado
+    // (NEXT_PUBLIC_BOTID_CLIENT_ENABLED, ver instrumentation-client.ts): sin él
+    // el fetch del navegador no lleva challenge y checkBotId() marca como bot al
+    // tráfico legítimo, así que BOTID_MODE=block a solas devolvería 403 a todos
+    // los visitantes. Hoy esa variable NO existe en Vercel, así que el día que
+    // alguien ponga BOTID_MODE=block este endpoint era el único que se caía —
+    // y en silencio, porque el chat presenta cualquier fallo como un genérico
+    // "problema de conexión", que es exactamente cómo el 403 de Gemini pasó
+    // siete semanas sin que nadie lo notara.
+    const botidClientEnabled = process.env.NEXT_PUBLIC_BOTID_CLIENT_ENABLED === 'true';
+    const configuredBotMode = process.env.BOTID_MODE ?? 'report-only';
+    const botBlockDowngraded = configuredBotMode === 'block' && !botidClientEnabled;
+    const botMode = botBlockDowngraded ? 'report-only' : configuredBotMode;
     const verification = await checkBotId();
     if (verification.isBot) {
-      console.warn(
-        JSON.stringify({
-          event: 'botid_detected',
-          endpoint: '/api/chat',
-          mode: botMode,
-          timestamp: new Date().toISOString(),
-          ip,
-          ua: request.headers.get('user-agent') ?? null,
-        }),
-      );
+      const detection = JSON.stringify({
+        event: 'botid_detected',
+        endpoint: '/api/chat',
+        mode: botMode,
+        configured_mode: configuredBotMode,
+        client_enabled: botidClientEnabled,
+        downgraded: botBlockDowngraded,
+        timestamp: new Date().toISOString(),
+        ip,
+        ua: request.headers.get('user-agent') ?? null,
+      });
+      // Degradado se registra como error, no como aviso: significa que alguien
+      // pidió bloquear y no se está bloqueando. Tiene que verse en los logs.
+      if (botBlockDowngraded) console.error(detection);
+      else console.warn(detection);
       if (botMode === 'block') {
         return badRequest('Access denied', 403);
       }

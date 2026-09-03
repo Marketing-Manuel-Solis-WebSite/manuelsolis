@@ -45,7 +45,12 @@ const officeData: OfficeData = {
     {
       name: 'Roberto García',
       role: { es: 'Abogado', en: 'Attorney' },
-      image: '/Roberto%20Garcia.png',
+      // El fichero es `public/roberto-garcia.jpg`. Aquí decía
+      // '/Roberto%20Garcia.png' —nombre y extensión equivocados— y la tarjeta
+      // salía como recuadro vacío en las dos páginas de Memphis. Era la única
+      // referencia rota de 16.444 al optimizador de imágenes.
+      // El dato bueno ya vive en attorneyData.ts; esto es una copia a mano.
+      image: '/roberto-garcia.jpg',
       quote: {
         es: "Es un privilegio acompañarte a alcanzar tu sueño americano.",
         en: "Happy for the privilege in assisting you achieve your American Dream."

@@ -623,7 +623,10 @@ export default function InversionistasClient() {
         <section id="contacto" className="relative py-32 z-10 bg-transparent">
           <div className="max-w-4xl mx-auto px-4 relative z-10">
             <m.div
-              initial={{ opacity: 0, y: 40 }}
+              // Sin estado inicial oculto: envuelve el formulario de captación
+              // y lo servía dentro de opacity:0 hasta que hidratara framer-motion.
+              // Ver el comentario de ContactFormClient.tsx.
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}

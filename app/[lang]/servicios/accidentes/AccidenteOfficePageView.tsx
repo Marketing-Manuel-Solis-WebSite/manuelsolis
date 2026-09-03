@@ -344,7 +344,7 @@ export default function AccidenteOfficePageView({
         {/* CONTACTO */}
         <section id="contacto" className="relative py-20 md:py-28 z-10 bg-transparent scroll-mt-24 px-4">
           <div className="max-w-4xl mx-auto relative z-10">
-            <Reveal variant="up" amount={0.2} className="relative z-10 p-5 sm:p-8 md:p-12 bg-white/5 backdrop-blur-md rounded-2xl sm:rounded-[2rem] shadow-2xl border border-white/10">
+            <Reveal variant="up" amount={0.2} className="relative z-10 p-5 sm:p-8 md:p-12 bg-white/5 backdrop-blur-md rounded-2xl sm:rounded-[2rem] shadow-2xl border border-white/10" eager>
               <div className="text-white">
                 <h2 className="text-2xl sm:text-3xl font-black mb-2">{t('requestEvaluation')}</h2>
                 <p className="text-white/60 text-sm mb-6">

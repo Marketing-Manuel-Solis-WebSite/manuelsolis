@@ -1,5 +1,25 @@
 # Accesos que faltan para cerrar el análisis
 
+> ## Estado real a 3 de septiembre de 2026 — leer esto antes que nada
+>
+> Lo de abajo se escribió el 5 de agosto y **parte de sus premisas ya no son ciertas**.
+> Lo verificado hoy, con el comando que lo prueba:
+>
+> | | Estado | Cómo se comprobó |
+> |---|---|---|
+> | **Google Search Console** | **Propiedad de DOMINIO ya verificada** | `dig +short TXT manuelsolis.com` → `google-site-verification=ID_bFcHefYxlhWjhCNPA8s--7bQI73W_ZyjZdVnVw78`. El documento de agosto decía "puede que la propiedad no exista"; sí existe, y de tipo dominio, que es el bueno: cubre subdominios y http. |
+> | **Bing Webmaster Tools** | **NO configurado, en absoluto** | Sin meta `msvalidate.01` en las 362 páginas, sin `BingSiteAuth.xml` en `public/`, sin TXT en el DNS, sin `BING_SITE_VERIFICATION` en Vercel. |
+> | **IndexNow** | **No implementado** | Sin fichero de clave en `public/`. |
+> | **GA4** | **Funcionando** | `NEXT_PUBLIC_GA_ID` en Vercel; `window.gtag` definido en producción. |
+> | **Meta pixel / TikTok** | **Funcionando** | `window.fbq` y `window.ttq` definidos en producción. |
+> | **CallRail DNI** | **🔴 APAGADO** | `NEXT_PUBLIC_CALLRAIL_SWAP_SRC` no existe en ningún entorno de Vercel. En producción no hay script de `cdn.callrail.com`, `window.CallTrk` es `undefined` y los `tel:` son los estáticos. Ninguna llamada del sitio se atribuye. |
+> | **Claves de Google Places** | 403 las dos | El rating vivo de `/testimonios` cae en silencio. |
+> | **Verificar producción** | **Ya no es un bloqueo** | `npm run verify:prod` resuelve el reto de Vercel una vez con Chrome headless y consulta el HTML servido. |
+>
+> **Lo que falta de verdad, por orden de valor:** Bing (no existe), CallRail (variable
+> ausente), y el acceso de lectura a GSC (la propiedad existe, pero no puedo consultarla).
+
+
 Estado a 5 de agosto de 2026. Este documento dice, por orden de valor, **qué dato me
 falta, qué podría hacer con él, y los pasos exactos para dármelo**. No contiene
 ningún secreto: el repositorio es público.
@@ -32,13 +52,13 @@ canibalizan entre sí de verdad (ahora solo puedo inferirlo por los títulos); s
 consultas ya rankean para reforzarlas; y comprobar si los cambios de esta semana
 mejoran el CTR.
 
-### Opción A — la más simple: verificar el sitio (5 minutos, sin credenciales)
+### Opción A — la más simple: exportar (5 minutos, sin credenciales)
 
-1. Entra en <https://search.google.com/search-console> y añade la propiedad
-   `https://www.manuelsolis.com` (tipo *Prefijo de URL*).
-2. Elige el método **Etiqueta HTML** y copia el valor del `content`.
-3. Dímelo por el chat y yo lo añado al `metadata.verification` del layout (una línea).
-4. Cuando esté verificado, exporta desde la interfaz y súbeme los CSV:
+**Ya no hay que verificar nada**: la propiedad de dominio existe desde el TXT del DNS.
+Solo hay que sacar los datos:
+
+1. Entra en <https://search.google.com/search-console>, propiedad `manuelsolis.com`.
+2. Exporta desde la interfaz y súbeme los CSV:
    - *Rendimiento* → últimos 3 meses → exportar **Consultas** y **Páginas**.
    - *Indexación → Páginas* → exportar el detalle de las excluidas.
    Con esos dos CSV en el repo (o pegados en el chat) hago el análisis completo.
@@ -57,6 +77,37 @@ mejoran el CTR.
    en el repo y lo ejecuto cada vez que haga falta.
 
 La opción B es la que te recomiendo: con ella no tienes que exportar nada nunca más.
+
+**Paso 4 corregido:** el correo de la cuenta de servicio se añade en *Configuración →
+Usuarios y permisos*. Basta permiso **Restringido** para leer informes; **Completo** solo
+hace falta si además quiero pedir indexación o gestionar sitemaps. Dale el mínimo.
+
+---
+
+## 1-bis. Bing Webmaster Tools — 5 minutos y no está hecho
+
+Bing alimenta a Bing, a Yahoo, a DuckDuckGo y **a Copilot y ChatGPT cuando buscan en la
+web**. Para un despacho que quiere aparecer en respuestas de IA, no tenerlo es un agujero.
+
+**No hace falta verificar nada a mano.** Bing importa la propiedad ya verificada de
+Search Console:
+
+1. <https://www.bing.com/webmasters> → *Add a site* → **Import from Google Search Console**.
+2. Iniciar sesión con la cuenta de Google que tiene la propiedad y autorizar.
+3. Elegir `manuelsolis.com` → *Import*. Queda verificada, con los sitemaps incluidos.
+4. Dentro de Bing: *Settings → API access* → generar la **API key**, y pásamela como
+   `BING_WEBMASTER_API_KEY` en Vercel. Con eso leo impresiones y clics de Bing igual que
+   los de Google.
+
+## 1-ter. IndexNow — para que Bing indexe en minutos, no en semanas
+
+Lo soportan Bing, Yandex, Naver, Seznam y Yep. **Google no**, y ha dicho que no piensa
+adoptarlo; Google se sigue trabajando con el sitemap. Aun así merece la pena: publicamos
+entradas de blog casi a diario y hoy Bing tarda semanas en verlas.
+
+Implementación: un fichero `public/<clave>.txt` con la clave dentro, y un POST a
+`api.indexnow.org` cada vez que se publica o se actualiza una URL. Encaja en el cron que
+ya publica el blog (`app/api/cron/publish-blog`). Son unas 30 líneas; dime y lo hago.
 
 ---
 

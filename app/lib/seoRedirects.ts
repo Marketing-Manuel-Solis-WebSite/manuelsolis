@@ -38,7 +38,14 @@ const DEFUNCT_ATTORNEYS = [
   'ana-patricia-rueda-en',
   'stephen-walker',
   'danatayri-morales-vidal-esq',
-  'edward-s-reisman',
+  // 'edward-s-reisman' NO va aquí: es un abogado EN ACTIVO.
+  // Entró por error en el barrido masivo de redirects legacy de WordPress del
+  // 30-abr-2026, cuatro semanas después de que su ficha se diera de alta en
+  // attorneyData.ts (26-mar). El resultado: su página se construye (122 KB),
+  // las dos páginas índice la enlazan con "Ver Perfil Completo", y en producción
+  // el 308 se la comía. Cuatro meses inalcanzable.
+  // El test de __tests__/auditoriaSeoSep2026.test.ts cruza esta lista contra
+  // attorneyData para que no vuelva a pasar con ningún otro.
   'stephanie-l-garcia-vidal',
 ];
 
@@ -430,6 +437,35 @@ export const seoRedirects: Redirect[] = [
   // (Use regex-constrained single segment to avoid path-to-regexp
   //  ambiguity with hyphen-prefixed parameters.)
   // ============================================================
+  /**
+   * Destinos explícitos ANTES del comodín.
+   *
+   * El comodín de abajo mandaba TODAS las landings de campaña a la portada, y
+   * varias de esas URLs siguen indexadas. La peor era
+   * `/landing-google-detainees`: la consulta de mayor intención de contratación
+   * que recibe el despacho —alguien con un familiar detenido buscando ahora— y
+   * aterrizaba en la portada genérica en vez de en la página de detenidos.
+   * Google trata un redirect hacia una página no equivalente como un soft-404 y
+   * deja de pasar relevancia, así que el comodín estaba tirando la señal de
+   * cinco URLs que ya tenían posiciones.
+   *
+   * El orden importa: en next.config.ts gana la primera regla que casa, así que
+   * estas van antes que el comodín. El comodín se queda como red de seguridad
+   * para las landings que no tienen equivalente.
+   */
+  { source: '/landing-google-detainees', destination: '/es/clientes-detenidos', permanent: true },
+  { source: '/:lang(es|en)/landing-google-detainees', destination: '/:lang/clientes-detenidos', permanent: true },
+  { source: '/landing-google-asylum-apply', destination: '/es/servicios/asilo', permanent: true },
+  { source: '/:lang(es|en)/landing-google-asylum-apply', destination: '/:lang/servicios/asilo', permanent: true },
+  { source: '/landing-google-citizenship-apply', destination: '/es/servicios/inmigracion', permanent: true },
+  { source: '/:lang(es|en)/landing-google-citizenship-apply', destination: '/:lang/servicios/inmigracion', permanent: true },
+  { source: '/landing-google-personal-injury-lawyer', destination: '/es/servicios/accidentes', permanent: true },
+  { source: '/:lang(es|en)/landing-google-personal-injury-lawyer', destination: '/:lang/servicios/accidentes', permanent: true },
+  // Solo la variante sin idioma: la de `/:lang/` ya existía más abajo con este
+  // mismo destino, y `landing-abogado-*` no lo captura el comodín de
+  // `landing-google-*`, así que su posición no importa.
+  { source: '/landing-abogado-de-inmigracion', destination: '/es/servicios/inmigracion', permanent: true },
+
   { source: '/:path(landing-google-.+)', destination: '/es', permanent: true },
   { source: '/:path(landing-facebook-.+)', destination: '/es', permanent: true },
   { source: '/:path(landing-fb-.+)', destination: '/es', permanent: true },

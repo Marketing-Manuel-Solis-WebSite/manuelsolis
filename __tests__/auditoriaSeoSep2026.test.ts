@@ -6,6 +6,10 @@ import { VIRTUAL_OFFICE_SLUGS } from '../app/lib/officesRegistry';
 import { OFFICE_NAP_SLUGS, getOfficeNap } from '../app/components/officesPhoneMap';
 import { BLOG_CATEGORIES, getArticleSection, getBlogCategory } from '../app/lib/blogCategories';
 import { BLOG_DATA } from '../app/[lang]/blog/page';
+import { seoRedirects } from '../app/lib/seoRedirects';
+import { attorneys } from '../app/lib/attorneyData';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 
 /**
  * Guardas de los arreglos de la contraverificación de eSEOspace (2026-09-02).
@@ -203,5 +207,75 @@ describe('taxonomía del blog en los datos estructurados (paso 06)', () => {
 
   it('un slug desconocido devuelve null, no una cadena vacía', () => {
     expect(getArticleSection('no-existe-este-post', 'es')).toBeNull();
+  });
+});
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Segunda tanda (2026-09-03): hallazgos de la auditoría de pérdidas.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+describe('ningún abogado en activo está enterrado por un redirect', () => {
+  it('ninguna ficha de abogado existente es origen de una redirección', () => {
+    // Edward S. Reisman estuvo CUATRO MESES inalcanzable: su slug entró por
+    // error en DEFUNCT_ATTORNEYS en un barrido de redirects legacy, cuatro
+    // semanas después de darse de alta en attorneyData. La página se construía,
+    // las dos páginas índice la enlazaban, y en producción el 308 se la comía.
+    const vivos = new Set(attorneys.map((a) => a.id));
+    const enterrados = seoRedirects
+      .map((r) => String(r.source))
+      .map((src) => src.match(/\/abogados\/([a-z0-9-]+)$/)?.[1])
+      .filter((slug): slug is string => Boolean(slug) && vivos.has(slug!));
+    expect(
+      [...new Set(enterrados)],
+      'estos abogados están en attorneyData Y son origen de un redirect: su ficha es inalcanzable',
+    ).toEqual([]);
+  });
+});
+
+describe('landings de campaña indexadas', () => {
+  const destinoDe = (source: string) =>
+    seoRedirects.find((r) => String(r.source) === source)?.destination;
+
+  it('la landing de detenidos va a la página de detenidos, no a la portada', () => {
+    // Es la consulta de mayor intención de contratación del despacho: alguien
+    // con un familiar detenido buscando ahora mismo. El comodín la mandaba a /es.
+    expect(destinoDe('/landing-google-detainees')).toBe('/es/clientes-detenidos');
+    expect(destinoDe('/:lang(es|en)/landing-google-detainees')).toBe('/:lang/clientes-detenidos');
+  });
+
+  it('las otras cuatro landings indexadas van a su servicio, no a la portada', () => {
+    expect(destinoDe('/landing-google-asylum-apply')).toBe('/es/servicios/asilo');
+    expect(destinoDe('/landing-google-personal-injury-lawyer')).toBe('/es/servicios/accidentes');
+    expect(destinoDe('/landing-google-citizenship-apply')).toBe('/es/servicios/inmigracion');
+    expect(destinoDe('/landing-abogado-de-inmigracion')).toBe('/es/servicios/inmigracion');
+    // La variante con idioma ya existía en el fichero; se comprueba igual.
+    expect(destinoDe('/:lang(es|en)/landing-abogado-de-inmigracion')).toBe('/:lang/servicios/inmigracion');
+  });
+
+  it('los destinos explícitos van ANTES que el comodín: gana la primera regla que casa', () => {
+    const idx = (s: string) => seoRedirects.findIndex((r) => String(r.source) === s);
+    expect(idx('/landing-google-detainees')).toBeLessThan(idx('/:path(landing-google-.+)'));
+    expect(idx('/:lang(es|en)/landing-google-detainees')).toBeLessThan(
+      idx('/:lang(es|en)/:path(landing-google-.+)'),
+    );
+  });
+});
+
+describe('imágenes sociales de las fichas de abogado', () => {
+  it('los 18 retratos remotos tienen su versión social local', () => {
+    const remotos = attorneys.filter((a) => a.image.startsWith('http'));
+    expect(remotos.length).toBeGreaterThan(15);
+    const sinSocial = remotos.filter((a) => !a.socialImage);
+    expect(sinSocial.map((a) => a.id), 'og:image se sirve cruda: una remota sin socialImage son megas').toEqual([]);
+  });
+
+  it('cada socialImage existe en disco y pesa menos de 500 KB', () => {
+    const faltan: string[] = [];
+    for (const a of attorneys) {
+      if (!a.socialImage) continue;
+      const abs = path.join(process.cwd(), 'public', a.socialImage);
+      if (!existsSync(abs)) faltan.push(`${a.id}: ${a.socialImage}`);
+    }
+    expect(faltan, 'socialImage declarada que no existe en public/').toEqual([]);
   });
 });

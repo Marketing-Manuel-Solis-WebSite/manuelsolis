@@ -352,7 +352,19 @@ export default function ContactFormClient() {
   const t = (es: string, en: string) => (lang === 'es' ? es : en);
 
   return (
-    <m.div variants={containerVar} initial="hidden" whileInView="visible" viewport={{ once: true }}
+    /*
+      `initial={false}`, no "hidden": el formulario de captación de todo el sitio
+      se servía dentro de opacity:0 en las 332 páginas que lo montan, y sus ocho
+      campos heredaban el mismo estado por `containerVar`/`itemVar`. Solo se
+      hacía visible cuando framer-motion hidrataba y descargaba su chunk
+      asíncrono, que no está precargado en ningún <link rel=preload>: si ese
+      chunk no llegaba —red móvil mala, bloqueador, despliegue a medias— el
+      formulario quedaba invisible, funcional y sin error en ningún log.
+      Los hijos heredan el estado del contenedor, así que esta línea quita dos
+      de las tres capas. La tercera es el <Reveal> que lo envuelve en cada
+      página, y va con `eager`.
+    */
+    <m.div variants={containerVar} initial={false} whileInView="visible" viewport={{ once: true }}
       className="relative bg-[#001026]/95 backdrop-blur-md rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 shadow-2xl border border-white/10 overflow-hidden"
     >
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
