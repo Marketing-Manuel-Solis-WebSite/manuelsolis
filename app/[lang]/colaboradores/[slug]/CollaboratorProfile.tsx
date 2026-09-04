@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   ArrowLeft, ArrowRight, Mail, Quote, Users, Globe, Star, ExternalLink,
-  Facebook, Instagram, Youtube, BadgeCheck, FileText, MapPin,
+  Facebook, Instagram, Youtube, BadgeCheck, MapPin,
 } from 'lucide-react';
 import TikTok from '../../../components/icons/TikTok';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-import ContactForm from '../../../components/ContactForm';
 import {
   getCollaborator,
   collaborators,
@@ -59,11 +58,6 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
     viewOnGoogle: { es: 'Ver en Google', en: 'View on Google' },
     relatedTitle: { es: 'Otros Colaboradores', en: 'Other Collaborators' },
     viewProfile: { es: 'Ver Perfil', en: 'View Profile' },
-    contactTitle: { es: 'Contacto', en: 'Contact' },
-    contactSubtitle: {
-      es: 'Déjenos sus datos y nuestro equipo se pondrá en contacto con usted.',
-      en: 'Leave us your details and our team will get in touch with you.',
-    },
     reviewsDisclaimer: {
       es: 'Las reseñas son verificables en Google Maps. Resultados pasados no garantizan resultados futuros.',
       en: 'Reviews are verifiable on Google Maps. Past results do not guarantee future outcomes.',
@@ -370,23 +364,12 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
         </section>
       )}
 
-      {/* CONTACT FORM */}
-      <section id="contacto" className="relative px-4 pb-24 z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 flex items-center justify-center gap-3">
-              <FileText size={28} className="text-[#B2904D]" />
-              {texts.contactTitle[language]}
-            </h2>
-            <p className="text-gray-400 max-w-xl mx-auto">
-              {texts.contactSubtitle[language]}
-            </p>
-          </div>
-          <div className="bg-[#001026]/80 p-6 md:p-10 rounded-3xl border border-white/10 shadow-2xl">
-            <ContactForm lang={language} />
-          </div>
-        </div>
-      </section>
+      {/*
+        Sin formulario de contacto. La ficha de un colaborador es una tarjeta de
+        presentación —la persona la reparte— y quien la abre viene a ver quién
+        es, no a abrir un caso: el correo y la oficina ya están arriba, junto al
+        nombre. El formulario de captación sigue en el resto del sitio.
+      */}
 
       <Footer />
     </div>
