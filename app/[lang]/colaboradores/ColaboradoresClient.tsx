@@ -108,10 +108,14 @@ export default function ColaboradoresClient({ lang }: { lang: 'es' | 'en' }) {
                       <p className="text-[#B2904D] text-xs font-bold tracking-widest uppercase mb-3">
                         {c.role}
                       </p>
-                      <div className="flex items-center gap-2 text-blue-100/60 text-xs mb-3">
-                        <Mail size={12} className="text-[#B2904D]" />
-                        <span className="truncate">{c.email}</span>
-                      </div>
+                      {/* Sin correo, sin bloque: `email` es opcional y una ficha
+                          sin él no debe enseñar un icono de sobre vacío. */}
+                      {c.email && (
+                        <div className="flex items-center gap-2 text-blue-100/60 text-xs mb-3">
+                          <Mail size={12} className="text-[#B2904D]" />
+                          <span className="truncate">{c.email}</span>
+                        </div>
+                      )}
                       <div className="flex items-center gap-2 text-white text-sm font-medium opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500 delay-75">
                         {texts.viewProfile[language]} <ChevronRight size={16} className="text-[#B2904D]" />
                       </div>

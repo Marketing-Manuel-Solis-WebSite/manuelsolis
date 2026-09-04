@@ -77,7 +77,9 @@ function getPersonSchema(collaborator: typeof collaborators[number], lang: strin
     image: collaborator.image.startsWith('http')
       ? collaborator.image
       : `${SITE_URL}${collaborator.image}`,
-    email: `mailto:${collaborator.email}`,
+    // Se omite la propiedad si no hay dirección: `mailto:undefined` en un
+    // Person es un dato falso, y omitir nunca es una discrepancia.
+    ...(collaborator.email ? { email: `mailto:${collaborator.email}` } : {}),
     description: collaborator.description[isEs ? 'es' : 'en'][0],
     url: `${SITE_URL}/${lang}/colaboradores/${collaborator.id}`,
     // Reference the canonical firm Organization node (app/[lang]/layout.tsx

@@ -143,14 +143,17 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
                 </span>
               </h1>
 
-              {/* Email */}
-              <a
-                href={`mailto:${collaborator.email}`}
-                className="inline-flex items-center gap-2 text-gray-300 hover:text-[#B2904D] transition-colors text-sm md:text-base mb-6 w-fit"
-              >
-                <Mail size={16} className="text-[#B2904D]" />
-                {collaborator.email}
-              </a>
+              {/* Email — opcional: sin dirección confirmada no se pinta un
+                  mailto: vacío, que manda al cliente a un buzón inexistente. */}
+              {collaborator.email && (
+                <a
+                  href={`mailto:${collaborator.email}`}
+                  className="inline-flex items-center gap-2 text-gray-300 hover:text-[#B2904D] transition-colors text-sm md:text-base mb-6 w-fit"
+                >
+                  <Mail size={16} className="text-[#B2904D]" />
+                  {collaborator.email}
+                </a>
+              )}
 
               {/* Description */}
               <div className="space-y-4 text-gray-300 text-base md:text-lg leading-relaxed font-light mb-8">

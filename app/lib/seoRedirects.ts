@@ -49,6 +49,23 @@ const DEFUNCT_ATTORNEYS = [
   'stephanie-l-garcia-vidal',
 ];
 
+/**
+ * Perfiles de colaborador retirados.
+ *
+ * La razón por la que esta sección se escondió en vez de borrarse (ae55edc) es
+ * que cada perfil es una tarjeta de presentación que la persona reparte: un 404
+ * rompe enlaces que ya circulan fuera del sitio. Al sustituir un colaborador,
+ * su URL tiene que seguir respondiendo, y va al índice de la sección — NUNCA a
+ * la ficha de quien le sustituye, que mandaría a quien busca a una persona a la
+ * ficha de otra.
+ */
+const RETIRED_COLLABORATORS = ['jennifer-olvera'];
+
+const retiredCollaboratorRedirects: Redirect[] = RETIRED_COLLABORATORS.flatMap((slug) => [
+  { source: `/colaboradores/${slug}`, destination: '/es/colaboradores', permanent: true },
+  { source: `/:lang(es|en)/colaboradores/${slug}`, destination: '/:lang/colaboradores', permanent: true },
+]);
+
 const defunctAttorneyRedirects: Redirect[] = DEFUNCT_ATTORNEYS.flatMap((slug) => [
   { source: `/abogados/${slug}`, destination: '/es/abogados', permanent: true },
   { source: `/:lang(es|en)/abogados/${slug}`, destination: '/:lang/abogados', permanent: true },
@@ -56,6 +73,7 @@ const defunctAttorneyRedirects: Redirect[] = DEFUNCT_ATTORNEYS.flatMap((slug) =>
 ]);
 
 export const seoRedirects: Redirect[] = [
+  ...retiredCollaboratorRedirects,
   // ============================================================
   // BLOG SLUG NORMALIZATION (underscore/CamelCase → kebab-case)
   // ============================================================

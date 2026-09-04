@@ -107,7 +107,14 @@ export interface Collaborator {
   name: string;
   image: string;
   role: { es: string; en: string }; // Título / Puesto
-  email: string;
+  /**
+   * Opcional a propósito. Se pinta como `mailto:` y entra en el `email` del
+   * Person JSON-LD, así que una dirección aproximada no es un detalle
+   * cosmético: manda correo de clientes a un buzón que puede no existir y
+   * publica un dato falso sobre una persona con nombre y apellido. Si no
+   * consta la suya, se omite y la ficha no enseña bloque de contacto.
+   */
+  email?: string;
   // Breve descripción — array of paragraphs, like attorney bios.
   description: { es: string[]; en: string[] };
   // Optional on purpose: only set it for a real, attributable testimonial with
@@ -122,20 +129,34 @@ export interface Collaborator {
 
 export const collaborators: Collaborator[] = [
   {
-    id: 'jennifer-olvera',
-    name: 'Jennifer Olvera',
-    image: '/openers/Jennifer.jpg',
+    id: 'oscar-manuel-oliva',
+    name: 'Oscar Manuel Oliva',
+    image: '/openers/oscar-manuel-oliva.jpg',
+    /**
+     * ⚠️ PUESTO Y BIOGRAFÍA PENDIENTES DE SUS PROPIAS PALABRAS.
+     *
+     * Lo que hay aquí es lo único que consta: su nombre y su fotografía. El
+     * puesto dice «Colaborador» porque es cierto y es como se llama la sección
+     * —no es un cargo inventado— y la descripción no afirma ninguna función,
+     * responsabilidad ni trayectoria que nadie haya confirmado.
+     *
+     * En una ficha con nombre y apellido de una persona real, en el sitio de un
+     * despacho, un cargo aproximado no es un marcador de posición inofensivo:
+     * se publica como `jobTitle` en el Person del JSON-LD y como `<title>` de
+     * la página. Sustituir estas dos líneas en cuanto lleguen las suyas.
+     *
+     * `email` va omitido por lo mismo (ver el comentario del tipo).
+     */
     role: {
-      es: 'Marketing Operations Manager',
-      en: 'Marketing Operations Manager',
+      es: 'Colaborador',
+      en: 'Collaborator',
     },
-    email: 'jolverag@manuelsolis.com',
     description: {
       es: [
-        'Jennifer Olvera lidera iniciativas de marketing orientadas al crecimiento, la generación de oportunidades y la mejora continua de la experiencia del cliente.',
+        'Oscar Manuel Oliva colabora con las Oficinas del Abogado Manuel Solís.',
       ],
       en: [
-        'Jennifer Olvera leads growth-oriented marketing initiatives focused on opportunity generation and the continuous improvement of the client experience.',
+        'Oscar Manuel Oliva collaborates with the Law Offices of Manuel Solis.',
       ],
     },
   },
