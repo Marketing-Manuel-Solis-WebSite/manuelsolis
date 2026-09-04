@@ -130,33 +130,35 @@ export interface Collaborator {
 export const collaborators: Collaborator[] = [
   {
     id: 'oscar-manuel-oliva',
-    name: 'Oscar Manuel Oliva',
-    image: '/openers/oscar-manuel-oliva.jpg',
     /**
-     * ⚠️ PUESTO Y BIOGRAFÍA PENDIENTES DE SUS PROPIAS PALABRAS.
+     * Datos tomados de la credencial digital que emite la firma
+     * (`credencial-digital-manuel-solis.html`, 2026-09-04), que es el artefacto
+     * oficial y lleva sello de identidad verificada. De ahí salen el nombre tal
+     * y como la firma lo publica, el cargo, el correo institucional y la oficina.
      *
-     * Lo que hay aquí es lo único que consta: su nombre y su fotografía. El
-     * puesto dice «Colaborador» porque es cierto y es como se llama la sección
-     * —no es un cargo inventado— y la descripción no afirma ninguna función,
-     * responsabilidad ni trayectoria que nadie haya confirmado.
+     * El slug conserva `manuel` —su nombre completo, el que codifica el correo
+     * `omoliva`— aunque la credencial muestre la forma corta. La URL ya está
+     * publicada y el slug no se ve; cambiarlo solo añadiría otro redirect.
      *
-     * En una ficha con nombre y apellido de una persona real, en el sitio de un
-     * despacho, un cargo aproximado no es un marcador de posición inofensivo:
-     * se publica como `jobTitle` en el Person del JSON-LD y como `<title>` de
-     * la página. Sustituir estas dos líneas en cuanto lleguen las suyas.
-     *
-     * `email` va omitido por lo mismo (ver el comentario del tipo).
+     * ⚠️ En inglés el cargo es «Legal Representative», NUNCA «Attorney». No es
+     * un matiz de traducción: en un despacho de inmigración de EE. UU. son dos
+     * figuras distintas, los abogados van en /abogados con su colegiatura, y
+     * declarar aquí una que no consta sería una credencial falsa en el
+     * `jobTitle` del Person.
      */
+    name: 'Oscar Oliva',
+    image: '/openers/oscar-manuel-oliva.jpg',
     role: {
-      es: 'Colaborador',
-      en: 'Collaborator',
+      es: 'Representante legal · Inmigración',
+      en: 'Legal Representative · Immigration',
     },
+    email: 'omoliva@manuelsolis.com',
     description: {
       es: [
-        'Oscar Manuel Oliva colabora con las Oficinas del Abogado Manuel Solís.',
+        'Oscar Oliva es representante legal en el área de inmigración de las Oficinas del Abogado Manuel Solís, y atiende desde la Oficina Principal de Houston, Texas.',
       ],
       en: [
-        'Oscar Manuel Oliva collaborates with the Law Offices of Manuel Solis.',
+        'Oscar Oliva is a legal representative in the immigration practice of the Law Offices of Manuel Solis, based at the main office in Houston, Texas.',
       ],
     },
   },
