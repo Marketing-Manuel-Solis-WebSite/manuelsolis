@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ArrowLeft, ArrowRight, Mail, Quote, Users, Globe, Star, ExternalLink,
-  Facebook, Instagram, Youtube, Linkedin, BadgeCheck, FileText, MapPin,
+  Facebook, Instagram, Youtube, BadgeCheck, FileText, MapPin,
 } from 'lucide-react';
 import TikTok from '../../../components/icons/TikTok';
 import Image from 'next/image';
@@ -37,7 +37,6 @@ const LINK_ICONS: Record<OfficialLinkType, React.ComponentType<{ size?: number; 
   facebook: Facebook,
   instagram: Instagram,
   youtube: Youtube,
-  linkedin: Linkedin,
   tiktok: TikTok,
 };
 

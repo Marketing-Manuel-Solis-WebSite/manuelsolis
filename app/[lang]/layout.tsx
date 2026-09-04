@@ -121,7 +121,6 @@ const organizationSchema = {
   sameAs: [
     'https://www.facebook.com/AbogadoManuelSolisOficial/',
     'https://www.tiktok.com/@abogadosmanuelsolis',
-    'https://www.linkedin.com/company/manuel-solis-law-firm/',
     'https://www.instagram.com/abogadomanuelsolisoficial/',
     'https://www.youtube.com/channel/UCWD61mNBq6qJ0BMhj_-a4Vg'
   ],
