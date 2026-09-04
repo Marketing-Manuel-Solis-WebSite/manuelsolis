@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ArrowLeft, ArrowRight, Mail, Quote, Users, Globe, Star, ExternalLink,
-  Facebook, Instagram, Youtube, Linkedin, BadgeCheck, FileText,
+  Facebook, Instagram, Youtube, Linkedin, BadgeCheck, FileText, MapPin,
 } from 'lucide-react';
 import TikTok from '../../../components/icons/TikTok';
 import Image from 'next/image';
@@ -49,7 +49,7 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
 
   const texts = {
     backToTeam: { es: 'Volver a Colaboradores', en: 'Back to Collaborators' },
-    badge: { es: 'Equipo Manuel Solís', en: 'Manuel Solís Team' },
+    badge: { es: 'Personal activo', en: 'Active staff' },
     testimonialTitle: { es: 'Testimonio', en: 'Testimonial' },
     reviewsBadge: { es: 'Reseñas Verificadas', en: 'Verified Reviews' },
     reviewsTitle: { es: 'Resultados con documentos en mano', en: 'Results with documents in hand' },
@@ -156,12 +156,24 @@ export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileP
                 </a>
               )}
 
-              {/* Description */}
-              <div className="space-y-4 text-gray-300 text-base md:text-lg leading-relaxed font-light mb-8">
-                {collaborator.description[language].map((paragraph, idx) => (
-                  <p key={idx}>{paragraph}</p>
-                ))}
-              </div>
+              {/* Oficina asignada — va aquí, pegada al correo, porque es el
+                  otro dato de contacto. Antes vivía dentro de la biografía. */}
+              {collaborator.office && (
+                <p className="inline-flex items-center gap-2 text-gray-300 text-sm md:text-base mb-6 w-fit">
+                  <MapPin size={16} className="text-[#B2904D]" />
+                  {collaborator.office[language]}
+                </p>
+              )}
+
+              {/* Biografía — opcional: sin párrafo confirmado no se pinta un
+                  bloque vacío ni se rellena con prosa inventada. */}
+              {collaborator.description && (
+                <div className="space-y-4 text-gray-300 text-base md:text-lg leading-relaxed font-light mb-8">
+                  {collaborator.description[language].map((paragraph, idx) => (
+                    <p key={idx}>{paragraph}</p>
+                  ))}
+                </div>
+              )}
 
               {/* Official links row */}
               <div className="flex flex-wrap items-center gap-3 mb-8">

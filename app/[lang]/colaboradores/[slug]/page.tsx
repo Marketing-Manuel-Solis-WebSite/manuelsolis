@@ -23,6 +23,28 @@ export async function generateStaticParams() {
   return params;
 }
 
+/**
+ * Descripción de la ficha, para el `<meta description>` y para el `description`
+ * del Person: la biografía si la hay y, si no, una compuesta con lo que sí
+ * consta —nombre, cargo y oficina—.
+ *
+ * Vive aquí y no duplicada en las dos funciones que la necesitan porque el
+ * `<meta>` y el JSON-LD tienen que decir lo MISMO: que difieran es justo el
+ * hallazgo de "contenido no coincidente" que este repo lleva meses cerrando en
+ * otras plantillas. Y nunca se inventa un párrafo para rellenar el hueco.
+ */
+function collaboratorDescription(
+  collaborator: (typeof collaborators)[number],
+  language: 'es' | 'en',
+): string {
+  return (
+    collaborator.description?.[language][0] ??
+    [`${collaborator.name} — ${collaborator.role[language]}`, collaborator.office?.[language]]
+      .filter(Boolean)
+      .join('. ')
+  );
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
   const isEs = lang === 'es';
@@ -34,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const role = collaborator.role[language];
   // Sin sufijo de marca: el template del layout ('%s | Manuel Solís') lo añade.
   const title = `${collaborator.name} | ${role}`;
-  const description = collaborator.description[language][0];
+  const description = collaboratorDescription(collaborator, language);
 
   return {
     title,
@@ -80,7 +102,12 @@ function getPersonSchema(collaborator: typeof collaborators[number], lang: strin
     // Se omite la propiedad si no hay dirección: `mailto:undefined` en un
     // Person es un dato falso, y omitir nunca es una discrepancia.
     ...(collaborator.email ? { email: `mailto:${collaborator.email}` } : {}),
-    description: collaborator.description[isEs ? 'es' : 'en'][0],
+    description: collaboratorDescription(collaborator, isEs ? 'es' : 'en'),
+    // La oficina asignada es un dato real de la persona, no solo un texto de
+    // la ficha: se declara también como `workLocation`.
+    ...(collaborator.office
+      ? { workLocation: { '@type': 'Place', name: collaborator.office[isEs ? 'es' : 'en'] } }
+      : {}),
     url: `${SITE_URL}/${lang}/colaboradores/${collaborator.id}`,
     // Reference the canonical firm Organization node (app/[lang]/layout.tsx
     // #organization) instead of re-declaring an anonymous one, so the entity

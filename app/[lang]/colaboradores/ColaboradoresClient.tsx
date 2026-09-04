@@ -19,7 +19,7 @@ export default function ColaboradoresClient({ lang }: { lang: 'es' | 'en' }) {
   const language: 'es' | 'en' = lang === 'en' ? 'en' : 'es';
 
   const hero = {
-    badge: { es: 'Equipo Manuel Solís', en: 'Manuel Solís Team' },
+    badge: { es: 'Personal activo', en: 'Active staff' },
     title1: { es: 'Nuestros', en: 'Our' },
     title2: { es: 'Colaboradores', en: 'Collaborators' },
     subtitle: {

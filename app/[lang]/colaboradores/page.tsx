@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isEs = lang === 'es';
 
   const title = isEs
-    ? 'Colaboradores — Equipo Manuel Solís'
+    ? 'Colaboradores — Personal activo'
     : 'Collaborators — Manuel Solís Team';
   const description = isEs
     ? 'Conozca a los colaboradores del Law Offices of Manuel Solís: profesionales dedicados a la experiencia del cliente, con reseñas verificadas en Google.'

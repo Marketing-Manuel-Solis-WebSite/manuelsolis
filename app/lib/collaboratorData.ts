@@ -115,8 +115,21 @@ export interface Collaborator {
    * consta la suya, se omite y la ficha no enseña bloque de contacto.
    */
   email?: string;
-  // Breve descripción — array of paragraphs, like attorney bios.
-  description: { es: string[]; en: string[] };
+  /**
+   * Oficina asignada, tal y como la nombra la credencial de la firma. Se pinta
+   * justo debajo del correo, no dentro de la biografía: es un dato de contacto,
+   * no prosa, y ahí es donde lo busca quien abre la ficha.
+   */
+  office?: { es: string; en: string };
+  /**
+   * Breve descripción — array of paragraphs, like attorney bios.
+   *
+   * Opcional: una ficha puede no tener biografía. Cuando falta, el `<meta
+   * description>` y el `description` del Person se componen con nombre, cargo y
+   * oficina, que son datos que sí constan — nunca se inventa un párrafo para
+   * rellenar el hueco.
+   */
+  description?: { es: string[]; en: string[] };
   // Optional on purpose: only set it for a real, attributable testimonial with
   // documented consent. Never a placeholder — the profile is public advertising.
   testimonial?: CollaboratorTestimonial;
@@ -153,13 +166,9 @@ export const collaborators: Collaborator[] = [
       en: 'Legal Representative · Immigration',
     },
     email: 'omoliva@manuelsolis.com',
-    description: {
-      es: [
-        'Oscar Oliva es representante legal en el área de inmigración de las Oficinas del Abogado Manuel Solís, y atiende desde la Oficina Principal de Houston, Texas.',
-      ],
-      en: [
-        'Oscar Oliva is a legal representative in the immigration practice of the Law Offices of Manuel Solis, based at the main office in Houston, Texas.',
-      ],
+    office: {
+      es: 'Oficina Principal; Houston, Texas',
+      en: 'Main Office; Houston, Texas',
     },
   },
 ];
