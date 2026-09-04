@@ -30,7 +30,7 @@ const ORG_NAME = 'Manuel Solis Law Firm';
 const ORG_LOGO = `${SITE_URL}/logo-manuel-solis.png`;
 const SAME_AS_BASE = [
   'https://www.facebook.com/AbogadoManuelSolisOficial/',
-  'https://twitter.com/AbogadoMSolis',
+  'https://www.tiktok.com/@abogadosmanuelsolis',
 ];
 
 export type OfficeOpeningHours = {

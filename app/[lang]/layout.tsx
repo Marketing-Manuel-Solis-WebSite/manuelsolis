@@ -120,7 +120,7 @@ const organizationSchema = {
   },
   sameAs: [
     'https://www.facebook.com/AbogadoManuelSolisOficial/',
-    'https://twitter.com/AbogadoMSolis',
+    'https://www.tiktok.com/@abogadosmanuelsolis',
     'https://www.linkedin.com/company/manuel-solis-law-firm/',
     'https://www.instagram.com/abogadomanuelsolisoficial/',
     'https://www.youtube.com/channel/UCWD61mNBq6qJ0BMhj_-a4Vg'
@@ -374,9 +374,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ],
     },
 
+    /**
+     * Las etiquetas `twitter:` se quedan; el `creator` no.
+     *
+     * No son lo mismo. `twitter:card` es un FORMATO de vista previa que leen
+     * Slack, Discord, Teams y varios servicios de enlaces además de X, así que
+     * quitarlo degradaría la previsualización en sitios donde el despacho sí
+     * está. `creator` es lo único que atribuye la página a una cuenta de X, y
+     * esa cuenta se retira.
+     */
     twitter: {
       card: 'summary_large_image',
-      creator: '@AbogadoMSolis',
       images: ['/og-default.jpg'],
     },
     

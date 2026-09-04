@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { CITY_FOOTER_LINKS } from './cityFooterLinks'
 import Image from 'next/image'
-import { Facebook, Twitter, Instagram, Youtube, Linkedin, ArrowUp } from 'lucide-react'
+import { Facebook, Instagram, Youtube, Linkedin, ArrowUp } from 'lucide-react'
+import TikTok from './icons/TikTok'
 import { useLanguage } from '../context/LanguageContext'
 import { m } from 'framer-motion'
 import NewsletterSignup from './NewsletterSignup'
@@ -33,7 +34,7 @@ export default function Footer() {
 
   const socialLinks = [
     { name: 'Facebook', href: 'https://www.facebook.com/AbogadoManuelSolisOficial/', icon: Facebook },
-    { name: 'Twitter', href: 'https://twitter.com/AbogadoMSolis', icon: Twitter },
+    { name: 'TikTok', href: 'https://www.tiktok.com/@abogadosmanuelsolis', icon: TikTok },
     { name: 'Instagram', href: 'https://www.instagram.com/abogadomanuelsolisoficial/', icon: Instagram },
     { name: 'YouTube', href: 'https://www.youtube.com/channel/UCWD61mNBq6qJ0BMhj_-a4Vg', icon: Youtube },
     { name: 'LinkedIn', href: 'https://www.linkedin.com/company/manuel-solis-law-firm/', icon: Linkedin },

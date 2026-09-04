@@ -25,7 +25,7 @@ export type OfficialLinkType =
   | 'instagram'
   | 'youtube'
   | 'linkedin'
-  | 'twitter';
+  | 'tiktok';
 
 export interface OfficialLink {
   type: OfficialLinkType;
@@ -40,7 +40,7 @@ export const officialLinks: OfficialLink[] = [
   { type: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/abogadomanuelsolisoficial/' },
   { type: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/channel/UCWD61mNBq6qJ0BMhj_-a4Vg' },
   { type: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/manuel-solis-law-firm/' },
-  { type: 'twitter', label: 'X (Twitter)', href: 'https://twitter.com/AbogadoMSolis' },
+  { type: 'tiktok', label: 'TikTok', href: 'https://www.tiktok.com/@abogadosmanuelsolis' },
 ];
 
 // "Reviews positivas de Google con documentos en mano."

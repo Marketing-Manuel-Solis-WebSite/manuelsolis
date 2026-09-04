@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Facebook, Twitter, Linkedin, Share2, Check, MessageCircle } from 'lucide-react';
+import { Facebook, Linkedin, Share2, Check, MessageCircle } from 'lucide-react';
 
 interface ShareButtonsProps {
   title: string;
@@ -21,7 +21,6 @@ export default function ShareButtons({ title, uiShareText }: ShareButtonsProps) 
 
   const shareLinks = {
     facebook: () => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
-    twitter: () => `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(currentUrl)}`,
     linkedin: () => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`,
     whatsapp: () => `https://wa.me/?text=${encodeURIComponent(title + ' ' + currentUrl)}`
   };
@@ -58,14 +57,13 @@ export default function ShareButtons({ title, uiShareText }: ShareButtonsProps) 
         <Facebook size={18} />
       </button>
       
-      <button 
-        onClick={() => handleShare('twitter')} 
-        aria-label="Compartir en X (Twitter)"
-        className="p-2.5 rounded-full bg-white/5 hover:bg-black hover:text-white text-white/70 transition-all duration-300 border border-white/10 hover:border-transparent"
-      >
-        <Twitter size={18} />
-      </button>
-      
+      {/*
+        El botón de X se retira con la cuenta. NO se sustituye por uno de
+        TikTok: TikTok no tiene intent web para compartir una URL cualquiera
+        —solo se publica desde la app, con un vídeo—, así que un botón
+        "compartir en TikTok" no llevaría a ninguna parte. Quedan Facebook,
+        LinkedIn, WhatsApp y copiar enlace, que sí funcionan.
+      */}
       <button 
         onClick={() => handleShare('linkedin')} 
         aria-label="Compartir en LinkedIn"

@@ -1,8 +1,9 @@
 import React from 'react';
 import {
   ArrowLeft, ArrowRight, Mail, Quote, Users, Globe, Star, ExternalLink,
-  Facebook, Instagram, Youtube, Linkedin, Twitter, BadgeCheck, FileText,
+  Facebook, Instagram, Youtube, Linkedin, BadgeCheck, FileText,
 } from 'lucide-react';
+import TikTok from '../../../components/icons/TikTok';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../../../components/Header';
@@ -37,7 +38,7 @@ const LINK_ICONS: Record<OfficialLinkType, React.ComponentType<{ size?: number; 
   instagram: Instagram,
   youtube: Youtube,
   linkedin: Linkedin,
-  twitter: Twitter,
+  tiktok: TikTok,
 };
 
 export default function CollaboratorProfile({ slug, lang }: CollaboratorProfileProps) {

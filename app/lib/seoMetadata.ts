@@ -18,7 +18,6 @@ import type { Language } from './translations';
 
 export const SITE_URL = 'https://www.manuelsolis.com';
 const SITE_NAME = 'Manuel Solis Law Firm';
-const TWITTER_HANDLE = '@AbogadoMSolis';
 const DEFAULT_IMAGE = '/og-default.jpg';
 
 export interface OgImageInput {
@@ -79,8 +78,9 @@ export function buildOpenGraph(input: BuildSocialInput): Metadata['openGraph'] {
 export function buildTwitter(input: Pick<BuildSocialInput, 'title' | 'description' | 'images'>): Metadata['twitter'] {
   const { title, description, images } = input;
   return {
+    // Sin `creator`: la cuenta de X se retiró. La tarjeta se queda porque el
+    // formato lo leen Slack, Discord y otros, no solo X. Ver app/[lang]/layout.tsx.
     card: 'summary_large_image',
-    creator: TWITTER_HANDLE,
     title,
     description,
     images: (images?.length ? images.map((i) => i.url) : [DEFAULT_IMAGE]).map(absolute),
