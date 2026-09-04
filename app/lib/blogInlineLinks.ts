@@ -234,3 +234,57 @@ export function addInlineLinks(
 
   return segmentos.map((s) => s.texto).join('');
 }
+
+/**
+ * Igual que `addInlineLinks`, pero para texto PLANO y devolviendo las partes
+ * en vez de HTML.
+ *
+ * Por qué hace falta una segunda función y no vale la de arriba: los 35
+ * artículos escritos a mano pintan el cuerpo de sus secciones como hijos de
+ * JSX —`<p>{t.sections.whatIs.text}</p>`—, no con `dangerouslySetInnerHTML`.
+ * Ese texto lo escapa React. Pasarlo por `addInlineLinks` obligaría a
+ * convertir las 218 expresiones a `dangerouslySetInnerHTML` para que el `<a>`
+ * se interprete, y eso cambia el escapado de 218 sitios a la vez: cualquier
+ * `<` o `&` que hoy React protege pasaría a interpretarse como marcado.
+ *
+ * Devolviendo partes, quien llama construye un `<a>` de React y no hay HTML
+ * crudo en ninguna parte. El precio es duplicar el recorrido de términos; la
+ * tabla y el estado son los mismos, así que el tope de 3 por artículo y el
+ * "un destino una sola vez" siguen valiendo entre las dos funciones.
+ *
+ * Las reglas no cambian: solo la PRIMERA aparición, solo un enlace por
+ * destino, y nunca en títulos ni listas — eso lo decide quien llama, pasando
+ * únicamente cuerpos de texto.
+ */
+export type TextoEnlazado =
+  | { tipo: 'texto'; valor: string }
+  | { tipo: 'enlace'; valor: string; href: string };
+
+export function linkPlainText(
+  texto: string,
+  lang: 'es' | 'en',
+  state: InlineLinkState,
+): TextoEnlazado[] {
+  if (!texto || state.usados.size >= MAX_POR_ARTICULO) {
+    return [{ tipo: 'texto', valor: texto }];
+  }
+
+  const plegado = plegarParaBuscar(texto);
+
+  for (const { re, path } of TERMINOS) {
+    if (state.usados.has(path)) continue;
+    const m = re.exec(plegado);
+    if (!m) continue;
+
+    state.usados.add(path);
+    // El texto visible sale del ORIGINAL: `plegarParaBuscar` conserva la
+    // longitud, así que los índices del plegado valen sobre el original.
+    return [
+      { tipo: 'texto', valor: texto.slice(0, m.index) },
+      { tipo: 'enlace', valor: texto.slice(m.index, m.index + m[0].length), href: `/${lang}${path}` },
+      { tipo: 'texto', valor: texto.slice(m.index + m[0].length) },
+    ].filter((p) => p.tipo === 'enlace' || p.valor !== '') as TextoEnlazado[];
+  }
+
+  return [{ tipo: 'texto', valor: texto }];
+}

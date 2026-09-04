@@ -15,6 +15,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -543,7 +544,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.whyDifferent.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.whyDifferent.subtitle}</p>
-                    <p className="mb-4">{t.sections.whyDifferent.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whyDifferent.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whyDifferent.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -565,7 +566,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.whoIsLiable.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.whoIsLiable.subtitle}</p>
-                    <p className="mb-4">{t.sections.whoIsLiable.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whoIsLiable.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whoIsLiable.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -587,7 +588,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.evidence.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.evidence.subtitle}</p>
-                    <p className="mb-4">{t.sections.evidence.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.evidence.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.evidence.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -612,7 +613,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.whatToDo.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.whatToDo.subtitle}</p>
-                    <p className="mb-4">{t.sections.whatToDo.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whatToDo.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whatToDo.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -634,7 +635,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.caseValue.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.caseValue.subtitle}</p>
-                    <p className="mb-4">{t.sections.caseValue.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.caseValue.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.caseValue.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -656,7 +657,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.rule51.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.rule51.subtitle}</p>
-                    <p className="mb-4">{t.sections.rule51.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.rule51.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.rule51.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -678,7 +679,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.insurerMistakes.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.insurerMistakes.subtitle}</p>
-                    <p className="mb-4">{t.sections.insurerMistakes.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.insurerMistakes.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.insurerMistakes.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">

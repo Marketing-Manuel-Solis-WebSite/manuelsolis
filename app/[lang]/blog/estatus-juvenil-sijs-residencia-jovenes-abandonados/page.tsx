@@ -16,6 +16,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -502,7 +503,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="text-xl text-white italic mb-6 border-l-4 border-[#B2904D] pl-6 py-2">
                       {t.sections.whatIsSIJS.quote}
                     </p>
-                    <p className="mb-4">{t.sections.whatIsSIJS.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whatIsSIJS.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whatIsSIJS.details.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -524,7 +525,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.ageRequirements.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.ageRequirements.subtitle}</p>
-                    <p className="mb-8">{t.sections.ageRequirements.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.ageRequirements.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.ageRequirements.requirements.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -555,7 +556,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                         </li>
                       ))}
                     </ul>
-                    <p className="mb-4">{t.sections.singleParent.text2}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.singleParent.text2} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="p-4 bg-[#B2904D]/10 rounded-xl border border-[#B2904D]/20 text-sm text-[#B2904D]">
                       <AlertCircle size={16} className="inline mr-2" />
                       {t.sections.singleParent.note}
@@ -580,7 +581,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.stateJudgeRole.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.stateJudgeRole.subtitle}</p>
-                    <p className="mb-4">{t.sections.stateJudgeRole.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.stateJudgeRole.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.stateJudgeRole.findings.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -589,7 +590,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                         </li>
                       ))}
                     </ul>
-                    <p className="mb-4">{t.sections.stateJudgeRole.text2}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.stateJudgeRole.text2} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="p-4 bg-[#B2904D]/10 rounded-xl border border-[#B2904D]/20 text-sm text-[#B2904D]">
                       <AlertCircle size={16} className="inline mr-2" />
                       {t.sections.stateJudgeRole.note}
@@ -603,7 +604,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.pathToResidency.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.pathToResidency.subtitle}</p>
-                    <p className="mb-4">{t.sections.pathToResidency.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.pathToResidency.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.pathToResidency.steps.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -673,7 +674,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.clarifications.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.clarifications.subtitle}</p>
-                    <p className="mb-4">{t.sections.clarifications.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.clarifications.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.clarifications.myths.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">

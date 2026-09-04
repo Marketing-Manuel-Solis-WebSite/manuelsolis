@@ -17,6 +17,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -634,7 +635,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Globe size={24} className="text-[#B2904D]" /></div>
                       {t.sections.countryStatus.title}
                     </h2>
-                    <p className="mb-8">{t.sections.countryStatus.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.countryStatus.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-4">
                       {t.sections.countryStatus.countries.map((country, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
@@ -658,7 +659,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Search size={24} className="text-[#B2904D]" /></div>
                       {t.sections.howToCheck.title}
                     </h2>
-                    <p className="mb-6">{t.sections.howToCheck.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.howToCheck.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-4 mt-6 list-none pl-0">
                       {t.sections.howToCheck.steps.map((step, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -690,7 +691,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><RefreshCw size={24} className="text-[#B2904D]" /></div>
                       {t.sections.renewal.title}
                     </h2>
-                    <p className="mb-8">{t.sections.renewal.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.renewal.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     {t.sections.renewal.points.map((point, i) => (
                       <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
                         <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{point.subtitle}</h4>
@@ -705,7 +706,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Briefcase size={24} className="text-[#B2904D]" /></div>
                       {t.sections.workPermit.title}
                     </h2>
-                    <p className="mb-6">{t.sections.workPermit.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.workPermit.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
                       <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.workPermit.autoExtension.subtitle}</h4>
@@ -743,7 +744,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><ShieldCheck size={24} className="text-[#B2904D]" /></div>
                       {t.sections.lostTPS.title}
                     </h2>
-                    <p className="mb-8">{t.sections.lostTPS.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.lostTPS.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-4">
                       {t.sections.lostTPS.options.map((option, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
@@ -762,7 +763,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><XCircle size={24} className="text-[#B2904D]" /></div>
                       {t.sections.errors.title}
                     </h2>
-                    <p className="mb-6">{t.sections.errors.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.errors.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-4">
                       {t.sections.errors.list.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">

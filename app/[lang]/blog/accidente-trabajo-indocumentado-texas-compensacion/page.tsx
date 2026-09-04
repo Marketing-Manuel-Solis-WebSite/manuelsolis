@@ -15,6 +15,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -543,7 +544,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.rights.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.rights.subtitle}</p>
-                    <p className="mb-4">{t.sections.rights.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.rights.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.rights.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -565,7 +566,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.workersComp.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.workersComp.subtitle}</p>
-                    <p className="mb-4">{t.sections.workersComp.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.workersComp.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.workersComp.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -587,7 +588,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.nonSubscriber.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.nonSubscriber.subtitle}</p>
-                    <p className="mb-4">{t.sections.nonSubscriber.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.nonSubscriber.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.nonSubscriber.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -609,7 +610,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.dayOfInjury.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.dayOfInjury.subtitle}</p>
-                    <p className="mb-4">{t.sections.dayOfInjury.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.dayOfInjury.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.dayOfInjury.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -631,7 +632,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.retaliation.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.retaliation.subtitle}</p>
-                    <p className="mb-4">{t.sections.retaliation.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.retaliation.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.retaliation.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -656,7 +657,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.recovery.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.recovery.subtitle}</p>
-                    <p className="mb-4">{t.sections.recovery.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.recovery.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.recovery.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -678,7 +679,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.mistakes.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.mistakes.subtitle}</p>
-                    <p className="mb-4">{t.sections.mistakes.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.mistakes.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.mistakes.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">

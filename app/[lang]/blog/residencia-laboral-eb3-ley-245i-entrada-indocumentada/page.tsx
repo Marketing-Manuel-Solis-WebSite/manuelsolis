@@ -16,6 +16,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -434,7 +435,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="text-xl text-white italic mb-6 border-l-4 border-[#B2904D] pl-6 py-2">
                       {t.sections.howPERMWorks.quote}
                     </p>
-                    <p className="mb-4">{t.sections.howPERMWorks.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.howPERMWorks.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-4 mt-6 list-none pl-0">
                       {t.sections.howPERMWorks.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -456,7 +457,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.permMyth.subtitle}</p>
 
-                    <p className="mb-4">{t.sections.permMyth.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.permMyth.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.permMyth.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -490,7 +491,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.consularAndPenalties.subtitle}</p>
 
-                    <p className="mb-6">{t.sections.consularAndPenalties.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.consularAndPenalties.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.consularAndPenalties.penalties.map((item, i) => (
@@ -520,7 +521,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.law245i.subtitle}</p>
 
-                    <p className="mb-6">{t.sections.law245i.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.law245i.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 mb-6">
                       <p className="text-white font-bold text-lg flex items-center gap-2 m-0">
@@ -569,7 +570,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Building2 size={24} className="text-[#B2904D]" /></div>
                       {t.sections.eb3Visa.title}
                     </h2>
-                    <p className="mb-4">{t.sections.eb3Visa.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.eb3Visa.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.eb3Visa.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">

@@ -16,6 +16,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -450,7 +451,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="text-xl text-white italic mb-6 border-l-4 border-[#B2904D] pl-6 py-2">
                       {t.sections.whatIsFOIA.quote}
                     </p>
-                    <p className="mb-4">{t.sections.whatIsFOIA.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whatIsFOIA.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whatIsFOIA.reveals.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -472,7 +473,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.keyAgencies.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.keyAgencies.subtitle}</p>
-                    <p className="mb-8">{t.sections.keyAgencies.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.keyAgencies.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid md:grid-cols-2 gap-4 my-8">
                       <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2 hover:border-[#B2904D]/50 transition-colors">
                         <Search className="text-[#B2904D]" />
@@ -523,7 +524,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.voluntaryDeparture.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.voluntaryDeparture.subtitle}</p>
-                    <p className="mb-4">{t.sections.voluntaryDeparture.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.voluntaryDeparture.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.voluntaryDeparture.differences.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -532,7 +533,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                         </li>
                       ))}
                     </ul>
-                    <p>{t.sections.voluntaryDeparture.text2}</p>
+                    <p><InlineLinkedText text={t.sections.voluntaryDeparture.text2} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                   </section>
 
                   {/* Sección 4: ¿Por qué pedir antes de aplicar? */}
@@ -542,7 +543,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.whyBeforeApplying.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.whyBeforeApplying.subtitle}</p>
-                    <p className="mb-4">{t.sections.whyBeforeApplying.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whyBeforeApplying.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whyBeforeApplying.risks.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -564,7 +565,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.lawyerAnalysis.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.lawyerAnalysis.subtitle}</p>
-                    <p className="mb-4">{t.sections.lawyerAnalysis.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.lawyerAnalysis.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.lawyerAnalysis.analyzes.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -624,7 +625,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Clock size={24} className="text-[#B2904D]" /></div>
                       {t.sections.whenToRequest.title}
                     </h2>
-                    <p className="mb-4">{t.sections.whenToRequest.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whenToRequest.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whenToRequest.benefits.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">

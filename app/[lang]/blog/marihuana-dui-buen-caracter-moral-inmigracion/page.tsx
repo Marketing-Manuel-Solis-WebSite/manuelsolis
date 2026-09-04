@@ -16,6 +16,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -570,7 +571,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.stateVsFederal.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.stateVsFederal.subtitle}</p>
-                    <p className="mb-4">{t.sections.stateVsFederal.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.stateVsFederal.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.stateVsFederal.points.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -592,7 +593,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.marijuanaImmigration.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.marijuanaImmigration.subtitle}</p>
-                    <p className="mb-4">{t.sections.marijuanaImmigration.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.marijuanaImmigration.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.marijuanaImmigration.situations.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -623,7 +624,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.cannabisIndustry.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.cannabisIndustry.subtitle}</p>
-                    <p className="mb-4">{t.sections.cannabisIndustry.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.cannabisIndustry.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.cannabisIndustry.risks.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -632,7 +633,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                         </li>
                       ))}
                     </ul>
-                    <p className="mb-4">{t.sections.cannabisIndustry.text2}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.cannabisIndustry.text2} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="p-4 bg-[#B2904D]/10 rounded-xl border border-[#B2904D]/20 text-sm text-[#B2904D]">
                       <AlertCircle size={16} className="inline mr-2" />
                       {t.sections.cannabisIndustry.note}
@@ -657,7 +658,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.medicalExam.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.medicalExam.subtitle}</p>
-                    <p className="mb-4">{t.sections.medicalExam.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.medicalExam.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.medicalExam.steps.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -685,7 +686,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.duiMoralCharacter.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.duiMoralCharacter.subtitle}</p>
-                    <p className="mb-4">{t.sections.duiMoralCharacter.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.duiMoralCharacter.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <h3 className="text-xl font-serif text-white mb-4">{lang === 'es' ? 'Factores que se evalúan:' : 'Factors evaluated:'}</h3>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.duiMoralCharacter.factors.map((item, i) => (
@@ -717,7 +718,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.duiDACA.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.duiDACA.subtitle}</p>
-                    <p className="mb-4">{t.sections.duiDACA.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.duiDACA.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid md:grid-cols-2 gap-4 my-8">
                       <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-3 hover:border-[#B2904D]/50 transition-colors">
                         <span className="font-bold text-white text-lg flex items-center gap-2"><Users className="text-[#B2904D]" size={20} /> DACA</span>
@@ -766,7 +767,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.moralCharacterConcept.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.moralCharacterConcept.subtitle}</p>
-                    <p className="mb-4">{t.sections.moralCharacterConcept.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.moralCharacterConcept.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <h3 className="text-xl font-serif text-white mb-4">{lang === 'es' ? 'USCIS evalúa:' : 'USCIS evaluates:'}</h3>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.moralCharacterConcept.evaluates.map((item, i) => (
@@ -826,7 +827,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.whatToLearn.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.whatToLearn.subtitle}</p>
-                    <p className="mb-4">{t.sections.whatToLearn.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whatToLearn.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whatToLearn.lessons.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">

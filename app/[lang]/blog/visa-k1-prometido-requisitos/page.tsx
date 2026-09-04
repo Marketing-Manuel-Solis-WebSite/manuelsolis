@@ -16,6 +16,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -540,7 +541,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.requirements.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.requirements.subtitle}</p>
-                    <p className="mb-4">{t.sections.requirements.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.requirements.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.requirements.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -562,7 +563,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.process.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.process.subtitle}</p>
-                    <p className="mb-4">{t.sections.process.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.process.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.process.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -595,7 +596,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.documents.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.documents.subtitle}</p>
-                    <p className="mb-4">{t.sections.documents.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.documents.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.documents.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -617,7 +618,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.k1VsMarriage.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.k1VsMarriage.subtitle}</p>
-                    <p className="mb-4">{t.sections.k1VsMarriage.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.k1VsMarriage.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid md:grid-cols-2 gap-4 my-8">
                       {Object.entries(t.sections.k1VsMarriage.cards).map(([key, card]) => (
                         <div key={key} className="p-5 bg-[#000a20] rounded-xl border border-white/10">
@@ -639,7 +640,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.errors.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.errors.subtitle}</p>
-                    <p className="mb-4">{t.sections.errors.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.errors.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.errors.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-red-500/10">
@@ -672,7 +673,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.expiredApproval.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.expiredApproval.subtitle}</p>
-                    <p className="mb-4">{t.sections.expiredApproval.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.expiredApproval.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.expiredApproval.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">

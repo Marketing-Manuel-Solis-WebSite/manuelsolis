@@ -17,6 +17,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -608,7 +609,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Mail size={24} className="text-[#B2904D]" /></div>
                       {t.sections.whatIsRFE.title}
                     </h2>
-                    <p className="mb-6">{t.sections.whatIsRFE.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.whatIsRFE.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-6 mb-8 list-none pl-0">
                       {t.sections.whatIsRFE.reasons.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -630,7 +631,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.firstError.title}
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.firstError.subtitle}</p>
-                    <p className="mb-6">{t.sections.firstError.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.firstError.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-3 mb-6">
                       {t.sections.firstError.examples.map((example, i) => (
                         <div key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -662,7 +663,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><ListOrdered size={24} className="text-[#B2904D]" /></div>
                       {t.sections.sevenSteps.title}
                     </h2>
-                    <p className="mb-8">{t.sections.sevenSteps.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.sevenSteps.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-4">
                       {t.sections.sevenSteps.steps.map((step, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
@@ -684,7 +685,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><XCircle size={24} className="text-[#B2904D]" /></div>
                       {t.sections.commonErrors.title}
                     </h2>
-                    <p className="mb-6">{t.sections.commonErrors.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.commonErrors.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-4">
                       {t.sections.commonErrors.list.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
@@ -703,7 +704,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Inbox size={24} className="text-[#B2904D]" /></div>
                       {t.sections.onlineOrMail.title}
                     </h2>
-                    <p className="mb-6">{t.sections.onlineOrMail.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.onlineOrMail.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
                       <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.onlineOrMail.online.subtitle}</h4>
@@ -738,7 +739,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Gavel size={24} className="text-[#B2904D]" /></div>
                       {t.sections.whenLegal.title}
                     </h2>
-                    <p className="mb-6">{t.sections.whenLegal.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.whenLegal.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-4 mb-6">
                       {t.sections.whenLegal.scenarios.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">

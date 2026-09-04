@@ -17,6 +17,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -640,7 +641,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Gavel size={24} className="text-[#B2904D]" /></div>
                       {t.sections.deportVsInadmiss.title}
                     </h2>
-                    <p className="mb-8">{t.sections.deportVsInadmiss.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.deportVsInadmiss.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-8 rounded-3xl border border-white/10 mb-6">
                       <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.deportVsInadmiss.deportable.subtitle}</h4>
@@ -691,7 +692,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><FileText size={24} className="text-[#B2904D]" /></div>
                       {t.sections.categories.title}
                     </h2>
-                    <p className="mb-8">{t.sections.categories.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.categories.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-4">
                       {t.sections.categories.items.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
@@ -710,7 +711,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><ShieldCheck size={24} className="text-[#B2904D]" /></div>
                       {t.sections.pettyOffense.title}
                     </h2>
-                    <p className="mb-6">{t.sections.pettyOffense.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.pettyOffense.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
                       <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.pettyOffense.requirements.subtitle}</h4>
@@ -746,7 +747,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><XCircle size={24} className="text-[#B2904D]" /></div>
                       {t.sections.whatNotToDo.title}
                     </h2>
-                    <p className="mb-6">{t.sections.whatNotToDo.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.whatNotToDo.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid gap-4">
                       {t.sections.whatNotToDo.list.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">

@@ -15,6 +15,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker'; // 👈 Importamos el tracker
@@ -439,7 +440,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="text-xl text-white italic mb-6 border-l-4 border-[#B2904D] pl-6 py-2">
                       {t.sections.whatIs.quote}
                     </p>
-                    <p className="mb-4">{t.sections.whatIs.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whatIs.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-4 mt-6 list-none pl-0">
                       {t.sections.whatIs.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -455,7 +456,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
                   <section>
                     <h2 className="text-3xl font-serif text-white mb-6">{t.sections.whyExists.title}</h2>
-                    <p className="mb-8">{t.sections.whyExists.text}</p>
+                    <p className="mb-8"><InlineLinkedText text={t.sections.whyExists.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <div className="grid md:grid-cols-2 gap-4 my-8">
                         <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 flex flex-col gap-2 hover:border-[#B2904D]/50 transition-colors">
                           <FileText className="text-[#B2904D]" />
@@ -505,7 +506,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                         <TrendingUp size={32} className="text-[#B2904D]" />
                         <span className="text-2xl font-bold text-white">{t.sections.timeline.time}</span>
                      </div>
-                     <p>{t.sections.timeline.text}</p>
+                     <p><InlineLinkedText text={t.sections.timeline.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                   </section>
 
                   <section className="relative my-12">

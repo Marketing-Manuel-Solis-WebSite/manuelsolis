@@ -16,6 +16,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -450,7 +451,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="text-xl text-white italic mb-6 border-l-4 border-[#B2904D] pl-6 py-2">
                       {t.sections.whatIs.quote}
                     </p>
-                    <p className="mb-4">{t.sections.whatIs.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whatIs.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.whatIs.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -473,7 +474,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.mythApply.subtitle}</p>
 
-                    <p className="mb-4">{t.sections.mythApply.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.mythApply.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.mythApply.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -510,7 +511,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.extremeHardship.subtitle}</p>
 
-                    <p className="mb-4">{t.sections.extremeHardship.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.extremeHardship.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-6">
                       <p className="text-white font-bold mb-3">{lang === 'es' ? 'Familiar calificado:' : 'Qualifying relative:'}</p>
@@ -597,7 +598,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><Gavel size={24} className="text-[#B2904D]" /></div>
                       {t.sections.evenIfQualify.title}
                     </h2>
-                    <p className="mb-4">{t.sections.evenIfQualify.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.evenIfQualify.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.evenIfQualify.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -618,7 +619,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       <div className="p-2 bg-white/10 rounded-lg"><AlertTriangle size={24} className="text-[#B2904D]" /></div>
                       {t.sections.risks.title}
                     </h2>
-                    <p className="mb-4">{t.sections.risks.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.risks.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.risks.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">

@@ -16,6 +16,7 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogBackground from '../../../components/blogs/BlogBackground';
+import InlineLinkedText from '../../../components/blogs/InlineLinkedText';
 import ShareButtons from '../../../components/blogs/ShareButtons';
 import ContactForm from '../../../components/ContactForm';
 import BlogTracker from '../../../components/blogs/BlogTracker';
@@ -432,8 +433,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="text-xl text-white italic mb-6 border-l-4 border-[#B2904D] pl-6 py-2">
                       {t.sections.whatIs.quote}
                     </p>
-                    <p className="mb-4">{t.sections.whatIs.text}</p>
-                    <p>{t.sections.whatIs.text2}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.whatIs.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
+                    <p><InlineLinkedText text={t.sections.whatIs.text2} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                   </section>
 
                   {/* Visa U Derivados */}
@@ -444,7 +445,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.visaUDerivados.subtitle}</p>
                     
-                    <p className="mb-4">{t.sections.visaUDerivados.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.visaUDerivados.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-8 list-none pl-0">
                       {t.sections.visaUDerivados.list1.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -454,7 +455,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       ))}
                     </ul>
 
-                    <p className="mb-4">{t.sections.visaUDerivados.text2}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.visaUDerivados.text2} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.visaUDerivados.list2.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -489,7 +490,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.vawaFamily.subtitle}</p>
                     
-                    <p className="mb-4">{t.sections.vawaFamily.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.vawaFamily.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     
                     <div className="p-5 bg-[#000a20] rounded-xl border border-white/10 mb-6">
                       <p className="text-white font-bold text-lg flex items-center gap-2 m-0">
@@ -522,7 +523,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.ageFactor.subtitle}</p>
                     
-                    <p className="mb-6">{t.sections.ageFactor.text}</p>
+                    <p className="mb-6"><InlineLinkedText text={t.sections.ageFactor.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
                       <ul className="space-y-4 list-none pl-0 m-0">
@@ -564,7 +565,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </h2>
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.abroad.subtitle}</p>
                     
-                    <p className="mb-4">{t.sections.abroad.text}</p>
+                    <p className="mb-4"><InlineLinkedText text={t.sections.abroad.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     <ul className="grid gap-3 mt-4 mb-6 list-none pl-0">
                       {t.sections.abroad.list.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
