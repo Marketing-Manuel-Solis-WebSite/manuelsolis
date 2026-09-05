@@ -8,7 +8,7 @@ import { BLOG_CATEGORIES, getArticleSection, getBlogCategory } from '../app/lib/
 import { BLOG_DATA } from '../app/[lang]/blog/page';
 import { seoRedirects } from '../app/lib/seoRedirects';
 import { attorneys } from '../app/lib/attorneyData';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 /**
@@ -277,5 +277,35 @@ describe('imágenes sociales de las fichas de abogado', () => {
       if (!existsSync(abs)) faltan.push(`${a.id}: ${a.socialImage}`);
     }
     expect(faltan, 'socialImage declarada que no existe en public/').toEqual([]);
+  });
+});
+
+describe('desborde horizontal en móvil (auditoría visual, sep 2026)', () => {
+  it('el artículo del blog deja encoger su columna: min-w-0 en el hijo de la rejilla', () => {
+    // Los 6 artículos con tabla llevaban una pantalla de 390 px a 414-502 px.
+    // Un hijo de rejilla trae `min-width: auto` y se niega a encoger por debajo
+    // de su contenido, así que la tabla empujaba al artículo y el artículo al
+    // viewport — y el `overflow-x-auto` de la tabla nunca llegaba a activarse.
+    const src = readFileSync(
+      path.join(process.cwd(), 'app/components/blogs/BlogArticleLayout.tsx'),
+      'utf8',
+    );
+    const article = src.match(/<article className="([^"]*lg:col-span-8[^"]*)"/);
+    expect(article, 'no se encontró el <article> de la rejilla').toBeTruthy();
+    expect(
+      article![1],
+      'el <article> es hijo de una rejilla y necesita min-w-0, o una tabla vuelve a ensanchar el viewport',
+    ).toContain('min-w-0');
+  });
+
+  it('el bloque de tabla conserva su contenedor con scroll horizontal', () => {
+    const src = readFileSync(
+      path.join(process.cwd(), 'app/components/blogs/BlogArticleLayout.tsx'),
+      'utf8',
+    );
+    const bloque = src.slice(src.indexOf("case 'table':"), src.indexOf("case 'note':"));
+    expect(bloque, 'la tabla debe desplazarse dentro de su caja, no mover la página').toContain(
+      'overflow-x-auto',
+    );
   });
 });

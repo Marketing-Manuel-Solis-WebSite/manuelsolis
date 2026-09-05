@@ -297,7 +297,23 @@ export default function BlogArticleLayout({
           {/* CONTENIDO */}
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="grid lg:grid-cols-12 gap-12">
-              <article className="lg:col-span-8 prose prose-lg prose-invert max-w-none">
+              {/*
+                `min-w-0` es imprescindible, no cosmético.
+
+                Este <article> es hijo de una rejilla, y un hijo de rejilla trae
+                `min-width: auto`: se niega a encoger por debajo del ancho de su
+                contenido. Con una tabla dentro, la tabla empuja al artículo y el
+                artículo empuja al viewport — que en móvil se ensancha en vez de
+                sacar barra de scroll. Medido: los 6 artículos con tabla llevaban
+                una pantalla de 390 px a 414-502 px; los 49 sin tabla, ninguno.
+
+                El `overflow-x-auto` del bloque `table` ya existía y no servía de
+                nada: el contenedor nunca llegaba a ser más estrecho que la tabla,
+                así que no había nada que desplazar. Con `min-w-0` el artículo sí
+                encoge y el scroll horizontal se queda DENTRO de la tabla, que es
+                donde debe estar.
+              */}
+              <article className="lg:col-span-8 min-w-0 prose prose-lg prose-invert max-w-none">
                 <div className="mb-12 relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
                   <Image
                     src={image}
