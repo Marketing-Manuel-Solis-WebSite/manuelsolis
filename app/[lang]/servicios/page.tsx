@@ -307,6 +307,22 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
                     <span className="inline-block w-1.5 h-5 bg-[#B2904D] rounded-full" />
                     {svc.title[isEs ? 'es' : 'en']}
                   </h3>
+                  {/*
+                    La etiqueta va en DOS LÍNEAS, con la ciudad arriba.
+
+                    Antes era una sola línea —"Servicio — Ciudad, ST"— con
+                    `truncate`, y `truncate` corta por el final: justo la ciudad,
+                    que es lo único que distingue un enlace de otro. Medido en
+                    producción, la caja daba 123 px en móvil y 181-199 px en
+                    iPad para etiquetas que necesitan entre 155 y 269 px, así que
+                    se cortaban 28 enlaces y varios pares quedaban idénticos
+                    ("Defensa de Deportación — Hou…" dos veces).
+
+                    Con la ciudad arriba y en negrita nunca se recorta lo que
+                    identifica el enlace, y el servicio de abajo puede truncar
+                    sin pérdida porque ya lo dice el <h3> de la sección.
+                    De paso la jerarquía ayuda a escanear la lista.
+                  */}
                   <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                     {pagesForService.map(p => {
                       const office = OFFICES[p.officeKey];
@@ -314,11 +330,17 @@ export default async function ServiciosPage({ params }: { params: Promise<{ lang
                         <li key={p.slug}>
                           <Link
                             href={`/${currentLang}/${p.slug}`}
-                            className="flex items-center gap-2 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-[#B2904D]/10 hover:border-[#B2904D]/30 transition-all group"
+                            className="flex items-start gap-2 p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-[#B2904D]/10 hover:border-[#B2904D]/30 transition-all group"
                           >
-                            <MapPin className="h-4 w-4 text-[#B2904D] flex-shrink-0" />
-                            <span className="text-white text-sm font-medium group-hover:text-[#B2904D] transition-colors truncate">
-                              {svc.shortTitle[isEs ? 'es' : 'en']} — {office.city}, {office.stateCode}
+                            <MapPin className="h-4 w-4 mt-0.5 text-[#B2904D] flex-shrink-0" />
+                            <span className="min-w-0 flex flex-col leading-tight">
+                              {/* Sin `truncate`: la ciudad no se recorta nunca. */}
+                              <span className="text-white text-sm font-semibold group-hover:text-[#B2904D] transition-colors">
+                                {office.city}, {office.stateCode}
+                              </span>
+                              <span className="text-white/60 text-xs truncate">
+                                {svc.shortTitle[isEs ? 'es' : 'en']}
+                              </span>
                             </span>
                           </Link>
                         </li>

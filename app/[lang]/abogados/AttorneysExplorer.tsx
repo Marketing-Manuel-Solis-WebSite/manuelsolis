@@ -88,7 +88,7 @@ export default function AttorneysExplorer({
                           e.preventDefault();
                           setSelectedAttorney(attorney);
                         }}
-                        className="card-3d group relative h-[450px] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#001540]/60 hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] focus-visible:ring-2 focus-visible:ring-[#B2904D] focus-visible:outline-none transition-all duration-500 block"
+                        className="card-3d group relative min-h-[450px] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-[#001540]/60 hover:border-[#B2904D]/70 hover:shadow-[0_0_30px_rgba(178,144,77,0.25)] focus-visible:ring-2 focus-visible:ring-[#B2904D] focus-visible:outline-none transition-all duration-500 block"
                         aria-label={`${attorney.name} — ${texts.viewProfile}`}
                       >
                         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">

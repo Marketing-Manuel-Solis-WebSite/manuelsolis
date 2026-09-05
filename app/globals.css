@@ -81,6 +81,39 @@
 
   html {
     scroll-behavior: smooth;
+
+    /*
+     * La cabecera es `position: fixed`, así que sin esto cualquier salto por
+     * ancla aterriza DEBAJO de ella. El caso peor es el enlace "Saltar al
+     * contenido": lleva a #main-content, que está en y=0, o sea justo tapado —
+     * el atajo de accesibilidad no llevaba a ningún sitio visible.
+     *
+     * Medido en producción: 76 px de cabecera en móvil y 118 px en escritorio
+     * en reposo, que encoge a 56 px al hacer scroll. Se reserva el estado en
+     * reposo más un respiro, que es el que aplica al aterrizar desde otra
+     * página.
+     */
+    scroll-padding-top: 88px;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: 130px;
+    }
+  }
+
+  /*
+   * Lo mismo para los anclajes profundos: un `id` en mitad del documento se
+   * alcanza por enlace externo y tiene que quedar por debajo de la cabecera.
+   */
+  :where(h2, h3, h4, section, article)[id] {
+    scroll-margin-top: 88px;
+  }
+
+  @media (min-width: 1024px) {
+    :where(h2, h3, h4, section, article)[id] {
+      scroll-margin-top: 130px;
+    }
   }
 
   body {
