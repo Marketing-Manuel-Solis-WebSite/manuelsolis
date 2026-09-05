@@ -640,16 +640,65 @@ export default function HeaderProfessional() {
 
             {/* --- 3. BOTÓN MÓVIL CON CLICK --- */}
             <div className="lg:hidden flex items-center gap-3 ml-auto">
-              {/* Language toggle for mobile */}
-              <Link
-                href={langPath(language === 'es' ? 'en' : 'es')}
-                onClick={() => onLangLinkClick(language === 'es' ? 'en' : 'es')}
-                aria-label={`${language === 'es' ? 'ES' : 'EN'} — ${language === 'es' ? 'Cambiar idioma' : 'Change language'}`}
-                className="flex items-center gap-1.5 text-[10px] font-light text-white/80 hover:text-white uppercase tracking-[0.15em] transition-colors duration-200 px-2 py-1.5 rounded-lg border border-white/10 active:bg-white/10"
+              {/*
+                Selector de idioma para móvil y tablet.
+
+                ANTES era un solo enlace que mostraba el idioma DE DESTINO: estando
+                en español ponía la bandera de EE. UU. y «EN». En escritorio, el
+                mismo hueco de la barra muestra el idioma ACTUAL («ES» con bandera
+                española) y despliega un menú. Dos convenciones opuestas en la misma
+                posición de la misma cabecera: a 1024 px «ES» significaba «estás en
+                español» y a 1023 px «EN» significaba «pulsa para pasar a inglés».
+
+                Y no era solo escritorio contra móvil: cinco centímetros más abajo,
+                dentro del propio menú móvil, la pareja ESP/ENG ya resaltaba el
+                idioma ACTUAL. El mismo teléfono se contradecía a sí mismo.
+
+                Una bandera sola no desambigua —puede leerse igual como «estás aquí»
+                que como «ve aquí»—, así que la salida no es elegir bandera sino
+                enseñar las DOS opciones y resaltar la activa. Es lo que ya hacen el
+                menú desplegable de escritorio y la pareja del menú móvil, de modo
+                que ahora las tres coinciden.
+
+                `aria-current="true"` es lo que le dice a un lector de pantalla cuál
+                está activa; el resaltado visual no le llega.
+
+                El alto mínimo de 40 px es la razón práctica de que esto sea un
+                segmento y no dos enlaces sueltos: el control anterior medía unos
+                22 px de alto, por debajo del mínimo de 24 de la WCAG 2.2, y esta
+                es la cabecera que ven los iPad en vertical (768-1023 px van por la
+                rama móvil, no por la de escritorio).
+              */}
+              <div
+                role="group"
+                aria-label={language === 'es' ? 'Idioma' : 'Language'}
+                className="flex items-stretch min-h-[40px] rounded-lg border border-white/10 overflow-hidden"
               >
-                {language === 'es' ? <FlagUS /> : <FlagES />}
-                <span>{language === 'es' ? 'EN' : 'ES'}</span>
-              </Link>
+                {(['es', 'en'] as const).map((code) => {
+                  const activo = language === code;
+                  return (
+                    <Link
+                      key={code}
+                      href={langPath(code)}
+                      onClick={() => onLangLinkClick(code)}
+                      hrefLang={code}
+                      aria-current={activo ? 'true' : undefined}
+                      aria-label={
+                        code === 'es'
+                          ? (language === 'es' ? 'Español, idioma actual' : 'Spanish')
+                          : (language === 'en' ? 'English, current language' : 'Inglés')
+                      }
+                      className={`flex items-center px-2.5 text-[10px] uppercase tracking-[0.15em] transition-colors duration-200 ${
+                        activo
+                          ? 'bg-white/10 text-white font-medium'
+                          : 'text-white/60 font-light hover:text-white active:bg-white/10'
+                      }`}
+                    >
+                      {code === 'es' ? 'ES' : 'EN'}
+                    </Link>
+                  );
+                })}
+              </div>
 
               <button
                 type="button"

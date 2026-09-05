@@ -309,3 +309,45 @@ describe('desborde horizontal en móvil (auditoría visual, sep 2026)', () => {
     );
   });
 });
+
+describe('selector de idioma: una sola convención en toda la cabecera', () => {
+  const header = () =>
+    readFileSync(path.join(process.cwd(), 'app/components/Header.tsx'), 'utf8');
+
+  it('el control móvil ofrece las dos lenguas, no solo la de destino', () => {
+    // Antes era un único enlace a `langPath(language === 'es' ? 'en' : 'es')`:
+    // estando en español mostraba «EN». En escritorio ese mismo hueco muestra
+    // «ES», el idioma ACTUAL. Y el menú móvil, justo debajo, también resalta el
+    // actual. El teléfono se contradecía consigo mismo.
+    const src = header();
+    expect(
+      src,
+      'el control móvil volvió a ser un toggle al idioma contrario; enseña las dos y resalta la activa',
+    ).not.toMatch(/langPath\(language === 'es' \? 'en' : 'es'\)/);
+
+    // Tres parejas es/en en la cabecera: el desplegable de escritorio y la del
+    // menú móvil las escriben literales; el segmento nuevo las recorre. Si
+    // alguna desaparece, aquí se nota.
+    expect(src.match(/langPath\('es'\)/g)?.length, 'faltan destinos a español').toBe(2);
+    expect(src.match(/langPath\('en'\)/g)?.length, 'faltan destinos a inglés').toBe(2);
+    expect(src, 'el segmento móvil debe recorrer las dos lenguas').toContain(
+      "(['es', 'en'] as const).map",
+    );
+  });
+
+  it('la opción activa se anuncia, no solo se pinta', () => {
+    // El resaltado visual no llega a un lector de pantalla.
+    expect(header(), 'la lengua activa necesita aria-current').toContain("aria-current={activo ? 'true' : undefined}");
+  });
+
+  it('el control móvil llega al mínimo táctil de la WCAG 2.2', () => {
+    // Medía ~22 px de alto (10 px de texto + py-1.5), por debajo de los 24 del
+    // criterio 2.5.8 — y es la cabecera que reciben los iPad en vertical, que
+    // a 768-1023 px van por la rama móvil.
+    const src = header();
+    const grupo = src.slice(src.indexOf('role="group"'), src.indexOf('role="group"') + 400);
+    const alto = grupo.match(/min-h-\[(\d+)px\]/);
+    expect(alto, 'el grupo de idioma perdió su alto mínimo').toBeTruthy();
+    expect(Number(alto![1])).toBeGreaterThanOrEqual(24);
+  });
+});
