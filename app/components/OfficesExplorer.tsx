@@ -235,7 +235,7 @@ const officePresentations: OfficePresentation[] = [
     slug: 'memphis',
     title: { es: 'Memphis', en: 'Memphis' },
     description: ORIGINAL_DESC,
-    image: '/offices/Memphis.png',
+    image: '/offices/memphis-corporate-ave.jpg',
     services: [
         { es: 'Inmigración', en: 'Immigration' },
         { es: 'Planificación Patrimonial', en: 'Estate Planning' },

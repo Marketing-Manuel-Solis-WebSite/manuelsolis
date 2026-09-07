@@ -260,7 +260,7 @@ export const accidentOffices: AccidentOffice[] = [
     // app/components/officesPhoneMap.ts → OFFICES_NAP.memphis. Hasta entonces
     // esta búsqueda de Maps lleva a la dirección correcta.
     mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+1991+Corporate+Ave+Suite+310+Memphis+TN+38132',
-    image: '/offices/ofAirways.png',
+    image: '/offices/memphis-corporate-ave.jpg',
   },
   {
     id: 'league-city',

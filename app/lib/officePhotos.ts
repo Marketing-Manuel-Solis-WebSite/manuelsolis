@@ -45,7 +45,11 @@ export const OFFICE_PHOTO_BY_SLUG: Readonly<Record<OfficeNapSlug, string>> = {
   'chicago-burr-ridge': '/offices/chicago-burr-ridge.jpg',
   'chicago-wall': '/offices/chicago-wall.jpg',
   arvada: '/offices/Denver.png',
-  memphis: '/offices/ofAirways.png',
+  // El nombre del archivo lleva la calle a propósito. La foto anterior se
+  // llamaba `ofAirways` y siguió publicándose meses después de la mudanza:
+  // fue justo ese nombre lo que delató que estaba obsoleta. Si la sede vuelve
+  // a moverse, que se note aquí sin abrir la imagen.
+  memphis: '/offices/memphis-corporate-ave.jpg',
 };
 
 /**

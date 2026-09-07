@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/oficinas/memphis`,
       title,
       description,
-      images: [{ url: '/offices/ofAirways.png', width: 1101, height: 507 }],
+      images: [{ url: '/offices/memphis-corporate-ave.jpg', width: 1600, height: 900 }],
     }),
   };
 }

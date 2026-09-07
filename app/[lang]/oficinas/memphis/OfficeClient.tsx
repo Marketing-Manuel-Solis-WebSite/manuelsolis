@@ -23,7 +23,7 @@ const officeData: OfficeData = {
   // app/components/officesPhoneMap.ts → OFFICES_NAP.memphis. Hasta entonces el
   // botón de mapa abre esta búsqueda de Maps con la dirección correcta.
   mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+1991+Corporate+Ave+Suite+310+Memphis+TN+38132',
-  image: '/offices/ofAirways.png',
+  image: '/offices/memphis-corporate-ave.jpg',
   
   // --- GERENCIA (ELIMINADO) ---
   managers: [],

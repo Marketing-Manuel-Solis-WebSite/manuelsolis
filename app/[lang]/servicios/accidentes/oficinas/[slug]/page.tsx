@@ -60,7 +60,7 @@ const OFFICE_IMAGE_SIZE: Record<string, { width: number; height: number } | unde
   '/offices/League.png': { width: 1000, height: 1000 },
   '/offices/los-angeles.png': { width: 1200, height: 900 },
   '/offices/main.png': { width: 927, height: 633 },
-  '/offices/ofAirways.png': { width: 1101, height: 507 },
+  '/offices/memphis-corporate-ave.jpg': { width: 1600, height: 900 },
   '/offices/ofhouston.png': { width: 1045, height: 663 },
   '/offices/ofLoop.png': { width: 1063, height: 601 },
   '/offices/ofNorth.png': { width: 1189, height: 685 },
