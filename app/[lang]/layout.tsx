@@ -145,7 +145,7 @@ const organizationSchema = {
     { '@type': 'Place', name: 'Harlingen Office', address: { '@type': 'PostalAddress', streetAddress: '320 E Jackson St', addressLocality: 'Harlingen', addressRegion: 'TX', postalCode: '78550', addressCountry: 'US' }, telephone: '(956) 597-7090' },
     { '@type': 'Place', name: 'Chicago Office', address: { '@type': 'PostalAddress', streetAddress: '6000 W Cermak Rd', addressLocality: 'Cicero', addressRegion: 'IL', postalCode: '60804', addressCountry: 'US' }, telephone: '(312) 477-0389' },
     { '@type': 'Place', name: 'Los Angeles Office', address: { '@type': 'PostalAddress', streetAddress: '8337 Telegraph Rd Ste 115', addressLocality: 'Pico Rivera', addressRegion: 'CA', postalCode: '90660', addressCountry: 'US' }, telephone: '(213) 784-1554' },
-    { '@type': 'Place', name: 'Memphis Office', address: { '@type': 'PostalAddress', streetAddress: '3385 Airways Blvd Suite 320', addressLocality: 'Memphis', addressRegion: 'TN', postalCode: '38116', addressCountry: 'US' }, telephone: '(901) 557-8357' },
+    { '@type': 'Place', name: 'Memphis Office', address: { '@type': 'PostalAddress', streetAddress: '1991 Corporate Ave #310', addressLocality: 'Memphis', addressRegion: 'TN', postalCode: '38132', addressCountry: 'US' }, telephone: '(901) 557-8357' },
     { '@type': 'Place', name: 'Denver/Arvada Office', address: { '@type': 'PostalAddress', streetAddress: '5400 Ward Rd BLDG IV', addressLocality: 'Arvada', addressRegion: 'CO', postalCode: '80002', addressCountry: 'US' }, telephone: '(720) 358-8973' },
   ],
   numberOfEmployees: {

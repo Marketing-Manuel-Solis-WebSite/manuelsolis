@@ -250,7 +250,7 @@ export const accidentOffices: AccidentOffice[] = [
     city: 'Memphis',
     state: 'TN',
     title: { es: 'Accidentes en Memphis, TN', en: 'Accidents in Memphis, TN' },
-    address: '3385 Airways Blvd, STE 320, Memphis, TN 38116, United States',
+    address: '1991 Corporate Ave #310, Memphis, TN 38132, United States',
     phone: '(901) 557-8357',
     email: 'memphis@manuelsolis.com',
     hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
@@ -259,7 +259,7 @@ export const accidentOffices: AccidentOffice[] = [
     // despacho (dueño del proyecto / marketing). Ver el TODO gemelo en
     // app/components/officesPhoneMap.ts → OFFICES_NAP.memphis. Hasta entonces
     // esta búsqueda de Maps lleva a la dirección correcta.
-    mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116',
+    mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+1991+Corporate+Ave+Suite+310+Memphis+TN+38132',
     image: '/offices/ofAirways.png',
   },
   {

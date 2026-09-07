@@ -507,10 +507,10 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     slug: 'memphis',
     name: { es: 'Memphis', en: 'Memphis' },
     menuLabel: 'Memphis',
-    street: '3385 Airways Blvd, STE 320',
+    street: '1991 Corporate Ave #310',
     city: 'Memphis',
     state: 'TN',
-    zip: '38116',
+    zip: '38132',
     phone: '(901) 557-8357',
     timeZone: 'America/Chicago',
     // TODO(GBP): falta un dato que nadie del repo puede generar: el share-link
@@ -523,7 +523,7 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     // Mientras no llegue, la búsqueda de Maps de abajo lleva a la dirección
     // correcta y funciona; solo no abre la ficha.
     mapLink:
-      'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116',
+      'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+1991+Corporate+Ave+Suite+310+Memphis+TN+38132',
     hours: weekly(
       {
         es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM',

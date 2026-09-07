@@ -13,7 +13,7 @@ const officeData: OfficeData = {
     es: 'Abogado de Inmigración Manuel Solís, con más de 35 años de experiencia y 50,000 casos ganados, le guía en su trámite de visa humanitaria: visa U, visa VAWA, visa T, visa juvenil, permiso de trabajo en USA y residencia permanente en USA. Contamos con representación legal en todo Estados Unidos y también ofrecemos asesoría en áreas legales como derecho familiar, accidentes, negligencia médica, derecho civil y criminal. Nuestro equipo de más de 200 profesionales analiza cada situación de manera detallada, elaborando estrategias legales personalizadas que buscan proteger sus derechos. Ofrecemos servicios legales en español e inglés, brindando atención cercana, asesoría confiable y compromiso total con cada cliente migratorio o legal.', 
     en: 'Immigration Attorney Manuel Solís, with more than 35 years of experience and 50,000 cases won, guides you through your humanitarian visa process: U visa, VAWA visa, T visa, juvenile visa, work permits in the USA, and permanent residence in the USA. We provide legal representation throughout the United States and also offer legal guidance in areas such as family law, personal injury, medical malpractice, civil law, and criminal law. Our team of more than 200 professionals carefully analyzes each situation, developing personalized legal strategies designed to protect your rights. We offer legal services in Spanish and English, providing personalized attention, trusted guidance, and full commitment to every immigration or legal client.' 
   },
-  address: '3385 Airways Blvd, STE 320, Memphis, TN 38116, United States',
+  address: '1991 Corporate Ave #310, Memphis, TN 38132, United States',
   phone: '(901) 557-8357',
   email: 'memphis@manuelsolis.com',
   hours: { es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM', en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM' },
@@ -22,7 +22,7 @@ const officeData: OfficeData = {
   // despacho (dueño del proyecto / marketing). Ver el TODO gemelo en
   // app/components/officesPhoneMap.ts → OFFICES_NAP.memphis. Hasta entonces el
   // botón de mapa abre esta búsqueda de Maps con la dirección correcta.
-  mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116',
+  mapLink: 'https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+1991+Corporate+Ave+Suite+310+Memphis+TN+38132',
   image: '/offices/ofAirways.png',
   
   // --- GERENCIA (ELIMINADO) ---

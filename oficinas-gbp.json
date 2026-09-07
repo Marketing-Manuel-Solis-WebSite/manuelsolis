@@ -140,13 +140,13 @@
     "nota": null
   },
   {
-    "nombre": "Memphis, TN — Airways Blvd",
+    "nombre": "Memphis, TN — Corporate Ave",
     "slug": "memphis",
     "storeCode": "MEM-INM-01",
-    "query": "Abogado de Inmigración Manuel Solis, 3385 Airways Blvd STE 320, Memphis, TN 38116",
+    "query": "Abogado de Inmigración Manuel Solis, 1991 Corporate Ave #310, Memphis, TN 38132",
     "placeId": "ChIJK_RRhsGHf4gRkT3D4gvjV9c",
-    "direccionSitio": "3385 Airways Blvd, STE 320, Memphis, TN 38116",
-    "direccionPanel": "3385 Airways Blvd, Suite 320, Memphis, Tennessee 38116",
+    "direccionSitio": "1991 Corporate Ave #310, Memphis, TN 38132",
+    "direccionPanel": "1991 Corporate Ave #310, Memphis, TN 38132",
     "nota": "Sigue faltando el share-link de la ficha en officesPhoneMap.ts."
   },
   {

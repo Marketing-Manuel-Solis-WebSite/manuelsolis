@@ -15,20 +15,22 @@ type Props = {
 // --- CONFIGURACIÓN SEO ESPECÍFICA DE LA OFICINA ---
 const OFFICE_INFO = {
   name: "Manuel Solis Law Firm - Memphis",
-  address: "3385 Airways Blvd, STE 320",
+  address: "1991 Corporate Ave #310",
   city: "Memphis",
   state: "TN",
-  zip: "38116",
+  zip: "38132",
   phone: "+1-901-557-8357",
-  // Coordenadas aproximadas para 3385 Airways Blvd
-  latitude: "35.0673", 
-  longitude: "-89.9928",
+  // El pin exacto de nuestra propia ficha de Google (place_id
+  // ChIJK_RRhsGHf4gRkT3D4gvjV9c), no un geocode de terceros: el `geo` del
+  // schema tiene que cuadrar con la ficha que Google ya indexa.
+  latitude: "35.0740005",
+  longitude: "-89.9971585",
   // TODO(GBP): falta el share-link (`https://share.google/…`) de la ficha de
   // Google Business Profile de Memphis; lo entrega quien administra el GBP del
   // despacho (dueño del proyecto / marketing). Ver el TODO gemelo en
   // app/components/officesPhoneMap.ts → OFFICES_NAP.memphis. Hasta entonces
   // `hasMap` sale de esta búsqueda de Maps con la dirección correcta.
-  mapUrl: "https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+3385+Airways+Blvd+STE+320+Memphis+TN+38116"
+  mapUrl: "https://www.google.com/maps/search/?api=1&query=Manuel+Solis+Law+Firm+1991+Corporate+Ave+Suite+310+Memphis+TN+38132"
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

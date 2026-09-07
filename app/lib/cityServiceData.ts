@@ -175,11 +175,11 @@ export const OFFICES: Record<string, OfficeInfo> = {
     citySlug: 'memphis',
     state: 'Tennessee',
     stateCode: 'TN',
-    address: '3385 Airways Blvd Suite 320, Memphis, TN 38116',
+    address: '1991 Corporate Ave #310, Memphis, TN 38132',
     officeSlug: 'memphis',
     phone: '(901) 557-8357',
-    zip: '38116',
-    coordinates: { lat: 35.0726, lng: -89.9848 },
+    zip: '38132',
+    coordinates: { lat: 35.0740005, lng: -89.9971585 },
     hours: {
       es: 'Lun - Vie 9:00 AM - 5:00 PM | Sáb 9:00 AM - 1:00 PM',
       en: 'Mon - Fri 9:00 AM - 5:00 PM | Sat 9:00 AM - 1:00 PM',
@@ -617,12 +617,12 @@ export const LANDING_PAGES: LandingPageConfig[] = [
     h1: { es: 'Abogado de Inmigración en Memphis, TN', en: 'Immigration Lawyer in Memphis, TN' },
     metaTitle: { es: 'Abogado de Inmigración en Memphis, TN', en: 'Immigration Lawyer in Memphis, TN' },
     metaDescription: {
-      es: 'Abogados de inmigración en Memphis con 35+ años de experiencia. Residencia, ciudadanía, deportación y Visa U. Oficina en Airways Blvd. Llame: (901) 557-8357.',
-      en: 'Immigration lawyers in Memphis with 35+ years of experience. Residency, citizenship, deportation and U Visa. Office on Airways Blvd. Call: (901) 557-8357.',
+      es: 'Abogados de inmigración en Memphis con 35+ años de experiencia. Residencia, ciudadanía, deportación y Visa U. Oficina en Corporate Ave. Llame: (901) 557-8357.',
+      en: 'Immigration lawyers in Memphis with 35+ years of experience. Residency, citizenship, deportation and U Visa. Office on Corporate Ave. Call: (901) 557-8357.',
     },
     intro: {
-      es: 'Memphis y el área del medio sur están experimentando un crecimiento significativo de la comunidad latina. Nuestra oficina en Airways Boulevard atiende a familias inmigrantes de Memphis, Nashville, y todo el estado de Tennessee, así como áreas cercanas de Mississippi y Arkansas. Siendo una de las pocas firmas de inmigración con presencia en Memphis, ofrecemos representación legal accesible en una región donde los recursos legales en español son limitados.',
-      en: 'Memphis and the Mid-South area are experiencing significant growth in the Latino community. Our office on Airways Boulevard serves immigrant families from Memphis, Nashville, and all of Tennessee, as well as nearby areas of Mississippi and Arkansas. As one of the few immigration firms with a presence in Memphis, we offer accessible legal representation in a region where Spanish-language legal resources are limited.',
+      es: 'Memphis y el área del medio sur están experimentando un crecimiento significativo de la comunidad latina. Nuestra oficina en Corporate Avenue atiende a familias inmigrantes de Memphis, Nashville, y todo el estado de Tennessee, así como áreas cercanas de Mississippi y Arkansas. Siendo una de las pocas firmas de inmigración con presencia en Memphis, ofrecemos representación legal accesible en una región donde los recursos legales en español son limitados.',
+      en: 'Memphis and the Mid-South area are experiencing significant growth in the Latino community. Our office on Corporate Avenue serves immigrant families from Memphis, Nashville, and all of Tennessee, as well as nearby areas of Mississippi and Arkansas. As one of the few immigration firms with a presence in Memphis, we offer accessible legal representation in a region where Spanish-language legal resources are limited.',
     },
     whyChooseUs: {
       es: ['Una de las pocas firmas de inmigración con oficina en Memphis', 'Atención a comunidades de Tennessee, Mississippi y Arkansas', 'Respaldo de una firma nacional con 35+ años de experiencia', 'Equipo bilingüe dedicado a la comunidad del medio sur', 'Planes de pago accesibles'],

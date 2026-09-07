@@ -119,9 +119,9 @@ Teléfono central: **(832) 598-0914**. Sitio: **https://www.manuelsolis.com**.
 
 ### 2.8 Memphis
 - **Ciudad:** Memphis, Tennessee
-- **Dirección exacta:** 3385 Airways Blvd, Suite 320, Memphis, **TN 38116**
+- **Dirección exacta:** 1991 Corporate Ave #310, Memphis, **TN 38132**
 - **Teléfono:** +1-901-557-8357
-- **GPS:** 35.0673, -89.9928
+- **GPS:** 35.0740005, -89.9971585
 - **Horario:** Lun–Vie 09:00–17:00; Sáb 09:00–13:00
 - **Abogadas destacadas:** Lupita Valenzuela Martinez, Sara James, Roberto García.
 - **Google Business:** https://share.google/Fc3ISgQAihcayfmws
