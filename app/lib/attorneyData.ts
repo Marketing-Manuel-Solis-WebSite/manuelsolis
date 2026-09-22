@@ -59,7 +59,7 @@ export const locationGroups: { label: { es: string; en: string }; ids: string[] 
   { label: { es: 'Dallas, Texas', en: 'Dallas, Texas' }, ids: ['mark-mcbroom'] },
   { label: { es: 'El Paso, Texas', en: 'El Paso, Texas' }, ids: ['victor-rojas'] },
   { label: { es: 'Chicago, Illinois', en: 'Chicago, Illinois' }, ids: ['andrew-fink', 'ana-patricia-rueda', 'eduardo-garcia'] },
-  { label: { es: 'Memphis, Tennessee', en: 'Memphis, Tennessee' }, ids: ['sara-james', 'lupita-valenzuela-martinez', 'roberto-garcia'] },
+  { label: { es: 'Memphis, Tennessee', en: 'Memphis, Tennessee' }, ids: ['sara-james', 'lupita-valenzuela-martinez', 'roberto-garcia', 'emilli-rauch'] },
   { label: { es: 'Arvada, Colorado', en: 'Arvada, Colorado' }, ids: ['edwin-zavala'] },
   { label: { es: 'Los Angeles, California', en: 'Los Angeles, California' }, ids: ['edward-s-reisman'] },
 ];
@@ -690,5 +690,32 @@ export const attorneys: Attorney[] = [
     admissions: [
       { es: "Tennessee", en: "Tennessee" }
     ]
+  },
+  {
+    id: 'emilli-rauch',
+    name: 'Emilli M. Rauch',
+    image: '/emilli-rauch.jpg',
+    socialImage: '/og/abogados/emilli-rauch.jpg',
+    role: { es: 'Abogada', en: 'Attorney' },
+    bio: {
+      es: [
+        "Emilli Rauch es abogada con licencia para ejercer en Memphis, Tennessee. Se graduó de la University of Memphis Cecil C. Humphreys School of Law en 2024 y está comprometida con usar el derecho para defender y dar poder a las comunidades vulnerables.",
+        "Apasionada por la justicia y por una representación que de verdad signifique algo para el cliente, aborda cada caso con compasión, integridad y la dedicación de asegurar que cada persona tenga una voz."
+      ],
+      en: [
+        "Emilli Rauch is a licensed attorney practicing in Memphis, TN. She graduated from the University of Memphis Cecil C. Humphreys School of Law in 2024. She is committed to using the law to advocate for and empower vulnerable communities.",
+        "Passionate about justice and meaningful client advocacy, she approaches every case with compassion, integrity, and a dedication to ensuring every person has a voice."
+      ]
+    },
+    seoDescription: {
+      es: 'Emilli M. Rauch ejerce en Memphis, Tennessee. Se graduó de la University of Memphis Cecil C. Humphreys School of Law en 2024 y defiende a comunidades vulnerables.',
+      en: 'Emilli M. Rauch practices in Memphis, TN. She graduated from the University of Memphis Cecil C. Humphreys School of Law in 2024 and advocates for vulnerable communities.'
+    },
+    quote: {
+      es: "Cada persona merece tener una voz.",
+      en: "Every person deserves to have a voice."
+    },
+    education: ["University of Memphis Cecil C. Humphreys School of Law (JD)"],
+    admissions: ["Tennessee"]
   },
 ];

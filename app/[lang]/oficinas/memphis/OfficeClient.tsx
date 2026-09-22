@@ -55,6 +55,15 @@ const officeData: OfficeData = {
         es: "Es un privilegio acompañarte a alcanzar tu sueño americano.",
         en: "Happy for the privilege in assisting you achieve your American Dream."
       }
+    },
+    {
+      name: 'Emilli M. Rauch',
+      role: { es: 'Abogada', en: 'Attorney' },
+      image: '/emilli-rauch.jpg',
+      quote: {
+        es: "Cada persona merece tener una voz.",
+        en: "Every person deserves to have a voice."
+      }
     }
   ],
 

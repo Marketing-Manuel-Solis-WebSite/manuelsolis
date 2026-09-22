@@ -343,11 +343,19 @@ export function getOficinasEntries(): SitemapURL[] {
 }
 
 // Attorney profile pages
+// Fecha de alta por ficha de abogado, para las que no estaban el 25-03-2026.
+// Un perfil que nace hoy declarando una fecha de hace meses le dice a Google que
+// no corre prisa rastrearlo, que es lo contrario de lo que interesa en una ficha
+// nueva. Mismo motivo que `LANDING_ALTA`.
+const ABOGADO_ALTA: Readonly<Record<string, string>> = {
+  'emilli-rauch': '2026-09-22',
+};
+
 export function getAbogadosEntries(): SitemapURL[] {
   return attorneys.flatMap((attorney) =>
     LANGS.map((lang) => ({
       url: `${BASE_URL}/${lang}/abogados/${attorney.id}`,
-      lastModified: '2026-03-25',
+      lastModified: ABOGADO_ALTA[attorney.id] ?? '2026-03-25',
       changeFrequency: 'monthly' as ChangeFreq,
       priority: 0.75,
     }))
