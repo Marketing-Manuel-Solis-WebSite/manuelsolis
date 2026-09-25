@@ -38,7 +38,7 @@ describe('buildOfficeFaqs — dice la verdad sobre cada oficina', () => {
     // Las cinco direcciones Regus/IWG. Que el visitante se plante ahí sin avisar
     // y lo encuentre cerrado es el fallo que esto evita.
     const conCita = OFFICE_NAP_SLUGS.filter((s) => OFFICES_NAP[s].hours.kind === 'appointment');
-    expect(conCita.length).toBeGreaterThanOrEqual(5);
+    expect(conCita.length).toBeGreaterThanOrEqual(4);
     for (const slug of conCita) {
       const [walkIn] = buildOfficeFaqs(slug, 'es');
       expect(walkIn.a, slug).toMatch(/cita previa/i);

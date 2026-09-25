@@ -321,7 +321,6 @@ export function getOficinasEntries(): SitemapURL[] {
   const ALTA: Record<string, string> = {
     'chicago-martingale': '2026-08-11',
     'chicago-prospect': '2026-08-11',
-    'chicago-wacker': '2026-08-11',
     'chicago-burr-ridge': '2026-08-11',
     'chicago-wall': '2026-08-11',
   };

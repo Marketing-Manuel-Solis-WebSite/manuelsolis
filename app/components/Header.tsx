@@ -166,7 +166,6 @@ export default function HeaderProfessional() {
           // principal va por su calle igual que las demás: está en Cermak Rd.
           subOffices: [
             { name: 'Cermak', href: `/${language}/oficinas/chicago` },
-            { name: 'Wacker', href: `/${language}/oficinas/chicago-wacker` },
             { name: 'Martingale', href: `/${language}/oficinas/chicago-martingale` },
             { name: 'Prospect', href: `/${language}/oficinas/chicago-prospect` },
             { name: 'Burr Ridge', href: `/${language}/oficinas/chicago-burr-ridge` },

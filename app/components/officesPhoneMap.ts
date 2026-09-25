@@ -89,7 +89,6 @@ export type OfficeNapSlug =
   // `/oficinas/prospect` a secas no dicen dónde están.
   | 'chicago-martingale'
   | 'chicago-prospect'
-  | 'chicago-wacker'
   | 'chicago-burr-ridge'
   | 'chicago-wall'
   | 'arvada'
@@ -113,7 +112,7 @@ function weekly(label: BiText, weekdays: OpenInterval, saturday?: OpenInterval):
 const FIRM_MAIN_PHONE = '1-888-676-1238';
 
 /**
- * Número del mercado de Chicago, compartido por las cinco direcciones nuevas.
+ * Número del mercado de Chicago, compartido por las direcciones del área.
  *
  * Es el mismo que publica la oficina de Chicago (6000 W Cermak Rd), y es cierto:
  * quien llama llega al equipo que atiende esas cinco direcciones. Se eligió
@@ -412,7 +411,9 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
   // schema y a la ficha de Google. Poner "Chicago" en una dirección de
   // Schaumburg o Naperville rompería el NAP y con él el posicionamiento local.
   //
-  // ⚠️ TELÉFONO: las cinco publican el número general del despacho porque
+  // S Wacker Dr se dio de baja el 2026-09-25: el despacho cerró esa oficina.
+  //
+  // ⚠️ TELÉFONO: todas publican el número general del despacho porque
   // marketing todavía no ha asignado líneas de seguimiento por sede. Es un dato
   // cierto —contesta el despacho— pero no local. Cambiar el campo `phone` de
   // cada entrada cuando lleguen los números.
@@ -441,19 +442,6 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     phone: CHICAGO_MARKET_PHONE,
     timeZone: 'America/Chicago',
     mapLink: mapsSearch('222 S Prospect Ave, Ste 338, Park Ridge, IL 60068'),
-    hours: APPOINTMENT_HOURS,
-  },
-  'chicago-wacker': {
-    slug: 'chicago-wacker',
-    name: { es: 'Wacker', en: 'Wacker' },
-    menuLabel: 'Wacker',
-    street: '125 S Wacker Dr, Ste 341',
-    city: 'Chicago',
-    state: 'IL',
-    zip: '60606',
-    phone: CHICAGO_MARKET_PHONE,
-    timeZone: 'America/Chicago',
-    mapLink: mapsSearch('125 S Wacker Dr, Ste 341, Chicago, IL 60606'),
     hours: APPOINTMENT_HOURS,
   },
   'chicago-burr-ridge': {

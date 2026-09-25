@@ -145,18 +145,17 @@ describe('bloque de ciudades del pie (paso 05)', () => {
 });
 
 describe('tipado de sedes sin atención presencial (defecto 1, crítico)', () => {
-  it('las diez direcciones virtuales incluyen las cinco del área de Chicago', () => {
+  it('las nueve direcciones virtuales incluyen las cuatro del área de Chicago', () => {
     const v = new Set<string>(VIRTUAL_OFFICE_SLUGS);
     for (const s of [
       'chicago-burr-ridge',
       'chicago-martingale',
       'chicago-prospect',
-      'chicago-wacker',
       'chicago-wall',
     ]) {
       expect(v.has(s), `${s} debe estar en VIRTUAL_OFFICE_SLUGS`).toBe(true);
     }
-    expect(VIRTUAL_OFFICE_SLUGS).toHaveLength(10);
+    expect(VIRTUAL_OFFICE_SLUGS).toHaveLength(9);
   });
 
   it('ninguna oficina virtual publica horario estructurado', () => {

@@ -401,6 +401,10 @@ export const seoRedirects: Redirect[] = [
   { source: '/:lang(es|en)/oficinas/denver', destination: '/:lang/oficinas/arvada', permanent: true },
   { source: '/:lang(es|en)/oficinas/memphis-office', destination: '/:lang/oficinas/memphis', permanent: true },
   { source: '/:lang(es|en)/oficinas/abogados-inmigracion-los-angeles', destination: '/:lang/oficinas/losangeles', permanent: true },
+  // Oficina cerrada (2026-09-25): 125 S Wacker Dr. Se manda a la sede de
+  // Chicago, que publica el mismo teléfono del mercado.
+  { source: '/oficinas/chicago-wacker', destination: '/es/oficinas/chicago', permanent: true },
+  { source: '/:lang(es|en)/oficinas/chicago-wacker', destination: '/:lang/oficinas/chicago', permanent: true },
   // /:lang/offices/* (English alias) — see also line 113 above
   { source: '/:lang(es|en)/offices/houston-principal-office', destination: '/:lang/oficinas/houston-principal', permanent: true },
   { source: '/:lang(es|en)/offices/houston', destination: '/:lang/oficinas/houston-principal', permanent: true },

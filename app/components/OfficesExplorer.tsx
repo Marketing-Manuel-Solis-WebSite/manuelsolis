@@ -196,13 +196,6 @@ const officePresentations: OfficePresentation[] = [
   // del área: no se copian los siete de la sede de Cermak, que tiene personal.
   // ───────────────────────────────────────────────────────────────────────
   {
-    slug: 'chicago-wacker',
-    title: { es: 'Wacker (Chicago)', en: 'Wacker (Chicago)' },
-    description: ORIGINAL_DESC,
-    image: '/offices/chicago-wacker.jpg',
-    services: CHICAGO_APPOINTMENT_SERVICES,
-  },
-  {
     slug: 'chicago-martingale',
     title: { es: 'Martingale (Schaumburg)', en: 'Martingale (Schaumburg)' },
     description: ORIGINAL_DESC,

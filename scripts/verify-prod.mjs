@@ -169,9 +169,9 @@ async function traer(ruta) {
 const checks = [];
 const check = (nombre, ok) => checks.push([nombre, ok]);
 
-// ── Defecto 1 (crítico): las diez sedes sin atención presencial emiten Place ──
+// ── Defecto 1 (crítico): las nueve sedes sin atención presencial emiten Place ──
 const SIN_PERSONAL = [
-  'chicago-wall', 'chicago-wacker', 'chicago-prospect', 'chicago-martingale',
+  'chicago-wall', 'chicago-prospect', 'chicago-martingale',
   'chicago-burr-ridge', 'kirby', 'league-city', 'main-st', 'north-loop', 'northchase',
 ];
 for (const slug of SIN_PERSONAL) {

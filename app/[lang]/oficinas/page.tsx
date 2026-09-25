@@ -80,7 +80,6 @@ const OFFICE_GROUPS: StateGroup[] = [
         city: { es: 'Chicago', en: 'Chicago' },
         slugs: [
           'chicago',
-          'chicago-wacker',
           'chicago-martingale',
           'chicago-prospect',
           'chicago-burr-ridge',

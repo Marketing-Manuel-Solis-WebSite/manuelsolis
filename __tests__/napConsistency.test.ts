@@ -261,7 +261,6 @@ function collectDivergences(): Divergence[] {
 const SIN_FICHA_DE_ACCIDENTES = new Set<string>([
   'chicago-martingale',
   'chicago-prospect',
-  'chicago-wacker',
   'chicago-burr-ridge',
   'chicago-wall',
 ]);
@@ -323,7 +322,6 @@ describe('NAP de oficinas — fuente única', () => {
       'chicago-burr-ridge',
       'chicago-martingale',
       'chicago-prospect',
-      'chicago-wacker',
       'chicago-wall',
     ]);
   });
@@ -471,7 +469,6 @@ describe('NAP de oficinas — fuente única', () => {
       [
         'chicago-martingale',
         'chicago-prospect',
-        'chicago-wacker',
         'chicago-burr-ridge',
         'chicago-wall',
       ].sort(),

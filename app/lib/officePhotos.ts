@@ -35,13 +35,12 @@ export const OFFICE_PHOTO_BY_SLUG: Readonly<Record<OfficeNapSlug, string>> = {
   // reencoda igual.
   chicago: '/og/oficina-chicago.jpg',
   // Área de Chicago: la portada de cada una es la ENTRADA de su edificio, con
-  // el número de la calle a la vista (10, 125 South Wacker, 1333, 1560). Se
+  // el número de la calle a la vista (10, 1333, 1560). Se
   // eligió así porque estas cinco son direcciones dentro de centros de
   // negocios: lo que le sirve a quien va a una cita es reconocer el portal
   // desde la calle, no ver un interior que podría ser cualquiera.
   'chicago-martingale': '/offices/chicago-martingale.jpg',
   'chicago-prospect': '/offices/chicago-prospect.jpg',
-  'chicago-wacker': '/offices/chicago-wacker.jpg',
   'chicago-burr-ridge': '/offices/chicago-burr-ridge.jpg',
   'chicago-wall': '/offices/chicago-wall.jpg',
   arvada: '/offices/Denver.png',

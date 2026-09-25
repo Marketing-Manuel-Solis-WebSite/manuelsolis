@@ -115,7 +115,6 @@ export const VIRTUAL_OFFICE_SLUGS = [
   // casi-duplicados que hubo que retirar del índice en las otras cinco.
   'chicago-martingale',
   'chicago-prospect',
-  'chicago-wacker',
   'chicago-burr-ridge',
   'chicago-wall',
 ] as const satisfies readonly OfficeSlug[];
