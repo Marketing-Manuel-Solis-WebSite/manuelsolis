@@ -55,7 +55,7 @@ const officeData: OfficeData = {
     {
       name: 'Eduardo Garcia',
       role: { es: 'Abogado', en: 'Attorney' },
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Eduardo%20Garcia.png',
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Eduardo.png',
       quote: { es: 'Escuchar primero.', en: 'Listen first.' },
     },
   ],

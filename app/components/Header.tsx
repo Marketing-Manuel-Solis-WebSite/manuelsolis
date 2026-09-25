@@ -394,6 +394,9 @@ export default function HeaderProfessional() {
                   maxWidth: '100%',
                 }}
                 priority
+                // Se pinta a ~223x52 (40px de alto al hacer scroll). Sin `sizes`,
+                // next/image precargaba la variante de 1920px en cada página.
+                sizes="224px"
               />
             </Link>
 
@@ -475,6 +478,10 @@ export default function HeaderProfessional() {
 
                     <span className="absolute bottom-1 left-0 w-0 h-[0.5px] bg-sky-200 transition-all duration-300 ease-out group-hover:w-full" />
 
+                    {/* Los desplegables se ocultan con `invisible`, que Next.js cuenta
+                        como visible: sin `prefetch={false}` cada carga de escritorio
+                        precargaba ~167 rutas. Al pasar el ratón por un enlace se sigue
+                        precargando. */}
                     {item.submenu && item.key === 'offices' && (
                       <div
                         id={`desktop-dropdown-${dropdownKey}`}
@@ -490,7 +497,7 @@ export default function HeaderProfessional() {
                                 <span className="block text-xs font-semibold text-white/80 uppercase tracking-[0.15em] px-4 py-2 bg-white/5 rounded-lg mb-2">Houston</span>
                                 <div className="ml-4 pl-4 border-l-2 border-[#B2904D]/25 space-y-0.5">
                                   {officeNav[0].cities[0].subOffices?.map((sub) => (
-                                    <Link key={sub.name} href={sub.href} className="group/item flex items-center px-4 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                    <Link prefetch={false} key={sub.name} href={sub.href} className="group/item flex items-center px-4 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
                                       <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{sub.name}</span>
                                     </Link>
                                   ))}
@@ -499,7 +506,7 @@ export default function HeaderProfessional() {
                               {/* Otras ciudades de Texas */}
                               <div className="space-y-0.5 pt-2 border-t border-white/5">
                                 {officeNav[0].cities.slice(1).map((city) => (
-                                  <Link key={city.name} href={city.href} className="group/item flex items-center px-4 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                  <Link prefetch={false} key={city.name} href={city.href} className="group/item flex items-center px-4 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
                                     <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{city.name}</span>
                                   </Link>
                                 ))}
@@ -531,14 +538,14 @@ export default function HeaderProfessional() {
                                         </span>
                                         <div className="ml-2 pl-3 border-l-2 border-[#B2904D]/25 space-y-0.5">
                                           {city.subOffices.map((sub) => (
-                                            <Link key={sub.name} href={sub.href} className="group/item flex items-center px-3 py-[6px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                            <Link prefetch={false} key={sub.name} href={sub.href} className="group/item flex items-center px-3 py-[6px] rounded-lg hover:bg-white/8 transition-colors duration-200">
                                               <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{sub.name}</span>
                                             </Link>
                                           ))}
                                         </div>
                                       </div>
                                     ) : (
-                                      <Link key={city.name} href={city.href} className="group/item flex items-center px-3 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
+                                      <Link prefetch={false} key={city.name} href={city.href} className="group/item flex items-center px-3 py-[7px] rounded-lg hover:bg-white/8 transition-colors duration-200">
                                         <span className="text-[13px] font-normal text-white/80 group-hover/item:text-white uppercase tracking-[0.1em] transition-colors duration-200">{city.name}</span>
                                       </Link>
                                     ),
@@ -550,7 +557,7 @@ export default function HeaderProfessional() {
 
                           {/* Ver todas las oficinas */}
                           <div className="mt-5 pt-4 border-t border-white/10">
-                            <Link href={`/${language}/oficinas`} className="group/item flex items-center justify-center px-4 py-2.5 rounded-xl hover:bg-[#B2904D]/10 transition-colors duration-200">
+                            <Link prefetch={false} href={`/${language}/oficinas`} className="group/item flex items-center justify-center px-4 py-2.5 rounded-xl hover:bg-[#B2904D]/10 transition-colors duration-200">
                               <span className="text-xs font-semibold text-[#B2904D] group-hover/item:text-white uppercase tracking-[0.15em] transition-colors duration-200">
                                 {language === 'es' ? 'Ver todas las oficinas' : 'View all offices'} →
                               </span>
@@ -580,7 +587,7 @@ export default function HeaderProfessional() {
                                 </p>
                               )}
                               {grupo.items.map((subItem) => (
-                                <Link
+                                <Link prefetch={false}
                                   key={subItem.name}
                                   href={subItem.href}
                                   className="group/item flex items-center px-4 py-2.5 rounded-lg hover:bg-white/5 transition-colors duration-200"

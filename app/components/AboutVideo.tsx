@@ -35,7 +35,7 @@ export default function AboutVideo({ lang }: { lang: Language }) {
         >
           <Image
             src="https://img.youtube.com/vi/AWgRoJitmJo/maxresdefault.jpg"
-            alt="Uniendo Familias | Episodio 4 — La decisión que lo cambió todo"
+            alt={isEs ? 'Uniendo Familias con Manuel Solis, episodio 4 (Pablo Santafe): La decisión que lo cambió todo' : 'Uniendo Familias with Manuel Solis, Episode 4 (Pablo Santafe): The Decision That Changed Everything'}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 50vw"

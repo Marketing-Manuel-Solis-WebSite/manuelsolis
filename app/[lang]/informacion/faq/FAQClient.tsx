@@ -402,7 +402,7 @@ export default function FAQClient() {
                   <div className="relative w-full h-full flex items-center justify-center">
                     <Image
                       src="/LogoInformacion.png"
-                      alt="Logo Información"
+                      alt="Law Offices of Manuel Solis"
                       width={500}
                       height={500}
                       className="object-contain drop-shadow-[0_0_20px_rgba(178,144,77,0.4)] hover:drop-shadow-[0_0_30px_rgba(178,144,77,0.6)] transition-all duration-500"

@@ -3,13 +3,17 @@ import { Reveal, Stagger, StaggerItem, Parallax, MagneticButton, Tilt, TiltLayer
 import HeroPopup from './HeroPopup';
 import type { Language } from '../lib/translations';
 
+// `name` es el alt de cada logo. Los nombres propios de colegios de abogados no
+// se traducen; sí la Rama Judicial de Puerto Rico, que tiene nombre oficial en
+// ambos idiomas. cd-state.png es el sello del Condado de Dallas («The County of
+// Dallas · State of Texas»), no un colegio de abogados: el alt dice lo que es.
 const associations = [
-  { name: 'Chicago Bar Association', logo: '/state-bar/Chicago-bar.png' },
-  { name: 'Illinois State Bar Association', logo: '/state-bar/illinois-bar.png' },
-  { name: 'State Bar of New Mexico', logo: '/state-bar/nm-state.png' },
-  { name: 'American Bar Association', logo: '/state-bar/aba-state.png' },
-  { name: 'Rama Judicial de Puerto Rico', logo: '/state-bar/pr-state.png' },
-  { name: 'CD State Bar', logo: '/state-bar/cd-state.png' },
+  { name: { es: 'Chicago Bar Association', en: 'Chicago Bar Association' }, logo: '/state-bar/Chicago-bar.png' },
+  { name: { es: 'Illinois State Bar Association', en: 'Illinois State Bar Association' }, logo: '/state-bar/illinois-bar.png' },
+  { name: { es: 'State Bar of New Mexico', en: 'State Bar of New Mexico' }, logo: '/state-bar/nm-state.png' },
+  { name: { es: 'American Bar Association', en: 'American Bar Association' }, logo: '/state-bar/aba-state.png' },
+  { name: { es: 'Rama Judicial de Puerto Rico', en: 'Puerto Rico Judicial Branch' }, logo: '/state-bar/pr-state.png' },
+  { name: { es: 'Sello del Condado de Dallas, Texas', en: 'Seal of Dallas County, Texas' }, logo: '/state-bar/cd-state.png' },
 ];
 
 function getLogoSize(logoName: string) {
@@ -77,7 +81,7 @@ export default function Hero({ lang }: { lang: Language }) {
             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
 
             <div className="relative z-10 w-full h-full origin-bottom flex justify-center -translate-y-5 lg:-translate-y-20">
-              <div className="w-full h-full scale-110 sm:scale-125 lg:scale-[1.65] lg:-translate-x-24 lg:origin-bottom transform-gpu">
+              <div className="w-full h-full scale-110 sm:scale-125 lg:scale-[1.2] 2xl:scale-[1.5] lg:origin-bottom transform-gpu">
                 <div className="relative w-full h-full hero-portrait-settle origin-bottom">
                   {/* sizes en px, no en vw: object-contain sobre un retrato 1080x1200
                       encaja por altura, asi que el ancho pintado lo fija la altura del
@@ -86,7 +90,7 @@ export default function Hero({ lang }: { lang: Language }) {
                       fold (flex-col-reverse) y su preload competia con el LCP real. */}
                   <Image
                     src="/manuelsolisl.png"
-                    alt="Abogado Manuel Solis"
+                    alt={isEs ? 'Los abogados Manuel Solís III, Manuel Solís y Juan Solís' : 'Attorneys Manuel Solís III, Manuel Solís and Juan Solís'}
                     fill
                     className="object-contain object-bottom drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]"
                     priority
@@ -136,11 +140,11 @@ export default function Hero({ lang }: { lang: Language }) {
 
                 {/* 50,000 — LCP showpiece: static, paints immediately (NOT staggered/gated) */}
                 <div className="relative w-full overflow-visible px-2 sm:px-4 lg:px-4 lg:pr-16 py-2 sm:py-4">
-                  <div className="absolute inset-0 text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[10rem] font-black tracking-tighter text-gold-500/15 blur-xl flex items-center justify-center lg:justify-start">
+                  <div className="absolute inset-0 text-[3.5rem] sm:text-[5rem] md:text-[7rem] xl:text-[10rem] font-black tracking-tighter text-gold-500/15 blur-xl flex items-center justify-center lg:justify-start">
                     50,000
                   </div>
                   <div
-                    className="relative text-[3.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[10rem] font-black tracking-tighter leading-none flex items-center justify-center lg:justify-start w-full"
+                    className="relative text-[3.5rem] sm:text-[5rem] md:text-[7rem] xl:text-[10rem] font-black tracking-tighter leading-none flex items-center justify-center lg:justify-start w-full"
                     style={{
                       background: 'linear-gradient(135deg, #B2904D 0%, #D4A853 25%, #B2904D 50%, #8B6914 75%, #B2904D 100%)',
                       WebkitBackgroundClip: 'text',
@@ -233,7 +237,7 @@ export default function Hero({ lang }: { lang: Language }) {
                         imageSizes (256, 384). La calidad 50 es imperceptible aquí
                         porque el logo va en escala de grises, al 50 % de opacidad
                         y detrás de la máscara de desvanecido del marquee. */}
-                    <Image src={assoc.logo} alt={assoc.name} height={size.height} width={size.width} sizes="(max-width: 1024px) 224px, 280px" quality={50} className="h-full w-auto object-contain drop-shadow-sm" loading="lazy" />
+                    <Image src={assoc.logo} alt={assoc.name[lang]} height={size.height} width={size.width} sizes="(max-width: 1024px) 224px, 280px" quality={50} className="h-full w-auto object-contain drop-shadow-sm" loading="lazy" />
                   </div>
                 </div>
               );

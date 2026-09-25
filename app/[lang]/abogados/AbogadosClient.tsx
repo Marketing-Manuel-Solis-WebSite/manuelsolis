@@ -65,11 +65,11 @@ export default function AbogadosClient({ lang }: { lang: 'es' | 'en' }) {
 
       <Header />
 
-      {/* FONDO ATMOSFÉRICO - CSS only, no JS animations */}
+      {/* FONDO ATMOSFÉRICO - CSS only, no JS animations — orbes solo desde lg, como OfficePageView: dos blur de 150/180px sobre una capa fija a pantalla completa coinciden con LCP de 15-28 s en iOS en estas páginas (Speed Insights, sep-2026) */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#002868] via-[#001540] to-[#000a20]" />
-        <div className="absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-500/20 rounded-full blur-[150px] opacity-50" />
-        <div className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-600/20 rounded-full blur-[180px] opacity-40" />
+        <div className="hidden lg:block absolute top-[-20%] right-[-10%] w-[70vw] h-[70vw] bg-blue-500/20 rounded-full blur-[150px] opacity-50" />
+        <div className="hidden lg:block absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-sky-600/20 rounded-full blur-[180px] opacity-40" />
       </div>
 
       <main id="main-content" tabIndex={-1}>

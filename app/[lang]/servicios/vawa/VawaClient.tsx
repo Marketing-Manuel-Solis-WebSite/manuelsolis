@@ -11,6 +11,7 @@ import { Reveal, Stagger, StaggerItem, MagneticButton } from '../../../component
 import VawaCases from './VawaCases';
 import { resolveTabs, resolveSteps, resolveBlog, getOffices, resolveUi, type StepIconKey } from './vawaData';
 import type { Language } from '../../../lib/translations';
+import { HOME_IMAGE_ALT } from '../../../lib/imageAlts';
 
 const STEP_ICONS: Record<StepIconKey, ElementType> = { messageSquare: MessageSquare, search: Search, fileText: FileText, shieldCheck: ShieldCheck };
 
@@ -67,7 +68,7 @@ export default function VawaClient({
               <div className="lg:col-span-5 relative h-[450px] md:h-[600px] lg:h-[80vh] flex items-end justify-center order-2 lg:order-1">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001540] via-transparent to-transparent blur-xl z-10 h-1/4 bottom-0 w-full" />
                 <div className="relative z-0 w-full h-full flex items-end justify-center">
-                  <Image src="/home-image.jpg" alt={isEs ? 'Abogados VAWA - Protección para víctimas de violencia doméstica' : 'VAWA Attorneys - Protection for domestic violence victims'} fill className="object-contain object-bottom drop-shadow-[0_0_35px_rgba(178,144,77,0.25)]" priority sizes="(max-width: 768px) 100vw, 50vw" />
+                  <Image src="/home-image.jpg" alt={HOME_IMAGE_ALT[lang]} fill className="object-contain object-bottom drop-shadow-[0_0_35px_rgba(178,144,77,0.25)]" priority sizes="(max-width: 768px) 100vw, 50vw" />
                 </div>
                 <Reveal variant="up" delay={0.3} className="absolute bottom-32 lg:bottom-48 -right-4 md:-right-10 z-20 p-6 border border-[#B2904D]/30 rounded-2xl backdrop-blur-xl bg-[#001540]/60 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
                   <div className="flex items-center gap-3 mb-1">

@@ -78,7 +78,7 @@ export default function SegurosClient({
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-transparent to-transparent blur-2xl rounded-full z-0 opacity-80" />
                 <div className="relative z-10 w-full h-full flex items-center justify-center transform-gpu">
                   <div className="relative w-full h-full">
-                    <Image src="/insurance-hero.png" alt="Abogado de reclamos de seguros en Houston, Texas" fill className="object-contain object-center drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]" priority sizes="(max-width: 768px) 100vw, 50vw" />
+                    <Image src="/insurance-hero.png" alt={isEs ? 'Persona de traje cubriendo con las manos una pequeña casa de maqueta' : 'Person in a suit cupping their hands over a small model house'} fill className="object-contain object-center drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]" priority sizes="(max-width: 768px) 100vw, 50vw" />
                   </div>
                 </div>
                 <Reveal variant="left" delay={0.3} className="absolute bottom-4 md:bottom-10 left-0 md:left-[-20px] z-20 p-4 md:p-6 border border-white/10 rounded-2xl backdrop-blur-md bg-white/10 shadow-2xl">

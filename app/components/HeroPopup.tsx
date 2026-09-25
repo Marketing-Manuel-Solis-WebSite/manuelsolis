@@ -106,8 +106,20 @@ export default function HeroPopup({ lang }: { lang: 'es' | 'en' }) {
           className="fixed top-20 sm:top-24 md:top-32 left-4 right-4 sm:left-auto sm:right-4 md:right-10 z-50 w-auto max-w-[calc(100%-2rem)] sm:max-w-sm mx-auto sm:mx-0 p-4 sm:p-6 rounded-2xl bg-red-900/90 backdrop-blur-md border border-red-500/30 shadow-2xl group"
         >
           <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-transparent rounded-2xl opacity-50 pointer-events-none" />
+          {/* Cierre visible de 44x44: antes el único control era el enlace de
+              texto de abajo, de 16 px de alto (auditoría de responsive 2026-09). */}
+          <button
+            type="button"
+            onClick={handleDismissPopup}
+            aria-label={isEs ? 'Cerrar aviso' : 'Close notice'}
+            className="absolute top-1 right-1 z-20 flex items-center justify-center w-11 h-11 rounded-full text-red-100 hover:text-white hover:bg-red-800/60 transition-colors"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
           <div className="relative z-10">
-            <h3 id="detained-popup-title" className="text-lg sm:text-xl font-bold mb-1 text-red-50 drop-shadow-md">
+            <h3 id="detained-popup-title" className="text-lg sm:text-xl font-bold mb-1 pr-10 text-red-50 drop-shadow-md">
               {isEs ? '¿Familiar Detenido?' : 'Detained Relative?'}
             </h3>
             <p id="detained-popup-description" className="text-xs sm:text-sm font-medium text-red-100/90 mb-3 sm:mb-4">
@@ -126,7 +138,7 @@ export default function HeroPopup({ lang }: { lang: 'es' | 'en' }) {
             <button
               onClick={handleDismissPopup}
               aria-label={isEs ? 'Cerrar aviso y continuar al sitio' : 'Close notice and continue to site'}
-              className="block w-full text-center mt-3 sm:mt-4 text-xs text-red-100 hover:text-white underline decoration-red-200/30 hover:decoration-white transition-all"
+              className="block w-full min-h-11 py-3 text-center mt-1 sm:mt-2 text-xs text-red-100 hover:text-white underline decoration-red-200/30 hover:decoration-white transition-all"
             >
               {isEs ? 'Continuar al sitio' : 'Continue to site'}
             </button>

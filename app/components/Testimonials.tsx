@@ -25,6 +25,10 @@ export default function Testimonials({ lang }: { lang: Language }) {
       ? 'Feliz, sentí que todo lo que perdí cuando ingresé al país, se me devolvió y con un regalo'
       : 'Happy, I felt that everything I lost when I entered the country was returned to me, and with a gift.',
     videoId: 'cTJ9M5PT-S4',
+    // La miniatura rotula "¡Residencia aprobada!" junto al nombre.
+    thumbnailAlt: isEs
+      ? 'Video testimonio de Octavio Varela: residencia aprobada'
+      : 'Octavio Varela video testimonial: residency approved',
   };
 
   return (
@@ -46,7 +50,7 @@ export default function Testimonials({ lang }: { lang: Language }) {
           <div className="lg:col-span-7 relative">
             <div className="absolute -inset-16 border border-white/5 rounded-full z-0 border-dashed opacity-40 hidden lg:block" />
             <Reveal variant="scale" amount={0.3}>
-              <TestimonialsVideo lang={lang} videoId={data.videoId} thumbnail={FALLBACK_THUMBNAIL} name={data.name} />
+              <TestimonialsVideo lang={lang} videoId={data.videoId} thumbnail={FALLBACK_THUMBNAIL} thumbnailAlt={data.thumbnailAlt} name={data.name} />
             </Reveal>
           </div>
 

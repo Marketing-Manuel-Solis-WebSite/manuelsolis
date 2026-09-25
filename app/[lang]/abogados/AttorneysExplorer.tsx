@@ -94,7 +94,7 @@ export default function AttorneysExplorer({
                         <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                           <Image
                             src={attorney.image}
-                            alt={attorney.name}
+                            alt={`${attorney.name}, ${attorney.role}`}
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                             className={attorney.id === 'lupita-valenzuela-martinez'
@@ -162,7 +162,7 @@ export default function AttorneysExplorer({
               <div className="w-full lg:w-5/12 bg-black relative h-[35vh] lg:h-auto">
                 <Image
                   src={selectedAttorney.image}
-                  alt={selectedAttorney.name}
+                  alt={`${selectedAttorney.name}, ${selectedAttorney.role}`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   className={selectedAttorney.id === 'lupita-valenzuela-martinez'

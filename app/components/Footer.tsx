@@ -219,23 +219,27 @@ export default function Footer() {
 
       </div>
 
-      {/* Reserva la altura de MobileStickyBar, que es `fixed` + `sm:hidden` y por
-          tanto solapa el final del pie por debajo de 640px. Va dentro del
+      {/* Reserva la altura de los controles fijos para que no tapen el final del
+          pie. Por debajo de 640px: MobileStickyBar (3.5rem) más el botón AI, que
+          flota encima (bottom 5.5rem + 4rem de alto = 9.5rem). Desde sm: la fila
+          de Consulta/WhatsApp/AI ocupa 5.5rem (bottom-6 + h-16). Va dentro del
           <footer> (no en body) para que el hueco herede el fondo navy en vez de
           mostrar el blanco del body. */}
       <div
         aria-hidden="true"
         className="sm:hidden"
-        style={{ height: 'calc(3.5rem + env(safe-area-inset-bottom, 0px))' }}
+        style={{ height: 'calc(9.5rem + env(safe-area-inset-bottom, 0px))' }}
       />
+      <div aria-hidden="true" className="hidden sm:block h-24" />
 
-      {/* BOTÓN "BACK TO TOP" */}
+      {/* BOTÓN "BACK TO TOP" — bottom-28 lo deja por encima de la fila de
+          controles fijos (5.5rem); en bottom-8 quedaba debajo del botón AI. */}
       <m.button
         onClick={scrollToTop}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label={language === 'es' ? 'Volver al inicio' : 'Scroll to top'}
-        className={`absolute bottom-8 right-8 w-10 h-10 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 text-[#B2904D] flex items-center justify-center hover:bg-[#B2904D] hover:text-[#001540] transition-all duration-300 backdrop-blur-sm hidden md:flex`}
+        className={`absolute bottom-28 right-8 w-10 h-10 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 text-[#B2904D] flex items-center justify-center hover:bg-[#B2904D] hover:text-[#001540] transition-all duration-300 backdrop-blur-sm hidden md:flex`}
       >
         <ArrowUp size={18} />
       </m.button>

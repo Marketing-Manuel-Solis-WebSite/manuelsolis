@@ -23,6 +23,8 @@ const testimonials = [
     name: 'Luis Gutierrez',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV01.png',
+    // Texto de la miniatura: nombre + "Residencia Aprobada" / "Trámite de Residencia".
+    imageAlt: { es: 'Video testimonio de Luis Gutierrez: residencia aprobada', en: 'Luis Gutierrez video testimonial: residency approved' },
     video: 'https://www.youtube.com/embed/dtKRXVMxcHU',
     youtubeId: 'dtKRXVMxcHU',
     quote: {
@@ -39,6 +41,8 @@ const testimonials = [
     name: 'José Aguilar y Laura Lechuga',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV02.png',
+    // Texto de la miniatura: nombre + "Residencia Aprobada" / "Trámite de Residencia".
+    imageAlt: { es: 'Video testimonio de José Aguilar y Laura Lechuga: residencia aprobada', en: 'José Aguilar and Laura Lechuga video testimonial: residency approved' },
     video: 'https://www.youtube.com/embed/y5BwL3Owhzg',
     youtubeId: 'y5BwL3Owhzg',
     quote: {
@@ -55,6 +59,8 @@ const testimonials = [
     name: 'Alejandra Espinoza',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV03.png',
+    // Texto de la miniatura: nombre + "Residencia Aprobada" / "Trámite de Residencia".
+    imageAlt: { es: 'Video testimonio de Alejandra Espinoza: residencia aprobada', en: 'Alejandra Espinoza video testimonial: residency approved' },
     video: 'https://www.youtube.com/embed/wZ7uJ0mHZjk',
     youtubeId: 'wZ7uJ0mHZjk',
     quote: {
@@ -71,6 +77,8 @@ const testimonials = [
     name: 'Yesenia Zavala',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV04.png',
+    // Texto de la miniatura: nombre + "Residencia Aprobada" / "Trámite de Residencia".
+    imageAlt: { es: 'Video testimonio de Yesenia Zavala: residencia aprobada', en: 'Yesenia Zavala video testimonial: residency approved' },
     video: 'https://www.youtube.com/embed/QXOZHRpSjSA',
     youtubeId: 'QXOZHRpSjSA',
     quote: {
@@ -87,6 +95,8 @@ const testimonials = [
     name: 'Ivonne Hernández',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV05.png',
+    // Texto de la miniatura: nombre + "Residencia Aprobada" / "Trámite de Residencia".
+    imageAlt: { es: 'Video testimonio de Ivonne Hernández: residencia aprobada', en: 'Ivonne Hernández video testimonial: residency approved' },
     video: 'https://www.youtube.com/embed/kT9ZXCFW5KM',
     youtubeId: 'kT9ZXCFW5KM',
     quote: {
@@ -103,6 +113,8 @@ const testimonials = [
     name: 'Octavio Varela',
     category: { es: 'Testimonio', en: 'Testimonial' },
     image: '/testimonials/YV06.png',
+    // Texto de la miniatura: nombre + "Residencia Aprobada" / "Trámite de Residencia".
+    imageAlt: { es: 'Video testimonio de Octavio Varela: trámite de residencia', en: 'Octavio Varela video testimonial: residency process' },
     video: 'https://www.youtube.com/embed/cTJ9M5PT-S4',
     youtubeId: 'cTJ9M5PT-S4',
     quote: {
@@ -143,15 +155,17 @@ const successStories = [
 ];
 
 // --- 8 FOTOS DE GALERÍA ---
+// Son fotos fijas, no videos: el alt describe solo lo que se ve (quién, qué
+// sostiene). El contenido de los sobres no se lee, así que no se nombra.
 const galleryPhotos = [
-  { src: '/reviews/bertha.png', name: 'Bertha Isabel' },
-  { src: '/reviews/edgar.png', name: 'Edgar Guadalupe' },
-  { src: '/reviews/juan.png', name: 'Juan Ramón' },
-  { src: '/reviews/margarita.png', name: 'Margarita Reyes' },
-  { src: '/reviews/marina.png', name: 'Marina Salgado' },
-  { src: '/reviews/monseraf.png', name: 'Monseraf Meléndez' },
-  { src: '/reviews/nidia.png', name: 'Nidia Elena' },
-  { src: '/reviews/pedro.png', name: 'Pedro Rogel' },
+  { src: '/reviews/bertha.png', name: 'Bertha Isabel', alt: { es: 'Bertha Isabel sonriendo con un sobre de correo en las manos', en: 'Bertha Isabel smiling and holding up a mail envelope' } },
+  { src: '/reviews/edgar.png', name: 'Edgar Guadalupe', alt: { es: 'Foto de grupo con Edgar Guadalupe, incluidos dos niños pequeños, en el vestíbulo de una oficina', en: 'Group photo with Edgar Guadalupe, including two small children, in an office lobby' } },
+  { src: '/reviews/juan.png', name: 'Juan Ramón', alt: { es: 'Juan Ramón sonriendo con un sobre de correo en las manos', en: 'Juan Ramón smiling and holding up a mail envelope' } },
+  { src: '/reviews/margarita.png', name: 'Margarita Reyes', alt: { es: 'Margarita Reyes con el pulgar arriba y un sobre de correo en la mano', en: 'Margarita Reyes giving a thumbs-up while holding a mail envelope' } },
+  { src: '/reviews/marina.png', name: 'Marina Salgado', alt: { es: 'Marina Salgado con un sobre de correo en las manos', en: 'Marina Salgado holding up a mail envelope' } },
+  { src: '/reviews/monseraf.png', name: 'Monseraf Meléndez', alt: { es: 'Monseraf Meléndez sonriendo con dos sobres de correo en las manos', en: 'Monseraf Meléndez smiling and holding two mail envelopes' } },
+  { src: '/reviews/nidia.png', name: 'Nidia Elena', alt: { es: 'Foto de grupo con Nidia Elena y otras dos personas', en: 'Group photo with Nidia Elena and two other people' } },
+  { src: '/reviews/pedro.png', name: 'Pedro Rogel', alt: { es: 'Pedro Rogel sentado a una mesa con un sobre de correo en las manos', en: 'Pedro Rogel seated at a table holding a mail envelope' } },
 ];
 
 interface TestimoniosClientProps {
@@ -322,7 +336,7 @@ export default function TestimoniosClient({ googleRating = null }: TestimoniosCl
                   <div className="relative h-[320px] w-full overflow-hidden z-10 rounded-t-[32px]">
                      <Image
                        src={item.image}
-                       alt={item.name}
+                       alt={getText(item.imageAlt)}
                        fill
                        className="object-cover opacity-90 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
                      />
@@ -671,7 +685,7 @@ export default function TestimoniosClient({ googleRating = null }: TestimoniosCl
                 >
                   <Image
                     src={photo.src}
-                    alt={photo.name}
+                    alt={getText(photo.alt)}
                     width={400}
                     height={533}
                     className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"

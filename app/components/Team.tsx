@@ -82,7 +82,7 @@ export default function Team({ lang }: { lang: Language }) {
             <Reveal variant="scale" amount={0.25} className="relative z-10 block w-full h-[500px] lg:h-[600px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 bg-navy-500">
               <Image
                 src="/MSTeam.png"
-                alt="Equipo de abogados Manuel Solis"
+                alt={isEs ? 'El abogado Manuel Solís frente a un mosaico de retratos del equipo de abogados de la firma' : "Attorney Manuel Solis in front of a collage of headshots of the firm's attorneys"}
                 fill
                 className="object-cover scale-105"
                 sizes="(max-width: 768px) 100vw, 50vw"

@@ -134,8 +134,8 @@ const faqs: { q: Detail; a: Detail }[] = [
 ];
 
 const blogPosts: { slug: string; title: Detail; category: Detail; image: string }[] = [
-  { slug: 'ley-de-los-10-anos-cancelacion-de-deportacion', title: { es: 'La Ley de los 10 Años: Cancelación de Deportación', en: 'The 10-Year Law: Cancellation of Removal' }, category: { es: 'Defensa de Deportación', en: 'Deportation Defense' }, image: '/blog/blog_16/BLOG06_CR1.png' },
-  { slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', title: { es: 'Frenar Deportación con Visa Humanitaria', en: 'Stop Deportation with Humanitarian Visa' }, category: { es: 'Defensa de Deportación', en: 'Deportation Defense' }, image: '/blog/blog_05/B5_CR1.png' },
+  { slug: 'ley-de-los-10-anos-cancelacion-de-deportacion', title: { es: 'La Ley de los 10 Años: Cancelación de Deportación', en: 'The 10-Year Law: Cancellation of Removal' }, category: { es: 'Defensa de Deportación', en: 'Deportation Defense' }, image: '/blog/blog_11/BLOG01_CR1.png' },
+  { slug: 'frenar-deportacion-inminente-con-solicitud-de-visa-humanitaria', title: { es: 'Frenar Deportación con Visa Humanitaria', en: 'Stop Deportation with Humanitarian Visa' }, category: { es: 'Defensa de Deportación', en: 'Deportation Defense' }, image: '/blog/blog_08/B8_CR1.png' },
   { slug: 'marihuana-dui-buen-caracter-moral-inmigracion', title: { es: 'Marihuana, DUI y Buen Carácter Moral', en: 'Marijuana, DUI & Good Moral Character' }, category: { es: 'Consecuencias Criminales', en: 'Criminal Consequences' }, image: '/blog/blog_17/BLOG07_CR1.png' },
   { slug: 'advance-parole-2026-viajar-con-daca-tps-visa-u', title: { es: 'Advance Parole 2026: Viajar con DACA, TPS o Visa U', en: 'Advance Parole 2026: Travel with DACA, TPS or U Visa' }, category: { es: 'Proceso Migratorio', en: 'Immigration Process' }, image: '/blog/blog_12/BLOG02_CR1.png' },
 ];

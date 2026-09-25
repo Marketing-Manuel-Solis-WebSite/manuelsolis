@@ -340,6 +340,17 @@ const officesData: OfficeData[] = officePresentations
     return 0;
   });
 
+// Fotos que comparten varias oficinas (hoy /offices/Houston.png, que es el
+// edificio de 6657 Navigation Blvd y se usa también para otras sedes de Houston).
+// En esas el alt queda vacío: nombrar la oficina activa diría que el edificio es
+// suyo, y es falso. Es una foto de fondo al 60 % bajo el título, que ya nombra
+// la oficina, así que alt="" no quita información.
+const sharedOfficeImages = new Set(
+  officesData
+    .map((o) => o.image)
+    .filter((img, i, all) => all.indexOf(img) !== i),
+);
+
 // --- MINI COMPONENTE: ACCIÓN HUD ---
 const ActionHUD = ({ label, value, icon: Icon, href, office }: { label: string, value: string, icon: React.ElementType, href?: string, office?: string }) => {
     const isTel = Boolean(href?.startsWith('tel'));
@@ -613,7 +624,9 @@ export default function OfficesExplorer({ lang }: { lang: Language }) {
                    {/* Imagen de fondo con efecto de foco */}
                    <Image
                      src={activeOffice.image}
-                     alt={activeOffice.city}
+                     alt={sharedOfficeImages.has(activeOffice.image)
+                       ? ''
+                       : (language === 'es' ? `Oficina ${gT(activeOffice.title)}` : `${gT(activeOffice.title)} office`)}
                      fill
                      className="object-cover opacity-60 transition-transform duration-1000 group-hover:scale-105"
                      sizes="(max-width: 768px) 100vw, 70vw"

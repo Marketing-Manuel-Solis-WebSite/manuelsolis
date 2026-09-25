@@ -92,7 +92,7 @@ export default function ImmigrationClient({
                   <div className="relative w-full h-full">
                     <Image
                       src="/immigration-hero.png"
-                      alt="Abogado de Inmigración en USA Manuel Solís"
+                      alt={isEs ? 'Bandera de Estados Unidos ondeando sobre una calle de la ciudad al atardecer' : 'American flag flying over a city street at sunset'}
                       fill
                       className="object-contain object-center drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]"
                       priority

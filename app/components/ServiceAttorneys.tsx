@@ -52,7 +52,7 @@ export default function ServiceAttorneys({
               <div className="relative aspect-[4/3] w-full bg-[#001030]">
                 <Image
                   src={a.image}
-                  alt={a.name}
+                  alt={`${a.name}, ${a.role}`}
                   fill
                   className="object-cover object-top"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

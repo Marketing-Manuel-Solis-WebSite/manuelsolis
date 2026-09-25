@@ -19,11 +19,14 @@ export default function TestimonialsVideo({
   lang,
   videoId,
   thumbnail,
+  thumbnailAlt,
   name,
 }: {
   lang: Language;
   videoId: string;
   thumbnail: string;
+  /** Alt de la miniatura, ya en el idioma activo. Sin él cae al nombre. */
+  thumbnailAlt?: string;
   name: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +46,7 @@ export default function TestimonialsVideo({
         >
           <Image
             src={thumbnail}
-            alt={name}
+            alt={thumbnailAlt ?? name}
             fill
             sizes="(max-width: 768px) 100vw, 60vw"
             className="object-cover transition-transform duration-[2s] group-hover:scale-105 opacity-90 group-hover:opacity-100"
