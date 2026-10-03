@@ -54,7 +54,7 @@ export function getText(obj: TranslatableString, language: 'es' | 'en'): string 
 
 // Attorney location groups
 export const locationGroups: { label: { es: string; en: string }; ids: string[] }[] = [
-  { label: { es: 'Houston, Texas', en: 'Houston, Texas' }, ids: ['manuel-solis', 'manuel-solis-iii', 'juan-solis', 'gregory-finney', 'alejandro-manzano', 'austen-gunnels', 'gabriel-perez', 'alexis-alvarez'] },
+  { label: { es: 'Houston, Texas', en: 'Houston, Texas' }, ids: ['manuel-solis', 'manuel-solis-iii', 'juan-solis', 'gregory-finney', 'alejandro-manzano', 'austen-gunnels', 'gabriel-perez'] },
   { label: { es: 'Bellaire, Texas', en: 'Bellaire, Texas' }, ids: ['ni-yan'] },
   { label: { es: 'Dallas, Texas', en: 'Dallas, Texas' }, ids: ['mark-mcbroom'] },
   { label: { es: 'El Paso, Texas', en: 'El Paso, Texas' }, ids: ['victor-rojas'] },
@@ -557,36 +557,6 @@ export const attorneys: Attorney[] = [
     quote: {
       es: "Utilizar el derecho como herramienta para la equidad y la justicia.",
       en: "Using law as a tool for equity and justice."
-    }
-  },
-  {
-    id: 'alexis-alvarez',
-    name: 'Alexis Alvarez',
-    image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Alexis-Alvarez.png',
-    socialImage: '/og/abogados/alexis-alvarez.jpg',
-    role: { es: 'Abogada', en: 'Attorney' },
-    bio: {
-      es: [
-        "Originaria del Valle del Río Grande, Texas. Hija de trabajadores agrícolas migrantes. Esta historia familiar le dio una profunda admiración por la comunidad inmigrante.",
-        "Obtuvo su JD de la Facultad de Derecho Sturm de la Universidad de Denver."
-      ],
-      en: [
-        "Native of the Rio Grande Valley, Texas. Daughter of migrant farm workers. This family history gave her a deep admiration for the immigrant community.",
-        "She obtained her JD from the University of Denver Sturm College of Law."
-      ]
-    },
-    seoDescription: {
-      es: 'Alexis Alvarez, abogada en Houston e hija de trabajadores agrícolas migrantes. Obtuvo su JD en la Universidad de Denver (Sturm College of Law).',
-      en: 'Alexis Alvarez, attorney in Houston and daughter of migrant farm workers. She earned her JD at the University of Denver Sturm College of Law.'
-    },
-    education: [
-      { es: "Universidad de Denver (Sturm College of Law)", en: "University of Denver (Sturm College of Law)" },
-      { es: "Universidad Texas A&M", en: "Texas A&M University" }
-    ],
-    admissions: ["Colorado"],
-    quote: {
-      es: "Cree firmemente en el principio de retribuir a la comunidad.",
-      en: "She firmly believes in the principle of giving back to the community."
     }
   },
   {

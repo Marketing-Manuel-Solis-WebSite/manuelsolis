@@ -133,7 +133,7 @@ Teléfono central: **(832) 598-0914**. Sitio: **https://www.manuelsolis.com**.
 - **Teléfono:** +1-720-358-8973
 - **GPS:** 39.7953, -105.1436
 - **Horario:** Lun–Vie 09:00–19:00; Sáb 09:00–14:00
-- **Abogados destacados:** Edwin Zavala, Alexis Alvarez.
+- **Abogados destacados:** Edwin Zavala.
 - **Google Business:** https://share.google/QbeutobA9WchbNPcu
 - **Ref.:** `app/[lang]/oficinas/arvada/page.tsx:16-20,73-74`; `app/lib/cityServiceData.ts:92`
 
@@ -203,7 +203,7 @@ Fuente: `app/lib/cityServiceData.ts:109-383`.
 - **El Paso:** Victor Rojas (`:290-314`).
 - **Chicago:** Andrew Fink, Ana Patricia Rueda (`:217-237`), Eduardo Garcia (`:394-418`).
 - **Memphis:** Sara James (`:370-393`), Lupita Valenzuela Martinez (`:504-537`), Roberto García (`:539-562`).
-- **Denver / Arvada:** Edwin Zavala (`:239-259`), Alexis Alvarez (`:420-443`).
+- **Denver / Arvada:** Edwin Zavala (`:239-259`).
 - **Los Ángeles:** Edward S. Reisman (`:445-468`).
 - **Houston (otras especialidades):** Gabriel Perez (lesiones/seguros, `:345-368`), Austen Gunnels (accidentes marítimos y de vehículos, `:316-343`), Alejandro Manzano (inmigración/EOIR, `:261-287`).
 

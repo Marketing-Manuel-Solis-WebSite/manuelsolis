@@ -38,6 +38,7 @@ const DEFUNCT_ATTORNEYS = [
   'ana-patricia-rueda-en',
   'stephen-walker',
   'danatayri-morales-vidal-esq',
+  'alexis-alvarez',
   // 'edward-s-reisman' NO va aquí: es un abogado EN ACTIVO.
   // Entró por error en el barrido masivo de redirects legacy de WordPress del
   // 30-abr-2026, cuatro semanas después de que su ficha se diera de alta en
