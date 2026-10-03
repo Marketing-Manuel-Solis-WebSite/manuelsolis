@@ -508,6 +508,12 @@ export interface PostLeadOptions {
   /** Override de la clave derivada del payload (solo para pruebas). */
   idempotencyKey?: string;
   signal?: AbortSignal;
+  /** Cabeceras extra (p. ej. Authorization de BoSpot). */
+  headers?: Record<string, string>;
+  /** Cuerpo a enviar en lugar de `payload` (el contrato de BoSpot es otro). */
+  body?: unknown;
+  /** Nombre del destino en los logs: 'bos' | 'bospot'. */
+  destination?: string;
 }
 
 // El usuario espera esta respuesta con el formulario en "Procesando...", así
@@ -547,6 +553,14 @@ export function buildIdempotencyKey(payload: LeadPayload): string {
   return createHash('sha256').update(material).digest('hex').slice(0, 32);
 }
 
+async function readErrorDetail(response: Response): Promise<string> {
+  try {
+    return (await response.text()).slice(0, 500);
+  } catch {
+    return '';
+  }
+}
+
 /** Aborta el intento por su propio tope sin perder el signal del caller. */
 function attemptSignal(timeoutMs: number, external?: AbortSignal): AbortSignal {
   const timeout = AbortSignal.timeout(timeoutMs);
@@ -579,6 +593,8 @@ export async function postLead(
   const attemptTimeoutMs = options.timeoutMs ?? DEFAULT_ATTEMPT_TIMEOUT_MS;
   const totalTimeoutMs = options.totalTimeoutMs ?? DEFAULT_TOTAL_TIMEOUT_MS;
   const idempotencyKey = options.idempotencyKey ?? buildIdempotencyKey(payload);
+  const destination = options.destination ?? 'bos';
+  const requestBody = JSON.stringify(options.body ?? payload);
   const startedAt = Date.now();
 
   let lastError: string | undefined;
@@ -597,8 +613,9 @@ export async function postLead(
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Idempotency-Key': idempotencyKey,
+          ...options.headers,
         },
-        body: JSON.stringify(payload),
+        body: requestBody,
         signal: attemptSignal(Math.min(attemptTimeoutMs, remainingMs), options.signal),
       });
 
@@ -607,6 +624,7 @@ export async function postLead(
           console.log(
             JSON.stringify({
               event: 'lead_capture_recovered',
+              destination,
               attempt,
               status: response.status,
               timestamp: new Date().toISOString(),
@@ -621,11 +639,16 @@ export async function postLead(
 
       // 4xx — client-side mistake or backend rejection. Don't retry.
       if (response.status >= 400 && response.status < 500) {
+        // El cuerpo dice qué campo rechazó el destino (BoSpot responde 422
+        // con `errors`); trae mensajes de validación, no datos del lead.
+        const detail = await readErrorDetail(response);
         console.error(
           JSON.stringify({
             event: 'lead_capture_failed_4xx',
+            destination,
             attempts: attempt,
             status: response.status,
+            detail,
             timestamp: new Date().toISOString(),
           }),
         );
@@ -640,6 +663,7 @@ export async function postLead(
       console.warn(
         JSON.stringify({
           event: 'lead_capture_attempt_failed',
+          destination,
           attempt,
           maxAttempts,
           status: response.status,
@@ -651,6 +675,7 @@ export async function postLead(
       console.warn(
         JSON.stringify({
           event: 'lead_capture_attempt_error',
+          destination,
           attempt,
           maxAttempts,
           error: lastError,
@@ -674,6 +699,7 @@ export async function postLead(
   console.error(
     JSON.stringify({
       event: 'lead_capture_failed_final',
+      destination,
       attempts: attemptsMade,
       status: lastStatus,
       error: lastError,

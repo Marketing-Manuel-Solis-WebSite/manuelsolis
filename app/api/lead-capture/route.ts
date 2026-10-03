@@ -5,10 +5,12 @@ import {
   detectDeviceTypeFromUA,
   LeadValidationError,
   mapFormToPayload,
-  postLead,
+  normalizePageUrl,
   sendLeadFallbackEmail,
   type LeadFormInput,
 } from '../../lib/leadCapture';
+import { normalizeEventId } from '../../lib/bospot';
+import { deliverLead } from '../../lib/leadDelivery';
 
 /**
  * POST /api/lead-capture
@@ -21,9 +23,10 @@ import {
  *   1. Rate-limit by IP (5 submissions/minute).
  *   2. Vercel BotID — Basic Detection (report-only by default).
  *   3. Validate + normalize the input via mapFormToPayload (pure).
- *   4. POST to LEAD_CAPTURE_ENDPOINT via postLead: retry/backoff acotado por
- *      timeout y con Idempotency-Key estable para que el reintento no
- *      duplique el lead.
+ *   4. Entrega vía deliverLead a BOS (LEAD_CAPTURE_ENDPOINT) y/o BoSpot,
+ *      según LEAD_DESTINATION (bos | both | bospot). Cada POST con
+ *      retry/backoff acotado por timeout y una Idempotency-Key estable para
+ *      que el reintento no duplique el lead.
  *   5. Si el POST no llegó a entregarse, email de respaldo con el lead
  *      completo (opt-in vía LEAD_FALLBACK_EMAIL) para que no se pierda.
  *
@@ -84,6 +87,12 @@ export async function POST(request: NextRequest) {
 
     const body = (await request.json()) as Partial<LeadFormInput> & {
       website?: unknown;
+      // Solo los usa BoSpot (ver lib/bospot.ts).
+      event_id?: unknown;
+      first_touch_source?: unknown;
+      first_touch_medium?: unknown;
+      first_touch_campaign?: unknown;
+      referrer?: unknown;
     };
 
     // Honeypot: el campo `website` está oculto en el formulario, así que un
@@ -154,19 +163,32 @@ export async function POST(request: NextRequest) {
       throw err;
     }
 
-    const result = await postLead(payload);
+    // El event_id llega del navegador: es el mismo eventID que recibió el
+    // Pixel, y BoSpot deduplica por él.
+    const delivery = await deliverLead(payload, {
+      event_id: normalizeEventId(body.event_id, () => crypto.randomUUID()),
+      submitted_at: new Date().toISOString(),
+      page_url: normalizePageUrl(input.page_url),
+      first_touch_source: typeof body.first_touch_source === 'string' ? body.first_touch_source : null,
+      first_touch_medium: typeof body.first_touch_medium === 'string' ? body.first_touch_medium : null,
+      first_touch_campaign: typeof body.first_touch_campaign === 'string' ? body.first_touch_campaign : null,
+      referrer: typeof body.referrer === 'string' ? body.referrer : null,
+    });
+    const result = delivery.primary;
 
-    if (result.ok) {
+    // El primario no lo recibió: hay que capturarlo a mano aunque el otro
+    // destino sí lo haya guardado. after() lo envía tras responder, para no
+    // sumar latencia al formulario.
+    if (!result.ok) {
+      after(() => sendLeadFallbackEmail(payload, result));
+    }
+
+    if (delivery.ok) {
       return NextResponse.json({
         success: true,
         attempts: result.attempts,
       });
     }
-
-    // El lead ya no llegó a su destino: el correo de respaldo es la única
-    // vía de recuperación. after() lo envía tras responder, para no sumar
-    // latencia al formulario.
-    after(() => sendLeadFallbackEmail(payload, result));
 
     // Surface upstream status when present so the client can decide
     // whether to show a retry-friendly message.

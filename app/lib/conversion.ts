@@ -108,6 +108,8 @@ export function fireConversion(
   type: FireConversionType,
   label: string,
   meta: FireConversionMeta = {},
+  /** eventId ya compartido con otro sistema (el lead que recibe BoSpot). */
+  options: { eventId?: string } = {},
 ): void {
   const stringMeta: Record<string, string> = Object.fromEntries(
     Object.entries(meta)
@@ -119,7 +121,7 @@ export function fireConversion(
   // (eventID) y viaja al ledger de Flight Check. El día que estos
   // eventos se reenvíen también por Conversions API, la deduplicación
   // Pixel ↔ CAPI ya queda garantizada sin tocar los call sites.
-  const metaEventId = generateMetaEventId();
+  const metaEventId = options.eventId || generateMetaEventId();
 
   // 1. Vercel Analytics
   try {

@@ -7,7 +7,7 @@ import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCirc
 import { fireConversion } from '../lib/conversion'
 import { fetchWithTimeout, FetchTimeoutError } from '../lib/fetchTimeout'
 import { getEffectiveUtms, effectiveUtmsToLeadFields } from '../lib/attribution'
-import { collectMetaBrowserParams } from '../lib/metaPixel'
+import { collectMetaBrowserParams, generateMetaEventId } from '../lib/metaPixel'
 
 // Client island: the interactive lead-capture form. La sección y el encabezado
 // viven en el wrapper de servidor (ContactForm.tsx); aquí quedan el submit, la
@@ -271,6 +271,10 @@ export default function ContactFormClient() {
     // que un agente dispara días después desde otra máquina.
     const metaKeys = collectMetaBrowserParams();
 
+    // Un solo id para el lead y para el Pixel: BoSpot lo guarda y lo reusa al
+    // mandar Lead Qualified/Purchase por CAPI, y Meta deduplica con él.
+    const eventId = generateMetaEventId();
+
     try {
       const payload = {
         ...formData,
@@ -278,6 +282,11 @@ export default function ContactFormClient() {
         ...clickIds,
         fbp: metaKeys.fbp || null,
         fbc: metaKeys.fbc || null,
+        event_id: eventId,
+        first_touch_source: eff.firstTouchSource || null,
+        first_touch_medium: eff.firstTouchMedium || null,
+        first_touch_campaign: eff.firstTouchCampaign || null,
+        referrer: typeof document !== 'undefined' ? document.referrer || null : null,
         [HONEYPOT_FIELD]: honeypot,
         page_url: pageUrl,
         language: lang,
@@ -303,10 +312,15 @@ export default function ContactFormClient() {
       if (response.ok) {
         // Un solo evento de conversión por envío: fireConversion hace el
         // fanout a las cinco superficies con un eventID compartido.
-        fireConversion('form_submit', 'contact_form', {
-          language: lang,
-          page_path: typeof window !== 'undefined' ? window.location.pathname : '',
-        });
+        fireConversion(
+          'form_submit',
+          'contact_form',
+          {
+            language: lang,
+            page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+          },
+          { eventId },
+        );
 
         setSubmitStatus('success');
         setFormData({
