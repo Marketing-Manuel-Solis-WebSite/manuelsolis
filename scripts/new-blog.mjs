@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 // Scaffold a new blog post end-to-end:
 //   1. Creates app/[lang]/blog/<slug>/page.tsx skeleton
-//   2. Injects entry into BLOG_DATA.posts in app/[lang]/blog/page.tsx
-//   3. Injects route into getBlogEntries() in app/lib/sitemapData.ts
-//   4. Creates public/blog/blog_<NN>/ folder for images
+//   2. Injects entry into ALL_POSTS in app/[lang]/blog/page.tsx
+//   3. Creates public/blog/blog_<NN>/ folder for images
+//
+// El sitemap no se toca: app/lib/sitemapData.ts genera las rutas del blog a
+// partir de BLOG_DATA, así que el post entra solo (y solo cuando ya salió).
 //
 // Manual follow-up (not automated): add the post to app/lib/blogRelations.ts
 // (blogServiceMap + authorArticleMap + allArticles + clusters).
@@ -74,7 +76,10 @@ Required:
 Optional:
   --read-time     e.g. "10 min" (default: "10 min")
   --author        author name (default: "Manuel Solís")
-  --date          publish date YYYY-MM-DD (default: today)
+  --date          publish date YYYY-MM-DD (default: today). Antes de esa
+                  fecha el post no sale (publicación programada).
+  --service-path  servicio enlazado al final (default: según la categoría,
+                  p. ej. /servicios/defensa-deportacion)
   --dry-run       show changes without writing files
 `;
 
@@ -139,17 +144,12 @@ const dryRun = Boolean(args['dry-run']);
 const blogPagePath = path.join(ROOT, 'app', '[lang]', 'blog', slug, 'page.tsx');
 const blogPageDir = path.dirname(blogPagePath);
 const blogHubPath = path.join(ROOT, 'app', '[lang]', 'blog', 'page.tsx');
-const sitemapPath = path.join(ROOT, 'app', 'lib', 'sitemapData.ts');
 
 // --- detect duplicates ---
 if (fs.existsSync(blogPagePath)) fail(`Blog folder already exists: ${blogPageDir}`);
 const hubContent = fs.readFileSync(blogHubPath, 'utf8');
 if (hubContent.includes(`slug: '${slug}'`)) {
-  fail(`Slug "${slug}" already present in BLOG_DATA.posts.`);
-}
-const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
-if (sitemapContent.includes(`/blog/${slug}'`)) {
-  fail(`Route /blog/${slug} already present in sitemapData.ts.`);
+  fail(`Slug "${slug}" already present in ALL_POSTS.`);
 }
 
 // --- determine image folder (from image path) ---
@@ -164,105 +164,122 @@ const escapeLiteral = (s) => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 // repo: son marcas que se escriben en el archivo generado y que el paso 3 del
 // panel (app/[lang]/admin/AdminHome.tsx) le pide buscar al autor para saber qué
 // reemplazar. Si se renombran o se quitan, esa instrucción deja de coincidir.
-const pageTemplate = `import React from 'react';
-import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Calendar, Clock, ArrowLeft, ShieldCheck, FileText } from 'lucide-react';
+// Formato actual de los posts: un archivo de datos que pinta BlogArticleLayout
+// (ver app/components/blogs/articleModel.ts para todos los bloques e iconos).
+const MONTHS_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const [yyyy, mm, dd] = date.split('-');
+const displayDateEs = `${dd} ${MONTHS_ES[Number(mm) - 1]}, ${yyyy}`;
+const displayDateEn = `${MONTHS_EN[Number(mm) - 1]} ${dd}, ${yyyy}`;
 
-import { generateBreadcrumbSchema } from '../../../lib/breadcrumbSchema';
-import Header from '../../../components/Header';
-import Footer from '../../../components/Footer';
-import BlogBackground from '../../../components/blogs/BlogBackground';
-import ShareButtons from '../../../components/blogs/ShareButtons';
-import BlogTracker from '../../../components/blogs/BlogTracker';
-import ReadingProgress from '../../../components/blogs/ReadingProgress';
-import BlogSchema from '../../../components/blogs/BlogSchema';
-
-const SITE_URL = 'https://www.manuelsolis.com';
-const SLUG = '${escapeLiteral(slug)}';
-
-const IMAGES = {
-  article: '${escapeLiteral(image)}',
-  author: '/abogado-manuel-solis.jpg',
+const SERVICE_PATHS = {
+  'procesos-migratorios': '/servicios/inmigracion',
+  'defensa-deportacion': '/servicios/defensa-deportacion',
+  'visa-u': '/servicios/visa-u',
+  'visa-T': '/servicios/inmigracion',
+  'visa-VAWA': '/servicios/vawa',
+  'visa-humanitaria': '/servicios/inmigracion',
+  'accidentes': '/servicios/accidentes',
 };
+const servicePath = (args['service-path'] || SERVICE_PATHS[categoryId]).trim();
 
-const blogContent = {
+const lit = (s) => `'${escapeLiteral(s)}'`;
+
+const pageTemplate = `import type { Metadata } from 'next';
+import BlogArticleLayout from '../../../components/blogs/BlogArticleLayout';
+import { buildArticleMetadata } from '../../../components/blogs/articleMetadata';
+import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/articleModel';
+
+const SLUG = ${lit(slug)};
+// Debe coincidir con \`date\` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
+// antes de esa fecha la página no se publica.
+const ISO_DATE = ${lit(date)};
+const IMAGE = ${lit(image)};
+
+const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {
-    metaTitle: '${escapeLiteral(titleEs)}',
-    metaDesc: '${escapeLiteral(excerptEs)}',
-    title: '${escapeLiteral(titleEs)}',
-    excerpt: '${escapeLiteral(excerptEs)}',
-    author: '${escapeLiteral(author)}',
-    date: '${escapeLiteral(date)}',
-    readTime: '${escapeLiteral(readTime)}',
-    ui: {
-      back: 'Volver al blog',
-      share: 'Compartir artículo',
-      writtenBy: 'Escrito por',
-      published: 'Publicado',
-      readTime: '${escapeLiteral(readTime)} de lectura',
-      authorRole: 'Fundador & Abogado Principal',
-      ctaButton: 'Consultar con un Abogado Ahora',
+    // TODO: título SEO (~60 caracteres) y descripción (~155).
+    metaTitle: ${lit(titleEs)},
+    metaDesc: ${lit(excerptEs)},
+    title: ${lit(titleEs)},
+    displayDate: ${lit(displayDateEs)},
+    readTime: ${lit(readTime)},
+    categoryLabel: ${lit(CATEGORY_LABELS[categoryId].es)},
+    summary: {
+      title: 'Resumen inicial',
+      // TODO: resumen de 3-5 líneas. Admite <strong>.
+      text: '',
     },
-    // TODO: rellenar con contenido real
-    intro: [
-      'Reemplaza este texto introductorio con el primer párrafo del artículo.',
-      'Puedes agregar más párrafos según necesites. Soporta <strong>HTML inline</strong>.',
-    ],
+    // TODO: párrafos de introducción.
+    intro: [''],
+    // TODO: secciones del artículo. Bloques: text, list, steps, cards, table, note, warning.
     sections: [
       {
-        heading: 'Primera sección — reemplazar título',
-        body: 'Contenido de la primera sección. Reemplaza este placeholder con texto real.',
-      },
-      {
-        heading: 'Segunda sección — reemplazar título',
-        body: 'Contenido de la segunda sección.',
+        icon: 'file',
+        title: '',
+        subtitle: '',
+        blocks: [{ kind: 'text', text: '' }],
       },
     ],
-    cta: {
-      title: '¿Necesitas ayuda con tu caso?',
-      body: 'Agenda una consulta con nuestro equipo legal.',
-      button: 'Agendar consulta',
+    faq: {
+      title: 'Preguntas frecuentes',
+      // TODO: preguntas frecuentes.
+      items: [{ q: '', a: '' }],
     },
+    conclusion: {
+      title: '',
+      // TODO: conclusión y consejo final.
+      text: '',
+      advice: '',
+    },
+    sources: {
+      title: 'Fuentes y referencias',
+      // TODO: fuentes.
+      list: [''],
+    },
+    ui: ARTICLE_UI.es,
   },
   en: {
-    metaTitle: '${escapeLiteral(titleEn)}',
-    metaDesc: '${escapeLiteral(excerptEn)}',
-    title: '${escapeLiteral(titleEn)}',
-    excerpt: '${escapeLiteral(excerptEn)}',
-    author: '${escapeLiteral(author)}',
-    date: '${escapeLiteral(date)}',
-    readTime: '${escapeLiteral(readTime)}',
-    ui: {
-      back: 'Back to blog',
-      share: 'Share article',
-      writtenBy: 'Written by',
-      published: 'Published',
-      readTime: '${escapeLiteral(readTime)} read',
-      authorRole: 'Founder & Lead Attorney',
-      ctaButton: 'Consult with an Attorney Now',
+    // TODO: SEO title (~60 chars) and description (~155).
+    metaTitle: ${lit(titleEn)},
+    metaDesc: ${lit(excerptEn)},
+    title: ${lit(titleEn)},
+    displayDate: ${lit(displayDateEn)},
+    readTime: ${lit(readTime)},
+    categoryLabel: ${lit(CATEGORY_LABELS[categoryId].en)},
+    summary: {
+      title: 'Summary',
+      // TODO: English summary.
+      text: '',
     },
-    // TODO: fill with real content
-    intro: [
-      'Replace this introduction with the first paragraph of the article.',
-      'You can add more paragraphs as needed. Supports <strong>inline HTML</strong>.',
-    ],
+    // TODO: English intro paragraphs.
+    intro: [''],
+    // TODO: English sections (same structure as Spanish).
     sections: [
       {
-        heading: 'First section — replace title',
-        body: 'Content of the first section. Replace this placeholder with real text.',
-      },
-      {
-        heading: 'Second section — replace title',
-        body: 'Content of the second section.',
+        icon: 'file',
+        title: '',
+        subtitle: '',
+        blocks: [{ kind: 'text', text: '' }],
       },
     ],
-    cta: {
-      title: 'Need help with your case?',
-      body: 'Book a consultation with our legal team.',
-      button: 'Book consultation',
+    faq: {
+      title: 'Frequently asked questions',
+      // TODO: English FAQ.
+      items: [{ q: '', a: '' }],
     },
+    conclusion: {
+      title: '',
+      // TODO: English conclusion and advice.
+      text: '',
+      advice: '',
+    },
+    sources: {
+      title: 'Sources and references',
+      // TODO: sources.
+      list: [''],
+    },
+    ui: ARTICLE_UI.en,
   },
 };
 
@@ -270,149 +287,57 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
-  const isEs = lang === 'es';
-  const t = isEs ? blogContent.es : blogContent.en;
-
-  return {
-    title: t.metaTitle,
-    description: t.metaDesc,
-    alternates: {
-      canonical: \`\${SITE_URL}/\${lang}/blog/\${SLUG}\`,
-      languages: {
-        es: \`\${SITE_URL}/es/blog/\${SLUG}\`,
-        en: \`\${SITE_URL}/en/blog/\${SLUG}\`,
-        'x-default': \`\${SITE_URL}/es/blog/\${SLUG}\`,
-      },
-    },
-    openGraph: {
-      title: t.metaTitle,
-      description: t.metaDesc,
-      url: \`\${SITE_URL}/\${lang}/blog/\${SLUG}\`,
-      siteName: 'Manuel Solis Law Firm',
-      locale: isEs ? 'es_US' : 'en_US',
-      type: 'article',
-      publishedTime: t.date,
-      authors: [t.author],
-      images: [{ url: \`\${SITE_URL}\${IMAGES.article}\`, width: 1200, height: 630, alt: t.title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: t.metaTitle,
-      description: t.metaDesc,
-      images: [\`\${SITE_URL}\${IMAGES.article}\`],
-    },
-  };
+  const currentLang: 'es' | 'en' = lang === 'en' ? 'en' : 'es';
+  return buildArticleMetadata({
+    slug: SLUG,
+    lang: currentLang,
+    content: content[currentLang],
+    image: IMAGE,
+    isoDate: ISO_DATE,
+  });
 }
 
-export default async function BlogPostPage({ params }: Props) {
+export default async function Page({ params }: Props) {
   const { lang } = await params;
   const currentLang: 'es' | 'en' = lang === 'en' ? 'en' : 'es';
-  const t = blogContent[currentLang];
-
-  const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: currentLang === 'es' ? 'Inicio' : 'Home', url: \`\${SITE_URL}/\${currentLang}\` },
-    { name: 'Blog', url: \`\${SITE_URL}/\${currentLang}/blog\` },
-    { name: t.title, url: \`\${SITE_URL}/\${currentLang}/blog/\${SLUG}\` },
-  ]);
 
   return (
-    <>
-      <BlogSchema
-        title={t.metaTitle}
-        description={t.metaDesc}
-        slug={SLUG}
-        date={t.date}
-        image={IMAGES.article}
-        lang={currentLang}
-        readTime={t.readTime}
-      />
-      <script id="breadcrumb-schema" type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-
-      <BlogTracker title={t.title} author={t.author} category="${escapeLiteral(CATEGORY_LABELS[categoryId].es)}" />
-      <ReadingProgress />
-
-      <div className="min-h-screen bg-[#001540] text-white selection:bg-[#B2904D] selection:text-[#001540]">
-        <Header />
-        <BlogBackground />
-
-        <main id="main-content" tabIndex={-1} className="relative z-10 pt-32 pb-20">
-          <section className="container mx-auto px-4 md:px-6 lg:px-8 max-w-4xl">
-            <div className="mb-8">
-              <Link href={\`/\${currentLang}/blog\`} className="inline-flex items-center gap-2 text-white/60 hover:text-[#B2904D] transition-colors text-sm font-medium uppercase tracking-wider">
-                <ArrowLeft size={16} />
-                {t.ui.back}
-              </Link>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-              <span className="flex items-center gap-2 text-white/60 text-sm">
-                <Calendar size={14} /> {t.date}
-              </span>
-              <span className="flex items-center gap-2 text-white/60 text-sm">
-                <Clock size={14} /> {t.ui.readTime}
-              </span>
-            </div>
-
-            <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-6 text-white">
-              {t.title}
-            </h1>
-
-            <p className="text-white/70 text-sm mb-8">
-              {t.ui.writtenBy} <strong className="text-white">{t.author}</strong>
-            </p>
-
-            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-10 border border-white/10">
-              <Image src={IMAGES.article} alt={t.title} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 1200px" />
-            </div>
-
-            {t.intro.map((p, i) => (
-              <p key={i} className="text-lg text-white/80 leading-relaxed mb-5"
-                 dangerouslySetInnerHTML={{ __html: p }} />
-            ))}
-
-            {t.sections.map((s, i) => (
-              <section key={i} className="my-10">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 flex items-center gap-2">
-                  <FileText className="w-6 h-6 text-[#B2904D]" />
-                  {s.heading}
-                </h2>
-                <p className="text-base text-white/80 leading-relaxed"
-                   dangerouslySetInnerHTML={{ __html: s.body }} />
-              </section>
-            ))}
-
-            <section className="my-12 p-8 rounded-2xl bg-[#B2904D]/10 border border-[#B2904D]/30 text-center">
-              <h2 className="text-2xl font-bold mb-3 flex items-center justify-center gap-2 text-white">
-                <ShieldCheck className="w-6 h-6 text-[#B2904D]" />
-                {t.cta.title}
-              </h2>
-              <p className="text-white/70 mb-6">{t.cta.body}</p>
-              <Link href={\`/\${currentLang}/consulta\`}
-                className="inline-block bg-[#B2904D] hover:bg-[#9a7c40] text-white font-semibold px-8 py-3 rounded-lg transition-colors">
-                {t.cta.button}
-              </Link>
-            </section>
-
-            <ShareButtons title={t.title} uiShareText={t.ui.share} />
-          </section>
-        </main>
-
-        <Footer />
-      </div>
-    </>
+    <BlogArticleLayout
+      slug={SLUG}
+      lang={currentLang}
+      content={content[currentLang]}
+      image={IMAGE}
+      // TODO: describe la portada en los dos idiomas.
+      imageAlt={currentLang === 'es' ? ${lit(titleEs)} : ${lit(titleEn)}}
+      isoDate={ISO_DATE}
+      servicePath=${JSON.stringify(servicePath)}
+      trackerCategory=${JSON.stringify(CATEGORY_LABELS[categoryId].es)}
+    />
   );
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return [{ lang: 'es' }, { lang: 'en' }];
 }
 `;
 
-// --- BLOG_DATA entry ---
+// --- newsletter: un correo cada 3 días como mínimo ---
+// El cron avisa a los suscriptores en `newsletterAt` (o en `date`). Se agenda
+// el primer día libre: la fecha del post o 3 días después del último aviso.
+const NEWSLETTER_GAP_DAYS = 3;
+const lastNewsletter = [...hubContent.matchAll(/newsletterAt:\s*'(\d{4}-\d{2}-\d{2})'/g)]
+  .map((m) => m[1])
+  .sort()
+  .pop();
+const addDays = (iso, n) => new Date(Date.parse(`${iso}T00:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
+const nextSlot = lastNewsletter ? addDays(lastNewsletter, NEWSLETTER_GAP_DAYS) : date;
+const newsletterAt = nextSlot > date ? nextSlot : date;
+
+// --- ALL_POSTS entry ---
 const blogDataEntry = `    {
       id: '${idFromSlug}',
       slug: '${slug}',
+      newsletterAt: '${newsletterAt}',
       title: {
         es: '${escapeLiteral(titleEs)}',
         en: '${escapeLiteral(titleEn)}'
@@ -431,24 +356,15 @@ const blogDataEntry = `    {
     },
     // ---`;
 
-// --- sitemap entry ---
-const sitemapEntry = `  { route: '/blog/${slug}', priority: 0.7, changeFrequency: 'monthly', lastModified: '${date}' },`;
-
 // --- inject helpers ---
 function injectBlogData(content) {
-  const marker = /(export const BLOG_DATA = \{[\r\n]+\s*posts:\s*\[\s*[\r\n]+)/;
+  // Desde la publicación programada (7ad7f0c) los posts viven en ALL_POSTS;
+  // BLOG_DATA.posts es esa lista filtrada por fecha.
+  const marker = /(const ALL_POSTS = \[\s*[\r\n]+)/;
   if (!marker.test(content)) {
-    throw new Error('Could not find BLOG_DATA.posts marker in app/[lang]/blog/page.tsx');
+    throw new Error('Could not find ALL_POSTS marker in app/[lang]/blog/page.tsx');
   }
   return content.replace(marker, `$1${blogDataEntry}\n`);
-}
-
-function injectSitemap(content) {
-  const marker = /(\{\s*route:\s*'\/blog',\s*priority:\s*0\.7,\s*changeFrequency:\s*'weekly',\s*lastModified:\s*'[^']+'\s*\},)/;
-  if (!marker.test(content)) {
-    throw new Error('Could not find /blog hub entry marker in app/lib/sitemapData.ts');
-  }
-  return content.replace(marker, `$1\n${sitemapEntry}`);
 }
 
 // --- prepare changes ---
@@ -457,7 +373,6 @@ try {
   changes = {
     blogPage: { path: blogPagePath, content: pageTemplate, action: 'create' },
     blogHub: { path: blogHubPath, content: injectBlogData(hubContent), action: 'patch' },
-    sitemap: { path: sitemapPath, content: injectSitemap(sitemapContent), action: 'patch' },
     imageDir: imageFolder ? { path: imageFolder, action: 'mkdir' } : null,
   };
 } catch (err) {
@@ -467,8 +382,7 @@ try {
 // --- show plan ---
 console.log('\n📝 Plan:');
 console.log(`  CREATE  ${path.relative(ROOT, blogPagePath)}`);
-console.log(`  PATCH   ${path.relative(ROOT, blogHubPath)}  (insert BLOG_DATA entry)`);
-console.log(`  PATCH   ${path.relative(ROOT, sitemapPath)}  (insert sitemap route)`);
+console.log(`  PATCH   ${path.relative(ROOT, blogHubPath)}  (insert ALL_POSTS entry)`);
 if (changes.imageDir) {
   const exists = fs.existsSync(changes.imageDir.path);
   console.log(`  MKDIR   ${path.relative(ROOT, changes.imageDir.path)}${exists ? ' (already exists)' : ''}`);
@@ -488,7 +402,6 @@ try {
   created.push({ kind: 'file', path: blogPagePath });
 
   fs.writeFileSync(blogHubPath, changes.blogHub.content, 'utf8');
-  fs.writeFileSync(sitemapPath, changes.sitemap.content, 'utf8');
 
   if (changes.imageDir) fs.mkdirSync(changes.imageDir.path, { recursive: true });
 
@@ -496,6 +409,7 @@ try {
   console.log('Next steps:');
   console.log(`  1. Drop the hero image at: public${image}`);
   console.log(`  2. Open ${path.relative(ROOT, blogPagePath)} and replace TODO content.`);
+  console.log(`     Add the post to app/lib/blogRelations.ts (related articles).`);
   console.log(`  3. Run \`npm run dev\` and check http://localhost:3000/es/blog/${slug}`);
   console.log(`  4. Commit + push → Vercel deploys → blog appears in admin newsletter.\n`);
 } catch (err) {
@@ -509,7 +423,6 @@ try {
   }
   // Restore patched files from disk-cached originals
   fs.writeFileSync(blogHubPath, hubContent, 'utf8');
-  fs.writeFileSync(sitemapPath, sitemapContent, 'utf8');
   console.error('Rollback complete. Repo restored.\n');
   process.exit(1);
 }

@@ -95,18 +95,21 @@ describe('datos reales del blog', () => {
     // Con el reloj en el año 2999 todo está vencido: lo único que puede frenar
     // a los 35 artículos viejos es la época.
     const cola = newsletterDue(ALL_BLOG_POSTS, FUTURO_LEJANO);
-    expect(cola).toHaveLength(20);
+    // La tanda de agosto-octubre de 2026 son 20; los posts nuevos se suman.
+    expect(cola.length).toBeGreaterThanOrEqual(20);
+    const viejos = ALL_BLOG_POSTS.filter((p) => newsletterDateOf(p) < NEWSLETTER_EPOCH);
+    expect(cola.length + viejos.length).toBe(ALL_BLOG_POSTS.length);
     for (const post of cola) {
       expect(newsletterDateOf(post) >= NEWSLETTER_EPOCH).toBe(true);
     }
   });
 
-  it('reparte los avisos de uno en uno, cada 3 días', () => {
+  it('reparte los avisos de uno en uno, con al menos 3 días entre correos', () => {
     const fechas = newsletterDue(ALL_BLOG_POSTS, FUTURO_LEJANO).map(newsletterDateOf);
     expect(new Set(fechas).size).toBe(fechas.length); // ni un solo día con dos correos
     for (let i = 1; i < fechas.length; i++) {
       const dias = (Date.parse(fechas[i]) - Date.parse(fechas[i - 1])) / 86400000;
-      expect(dias).toBe(3);
+      expect(dias).toBeGreaterThanOrEqual(3);
     }
   });
 
@@ -144,6 +147,6 @@ describe('datos reales del blog', () => {
       comprobados++;
     }
 
-    expect(comprobados).toBe(20);
+    expect(comprobados).toBeGreaterThanOrEqual(20);
   });
 });
