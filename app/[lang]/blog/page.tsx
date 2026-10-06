@@ -33,6 +33,27 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'orden_deportacion_en_ausencia_reabrir_caso',
+      slug: 'orden-deportacion-en-ausencia-reabrir-caso',
+      newsletterAt: '2026-10-06',
+      title: {
+        es: 'Orden de deportación en ausencia: cómo reabrir tu caso si no llegaste a la corte',
+        en: 'In-Absentia Order of Removal: How to Reopen Your Case After Missing Your Court Date'
+      },
+      excerpt: {
+        es: '¿Te ordenaron deportar por no ir a la corte? Cuándo se puede reabrir el caso, qué plazos aplican y qué pruebas necesitas.',
+        en: 'Were you ordered deported for not going to court? When you can reopen the case, what deadlines apply, and what evidence you need.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-10-06',
+      readTime: '5 min',
+      image: '/blog/blog_37/OCT_B1.png',
+      featured: false
+    },
+    // ---
+    {
       id: 'ley_laken_riley_detencion_obligatoria_2026',
       slug: 'ley-laken-riley-detencion-obligatoria-2026',
       newsletterAt: '2026-08-25',
