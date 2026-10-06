@@ -5,7 +5,7 @@ import { buildOfficeSchema } from '../../../lib/officeSchema';
 import { buildMainOfficeFaqs } from '../../../lib/officeFaq';
 import { buildFaqPageSchema } from '../../../lib/faqSchema';
 import { buildSocialMetadata } from '../../../lib/seoMetadata';
-import { getOfficeNap, formatOfficeAddress } from '../../../components/officesPhoneMap';
+import { getOfficeNap } from '../../../components/officesPhoneMap';
 import { officeOgImage } from '../../../lib/officePhotos';
 
 const SLUG = 'chicago-jackson';

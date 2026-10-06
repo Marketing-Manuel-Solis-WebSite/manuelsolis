@@ -154,7 +154,7 @@ DATOS DEL DESPACHO
 OFICINAS
 ${officeDirectory(lang)}
 
-Cinco de esas direcciones (Kirby, Main St, North Loop, Northchase y League City) funcionan con cita previa y no tienen personal en el local: si alguien quiere pasar sin avisar, dile que llame primero para que le confirmen dónde le atienden.
+Siete de esas direcciones atienden solo con cita y no tienen personal en el local: Kirby, Main St, North Loop, Northchase y League City (Houston), Jackson (Chicago, 111 W Jackson Blvd) y Alameda (Los Ángeles, 777 S Alameda St). No las llames "satélite": di que atienden solo con cita. En Chicago ya solo existen Cermak y Jackson. Si alguien quiere pasar sin avisar, dile que llame primero para que le confirmen dónde le atienden.
 
 Ahora mismo, en hora de la sede (Houston, zona Central): ${nowInHouston(lang)}. Los horarios de arriba están en la hora local de cada oficina, y El Paso y Arvada van una hora por detrás de Houston. No digas que una oficina está abierta "ahora" o "hoy" sin cuadrarlo con su horario: si está cerrada, di cuándo vuelve a abrir.
 

@@ -254,8 +254,8 @@ export function buildMainOfficeFaqs(slug: string, lang: 'es' | 'en'): OfficeFaq[
             ? `No. ${name} atiende solo con cita. Llame al ${nap.phone} para agendar su cita dentro de su horario de atención, o vaya a una de las dos oficinas de Houston que sí reciben sin cita: la Principal, en 6657 Navigation Blvd, o Bellaire.`
             : `No. ${name} is by appointment only. Call ${nap.phone} to schedule your appointment during business hours, or go to one of the two Houston offices that do take walk-ins: the Main Office at 6657 Navigation Blvd, or Bellaire.`
           : es
-            ? `No. Esta dirección funciona con cita previa: el teléfono ${nap.phone} contesta a cualquier hora, pero en el local no hay personal esperando, así que hay que concertar la visita antes de desplazarse.`
-            : `No. This address works by appointment: the phone ${nap.phone} is answered at any hour, but there is no staff waiting at the location, so the visit has to be arranged before travelling there.`
+            ? `No. ${name} atiende solo con cita previa: llame al ${nap.phone} para agendar su cita, la línea contesta a cualquier hora. En el local no hay personal esperando sin cita, así que agéndela antes de desplazarse.`
+            : `No. ${name} is by appointment only: call ${nap.phone} to schedule your appointment; the line is answered at any hour. There is no staff waiting at the location without an appointment, so schedule it before travelling there.`
         : es
           ? `Sí, dentro de su horario (${nap.hours.label.es}). Aun así, para un trámite de inmigración conviene llamar antes al ${nap.phone}: así le dicen qué documentos traer y evita un segundo viaje, que es lo que más tiempo cuesta en estos casos.`
           : `Yes, during opening hours (${nap.hours.label.en}). Even so, for an immigration matter it is worth calling ${nap.phone} first: they will tell you which documents to bring and you avoid a second trip, which is what costs the most time in these cases.`,
@@ -265,10 +265,10 @@ export function buildMainOfficeFaqs(slug: string, lang: 'es' | 'en'): OfficeFaq[
         ? `¿Se atiende en español en ${name}?`
         : `Is service available in Spanish at ${name}?`,
       a: es
-        ? `Sí. El despacho trabaja en español e inglés en sus quince oficinas, así que no hace falta traer intérprete ni pedir una cita distinta.${
+        ? `Sí. El despacho trabaja en español e inglés en todas sus oficinas, así que no hace falta traer intérprete ni pedir una cita distinta.${
             slug === 'houston-bellaire' ? ' Esta oficina atiende además en chino.' : ''
           }${tz ? ` Al llamar, tenga en cuenta que ${nap.city} va en ${tz.es}.` : ''}`
-        : `Yes. The firm works in Spanish and English at all fifteen offices, so there is no need to bring an interpreter or book a different appointment.${
+        : `Yes. The firm works in Spanish and English at all of its offices, so there is no need to bring an interpreter or book a different appointment.${
             slug === 'houston-bellaire' ? ' This office also assists in Chinese.' : ''
           }${tz ? ` When calling, note that ${nap.city} runs on ${tz.en}.` : ''}`,
     },

@@ -88,5 +88,6 @@ export default function OfficeClient({
   /** Preguntas de esta sede; las resuelve el page.tsx, que tiene el slug del NAP. */
   faqs?: FaqPair[];
 }) {
-  return <OfficePageView data={officeData} ui={uiText} lang={lang} faqs={faqs} />;
+  // napSlug activa la etiqueta «Solo con cita» y el aviso de agendar cita.
+  return <OfficePageView data={officeData} ui={uiText} lang={lang} faqs={faqs} napSlug={SLUG} />;
 }
