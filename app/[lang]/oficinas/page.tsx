@@ -66,25 +66,26 @@ const OFFICE_GROUPS: StateGroup[] = [
   },
   {
     state: { es: 'California', en: 'California' },
-    slugs: ['losangeles'],
+    cityGroups: [
+      {
+        // Mismo patrón que Chicago: la sede con personal (Pico Rivera) y la
+        // dirección con cita del centro, agrupadas bajo la ciudad.
+        city: { es: 'Los Ángeles', en: 'Los Angeles' },
+        slugs: ['losangeles', 'losangeles-alameda'],
+      },
+    ],
+    slugs: [],
   },
   {
     state: { es: 'Illinois', en: 'Illinois' },
     cityGroups: [
       {
-        // Igual que Houston: las direcciones del área metropolitana se agrupan
-        // bajo la ciudad de referencia y se distinguen por su calle, que es
-        // como las pidió el despacho. `city` de cada una sigue siendo su
-        // municipio real (Schaumburg, Park Ridge, Burr Ridge, Naperville) —
-        // esta agrupación es de navegación, no de dirección postal.
+        // Igual que Houston: las direcciones se agrupan bajo la ciudad de
+        // referencia. `city` de cada una sigue siendo su municipio real (la
+        // sede de Cermak está en Cicero): la agrupación es de navegación, no
+        // de dirección postal.
         city: { es: 'Chicago', en: 'Chicago' },
-        slugs: [
-          'chicago',
-          'chicago-martingale',
-          'chicago-prospect',
-          'chicago-burr-ridge',
-          'chicago-wall',
-        ],
+        slugs: ['chicago', 'chicago-jackson'],
       },
     ],
     slugs: [],
@@ -107,8 +108,10 @@ const OFFICE_GROUPS: StateGroup[] = [
 // así que ya no vale restar las de cita al total. Restarlas contaría a las
 // satélite como oficinas atendidas, que es justo lo contrario de lo decidido.
 const TOTAL_LOCATIONS = OFFICE_NAP_SLUGS.length;
-const APPOINTMENT_LOCATIONS = APPOINTMENT_OFFICE_SLUGS.length;
-const SATELLITE_LOCATIONS = SATELLITE_OFFICE_SLUGS.length;
+// Hacia fuera, satélite y solo-cita se publican igual —«con cita»—: el
+// despacho pidió no usar la palabra "satélite" (reunión del 2026-10-06). La
+// distinción sigue en los datos (horario real o no) y en el schema.
+const BY_APPOINTMENT_LOCATIONS = APPOINTMENT_OFFICE_SLUGS.length + SATELLITE_OFFICE_SLUGS.length;
 const STAFFED_OFFICES = PHYSICAL_OFFICE_COUNT;
 const STATE_COUNT = new Set(OFFICE_NAP_SLUGS.map((slug) => OFFICES_NAP[slug].state)).size;
 
@@ -122,8 +125,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `Our Offices in ${STATE_COUNT} States`;
 
   const description = isEs
-    ? `Encuentre su oficina de Manuel Solis: ${STAFFED_OFFICES} sedes con atención presencial, ${SATELLITE_LOCATIONS} satélite y ${APPOINTMENT_LOCATIONS} con cita en Texas, California, Illinois, Colorado y Tennessee.`
-    : `Find your nearest Manuel Solis office: ${STAFFED_OFFICES} walk-in offices, ${SATELLITE_LOCATIONS} satellite and ${APPOINTMENT_LOCATIONS} by-appointment locations in Texas, California, Illinois, Colorado, and Tennessee.`;
+    ? `Encuentre su oficina de Manuel Solis: ${STAFFED_OFFICES} sedes con atención presencial y ${BY_APPOINTMENT_LOCATIONS} con cita en Texas, California, Illinois, Colorado y Tennessee.`
+    : `Find your nearest Manuel Solis office: ${STAFFED_OFFICES} walk-in offices and ${BY_APPOINTMENT_LOCATIONS} by-appointment locations in Texas, California, Illinois, Colorado, and Tennessee.`;
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -172,16 +175,11 @@ function OfficeCard({
 }) {
   const nap = OFFICES_NAP[slug];
   const Heading: ElementType = as;
-  // Tres estados posibles, y la etiqueta tiene que decir cuál es: una satélite
-  // no se anuncia igual que una dirección de solo cita ni que una sede con
-  // atención presencial.
-  const satellite = isSatelliteOffice(slug);
-  const byAppointment = isAppointmentOnlyOffice(slug);
-  const badge = satellite
-    ? { es: 'Oficina satélite · no presencial', en: 'Satellite office · not walk-in' }
-    : byAppointment
-      ? { es: 'Con cita previa', en: 'By appointment' }
-      : null;
+  // La etiqueta dice cómo se atiende: con atención presencial no lleva, y las
+  // satélite y las de solo cita llevan la misma, «Solo con cita» (el despacho
+  // pidió no publicar la palabra "satélite", reunión del 2026-10-06).
+  const byAppointment = isSatelliteOffice(slug) || isAppointmentOnlyOffice(slug);
+  const badge = byAppointment ? { es: 'Solo con cita', en: 'By appointment only' } : null;
 
   return (
     <StaggerItem
@@ -247,8 +245,8 @@ export default async function OficinasPage({ params }: Props) {
               <Building2 className="w-4 h-4 text-[#B2904D]" />
               <span className="text-sm font-medium text-white/90 tracking-wide uppercase">
                 {isEs
-                  ? `${STAFFED_OFFICES} Oficinas Presenciales · ${SATELLITE_LOCATIONS} Satélite · ${APPOINTMENT_LOCATIONS} con Cita · ${STATE_COUNT} Estados`
-                  : `${STAFFED_OFFICES} Walk-in Offices · ${SATELLITE_LOCATIONS} Satellite · ${APPOINTMENT_LOCATIONS} By Appointment · ${STATE_COUNT} States`}
+                  ? `${STAFFED_OFFICES} Oficinas Presenciales · ${BY_APPOINTMENT_LOCATIONS} con Cita · ${STATE_COUNT} Estados`
+                  : `${STAFFED_OFFICES} Walk-in Offices · ${BY_APPOINTMENT_LOCATIONS} By Appointment · ${STATE_COUNT} States`}
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">

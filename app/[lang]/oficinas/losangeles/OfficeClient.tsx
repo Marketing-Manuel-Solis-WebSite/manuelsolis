@@ -26,9 +26,9 @@ const officeData: OfficeData = {
   // --- ABOGADOS ---
   attorneys: [
     {
-      name: 'Edward Stephen',
+      name: 'Edward S. Reisman',
       role: { es: 'Abogado', en: 'Attorney' },
-      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Edward-Steven-Reisman.png', // Usando foto de Edward S. Reisman
+      image: 'https://uenjwzjx3vckezns.public.blob.vercel-storage.com/Edward-Steven-Reisman.png',
       quote: { es: "Guiando a sus clientes con conocimiento y humanidad.", en: "Guiding clients with knowledge and humanity." }
     }
   ],

@@ -7,7 +7,7 @@ import Header from './Header';
 import Footer from './Footer';
 import FaqSection from './FaqSection';
 import type { FaqPair } from '../lib/faqSchema';
-import { isSatelliteOffice } from './officesPhoneMap';
+import { isAppointmentOnlyOffice, isSatelliteOffice } from './officesPhoneMap';
 import ContactForm from './ContactForm';
 import TrackedPhoneLink from './TrackedPhoneLink';
 import { Reveal, Stagger, StaggerItem } from './motion';
@@ -119,6 +119,9 @@ export default function OfficePageView({
 }) {
   const t = (obj: BiText) => obj[lang] || obj.es;
   const satellite = napSlug ? isSatelliteOffice(napSlug) : false;
+  // Satélite (horario real) y solo-cita se anuncian igual: «Solo con cita». El
+  // despacho pidió no publicar la palabra "satélite" (reunión del 2026-10-06).
+  const byAppointment = satellite || (napSlug ? isAppointmentOnlyOffice(napSlug) : false);
   // 14 offices ship a real share.google mapLink; northchase only has a
   // placeholder, so it falls back to a Google Maps address search (1:1 with
   // the original per-page behavior).
@@ -153,7 +156,7 @@ export default function OfficePageView({
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B2904D]/10 border border-[#B2904D]/30 mb-6">
                   <Sparkles className="text-[#B2904D]" size={14} />
                   <span className="text-[#B2904D] text-xs font-bold tracking-[0.2em] uppercase">
-                    {satellite ? (lang === 'es' ? 'Oficina satélite' : 'Satellite office') : data.badge}
+                    {byAppointment ? (lang === 'es' ? 'Solo con cita' : 'By appointment only') : data.badge}
                   </span>
                 </div>
 
@@ -164,7 +167,7 @@ export default function OfficePageView({
                 <div className="w-24 h-1 bg-gradient-to-r from-[#B2904D] to-transparent mb-8" />
 
                 {/*
-                  AVISO DE SEDE SATÉLITE.
+                  AVISO DE ATENCIÓN SOLO CON CITA (satélite y solo-cita).
                   Va aquí, pegado al H1 y antes de cualquier otro texto, porque
                   la versión anterior lo dejaba dentro del párrafo de
                   descripción: técnicamente estaba en la página, pero a 800
@@ -173,7 +176,7 @@ export default function OfficePageView({
                   averiguar si puede presentarse, y esa respuesta no puede
                   estar enterrada en prosa.
                 */}
-                {satellite && (
+                {byAppointment && (
                   <div
                     role="note"
                     className="flex items-start gap-3 mb-8 rounded-2xl border border-[#B2904D]/40 bg-[#B2904D]/10 px-5 py-4"
@@ -181,13 +184,11 @@ export default function OfficePageView({
                     <Info className="text-[#B2904D] mt-0.5 shrink-0" size={20} aria-hidden="true" />
                     <p className="text-white text-sm md:text-base leading-relaxed">
                       <strong className="font-semibold">
-                        {lang === 'es'
-                          ? 'Esta es una oficina satélite: no hay atención presencial.'
-                          : 'This is a satellite office: there is no walk-in service.'}
+                        {lang === 'es' ? 'Atención solo con cita.' : 'By appointment only.'}
                       </strong>{' '}
                       {lang === 'es'
-                        ? `No se recibe sin aviso previo. Llame al ${data.phone} para coordinar su visita dentro del horario de operación.`
-                        : `Visitors are not received without prior notice. Call ${data.phone} to arrange your visit within its operating hours.`}
+                        ? `Llame al ${data.phone} para agendar su cita${satellite ? ' dentro de nuestro horario de atención' : ''}.`
+                        : `Call ${data.phone} to schedule your appointment${satellite ? ' during our business hours' : ''}.`}
                     </p>
                   </div>
                 )}
@@ -251,8 +252,8 @@ export default function OfficePageView({
                           {satellite && (
                             <p className="text-[#B2904D] text-sm mt-1 font-medium">
                               {lang === 'es'
-                                ? 'Horario de operación · sin atención presencial'
-                                : 'Operating hours · no walk-in service'}
+                                ? 'Horario de atención · solo con cita'
+                                : 'Business hours · by appointment only'}
                             </p>
                           )}
                         </div>

@@ -253,17 +253,15 @@ function collectDivergences(): Divergence[] {
 /**
  * Oficinas que a propósito NO tienen página de accidentes por sede.
  *
- * Las cinco direcciones nuevas del área de Chicago. El grupo de fichas de
- * accidentes era el cúmulo de casi-duplicados más persistente del sitio —
- * midió hasta 0,79 de similitud entre sí— y de él ya se retiraron del índice
- * las cinco virtuales de Houston. Añadir cinco más lo reconstruiría.
+ * Las direcciones con cita en centros de negocios dadas de alta después de
+ * la limpieza: Jackson (Chicago) y Alameda (Los Ángeles), 2026-10-06. Las
+ * cuatro del área de Chicago que estaban aquí se retiraron ese mismo día. El
+ * grupo de fichas de accidentes era el cúmulo de casi-duplicados más
+ * persistente del sitio —midió hasta 0,79 de similitud entre sí— y de él ya se
+ * retiraron del índice las cinco virtuales de Houston. Añadir más lo
+ * reconstruiría.
  */
-const SIN_FICHA_DE_ACCIDENTES = new Set<string>([
-  'chicago-martingale',
-  'chicago-prospect',
-  'chicago-burr-ridge',
-  'chicago-wall',
-]);
+const SIN_FICHA_DE_ACCIDENTES = new Set<string>(['chicago-jackson', 'losangeles-alameda']);
 
 /**
  * true si la página de esa oficina lee el NAP en vez de copiarlo.
@@ -318,12 +316,7 @@ describe('NAP de oficinas — fuente única', () => {
     // ficha de una de estas, este test falla y obliga a quitarla de la lista, que
     // es la forma de no olvidarse de que quedaron pendientes.
     const sinFicha = OFFICE_NAP_SLUGS.filter((slug) => !(slug in OFFICES_PLACE_IDS)).sort();
-    expect(sinFicha).toEqual([
-      'chicago-burr-ridge',
-      'chicago-martingale',
-      'chicago-prospect',
-      'chicago-wall',
-    ]);
+    expect(sinFicha).toEqual(['chicago-jackson', 'losangeles-alameda']);
   });
 
   it('officesPhoneMap se deriva del registro NAP', () => {
@@ -423,7 +416,7 @@ describe('NAP de oficinas — fuente única', () => {
     expect(faltan, `sin entrada en OfficesExplorer: ${faltan.join(', ')}`).toEqual([]);
   });
 
-  it('solo las altas de Chicago quedan sin página de accidentes', () => {
+  it('solo las direcciones con cita nuevas quedan sin página de accidentes', () => {
     // Fija el conjunto: si alguien retira la ficha de accidentes de una oficina
     // existente, o crea una para las nuevas, este test lo dice.
     const sinFicha = OFFICE_NAP_SLUGS.filter(
@@ -464,15 +457,9 @@ describe('NAP de oficinas — fuente única', () => {
       ['kirby', 'league-city', 'main-st', 'north-loop', 'northchase'].sort(),
     );
 
-    // Solo cita: las cinco del área de Chicago, que no se reclasificaron.
-    expect(porTipo('appointment')).toEqual(
-      [
-        'chicago-martingale',
-        'chicago-prospect',
-        'chicago-burr-ridge',
-        'chicago-wall',
-      ].sort(),
-    );
+    // Solo cita: las direcciones en centros de negocios de Chicago y Los
+    // Ángeles (alta 2026-10-06).
+    expect(porTipo('appointment')).toEqual(['chicago-jackson', 'losangeles-alameda'].sort());
 
     // Toda sede sin atención presencial tiene que ser satélite o de solo cita:
     // nadie puede quedarse en tierra de nadie.

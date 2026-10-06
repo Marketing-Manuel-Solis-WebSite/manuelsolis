@@ -108,15 +108,15 @@ export const VIRTUAL_OFFICE_SLUGS = [
   'main-st',
   'kirby',
   'league-city',
-  // Área metropolitana de Chicago (alta 2026-08-11). El propio despacho las
-  // pidió como "oficinas virtuales", así que entran aquí desde el primer día:
-  // sin horario estructurado en el schema, sin contar como oficina física y sin
-  // ficha de accidentes propia — que es lo que evita repetir el cúmulo de
-  // casi-duplicados que hubo que retirar del índice en las otras cinco.
-  'chicago-martingale',
-  'chicago-prospect',
-  'chicago-burr-ridge',
-  'chicago-wall',
+  // Direcciones con cita en centros de negocios (alta 2026-10-06): Jackson,
+  // en el Loop de Chicago, y Alameda (Spaces), en el centro de Los Ángeles.
+  // Entran aquí desde el primer día, como entraron las del área de Chicago que
+  // sustituyen: sin horario estructurado en el schema, sin contar como oficina
+  // física y sin ficha de accidentes propia — que es lo que evita repetir el
+  // cúmulo de casi-duplicados que hubo que retirar del índice en las de Houston.
+  // Su placeId se añade a OFFICES_PLACE_IDS cuando la ficha quede verificada.
+  'chicago-jackson',
+  'losangeles-alameda',
 ] as const satisfies readonly OfficeSlug[];
 
 /** true si el slug corresponde a una dirección de oficina virtual. */

@@ -319,10 +319,8 @@ export function getOficinasEntries(): SitemapURL[] {
    * una oficina, añadir su fecha aquí.
    */
   const ALTA: Record<string, string> = {
-    'chicago-martingale': '2026-08-11',
-    'chicago-prospect': '2026-08-11',
-    'chicago-burr-ridge': '2026-08-11',
-    'chicago-wall': '2026-08-11',
+    'chicago-jackson': '2026-10-06',
+    'losangeles-alameda': '2026-10-06',
   };
 
   // El índice /oficinas cambió el mismo día: lista cinco sedes más y sus

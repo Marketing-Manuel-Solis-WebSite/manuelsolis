@@ -8,11 +8,11 @@ import { buildSocialMetadata } from '../../../lib/seoMetadata';
 import { getOfficeNap, formatOfficeAddress } from '../../../components/officesPhoneMap';
 import { officeOgImage } from '../../../lib/officePhotos';
 
-const SLUG = 'chicago-wall';
+const SLUG = 'chicago-jackson';
 const SITE_URL = 'https://www.manuelsolis.com';
 
 /**
- * Dirección virtual del área de Chicago (VIRTUAL_OFFICE_SLUGS).
+ * Dirección con cita en el Loop de Chicago (VIRTUAL_OFFICE_SLUGS).
  *
  * A diferencia de las páginas de oficina antiguas, esta NO repite la dirección
  * ni el teléfono: los lee de OFFICES_NAP. Ese duplicado es lo que hacía
@@ -30,13 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const localeLang = isEs ? 'es' : 'en';
 
   const title = isEs
-    ? `Abogados en Naperville (Wall St)`
-    : `Lawyers in Naperville (Wall St)`;
+    ? `Abogados de Inmigración en Chicago (Loop)`
+    : `Immigration Lawyers in Chicago (Loop)`;
 
   // No puede prometer atención presencial 24 h: lo que abre 24 h es la línea.
   const description = isEs
-    ? `Manuel Solís en ${nap.street}, ${nap.city}: solo con cita previa; línea telefónica 24 horas. Inmigración, familia y accidentes.`
-    : `Manuel Solis at ${nap.street}, ${nap.city}: by appointment only; 24-hour phone line. Immigration, family law, and accident attorneys.`;
+    ? `Manuel Solís en ${nap.street}, en el Loop de ${nap.city}: atención solo con cita. Llame al ${nap.phone} para agendar. Inmigración, familia y accidentes.`
+    : `Manuel Solis at ${nap.street} in the ${nap.city} Loop: by appointment only. Call ${nap.phone} to schedule. Immigration, family law, and accident attorneys.`;
 
   const og = officeOgImage(SLUG, localeLang);
 
@@ -56,8 +56,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       path: `/${lang}/oficinas/${SLUG}`,
       title,
       description,
-      // Portada = la entrada del edificio, 1600x900 (ver app/lib/officePhotos.ts).
-      images: og ? [{ url: og.url, width: 1600, height: 900, alt: og.alt }] : undefined,
+      // Imagen genérica del despacho (1200x630) hasta tener foto de la entrada:
+      // ver app/lib/officePhotos.ts.
+      images: og ? [{ url: og.url, width: 1200, height: 630, alt: og.alt }] : undefined,
     }),
   };
 }
@@ -81,8 +82,8 @@ export default async function Page({ params }: Props) {
         mapUrl: nap.mapLink,
       },
       description: {
-        es: `Dirección de Manuel Solís en ${nap.city} (Wall St) que se atiende solo con cita previa, sin personal del despacho en el sitio. Inmigración, familia y accidentes.`,
-        en: `Manuel Solis by-appointment location in ${nap.city} (Wall St), with no firm staff on site. Immigration, family law, and accident cases.`,
+        es: `Dirección de Manuel Solís en el Loop de ${nap.city} (W Jackson Blvd) que atiende solo con cita. Inmigración, familia y accidentes.`,
+        en: `Manuel Solis by-appointment location in the ${nap.city} Loop (W Jackson Blvd). Immigration, family law, and accident cases.`,
       },
     },
     localeLang,

@@ -406,6 +406,11 @@ export const seoRedirects: Redirect[] = [
   // Chicago, que publica el mismo teléfono del mercado.
   { source: '/oficinas/chicago-wacker', destination: '/es/oficinas/chicago', permanent: true },
   { source: '/:lang(es|en)/oficinas/chicago-wacker', destination: '/:lang/oficinas/chicago', permanent: true },
+  // Direcciones con cita retiradas (2026-10-06): Martingale (Schaumburg),
+  // Prospect (Park Ridge), Burr Ridge y Wall (Naperville). En Chicago quedan
+  // Cermak y Jackson; se manda a la sede con personal, igual que Wacker.
+  { source: '/oficinas/:slug(chicago-martingale|chicago-prospect|chicago-burr-ridge|chicago-wall)', destination: '/es/oficinas/chicago', permanent: true },
+  { source: '/:lang(es|en)/oficinas/:slug(chicago-martingale|chicago-prospect|chicago-burr-ridge|chicago-wall)', destination: '/:lang/oficinas/chicago', permanent: true },
   // /:lang/offices/* (English alias) — see also line 113 above
   { source: '/:lang(es|en)/offices/houston-principal-office', destination: '/:lang/oficinas/houston-principal', permanent: true },
   { source: '/:lang(es|en)/offices/houston', destination: '/:lang/oficinas/houston-principal', permanent: true },

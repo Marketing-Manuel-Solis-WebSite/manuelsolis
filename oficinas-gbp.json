@@ -120,6 +120,16 @@
     "nota": null
   },
   {
+    "nombre": "Los Angeles, CA — S Alameda St",
+    "slug": "losangeles-alameda",
+    "storeCode": null,
+    "query": "Abogado de Inmigración Manuel Solis, 777 S Alameda St, Los Angeles, CA 90021",
+    "placeId": null,
+    "direccionSitio": "777 S Alameda St, Los Angeles, CA 90021",
+    "direccionPanel": null,
+    "nota": "Ficha dada de alta en octubre de 2026 (con cita). Publicada en el sitio el 2026-10-06 a pedido del despacho para sostener la verificacion. Confirmar suite y telefono contra el panel."
+  },
+  {
     "nombre": "Cicero, IL (Chicago)",
     "slug": "chicago",
     "storeCode": "CHI-INM-01",
@@ -128,6 +138,16 @@
     "direccionSitio": "6000 W Cermak Rd, Cicero, IL 60804",
     "direccionPanel": "6000 W Cermak Rd, Cicero, IL 60804",
     "nota": null
+  },
+  {
+    "nombre": "Chicago, IL — W Jackson Blvd",
+    "slug": "chicago-jackson",
+    "storeCode": null,
+    "query": "Abogado de Inmigración Manuel Solis, 111 W Jackson Blvd, Chicago, IL 60604",
+    "placeId": null,
+    "direccionSitio": "111 W Jackson Blvd, Chicago, IL 60604",
+    "direccionPanel": null,
+    "nota": "Ficha en vivo (sustituye a Wacker). Usa el mismo telefono que tenia Wacker. Confirmar suite contra el panel."
   },
   {
     "nombre": "Arvada, CO (Denver)",
@@ -158,45 +178,5 @@
     "direccionSitio": null,
     "direccionPanel": "Chase Tower, 600 South Tyler Street #1306, Amarillo, Texas 79101",
     "nota": "SEDE FANTASMA: existe en Google, no existe en el sitio ni en OFFICES_NAP. Marcada 'Temporarily closed' + edicion pendiente. Store code usa IMG en vez de INM. Unica ficha con el nombre limpio ('Abogados Manuel Solis'). Decision de negocio pendiente: reabrir y publicar, o cerrar en definitiva."
-  },
-  {
-    "nombre": "Schaumburg, IL — Martingale Rd",
-    "slug": "chicago-martingale",
-    "storeCode": null,
-    "query": "Law Offices of Manuel Solis, 10 N Martingale Rd Ste 4137, Schaumburg, IL 60173",
-    "placeId": null,
-    "direccionSitio": "10 N Martingale Rd, Ste 4137, Schaumburg, IL 60173",
-    "direccionPanel": null,
-    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
-  },
-  {
-    "nombre": "Park Ridge, IL — S Prospect Ave",
-    "slug": "chicago-prospect",
-    "storeCode": null,
-    "query": "Law Offices of Manuel Solis, 222 S Prospect Ave Ste 338, Park Ridge, IL 60068",
-    "placeId": null,
-    "direccionSitio": "222 S Prospect Ave, Ste 338, Park Ridge, IL 60068",
-    "direccionPanel": null,
-    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
-  },
-  {
-    "nombre": "Burr Ridge, IL — Burr Ridge Pkwy",
-    "slug": "chicago-burr-ridge",
-    "storeCode": null,
-    "query": "Law Offices of Manuel Solis, 1333 Burr Ridge Pkwy Ste 244, Burr Ridge, IL 60527",
-    "placeId": null,
-    "direccionSitio": "1333 Burr Ridge Pkwy, Ste 244, Burr Ridge, IL 60527",
-    "direccionPanel": null,
-    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
-  },
-  {
-    "nombre": "Naperville, IL — Wall St",
-    "slug": "chicago-wall",
-    "storeCode": null,
-    "query": "Law Offices of Manuel Solis, 1560 Wall St Ste 319, Naperville, IL 60563",
-    "placeId": null,
-    "direccionSitio": "1560 Wall St, Ste 319, Naperville, IL 60563",
-    "direccionPanel": null,
-    "nota": "Sin ficha. NO DAR DE ALTA hasta resolver el nombre y la politica de oficinas virtuales."
   }
 ]

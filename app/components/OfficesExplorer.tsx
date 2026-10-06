@@ -56,12 +56,11 @@ const ORIGINAL_DESC = {
 };
 
 /**
- * Servicios de las direcciones con cita del área de Chicago.
+ * Servicios de las direcciones con cita en centros de negocios.
  *
- * Los mismos cinco para las cinco, y a propósito: son lo que se atiende con
- * cita en una sala del centro de negocios. La sede de Cermak lista siete
- * —incluye trámites que necesitan personal en sitio, como tickets o detenidos—
- * y copiarlos aquí prometería en cinco direcciones algo que no se hace en ellas.
+ * Son lo que se atiende con cita en una sala del centro de negocios. La sede de
+ * Cermak lista siete —incluye trámites que necesitan personal en sitio, como
+ * tickets o detenidos— y copiarlos aquí prometería algo que no se hace en ellas.
  */
 const CHICAGO_APPOINTMENT_SERVICES: BiText[] = [
   { es: 'Inmigración', en: 'Immigration' },
@@ -184,44 +183,35 @@ const officePresentations: OfficePresentation[] = [
   },
 
   // ───────────────────────────────────────────────────────────────────────
-  // Área metropolitana de Chicago — direcciones con cita (alta 2026-08-11).
+  // Direcciones con cita (alta 2026-10-06): Jackson, en el Loop de Chicago, y
+  // Alameda, en el centro de Los Ángeles.
   //
-  // ⚠️ ESTA LISTA ES A MANO, no derivada del NAP. Es la razón por la que las
-  // cinco no aparecían en el explorador de la portada aunque sí estuvieran en
-  // el registro, en el sitemap, en el índice y en el menú móvil: el resto del
-  // sitio las heredó solas y este archivo no. Al dar de alta una oficina hay
-  // que añadirla AQUÍ además del NAP.
+  // ⚠️ ESTA LISTA ES A MANO, no derivada del NAP: al dar de alta una oficina
+  // hay que añadirla AQUÍ además del NAP, o no sale en el explorador de la
+  // portada aunque esté en el registro, el sitemap, el índice y el menú.
   //
-  // Los servicios son los que de verdad se atienden en una dirección con cita
-  // del área: no se copian los siete de la sede de Cermak, que tiene personal.
+  // Los servicios son los que de verdad se atienden en una dirección con cita:
+  // no se copian los de la sede con personal de cada ciudad.
   // ───────────────────────────────────────────────────────────────────────
   {
-    slug: 'chicago-martingale',
-    title: { es: 'Martingale (Schaumburg)', en: 'Martingale (Schaumburg)' },
+    slug: 'chicago-jackson',
+    title: { es: 'Jackson (Chicago)', en: 'Jackson (Chicago)' },
     description: ORIGINAL_DESC,
-    image: '/offices/chicago-martingale.jpg',
+    image: '/og-default.jpg',
     services: CHICAGO_APPOINTMENT_SERVICES,
   },
   {
-    slug: 'chicago-prospect',
-    title: { es: 'Prospect (Park Ridge)', en: 'Prospect (Park Ridge)' },
+    slug: 'losangeles-alameda',
+    title: { es: 'Alameda (Los Ángeles)', en: 'Alameda (Los Angeles)' },
     description: ORIGINAL_DESC,
-    image: '/offices/chicago-prospect.jpg',
-    services: CHICAGO_APPOINTMENT_SERVICES,
-  },
-  {
-    slug: 'chicago-burr-ridge',
-    title: { es: 'Burr Ridge', en: 'Burr Ridge' },
-    description: ORIGINAL_DESC,
-    image: '/offices/chicago-burr-ridge.jpg',
-    services: CHICAGO_APPOINTMENT_SERVICES,
-  },
-  {
-    slug: 'chicago-wall',
-    title: { es: 'Wall (Naperville)', en: 'Wall (Naperville)' },
-    description: ORIGINAL_DESC,
-    image: '/offices/chicago-wall.jpg',
-    services: CHICAGO_APPOINTMENT_SERVICES,
+    image: '/og-default.jpg',
+    services: [
+      { es: 'Inmigración', en: 'Immigration' },
+      { es: 'Defensa contra deportación', en: 'Deportation Defense' },
+      { es: 'Detenidos', en: 'Detained' },
+      { es: 'Asilo', en: 'Asylum' },
+      { es: 'Familiar', en: 'Family Law' },
+    ],
   },
 
   {
@@ -435,10 +425,11 @@ const STATUS_LABELS: Record<OfficeOpenState, BiText> = {
   closed: { es: 'CERRADO', en: 'CLOSED' },
   'always-open': { es: 'ABIERTO 24 H', en: 'OPEN 24 H' },
   appointment: { es: 'CON CITA', en: 'BY APPT' },
-  // Satélite: la etiqueta dice lo que ES la sede, no si está abierta. Tiene
-  // horario real, pero no atiende sin aviso, así que un "ABIERTO" aquí llevaría
-  // a alguien hasta la puerta para nada.
-  satellite: { es: 'SATÉLITE', en: 'SATELLITE' },
+  // Satélite (dato interno): la etiqueta dice cómo se atiende, no si está
+  // abierta. Tiene horario real, pero solo atiende con cita, así que un
+  // "ABIERTO" aquí llevaría a alguien hasta la puerta para nada. El despacho
+  // pidió no publicar la palabra "satélite" (reunión del 2026-10-06).
+  satellite: { es: 'CON CITA', en: 'BY APPT' },
 };
 
 const STATUS_TONES: Record<OfficeOpenState, { text: string; dot: string }> = {

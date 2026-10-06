@@ -145,17 +145,14 @@ describe('bloque de ciudades del pie (paso 05)', () => {
 });
 
 describe('tipado de sedes sin atención presencial (defecto 1, crítico)', () => {
-  it('las nueve direcciones virtuales incluyen las cuatro del área de Chicago', () => {
+  it('las siete direcciones virtuales incluyen Jackson (Chicago) y Alameda (Los Ángeles)', () => {
     const v = new Set<string>(VIRTUAL_OFFICE_SLUGS);
-    for (const s of [
-      'chicago-burr-ridge',
-      'chicago-martingale',
-      'chicago-prospect',
-      'chicago-wall',
-    ]) {
+    for (const s of ['chicago-jackson', 'losangeles-alameda']) {
       expect(v.has(s), `${s} debe estar en VIRTUAL_OFFICE_SLUGS`).toBe(true);
     }
-    expect(VIRTUAL_OFFICE_SLUGS).toHaveLength(9);
+    // Las cinco de Houston más estas dos (las cuatro del área de Chicago se
+    // retiraron el 2026-10-06).
+    expect(VIRTUAL_OFFICE_SLUGS).toHaveLength(7);
   });
 
   it('ninguna oficina virtual publica horario estructurado', () => {

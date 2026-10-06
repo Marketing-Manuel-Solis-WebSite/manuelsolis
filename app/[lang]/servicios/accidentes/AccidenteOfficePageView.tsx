@@ -140,13 +140,11 @@ export default function AccidenteOfficePageView({
                     <Info className="text-[#B2904D] mt-0.5 shrink-0" size={20} aria-hidden="true" />
                     <p className="text-white text-sm md:text-base leading-relaxed">
                       <strong className="font-semibold">
-                        {isEs
-                          ? 'Esta es una oficina satélite: no hay atención presencial.'
-                          : 'This is a satellite office: there is no walk-in service.'}
+                        {isEs ? 'Atención solo con cita.' : 'By appointment only.'}
                       </strong>{' '}
                       {isEs
-                        ? `No se recibe sin aviso previo. Llame al ${office.phone} para coordinar su visita.`
-                        : `Visitors are not received without prior notice. Call ${office.phone} to arrange your visit.`}
+                        ? `Llame al ${office.phone} para agendar su cita.`
+                        : `Call ${office.phone} to schedule your appointment.`}
                     </p>
                   </div>
                 )}

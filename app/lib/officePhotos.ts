@@ -34,15 +34,13 @@ export const OFFICE_PHOTO_BY_SLUG: Readonly<Record<OfficeNapSlug, string>> = {
   // crudo. El hero de la pagina no pierde nada — es 16:9 y next/image lo
   // reencoda igual.
   chicago: '/og/oficina-chicago.jpg',
-  // Área de Chicago: la portada de cada una es la ENTRADA de su edificio, con
-  // el número de la calle a la vista (10, 1333, 1560). Se
-  // eligió así porque estas cinco son direcciones dentro de centros de
-  // negocios: lo que le sirve a quien va a una cita es reconocer el portal
-  // desde la calle, no ver un interior que podría ser cualquiera.
-  'chicago-martingale': '/offices/chicago-martingale.jpg',
-  'chicago-prospect': '/offices/chicago-prospect.jpg',
-  'chicago-burr-ridge': '/offices/chicago-burr-ridge.jpg',
-  'chicago-wall': '/offices/chicago-wall.jpg',
+  // Direcciones con cita en centros de negocios (alta 2026-10-06). Todavía no
+  // hay foto de su entrada, y poner la de otra sede sería mentir sobre dónde
+  // está: va la imagen genérica del despacho. Cuando haya foto, que sea la
+  // ENTRADA del edificio con el número de la calle a la vista, que es lo que le
+  // sirve a quien llega a una cita.
+  'chicago-jackson': '/og-default.jpg',
+  'losangeles-alameda': '/og-default.jpg',
   arvada: '/offices/Denver.png',
   // El nombre del archivo lleva la calle a propósito. La foto anterior se
   // llamaba `ofAirways` y siguió publicándose meses después de la mudanza:

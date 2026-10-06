@@ -110,8 +110,8 @@ function serviceDescription(office: AccidentOffice, lang: 'es' | 'en'): string {
     return (
       base +
       (lang === 'es'
-        ? ' Es una oficina satélite: no hay atención presencial y la visita se coordina antes por teléfono. Opera de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 9:00 AM a 4:00 PM.'
-        : ' This is a satellite office: there is no walk-in service and visits are arranged in advance by phone. It operates Monday to Friday from 9:00 AM to 7:00 PM and Saturday from 9:00 AM to 4:00 PM.')
+        ? ' Atiende solo con cita: llame antes para agendarla. El horario de atención es de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 9:00 AM a 4:00 PM.'
+        : ' It is by appointment only: call ahead to schedule. Business hours are Monday to Friday from 9:00 AM to 7:00 PM and Saturday from 9:00 AM to 4:00 PM.')
     );
   }
 

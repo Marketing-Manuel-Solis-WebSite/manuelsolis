@@ -35,10 +35,11 @@ describe('buildOfficeFaqs — cobertura', () => {
 
 describe('buildOfficeFaqs — dice la verdad sobre cada oficina', () => {
   it('avisa de que las direcciones con cita previa no tienen personal', () => {
-    // Las cinco direcciones Regus/IWG. Que el visitante se plante ahí sin avisar
-    // y lo encuentre cerrado es el fallo que esto evita.
+    // Las direcciones en centros de negocios (Jackson y Alameda). Que el
+    // visitante se plante ahí sin avisar y lo encuentre cerrado es el fallo que
+    // esto evita.
     const conCita = OFFICE_NAP_SLUGS.filter((s) => OFFICES_NAP[s].hours.kind === 'appointment');
-    expect(conCita.length).toBeGreaterThanOrEqual(4);
+    expect(conCita.length).toBeGreaterThanOrEqual(2);
     for (const slug of conCita) {
       const [walkIn] = buildOfficeFaqs(slug, 'es');
       expect(walkIn.a, slug).toMatch(/cita previa/i);
@@ -65,7 +66,9 @@ describe('buildOfficeFaqs — dice la verdad sobre cada oficina', () => {
     for (const slug of SATELLITE_OFFICE_SLUGS) {
       const [walkIn] = buildOfficeFaqs(slug, 'es');
       expect(walkIn.a, slug).toMatch(/^No\./);
-      expect(walkIn.a, slug).toMatch(/sat[ée]lite/i);
+      expect(walkIn.a, slug).toMatch(/solo con cita/i);
+      // El despacho pidió no publicar la palabra (reunión del 2026-10-06).
+      expect(walkIn.a, slug).not.toMatch(/sat[ée]lite/i);
       expect(walkIn.a, slug).not.toMatch(/24 horas/i);
     }
   });

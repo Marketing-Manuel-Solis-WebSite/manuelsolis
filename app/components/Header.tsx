@@ -150,15 +150,26 @@ export default function HeaderProfessional() {
     },
     {
       state: 'California',
-      cities: [{ name: 'Los Angeles', href: `/${language}/oficinas/losangeles` }],
+      cities: [
+        {
+          // Mismo desglose que Chicago: la ciudad abre su oficina con personal
+          // y las direcciones se listan por su calle.
+          name: 'Los Angeles',
+          href: `/${language}/oficinas/losangeles`,
+          subOffices: [
+            { name: 'Telegraph', href: `/${language}/oficinas/losangeles` },
+            { name: 'Alameda', href: `/${language}/oficinas/losangeles-alameda` },
+          ],
+        },
+      ],
     },
     {
       state: 'Illinois',
       cities: [
         {
           // Mismo desglose que Houston: la ciudad de referencia abre y las
-          // direcciones del área se listan por su calle. Es literalmente lo que
-          // pidió el despacho al dar de alta las cinco nuevas.
+          // direcciones del área se listan por su calle, que es como lo pidió
+          // el despacho.
           name: 'Chicago',
           href: `/${language}/oficinas/chicago`,
           // Etiquetas = nombre de la calle, que es como las pidió el despacho y
@@ -166,10 +177,7 @@ export default function HeaderProfessional() {
           // principal va por su calle igual que las demás: está en Cermak Rd.
           subOffices: [
             { name: 'Cermak', href: `/${language}/oficinas/chicago` },
-            { name: 'Martingale', href: `/${language}/oficinas/chicago-martingale` },
-            { name: 'Prospect', href: `/${language}/oficinas/chicago-prospect` },
-            { name: 'Burr Ridge', href: `/${language}/oficinas/chicago-burr-ridge` },
-            { name: 'Wall', href: `/${language}/oficinas/chicago-wall` },
+            { name: 'Jackson', href: `/${language}/oficinas/chicago-jackson` },
           ],
         },
       ],

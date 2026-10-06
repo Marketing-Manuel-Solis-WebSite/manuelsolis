@@ -59,11 +59,9 @@ function build(): string {
     // Tres categorías desde el 2026-08-22. Para un extractor esto importa más
     // que para una persona: si no se dice, lee "oficina" y asume que se puede
     // ir sin avisar.
-    const cita = isSatelliteOffice(slug)
-      ? ' — oficina satélite, sin atención presencial'
-      : isVirtualOffice(slug)
-        ? ' — solo con cita previa'
-        : '';
+    // Se publica como «solo con cita» también en las satélite: el despacho
+    // pidió no usar la palabra (reunión del 2026-10-06).
+    const cita = isSatelliteOffice(slug) || isVirtualOffice(slug) ? ' — solo con cita' : '';
     return `- ${nap.name.es}: ${formatOfficeAddress(nap)} · Tel. ${nap.phone}${cita} · ${SITE_URL}/es/oficinas/${slug}`;
   }).join('\n');
 

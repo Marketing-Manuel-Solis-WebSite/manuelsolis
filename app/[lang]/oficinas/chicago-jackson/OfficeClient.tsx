@@ -3,10 +3,10 @@ import type { FaqPair } from '../../../lib/faqSchema';
 import { getOfficeNap, formatOfficeAddress } from '../../../components/officesPhoneMap';
 import { OFFICE_PHOTO_BY_SLUG } from '../../../lib/officePhotos';
 
-const SLUG = 'chicago-wall';
+const SLUG = 'chicago-jackson';
 
 /**
- * Naperville (Wall St) — dirección virtual del área de Chicago.
+ * Jackson (Chicago) — dirección con cita en el Loop de Chicago.
  *
  * La dirección, el teléfono, el horario y el mapa se leen de OFFICES_NAP en vez
  * de copiarse aquí: es el duplicado que hacía divergir el NAP entre archivos.
@@ -18,16 +18,16 @@ const officeData: OfficeData = {
   id: SLUG,
   city: nap.city,
   state: nap.state,
-  title: { es: 'Naperville (Wall St)', en: 'Naperville (Wall St)' },
+  title: { es: 'Chicago (W Jackson Blvd)', en: 'Chicago (W Jackson Blvd)' },
   quote: {
     es: 'Más de 35 años de experiencia y 50,000 casos ganados',
     en: 'Over 35 years of experience and 50,000 cases won',
   },
-  // Dice qué ES esta dirección. Describirla como una sede más sería falso: no
-  // hay personal del despacho en el sitio y la visita se agenda antes.
+  // Dice qué ES esta dirección: se atiende solo con cita. El despacho pidió
+  // decirlo así, sin la palabra "satélite" (reunión del 2026-10-06).
   description: {
-    es: `Esta dirección de Wall St es un punto de atención con cita previa: no hay personal del despacho en el sitio, así que la visita se agenda antes por teléfono y la línea se contesta las 24 horas. Con la cita hecha se atienden aquí casos de inmigración, derecho familiar y accidentes con el equipo de Manuel Solís, en español o en inglés. Si necesita acudir sin cita, la oficina con personal del área es Chicago, en 6000 W Cermak Rd.`,
-    en: `This Wall St address is a by-appointment location: the firm keeps no staff on site, so visits are booked in advance by phone and the line is answered 24 hours a day. Once the appointment is set, immigration, family law, and accident cases are handled here with the Manuel Solis team, in Spanish or English. If you need to walk in, the staffed office for the area is Chicago, at 6000 W Cermak Rd.`,
+    es: `Nuestra oficina de W Jackson Blvd, en el Loop de Chicago, atiende solo con cita. Llame al ${nap.phone} para agendar su cita; la línea se contesta las 24 horas. Con la cita hecha se atienden aquí casos de inmigración, derecho familiar y accidentes con el equipo de Manuel Solís, en español o en inglés. Si necesita acudir sin cita, la oficina del área con atención presencial es Chicago, en 6000 W Cermak Rd.`,
+    en: `Our W Jackson Blvd office in the Chicago Loop is by appointment only. Call ${nap.phone} to schedule your appointment; the line is answered 24 hours a day. Once your appointment is set, immigration, family law, and accident cases are handled here with the Manuel Solis team, in Spanish or English. If you need to walk in, the area office that takes walk-ins is Chicago, at 6000 W Cermak Rd.`,
   },
   address: formatOfficeAddress(nap),
   phone: nap.phone,
@@ -36,7 +36,7 @@ const officeData: OfficeData = {
   mapLink: nap.mapLink,
   image: OFFICE_PHOTO_BY_SLUG[SLUG],
 
-  // Sin gerencia en sitio: es una dirección con cita.
+  // Sin gerencia en el sitio: se atiende con cita.
   managers: [],
 
   attorneys: [

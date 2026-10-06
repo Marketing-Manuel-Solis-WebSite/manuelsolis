@@ -1,5 +1,5 @@
 /**
- * Datos NAP compartidos de las 15 oficinas (versión client-safe).
+ * Datos NAP compartidos de todas las oficinas (versión client-safe).
  *
  * app/lib/officesRegistry.ts (placeIds de Google + lista de oficinas
  * virtuales) es `server-only`, así que las islas cliente —Header,
@@ -82,15 +82,15 @@ export type OfficeNapSlug =
   | 'el-paso'
   | 'harlingen'
   | 'losangeles'
+  // Dirección con cita en el centro de Los Ángeles (alta 2026-10-06), a unas
+  // cuadras de la corte de inmigración. Prefijo de mercado igual que las
+  // `chicago-*`: `/oficinas/alameda` a secas no dice dónde está.
+  | 'losangeles-alameda'
   | 'chicago'
-  // Direcciones virtuales del área metropolitana de Chicago, alta de
-  // 2026-08-11. Llevan prefijo `chicago-` porque el despacho las agrupa bajo
-  // ese mercado (igual que las `houston-*`) y porque `/oficinas/wall` o
-  // `/oficinas/prospect` a secas no dicen dónde están.
-  | 'chicago-martingale'
-  | 'chicago-prospect'
-  | 'chicago-burr-ridge'
-  | 'chicago-wall'
+  // Dirección con cita en el Loop de Chicago (alta 2026-10-06). Sustituye a
+  // Wacker y a las cuatro del área (Martingale, Prospect, Burr Ridge, Wall),
+  // que el despacho retiró: en Chicago quedan Cermak, con personal, y Jackson.
+  | 'chicago-jackson'
   | 'arvada'
   | 'memphis';
 
@@ -103,7 +103,6 @@ function weekly(label: BiText, weekdays: OpenInterval, saturday?: OpenInterval):
   return { kind: 'weekly', label, open };
 }
 
-/** Horario común de las 5 direcciones virtuales (VIRTUAL_OFFICE_SLUGS). */
 /**
  * Línea general del despacho. Se declara aquí arriba porque OFFICES_NAP la
  * necesita: `DEFAULT_PHONE` la reexporta más abajo para el resto del sitio, y
@@ -115,18 +114,27 @@ const FIRM_MAIN_PHONE = '1-888-676-1238';
  * Número del mercado de Chicago, compartido por las direcciones del área.
  *
  * Es el mismo que publica la oficina de Chicago (6000 W Cermak Rd), y es cierto:
- * quien llama llega al equipo que atiende esas cinco direcciones. Se eligió
+ * quien llama llega al equipo que atiende la dirección de Jackson. El despacho
+ * pidió conservar para Jackson el número que tenía Wacker (reunión del
+ * 2026-10-06), que es este. Se eligió
  * frente al 1-888 general por dos razones — el resto de las oficinas publica un
  * número LOCAL y hay un test que lo exige, y un fijo local convierte mejor que
  * un gratuito en una pagina de sede.
  *
- * No crea conflicto de ficha de Google porque ninguna de las cinco tiene GBP
- * todavia.
+ * La ficha de Google de Jackson publica este mismo número.
  *
  * ⚠️ Es provisional: marketing aun no ha asignado lineas de seguimiento por
  * sede. Cuando lleguen, cambiar el campo phone de cada entrada.
  */
 const CHICAGO_MARKET_PHONE = '(312) 477-0389';
+
+/**
+ * Número del mercado de Los Ángeles: el de la oficina con personal de Pico
+ * Rivera. Mismo criterio que CHICAGO_MARKET_PHONE: quien llama para agendar
+ * en Alameda llega al equipo de Los Ángeles. Provisional hasta que marketing
+ * asigne una línea propia a la sede.
+ */
+const LOS_ANGELES_MARKET_PHONE = '(213) 784-1554';
 
 /**
  * Enlace de mapa por búsqueda de dirección.
@@ -369,7 +377,7 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     city: 'Pico Rivera',
     state: 'CA',
     zip: '90660',
-    phone: '(213) 784-1554',
+    phone: LOS_ANGELES_MARKET_PHONE,
     timeZone: 'America/Los_Angeles',
     mapLink: 'https://share.google/VnrxOpNfWDbNYkwjP',
     hours: weekly(
@@ -380,6 +388,23 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
       { opens: '09:00', closes: '18:00' },
       { opens: '09:00', closes: '14:00' },
     ),
+  },
+  // Con cita, sin personal del despacho en el sitio (centro de negocios
+  // Spaces, Fashion District). Ficha de Google dada de alta en octubre de 2026.
+  // ⚠️ Sin número de suite: el despacho dio la dirección sin él. Si la ficha
+  // de Google lo publica, añadirlo aquí para que el NAP coincida.
+  'losangeles-alameda': {
+    slug: 'losangeles-alameda',
+    name: { es: 'Alameda (Los Ángeles)', en: 'Alameda (Los Angeles)' },
+    menuLabel: 'Alameda',
+    street: '777 S Alameda St',
+    city: 'Los Angeles',
+    state: 'CA',
+    zip: '90021',
+    phone: LOS_ANGELES_MARKET_PHONE,
+    timeZone: 'America/Los_Angeles',
+    mapLink: mapsSearch('777 S Alameda St, Los Angeles, CA 90021'),
+    hours: APPOINTMENT_HOURS,
   },
   chicago: {
     slug: 'chicago',
@@ -403,74 +428,30 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
   },
 
   // ───────────────────────────────────────────────────────────────────────
-  // Área metropolitana de Chicago — direcciones virtuales (alta 2026-08-11)
+  // Chicago — dirección con cita en el Loop (alta 2026-10-06)
   //
-  // `city` es el MUNICIPIO REAL, no "Chicago". Es la misma convención que ya
-  // sigue la oficina `chicago`, cuya dirección está en Cicero: el nombre es la
-  // etiqueta de mercado y `city` es el dato que va al `addressLocality` del
-  // schema y a la ficha de Google. Poner "Chicago" en una dirección de
-  // Schaumburg o Naperville rompería el NAP y con él el posicionamiento local.
+  // El despacho retiró las direcciones virtuales del área: S Wacker Dr se dio
+  // de baja el 2026-09-25, y Martingale (Schaumburg), Prospect (Park Ridge),
+  // Burr Ridge y Wall (Naperville) el 2026-10-06. En Chicago quedan Cermak,
+  // con personal, y esta. Sus URLs pasan a 301 hacia la sede de Chicago.
   //
-  // S Wacker Dr se dio de baja el 2026-09-25: el despacho cerró esa oficina.
-  //
-  // ⚠️ TELÉFONO: todas publican el número general del despacho porque
-  // marketing todavía no ha asignado líneas de seguimiento por sede. Es un dato
-  // cierto —contesta el despacho— pero no local. Cambiar el campo `phone` de
-  // cada entrada cuando lleguen los números.
+  // Jackson tiene ficha de Google en vivo y publica el número que tenía Wacker.
+  // ⚠️ Sin número de suite: si la ficha de Google lo publica, añadirlo aquí
+  // para que el NAP coincida.
   // ───────────────────────────────────────────────────────────────────────
-  'chicago-martingale': {
-    slug: 'chicago-martingale',
-    name: { es: 'Martingale', en: 'Martingale' },
-    menuLabel: 'Martingale',
-    street: '10 N Martingale Rd, Ste 4137',
-    city: 'Schaumburg',
+  'chicago-jackson': {
+    slug: 'chicago-jackson',
+    name: { es: 'Jackson (Chicago)', en: 'Jackson (Chicago)' },
+    menuLabel: 'Jackson',
+    street: '111 W Jackson Blvd',
+    city: 'Chicago',
     state: 'IL',
-    zip: '60173',
+    zip: '60604',
     phone: CHICAGO_MARKET_PHONE,
     timeZone: 'America/Chicago',
-    mapLink: mapsSearch('10 N Martingale Rd, Ste 4137, Schaumburg, IL 60173'),
+    mapLink: mapsSearch('111 W Jackson Blvd, Chicago, IL 60604'),
     hours: APPOINTMENT_HOURS,
   },
-  'chicago-prospect': {
-    slug: 'chicago-prospect',
-    name: { es: 'Prospect', en: 'Prospect' },
-    menuLabel: 'Prospect',
-    street: '222 S Prospect Ave, Ste 338',
-    city: 'Park Ridge',
-    state: 'IL',
-    zip: '60068',
-    phone: CHICAGO_MARKET_PHONE,
-    timeZone: 'America/Chicago',
-    mapLink: mapsSearch('222 S Prospect Ave, Ste 338, Park Ridge, IL 60068'),
-    hours: APPOINTMENT_HOURS,
-  },
-  'chicago-burr-ridge': {
-    slug: 'chicago-burr-ridge',
-    name: { es: 'Burr Ridge', en: 'Burr Ridge' },
-    menuLabel: 'Burr Ridge',
-    street: '1333 Burr Ridge Pkwy, Ste 244',
-    city: 'Burr Ridge',
-    state: 'IL',
-    zip: '60527',
-    phone: CHICAGO_MARKET_PHONE,
-    timeZone: 'America/Chicago',
-    mapLink: mapsSearch('1333 Burr Ridge Pkwy, Ste 244, Burr Ridge, IL 60527'),
-    hours: APPOINTMENT_HOURS,
-  },
-  'chicago-wall': {
-    slug: 'chicago-wall',
-    name: { es: 'Wall', en: 'Wall' },
-    menuLabel: 'Wall',
-    street: '1560 Wall St, Ste 319',
-    city: 'Naperville',
-    state: 'IL',
-    zip: '60563',
-    phone: CHICAGO_MARKET_PHONE,
-    timeZone: 'America/Chicago',
-    mapLink: mapsSearch('1560 Wall St, Ste 319, Naperville, IL 60563'),
-    hours: APPOINTMENT_HOURS,
-  },
-
   arvada: {
     slug: 'arvada',
     name: { es: 'Arvada (Denver)', en: 'Arvada (Denver)' },
