@@ -33,6 +33,27 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'cambio_de_direccion_uscis_corte_ar_11_eoir_33',
+      slug: 'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
+      newsletterAt: '2026-10-09',
+      title: {
+        es: 'Me mudé y no avisé: por qué cambiar tu dirección con USCIS y la corte puede salvar tu caso (AR-11 y EOIR-33)',
+        en: 'I Moved and Didn\'t Report It: Why Updating Your Address with USCIS and the Court Can Save Your Case (AR-11 and EOIR-33)'
+      },
+      excerpt: {
+        es: 'Si te mudaste, tienes 10 días para avisar a USCIS y 5 días hábiles a la corte de inmigración. Cómo hacerlo y qué pasa si no avisas.',
+        en: 'If you moved, you have 10 days to notify USCIS and 5 business days to notify the immigration court. How to do it and what happens if you don\'t.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-10-06',
+      readTime: '6 min',
+      image: '/blog/blog_38/OCT_B2.png',
+      featured: false
+    },
+    // ---
+    {
       id: 'orden_deportacion_en_ausencia_reabrir_caso',
       slug: 'orden-deportacion-en-ausencia-reabrir-caso',
       newsletterAt: '2026-10-06',
