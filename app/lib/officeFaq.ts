@@ -52,6 +52,24 @@ function closedDays(nap: OfficeNap, lang: 'es' | 'en'): string[] {
   return cerrados;
 }
 
+/**
+ * Adónde ir sin cita desde una sede que solo atiende con cita. Depende del
+ * mercado: mandar a alguien de Chicago a Navigation Blvd sería inútil. La
+ * dirección de Chicago y Los Ángeles sale del NAP, no se copia.
+ */
+function walkInAlternative(nap: OfficeNap, lang: 'es' | 'en'): string {
+  const es = lang === 'es';
+  const sede = nap.state === 'IL' ? OFFICES_NAP.chicago : nap.state === 'CA' ? OFFICES_NAP.losangeles : null;
+  if (sede) {
+    return es
+      ? `o acuda a la oficina de ${sede.name.es} que sí recibe sin cita, en ${sede.street}, ${sede.city}.`
+      : `or go to the ${sede.name.en} office that does take walk-ins, at ${sede.street}, ${sede.city}.`;
+  }
+  return es
+    ? 'o acuda a una de las dos oficinas de Houston que sí reciben sin cita: la Principal, en 6657 Navigation Blvd, o Bellaire.'
+    : 'or go to one of the two Houston offices that do take walk-ins: the Main Office at 6657 Navigation Blvd, or Bellaire.';
+}
+
 function walkInFaq(nap: OfficeNap, lang: 'es' | 'en', zone: string): OfficeFaq {
   const name = nap.name[lang];
   const es = lang === 'es';
@@ -88,8 +106,8 @@ function walkInFaq(nap: OfficeNap, lang: 'es' | 'en', zone: string): OfficeFaq {
     return {
       q,
       a: es
-        ? `No. ${name} atiende solo con cita, dentro de su horario (${nap.hours.label.es}). Llame antes al ${nap.phone} para agendar su cita, o acuda a una de las dos oficinas de Houston que sí reciben sin cita: la Principal, en 6657 Navigation Blvd, o Bellaire.`
-        : `No. ${name} is by appointment only, during its business hours (${nap.hours.label.en}). Call ${nap.phone} first to schedule your appointment, or go to one of the two Houston offices that do take walk-ins: the Main Office at 6657 Navigation Blvd, or Bellaire.`,
+        ? `No. ${name} atiende solo con cita, dentro de su horario (${nap.hours.label.es}). Llame antes al ${nap.phone} para agendar su cita, ${walkInAlternative(nap, 'es')}`
+        : `No. ${name} is by appointment only, during its business hours (${nap.hours.label.en}). Call ${nap.phone} first to schedule your appointment, ${walkInAlternative(nap, 'en')}`,
     };
   }
 
@@ -251,8 +269,8 @@ export function buildMainOfficeFaqs(slug: string, lang: 'es' | 'en'): OfficeFaq[
       a: cita
         ? satelite
           ? es
-            ? `No. ${name} atiende solo con cita. Llame al ${nap.phone} para agendar su cita dentro de su horario de atención, o vaya a una de las dos oficinas de Houston que sí reciben sin cita: la Principal, en 6657 Navigation Blvd, o Bellaire.`
-            : `No. ${name} is by appointment only. Call ${nap.phone} to schedule your appointment during business hours, or go to one of the two Houston offices that do take walk-ins: the Main Office at 6657 Navigation Blvd, or Bellaire.`
+            ? `No. ${name} atiende solo con cita. Llame al ${nap.phone} para agendar su cita dentro de su horario de atención, ${walkInAlternative(nap, 'es')}`
+            : `No. ${name} is by appointment only. Call ${nap.phone} to schedule your appointment during business hours, ${walkInAlternative(nap, 'en')}`
           : es
             ? `No. ${name} atiende solo con cita previa: llame al ${nap.phone} para agendar su cita, la línea contesta a cualquier hora. En el local no hay personal esperando sin cita, así que agéndela antes de desplazarse.`
             : `No. ${name} is by appointment only: call ${nap.phone} to schedule your appointment; the line is answered at any hour. There is no staff waiting at the location without an appointment, so schedule it before travelling there.`

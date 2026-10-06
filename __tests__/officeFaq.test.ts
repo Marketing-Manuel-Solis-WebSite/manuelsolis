@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildOfficeFaqs, buildOfficeFaqSchema } from '../app/lib/officeFaq';
+import { buildMainOfficeFaqs, buildOfficeFaqs, buildOfficeFaqSchema } from '../app/lib/officeFaq';
 import {
   OFFICE_NAP_SLUGS,
   OFFICES_NAP,
@@ -35,11 +35,11 @@ describe('buildOfficeFaqs — cobertura', () => {
 
 describe('buildOfficeFaqs — dice la verdad sobre cada oficina', () => {
   it('avisa de que las direcciones con cita previa no tienen personal', () => {
-    // Las direcciones en centros de negocios (Jackson y Alameda). Que el
+    // Las direcciones con cita sin horario publicado (hoy, Alameda). Que el
     // visitante se plante ahí sin avisar y lo encuentre cerrado es el fallo que
     // esto evita.
     const conCita = OFFICE_NAP_SLUGS.filter((s) => OFFICES_NAP[s].hours.kind === 'appointment');
-    expect(conCita.length).toBeGreaterThanOrEqual(2);
+    expect(conCita.length).toBeGreaterThanOrEqual(1);
     for (const slug of conCita) {
       const [walkIn] = buildOfficeFaqs(slug, 'es');
       expect(walkIn.a, slug).toMatch(/cita previa/i);
@@ -71,6 +71,21 @@ describe('buildOfficeFaqs — dice la verdad sobre cada oficina', () => {
       expect(walkIn.a, slug).not.toMatch(/sat[ée]lite/i);
       expect(walkIn.a, slug).not.toMatch(/24 horas/i);
     }
+  });
+
+  it('la alternativa sin cita es la sede con personal de SU mercado, no Houston', () => {
+    // Jackson (Chicago) es satélite desde el 2026-10-06: mandar a alguien de
+    // Chicago a Navigation Blvd sería inútil.
+    for (const lang of ['es', 'en'] as const) {
+      const [walkIn] = buildOfficeFaqs('chicago-jackson', lang);
+      expect(walkIn.a).toMatch(/6000 W Cermak Rd/);
+      expect(walkIn.a).not.toMatch(/Navigation|Houston/);
+      const [main] = buildMainOfficeFaqs('chicago-jackson', lang).slice(1, 2);
+      expect(main.a).toMatch(/6000 W Cermak Rd/);
+      expect(main.a).not.toMatch(/Navigation|Houston/);
+    }
+    // Y las de Houston siguen mandando a las de Houston.
+    expect(buildOfficeFaqs('kirby', 'es')[0].a).toMatch(/6657 Navigation Blvd/);
   });
 
   it('menciona el huso solo donde difiere del de la sede', () => {

@@ -454,12 +454,14 @@ describe('NAP de oficinas — fuente única', () => {
      * Houston: es la misma operación que Kirby o Main St.
      */
     expect(porTipo('satellite')).toEqual(
-      ['kirby', 'league-city', 'main-st', 'north-loop', 'northchase'].sort(),
+      // chicago-jackson: horario real de su ficha de Google, solo con cita
+      // (2026-10-06), la misma operación que las de Houston.
+      ['chicago-jackson', 'kirby', 'league-city', 'main-st', 'north-loop', 'northchase'].sort(),
     );
 
-    // Solo cita: las direcciones en centros de negocios de Chicago y Los
-    // Ángeles (alta 2026-10-06).
-    expect(porTipo('appointment')).toEqual(['chicago-jackson', 'losangeles-alameda'].sort());
+    // Solo cita, sin horario publicado: Alameda (Los Ángeles), alta
+    // 2026-10-06, hasta que su ficha de Google publique horario.
+    expect(porTipo('appointment')).toEqual(['losangeles-alameda']);
 
     // Toda sede sin atención presencial tiene que ser satélite o de solo cita:
     // nadie puede quedarse en tierra de nadie.

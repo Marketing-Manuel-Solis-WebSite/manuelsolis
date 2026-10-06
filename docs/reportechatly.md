@@ -11,7 +11,7 @@
 **Law Offices of Manuel Solís** (usado también como marca **Manuel Solis Law Firm**) es un despacho de abogados con sede central (headquarters) en **Houston, Texas**, con más de 35 años de trayectoria. Opera:
 
 - **10 oficinas físicas con personal** en 5 estados: Texas, Illinois, California, Colorado y Tennessee.
-- **7 sedes con cita** (centros de negocios Regus / IWG / WeWork / Spaces): 5 en el área metropolitana de Houston y League City, 1 en el Loop de Chicago (111 W Jackson Blvd) y 1 en el centro de Los Ángeles (777 S Alameda St). Solo se atienden **con cita** y **no tienen personal permanente en sitio**. Al cliente se le dice "atención solo con cita; llame para agendar" — el despacho no usa la palabra "satélite".
+- **7 sedes con cita** (centros de negocios Regus / IWG / WeWork / Spaces): 5 en el área metropolitana de Houston y League City, 1 en el Loop de Chicago (111 W Jackson Blvd, Suite 1700) y 1 en el centro de Los Ángeles (777 S Alameda St). Solo se atienden **con cita** y **no tienen personal permanente en sitio**. Al cliente se le dice "atención solo con cita; llame para agendar" — el despacho no usa la palabra "satélite".
 
 Especialización principal: **inmigración y defensa de deportación, accidentes y lesiones personales, asilo, Visa U y VAWA**. Equipo de **19+ abogados** distribuidos por sede, todos bilingües español-inglés, con atención adicional en chino en Houston Bellaire.
 
@@ -162,7 +162,7 @@ Teléfono central: **(832) 598-0914**. Sitio: **https://www.manuelsolis.com**.
 | 3 | Houston — Main St | 708 Main St, Houston, TX | 77002 | +1-713-842-9575 | WeWork / Spaces / Regus (Great Jones Bldg) | `main-st/page.tsx:16-20`; `officesRegistry.ts:60` |
 | 4 | Houston — Kirby | 3730 Kirby Dr, Suite 1200, Houston, TX | 77098 | +1-713-903-7875 | Regus (River Oaks Tower) | `kirby/page.tsx:16-20`; `officesRegistry.ts:61` |
 | 5 | League City | 2600 S Shore Blvd, Suite 300, League City, TX | 77573 | +1-832-598-3782 | Regus | `league-city/page.tsx:16-20`; `officesRegistry.ts:62` |
-| 6 | Chicago — Jackson (Loop) | 111 W Jackson Blvd, Chicago, IL | 60604 | +1-312-477-0389 | Centro de negocios (alta 2026-10-06) | `chicago-jackson/`; `officesPhoneMap.ts` |
+| 6 | Chicago — Jackson (Loop) | 111 W Jackson Blvd, Suite 1700, Chicago, IL | 60604 | +1-312-477-0389 · L-V 9:00-18:00, S 8:00-16:00, solo con cita | Centro de negocios (alta 2026-10-06) | `chicago-jackson/`; `officesPhoneMap.ts` |
 | 7 | Los Ángeles — Alameda (centro, cerca de la corte de inmigración) | 777 S Alameda St, Los Angeles, CA | 90021 | +1-213-784-1554 | Spaces (alta 2026-10-06) | `losangeles-alameda/`; `officesPhoneMap.ts` |
 
 > Chicago ya no tiene las direcciones de Wacker, Martingale (Schaumburg), Prospect (Park Ridge), Burr Ridge ni Wall (Naperville): se retiraron. En Chicago solo quedan Cermak (Cicero, con personal) y Jackson (con cita).

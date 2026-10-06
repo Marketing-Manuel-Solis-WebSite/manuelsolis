@@ -33,10 +33,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `Abogados de Inmigración en Chicago (Loop)`
     : `Immigration Lawyers in Chicago (Loop)`;
 
-  // No puede prometer atención presencial 24 h: lo que abre 24 h es la línea.
+  // No promete atención presencial: se atiende solo con cita, en el horario de su ficha.
   const description = isEs
-    ? `Manuel Solís en ${nap.street}, en el Loop de ${nap.city}: atención solo con cita. Llame al ${nap.phone} para agendar. Inmigración, familia y accidentes.`
-    : `Manuel Solis at ${nap.street} in the ${nap.city} Loop: by appointment only. Call ${nap.phone} to schedule. Immigration, family law, and accident attorneys.`;
+    ? `Manuel Solís en ${nap.street}, Loop de ${nap.city}: solo con cita. Llame al ${nap.phone} para agendar. Inmigración, familia y accidentes.`
+    : `Manuel Solis at ${nap.street}, ${nap.city} Loop: by appointment only. Call ${nap.phone} to schedule. Immigration, family, and accident cases.`;
 
   const og = officeOgImage(SLUG, localeLang);
 

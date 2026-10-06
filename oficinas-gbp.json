@@ -143,11 +143,11 @@
     "nombre": "Chicago, IL — W Jackson Blvd",
     "slug": "chicago-jackson",
     "storeCode": null,
-    "query": "Abogado de Inmigración Manuel Solis, 111 W Jackson Blvd, Chicago, IL 60604",
+    "query": "Abogado de Inmigración Manuel Solis, 111 W Jackson Blvd Suite 1700, Chicago, IL 60604",
     "placeId": null,
-    "direccionSitio": "111 W Jackson Blvd, Chicago, IL 60604",
-    "direccionPanel": null,
-    "nota": "Ficha en vivo (sustituye a Wacker). Usa el mismo telefono que tenia Wacker. Confirmar suite contra el panel."
+    "direccionSitio": "111 W Jackson Blvd, Suite 1700, Chicago, IL 60604",
+    "direccionPanel": "111 W Jackson Blvd Suite 1700, Chicago, IL 60604",
+    "nota": "Ficha en vivo (sustituye a Wacker). Panel 2026-10-06: (312) 477-0389, L-V 9-18, S 8-16, D cerrado. El sitio publica lo mismo (solo con cita)."
   },
   {
     "nombre": "Arvada, CO (Denver)",

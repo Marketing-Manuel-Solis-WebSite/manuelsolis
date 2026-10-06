@@ -436,21 +436,36 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
   // con personal, y esta. Sus URLs pasan a 301 hacia la sede de Chicago.
   //
   // Jackson tiene ficha de Google en vivo y publica el número que tenía Wacker.
-  // ⚠️ Sin número de suite: si la ficha de Google lo publica, añadirlo aquí
-  // para que el NAP coincida.
+  // Dirección, suite y horario copiados de esa ficha (2026-10-06). Es satélite
+  // en los datos —horario real, atención solo con cita—, igual que las cinco
+  // de Houston; hacia fuera se anuncia «Solo con cita».
   // ───────────────────────────────────────────────────────────────────────
   'chicago-jackson': {
     slug: 'chicago-jackson',
     name: { es: 'Jackson (Chicago)', en: 'Jackson (Chicago)' },
     menuLabel: 'Jackson',
-    street: '111 W Jackson Blvd',
+    street: '111 W Jackson Blvd, Suite 1700',
     city: 'Chicago',
     state: 'IL',
     zip: '60604',
     phone: CHICAGO_MARKET_PHONE,
     timeZone: 'America/Chicago',
-    mapLink: mapsSearch('111 W Jackson Blvd, Chicago, IL 60604'),
-    hours: APPOINTMENT_HOURS,
+    mapLink: mapsSearch('111 W Jackson Blvd Suite 1700, Chicago, IL 60604'),
+    hours: {
+      kind: 'satellite',
+      label: {
+        es: 'Lun - Vie 9:00 AM - 6:00 PM | Sáb 8:00 AM - 4:00 PM',
+        en: 'Mon - Fri 9:00 AM - 6:00 PM | Sat 8:00 AM - 4:00 PM',
+      },
+      open: {
+        1: { opens: '09:00', closes: '18:00' },
+        2: { opens: '09:00', closes: '18:00' },
+        3: { opens: '09:00', closes: '18:00' },
+        4: { opens: '09:00', closes: '18:00' },
+        5: { opens: '09:00', closes: '18:00' },
+        6: { opens: '08:00', closes: '16:00' },
+      },
+    },
   },
   arvada: {
     slug: 'arvada',

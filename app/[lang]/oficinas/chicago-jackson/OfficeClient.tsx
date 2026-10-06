@@ -26,8 +26,8 @@ const officeData: OfficeData = {
   // Dice qué ES esta dirección: se atiende solo con cita. El despacho pidió
   // decirlo así, sin la palabra "satélite" (reunión del 2026-10-06).
   description: {
-    es: `Nuestra oficina de W Jackson Blvd, en el Loop de Chicago, atiende solo con cita. Llame al ${nap.phone} para agendar su cita; la línea se contesta las 24 horas. Con la cita hecha se atienden aquí casos de inmigración, derecho familiar y accidentes con el equipo de Manuel Solís, en español o en inglés. Si necesita acudir sin cita, la oficina del área con atención presencial es Chicago, en 6000 W Cermak Rd.`,
-    en: `Our W Jackson Blvd office in the Chicago Loop is by appointment only. Call ${nap.phone} to schedule your appointment; the line is answered 24 hours a day. Once your appointment is set, immigration, family law, and accident cases are handled here with the Manuel Solis team, in Spanish or English. If you need to walk in, the area office that takes walk-ins is Chicago, at 6000 W Cermak Rd.`,
+    es: `Nuestra oficina de W Jackson Blvd, en el Loop de Chicago, atiende solo con cita. Llame al ${nap.phone} para agendar su cita dentro del horario de atención. Con la cita hecha se atienden aquí casos de inmigración, derecho familiar y accidentes con el equipo de Manuel Solís, en español o en inglés. Si necesita acudir sin cita, la oficina del área con atención presencial es Chicago, en 6000 W Cermak Rd.`,
+    en: `Our W Jackson Blvd office in the Chicago Loop is by appointment only. Call ${nap.phone} to schedule your appointment during business hours. Once your appointment is set, immigration, family law, and accident cases are handled here with the Manuel Solis team, in Spanish or English. If you need to walk in, the area office that takes walk-ins is Chicago, at 6000 W Cermak Rd.`,
   },
   address: formatOfficeAddress(nap),
   phone: nap.phone,
