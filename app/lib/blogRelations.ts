@@ -20,6 +20,7 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'habeas-corpus-detenido-ice-sin-fianza',
     'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
     'orden-deportacion-en-ausencia-reabrir-caso',
     'ley-laken-riley-detencion-obligatoria-2026',
@@ -122,6 +123,7 @@ const clusters: Record<string, string[]> = {
     'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
   ],
   deportation: [
+    'habeas-corpus-detenido-ice-sin-fianza',
     'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
     'orden-deportacion-en-ausencia-reabrir-caso',
     'ley-laken-riley-detencion-obligatoria-2026',

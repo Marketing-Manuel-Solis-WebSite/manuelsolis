@@ -33,6 +33,27 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'habeas_corpus_detenido_ice_sin_fianza',
+      slug: 'habeas-corpus-detenido-ice-sin-fianza',
+      newsletterAt: '2026-10-12',
+      title: {
+        es: 'Habeas corpus: cómo sacar a un familiar de la detención de ICE cuando le niegan la fianza',
+        en: 'Habeas Corpus: How to Get a Family Member Out of ICE Detention When Bond Is Denied'
+      },
+      excerpt: {
+        es: 'Si ICE detuvo a tu familiar y le niegan la fianza, un habeas corpus en corte federal puede lograr una audiencia de fianza o su libertad. Así funciona en 2026.',
+        en: 'If ICE detained your family member and denied bond, a habeas corpus petition in federal court can win a bond hearing or release. How it works in 2026.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-10-06',
+      readTime: '7 min',
+      image: '/blog/blog_39/OCT_B3.png',
+      featured: false
+    },
+    // ---
+    {
       id: 'cambio_de_direccion_uscis_corte_ar_11_eoir_33',
       slug: 'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
       newsletterAt: '2026-10-09',
