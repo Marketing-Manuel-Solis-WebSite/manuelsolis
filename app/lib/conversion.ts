@@ -69,10 +69,13 @@ const PIXEL_MAP: Record<string, PixelMapping> = {
     ttq: 'CompleteRegistration',
     ga4: 'generate_lead',
   },
+  // Sin `ga4`: llega a GA4 con su propio nombre. `generate_lead` es el evento
+  // clave de GA4 y tiene que significar solo «formulario aceptado por el
+  // servidor»; si un lead calificado también lo disparara, el mismo lead
+  // contaría dos veces. Hoy nadie dispara qualified_lead desde el navegador.
   qualified_lead: {
     fbq: { event: 'Lead', standard: true },
     ttq: 'CompleteRegistration',
-    ga4: 'generate_lead',
   },
   phone_click: {
     fbq: { event: 'Contact', standard: true },

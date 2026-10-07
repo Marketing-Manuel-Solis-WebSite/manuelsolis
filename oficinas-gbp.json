@@ -100,14 +100,14 @@
     "nota": null
   },
   {
-    "nombre": "Harlingen, TX — E Jackson St",
+    "nombre": "Harlingen, TX — E Jackson Ave",
     "slug": "harlingen",
     "storeCode": "HAR-INM-01",
     "query": "Abogado de Inmigración Manuel Solis, 320 E Jackson St, Harlingen, TX 78550",
     "placeId": "ChIJPR1wKR-Cb4YRcpf4p0CiN6c",
-    "direccionSitio": "320 E Jackson St, Harlingen, TX 78550",
+    "direccionSitio": "320 E Jackson Ave, Harlingen, TX 78550",
     "direccionPanel": "320 E Jackson St, Harlingen, Texas 78550",
-    "nota": null
+    "nota": "2026-10-07: el despacho confirma Avenue (Census/OSM tambien). El sitio ya dice Ave; falta corregir el panel de Google, que dice St."
   },
   {
     "nombre": "Pico Rivera, CA (Los Ángeles)",

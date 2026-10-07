@@ -214,7 +214,7 @@ export const OFFICES: Record<string, OfficeInfo> = {
     citySlug: 'harlingen',
     state: 'Texas',
     stateCode: 'TX',
-    address: '320 E Jackson St, Harlingen, TX 78550',
+    address: '320 E Jackson Ave, Harlingen, TX 78550',
     officeSlug: 'harlingen',
     phone: '(956) 597-7090',
     zip: '78550',

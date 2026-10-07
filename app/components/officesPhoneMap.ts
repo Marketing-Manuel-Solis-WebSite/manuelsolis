@@ -357,7 +357,10 @@ export const OFFICES_NAP: Readonly<Record<OfficeNapSlug, OfficeNap>> = {
     slug: 'harlingen',
     name: { es: 'Harlingen', en: 'Harlingen' },
     menuLabel: 'Harlingen',
-    street: '320 E Jackson St',
+    // Avenue, no Street: es como la registran el Census (TIGER) y OpenStreetMap
+    // y lo confirmó el despacho el 2026-10-07. La ficha de Google aún dice
+    // "St" y hay que corregirla allí.
+    street: '320 E Jackson Ave',
     city: 'Harlingen',
     state: 'TX',
     zip: '78550',

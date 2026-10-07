@@ -116,7 +116,7 @@ export const accidentOffices: AccidentOffice[] = [
     city: 'Harlingen',
     state: 'TX',
     title: { es: 'Accidentes en Harlingen, TX', en: 'Accidents in Harlingen, TX' },
-    address: '320 E Jackson St, Harlingen, Texas 78550, United States',
+    address: '320 E Jackson Ave, Harlingen, Texas 78550, United States',
     phone: '(956) 597-7090',
     email: 'harlingen@manuelsolis.com',
     hours: { es: 'Lun - Vie 9:00 AM - 6:00 PM', en: 'Mon - Fri 9:00 AM - 6:00 PM' },

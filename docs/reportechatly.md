@@ -139,7 +139,7 @@ Teléfono central: **(832) 598-0914**. Sitio: **https://www.manuelsolis.com**.
 
 ### 2.10 Harlingen (Valle del Río Grande)
 - **Ciudad:** Harlingen, Texas
-- **Dirección exacta:** 320 E Jackson St, Harlingen, **TX 78550**
+- **Dirección exacta:** 320 E Jackson Ave, Harlingen, **TX 78550**
 - **Teléfono:** +1-956-597-7090
 - **GPS:** 26.1923, -97.6953
 - **Horario:** Lun–Vie 09:00–18:00
