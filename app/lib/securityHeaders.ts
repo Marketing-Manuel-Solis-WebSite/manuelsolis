@@ -43,7 +43,13 @@ const CONTENT_SECURITY_POLICY = [
   // js.callrail.com (swap_session.js, icap.js, poll.js) y app.callrail.com
   // (form_capture.js). Verificado leyendo el bundle: los tres hosts salen del
   // objeto `endpoints` que CallRail inlinea en swap.js.
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com https://*.callrail.com",
+  //
+  // Hyros (atribución, alta 2026-10-08): el universal script sale de
+  // <id-de-cuenta>.t.hyros.com. Comodín porque el id va en el subdominio.
+  // Su cuenta tiene apagados el pixel de terceros (static.icexyz.com) y la
+  // huella de dispositivo, que pedirían más orígenes: verificado leyendo las
+  // banderas THIRD_PARTY_TRACKING / FINGERPRINT_ENABLED del propio script.
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://analytics.tiktok.com https://va.vercel-scripts.com https://*.callrail.com https://*.t.hyros.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https:",
   "font-src 'self' https://fonts.gstatic.com",
@@ -64,11 +70,14 @@ const CONTENT_SECURITY_POLICY = [
   //     servidor responde qué número asignar. Sin connect-src el script carga
   //     pero el pool nunca asigna, que es el modo de fallo más caro: parece
   //     instalado y no atribuye nada.
+  //   - Hyros manda los clics, page views y datos del lead por fetch/XHR/
+  //     sendBeacon a <id>.t.hyros.com (TRACKING_URL) y abre la sesión contra
+  //     lg.hyr.so (LEAD_GEN_URL). Sin el segundo, carga pero no atribuye.
   //   - El asistente del sitio NO aparece aquí a propósito: /api/chat habla con
   //     el proveedor de IA desde el servidor, así que esa llamada nunca pasa por
   //     la CSP del navegador. Estaba abierto `generativelanguage.googleapis.com`
   //     sin que ningún script del cliente lo usara; se quitó al migrar el chat.
-  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://*.tiktokw.us https://va.vercel-scripts.com https://vitals.vercel-insights.com https://*.callrail.com",
+  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://*.tiktokw.us https://va.vercel-scripts.com https://vitals.vercel-insights.com https://*.callrail.com https://*.t.hyros.com https://lg.hyr.so",
   "frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com",
   "media-src 'self' https:",
   "worker-src 'self' blob:",

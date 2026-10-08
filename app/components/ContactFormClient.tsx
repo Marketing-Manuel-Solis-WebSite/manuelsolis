@@ -47,6 +47,11 @@ interface NeonInputProps {
   required?: boolean;
   isTextArea?: boolean;
   autoComplete?: string;
+  /**
+   * Clase que lee el script de Hyros para reconocer el campo del lead
+   * (hyros-first-name, hyros-last-name, hyros-phone). No tiene estilo.
+   */
+  trackingClass?: string;
 }
 
 const NeonInput = ({
@@ -60,6 +65,7 @@ const NeonInput = ({
   required = false,
   isTextArea = false,
   autoComplete,
+  trackingClass,
 }: NeonInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -105,7 +111,7 @@ const NeonInput = ({
           required={required}
           aria-required={required}
           autoComplete={autoComplete}
-          className={baseClasses}
+          className={trackingClass ? `${trackingClass} ${baseClasses}` : baseClasses}
           placeholder={placeholder}
         />
       )}
@@ -431,8 +437,8 @@ export default function ContactFormClient() {
             <fieldset className="min-w-0 p-0">
               <legend className="block p-0 text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Identidad', 'Identity')}</legend>
               <div className="space-y-5">
-                <NeonInput icon={User} name="first_name" label={t('Nombre', 'First name')} autoComplete="given-name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
-                <NeonInput icon={User} name="last_name" label={t('Apellido', 'Last name')} autoComplete="family-name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
+                <NeonInput icon={User} name="first_name" trackingClass="hyros-first-name" label={t('Nombre', 'First name')} autoComplete="given-name" placeholder={t('Nombre', 'First Name')} value={formData.first_name} onChange={handleChange} required />
+                <NeonInput icon={User} name="last_name" trackingClass="hyros-last-name" label={t('Apellido', 'Last name')} autoComplete="family-name" placeholder={t('Apellido', 'Last Name')} value={formData.last_name} onChange={handleChange} required />
               </div>
             </fieldset>
           </m.div>
@@ -441,7 +447,7 @@ export default function ContactFormClient() {
             <fieldset className="min-w-0 p-0">
               <legend className="block p-0 text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Contacto', 'Contact')}</legend>
               <div className="space-y-5">
-                <NeonInput icon={Phone} name="phone" type="tel" label={t('Teléfono', 'Phone number')} autoComplete="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
+                <NeonInput icon={Phone} name="phone" type="tel" trackingClass="hyros-phone" label={t('Teléfono', 'Phone number')} autoComplete="tel" placeholder={t('Teléfono', 'Phone Number')} value={formData.phone} onChange={handleChange} required />
                 <NeonInput icon={Mail} name="email" type="email" label={t('Correo electrónico', 'Email address')} autoComplete="email" placeholder={t('Correo', 'Email Address')} value={formData.email} onChange={handleChange} required />
               </div>
             </fieldset>
@@ -539,6 +545,8 @@ export default function ContactFormClient() {
             onChange={(e) => setHoneypot(e.target.value)}
             tabIndex={-1}
             autoComplete="off"
+            // Campo trampa antispam: que Hyros no lo lea como dato del lead.
+            className="hyros-ignore"
           />
         </div>
       </form>

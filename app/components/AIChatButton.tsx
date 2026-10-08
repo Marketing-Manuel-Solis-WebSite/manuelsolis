@@ -553,7 +553,7 @@ export default function AIChatButton() {
                     }
                   }}
                   placeholder={texts.placeholder}
-                  className="w-full resize-none bg-white/5 border border-white/10 text-white placeholder-white/30 rounded-2xl py-3.5 pl-5 pr-14 focus:outline-none focus:border-[#D4AF37]/50 focus:bg-white/10 transition-all text-sm shadow-inner max-h-28 scrollbar-custom"
+                  className="hyros-ignore w-full resize-none bg-white/5 border border-white/10 text-white placeholder-white/30 rounded-2xl py-3.5 pl-5 pr-14 focus:outline-none focus:border-[#D4AF37]/50 focus:bg-white/10 transition-all text-sm shadow-inner max-h-28 scrollbar-custom"
                   disabled={busy}
                 />
                 <button

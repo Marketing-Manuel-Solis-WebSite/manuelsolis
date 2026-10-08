@@ -105,7 +105,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
             aria-label={t.emailLabel}
             autoComplete="email"
             required
-            className="flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all"
+            className="hyros-ignore flex-1 px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all"
           />
           <m.button
             type="submit"
@@ -212,7 +212,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                     placeholder={t.namePlaceholder}
                     aria-label={t.nameLabel}
                     autoComplete="given-name"
-                    className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all backdrop-blur-sm"
+                    className="hyros-ignore w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all backdrop-blur-sm"
                   />
                   <div className="flex gap-2">
                     <input
@@ -223,7 +223,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                       aria-label={t.emailLabel}
                       autoComplete="email"
                       required
-                      className="flex-1 px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all backdrop-blur-sm"
+                      className="hyros-ignore flex-1 px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all backdrop-blur-sm"
                     />
                     <m.button
                       type="submit"
@@ -318,7 +318,7 @@ export default function NewsletterSignup({ variant = 'inline' }: NewsletterSignu
                 aria-label={t.emailLabel}
                 autoComplete="email"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all"
+                className="hyros-ignore w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-[#B2904D]/50 focus:ring-1 focus:ring-[#B2904D]/30 transition-all"
               />
               <m.button
                 type="submit"

@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // 8): datos recopilados en web y SMS, píxeles de terceros y ejercicio de
   // derechos. Nada que no esté en PrivacidadClient.
   const description = isEs
-    ? 'Qué datos recopilamos en el sitio y por SMS, qué comparten los píxeles de Meta, Google y TikTok, y cómo pedir acceso, corrección o borrado de su información.'
-    : 'What data we collect on the site and by SMS, what the Meta, Google and TikTok pixels share, and how to request access to, correction, or deletion of your data.';
+    ? 'Qué datos recopilamos en el sitio y por SMS, qué reciben Meta, Google, TikTok y Hyros, y cómo pedir acceso, corrección o borrado de su información.'
+    : 'What data we collect on the site and by SMS, what Meta, Google, TikTok and Hyros receive, and how to request access to, correction, or deletion of your data.';
 
   return {
     title,

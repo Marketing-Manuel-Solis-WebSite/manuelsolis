@@ -6,6 +6,7 @@ import Script from 'next/script';
 import { Analytics, type BeforeSendEvent } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { trackPageView, whenAnalyticsReady } from '../lib/tracking';
+import { validHyrosSrc } from '../lib/hyros';
 
 // IDs de analítica desde el entorno para poder rotarlos o desactivarlos sin
 // tocar código. Cada script se renderiza solo si su ID está definido.
@@ -46,6 +47,30 @@ function callRailSrc(): string | null {
   return CALLRAIL_SWAP_SRC.startsWith('https://cdn.callrail.com/')
     ? CALLRAIL_SWAP_SRC
     : null;
+}
+
+/**
+ * Hyros — atribución publicitaria (universal script), alta 2026-10-08.
+ *
+ * La var lleva la URL del script SIN `ref_url`, tal como la da el panel de
+ * Hyros (Tracking → Universal Script): origen con el id de cuenta, `ph`,
+ * `tag`, `spa` y `embed`. `ref_url` se añade en el navegador con
+ * document.URL, igual que el snippet oficial, porque es la URL de aterrizaje
+ * —con sus gclid/fbclid/UTMs— la que Hyros usa para atribuir.
+ *
+ * `afterInteractive` por la misma razón que CallRail: Hyros pide cargar lo
+ * antes posible, y con `spa=true` envuelve history.pushState para registrar
+ * cada cambio de ruta de Next sin recargar el script.
+ *
+ * Toma el correo y el teléfono que se escriben en los formularios (al salir
+ * del campo y al enviar). Los campos que NO son de un lead —newsletter, baja,
+ * panel— llevan la clase `hyros-ignore`. Ver docs/HYROS.md.
+ */
+const HYROS_SRC = process.env.NEXT_PUBLIC_HYROS_SRC;
+
+/** Mismo blindaje que callRailSrc(): solo se acepta un script de Hyros. */
+function hyrosSrc(): string | null {
+  return validHyrosSrc(HYROS_SRC);
 }
 
 type TiktokPixel = { page?: () => void };
@@ -239,6 +264,27 @@ export function TrackingSurfaces() {
           id="callrail-swap"
           src={callRailSrc() as string}
           strategy="afterInteractive"
+        />
+      )}
+
+      {/* Hyros: el snippet oficial, con `ref_url` calculado en el navegador.
+          La URL va serializada con JSON.stringify para que ningún carácter
+          de la var pueda cerrar el string del script. El propio script se
+          niega a cargarse dos veces (window.mh_script_<id>). */}
+      {hyrosSrc() && (
+        <Script
+          id="hyros-universal"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = ${JSON.stringify(hyrosSrc())} + '&ref_url=' + encodeURI(document.URL);
+                document.head.appendChild(s);
+              })();
+            `,
+          }}
         />
       )}
 

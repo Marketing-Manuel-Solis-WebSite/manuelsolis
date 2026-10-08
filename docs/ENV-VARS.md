@@ -55,6 +55,7 @@ Para generar uno nuevo: `node -e "console.log(require('crypto').randomBytes(32).
 | `NEWSLETTER_FROM_ADDRESS` | Remitente del boletín. |
 | `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_META_PIXEL_ID`, `NEXT_PUBLIC_TIKTOK_PIXEL_ID` | Identificadores de las tres superficies de medición. Si una falta, su script no se monta y sus eventos se descartan sin error. |
 | `NEXT_PUBLIC_CALLRAIL_SWAP_SRC` | URL completa del `swap.js` de CallRail (DNI de sesión). Se rechaza cualquier valor que no empiece por `https://cdn.callrail.com/`: la var se interpola en el `src` de un `<script>`. Si falta, el script no se monta y el sitio enseña los números reales. Ver `docs/CALLRAIL-ATRIBUCION.md`. |
+| `NEXT_PUBLIC_HYROS_SRC` | URL del universal script de Hyros **sin** `ref_url` (Tracking → Universal Script en el panel de Hyros), p. ej. `https://222869.t.hyros.com/v1/lst/universal-script?ph=…&tag=!clicked&spa=true&embed=true`. Solo se acepta un host `<id>.t.hyros.com` con esa ruta (`app/lib/hyros.ts`). Si falta, el script no se monta: es el interruptor para apagar Hyros sin tocar código. Ver `docs/HYROS.md`. |
 | `ANALYZE` | `true` abre el analizador de bundle en el build. |
 
 ## Nota de higiene

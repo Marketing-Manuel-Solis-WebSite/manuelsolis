@@ -206,7 +206,7 @@ export default async function NewsletterUnsubscribePage({
                         required
                         autoComplete="email"
                         placeholder={t.emailPlaceholder}
-                        className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-white placeholder-blue-200/30 focus:border-[#B2904D]/50 focus:outline-none"
+                        className="hyros-ignore w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-white placeholder-blue-200/30 focus:border-[#B2904D]/50 focus:outline-none"
                       />
                     </div>
                   )}

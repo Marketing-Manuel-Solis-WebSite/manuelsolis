@@ -511,7 +511,7 @@ export default function AdminClient({
                 onChange={(e) => setQuickTestEmail(e.target.value)}
                 placeholder="tu-email@ejemplo.com"
                 disabled={running}
-                className="flex-1 px-3 py-2.5 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#B2904D] focus:border-transparent bg-white"
+                className="hyros-ignore flex-1 px-3 py-2.5 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#B2904D] focus:border-transparent bg-white"
               />
               <button
                 type="button"
