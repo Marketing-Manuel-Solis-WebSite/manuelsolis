@@ -7,7 +7,7 @@ const SLUG = 'orden-deportacion-en-ausencia-reabrir-caso';
 // Debe coincidir con `date` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
 // antes de esa fecha la página no se publica.
 const ISO_DATE = '2026-10-06';
-const IMAGE = '/blog/blog_37/OCT_B1.png';
+const IMAGE = '/blog/blog_37/OCT_B1.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {

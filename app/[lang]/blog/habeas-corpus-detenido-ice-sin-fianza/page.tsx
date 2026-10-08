@@ -7,7 +7,7 @@ const SLUG = 'habeas-corpus-detenido-ice-sin-fianza';
 // Debe coincidir con `date` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
 // antes de esa fecha la página no se publica.
 const ISO_DATE = '2026-10-06';
-const IMAGE = '/blog/blog_39/OCT_B3.png';
+const IMAGE = '/blog/blog_39/OCT_B3.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {

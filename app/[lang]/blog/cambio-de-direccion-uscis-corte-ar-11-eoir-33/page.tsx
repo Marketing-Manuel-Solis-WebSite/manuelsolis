@@ -7,7 +7,7 @@ const SLUG = 'cambio-de-direccion-uscis-corte-ar-11-eoir-33';
 // Debe coincidir con `date` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
 // antes de esa fecha la página no se publica.
 const ISO_DATE = '2026-10-06';
-const IMAGE = '/blog/blog_38/OCT_B2.png';
+const IMAGE = '/blog/blog_38/OCT_B2.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
   es: {

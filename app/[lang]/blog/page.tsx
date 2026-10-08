@@ -49,7 +49,7 @@ const ALL_POSTS = [
       author: 'Manuel Solís',
       date: '2026-10-06',
       readTime: '7 min',
-      image: '/blog/blog_39/OCT_B3.png',
+      image: '/blog/blog_39/OCT_B3.jpg',
       featured: false
     },
     // ---
@@ -70,7 +70,7 @@ const ALL_POSTS = [
       author: 'Manuel Solís',
       date: '2026-10-06',
       readTime: '6 min',
-      image: '/blog/blog_38/OCT_B2.png',
+      image: '/blog/blog_38/OCT_B2.jpg',
       featured: false
     },
     // ---
@@ -91,7 +91,7 @@ const ALL_POSTS = [
       author: 'Manuel Solís',
       date: '2026-10-06',
       readTime: '5 min',
-      image: '/blog/blog_37/OCT_B1.png',
+      image: '/blog/blog_37/OCT_B1.jpg',
       featured: false
     },
     // ---
