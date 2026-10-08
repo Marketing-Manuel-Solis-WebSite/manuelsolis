@@ -96,7 +96,7 @@ const NeonInput = ({
           aria-required={required}
           autoComplete={autoComplete}
           rows={5}
-          className={`${baseClasses} resize-none`}
+          className={`${trackingClass ? `${trackingClass} ` : ''}${baseClasses} resize-none`}
           placeholder={placeholder}
         />
       ) : (
@@ -456,7 +456,7 @@ export default function ContactFormClient() {
 
         <m.div variants={itemVar}>
           <label htmlFor="enquiry_detail" className="block text-xs font-bold text-cyan-100/70 uppercase tracking-widest mb-3 ml-1">{t('Detalles', 'Details')}</label>
-          <NeonInput icon={MessageSquare} name="enquiry_detail" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
+          <NeonInput icon={MessageSquare} name="enquiry_detail" trackingClass="hyros-ignore" isTextArea placeholder={t('Describa brevemente su situación legal...', 'Briefly describe your legal situation...')} value={formData.enquiry_detail} onChange={handleChange} required />
         </m.div>
 
         <div className="space-y-4">

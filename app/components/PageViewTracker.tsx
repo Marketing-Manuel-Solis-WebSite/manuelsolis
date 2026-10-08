@@ -7,6 +7,7 @@ import { Analytics, type BeforeSendEvent } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { trackPageView, whenAnalyticsReady } from '../lib/tracking';
 import { validHyrosSrc } from '../lib/hyros';
+import { isUntrackedPath } from '../lib/untrackedPaths';
 
 // IDs de analítica desde el entorno para poder rotarlos o desactivarlos sin
 // tocar código. Cada script se renderiza solo si su ID está definido.
@@ -77,17 +78,6 @@ type TiktokPixel = { page?: () => void };
 
 interface WindowWithTtq extends Window {
   ttq?: TiktokPixel;
-}
-
-/**
- * Rutas sin ningún rastreo:
- *   - el panel interno: /admin, /es/admin, /en/admin y cualquier subruta;
- *   - la baja del boletín (/es|en/newsletter/unsubscribe): su URL lleva el
- *     correo del suscriptor y el token de baja (?email=…&t=…), y los
- *     píxeles y Hyros reciben la URL completa de la página.
- */
-function isUntrackedPath(pathname: string): boolean {
-  return /\/admin(\/|$)/.test(pathname) || /\/newsletter\/unsubscribe(\/|$)/.test(pathname);
 }
 
 function isTrackablePath(pathname: string): boolean {

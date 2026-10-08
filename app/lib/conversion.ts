@@ -29,6 +29,7 @@ import {
   type ConversionType,
 } from './tracking';
 import { collectMetaBrowserParams, generateMetaEventId } from './metaPixel';
+import { isUntrackedLocation } from './untrackedPaths';
 
 export type FireConversionType =
   | ConversionType
@@ -114,6 +115,10 @@ export function fireConversion(
   /** eventId ya compartido con otro sistema (el lead que recibe BoSpot). */
   options: { eventId?: string } = {},
 ): void {
+  // En la baja del boletín la URL lleva el correo y el token: ningún clic de
+  // esa página puede viajar a Meta, GA4, TikTok ni al registro propio.
+  if (isUntrackedLocation()) return;
+
   const stringMeta: Record<string, string> = Object.fromEntries(
     Object.entries(meta)
       .filter(([, v]) => v !== undefined && v !== null)

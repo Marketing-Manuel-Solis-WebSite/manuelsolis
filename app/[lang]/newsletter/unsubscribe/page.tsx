@@ -28,6 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       nocache: true,
       googleBot: { index: false, follow: false },
     },
+    // La URL lleva el correo y el token de baja. Con 'strict-origin', la
+    // página siguiente (tras el POST y su 303) solo tiene el origen como
+    // referrer, así que ningún script de esa página lee el correo de ahí.
+    // 'no-referrer' no sirve: el POST saldría con Origin: null y la ruta de
+    // baja lo rechaza por la comprobación de mismo origen.
+    referrer: 'strict-origin',
   };
 }
 

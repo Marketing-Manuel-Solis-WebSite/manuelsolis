@@ -89,7 +89,15 @@ describe('carga del script', () => {
   // ni Hyros ni los píxeles pueden cargarse ahí, porque reciben la URL entera.
   it('no se carga en el panel ni en la baja del boletín', () => {
     expect(src).toContain('if (isUntrackedPath(pathname)) return null;');
-    expect(src).toContain('/\\/newsletter\\/unsubscribe(\\/|$)/');
+    expect(read('app/lib/untrackedPaths.ts')).toContain('/\\/newsletter\\/unsubscribe(\\/|$)/');
+  });
+
+  // Los clics de llamada/WhatsApp de esa página tampoco: viajarían a Meta y
+  // al registro propio con la URL que lleva el correo.
+  it('las conversiones y page views respetan las rutas sin rastreo', () => {
+    expect(read('app/lib/conversion.ts')).toContain('if (isUntrackedLocation()) return;');
+    expect(read('app/lib/tracking.ts').match(/if \(isUntrackedLocation\(\)\) return;/g)?.length).toBe(2);
+    expect(read('app/[lang]/newsletter/unsubscribe/page.tsx')).toContain("referrer: 'strict-origin'");
   });
 });
 
@@ -123,6 +131,9 @@ describe('qué campos lee', () => {
     expect(form).toContain('trackingClass="hyros-first-name"');
     expect(form).toContain('trackingClass="hyros-last-name"');
     expect(form).toContain('trackingClass="hyros-phone"');
+    // El texto de la consulta no lo recibe Hyros (lo promete la política).
+    expect(form).toContain('name="enquiry_detail" trackingClass="hyros-ignore"');
+    expect(form).toContain("${trackingClass ? `${trackingClass} ` : ''}${baseClasses} resize-none");
     const honeypot = form.slice(form.indexOf('id={HONEYPOT_FIELD}'), form.indexOf('id={HONEYPOT_FIELD}') + 400);
     expect(honeypot).toContain('hyros-ignore');
   });

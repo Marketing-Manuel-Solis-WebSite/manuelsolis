@@ -11,6 +11,7 @@
  * de varios clicks internos sigue atribuyéndose al canal real.
  */
 import { getEffectiveUtms } from './attribution';
+import { isUntrackedLocation } from './untrackedPaths';
 import {
   collectMetaBrowserParams,
   firePixelPageView,
@@ -306,6 +307,7 @@ export async function trackConversion(
   meta?: ConversionEvent['meta'],
 ): Promise<void> {
   if (typeof window === 'undefined') return;
+  if (isUntrackedLocation()) return;
   const event = buildBaseEvent(type, label);
   if (meta) event.meta = meta;
   postEvent(event);
@@ -371,6 +373,7 @@ function postPageViewWithFbp(event: ConversionEvent, eventId: string): void {
 
 export function trackPageView(label?: string): void {
   if (typeof window === 'undefined') return;
+  if (isUntrackedLocation()) return;
   const path = window.location.pathname + window.location.search;
   if (path === lastTrackedPath) return;
   lastTrackedPath = path;
