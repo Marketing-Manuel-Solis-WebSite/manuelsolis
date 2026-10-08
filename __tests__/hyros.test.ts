@@ -84,6 +84,13 @@ describe('carga del script', () => {
   it('solo se monta con una URL validada', () => {
     expect(src).toContain('validHyrosSrc(HYROS_SRC)');
   });
+
+  // La URL de la baja del boletín lleva el correo y el token (?email=…&t=…):
+  // ni Hyros ni los píxeles pueden cargarse ahí, porque reciben la URL entera.
+  it('no se carga en el panel ni en la baja del boletín', () => {
+    expect(src).toContain('if (isUntrackedPath(pathname)) return null;');
+    expect(src).toContain('/\\/newsletter\\/unsubscribe(\\/|$)/');
+  });
 });
 
 describe('qué campos lee', () => {
@@ -130,5 +137,9 @@ describe('divulgación', () => {
     expect(src).toContain('Hyros (advertising attribution)');
     expect(src).not.toContain('—no su nombre, correo electrónico ni teléfono—');
     expect(src).not.toContain('— not your name, email address, or phone number —');
+    // La promesa en rojo de la Sección 4.B contradecía la 5.B.
+    expect(src).not.toContain('Enviar su nombre, correo electrónico o número de teléfono a plataformas de publicidad.');
+    expect(src).not.toContain('Send your name, email address, or phone number to advertising platforms.');
+    expect(src).not.toContain('solo en las siguientes circunstancias limitadas');
   });
 });

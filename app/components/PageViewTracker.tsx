@@ -79,14 +79,20 @@ interface WindowWithTtq extends Window {
   ttq?: TiktokPixel;
 }
 
-/** Panel interno: /admin, /es/admin, /en/admin y cualquier subruta. */
-function isAdminPath(pathname: string): boolean {
-  return /\/admin(\/|$)/.test(pathname);
+/**
+ * Rutas sin ningún rastreo:
+ *   - el panel interno: /admin, /es/admin, /en/admin y cualquier subruta;
+ *   - la baja del boletín (/es|en/newsletter/unsubscribe): su URL lleva el
+ *     correo del suscriptor y el token de baja (?email=…&t=…), y los
+ *     píxeles y Hyros reciben la URL completa de la página.
+ */
+function isUntrackedPath(pathname: string): boolean {
+  return /\/admin(\/|$)/.test(pathname) || /\/newsletter\/unsubscribe(\/|$)/.test(pathname);
 }
 
 function isTrackablePath(pathname: string): boolean {
   if (pathname.startsWith('/api')) return false;
-  if (isAdminPath(pathname)) return false;
+  if (isUntrackedPath(pathname)) return false;
   return !pathname.endsWith('.xml') && !pathname.endsWith('.txt');
 }
 
@@ -99,14 +105,14 @@ function pathnameOf(url: string): string {
 }
 
 const dropAdminPageViews = (event: BeforeSendEvent): BeforeSendEvent | null =>
-  isAdminPath(pathnameOf(event.url)) ? null : event;
+  isUntrackedPath(pathnameOf(event.url)) ? null : event;
 
 // @vercel/speed-insights no exporta el tipo de su evento; esta es la forma
 // que espera su prop beforeSend.
 type SpeedInsightsEvent = { type: 'vital'; url: string; route?: string };
 
 const dropAdminVitals = (event: SpeedInsightsEvent): SpeedInsightsEvent | null =>
-  isAdminPath(pathnameOf(event.url)) ? null : event;
+  isUntrackedPath(pathnameOf(event.url)) ? null : event;
 
 /**
  * Dispara el page view en el primer render y en cada cambio de pathname o
@@ -132,7 +138,7 @@ export default function PageViewTracker() {
     // una página pública, cuando el script ya quedó cargado.
     if (GA_ID) {
       (window as unknown as Record<string, boolean>)[`ga-disable-${GA_ID}`] =
-        isAdminPath(pathname);
+        isUntrackedPath(pathname);
     }
 
     if (!isTrackablePath(pathname)) return;
@@ -169,7 +175,7 @@ export default function PageViewTracker() {
 export function TrackingSurfaces() {
   const pathname = usePathname();
 
-  if (isAdminPath(pathname)) return null;
+  if (isUntrackedPath(pathname)) return null;
 
   return (
     <>
