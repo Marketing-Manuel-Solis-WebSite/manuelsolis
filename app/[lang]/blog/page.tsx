@@ -33,6 +33,69 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'habeas_corpus_detenido_ice_sin_fianza',
+      slug: 'habeas-corpus-detenido-ice-sin-fianza',
+      newsletterAt: '2026-10-12',
+      title: {
+        es: 'Habeas corpus: cómo sacar a un familiar de la detención de ICE cuando le niegan la fianza',
+        en: 'Habeas Corpus: How to Get a Family Member Out of ICE Detention When Bond Is Denied'
+      },
+      excerpt: {
+        es: 'Si ICE detuvo a tu familiar y le niegan la fianza, un habeas corpus en corte federal puede lograr una audiencia de fianza o su libertad. Así funciona en 2026.',
+        en: 'If ICE detained your family member and denied bond, a habeas corpus petition in federal court can win a bond hearing or release. How it works in 2026.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-10-06',
+      readTime: '7 min',
+      image: '/blog/blog_39/OCT_B3.jpg',
+      featured: false
+    },
+    // ---
+    {
+      id: 'cambio_de_direccion_uscis_corte_ar_11_eoir_33',
+      slug: 'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
+      newsletterAt: '2026-10-09',
+      title: {
+        es: 'Me mudé y no avisé: por qué cambiar tu dirección con USCIS y la corte puede salvar tu caso (AR-11 y EOIR-33)',
+        en: 'I Moved and Didn\'t Report It: Why Updating Your Address with USCIS and the Court Can Save Your Case (AR-11 and EOIR-33)'
+      },
+      excerpt: {
+        es: 'Si te mudaste, tienes 10 días para avisar a USCIS y 5 días hábiles a la corte de inmigración. Cómo hacerlo y qué pasa si no avisas.',
+        en: 'If you moved, you have 10 days to notify USCIS and 5 business days to notify the immigration court. How to do it and what happens if you don\'t.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-10-06',
+      readTime: '6 min',
+      image: '/blog/blog_38/OCT_B2.jpg',
+      featured: false
+    },
+    // ---
+    {
+      id: 'orden_deportacion_en_ausencia_reabrir_caso',
+      slug: 'orden-deportacion-en-ausencia-reabrir-caso',
+      newsletterAt: '2026-10-06',
+      title: {
+        es: 'Orden de deportación en ausencia: cómo reabrir tu caso si no llegaste a la corte',
+        en: 'In-Absentia Order of Removal: How to Reopen Your Case After Missing Your Court Date'
+      },
+      excerpt: {
+        es: '¿Te ordenaron deportar por no ir a la corte? Cuándo se puede reabrir el caso, qué plazos aplican y qué pruebas necesitas.',
+        en: 'Were you ordered deported for not going to court? When you can reopen the case, what deadlines apply, and what evidence you need.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-10-06',
+      readTime: '5 min',
+      image: '/blog/blog_37/OCT_B1.jpg',
+      featured: false
+    },
+    // ---
+    {
       id: 'ley_laken_riley_detencion_obligatoria_2026',
       slug: 'ley-laken-riley-detencion-obligatoria-2026',
       newsletterAt: '2026-08-25',
