@@ -38,8 +38,8 @@ export default function About({ lang }: { lang: Language }) {
             {'Uniendo Familias | '}
             <span className="font-normal text-gradient-gold-subtle">
               {isEs
-                ? 'Episodio 4 — La decisión que lo cambió todo'
-                : 'Episode 4 — The Decision That Changed Everything'}
+                ? 'Episodio 5 — Una familia, una esperanza'
+                : 'Episode 5 — One Family, One Hope'}
             </span>
           </h2>
         </Reveal>
@@ -50,15 +50,15 @@ export default function About({ lang }: { lang: Language }) {
           <Stagger gap={0.12} className="lg:col-span-6 space-y-10">
 
             <StaggerItem as="div" className="space-y-6 text-lg text-blue-100/80 leading-relaxed font-light">
-              {/* Sinopsis oficial del episodio (versión recortada). El episodio se grabó en español: de ahí el aviso en EN. */}
+              {/* Sinopsis oficial del episodio 5 (YouTube), en dos párrafos. El episodio se grabó en español: de ahí el aviso en EN. */}
               {isEs ? (
                 <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
-                  Una redada de ICE cambia el destino de una familia en minutos. <strong className="text-white font-medium">Pablo</strong> es detenido y separado de su esposa y sus tres hijos, dejándolos frente a un futuro incierto. Mientras él lucha por no perder la esperanza tras las rejas, <strong className="text-white font-medium">Yohana</strong> emprende una carrera contrarreloj para encontrar una salida.<br /><br />Cuando todo parece perdido, el <strong className="text-white font-medium">abogado de inmigración Manuel Solís</strong> interviene con una estrategia legal poco común: un <strong className="text-white font-medium">habeas corpus</strong> para defender los derechos de Pablo y desafiar su detención. Basado en una historia real, este episodio revela el costo humano de la separación familiar y cómo una decisión valiente puede devolver la esperanza.
+                  Después de un mes de detención, y gracias a la estrategia legal de un <strong className="text-white font-medium">habeas corpus</strong>, <strong className="text-white font-medium">Jexis</strong> logró recuperar su libertad con el apoyo del <strong className="text-white font-medium">abogado de inmigración Manuel Solís</strong>.<br /><br />Hoy, su experiencia se convierte en un mensaje de esperanza para quienes sienten que ya no tienen opciones. No están solos: existen opciones legales y apoyo para enfrentar estas situaciones.
                 </p>
               ) : (
                 <>
                   <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
-                    An ICE raid changes the fate of a family in minutes. <strong className="text-white font-medium">Pablo</strong> is detained and separated from his wife and their three children, leaving them facing an uncertain future. While he fights not to lose hope behind bars, <strong className="text-white font-medium">Yohana</strong> starts a race against the clock to find a way out.<br /><br />When all seems lost, <strong className="text-white font-medium">immigration attorney Manuel Solís</strong> steps in with an uncommon legal strategy: a <strong className="text-white font-medium">habeas corpus</strong> petition to defend Pablo&apos;s rights and challenge his detention. Based on a true story, this episode reveals the human cost of family separation and how one brave decision can give hope back.
+                    After a month in detention, and thanks to the legal strategy of a <strong className="text-white font-medium">habeas corpus</strong> petition, <strong className="text-white font-medium">Jexis</strong> regained his freedom with the help of <strong className="text-white font-medium">immigration attorney Manuel Solís</strong>.<br /><br />Today, his experience becomes a message of hope for those who feel they have run out of options. You are not alone: there are legal options and support to face these situations.
                   </p>
                   <p className="pl-6 text-sm text-blue-200/60">Episode in Spanish.</p>
                 </>

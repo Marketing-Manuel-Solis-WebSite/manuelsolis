@@ -20,8 +20,8 @@ export default function AboutVideo({ lang }: { lang: Language }) {
         <iframe
           width="100%"
           height="100%"
-          src="https://www.youtube.com/embed/AWgRoJitmJo?rel=0&controls=1&autoplay=1"
-          title="Uniendo Familias | Episodio 4 — La decisión que lo cambió todo"
+          src="https://www.youtube.com/embed/E4scFUVVHJo?rel=0&controls=1&autoplay=1"
+          title={isEs ? 'Uniendo Familias | Episodio 5 — Una familia, una esperanza' : 'Uniendo Familias | Episode 5 — One Family, One Hope'}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
@@ -34,8 +34,11 @@ export default function AboutVideo({ lang }: { lang: Language }) {
           aria-label={isEs ? 'Reproducir video' : 'Play video'}
         >
           <Image
-            src="https://img.youtube.com/vi/AWgRoJitmJo/maxresdefault.jpg"
-            alt={isEs ? 'Uniendo Familias con Manuel Solis, episodio 4 (Pablo Santafe): La decisión que lo cambió todo' : 'Uniendo Familias with Manuel Solis, Episode 4 (Pablo Santafe): The Decision That Changed Everything'}
+            // Portada oficial del episodio (1280x720, la misma del linktree). La
+            // miniatura de YouTube no sirve: no hay maxresdefault (404) y la
+            // sddefault es 4:3 con franjas negras.
+            src="/videos/uniendo-familias-ep5.jpg"
+            alt={isEs ? 'Uniendo Familias con Manuel Solís, episodio 5: Jexis recupera su libertad gracias a un habeas corpus' : 'Uniendo Familias with Manuel Solís, Episode 5: Jexis regains his freedom through a habeas corpus petition'}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 50vw"

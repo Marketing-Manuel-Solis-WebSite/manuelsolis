@@ -170,23 +170,29 @@ export const TESTIMONIOS_PAGE_VIDEOS: readonly SiteVideo[] = [
   },
 ];
 
-// Episodio de la portada (app/components/AboutVideo.tsx + About.tsx). El título
-// y la sinopsis son los oficiales de YouTube que ya renderiza About.tsx, aquí en
+// Episodio de la portada (app/components/AboutVideo.tsx + About.tsx): el 5,
+// "Una familia, una esperanza" (Jexis), que sustituyó al 4 el 2026-10-09 a
+// pedido del despacho. El título y la sinopsis son los oficiales de YouTube que ya renderiza About.tsx, aquí en
 // texto plano. `inLanguage: 'es'` está documentado en la propia página ("El
 // episodio se grabó en español" / "Episode in Spanish."), a diferencia de los
 // testimonios, donde el idioma del audio no consta en ningún dato.
-const UNIENDO_FAMILIAS_EP4: SiteVideo = {
-  youtubeId: 'AWgRoJitmJo',
+const UNIENDO_FAMILIAS_EP5: SiteVideo = {
+  youtubeId: 'E4scFUVVHJo',
   name: {
-    es: 'Uniendo Familias | Episodio 4 — La decisión que lo cambió todo',
-    en: 'Uniendo Familias | Episode 4 — The Decision That Changed Everything',
+    es: 'Uniendo Familias | Episodio 5 — Una familia, una esperanza',
+    en: 'Uniendo Familias | Episode 5 — One Family, One Hope',
   },
   description: {
-    es: 'Una redada de ICE cambia el destino de una familia en minutos. Pablo es detenido y separado de su esposa y sus tres hijos, dejándolos frente a un futuro incierto. Mientras él lucha por no perder la esperanza tras las rejas, Yohana emprende una carrera contrarreloj para encontrar una salida.',
-    en: 'An ICE raid changes the fate of a family in minutes. Pablo is detained and separated from his wife and their three children, leaving them facing an uncertain future. While he fights not to lose hope behind bars, Yohana starts a race against the clock to find a way out.',
+    es: 'Después de un mes de detención, y gracias a la estrategia legal de un habeas corpus, Jexis logró recuperar su libertad con el apoyo del abogado de inmigración Manuel Solís. Hoy, su experiencia se convierte en un mensaje de esperanza para quienes sienten que ya no tienen opciones.',
+    en: 'After a month in detention, and thanks to the legal strategy of a habeas corpus petition, Jexis regained his freedom with the help of immigration attorney Manuel Solís. Today, his experience becomes a message of hope for those who feel they have run out of options.',
   },
-  thumbnailUrl: 'https://img.youtube.com/vi/AWgRoJitmJo/maxresdefault.jpg',
-  uploadDate: '2026-04-30',
+  // Portada oficial del episodio, 1280x720. YouTube no tiene maxresdefault de
+  // este vídeo (404) y su sddefault es 4:3 con franjas negras.
+  thumbnailUrl: '/videos/uniendo-familias-ep5.jpg',
+  // Fecha real del itemprop="uploadDate" del vídeo (2026-05-26T15:21:44-07:00)
+  // y duración real (lengthSeconds 370 = 6 min 10 s).
+  uploadDate: '2026-05-26',
+  duration: 'PT6M10S',
   inLanguage: 'es',
 };
 
@@ -197,7 +203,7 @@ const UNIENDO_FAMILIAS_EP4: SiteVideo = {
  * entrada en vez de duplicarla con otra copia.
  */
 export const HOME_PAGE_VIDEOS: readonly SiteVideo[] = [
-  UNIENDO_FAMILIAS_EP4,
+  UNIENDO_FAMILIAS_EP5,
   ...TESTIMONIOS_PAGE_VIDEOS.filter((video) => video.youtubeId === 'cTJ9M5PT-S4'),
 ];
 
@@ -232,7 +238,7 @@ export function buildPageVideoSchemas(input: {
 
 /** Vídeos del catálogo a los que les falta la fecha de subida real. */
 export function videosPendingUploadDate(): string[] {
-  return [...TESTIMONIOS_PAGE_VIDEOS, UNIENDO_FAMILIAS_EP4]
+  return [...TESTIMONIOS_PAGE_VIDEOS, UNIENDO_FAMILIAS_EP5]
     .filter((video) => !video.uploadDate)
     .map((video) => video.youtubeId);
 }
