@@ -38,7 +38,7 @@ export default function AboutVideo({ lang }: { lang: Language }) {
             // miniatura de YouTube no sirve: no hay maxresdefault (404) y la
             // sddefault es 4:3 con franjas negras.
             src="/videos/uniendo-familias-ep5.jpg"
-            alt={isEs ? 'Uniendo Familias con Manuel Solís, episodio 5: Jexis recupera su libertad gracias a un habeas corpus' : 'Uniendo Familias with Manuel Solís, Episode 5: Jexis regains his freedom through a habeas corpus petition'}
+            alt={isEs ? 'Uniendo Familias con Manuel Solís, episodio 5: Jexis recupera su libertad gracias a un habeas corpus' : 'Uniendo Familias with Manuel Solís, Episode 5: Jexis is released through a habeas corpus petition'}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 50vw"

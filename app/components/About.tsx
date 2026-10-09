@@ -58,7 +58,7 @@ export default function About({ lang }: { lang: Language }) {
               ) : (
                 <>
                   <p className="border-l-[3px] border-[#B2904D]/50 pl-6 py-1">
-                    After a month in detention, and thanks to the legal strategy of a <strong className="text-white font-medium">habeas corpus</strong> petition, <strong className="text-white font-medium">Jexis</strong> regained his freedom with the help of <strong className="text-white font-medium">immigration attorney Manuel Solís</strong>.<br /><br />Today, his experience becomes a message of hope for those who feel they have run out of options. You are not alone: there are legal options and support to face these situations.
+                    After a month in detention, and thanks to the legal strategy of a <strong className="text-white font-medium">habeas corpus</strong> petition, <strong className="text-white font-medium">Jexis</strong> was released with the help of <strong className="text-white font-medium">immigration attorney Manuel Solís</strong>.<br /><br />Today, Jexis&apos;s story becomes a message of hope for those who feel they have run out of options. You are not alone: there are legal options and support to face these situations.
                   </p>
                   <p className="pl-6 text-sm text-blue-200/60">Episode in Spanish.</p>
                 </>

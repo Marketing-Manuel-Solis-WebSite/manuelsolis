@@ -184,7 +184,7 @@ const UNIENDO_FAMILIAS_EP5: SiteVideo = {
   },
   description: {
     es: 'Después de un mes de detención, y gracias a la estrategia legal de un habeas corpus, Jexis logró recuperar su libertad con el apoyo del abogado de inmigración Manuel Solís. Hoy, su experiencia se convierte en un mensaje de esperanza para quienes sienten que ya no tienen opciones.',
-    en: 'After a month in detention, and thanks to the legal strategy of a habeas corpus petition, Jexis regained his freedom with the help of immigration attorney Manuel Solís. Today, his experience becomes a message of hope for those who feel they have run out of options.',
+    en: 'After a month in detention, and thanks to the legal strategy of a habeas corpus petition, Jexis was released with the help of immigration attorney Manuel Solís. Today, Jexis\'s story becomes a message of hope for those who feel they have run out of options.',
   },
   // Portada oficial del episodio, 1280x720. YouTube no tiene maxresdefault de
   // este vídeo (404) y su sddefault es 4:3 con franjas negras.
