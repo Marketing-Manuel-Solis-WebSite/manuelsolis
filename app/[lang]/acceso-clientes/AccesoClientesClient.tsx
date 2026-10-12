@@ -514,7 +514,7 @@ export default function AccesoClientesClient() {
               >
                 <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
                   <Image
-                    src="/MSTeam.png"
+                    src="/equipo-legal-manuel-solis.jpg"
                     alt={lang === 'es' ? 'Equipo legal de Manuel Solis' : 'Manuel Solis legal team'}
                     fill
                     className="object-cover"
