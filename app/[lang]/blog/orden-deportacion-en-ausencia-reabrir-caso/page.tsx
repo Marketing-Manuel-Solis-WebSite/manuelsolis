@@ -6,7 +6,7 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 const SLUG = 'orden-deportacion-en-ausencia-reabrir-caso';
 // Debe coincidir con `date` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
 // antes de esa fecha la página no se publica.
-const ISO_DATE = '2026-10-06';
+const ISO_DATE = '2026-10-17';
 const IMAGE = '/blog/blog_37/OCT_B1.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
@@ -15,10 +15,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     metaDesc:
       '¿Te ordenaron deportar por no ir a la corte? Cuándo se puede reabrir el caso, qué plazos aplican y qué pruebas necesitas.',
     title: 'Orden de deportación en ausencia: cómo reabrir tu caso si no llegaste a la corte',
-    displayDate: '06 Oct, 2026',
+    displayDate: '17 Oct, 2026',
     readTime: '5 min',
     categoryLabel: 'Defensa contra Deportación',
-    lastUpdated: '6 de octubre de 2026',
+    lastUpdated: '17 de octubre de 2026',
     summary: {
       title: 'Resumen inicial',
       text: 'Si no llegaste a tu audiencia en la corte de inmigración, el juez pudo ordenar tu deportación sin escucharte. Esa orden se llama <strong>“orden en ausencia”</strong> (in absentia). En muchos casos se puede anular con una <strong>moción para reabrir</strong>, pero los plazos son estrictos y cada día cuenta.',
@@ -227,10 +227,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     metaDesc:
       'Were you ordered deported for not going to court? When you can reopen the case, what deadlines apply, and what evidence you need.',
     title: 'In-Absentia Order of Removal: How to Reopen Your Case After Missing Your Court Date',
-    displayDate: 'Oct 06, 2026',
+    displayDate: 'Oct 17, 2026',
     readTime: '5 min',
     categoryLabel: 'Deportation Defense',
-    lastUpdated: 'October 6, 2026',
+    lastUpdated: 'October 17, 2026',
     summary: {
       title: 'Summary',
       text: 'If you missed your immigration court hearing, the judge may have ordered your deportation without hearing your side. This is known as an <strong>“in-absentia order.”</strong> In many cases it can be rescinded with a <strong>motion to reopen</strong>, but the deadlines are strict and every day counts.',

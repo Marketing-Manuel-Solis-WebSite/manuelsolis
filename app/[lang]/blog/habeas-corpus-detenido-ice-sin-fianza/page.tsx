@@ -6,7 +6,7 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 const SLUG = 'habeas-corpus-detenido-ice-sin-fianza';
 // Debe coincidir con `date` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
 // antes de esa fecha la página no se publica.
-const ISO_DATE = '2026-10-06';
+const ISO_DATE = '2026-10-14';
 const IMAGE = '/blog/blog_39/OCT_B3.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
@@ -15,10 +15,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     metaDesc:
       'Si ICE detuvo a tu familiar y le niegan la fianza, un habeas corpus en corte federal puede lograr una audiencia de fianza o su libertad. Así funciona en 2026.',
     title: 'Habeas corpus: cómo sacar a un familiar de la detención de ICE cuando le niegan la fianza',
-    displayDate: '06 Oct, 2026',
+    displayDate: '14 Oct, 2026',
     readTime: '7 min',
     categoryLabel: 'Defensa contra Deportación',
-    lastUpdated: '6 de octubre de 2026',
+    lastUpdated: '14 de octubre de 2026',
     summary: {
       title: 'Resumen inicial',
       text: 'El <strong>habeas corpus</strong> es una demanda ante un juez federal para revisar si una detención es legal. Desde 2025 se volvió la herramienta principal para miles de personas detenidas por ICE sin derecho a fianza. Puede lograr una <strong>audiencia de fianza o incluso la libertad</strong>, pero el resultado depende mucho del estado donde está detenida la persona.',
@@ -57,7 +57,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'En septiembre de 2025, la Junta de Apelaciones de Inmigración respaldó esa postura en <em>Matter of Yajure Hurtado</em>. Desde entonces, los jueces de inmigración no pueden dar fianza a esas personas.',
+            text: 'En septiembre de 2025, la Junta de Apelaciones de Inmigración respaldó esa postura en <em>Matter of Yajure Hurtado</em>. Desde entonces, los jueces de inmigración normalmente les niegan la fianza, salvo que una corte federal ordene una audiencia de fianza.',
           },
           {
             kind: 'text',
@@ -242,10 +242,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     metaDesc:
       'If ICE detained your family member and denied bond, a habeas corpus petition in federal court can win a bond hearing or release. How it works in 2026.',
     title: 'Habeas Corpus: How to Get a Family Member Out of ICE Detention When Bond Is Denied',
-    displayDate: 'Oct 06, 2026',
+    displayDate: 'Oct 14, 2026',
     readTime: '7 min',
     categoryLabel: 'Deportation Defense',
-    lastUpdated: 'October 6, 2026',
+    lastUpdated: 'October 14, 2026',
     summary: {
       title: 'Summary',
       text: 'A <strong>habeas corpus</strong> petition asks a federal judge to review whether a detention is lawful. Since 2025 it has become the main tool for thousands of people held by ICE without the right to bond. It can win a <strong>bond hearing or even release</strong>, but the outcome depends heavily on the state where the person is detained.',
@@ -284,7 +284,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'In September 2025, the Board of Immigration Appeals endorsed that position in <em>Matter of Yajure Hurtado</em>. Since then, immigration judges cannot grant bond to these people.',
+            text: 'In September 2025, the Board of Immigration Appeals endorsed that position in <em>Matter of Yajure Hurtado</em>. Since then, immigration judges generally deny them bond unless a federal court orders a bond hearing.',
           },
           {
             kind: 'text',

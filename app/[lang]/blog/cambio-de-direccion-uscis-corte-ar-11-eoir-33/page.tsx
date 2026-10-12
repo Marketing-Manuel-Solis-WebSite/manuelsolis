@@ -6,7 +6,7 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 const SLUG = 'cambio-de-direccion-uscis-corte-ar-11-eoir-33';
 // Debe coincidir con `date` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
 // antes de esa fecha la página no se publica.
-const ISO_DATE = '2026-10-06';
+const ISO_DATE = '2026-10-20';
 const IMAGE = '/blog/blog_38/OCT_B2.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
@@ -16,10 +16,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Si te mudaste, tienes 10 días para avisar a USCIS y 5 días hábiles a la corte de inmigración. Cómo hacerlo y qué pasa si no avisas.',
     title:
       'Me mudé y no avisé: por qué cambiar tu dirección con USCIS y la corte puede salvar tu caso (AR-11 y EOIR-33)',
-    displayDate: '06 Oct, 2026',
+    displayDate: '20 Oct, 2026',
     readTime: '6 min',
     categoryLabel: 'Defensa contra Deportación',
-    lastUpdated: '6 de octubre de 2026',
+    lastUpdated: '20 de octubre de 2026',
     summary: {
       title: 'Resumen inicial',
       text: 'Cambiarte de casa sin avisar es una de las formas más comunes de perder un caso de inmigración. Los avisos siguen llegando a la dirección vieja, faltas a una cita y el juez puede ordenar tu <strong>deportación en ausencia</strong>. Avisar es gratis, toma minutos y la ley lo exige.',
@@ -110,7 +110,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               '<strong>Deportación en ausencia:</strong> la corte manda los avisos a la última dirección que diste. Ese aviso vale legalmente aunque nunca lo hayas recibido.',
               '<strong>Casos negados en USCIS:</strong> si no llegas a tus huellas, a tu entrevista o no contestas una solicitud de evidencia (RFE), USCIS puede negar el caso. Desde 2025, USCIS envía a la corte con más frecuencia a quien le niega un trámite y no tiene estatus.',
               '<strong>Tarjetas perdidas:</strong> tu permiso de trabajo o tu green card pueden llegar a la dirección vieja.',
-              '<strong>Consecuencias penales:</strong> no avisar a propósito es un delito menor, con multa de hasta $200, cárcel de hasta 30 días o ambas. También puede ser causa de deportación, salvo que demuestres que no fue intencional.',
+              '<strong>Consecuencias penales:</strong> no avisar es un delito menor, con multa de hasta $200, cárcel de hasta 30 días o ambas. También puede ser causa de deportación, salvo que demuestres que no fue intencional.',
             ],
           },
           {
@@ -204,15 +204,15 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     ui: ARTICLE_UI.es,
   },
   en: {
-    metaTitle: 'I Moved and Didn’t Report It: AR-11 & EOIR-33',
+    metaTitle: 'I Moved and Didn’t Report It: AR-11/EOIR-33',
     metaDesc:
       'If you moved, you have 10 days to notify USCIS and 5 business days to notify the immigration court. How to do it and what happens if you don’t.',
     title:
       'I Moved and Didn’t Report It: Why Updating Your Address with USCIS and the Court Can Save Your Case (AR-11 and EOIR-33)',
-    displayDate: 'Oct 06, 2026',
+    displayDate: 'Oct 20, 2026',
     readTime: '6 min',
     categoryLabel: 'Deportation Defense',
-    lastUpdated: 'October 6, 2026',
+    lastUpdated: 'October 20, 2026',
     summary: {
       title: 'Summary',
       text: 'Moving without reporting your new address is one of the most common ways to lose an immigration case. Notices keep going to the old address, you miss an appointment, and the judge can order your <strong>deportation in absentia</strong>. Reporting it is free, takes minutes, and the law requires it.',
@@ -303,7 +303,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
               '<strong>Deportation in absentia:</strong> the court sends notices to the last address you gave. That notice is legally valid even if you never received it.',
               '<strong>Denied USCIS cases:</strong> if you miss your biometrics, your interview, or don’t answer a Request for Evidence (RFE), USCIS can deny the case. Since 2025, USCIS more often refers people to court when it denies a benefit and they have no status.',
               '<strong>Lost cards:</strong> your work permit or green card may be delivered to the old address.',
-              '<strong>Criminal consequences:</strong> willfully failing to report is a misdemeanor, punishable by a fine of up to $200, up to 30 days in jail, or both. It can also be a ground for deportation unless you show it was not willful.',
+              '<strong>Criminal consequences:</strong> failing to report is a misdemeanor, punishable by a fine of up to $200, up to 30 days in jail, or both. It can also be a ground for deportation unless you show it was not willful.',
             ],
           },
           {
