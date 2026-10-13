@@ -161,7 +161,7 @@ export const collaborators: Collaborator[] = [
     image: '/openers/oscar-manuel-oliva.jpg',
     role: {
       es: 'Representante legal · Inmigración',
-      en: 'Legal Representative · Immigration',
+      en: 'Immigration Legal Representative',
     },
     email: 'omoliva@manuelsolis.com',
     office: {
