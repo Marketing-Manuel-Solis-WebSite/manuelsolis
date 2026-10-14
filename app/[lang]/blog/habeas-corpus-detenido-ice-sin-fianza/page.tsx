@@ -57,11 +57,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'En septiembre de 2025, la Junta de Apelaciones de Inmigración respaldó esa postura en <em>Matter of Yajure Hurtado</em>. Desde entonces, los jueces de inmigración normalmente les niegan la fianza, salvo que una corte federal ordene una audiencia de fianza.',
+            text: 'En septiembre de 2025, la Junta de Apelaciones de Inmigración respaldó esa postura en <em>Matter of Yajure Hurtado</em>. Desde entonces, los jueces de inmigración consideran que no tienen facultad para dar audiencia de fianza a esas personas, salvo en los circuitos que rechazaron esa interpretación (ver tabla) o cuando un juez federal la ordena en un habeas.',
           },
           {
             kind: 'text',
-            text: 'El resultado: miles de personas con años en el país, familia y sin antecedentes quedaron detenidas sin audiencia de fianza. <strong>La única puerta fue la corte federal.</strong>',
+            text: 'El resultado: miles de personas con años en el país, familia y sin antecedentes quedaron detenidas sin audiencia de fianza. <strong>La corte federal se volvió la vía principal para conseguirla.</strong>',
           },
         ],
       },
@@ -284,11 +284,11 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
           },
           {
             kind: 'text',
-            text: 'In September 2025, the Board of Immigration Appeals endorsed that position in <em>Matter of Yajure Hurtado</em>. Since then, immigration judges generally deny them bond unless a federal court orders a bond hearing.',
+            text: 'In September 2025, the Board of Immigration Appeals endorsed that position in <em>Matter of Yajure Hurtado</em>. Since then, immigration judges have taken the position that they lack authority to hold bond hearings for these people, except in circuits that rejected that interpretation (see table) or when a federal judge orders one in a habeas case.',
           },
           {
             kind: 'text',
-            text: 'The result: thousands of people with years in the country, families, and no criminal record were held without a bond hearing. <strong>The only door left was federal court.</strong>',
+            text: 'The result: thousands of people with years in the country, families, and no criminal record were held without a bond hearing. <strong>Federal court became the main way to get one.</strong>',
           },
         ],
       },
