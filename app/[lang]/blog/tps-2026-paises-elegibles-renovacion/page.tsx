@@ -54,7 +54,7 @@ const blogContent = {
       ctaButton: 'Consultar con un Abogado Ahora'
     },
     title: 'TPS 2026: ¿Tu país sigue protegido o fue terminado? Guía país por país',
-    lastUpdated: '13 de octubre de 2026',
+    lastUpdated: '14 de octubre de 2026',
     summary: {
       title: 'Resumen inicial',
       text: 'El Estatus de Protección Temporal (<strong>TPS</strong>) ha sido un salvavidas para cientos de miles de personas en Estados Unidos. Pero en 2026, el panorama está cambiando rápidamente: algunos países mantienen su designación, otros fueron terminados y algunos están atrapados en litigio federal. En este artículo explicamos <strong>país por país</strong> cuál es el estatus actual, qué hacer con tu permiso de trabajo, cómo renovar, y qué opciones existen si ya perdiste la protección.'
@@ -85,7 +85,7 @@ const blogContent = {
             name: 'Venezuela (Redesignación 2023)',
             status: 'Terminado',
             statusColor: 'text-red-400',
-            detail: 'La terminación de la redesignación de 2023 se publicó el <strong>5 de febrero de 2025</strong> (90 FR 9040) y entró en vigor el <strong>7 de abril de 2025</strong>. El <strong>3 de octubre de 2025</strong>, la Corte Suprema permitió que la terminación surtiera efecto de inmediato. Por una orden judicial de mayo de 2025, ciertos documentos emitidos en o antes del 5 de febrero de 2025 mantuvieron la autorización de empleo hasta el <strong>2 de octubre de 2026</strong>.'
+            detail: 'La terminación de la redesignación de 2023 se publicó el <strong>5 de febrero de 2025</strong> (90 FR 9040) con fecha efectiva del 7 de abril de 2025. En marzo de 2025 una corte federal de distrito pospuso esa fecha; la Corte Suprema suspendió esa orden en mayo de 2025 y, el <strong>3 de octubre de 2025</strong>, suspendió también la sentencia final de la corte de distrito, lo que permitió que la terminación surtiera efecto de inmediato (No. 25A326). Por una orden judicial de mayo de 2025, ciertos documentos emitidos en o antes del 5 de febrero de 2025 mantuvieron la autorización de empleo hasta el <strong>2 de octubre de 2026</strong>.'
           },
           {
             name: 'Honduras',
@@ -103,7 +103,7 @@ const blogContent = {
             name: 'Haití',
             status: 'Terminado',
             statusColor: 'text-red-400',
-            detail: 'USCIS indica que la designación de Haití terminó con efecto el <strong>27 de julio de 2026</strong>. El aviso de terminación se publicó el 28 de noviembre de 2025 (90 FR 54733).'
+            detail: 'La terminación se publicó el 28 de noviembre de 2025 (90 FR 54733) con fecha efectiva del 3 de febrero de 2026, pero una corte federal de distrito en Washington, D.C. otorgó una medida provisional. El <strong>25 de junio de 2026</strong>, la Corte Suprema resolvió <em>Mullin v. Doe</em> (No. 25-1083, junto con <em>Trump v. Miot</em>, No. 25-1084), sobre las terminaciones del TPS de Siria y Haití, y sostuvo que la ley del TPS impide la revisión judicial de los reclamos no constitucionales. USCIS indica que la designación de Haití terminó con efecto el <strong>27 de julio de 2026</strong> y que los permisos de trabajo con categoría A12 o C19 emitidos a beneficiarios haitianos ya no son válidos.'
           }
         ]
       },
@@ -248,7 +248,10 @@ const blogContent = {
           'Federal Register – 90 FR 43225 (Venezuela 2021, Sept. 8, 2025)',
           'Federal Register – 90 FR 30089 (Honduras, July 8, 2025)',
           'Federal Register – 90 FR 54733 (Haiti, Nov. 28, 2025)',
-          'National TPS Alliance v. Noem, No. 25-cv-05687-TLT (N.D. Cal.); No. 26-199 (9th Cir. 2026)'
+          'National TPS Alliance v. Noem, No. 25-cv-05687-TLT (N.D. Cal.); No. 26-199 (9th Cir. 2026)',
+          'Supreme Court – Noem v. National TPS Alliance, No. 25A326 (Oct. 3, 2025)',
+          'Supreme Court – Mullin v. Doe, 609 U.S. 324 (2026), Nos. 25-1083 and 25-1084 (June 25, 2026)',
+          'USCIS – Update on Termination of Temporary Protected Status for Haiti (July 29, 2026)'
         ]
       }
     }
@@ -270,7 +273,7 @@ const blogContent = {
       ctaButton: 'Consult with an Attorney Now'
     },
     title: 'TPS 2026: Is Your Country Still Protected or Was It Terminated? A Country-by-Country Guide',
-    lastUpdated: 'October 13, 2026',
+    lastUpdated: 'October 14, 2026',
     summary: {
       title: 'Initial Summary',
       text: 'Temporary Protected Status (<strong>TPS</strong>) has been a lifeline for hundreds of thousands of people in the United States. But in 2026, the landscape is changing rapidly: some countries maintain their designation, others were terminated, and some are caught in federal litigation. In this article, we explain <strong>country by country</strong> the current status, what to do with your work permit, how to renew, and what options exist if you have already lost protection.'
@@ -301,7 +304,7 @@ const blogContent = {
             name: 'Venezuela (2023 Redesignation)',
             status: 'Terminated',
             statusColor: 'text-red-400',
-            detail: 'The termination of the 2023 redesignation was published on <strong>February 5, 2025</strong> (90 FR 9040) and took effect on <strong>April 7, 2025</strong>. On <strong>October 3, 2025</strong>, the Supreme Court allowed the termination to take immediate effect. Under a May 2025 court order, certain documents issued on or before February 5, 2025 kept work authorization through <strong>October 2, 2026</strong>.'
+            detail: 'The termination of the 2023 redesignation was published on <strong>February 5, 2025</strong> (90 FR 9040) with an effective date of April 7, 2025. In March 2025 a federal district court postponed that date; the Supreme Court stayed that order in May 2025 and, on <strong>October 3, 2025</strong>, also stayed the district court\'s final judgment, allowing the termination to take immediate effect (No. 25A326). Under a May 2025 court order, certain documents issued on or before February 5, 2025 kept work authorization through <strong>October 2, 2026</strong>.'
           },
           {
             name: 'Honduras',
@@ -319,7 +322,7 @@ const blogContent = {
             name: 'Haiti',
             status: 'Terminated',
             statusColor: 'text-red-400',
-            detail: 'USCIS states that Haiti\'s designation was terminated effective <strong>July 27, 2026</strong>. The termination notice was published on November 28, 2025 (90 FR 54733).'
+            detail: 'The termination was published on November 28, 2025 (90 FR 54733) with an effective date of February 3, 2026, but a federal district court in Washington, D.C. granted interim relief. On <strong>June 25, 2026</strong>, the Supreme Court decided <em>Mullin v. Doe</em> (No. 25-1083, together with <em>Trump v. Miot</em>, No. 25-1084), concerning the TPS terminations for Syria and Haiti, and held that the TPS statute bars judicial review of non-constitutional claims. USCIS states that Haiti\'s designation was terminated effective <strong>July 27, 2026</strong> and that A12 or C19 work permits issued to Haitian beneficiaries are no longer valid.'
           }
         ]
       },
@@ -464,7 +467,10 @@ const blogContent = {
           'Federal Register – 90 FR 43225 (Venezuela 2021, Sept. 8, 2025)',
           'Federal Register – 90 FR 30089 (Honduras, July 8, 2025)',
           'Federal Register – 90 FR 54733 (Haiti, Nov. 28, 2025)',
-          'National TPS Alliance v. Noem, No. 25-cv-05687-TLT (N.D. Cal.); No. 26-199 (9th Cir. 2026)'
+          'National TPS Alliance v. Noem, No. 25-cv-05687-TLT (N.D. Cal.); No. 26-199 (9th Cir. 2026)',
+          'Supreme Court – Noem v. National TPS Alliance, No. 25A326 (Oct. 3, 2025)',
+          'Supreme Court – Mullin v. Doe, 609 U.S. 324 (2026), Nos. 25-1083 and 25-1084 (June 25, 2026)',
+          'USCIS – Update on Termination of Temporary Protected Status for Haiti (July 29, 2026)'
         ]
       }
     }
@@ -526,7 +532,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
         slug="tps-2026-paises-elegibles-renovacion"
         date="2026-04-10"
-        dateModified="2026-10-13"
+        dateModified="2026-10-14"
         image={IMAGES.article}
         lang={lang as string}
         readTime="12"
