@@ -679,7 +679,7 @@ export const attorneys: Attorney[] = [
     },
     seoDescription: {
       es: 'Emilli M. Rauch ejerce en Memphis, Tennessee. Se graduó de la University of Memphis Cecil C. Humphreys School of Law en 2024 y defiende a comunidades vulnerables.',
-      en: 'Emilli M. Rauch practices in Memphis, TN. She graduated from the University of Memphis Cecil C. Humphreys School of Law in 2024 and advocates for vulnerable communities.'
+      en: 'Memphis, TN attorney Emilli M. Rauch, a 2024 graduate of the University of Memphis Cecil C. Humphreys School of Law, advocates for vulnerable communities.'
     },
     quote: {
       es: "Cada persona merece tener una voz.",
