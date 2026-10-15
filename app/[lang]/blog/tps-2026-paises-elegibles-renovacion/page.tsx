@@ -48,11 +48,13 @@ const blogContent = {
       readTime: '12 min de lectura',
       tags: 'TPS 2026',
       date: '10 Abr, 2026',
+      updatedLabel: 'Última actualización',
       time: '12 min',
       authorRole: 'Fundador & Abogado Principal',
       ctaButton: 'Consultar con un Abogado Ahora'
     },
     title: 'TPS 2026: ¿Tu país sigue protegido o fue terminado? Guía país por país',
+    lastUpdated: '14 de octubre de 2026',
     summary: {
       title: 'Resumen inicial',
       text: 'El Estatus de Protección Temporal (<strong>TPS</strong>) ha sido un salvavidas para cientos de miles de personas en Estados Unidos. Pero en 2026, el panorama está cambiando rápidamente: algunos países mantienen su designación, otros fueron terminados y algunos están atrapados en litigio federal. En este artículo explicamos <strong>país por país</strong> cuál es el estatus actual, qué hacer con tu permiso de trabajo, cómo renovar, y qué opciones existen si ya perdiste la protección.'
@@ -69,39 +71,39 @@ const blogContent = {
         countries: [
           {
             name: 'El Salvador',
-            status: 'Extendido',
-            statusColor: 'text-green-400',
-            detail: 'La designación de El Salvador ha sido extendida hasta el <strong>9 de septiembre de 2026</strong>. Los beneficiarios deben haber reinscrito dentro del período establecido por USCIS. Si no reinscribiste a tiempo, podrías haber perdido la cobertura aunque tu país siga designado.'
+            status: 'Anuncio pendiente',
+            statusColor: 'text-amber-400',
+            detail: 'La designación de El Salvador fue extendida hasta el <strong>9 de septiembre de 2026</strong> (90 FR 5953). USCIS indica que hará un anuncio sobre el TPS de El Salvador en su momento y que, mientras tanto, los beneficiarios <strong>mantienen la protección, incluido el permiso de trabajo</strong>. Los beneficiarios deben haber reinscrito dentro del período establecido por USCIS. Si no reinscribiste a tiempo, podrías haber perdido la cobertura aunque tu país siga designado.'
           },
           {
             name: 'Venezuela (Designación 2021)',
             status: 'Terminado',
             statusColor: 'text-red-400',
-            detail: 'La designación original de Venezuela de 2021 fue terminada efectivamente el <strong>7 de noviembre de 2025</strong>. Las personas cubiertas bajo esta designación que no tienen otra base legal pueden haber perdido su estatus de TPS.'
+            detail: 'La designación original de Venezuela de 2021 fue terminada efectivamente el <strong>7 de noviembre de 2025</strong> (90 FR 43225, publicado el 8 de septiembre de 2025). Las personas cubiertas bajo esta designación que no tienen otra base legal pueden haber perdido su estatus de TPS.'
           },
           {
             name: 'Venezuela (Redesignación 2023)',
-            status: 'En litigio',
-            statusColor: 'text-amber-400',
-            detail: 'La redesignación de 2023 está actualmente protegida por <strong>orden judicial</strong> y permanece válida hasta el <strong>2 de octubre de 2026</strong>. Esto significa que si calificas bajo esta redesignación, tu TPS sigue vigente mientras la orden judicial esté activa. Sin embargo, esto puede cambiar si el tribunal modifica su decisión.'
+            status: 'Terminado',
+            statusColor: 'text-red-400',
+            detail: 'La terminación de la redesignación de 2023 se publicó el <strong>5 de febrero de 2025</strong> (90 FR 9040) con fecha efectiva del 7 de abril de 2025. En marzo de 2025 una corte federal de distrito pospuso esa fecha; la Corte Suprema suspendió esa orden en mayo de 2025 y, el <strong>3 de octubre de 2025</strong>, suspendió también la sentencia final de la corte de distrito, lo que permitió que la terminación surtiera efecto de inmediato (No. 25A326). Por una orden judicial de mayo de 2025, ciertos documentos emitidos en o antes del 5 de febrero de 2025 mantuvieron la autorización de empleo hasta el <strong>2 de octubre de 2026</strong>.'
           },
           {
             name: 'Honduras',
             status: 'Terminado',
             statusColor: 'text-red-400',
-            detail: 'La designación de Honduras fue terminada efectivamente el <strong>8 de septiembre de 2025</strong>. Los antiguos beneficiarios de TPS de Honduras que no tienen otro estatus migratorio válido necesitan explorar opciones alternativas urgentemente.'
+            detail: 'La designación de Honduras fue terminada efectivamente el <strong>8 de septiembre de 2025</strong> (90 FR 30089). El 31 de diciembre de 2025 una corte de distrito anuló la terminación, pero el <strong>9 de febrero de 2026</strong> la Corte de Apelaciones del Noveno Circuito suspendió esa orden (No. 26-199). Los antiguos beneficiarios de TPS de Honduras que no tienen otro estatus migratorio válido necesitan explorar opciones alternativas urgentemente.'
           },
           {
             name: 'Ucrania',
-            status: 'Extendido',
-            statusColor: 'text-green-400',
-            detail: 'Debido al conflicto armado en curso, la designación de Ucrania ha sido extendida hasta el <strong>19 de octubre de 2026</strong>. Los beneficiarios deben reinscribir dentro del plazo publicado en el Federal Register.'
+            status: 'Vence el 19 oct 2026',
+            statusColor: 'text-amber-400',
+            detail: 'La designación de Ucrania fue extendida hasta el <strong>19 de octubre de 2026</strong> (90 FR 5936). A la fecha de esta actualización no se ha publicado en el Federal Register un aviso de extensión ni de terminación.'
           },
           {
             name: 'Haití',
-            status: 'Bajo revisión',
-            statusColor: 'text-amber-400',
-            detail: 'La situación de Haití continúa siendo monitoreada. Dada la inestabilidad en el país, la designación ha tenido múltiples extensiones. Los beneficiarios deben verificar las fechas más recientes directamente en USCIS.gov, ya que los plazos pueden cambiar con poca antelación.'
+            status: 'Terminado',
+            statusColor: 'text-red-400',
+            detail: 'La terminación se publicó el 28 de noviembre de 2025 (90 FR 54733) con fecha efectiva del 3 de febrero de 2026, pero una corte federal de distrito en Washington, D.C. otorgó una medida provisional. El <strong>25 de junio de 2026</strong>, la Corte Suprema resolvió <em>Mullin v. Doe</em> (No. 25-1083, junto con <em>Trump v. Miot</em>, No. 25-1084), sobre las terminaciones del TPS de Siria y Haití, y sostuvo que la ley del TPS impide la revisión judicial de los reclamos no constitucionales. USCIS indica que la designación de Haití terminó con efecto el <strong>27 de julio de 2026</strong> y que los permisos de trabajo con categoría A12 o C19 emitidos a beneficiarios haitianos ya no son válidos.'
           }
         ]
       },
@@ -239,10 +241,17 @@ const blogContent = {
         title: 'Fuentes Citadas',
         list: [
           'USCIS – Temporary Protected Status (TPS) Designated Countries',
-          'USCIS – TPS El Salvador Extension Notice',
-          'Federal Register – TPS Venezuela Redesignation 2023',
-          'USCIS – Employment Authorization for TPS Beneficiaries',
-          'American Immigration Lawyers Association (AILA) – TPS Litigation Updates'
+          'USCIS – TPS country pages: El Salvador, Venezuela, Honduras, Ukraine, Haiti',
+          'Federal Register – 90 FR 5953 (El Salvador, Jan. 17, 2025)',
+          'Federal Register – 90 FR 5936 (Ukraine, Jan. 17, 2025)',
+          'Federal Register – 90 FR 9040 (Venezuela 2023, Feb. 5, 2025)',
+          'Federal Register – 90 FR 43225 (Venezuela 2021, Sept. 8, 2025)',
+          'Federal Register – 90 FR 30089 (Honduras, July 8, 2025)',
+          'Federal Register – 90 FR 54733 (Haiti, Nov. 28, 2025)',
+          'National TPS Alliance v. Noem, No. 25-cv-05687-TLT (N.D. Cal.); No. 26-199 (9th Cir. 2026)',
+          'Supreme Court – Noem v. National TPS Alliance, No. 25A326 (Oct. 3, 2025)',
+          'Supreme Court – Mullin v. Doe, 609 U.S. 324 (2026), Nos. 25-1083 and 25-1084 (June 25, 2026)',
+          'USCIS – Update on Termination of Temporary Protected Status for Haiti (July 29, 2026)'
         ]
       }
     }
@@ -258,11 +267,13 @@ const blogContent = {
       readTime: '12 min read',
       tags: 'TPS 2026',
       date: 'Apr 10, 2026',
+      updatedLabel: 'Last updated',
       time: '12 min',
       authorRole: 'Founder & Lead Attorney',
       ctaButton: 'Consult with an Attorney Now'
     },
     title: 'TPS 2026: Is Your Country Still Protected or Was It Terminated? A Country-by-Country Guide',
+    lastUpdated: 'October 14, 2026',
     summary: {
       title: 'Initial Summary',
       text: 'Temporary Protected Status (<strong>TPS</strong>) has been a lifeline for hundreds of thousands of people in the United States. But in 2026, the landscape is changing rapidly: some countries maintain their designation, others were terminated, and some are caught in federal litigation. In this article, we explain <strong>country by country</strong> the current status, what to do with your work permit, how to renew, and what options exist if you have already lost protection.'
@@ -279,39 +290,39 @@ const blogContent = {
         countries: [
           {
             name: 'El Salvador',
-            status: 'Extended',
-            statusColor: 'text-green-400',
-            detail: 'El Salvador\'s designation has been extended until <strong>September 9, 2026</strong>. Beneficiaries must have re-registered within the period established by USCIS. If you did not re-register on time, you may have lost coverage even though your country is still designated.'
+            status: 'Announcement pending',
+            statusColor: 'text-amber-400',
+            detail: 'El Salvador\'s designation was extended until <strong>September 9, 2026</strong> (90 FR 5953). USCIS states that an announcement on El Salvador\'s TPS will be made at the appropriate time and that, in the meantime, beneficiaries <strong>keep their protection, including work authorization</strong>. Beneficiaries must have re-registered within the period established by USCIS. If you did not re-register on time, you may have lost coverage even though your country is still designated.'
           },
           {
             name: 'Venezuela (2021 Designation)',
             status: 'Terminated',
             statusColor: 'text-red-400',
-            detail: 'Venezuela\'s original 2021 designation was effectively terminated on <strong>November 7, 2025</strong>. Individuals covered under this designation who have no other legal basis may have lost their TPS status.'
+            detail: 'Venezuela\'s original 2021 designation was effectively terminated on <strong>November 7, 2025</strong> (90 FR 43225, published September 8, 2025). Individuals covered under this designation who have no other legal basis may have lost their TPS status.'
           },
           {
             name: 'Venezuela (2023 Redesignation)',
-            status: 'In litigation',
-            statusColor: 'text-amber-400',
-            detail: 'The 2023 redesignation is currently protected by a <strong>court order</strong> and remains valid until <strong>October 2, 2026</strong>. This means that if you qualify under this redesignation, your TPS remains active as long as the court order is in effect. However, this could change if the court modifies its decision.'
+            status: 'Terminated',
+            statusColor: 'text-red-400',
+            detail: 'The termination of the 2023 redesignation was published on <strong>February 5, 2025</strong> (90 FR 9040) with an effective date of April 7, 2025. In March 2025 a federal district court postponed that date; the Supreme Court stayed that order in May 2025 and, on <strong>October 3, 2025</strong>, also stayed the district court\'s final judgment, allowing the termination to take immediate effect (No. 25A326). Under a May 2025 court order, certain documents issued on or before February 5, 2025 kept work authorization through <strong>October 2, 2026</strong>.'
           },
           {
             name: 'Honduras',
             status: 'Terminated',
             statusColor: 'text-red-400',
-            detail: 'Honduras\' designation was effectively terminated on <strong>September 8, 2025</strong>. Former TPS beneficiaries from Honduras who do not have another valid immigration status need to urgently explore alternative options.'
+            detail: 'Honduras\' designation was effectively terminated on <strong>September 8, 2025</strong> (90 FR 30089). On December 31, 2025 a district court vacated the termination, but on <strong>February 9, 2026</strong> the Ninth Circuit Court of Appeals stayed that order (No. 26-199). Former TPS beneficiaries from Honduras who do not have another valid immigration status need to urgently explore alternative options.'
           },
           {
             name: 'Ukraine',
-            status: 'Extended',
-            statusColor: 'text-green-400',
-            detail: 'Due to the ongoing armed conflict, Ukraine\'s designation has been extended until <strong>October 19, 2026</strong>. Beneficiaries must re-register within the deadline published in the Federal Register.'
+            status: 'Expires Oct 19, 2026',
+            statusColor: 'text-amber-400',
+            detail: 'Ukraine\'s designation was extended until <strong>October 19, 2026</strong> (90 FR 5936). As of this update, no extension or termination notice has been published in the Federal Register.'
           },
           {
             name: 'Haiti',
-            status: 'Under review',
-            statusColor: 'text-amber-400',
-            detail: 'Haiti\'s situation continues to be monitored. Given the instability in the country, the designation has had multiple extensions. Beneficiaries should verify the most recent dates directly on USCIS.gov, as deadlines can change with little notice.'
+            status: 'Terminated',
+            statusColor: 'text-red-400',
+            detail: 'The termination was published on November 28, 2025 (90 FR 54733) with an effective date of February 3, 2026, but a federal district court in Washington, D.C. granted interim relief. On <strong>June 25, 2026</strong>, the Supreme Court decided <em>Mullin v. Doe</em> (No. 25-1083, together with <em>Trump v. Miot</em>, No. 25-1084), concerning the TPS terminations for Syria and Haiti, and held that the TPS statute bars judicial review of non-constitutional claims. USCIS states that Haiti\'s designation was terminated effective <strong>July 27, 2026</strong> and that A12 or C19 work permits issued to Haitian beneficiaries are no longer valid.'
           }
         ]
       },
@@ -449,10 +460,17 @@ const blogContent = {
         title: 'Sources Cited',
         list: [
           'USCIS – Temporary Protected Status (TPS) Designated Countries',
-          'USCIS – TPS El Salvador Extension Notice',
-          'Federal Register – TPS Venezuela Redesignation 2023',
-          'USCIS – Employment Authorization for TPS Beneficiaries',
-          'American Immigration Lawyers Association (AILA) – TPS Litigation Updates'
+          'USCIS – TPS country pages: El Salvador, Venezuela, Honduras, Ukraine, Haiti',
+          'Federal Register – 90 FR 5953 (El Salvador, Jan. 17, 2025)',
+          'Federal Register – 90 FR 5936 (Ukraine, Jan. 17, 2025)',
+          'Federal Register – 90 FR 9040 (Venezuela 2023, Feb. 5, 2025)',
+          'Federal Register – 90 FR 43225 (Venezuela 2021, Sept. 8, 2025)',
+          'Federal Register – 90 FR 30089 (Honduras, July 8, 2025)',
+          'Federal Register – 90 FR 54733 (Haiti, Nov. 28, 2025)',
+          'National TPS Alliance v. Noem, No. 25-cv-05687-TLT (N.D. Cal.); No. 26-199 (9th Cir. 2026)',
+          'Supreme Court – Noem v. National TPS Alliance, No. 25A326 (Oct. 3, 2025)',
+          'Supreme Court – Mullin v. Doe, 609 U.S. 324 (2026), Nos. 25-1083 and 25-1084 (June 25, 2026)',
+          'USCIS – Update on Termination of Temporary Protected Status for Haiti (July 29, 2026)'
         ]
       }
     }
@@ -514,6 +532,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
         slug="tps-2026-paises-elegibles-renovacion"
         date="2026-04-10"
+        dateModified="2026-10-14"
         image={IMAGES.article}
         lang={lang as string}
         readTime="12"
@@ -563,6 +582,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
               </span>
               <span className="flex items-center gap-2 text-white/60 text-sm">
                 <Clock size={14} /> {t.ui.time}
+              </span>
+              <span className="flex items-center gap-2 text-white/60 text-sm">
+                <RefreshCw size={14} /> {t.ui.updatedLabel}: {t.lastUpdated}
               </span>
             </div>
 
