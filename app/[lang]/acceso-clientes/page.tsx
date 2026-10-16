@@ -2,6 +2,7 @@ import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import type { Metadata } from 'next';
 import AccesoClientesClient from './AccesoClientesClient';
 import { buildSocialMetadata } from '../../lib/seoMetadata';
+import { ACCESO_CLIENTES_PAGE_VIDEOS, buildPageVideoSchemas } from '../../lib/videoSchema';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -47,12 +48,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function AccesoClientesPage({ params }: Props) {
   const { lang } = await params;
+  const currentLang = lang === 'en' ? 'en' : 'es';
+  // El tutorial del portal (Bunny Stream) es el vídeo principal del hero.
+  const videoSchemas = buildPageVideoSchemas({
+    videos: ACCESO_CLIENTES_PAGE_VIDEOS,
+    lang: currentLang,
+    pagePath: `/${currentLang}/acceso-clientes`,
+  });
+
   return (
     <>
       <BreadcrumbSchema
-        lang={lang === 'en' ? 'en' : 'es'}
+        lang={currentLang}
         trail={[{ es: 'Acceso a Clientes', en: 'Client Access', path: '/acceso-clientes' }]}
       />
+      {videoSchemas.map((schema, i) => (
+        <script
+          key={i}
+          id={`acceso-video-schema-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <AccesoClientesClient />
     </>
   );

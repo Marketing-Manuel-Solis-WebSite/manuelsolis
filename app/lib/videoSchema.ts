@@ -12,9 +12,15 @@
 // vídeo, así que son las reales — no estimaciones ni fechas de commit. Si algún
 // día se añade un vídeo sin ella, el emisor devuelve null y ese vídeo no se
 // marca: es preferible no ser elegible a declarar una fecha falsa.
+//
+// Bunny Stream (alta 2026-10-16): el tutorial de /acceso-clientes no está en
+// YouTube sino en Bunny (ver app/lib/bunnyStream.ts). Esos vídeos solo llevan
+// `embedUrl`: los archivos del CDN están restringidos por dominio y Googlebot
+// recibiría 403 en un `contentUrl`. Google exige uno de los dos, no ambos.
 // ============================================================
 
 import { ORG_REF } from './schemaOrg';
+import { bunnyEmbedUrl, PORTAL_TUTORIAL_VIDEO, type BunnyVideoRef } from './bunnyStream';
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
@@ -25,9 +31,23 @@ interface LocalizedText {
   en: string;
 }
 
-export interface VideoObjectInput {
-  /** ID del vídeo en YouTube: de ahí salen embedUrl y contentUrl. */
-  youtubeId: string;
+/**
+ * Dónde está alojado el vídeo: de ahí salen embedUrl y, en YouTube, contentUrl.
+ * Exactamente uno de los dos.
+ */
+export type VideoHost =
+  | { youtubeId: string; bunny?: undefined }
+  | { bunny: BunnyVideoRef; youtubeId?: undefined };
+
+function hostUrls(host: VideoHost): { embedUrl: string; contentUrl?: string } {
+  if (host.bunny) return { embedUrl: bunnyEmbedUrl(host.bunny) };
+  return {
+    embedUrl: `https://www.youtube.com/embed/${host.youtubeId}`,
+    contentUrl: `https://www.youtube.com/watch?v=${host.youtubeId}`,
+  };
+}
+
+export type VideoObjectInput = VideoHost & {
   name: string;
   description: string;
   /**
@@ -36,7 +56,7 @@ export interface VideoObjectInput {
    * "toda ruta de asset del código existe en public/" de contentHygiene.
    */
   thumbnailUrl: string;
-  /** Fecha de subida REAL a YouTube, ISO 8601. Sin ella no se emite schema. */
+  /** Fecha de subida REAL a la plataforma, ISO 8601. Sin ella no se emite schema. */
   uploadDate: string | null;
   /** Duración ISO 8601 ('PT4M12S'). Se omite mientras no se conozca. */
   duration?: string;
@@ -44,7 +64,7 @@ export interface VideoObjectInput {
   pagePath?: string;
   /** Idioma del audio, no de la página. Solo si está documentado. */
   inLanguage?: string;
-}
+};
 
 /** Fecha o fecha-hora ISO 8601: '2026-03-14' o '2026-03-14T10:00:00-05:00'. */
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2})?(\.\d+)?(Z|[+-]\d{2}:\d{2})?)?$/;
@@ -54,7 +74,7 @@ function absolute(url: string): string {
 }
 
 /**
- * VideoObject de un vídeo de YouTube.
+ * VideoObject de un vídeo de YouTube o de Bunny Stream.
  *
  * Devuelve `null` cuando falta `uploadDate` o no es una fecha ISO: es la única
  * salida honesta, porque un VideoObject sin uploadDate lo descarta Google y uno
@@ -70,8 +90,7 @@ export function buildVideoObjectSchema(input: VideoObjectInput): Record<string, 
     description: input.description,
     thumbnailUrl: [absolute(input.thumbnailUrl)],
     uploadDate: input.uploadDate,
-    embedUrl: `https://www.youtube.com/embed/${input.youtubeId}`,
-    contentUrl: `https://www.youtube.com/watch?v=${input.youtubeId}`,
+    ...hostUrls(input),
     ...(input.duration ? { duration: input.duration } : {}),
     ...(input.inLanguage ? { inLanguage: input.inLanguage } : {}),
     ...(input.pagePath
@@ -87,16 +106,15 @@ export function buildVideoObjectSchema(input: VideoObjectInput): Record<string, 
   };
 }
 
-export interface SiteVideo {
-  youtubeId: string;
+export type SiteVideo = VideoHost & {
   name: LocalizedText;
   description: LocalizedText;
   thumbnailUrl: string;
-  /** null = fecha de subida pendiente de confirmar en el canal de YouTube. */
+  /** null = fecha de subida pendiente de confirmar en la plataforma. */
   uploadDate: string | null;
   duration?: string;
   inLanguage?: string;
-}
+};
 
 // ===== Catálogo =====
 // Copia tomada literalmente de lo que ya se publica en la página, sin reescribir
@@ -207,6 +225,32 @@ export const HOME_PAGE_VIDEOS: readonly SiteVideo[] = [
   ...TESTIMONIOS_PAGE_VIDEOS.filter((video) => video.youtubeId === 'cTJ9M5PT-S4'),
 ];
 
+// Tutorial del portal de clientes (Bunny Stream, no YouTube). `name` es el
+// mismo texto del `title` del iframe en AccesoClientesClient.tsx y
+// `description` resume la descripción del hero de esa página. Fecha y duración
+// reales, leídas del JSON-LD que publica el propio reproductor de Bunny
+// ("uploadDate":"2026-10-12T21:41:09.143Z", "duration":"PT41S"). Sin
+// `inLanguage`: el idioma del audio no consta en ningún dato.
+const PORTAL_TUTORIAL: SiteVideo = {
+  bunny: PORTAL_TUTORIAL_VIDEO,
+  name: {
+    es: 'Tutorial del Portal de Clientes | Manuel Solís',
+    en: 'Client Portal Tutorial | Manuel Solís',
+  },
+  description: {
+    es: 'Video tutorial del nuevo portal de clientes de Law Offices of Manuel Solís, donde podrá dar seguimiento a su caso y mantenerse informado de cada avance.',
+    en: 'Video tutorial of the new client portal of the Law Offices of Manuel Solís, where you can track your case and stay informed of every update.',
+  },
+  // La misma portada que muestra el reproductor de Bunny, descargada a
+  // public/ porque el CDN de Bunny responde 403 sin Referer permitido.
+  thumbnailUrl: '/videos/tutorial-portal-clientes.jpg',
+  uploadDate: '2026-10-12',
+  duration: 'PT41S',
+};
+
+/** Vídeo de /acceso-clientes: el tutorial del portal (<BunnyVideo>). */
+export const ACCESO_CLIENTES_PAGE_VIDEOS: readonly SiteVideo[] = [PORTAL_TUTORIAL];
+
 /**
  * VideoObjects listos para inyectar en una página, en el idioma de la página.
  *
@@ -223,13 +267,9 @@ export function buildPageVideoSchemas(input: {
   return videos
     .map((video) =>
       buildVideoObjectSchema({
-        youtubeId: video.youtubeId,
+        ...video,
         name: video.name[lang],
         description: video.description[lang],
-        thumbnailUrl: video.thumbnailUrl,
-        uploadDate: video.uploadDate,
-        duration: video.duration,
-        inLanguage: video.inLanguage,
         pagePath,
       })
     )
@@ -238,7 +278,7 @@ export function buildPageVideoSchemas(input: {
 
 /** Vídeos del catálogo a los que les falta la fecha de subida real. */
 export function videosPendingUploadDate(): string[] {
-  return [...TESTIMONIOS_PAGE_VIDEOS, UNIENDO_FAMILIAS_EP5]
+  return [...TESTIMONIOS_PAGE_VIDEOS, UNIENDO_FAMILIAS_EP5, PORTAL_TUTORIAL]
     .filter((video) => !video.uploadDate)
-    .map((video) => video.youtubeId);
+    .map((video) => (video.bunny ? video.bunny.videoId : video.youtubeId));
 }
