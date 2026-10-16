@@ -20,6 +20,9 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'habeas-corpus-detenido-ice-sin-fianza',
+    'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
+    'orden-deportacion-en-ausencia-reabrir-caso',
     'ley-laken-riley-detencion-obligatoria-2026',
     'impuesto-1-por-ciento-remesas-2026-como-evitarlo',
     'cuanto-cuesta-arreglar-papeles-tarifas-uscis-2026',
@@ -120,6 +123,9 @@ const clusters: Record<string, string[]> = {
     'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
   ],
   deportation: [
+    'habeas-corpus-detenido-ice-sin-fianza',
+    'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
+    'orden-deportacion-en-ausencia-reabrir-caso',
     'ley-laken-riley-detencion-obligatoria-2026',
     'autodeportacion-salida-voluntaria-riesgos-2026',
     'caso-desestimado-corte-inmigracion-trampa-deportacion-expedita',
