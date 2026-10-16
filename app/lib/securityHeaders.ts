@@ -78,7 +78,10 @@ const CONTENT_SECURITY_POLICY = [
   //     la CSP del navegador. Estaba abierto `generativelanguage.googleapis.com`
   //     sin que ningún script del cliente lo usara; se quitó al migrar el chat.
   "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://connect.facebook.net https://www.facebook.com https://analytics.tiktok.com https://*.tiktokw.us https://va.vercel-scripts.com https://vitals.vercel-insights.com https://*.callrail.com https://*.t.hyros.com https://lg.hyr.so",
-  "frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com",
+  // player.mediadelivery.net: reproductor de Bunny Stream (tutorial de
+  // /acceso-clientes, ver app/lib/bunnyStream.ts). Los segmentos de vídeo los
+  // pide el documento del iframe, que no hereda esta CSP: basta con el frame.
+  "frame-src 'self' https://www.google.com https://www.youtube.com https://www.facebook.com https://player.mediadelivery.net",
   "media-src 'self' https:",
   "worker-src 'self' blob:",
   "base-uri 'self'",
