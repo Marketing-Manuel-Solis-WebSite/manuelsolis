@@ -35,7 +35,7 @@ const ALL_POSTS = [
     {
       id: 'habeas_corpus_detenido_ice_sin_fianza',
       slug: 'habeas-corpus-detenido-ice-sin-fianza',
-      newsletterAt: '2026-10-14',
+      newsletterAt: '2026-10-21',
       title: {
         es: 'Habeas corpus: cómo sacar a un familiar de la detención de ICE cuando le niegan la fianza',
         en: 'Habeas Corpus: How to Get a Family Member Out of ICE Detention When Bond Is Denied'
@@ -47,7 +47,7 @@ const ALL_POSTS = [
       categoryId: 'defensa-deportacion',
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
-      date: '2026-10-14',
+      date: '2026-10-21',
       readTime: '7 min',
       image: '/blog/blog_39/OCT_B3.jpg',
       featured: false
@@ -56,7 +56,7 @@ const ALL_POSTS = [
     {
       id: 'cambio_de_direccion_uscis_corte_ar_11_eoir_33',
       slug: 'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
-      newsletterAt: '2026-10-20',
+      newsletterAt: '2026-10-27',
       title: {
         es: 'Me mudé y no avisé: por qué cambiar tu dirección con USCIS y la corte puede salvar tu caso (AR-11 y EOIR-33)',
         en: 'I Moved and Didn\'t Report It: Why Updating Your Address with USCIS and the Court Can Save Your Case (AR-11 and EOIR-33)'
@@ -68,7 +68,7 @@ const ALL_POSTS = [
       categoryId: 'defensa-deportacion',
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
-      date: '2026-10-20',
+      date: '2026-10-27',
       readTime: '6 min',
       image: '/blog/blog_38/OCT_B2.jpg',
       featured: false
@@ -77,7 +77,7 @@ const ALL_POSTS = [
     {
       id: 'orden_deportacion_en_ausencia_reabrir_caso',
       slug: 'orden-deportacion-en-ausencia-reabrir-caso',
-      newsletterAt: '2026-10-17',
+      newsletterAt: '2026-10-24',
       title: {
         es: 'Orden de deportación en ausencia: cómo reabrir tu caso si no llegaste a la corte',
         en: 'In-Absentia Order of Removal: How to Reopen Your Case After Missing Your Court Date'
@@ -89,7 +89,7 @@ const ALL_POSTS = [
       categoryId: 'defensa-deportacion',
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
-      date: '2026-10-17',
+      date: '2026-10-24',
       readTime: '5 min',
       image: '/blog/blog_37/OCT_B1.jpg',
       featured: false

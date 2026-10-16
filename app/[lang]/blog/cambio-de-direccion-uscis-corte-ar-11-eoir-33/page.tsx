@@ -6,7 +6,7 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 const SLUG = 'cambio-de-direccion-uscis-corte-ar-11-eoir-33';
 // Debe coincidir con `date` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
 // antes de esa fecha la página no se publica.
-const ISO_DATE = '2026-10-20';
+const ISO_DATE = '2026-10-27';
 const IMAGE = '/blog/blog_38/OCT_B2.jpg';
 
 const content: Record<'es' | 'en', BlogArticleContent> = {
@@ -16,10 +16,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'Si te mudaste, tienes 10 días para avisar a USCIS y 5 días hábiles a la corte de inmigración. Cómo hacerlo y qué pasa si no avisas.',
     title:
       'Me mudé y no avisé: por qué cambiar tu dirección con USCIS y la corte puede salvar tu caso (AR-11 y EOIR-33)',
-    displayDate: '20 Oct, 2026',
+    displayDate: '27 Oct, 2026',
     readTime: '6 min',
     categoryLabel: 'Defensa contra Deportación',
-    lastUpdated: '20 de octubre de 2026',
+    lastUpdated: '27 de octubre de 2026',
     summary: {
       title: 'Resumen inicial',
       text: 'Cambiarte de casa sin avisar es una de las formas más comunes de perder un caso de inmigración. Los avisos siguen llegando a la dirección vieja, faltas a una cita y el juez puede ordenar tu <strong>deportación en ausencia</strong>. Avisar es gratis, toma minutos y la ley lo exige.',
@@ -209,10 +209,10 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
       'If you moved, you have 10 days to notify USCIS and 5 business days to notify the immigration court. How to do it and what happens if you don’t.',
     title:
       'I Moved and Didn’t Report It: Why Updating Your Address with USCIS and the Court Can Save Your Case (AR-11 and EOIR-33)',
-    displayDate: 'Oct 20, 2026',
+    displayDate: 'Oct 27, 2026',
     readTime: '6 min',
     categoryLabel: 'Deportation Defense',
-    lastUpdated: 'October 20, 2026',
+    lastUpdated: 'October 27, 2026',
     summary: {
       title: 'Summary',
       text: 'Moving without reporting your new address is one of the most common ways to lose an immigration case. Notices keep going to the old address, you miss an appointment, and the judge can order your <strong>deportation in absentia</strong>. Reporting it is free, takes minutes, and the law requires it.',
