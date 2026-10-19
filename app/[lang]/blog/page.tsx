@@ -33,6 +33,27 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'nacido_en_mexico_padre_madre_ciudadano_ciudadania_adquirida',
+      slug: 'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
+      newsletterAt: '2026-11-04',
+      title: {
+        es: 'Naciste en México de padre o madre estadounidense: podrías ser ciudadano sin saberlo',
+        en: 'Born in Mexico to a U.S. Citizen Parent: You Could Be a Citizen Without Knowing It'
+      },
+      excerpt: {
+        es: 'Si naciste en México y tu papá o tu mamá es ciudadano estadounidense, podrías ser ciudadano desde que naciste. Requisitos por fecha de nacimiento, pruebas y trámites.',
+        en: 'If you were born in Mexico and your father or mother is a U.S. citizen, you may have been a citizen since birth. Requirements by date of birth, proof, and how to apply.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-11-04',
+      readTime: '6 min',
+      image: '/blog/blog_41/NOV_B1.jpg',
+      featured: false
+    },
+    // ---
+    {
       id: 'habeas_corpus_detenido_ice_sin_fianza',
       slug: 'habeas-corpus-detenido-ice-sin-fianza',
       newsletterAt: '2026-10-21',
