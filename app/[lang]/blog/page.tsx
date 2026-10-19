@@ -33,6 +33,27 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'manejar_sin_licencia_parada_transito_ice_287g',
+      slug: 'manejar-sin-licencia-parada-transito-ice-287g',
+      newsletterAt: '2026-11-11',
+      title: {
+        es: 'Me pararon manejando sin licencia: cómo una infracción de tránsito puede terminar en ICE',
+        en: 'Stopped for Driving Without a License: How a Traffic Ticket Can End Up with ICE'
+      },
+      excerpt: {
+        es: 'Una parada de tránsito puede terminar en ICE, sobre todo en Texas con la ley SB 8 y los acuerdos 287(g). Cómo pasa, qué derechos tienes y cómo prepararte.',
+        en: 'A traffic stop can end up with ICE, especially in Texas under SB 8 and 287(g) agreements. How it happens, what rights you have, and how to prepare.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-11-11',
+      readTime: '5 min',
+      image: '/blog/blog_42/NOV_B2.jpg',
+      featured: false
+    },
+    // ---
+    {
       id: 'nacido_en_mexico_padre_madre_ciudadano_ciudadania_adquirida',
       slug: 'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
       newsletterAt: '2026-11-04',

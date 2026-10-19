@@ -20,6 +20,7 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'manejar-sin-licencia-parada-transito-ice-287g',
     'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
     'habeas-corpus-detenido-ice-sin-fianza',
     'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
@@ -124,6 +125,7 @@ const clusters: Record<string, string[]> = {
     'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
   ],
   deportation: [
+    'manejar-sin-licencia-parada-transito-ice-287g',
     'habeas-corpus-detenido-ice-sin-fianza',
     'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
     'orden-deportacion-en-ausencia-reabrir-caso',
