@@ -21,9 +21,9 @@ const officeData: OfficeData = {
   image: '/offices/Denver.png',
   
   // --- GERENCIA ---
-  managers: [
-    { name: 'Nombre Gerente', role: { es: 'Gerente de Oficina', en: 'Office Manager' } },
-  ],
+  // Vacío hasta tener el nombre real del gerente: con la lista vacía,
+  // OfficePageView no pinta la sección (nunca un nombre de relleno).
+  managers: [],
   // --- ABOGADOS (ACTUALIZADO SEGÚN TU LISTA) ---
   attorneys: [
     { 

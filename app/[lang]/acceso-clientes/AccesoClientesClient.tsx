@@ -25,7 +25,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import BunnyVideo from '../../components/BunnyVideo';
 import { useLanguage } from '../../context/LanguageContext';
+import { PORTAL_TUTORIAL_VIDEO } from '../../lib/bunnyStream';
 
 const PORTAL_URL = 'https://client.solislooms.com';
 
@@ -40,6 +42,14 @@ const ui = {
   badge: { es: 'Portal Seguro de Clientes', en: 'Secure Client Portal' },
   heroTitle1: { es: 'Obtenga avances sobre su caso', en: 'Get updates on your case' },
   heroTitle2: { es: 'en tan solo un clic.', en: 'in just one click.' },
+  // `tutorialTitle` es también el `name` del VideoObject (app/lib/videoSchema.ts):
+  // si cambia aquí, cambiarlo allí.
+  tutorialTitle: { es: 'Tutorial del Portal de Clientes | Manuel Solís', en: 'Client Portal Tutorial | Manuel Solís' },
+  tutorialAlt: {
+    es: 'Video tutorial: cómo usar el portal de clientes de Law Offices of Manuel Solís',
+    en: 'Video tutorial: how to use the Law Offices of Manuel Solís client portal',
+  },
+  tutorialPlay: { es: 'Reproducir el video tutorial del portal de clientes', en: 'Play the client portal video tutorial' },
   heroDescription: {
     es: 'Bienvenido al nuevo portal de clientes de Law Offices of Manuel Solís. Aquí podrá dar seguimiento a su caso y mantenerse informado de cada avance — desde cualquier lugar y en cualquier momento.',
     en: 'Welcome to the new client portal of the Law Offices of Manuel Solís. Here you can track your case and stay informed of every update — from anywhere, at any time.',
@@ -336,6 +346,25 @@ export default function AccesoClientesClient() {
                 {gT(ui.heroTitle2)}
               </m.span>
             </m.h1>
+
+            {/* Video tutorial. Entra solo con desplazamiento, sin fundido: la
+                portada es el elemento LCP del hero y partir de opacity 0
+                retrasaría la métrica hasta el final de la animación. */}
+            <m.div
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full max-w-2xl mx-auto mb-10"
+            >
+              <BunnyVideo
+                video={PORTAL_TUTORIAL_VIDEO}
+                poster="/videos/tutorial-portal-clientes.jpg"
+                title={gT(ui.tutorialTitle)}
+                alt={gT(ui.tutorialAlt)}
+                playLabel={gT(ui.tutorialPlay)}
+                priority
+              />
+            </m.div>
 
             {/* Decorative line */}
             <m.div
