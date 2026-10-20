@@ -18,6 +18,12 @@ const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 // AMBOS datasets. El espejo server-side hace lo mismo (ver metaCapi.ts).
 // Al terminar la transición se elimina la env var y el init extra muere solo.
 const META_PIXEL_ID_2 = process.env.NEXT_PUBLIC_META_PIXEL_ID_2;
+// Pixel adicional pedido por Marketing (2026-10-20). Solo navegador: los
+// fbq('track') sin ID llegan a todos los pixels inicializados, así que recibe
+// PageView y los eventos de conversión igual que los otros dos.
+const META_PIXEL_ID_3 = /^\d+$/.test(process.env.NEXT_PUBLIC_META_PIXEL_ID_3 ?? '')
+  ? process.env.NEXT_PUBLIC_META_PIXEL_ID_3
+  : undefined;
 const TIKTOK_PIXEL_ID = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID;
 
 /**
@@ -214,6 +220,7 @@ export function TrackingSurfaces() {
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '${META_PIXEL_ID}');
               ${META_PIXEL_ID_2 ? `fbq('init', '${META_PIXEL_ID_2}');` : ''}
+              ${META_PIXEL_ID_3 ? `fbq('init', '${META_PIXEL_ID_3}');` : ''}
               window.dispatchEvent(new Event('msl:fbq-ready'));
             `,
           }}

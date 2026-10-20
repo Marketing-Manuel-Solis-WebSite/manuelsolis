@@ -35,6 +35,10 @@ export const dynamicParams = false;
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 // Dataset nuevo (transición dual 2026-08-07) — ver PageViewTracker.tsx.
 const META_PIXEL_ID_2 = process.env.NEXT_PUBLIC_META_PIXEL_ID_2;
+// Pixel adicional (2026-10-20) — ver PageViewTracker.tsx.
+const META_PIXEL_ID_3 = /^\d+$/.test(process.env.NEXT_PUBLIC_META_PIXEL_ID_3 ?? '')
+  ? process.env.NEXT_PUBLIC_META_PIXEL_ID_3
+  : undefined;
 
 // Sede principal, leída de la fuente única de NAP para no crear otra copia (hay
 // un test que compara las fuentes entre sí: __tests__/napConsistency.test.ts).
@@ -455,6 +459,16 @@ export default async function LangLayout({ children, params }: Props) {
             width="1"
             style={{ display: 'none' }}
             src={`https://www.facebook.com/tr?id=${META_PIXEL_ID_2}&ev=PageView&noscript=1`}
+            alt=""
+            aria-hidden="true"
+          />
+        )}
+        {META_PIXEL_ID_3 && (
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID_3}&ev=PageView&noscript=1`}
             alt=""
             aria-hidden="true"
           />
