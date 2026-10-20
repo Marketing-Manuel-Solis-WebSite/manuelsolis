@@ -20,6 +20,7 @@ export interface RelatedArticle {
 // Maps attorney IDs to blog post slugs they authored
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
+    'entre-con-visa-me-quede-matrimonio-ciudadano-ajuste',
     'manejar-sin-licencia-parada-transito-ice-287g',
     'ciudadania-derivada-hijos-n-600',
     'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
@@ -148,6 +149,7 @@ const clusters: Record<string, string[]> = {
     'daca-2026-estado-legal-tribunales',
   ],
   process: [
+    'entre-con-visa-me-quede-matrimonio-ciudadano-ajuste',
     'ciudadania-derivada-hijos-n-600',
     'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
     'impuesto-1-por-ciento-remesas-2026-como-evitarlo',

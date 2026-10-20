@@ -33,6 +33,27 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'entre_con_visa_me_quede_matrimonio_ciudadano_ajuste',
+      slug: 'entre-con-visa-me-quede-matrimonio-ciudadano-ajuste',
+      newsletterAt: '2026-11-25',
+      title: {
+        es: 'Entré con visa y me quedé: cómo arreglar papeles casándote con un ciudadano',
+        en: 'I Entered on a Visa and Stayed: How to Get a Green Card by Marrying a U.S. Citizen'
+      },
+      excerpt: {
+        es: 'Si entraste con visa o parole y te casaste con un ciudadano, podrías arreglar sin salir del país aunque tu visa esté vencida. Requisitos, riesgos y pasos en 2026.',
+        en: 'If you entered on a visa or parole and married a U.S. citizen, you may be able to get a green card without leaving, even if your visa expired. Requirements, risks, and steps.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-11-25',
+      readTime: '8 min',
+      image: '/blog/blog_44/NOV_B4.jpg',
+      featured: false
+    },
+    // ---
+    {
       id: 'ciudadania_derivada_hijos_n_600',
       slug: 'ciudadania-derivada-hijos-n-600',
       newsletterAt: '2026-11-11',
