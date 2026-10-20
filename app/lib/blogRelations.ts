@@ -21,6 +21,7 @@ export interface RelatedArticle {
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
     'manejar-sin-licencia-parada-transito-ice-287g',
+    'ciudadania-derivada-hijos-n-600',
     'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
     'habeas-corpus-detenido-ice-sin-fianza',
     'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
@@ -147,6 +148,7 @@ const clusters: Record<string, string[]> = {
     'daca-2026-estado-legal-tribunales',
   ],
   process: [
+    'ciudadania-derivada-hijos-n-600',
     'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
     'impuesto-1-por-ciento-remesas-2026-como-evitarlo',
     'cuanto-cuesta-arreglar-papeles-tarifas-uscis-2026',

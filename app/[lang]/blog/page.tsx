@@ -33,6 +33,27 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'ciudadania_derivada_hijos_n_600',
+      slug: 'ciudadania-derivada-hijos-n-600',
+      newsletterAt: '2026-11-11',
+      title: {
+        es: 'Me hice ciudadano: ¿mis hijos también? La ciudadanía derivada y el formulario N-600',
+        en: 'I Became a Citizen: Are My Children Citizens Too? Derived Citizenship and Form N-600'
+      },
+      excerpt: {
+        es: 'Si te hiciste ciudadano, tus hijos con green card y menores de 18 pueden ser ciudadanos en automático. Requisitos, cómo probarlo y qué pasa si ya cumplieron 18.',
+        en: 'If you became a citizen, your children with a green card who are under 18 may be citizens automatically. Requirements, how to prove it, and what happens if they turned 18.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-11-11',
+      readTime: '6 min',
+      image: '/blog/blog_42/NOV_B2.jpg',
+      featured: false
+    },
+    // ---
+    {
       id: 'manejar_sin_licencia_parada_transito_ice_287g',
       slug: 'manejar-sin-licencia-parada-transito-ice-287g',
       newsletterAt: '2026-11-18',
