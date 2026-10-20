@@ -6,8 +6,8 @@ import { ARTICLE_UI, type BlogArticleContent } from '../../../components/blogs/a
 const SLUG = 'manejar-sin-licencia-parada-transito-ice-287g';
 // Debe coincidir con `date` del post en ALL_POSTS (app/[lang]/blog/page.tsx):
 // antes de esa fecha la página no se publica.
-const ISO_DATE = '2026-11-11';
-const IMAGE = '/blog/blog_42/NOV_B2.jpg';
+const ISO_DATE = '2026-11-18';
+const IMAGE = '/blog/blog_43/NOV_B3.jpg';
 
 const LINK = 'class="text-[#B2904D] underline hover:text-white"';
 
@@ -17,7 +17,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     metaDesc:
       'Una parada de tránsito puede terminar en ICE, sobre todo en Texas con la ley SB 8 y los acuerdos 287(g). Cómo pasa, qué derechos tienes y cómo prepararte.',
     title: 'Me pararon manejando sin licencia: cómo una infracción de tránsito puede terminar en ICE',
-    displayDate: '11 Nov, 2026',
+    displayDate: '18 Nov, 2026',
     readTime: '5 min',
     categoryLabel: 'Defensa contra Deportación',
     summary: {
@@ -206,7 +206,7 @@ const content: Record<'es' | 'en', BlogArticleContent> = {
     metaDesc:
       'A traffic stop can end up with ICE, especially in Texas under SB 8 and 287(g) agreements. How it happens, what rights you have, and how to prepare.',
     title: 'Stopped for Driving Without a License: How a Traffic Ticket Can End Up with ICE',
-    displayDate: 'Nov 11, 2026',
+    displayDate: 'Nov 18, 2026',
     readTime: '5 min',
     categoryLabel: 'Deportation Defense',
     summary: {

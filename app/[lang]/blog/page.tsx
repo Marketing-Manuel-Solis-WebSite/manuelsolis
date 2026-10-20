@@ -35,7 +35,7 @@ const ALL_POSTS = [
     {
       id: 'manejar_sin_licencia_parada_transito_ice_287g',
       slug: 'manejar-sin-licencia-parada-transito-ice-287g',
-      newsletterAt: '2026-11-11',
+      newsletterAt: '2026-11-18',
       title: {
         es: 'Me pararon manejando sin licencia: cómo una infracción de tránsito puede terminar en ICE',
         en: 'Stopped for Driving Without a License: How a Traffic Ticket Can End Up with ICE'
@@ -47,9 +47,9 @@ const ALL_POSTS = [
       categoryId: 'defensa-deportacion',
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
-      date: '2026-11-11',
+      date: '2026-11-18',
       readTime: '5 min',
-      image: '/blog/blog_42/NOV_B2.jpg',
+      image: '/blog/blog_43/NOV_B3.jpg',
       featured: false
     },
     // ---
