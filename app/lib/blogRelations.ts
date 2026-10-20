@@ -21,7 +21,7 @@ export interface RelatedArticle {
 export const authorArticleMap: Record<string, string[]> = {
   'manuel-solis': [
     'entre-con-visa-me-quede-matrimonio-ciudadano-ajuste',
-    'manejar-sin-licencia-parada-transito-ice-287g',
+    'manejar-sin-licencia-california-ice-sb54-ab60',
     'ciudadania-derivada-hijos-n-600',
     'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
     'habeas-corpus-detenido-ice-sin-fianza',
@@ -127,7 +127,7 @@ const clusters: Record<string, string[]> = {
     'visa-u-y-vawa-incluir-hijos-y-nuevos-esposos-derivados',
   ],
   deportation: [
-    'manejar-sin-licencia-parada-transito-ice-287g',
+    'manejar-sin-licencia-california-ice-sb54-ab60',
     'habeas-corpus-detenido-ice-sin-fianza',
     'cambio-de-direccion-uscis-corte-ar-11-eoir-33',
     'orden-deportacion-en-ausencia-reabrir-caso',

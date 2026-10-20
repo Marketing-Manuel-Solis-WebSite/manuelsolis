@@ -75,22 +75,22 @@ const ALL_POSTS = [
     },
     // ---
     {
-      id: 'manejar_sin_licencia_parada_transito_ice_287g',
-      slug: 'manejar-sin-licencia-parada-transito-ice-287g',
+      id: 'manejar_sin_licencia_california_ice_sb54_ab60',
+      slug: 'manejar-sin-licencia-california-ice-sb54-ab60',
       newsletterAt: '2026-11-18',
       title: {
-        es: 'Me pararon manejando sin licencia: cómo una infracción de tránsito puede terminar en ICE',
-        en: 'Stopped for Driving Without a License: How a Traffic Ticket Can End Up with ICE'
+        es: 'Me pararon manejando sin licencia en California: ¿puede terminar en ICE?',
+        en: 'Stopped for Driving Without a License in California: Can It End Up with ICE?'
       },
       excerpt: {
-        es: 'Una parada de tránsito puede terminar en ICE, sobre todo en Texas con la ley SB 8 y los acuerdos 287(g). Cómo pasa, qué derechos tienes y cómo prepararte.',
-        en: 'A traffic stop can end up with ICE, especially in Texas under SB 8 and 287(g) agreements. How it happens, what rights you have, and how to prepare.'
+        es: 'En California la policía local no colabora con ICE, pero una parada de tránsito puede terminar en ICE. Qué protege la SB 54, la licencia AB 60 y qué cambió en 2026.',
+        en: 'In California, local police do not work with ICE, but a traffic stop can still end with ICE. What SB 54 and the AB 60 license protect, and what changed in 2026.'
       },
       categoryId: 'defensa-deportacion',
       category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
       author: 'Manuel Solís',
       date: '2026-11-18',
-      readTime: '5 min',
+      readTime: '10 min',
       image: '/blog/blog_43/NOV_B3.jpg',
       featured: false
     },
