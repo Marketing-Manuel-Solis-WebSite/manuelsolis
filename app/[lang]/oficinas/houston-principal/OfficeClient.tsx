@@ -48,12 +48,6 @@ const officeData: OfficeData = {
       image: '/LogoInformacion.png', // Placeholder
       role: { es: 'Abogada', en: 'Attorney' },
       quote: { es: "Defensa con integridad.", en: "Defense with integrity." }
-    },
-    {
-      name: 'Timothe Garille',
-      image: '/LogoInformacion.png', // Placeholder
-      role: { es: 'Abogado', en: 'Attorney' },
-      quote: { es: "Compromiso con cada caso.", en: "Commitment to every case." }
     }
   ],
 
