@@ -54,7 +54,7 @@ const blogContent = {
       ctaButton: 'Consultar con un Abogado Ahora'
     },
     title: 'TPS 2026: ¿Tu país sigue protegido o fue terminado? Guía país por país',
-    lastUpdated: '14 de octubre de 2026',
+    lastUpdated: '23 de octubre de 2026',
     summary: {
       title: 'Resumen inicial',
       text: 'El Estatus de Protección Temporal (<strong>TPS</strong>) ha sido un salvavidas para cientos de miles de personas en Estados Unidos. Pero en 2026, el panorama está cambiando rápidamente: algunos países mantienen su designación, otros fueron terminados y algunos están atrapados en litigio federal. En este artículo explicamos <strong>país por país</strong> cuál es el estatus actual, qué hacer con tu permiso de trabajo, cómo renovar, y qué opciones existen si ya perdiste la protección.'
@@ -95,9 +95,9 @@ const blogContent = {
           },
           {
             name: 'Ucrania',
-            status: 'Vence el 19 oct 2026',
+            status: 'Anuncio pendiente',
             statusColor: 'text-amber-400',
-            detail: 'La designación de Ucrania fue extendida hasta el <strong>19 de octubre de 2026</strong> (90 FR 5936). A la fecha de esta actualización no se ha publicado en el Federal Register un aviso de extensión ni de terminación.'
+            detail: 'La designación de Ucrania fue extendida hasta el <strong>19 de octubre de 2026</strong> (90 FR 5936). USCIS indica que hará un anuncio sobre el TPS de Ucrania en su momento y que, mientras tanto, los beneficiarios <strong>mantienen la protección, incluido el permiso de trabajo</strong>. A la fecha de esta actualización no se ha publicado en el Federal Register un aviso de extensión ni de terminación.'
           },
           {
             name: 'Haití',
@@ -273,7 +273,7 @@ const blogContent = {
       ctaButton: 'Consult with an Attorney Now'
     },
     title: 'TPS 2026: Is Your Country Still Protected or Was It Terminated? A Country-by-Country Guide',
-    lastUpdated: 'October 14, 2026',
+    lastUpdated: 'October 23, 2026',
     summary: {
       title: 'Initial Summary',
       text: 'Temporary Protected Status (<strong>TPS</strong>) has been a lifeline for hundreds of thousands of people in the United States. But in 2026, the landscape is changing rapidly: some countries maintain their designation, others were terminated, and some are caught in federal litigation. In this article, we explain <strong>country by country</strong> the current status, what to do with your work permit, how to renew, and what options exist if you have already lost protection.'
@@ -314,9 +314,9 @@ const blogContent = {
           },
           {
             name: 'Ukraine',
-            status: 'Expires Oct 19, 2026',
+            status: 'Announcement pending',
             statusColor: 'text-amber-400',
-            detail: 'Ukraine\'s designation was extended until <strong>October 19, 2026</strong> (90 FR 5936). As of this update, no extension or termination notice has been published in the Federal Register.'
+            detail: 'Ukraine\'s designation was extended until <strong>October 19, 2026</strong> (90 FR 5936). USCIS states that an announcement on Ukraine\'s TPS will be made at the appropriate time and that, in the meantime, beneficiaries <strong>keep their protection, including work authorization</strong>. As of this update, no extension or termination notice has been published in the Federal Register.'
           },
           {
             name: 'Haiti',
@@ -532,7 +532,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
         description={blogContent[lang as 'es' | 'en']?.metaDesc || blogContent.es.metaDesc}
         slug="tps-2026-paises-elegibles-renovacion"
         date="2026-04-10"
-        dateModified="2026-10-14"
+        dateModified="2026-10-23"
         image={IMAGES.article}
         lang={lang as string}
         readTime="12"
