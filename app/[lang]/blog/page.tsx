@@ -33,6 +33,90 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.jpg`;
  */
 const ALL_POSTS = [
     {
+      id: 'entre_con_visa_me_quede_matrimonio_ciudadano_ajuste',
+      slug: 'entre-con-visa-me-quede-matrimonio-ciudadano-ajuste',
+      newsletterAt: '2026-11-25',
+      title: {
+        es: 'Entré con visa y me quedé: cómo arreglar papeles casándote con un ciudadano',
+        en: 'I Entered on a Visa and Stayed: How to Get a Green Card by Marrying a U.S. Citizen'
+      },
+      excerpt: {
+        es: 'Si entraste con visa o parole y te casaste con un ciudadano, podrías arreglar sin salir del país aunque tu visa esté vencida. Requisitos, riesgos y pasos en 2026.',
+        en: 'If you entered on a visa or parole and married a U.S. citizen, you may be able to get a green card without leaving, even if your visa expired. Requirements, risks, and steps.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-11-25',
+      readTime: '8 min',
+      image: '/blog/blog_44/NOV_B4.jpg',
+      featured: false
+    },
+    // ---
+    {
+      id: 'ciudadania_derivada_hijos_n_600',
+      slug: 'ciudadania-derivada-hijos-n-600',
+      newsletterAt: '2026-11-11',
+      title: {
+        es: 'Me hice ciudadano: ¿mis hijos también? La ciudadanía derivada y el formulario N-600',
+        en: 'I Became a Citizen: Are My Children Citizens Too? Derived Citizenship and Form N-600'
+      },
+      excerpt: {
+        es: 'Si te hiciste ciudadano, tus hijos con green card y menores de 18 pueden ser ciudadanos en automático. Requisitos, cómo probarlo y qué pasa si ya cumplieron 18.',
+        en: 'If you became a citizen, your children with a green card who are under 18 may be citizens automatically. Requirements, how to prove it, and what happens if they turned 18.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-11-11',
+      readTime: '6 min',
+      image: '/blog/blog_42/NOV_B2.jpg',
+      featured: false
+    },
+    // ---
+    {
+      id: 'manejar_sin_licencia_california_ice_sb54_ab60',
+      slug: 'manejar-sin-licencia-california-ice-sb54-ab60',
+      newsletterAt: '2026-11-18',
+      title: {
+        es: 'Me pararon manejando sin licencia en California: ¿puede terminar en ICE?',
+        en: 'Stopped for Driving Without a License in California: Can It End Up with ICE?'
+      },
+      excerpt: {
+        es: 'En California la policía local no colabora con ICE, pero una parada de tránsito puede terminar en ICE. Qué protege la SB 54, la licencia AB 60 y qué cambió en 2026.',
+        en: 'In California, local police do not work with ICE, but a traffic stop can still end with ICE. What SB 54 and the AB 60 license protect, and what changed in 2026.'
+      },
+      categoryId: 'defensa-deportacion',
+      category: { es: 'Defensa contra Deportación', en: 'Deportation Defense' },
+      author: 'Manuel Solís',
+      date: '2026-11-18',
+      readTime: '10 min',
+      image: '/blog/blog_43/NOV_B3.jpg',
+      featured: false
+    },
+    // ---
+    {
+      id: 'nacido_en_mexico_padre_madre_ciudadano_ciudadania_adquirida',
+      slug: 'nacido-en-mexico-padre-madre-ciudadano-ciudadania-adquirida',
+      newsletterAt: '2026-11-04',
+      title: {
+        es: 'Naciste en México de padre o madre estadounidense: podrías ser ciudadano sin saberlo',
+        en: 'Born in Mexico to a U.S. Citizen Parent: You Could Be a Citizen Without Knowing It'
+      },
+      excerpt: {
+        es: 'Si naciste en México y tu papá o tu mamá es ciudadano estadounidense, podrías ser ciudadano desde que naciste. Requisitos por fecha de nacimiento, pruebas y trámites.',
+        en: 'If you were born in Mexico and your father or mother is a U.S. citizen, you may have been a citizen since birth. Requirements by date of birth, proof, and how to apply.'
+      },
+      categoryId: 'procesos-migratorios',
+      category: { es: 'Procesos Migratorios', en: 'Immigration Process' },
+      author: 'Manuel Solís',
+      date: '2026-11-04',
+      readTime: '6 min',
+      image: '/blog/blog_41/NOV_B1.jpg',
+      featured: false
+    },
+    // ---
+    {
       id: 'habeas_corpus_detenido_ice_sin_fianza',
       slug: 'habeas-corpus-detenido-ice-sin-fianza',
       newsletterAt: '2026-10-21',
