@@ -26,9 +26,9 @@ const officeData: OfficeData = {
   // --- ABOGADOS ---
   attorneys: [
     { 
-      name: 'Diana Maria Goicoblechman', 
+      name: 'Diana Maria Goyco Blechman', 
       role: { es: 'Abogada', en: 'Attorney' }, 
-      image: '/LogoInformacion.png', // Placeholder por solicitud
+      image: '/diana-maria-goyco.jpg',
       quote: { es: "Compromiso y excelencia legal.", en: "Commitment and legal excellence." }
     }
   ],
