@@ -13,7 +13,8 @@
     "new-blog": "node scripts/new-blog.mjs",
     "faq:review": "node scripts/faq-review.mjs",
     "gbp:check": "node scripts/check-fichas-gbp.mjs",
-    "verify:prod": "node scripts/verify-prod.mjs"
+    "verify:prod": "node scripts/verify-prod.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
