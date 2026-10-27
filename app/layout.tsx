@@ -86,8 +86,14 @@ export default function RootLayout({
   // (LangSetter en [lang]/layout.tsx cubre las navegaciones de cliente).
   // Content-Language (proxy.ts) + hreflang por página siguen siendo las
   // señales de idioma primarias para SEO. Ver el bloque de arriba.
+  //
+  // data-scroll-behavior="smooth": desde Next 16 el router solo desactiva el
+  // `scroll-behavior: smooth` de globals.css durante una navegación si <html>
+  // lleva este atributo. Sin él, el "volver arriba" de la navegación se anima
+  // y el main.focus() que Next hace justo después lo cancela: la página nueva
+  // se quedaba a media altura o en el footer al llegar desde abajo.
   return (
-    <html lang="es" className={outfit.variable}>
+    <html lang="es" className={outfit.variable} data-scroll-behavior="smooth">
       <body className={outfit.className}>
         <script
           dangerouslySetInnerHTML={{
