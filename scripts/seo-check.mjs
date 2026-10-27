@@ -48,9 +48,29 @@ const first = (re, src) => {
   return m ? m[1].trim() : null
 }
 
-const pages = files.map((file) => {
+// Rutas que el build prerenderizó como 404 (p. ej. posts programados con fecha
+// futura, que llaman a notFound()): su HTML es la página de no encontrado, no
+// una URL indexable. Se detectan por el status del .meta de Next o, si falta,
+// por el marcador de notFound() que Next deja en el HTML. No basta un noindex:
+// una página real con noindex intencionado debe seguir auditándose.
+const isNotFound = (file, src) => {
+  const meta = file.replace(/\.html$/, '.meta')
+  if (existsSync(meta)) {
+    try {
+      if (JSON.parse(readFileSync(meta, 'utf8')).status === 404) return true
+    } catch {}
+  }
+  return src.includes('NEXT_HTTP_ERROR_FALLBACK;404')
+}
+
+const notFound = []
+const pages = files.flatMap((file) => {
   const src = readFileSync(file, 'utf8')
   const url = '/' + path.relative(APP_DIR, file).split(path.sep).join('/').replace(/\.html$/, '')
+  if (!INTERNAL.test(url) && isNotFound(file, src)) {
+    notFound.push(url)
+    return []
+  }
   return {
     url,
     internal: INTERNAL.test(url),
@@ -121,6 +141,7 @@ for (const p of publicPages) {
 }
 
 console.log(`Páginas analizadas: ${pages.length} (${publicPages.length} públicas, ${pages.length - publicPages.length} internas de Next)`)
+console.log(`Omitidas por 404 en el build: ${notFound.length}${notFound.length ? ` (${notFound.join(', ')})` : ''}`)
 
 if (warnings.length) {
   console.log(`\n⚠ ${warnings.length} avisos de longitud:`)
