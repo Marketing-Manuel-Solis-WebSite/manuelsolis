@@ -29,18 +29,14 @@ import {
   buildUnsubscribeApiUrl,
   buildUnsubscribePageUrl,
 } from '../../../lib/newsletter/unsubscribeToken';
+import { getFromAddress } from '../../../lib/newsletter/fromAddress';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
 export const dynamic = 'force-dynamic';
 
-const DEFAULT_FROM_ADDRESS = 'Manuel Solis Law <newsletter@manuelsolis.com>';
 const DEFAULT_MAX_PER_RUN = 1000;
 const DEFAULT_SEND_DELAY_MS = 120;
-
-function getFromAddress(): string {
-  return process.env.NEWSLETTER_FROM_ADDRESS || DEFAULT_FROM_ADDRESS;
-}
 
 let activeBlast = false;
 

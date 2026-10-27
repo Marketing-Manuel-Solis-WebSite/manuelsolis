@@ -34,7 +34,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Cómo Encontrar a un Detenido por ICE: Guía Paso a Paso',
+    metaTitle: 'Localizador de ICE: encuentra a un detenido',
     metaDesc: 'Aprende a localizar a tu familiar detenido por ICE: cómo usar el localizador oficial, qué es el número A y qué hacer en las primeras 48 horas. Guía en español.',
     ui: {
       back: 'Volver al blog',
@@ -203,7 +203,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'How to Find Someone Detained by ICE: Step-by-Step Guide',
+    metaTitle: 'ICE Locator: How to Find Someone Detained',
     metaDesc: 'Learn how to locate a loved one detained by ICE: how to use the official detainee locator, what the A-number is, and what to do in the first 48 hours.',
     ui: {
       back: 'Back to blog',

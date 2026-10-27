@@ -7,6 +7,11 @@ import {
   buildUnsubscribeApiUrl,
   buildUnsubscribePageUrl,
 } from '../../../lib/newsletter/unsubscribeToken';
+import { getFromAddress } from '../../../lib/newsletter/fromAddress';
+import {
+  parseLanguage,
+  sanitizeFirstName,
+} from '../../../lib/newsletter/subscribeInput';
 
 function getResend() {
   const key = process.env.RESEND_API_KEY;
@@ -70,11 +75,28 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const { email, firstName, language = 'es' } = await request.json();
+    const body = await request.json();
+    const { email } = body;
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
         { success: false, error: 'Invalid email address.' },
+        { status: 400 },
+      );
+    }
+
+    const firstName = sanitizeFirstName(body.firstName);
+    if (firstName === null) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid first name.' },
+        { status: 400 },
+      );
+    }
+
+    const language = parseLanguage(body.language);
+    if (language === null) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid language.' },
         { status: 400 },
       );
     }
@@ -93,7 +115,7 @@ export async function POST(request: NextRequest) {
     // Send welcome email. Lleva los mismos encabezados de baja que el blast:
     // Gmail y Yahoo los exigen en todo correo masivo, incluido el de alta.
     await resend.emails.send({
-      from: 'Manuel Solis Law <newsletter@manuelsolis.com>',
+      from: getFromAddress(),
       to: email,
       subject:
         language === 'es'

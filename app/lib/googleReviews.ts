@@ -8,9 +8,11 @@ import { unstable_cache } from 'next/cache';
  * Architecture:
  *   - getPlaceDataRaw(): pure async, hits Google directly. Used in
  *     unit tests with fetch mocked.
- *   - getPlaceData():    cached wrapper (unstable_cache, 24h TTL,
- *     tag 'google-reviews' for manual revalidation). Used in
- *     production by Server Components and the schema builders.
+ *   - getPlaceData():    cached wrapper (unstable_cache, 24h TTL for
+ *     valid results only, tag 'google-reviews' for manual
+ *     revalidation; failures are not cached, only remembered 5 min
+ *     in memory). Used in production by Server Components and the
+ *     schema builders.
  *   - getAggregatedRating(): aggregates multiple Place IDs into a
  *     weighted average. Useful for org-wide schema rollups.
  *
@@ -175,17 +177,60 @@ export async function getPlaceDataRaw(
 }
 
 /**
- * Cached wrapper. unstable_cache keyed by placeId, revalidated every
- * 24 hours. Callers needing manual invalidation can use:
+ * Tiempo que se recuerda un fallo antes de volver a preguntar a Google.
+ * En memoria del proceso: evita martillar la API en cada render mientras la
+ * clave esté muerta, sin congelar el null 24h en la caché de datos.
+ */
+const FAILURE_TTL_MS = 5 * 60 * 1000;
+const failedAt = new Map<string, number>();
+
+class PlaceDataUnavailable extends Error {}
+
+/**
+ * Solo los resultados válidos entran en la caché de 24h: si la petición falla
+ * se lanza dentro de unstable_cache, que no guarda los errores. Antes se
+ * cacheaba el null 24h, así que un 403 pasajero apagaba el rating un día
+ * entero. La key cambió ('-v2') para descartar los null ya guardados.
+ */
+const getPlaceDataCached = unstable_cache(
+  async (placeId: string): Promise<GooglePlaceData> => {
+    const data = await getPlaceDataRaw(placeId);
+    if (!data) throw new PlaceDataUnavailable(placeId);
+    return data;
+  },
+  ['google-place-data-v2'],
+  { revalidate: 86400, tags: ['google-reviews'] },
+);
+
+/**
+ * Cached wrapper. Válidos: unstable_cache keyed by placeId, 24h. Fallos:
+ * null sin cachear, recordado FAILURE_TTL_MS en memoria. Callers needing
+ * manual invalidation can use:
  *   import { revalidateTag } from 'next/cache';
  *   revalidateTag('google-reviews');
  */
-export const getPlaceData = unstable_cache(
-  async (placeId: string): Promise<GooglePlaceData | null> =>
-    getPlaceDataRaw(placeId),
-  ['google-place-data'],
-  { revalidate: 86400, tags: ['google-reviews'] },
-);
+export async function getPlaceData(
+  placeId: string,
+): Promise<GooglePlaceData | null> {
+  const lastFailure = failedAt.get(placeId);
+  if (lastFailure !== undefined && Date.now() - lastFailure < FAILURE_TTL_MS) {
+    return null;
+  }
+  try {
+    const data = await getPlaceDataCached(placeId);
+    failedAt.delete(placeId);
+    return data;
+  } catch (err) {
+    if (!(err instanceof PlaceDataUnavailable)) {
+      logEvent('google_reviews_cache_error', {
+        placeId,
+        error: err instanceof Error ? err.message : String(err),
+      });
+    }
+    failedAt.set(placeId, Date.now());
+    return null;
+  }
+}
 
 /**
  * Compute a weighted average rating across multiple Place IDs.

@@ -35,7 +35,7 @@ const IMAGES = {
 
 const blogContent = {
   es: {
-    metaTitle: 'Formulario G-28: cómo cambiar de abogado sin afectar tu caso',
+    metaTitle: 'Formulario G-28: cómo cambiar de abogado',
     metaDesc: '¿Quieres cambiar de abogado de inmigración? Aprende cómo funciona el Formulario G-28 y cómo notificar a USCIS sin poner en riesgo tu proceso migratorio.',
     ui: {
       back: 'Volver al blog',
@@ -140,7 +140,7 @@ const blogContent = {
     }
   },
   en: {
-    metaTitle: 'Form G-28: How to Change Your Immigration Attorney Safely',
+    metaTitle: 'Form G-28: How to Change Immigration Attorneys',
     metaDesc: 'Want to change your immigration attorney? Learn how Form G-28 works and how to properly notify USCIS without putting your immigration case at risk.',
     ui: {
       back: 'Back to blog',
