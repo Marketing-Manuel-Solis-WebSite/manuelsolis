@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   experimental: {
     cpus: 4,
+    // app/global-not-found.tsx: con un root layout por locale
+    // (app/[lang]/layout.tsx) ya no hay layout común para la 404 de URLs sin
+    // ruta. Sin este flag, /_not-found sale sin CSS, sin fuente y sin lang.
+    globalNotFound: true,
   },
   images: {
     formats: ['image/avif', 'image/webp'],

@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-// not-found.tsx vive fuera del segmento [lang], así que no recibe el locale por
-// params y su HTML se prerenderiza una sola vez. El idioma se resuelve en el
-// cliente leyendo location.pathname (misma condición que el script inline del
-// root layout); el prerender queda en español, el idioma por defecto del sitio.
+// Vista compartida de la 404. La usan app/global-not-found.tsx (URL que no
+// coincide con ninguna ruta) y app/[lang]/not-found.tsx (notFound() dentro de
+// una página). Ninguno de los dos recibe el locale por props y su HTML se
+// prerenderiza una sola vez, así que el idioma del texto se resuelve en el
+// cliente leyendo location.pathname; el prerender queda en español, el idioma
+// por defecto del sitio.
 const LOCALE_TEXT = {
   es: {
     title: 'Página no encontrada',

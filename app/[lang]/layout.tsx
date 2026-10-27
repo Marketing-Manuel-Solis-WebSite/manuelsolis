@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
+import '../globals.css';
+import { outfit } from '../lib/fonts';
+import SkipLink from '../components/SkipLink';
 import { LanguageProvider } from '../context/LanguageContext';
 import FloatingCtas from '../components/FloatingCtas';
 import PageViewTracker, { TrackingSurfaces } from '../components/PageViewTracker';
@@ -17,10 +20,32 @@ type Props = {
 
 const SITE_URL = 'https://www.manuelsolis.com';
 
+// ───────────────────────────────────────────────────────────────────────────
+// ESTE ES EL ROOT LAYOUT DE /es Y /en (no hay app/layout.tsx).
+//
+// Así <html lang> sale del servidor con el locale real de la ruta. Antes había
+// un app/layout.tsx por encima de [lang] que no recibía params y servía las
+// rutas /en/* con lang="es" (WCAG 3.1.1), corregido solo en el cliente.
+//
+// Por qué así y no leyendo un header (proxy.ts manda x-locale): headers() en
+// un root layout vuelve dinámico el árbol entero y se pierde el prerender
+// estático. Aquí el locale viene de `params`, que con generateStaticParams +
+// dynamicParams = false se resuelve en build: las rutas siguen ●/ISR.
+//
+// Lo que exige tener varios root layouts (verificado contra Next 16.4):
+//   · app/global-not-found.tsx + experimental.globalNotFound en next.config:
+//     sin un layout común, /_not-found no tendría CSS, fuente ni lang;
+//   · app/[lang]/not-found.tsx para los notFound() de las páginas;
+//   · app/(root)/ con su propio layout para el redirect de "/";
+//   · navegar entre /es y /en cambia de root layout, y Next lo resuelve con
+//     una carga completa de página en vez de una navegación de cliente.
+// __tests__/htmlLang.test.ts y scripts/seo-check.mjs protegen todo esto.
+// ───────────────────────────────────────────────────────────────────────────
+
 // ISR: regenerate the [lang] subtree every 24h. It is the revalidate that
 // the pages reading live Google Places data inherit (office cards, city
 // landings, /testimonios), and it matches the 24h unstable_cache TTL in
-// lib/googleReviews.ts. Paired with the root layout avoiding headers(),
+// lib/googleReviews.ts. Paired with this root layout avoiding headers(),
 // this keeps the [lang] routes static/ISR instead of ƒ Dynamic.
 export const revalidate = 86400;
 
@@ -412,82 +437,90 @@ export default async function LangLayout({ children, params }: Props) {
   const { lang } = await params;
   const currentLang = (lang === 'es' || lang === 'en') ? (lang as Language) : 'es';
 
+  // data-scroll-behavior="smooth": desde Next 16 el router solo desactiva el
+  // `scroll-behavior: smooth` de globals.css durante una navegación si <html>
+  // lleva este atributo. Sin él, el "volver arriba" de la navegación se anima
+  // y el main.focus() que Next hace justo después lo cancela: la página nueva
+  // se quedaba a media altura o en el footer al llegar desde abajo.
   return (
-    <>
-      <LangSetter lang={currentLang} />
+    <html lang={currentLang} className={outfit.variable} data-scroll-behavior="smooth">
+      <body className={outfit.className}>
+        <SkipLink />
+        <LangSetter lang={currentLang} />
 
-      {/* Preconnect to critical third-party origins — hoisted to <head> by Next.js */}
-      {/* dns-prefetch (no preconnect): GA carga lazyOnload y YouTube solo
-          existe en el facade click-to-play de About/Testimonios — un
-          preconnect sitewide compite con la conexión del LCP. */}
-      <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-      <link rel="dns-prefetch" href="https://img.youtube.com" />
-      <link rel="dns-prefetch" href="https://connect.facebook.net" />
-      <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
+        {/* Preconnect to critical third-party origins — hoisted to <head> by Next.js */}
+        {/* dns-prefetch (no preconnect): GA carga lazyOnload y YouTube solo
+            existe en el facade click-to-play de About/Testimonios — un
+            preconnect sitewide compite con la conexión del LCP. */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://img.youtube.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://analytics.tiktok.com" />
 
-      {/* RSS Feed for newsletter (SEO + feed readers) */}
-      <link rel="alternate" type="application/rss+xml" title="Newsletter - Manuel Solis Law" href={`${SITE_URL}/rss/newsletter`} />
-      <link rel="alternate" type="application/rss+xml" title="Blog Legal - Manuel Solis Law" href={`${SITE_URL}/rss/blog`} />
+        {/* RSS Feed for newsletter (SEO + feed readers) */}
+        <link rel="alternate" type="application/rss+xml" title="Newsletter - Manuel Solis Law" href={`${SITE_URL}/rss/newsletter`} />
+        <link rel="alternate" type="application/rss+xml" title="Blog Legal - Manuel Solis Law" href={`${SITE_URL}/rss/blog`} />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
 
-      {/* GA4, Meta Pixel, TikTok, Vercel Analytics y Speed Insights. Es un
-          client component porque excluye el panel /admin por pathname. */}
-      <TrackingSurfaces />
+        {/* GA4, Meta Pixel, TikTok, Vercel Analytics y Speed Insights. Es un
+            client component porque excluye el panel /admin por pathname. */}
+        <TrackingSurfaces />
 
-      <noscript>
-        {META_PIXEL_ID && (
-          <img
-            height="1"
-            width="1"
-            style={{ display: 'none' }}
-            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
-            alt=""
-            aria-hidden="true"
-          />
-        )}
-        {META_PIXEL_ID_2 && (
-          <img
-            height="1"
-            width="1"
-            style={{ display: 'none' }}
-            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID_2}&ev=PageView&noscript=1`}
-            alt=""
-            aria-hidden="true"
-          />
-        )}
-        {META_PIXEL_ID_3 && (
-          <img
-            height="1"
-            width="1"
-            style={{ display: 'none' }}
-            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID_3}&ev=PageView&noscript=1`}
-            alt=""
-            aria-hidden="true"
-          />
-        )}
-      </noscript>
+        <noscript>
+          {META_PIXEL_ID && (
+            <img
+              height="1"
+              width="1"
+              style={{ display: 'none' }}
+              src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+              alt=""
+              aria-hidden="true"
+            />
+          )}
+          {META_PIXEL_ID_2 && (
+            <img
+              height="1"
+              width="1"
+              style={{ display: 'none' }}
+              src={`https://www.facebook.com/tr?id=${META_PIXEL_ID_2}&ev=PageView&noscript=1`}
+              alt=""
+              aria-hidden="true"
+            />
+          )}
+          {META_PIXEL_ID_3 && (
+            <img
+              height="1"
+              width="1"
+              style={{ display: 'none' }}
+              src={`https://www.facebook.com/tr?id=${META_PIXEL_ID_3}&ev=PageView&noscript=1`}
+              alt=""
+              aria-hidden="true"
+            />
+          )}
+        </noscript>
 
-      <LanguageProvider initialLanguage={currentLang}>
-        <Suspense fallback={null}>
-          <AttributionCapture />
-        </Suspense>
-        <Suspense fallback={null}>
-          <PageViewTracker />
-        </Suspense>
-        <MotionProvider>
-          {children}
-          <FloatingCtas />
-        </MotionProvider>
-      </LanguageProvider>
-    </>
+        <LanguageProvider initialLanguage={currentLang}>
+          <Suspense fallback={null}>
+            <AttributionCapture />
+          </Suspense>
+          <Suspense fallback={null}>
+            <PageViewTracker />
+          </Suspense>
+          <MotionProvider>
+            {children}
+            <FloatingCtas />
+          </MotionProvider>
+        </LanguageProvider>
+      </body>
+    </html>
   );
 }
 

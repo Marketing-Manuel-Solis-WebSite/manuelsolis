@@ -85,6 +85,7 @@ const pages = files.flatMap((file) => {
     // falsos "sin JSON-LD" en páginas que sí lo emitían.
     jsonLd: /<script[^>]*type="application\/ld\+json"[^>]*>/.test(src),
     hreflang: /<link rel="alternate" hreflang=/i.test(src),
+    htmlLang: first(/<html[^>]*\slang="([^"]*)"/, src),
   }
 })
 
@@ -134,6 +135,17 @@ const dupes = (field, label) => {
 dupes('title', 'title')
 dupes('description', 'description')
 
+// <html lang> del HTML servido = locale de la URL. Lo pinta el root layout
+// app/[lang]/layout.tsx; antes todo /en/* salía con lang="es" (ver
+// __tests__/htmlLang.test.ts).
+const wrongLang = publicPages.filter((p) => {
+  const locale = p.url.split('/')[1]
+  return (locale === 'es' || locale === 'en') && p.htmlLang !== locale
+})
+if (wrongLang.length) {
+  errors.push(`${wrongLang.length} páginas con <html lang> distinto del locale de la URL: ${wrongLang.slice(0, 5).map((p) => `${p.url} (lang="${p.htmlLang}")`).join(', ')}${wrongLang.length > 5 ? '…' : ''}`)
+}
+
 for (const p of publicPages) {
   if (p.title && p.title.length > TITLE_MAX) warnings.push(`title de ${p.url} mide ${p.title.length} (Google trunca sobre ${TITLE_MAX})`)
   if (p.description && p.description.length > DESC_MAX) warnings.push(`description de ${p.url} mide ${p.description.length} (se trunca sobre ${DESC_MAX})`)
@@ -155,4 +167,4 @@ if (errors.length) {
   process.exit(1)
 }
 
-console.log(`\n✓ Sin fallos: las ${publicPages.length} páginas públicas tienen title, description, canonical, hreflang, JSON-LD y bloque social completos, y ninguna repite title ni description.`)
+console.log(`\n✓ Sin fallos: las ${publicPages.length} páginas públicas tienen title, description, canonical, hreflang, JSON-LD, bloque social completo y <html lang> de su locale, y ninguna repite title ni description.`)

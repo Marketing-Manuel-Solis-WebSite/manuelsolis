@@ -15,13 +15,28 @@ import { describe, it, expect } from 'vitest';
  */
 const read = (p: string) => readFileSync(path.join(process.cwd(), p), 'utf8');
 
+/**
+ * Hay más de un archivo que pinta <html>: un root layout por locale
+ * (app/[lang]/layout.tsx), el de "/" (app/(root)/layout.tsx) y la 404 global
+ * (app/global-not-found.tsx). Los tres se listan a mano para que borrar o
+ * renombrar uno haga fallar el test en vez de dejarlo sin cubrir.
+ */
+const HTML_FILES = [
+  'app/[lang]/layout.tsx',
+  'app/(root)/layout.tsx',
+  'app/global-not-found.tsx',
+];
+
 describe('scroll al navegar', () => {
-  it('si <html> usa scroll suave, el root layout lleva data-scroll-behavior="smooth"', () => {
-    const css = read('app/globals.css');
-    const smooth = /html\s*\{[^}]*scroll-behavior:\s*smooth/.test(css);
-    if (!smooth) return;
-    // El JSX real, no las menciones a `<html lang>` de los comentarios.
-    const htmlTag = read('app/layout.tsx').match(/^\s*<html\s[^>]*=[^>]*>/m)?.[0] ?? '';
-    expect(htmlTag).toContain('data-scroll-behavior="smooth"');
-  });
+  it.each(HTML_FILES)(
+    'si <html> usa scroll suave, %s lleva data-scroll-behavior="smooth"',
+    (file) => {
+      const css = read('app/globals.css');
+      const smooth = /html\s*\{[^}]*scroll-behavior:\s*smooth/.test(css);
+      if (!smooth) return;
+      // El JSX real, no las menciones a `<html lang>` de los comentarios.
+      const htmlTag = read(file).match(/^\s*<html\s[^>]*=[^>]*>/m)?.[0] ?? '';
+      expect(htmlTag).toContain('data-scroll-behavior="smooth"');
+    },
+  );
 });
