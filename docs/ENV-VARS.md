@@ -11,7 +11,6 @@ Vercel (Settings → Environment Variables).
 
 | Variable | Para qué | Si falta |
 |---|---|---|
-| `API_SOLIS_TOKEN` | Token que `POST /api/signup-proxy` envía como `X-Api-Token` a `solislawruler.azurewebsites.net`. Lo emite ese sistema: no se puede generar por nuestra cuenta. | El endpoint responde 500. Es el único consumidor, y no tiene llamadores dentro del sitio. |
 | `BOS_API_TOKEN` | Autentica la entrega de leads al CRM. | Los leads no llegan a BOS y caen al respaldo (ver `LEAD_FALLBACK_EMAIL`). |
 | `LEAD_CAPTURE_ENDPOINT` | URL destino de los leads. | Se usa el endpoint de `bos.manuelsolis.com` por defecto. |
 | `RESEND_API_KEY` | Envío de todos los correos (boletín, bienvenida, respaldo de leads). | No se envía ningún correo. |
@@ -63,3 +62,8 @@ Para generar uno nuevo: `node -e "console.log(require('crypto').randomBytes(32).
 `.env.local` contiene una clave llamada `T` que ningún archivo del proyecto lee
 (`process.env.T` no aparece en el código). Parece un valor pegado por error; conviene
 revisarla y, si es un secreto real de algún servicio, tratarla como comprometida.
+
+`API_SOLIS_TOKEN` ya no la lee nada: su único consumidor, `POST /api/signup-proxy`, se
+eliminó en oct-2026 (no tenía llamadores desde que se quitó `join-in` en jun-2026). Se
+puede borrar de Vercel; como su valor estuvo en el historial público, conviene que el
+dueño de `solislawruler.azurewebsites.net` la revoque.
