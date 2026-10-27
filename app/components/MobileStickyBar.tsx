@@ -119,7 +119,7 @@ export default function MobileStickyBar() {
           href={`/${lang}/consulta`}
           onClick={handleConsultaClick}
           className="flex-1 flex items-center justify-center gap-2 min-h-[44px] py-3.5 bg-white/5 text-white font-semibold text-sm border-l border-[#B2904D]/30 active:bg-white/10 transition-colors"
-          aria-label={isEs ? 'Solicitar consulta' : 'Request consultation'}
+          aria-label={isEs ? 'Consulta: solicitar consulta' : 'Consult: request a consultation'}
         >
           <FileText className="w-4 h-4 text-[#B2904D]" strokeWidth={2.25} />
           <span>{isEs ? 'Consulta' : 'Consult'}</span>

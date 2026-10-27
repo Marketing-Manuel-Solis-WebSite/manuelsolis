@@ -297,9 +297,9 @@ export default function OfficePageView({
                         </div>
 
                         <div className="p-4 text-center relative z-10">
-                          <h5 className="font-bold text-white text-sm md:text-base leading-tight mb-1 group-hover:text-[#B2904D] transition-colors">
+                          <h3 className="font-bold text-white text-sm md:text-base leading-tight mb-1 group-hover:text-[#B2904D] transition-colors">
                             {person.name}
-                          </h5>
+                          </h3>
                           <span className="text-[10px] font-medium uppercase tracking-wider text-white/40 block">
                             {t(person.role)}
                           </span>
@@ -352,9 +352,9 @@ export default function OfficePageView({
                           <div className="mb-3 p-2 rounded-full bg-white/5 text-white/20 group-hover:text-[#B2904D] group-hover:bg-[#B2904D]/10 transition-colors">
                             <User size={18} />
                           </div>
-                          <h5 className="font-bold text-white text-sm text-center leading-tight mb-1">
+                          <h3 className="font-bold text-white text-sm text-center leading-tight mb-1">
                             {person.name}
-                          </h5>
+                          </h3>
                           <span className="text-[9px] font-medium uppercase tracking-wider text-white/40 text-center">
                             {t(person.role)}
                           </span>

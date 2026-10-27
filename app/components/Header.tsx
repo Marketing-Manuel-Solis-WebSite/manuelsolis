@@ -697,10 +697,12 @@ export default function HeaderProfessional() {
                       onClick={() => onLangLinkClick(code)}
                       hrefLang={code}
                       aria-current={activo ? 'true' : undefined}
+                      // Empieza por el texto visible (ES/EN): WCAG 2.5.3, quien
+                      // usa control por voz dice lo que ve.
                       aria-label={
                         code === 'es'
-                          ? (language === 'es' ? 'Español, idioma actual' : 'Spanish')
-                          : (language === 'en' ? 'English, current language' : 'Inglés')
+                          ? (language === 'es' ? 'ES, Español, idioma actual' : 'ES, Spanish')
+                          : (language === 'en' ? 'EN, English, current language' : 'EN, Inglés')
                       }
                       className={`flex items-center px-2.5 text-[10px] uppercase tracking-[0.15em] transition-colors duration-200 ${
                         activo

@@ -67,7 +67,7 @@ export default function ServiceAttorneys({
                   <span>{a.role}</span>
                 </p>
                 {a.credential && (
-                  <p className="mt-2 text-xs uppercase tracking-wider text-white/45">
+                  <p className="mt-2 text-xs uppercase tracking-wider text-white/55">
                     {isEs ? 'Colegiación: ' : 'Admitted: '}
                     {a.credential}
                   </p>

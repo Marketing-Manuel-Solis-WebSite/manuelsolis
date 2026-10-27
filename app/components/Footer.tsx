@@ -72,7 +72,7 @@ export default function Footer() {
               alt={language === 'es' ? 'Manuel Solis Law Firm — Página de inicio' : 'Manuel Solis Law Firm — Home page'}
               width={BRAND_LOGO.width}
               height={BRAND_LOGO.height}
-              className="h-24 w-auto relative z-10 drop-shadow-lg"
+              className="h-24 w-auto object-contain relative z-10 drop-shadow-lg"
             />
           </Link>
 
