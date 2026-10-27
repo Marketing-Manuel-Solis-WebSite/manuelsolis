@@ -133,12 +133,14 @@ export default function Footer() {
           <p className="text-center text-[11px] md:text-xs font-bold tracking-[0.25em] uppercase text-[#B2904D] mb-6">
             {language === 'es' ? 'Abogados por ciudad y servicio' : 'Attorneys by city and service'}
           </p>
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2 max-w-5xl mx-auto text-[11px] md:text-xs text-blue-100/60">
+          {/* En móvil cada enlace ocupa una fila de 44px (área táctil, WCAG
+              2.5.5); desde md vuelve a ser texto en línea con el gap original. */}
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-0 md:gap-y-2 max-w-5xl mx-auto text-[11px] md:text-xs text-blue-100/60">
             {CITY_FOOTER_LINKS.map((item) => (
               <li key={item.slug}>
                 <Link
                   href={`/${language}/${item.slug}`}
-                  className="hover:text-[#B2904D] transition-colors"
+                  className="flex min-h-11 items-center md:inline md:min-h-0 hover:text-[#B2904D] transition-colors"
                 >
                   {language === 'es' ? item.es : item.en}
                 </Link>
