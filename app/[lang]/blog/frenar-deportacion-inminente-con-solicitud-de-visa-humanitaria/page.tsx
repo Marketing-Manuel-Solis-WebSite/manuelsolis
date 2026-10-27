@@ -590,7 +590,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   </div>
 
                   <div className="border-t border-white/10 pt-8 mt-12">
-                      <h4 className="text-xs font-bold text-white/50 uppercase mb-4 tracking-widest">{t.sections.sources.title}</h4>
+                      <h3 className="text-xs font-bold text-white/50 uppercase mb-4 tracking-widest">{t.sections.sources.title}</h3>
                       <ul className="space-y-2 text-sm text-white/50 list-none pl-0">
                          {t.sections.sources.list.map((source, idx) => (
                            <li key={idx} className="flex items-center gap-2 hover:text-[#B2904D] transition-colors"><ArrowUpRight size={12} /> {source}</li>

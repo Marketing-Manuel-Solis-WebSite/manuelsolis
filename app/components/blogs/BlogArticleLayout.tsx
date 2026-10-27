@@ -423,9 +423,9 @@ export default function BlogArticleLayout({
 
                   {/* Fuentes */}
                   <div className="border-t border-white/10 pt-8 mt-12">
-                    <h4 className="text-xs font-bold text-white/50 uppercase mb-4 tracking-widest">
+                    <h3 className="text-xs font-bold text-white/50 uppercase mb-4 tracking-widest">
                       {t.sources.title}
-                    </h4>
+                    </h3>
                     <ul className="space-y-2 text-sm text-white/50 list-none pl-0">
                       {t.sources.list.map((source, i) => (
                         <li key={i} className="flex items-center gap-2 hover:text-[#B2904D] transition-colors">

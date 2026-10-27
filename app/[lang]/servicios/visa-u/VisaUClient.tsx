@@ -238,7 +238,7 @@ export default function VisaUClient({ lang }: { lang: Language }) {
                         <BookOpen size={12} className="text-[#B2904D]" />
                         <span className="text-[#B2904D] text-[10px] font-bold uppercase tracking-wider">{article.category}</span>
                       </div>
-                      <h4 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors leading-snug mb-4">{article.title}</h4>
+                      <h3 className="text-sm font-medium text-white group-hover:text-[#B2904D] transition-colors leading-snug mb-4">{article.title}</h3>
                       <span className="text-xs text-[#B2904D] flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
                         {isEs ? 'Leer artículo' : 'Read article'} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                       </span>
