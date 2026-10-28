@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { Reveal, Stagger, StaggerItem, Parallax, MagneticButton, Tilt, TiltLayer } from './motion';
-import HeroPopup from './HeroPopup';
 import type { Language } from '../lib/translations';
 
 // `name` es el alt de cada logo. Los nombres propios de colegios de abogados no
@@ -245,8 +244,6 @@ export default function Hero({ lang }: { lang: Language }) {
           </div>
         </div>
       </div>
-
-      <HeroPopup lang={lang} />
 
       <style dangerouslySetInnerHTML={{ __html: MARQUEE_CSS }} />
     </section>
