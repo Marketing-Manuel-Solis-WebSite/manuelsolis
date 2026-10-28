@@ -619,7 +619,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       ))}
                     </ul>
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.whatIsRFE.vsNOID.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.whatIsRFE.vsNOID.subtitle}</h3>
                       <p className="m-0">{t.sections.whatIsRFE.vsNOID.text}</p>
                     </div>
                   </section>
@@ -670,7 +670,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                           <div className="flex items-start gap-4">
                             <span className="shrink-0 w-10 h-10 rounded-full bg-[#B2904D] text-[#001540] flex items-center justify-center font-bold text-lg">{step.number}</span>
                             <div>
-                              <h4 className="text-white font-bold mb-2">{step.title}</h4>
+                              <h3 className="text-white font-bold mb-2">{step.title}</h3>
                               <p className="m-0 text-sm">{step.detail}</p>
                             </div>
                           </div>
@@ -689,9 +689,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4">
                       {t.sections.commonErrors.list.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-red-400 font-bold mb-2 flex items-center gap-2">
+                          <h3 className="text-red-400 font-bold mb-2 flex items-center gap-2">
                             <AlertCircle size={18} /> {item.error}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm">{item.detail}</p>
                         </div>
                       ))}
@@ -707,12 +707,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="mb-6"><InlineLinkedText text={t.sections.onlineOrMail.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.onlineOrMail.online.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.onlineOrMail.online.subtitle}</h3>
                       <p className="m-0">{t.sections.onlineOrMail.online.text}</p>
                     </div>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.onlineOrMail.mail.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.onlineOrMail.mail.subtitle}</h3>
                       <p className="m-0">{t.sections.onlineOrMail.mail.text}</p>
                     </div>
 
@@ -743,9 +743,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4 mb-6">
                       {t.sections.whenLegal.scenarios.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-white font-bold mb-2 flex items-center gap-2">
+                          <h3 className="text-white font-bold mb-2 flex items-center gap-2">
                             <ShieldCheck size={18} className="text-[#B2904D]" /> {item.scenario}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm">{item.detail}</p>
                         </div>
                       ))}
@@ -765,10 +765,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4">
                       {t.sections.faq.items.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-white font-bold mb-3 flex items-start gap-2">
+                          <h3 className="text-white font-bold mb-3 flex items-start gap-2">
                             <span className="shrink-0 w-7 h-7 rounded-full bg-[#B2904D] text-[#001540] flex items-center justify-center font-bold text-xs">P</span>
                             {item.q}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm pl-9">{item.a}</p>
                         </div>
                       ))}

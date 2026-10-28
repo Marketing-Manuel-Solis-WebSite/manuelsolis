@@ -587,7 +587,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="mb-6" dangerouslySetInnerHTML={{ __html: t.sections.renew.text }} />
 
                     <div className="bg-white/5 p-8 rounded-3xl border border-white/10 mb-6">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.renew.keyPoints.title}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.renew.keyPoints.title}</h3>
                       <ul className="grid gap-3 mt-4 list-none pl-0">
                         {t.sections.renew.keyPoints.list.map((item, i) => (
                           <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -640,7 +640,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </ul>
 
                     <div className="bg-white/5 p-8 rounded-3xl border border-white/10 mb-6">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.expired.options.title}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.expired.options.title}</h3>
                       <ul className="grid gap-3 mt-4 list-none pl-0">
                         {t.sections.expired.options.list.map((item, i) => (
                           <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -726,7 +726,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-6 mb-6">
                       {t.sections.supremeCourt.scenarios.map((s, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-3xl border border-white/10">
-                          <h4 className="text-[#B2904D] font-bold mb-3 text-lg">{s.title}</h4>
+                          <h3 className="text-[#B2904D] font-bold mb-3 text-lg">{s.title}</h3>
                           <p className="m-0 text-blue-50/80">{s.text}</p>
                         </div>
                       ))}
@@ -751,10 +751,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4 mb-6">
                       {t.sections.alternatives.list.map((opt, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-white font-bold mb-2 flex items-center gap-2">
+                          <h3 className="text-white font-bold mb-2 flex items-center gap-2">
                             <CheckCircle2 size={20} className="text-green-400" />
                             {opt.title}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-blue-50/80 text-base">{opt.text}</p>
                         </div>
                       ))}

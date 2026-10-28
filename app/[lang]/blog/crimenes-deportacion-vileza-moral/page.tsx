@@ -644,7 +644,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="mb-8"><InlineLinkedText text={t.sections.deportVsInadmiss.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-8 rounded-3xl border border-white/10 mb-6">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.deportVsInadmiss.deportable.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.deportVsInadmiss.deportable.subtitle}</h3>
                       <p className="mb-4">{t.sections.deportVsInadmiss.deportable.text}</p>
                       <ul className="grid gap-3 mt-4 list-none pl-0">
                         {t.sections.deportVsInadmiss.deportable.list.map((item, i) => (
@@ -657,7 +657,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </div>
 
                     <div className="bg-white/5 p-8 rounded-3xl border border-white/10 mb-6">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.deportVsInadmiss.inadmissible.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-4 text-sm">{t.sections.deportVsInadmiss.inadmissible.subtitle}</h3>
                       <p className="mb-4">{t.sections.deportVsInadmiss.inadmissible.text}</p>
                       <ul className="grid gap-3 mt-4 list-none pl-0">
                         {t.sections.deportVsInadmiss.inadmissible.list.map((item, i) => (
@@ -696,9 +696,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4">
                       {t.sections.categories.items.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+                          <h3 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
                             <Gavel size={18} className="text-[#B2904D]" /> {item.name}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm">{item.detail}</p>
                         </div>
                       ))}
@@ -714,7 +714,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="mb-6"><InlineLinkedText text={t.sections.pettyOffense.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.pettyOffense.requirements.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.pettyOffense.requirements.subtitle}</h3>
                       <ul className="grid gap-3 mt-4 list-none pl-0">
                         {t.sections.pettyOffense.requirements.list.map((item, i) => (
                           <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -726,12 +726,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </div>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.pettyOffense.youthful.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.pettyOffense.youthful.subtitle}</h3>
                       <p className="m-0">{t.sections.pettyOffense.youthful.text}</p>
                     </div>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.pettyOffense.oneConviction.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.pettyOffense.oneConviction.subtitle}</h3>
                       <p className="m-0">{t.sections.pettyOffense.oneConviction.text}</p>
                     </div>
 
@@ -751,9 +751,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4">
                       {t.sections.whatNotToDo.list.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-red-400 font-bold mb-2 flex items-center gap-2">
+                          <h3 className="text-red-400 font-bold mb-2 flex items-center gap-2">
                             <AlertCircle size={18} /> {item.action}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm">{item.detail}</p>
                         </div>
                       ))}
@@ -796,10 +796,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4">
                       {t.sections.faq.items.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-white font-bold mb-3 flex items-start gap-2">
+                          <h3 className="text-white font-bold mb-3 flex items-start gap-2">
                             <span className="shrink-0 w-7 h-7 rounded-full bg-[#B2904D] text-[#001540] flex items-center justify-center font-bold text-xs">P</span>
                             {item.q}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm pl-9">{item.a}</p>
                         </div>
                       ))}

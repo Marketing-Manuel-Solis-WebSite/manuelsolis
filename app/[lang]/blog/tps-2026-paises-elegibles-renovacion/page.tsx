@@ -662,9 +662,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       {t.sections.countryStatus.countries.map((country, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
                           <div className="flex items-center justify-between mb-3">
-                            <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                            <h3 className="text-white font-bold text-lg flex items-center gap-2">
                               <MapPin size={18} className="text-[#B2904D]" /> {country.name}
-                            </h4>
+                            </h3>
                             <span className={`text-xs font-bold uppercase tracking-widest ${country.statusColor}`}>
                               {country.status}
                             </span>
@@ -716,7 +716,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="mb-8"><InlineLinkedText text={t.sections.renewal.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
                     {t.sections.renewal.points.map((point, i) => (
                       <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
-                        <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{point.subtitle}</h4>
+                        <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{point.subtitle}</h3>
                         <p className="m-0">{point.text}</p>
                       </div>
                     ))}
@@ -731,7 +731,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="mb-6"><InlineLinkedText text={t.sections.workPermit.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mb-4">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.workPermit.autoExtension.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.workPermit.autoExtension.subtitle}</h3>
                       <p className="mb-4">{t.sections.workPermit.autoExtension.text}</p>
                       <ul className="grid gap-3 mt-4 list-none pl-0">
                         {t.sections.workPermit.autoExtension.list.map((item, i) => (
@@ -744,7 +744,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     </div>
 
                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.workPermit.noExtension.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-3 text-sm">{t.sections.workPermit.noExtension.subtitle}</h3>
                       <p className="m-0">{t.sections.workPermit.noExtension.text}</p>
                     </div>
                   </section>
@@ -770,9 +770,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4">
                       {t.sections.lostTPS.options.map((option, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+                          <h3 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
                             <CheckCircle2 size={18} className="text-[#B2904D]" /> {option.name}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm">{option.text}</p>
                         </div>
                       ))}
@@ -789,9 +789,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4">
                       {t.sections.errors.list.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-red-400 font-bold mb-2 flex items-center gap-2">
+                          <h3 className="text-red-400 font-bold mb-2 flex items-center gap-2">
                             <AlertCircle size={18} /> {item.error}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm">{item.detail}</p>
                         </div>
                       ))}
@@ -807,10 +807,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <div className="grid gap-4">
                       {t.sections.faq.items.map((item, i) => (
                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                          <h4 className="text-white font-bold mb-3 flex items-start gap-2">
+                          <h3 className="text-white font-bold mb-3 flex items-start gap-2">
                             <span className="shrink-0 w-7 h-7 rounded-full bg-[#B2904D] text-[#001540] flex items-center justify-center font-bold text-xs">P</span>
                             {item.q}
-                          </h4>
+                          </h3>
                           <p className="m-0 text-sm pl-9">{item.a}</p>
                         </div>
                       ))}

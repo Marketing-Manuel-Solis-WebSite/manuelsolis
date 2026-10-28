@@ -561,10 +561,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.strongEvidence.subtitle}</p>
                     <p className="mb-8"><InlineLinkedText text={t.sections.strongEvidence.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
-                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                       <ShieldCheck size={20} className="text-green-400" />
                       {lang === 'es' ? 'Evidencia fuerte' : 'Strong Evidence'}
-                    </h4>
+                    </h3>
                     <ul className="grid gap-3 mt-2 mb-8 list-none pl-0">
                       {t.sections.strongEvidence.strongItems.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -574,10 +574,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       ))}
                     </ul>
 
-                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                       <AlertTriangle size={20} className="text-yellow-400" />
                       {lang === 'es' ? 'Evidencia débil (por sí sola)' : 'Weak Evidence (on its own)'}
-                    </h4>
+                    </h3>
                     <ul className="grid gap-3 mt-2 mb-6 list-none pl-0">
                       {t.sections.strongEvidence.weakItems.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-yellow-500/10">
@@ -613,10 +613,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                     <p className="text-[#B2904D] font-medium mb-6 text-sm uppercase tracking-wider">{t.sections.commonQuestions.subtitle}</p>
                     <p className="mb-8"><InlineLinkedText text={t.sections.commonQuestions.text} lang={lang as 'es' | 'en'} state={enlacesInline} /></p>
 
-                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                       <ClipboardList size={20} className="text-blue-400" />
                       {lang === 'es' ? 'Preguntas estándar' : 'Standard Questions'}
-                    </h4>
+                    </h3>
                     <ul className="grid gap-3 mt-2 mb-8 list-none pl-0">
                       {t.sections.commonQuestions.standard.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
@@ -626,10 +626,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                       ))}
                     </ul>
 
-                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
+                    <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                       <Eye size={20} className="text-red-400" />
                       {lang === 'es' ? 'Preguntas "trampa" o de detalle' : '"Trap" or Detail Questions'}
-                    </h4>
+                    </h3>
                     <ul className="grid gap-3 mt-2 mb-6 list-none pl-0">
                       {t.sections.commonQuestions.trap.map((item, i) => (
                         <li key={i} className="flex items-start gap-4 bg-white/5 p-4 rounded-xl border border-red-500/10">

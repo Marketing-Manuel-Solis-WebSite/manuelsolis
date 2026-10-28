@@ -498,7 +498,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
                   <section>
                     <h2 className="text-3xl font-serif text-white mb-6">{t.sections.requirements.title}</h2>
                     <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
-                      <h4 className="text-[#B2904D] font-bold uppercase tracking-widest mb-6 text-sm">{t.sections.requirements.subtitle}</h4>
+                      <h3 className="text-[#B2904D] font-bold uppercase tracking-widest mb-6 text-sm">{t.sections.requirements.subtitle}</h3>
                       <ul className="space-y-4 list-none pl-0 m-0">
                         {t.sections.requirements.list.map((req, idx) => (
                            <li key={idx} className="flex gap-3 items-start">
