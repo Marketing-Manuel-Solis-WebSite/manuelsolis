@@ -510,3 +510,21 @@ describe('injectUtmsIntoUrl — BOS parsea la URL, no los campos utm_*', () => {
     expect(u.searchParams.get('utm_source')).toBe('Sitio web');
   });
 });
+
+describe('page_url del lead orgánico lleva las etiquetas de sitio web', () => {
+  it('sin UTMs, la URL que va a BOS y al CRM trae Sitio web / Organic / Organic_search', () => {
+    const p = mapFormToPayload({
+      first_name: 'Ana',
+      phone: '7135550100',
+      email: 'ana@example.com',
+      acceptedTerms: true,
+      page_url: 'https://www.manuelsolis.com/en/consulta',
+      language: 'en',
+    } as LeadFormInput);
+    const u = new URL(p.page_url);
+    expect(u.pathname).toBe('/en/consulta');
+    expect(u.searchParams.get('utm_source')).toBe('Sitio web');
+    expect(u.searchParams.get('utm_medium')).toBe('Organic');
+    expect(u.searchParams.get('utm_campaign')).toBe('Organic_search');
+  });
+});

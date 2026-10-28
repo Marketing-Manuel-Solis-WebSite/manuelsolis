@@ -5,7 +5,6 @@ import {
   detectDeviceTypeFromUA,
   LeadValidationError,
   mapFormToPayload,
-  normalizePageUrl,
   sendLeadFallbackEmail,
   type LeadFormInput,
 } from '../../lib/leadCapture';
@@ -168,7 +167,9 @@ export async function POST(request: NextRequest) {
     const delivery = await deliverLead(payload, {
       event_id: normalizeEventId(body.event_id, () => crypto.randomUUID()),
       submitted_at: new Date().toISOString(),
-      page_url: normalizePageUrl(input.page_url),
+      // El CRM, igual que BOS, saca la atribución de la URL: va la misma con
+      // las UTMs inyectadas (Sitio web / Organic / Organic_search si es orgánico).
+      page_url: payload.page_url,
       first_touch_source: typeof body.first_touch_source === 'string' ? body.first_touch_source : null,
       first_touch_medium: typeof body.first_touch_medium === 'string' ? body.first_touch_medium : null,
       first_touch_campaign: typeof body.first_touch_campaign === 'string' ? body.first_touch_campaign : null,

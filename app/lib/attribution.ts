@@ -304,36 +304,3 @@ export function effectiveUtmsToLeadFields(
     utm_term: eff.term || null,
   };
 }
-
-/**
- * `page_url` que viaja con el lead. Si la página del formulario ya trae query
- * (`?utm_source=…`), va tal cual. Si no —el visitante llegó por campaña y
- * navegó a /consulta—, se le agregan las UTMs y click IDs efectivos de la
- * cookie, para que el link que ve el CRM muestre de dónde vino, igual que el
- * de la landing de LGG. Tráfico directo u orgánico sale sin query.
- */
-export function buildLeadPageUrl(
-  href: string,
-  eff: ReturnType<typeof getEffectiveUtms>,
-): string {
-  let url: URL;
-  try {
-    url = new URL(href);
-  } catch {
-    return href;
-  }
-  if (url.search) return url.href;
-  url.hash = '';
-  const hasRealSource = !!eff.source && eff.source !== 'direct';
-  const params: [string, string | undefined][] = [
-    ['utm_source', hasRealSource ? eff.source : undefined],
-    ['utm_medium', hasRealSource && eff.medium !== '(none)' ? eff.medium : undefined],
-    ['utm_campaign', hasRealSource ? eff.campaign : undefined],
-    ['utm_content', hasRealSource ? eff.content : undefined],
-    ['utm_term', hasRealSource ? eff.term : undefined],
-    ['gclid', eff.gclid],
-    ['fbclid', eff.fbclid],
-  ];
-  for (const [k, v] of params) if (v) url.searchParams.set(k, v);
-  return url.href;
-}
