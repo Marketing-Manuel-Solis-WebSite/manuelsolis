@@ -6,7 +6,7 @@ import { m, AnimatePresence, Variants } from 'framer-motion'
 import { User, Phone, Mail, MessageSquare, CheckCircle2, ShieldCheck, Zap, XCircle, type LucideIcon } from 'lucide-react'
 import { fireConversion } from '../lib/conversion'
 import { fetchWithTimeout, FetchTimeoutError } from '../lib/fetchTimeout'
-import { getEffectiveUtms, effectiveUtmsToLeadFields } from '../lib/attribution'
+import { getEffectiveUtms, effectiveUtmsToLeadFields, buildLeadPageUrl } from '../lib/attribution'
 import { collectMetaBrowserParams, generateMetaEventId } from '../lib/metaPixel'
 
 // Client island: the interactive lead-capture form. La sección y el encabezado
@@ -253,10 +253,9 @@ export default function ContactFormClient() {
       } catch {
         urlParams = null;
       }
-      const hasParams = (urlParams?.toString().length ?? 0) > 0;
-      pageUrl = hasParams
-        ? window.location.href
-        : `${window.location.origin}${window.location.pathname}`;
+      // Sin query en la URL actual, el link lleva las UTMs de la cookie para
+      // que el CRM vea la campaña también en page_url.
+      pageUrl = buildLeadPageUrl(`${window.location.origin}${window.location.pathname}${window.location.search}`, eff);
       try {
         sessionId = window.sessionStorage.getItem('msl_sid');
       } catch {

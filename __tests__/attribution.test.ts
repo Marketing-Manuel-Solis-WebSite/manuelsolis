@@ -5,6 +5,7 @@ import {
   captureAttribution,
   getAttributionState,
   effectiveUtmsToLeadFields,
+  buildLeadPageUrl,
 } from '../app/lib/attribution';
 import { mapFormToPayload, type LeadFormInput } from '../app/lib/leadCapture';
 
@@ -375,5 +376,46 @@ describe('E2E: URL → cookie → payload del form → mapFormToPayload (contrat
     expect(payload.utm_source).toBe('(direct)');
     expect(payload.utm_medium).toBe('(none)');
     expect(payload.campaign).toBe('directo');
+  });
+});
+
+describe('buildLeadPageUrl: el link del lead muestra la campaña', () => {
+  const base = { source: 'direct', medium: 'none' } as ReturnType<typeof getEffectiveUtms>;
+
+  it('con query en la URL actual la deja tal cual', () => {
+    const href = 'https://www.manuelsolis.com/es/consulta?utm_source=tiktok&x=1';
+    expect(buildLeadPageUrl(href, { ...base, source: 'google', medium: 'cpc' })).toBe(href);
+  });
+
+  it('sin query agrega las UTMs y el gclid de la cookie', () => {
+    const url = new URL(
+      buildLeadPageUrl('https://www.manuelsolis.com/en/consulta', {
+        ...base,
+        source: 'google',
+        medium: 'cpc',
+        campaign: 'immigration_spanish_search',
+        term: 'immigration attorney',
+        gclid: 'abc',
+      }),
+    );
+    expect(url.pathname).toBe('/en/consulta');
+    expect(url.searchParams.get('utm_source')).toBe('google');
+    expect(url.searchParams.get('utm_medium')).toBe('cpc');
+    expect(url.searchParams.get('utm_campaign')).toBe('immigration_spanish_search');
+    expect(url.searchParams.get('utm_term')).toBe('immigration attorney');
+    expect(url.searchParams.get('gclid')).toBe('abc');
+    expect(url.searchParams.has('utm_content')).toBe(false);
+  });
+
+  it('orgánico o directo sale sin query', () => {
+    expect(buildLeadPageUrl('https://www.manuelsolis.com/en/consulta', base)).toBe(
+      'https://www.manuelsolis.com/en/consulta',
+    );
+  });
+
+  it('solo click ID: lo agrega sin inventar source', () => {
+    const url = new URL(buildLeadPageUrl('https://www.manuelsolis.com/es', { ...base, fbclid: 'IwAR' }));
+    expect(url.searchParams.get('fbclid')).toBe('IwAR');
+    expect(url.searchParams.has('utm_source')).toBe(false);
   });
 });
