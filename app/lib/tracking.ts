@@ -12,6 +12,7 @@
  */
 import { getEffectiveUtms } from './attribution';
 import { isUntrackedLocation } from './untrackedPaths';
+import { isGa4AllowedLocation } from './ga4Hosts';
 import {
   collectMetaBrowserParams,
   firePixelPageView,
@@ -178,6 +179,9 @@ export function pushToDataLayer(event: string, params: Record<string, string>) {
   } catch (e) {
     console.error('[dataLayer] Push error:', e);
   }
+  // Fuera de producción gtag.js no se carga (ver ga4Hosts.ts); sin este corte
+  // la llamada quedaría en la cola esperando un global que nunca llega.
+  if (!isGa4AllowedLocation()) return;
   whenAnalyticsReady(
     () => (window as WindowWithAnalytics).gtag,
     (gtag) => gtag('event', event, params),

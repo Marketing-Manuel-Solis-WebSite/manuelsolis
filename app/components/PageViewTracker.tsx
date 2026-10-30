@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
 import { Analytics, type BeforeSendEvent } from '@vercel/analytics/next';
@@ -8,6 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { trackPageView, whenAnalyticsReady } from '../lib/tracking';
 import { validHyrosSrc } from '../lib/hyros';
 import { isUntrackedPath } from '../lib/untrackedPaths';
+import { isGa4AllowedLocation } from '../lib/ga4Hosts';
 
 // IDs de analítica desde el entorno para poder rotarlos o desactivarlos sin
 // tocar código. Cada script se renderiza solo si su ID está definido.
@@ -159,6 +160,9 @@ export default function PageViewTracker() {
   return null;
 }
 
+// El hostname no cambia durante la vida de la página: no hay a qué suscribirse.
+const subscribeNoop = () => () => {};
+
 /**
  * Superficies de analítica de terceros. Viven en un client component porque
  * la exclusión del panel interno /admin necesita el pathname: el layout es
@@ -170,12 +174,16 @@ export default function PageViewTracker() {
  */
 export function TrackingSurfaces() {
   const pathname = usePathname();
+  // GA4 solo en los dominios de producción (ver ga4Hosts.ts). El host se lee
+  // en el navegador; en el servidor vale false, y como los scripts son
+  // lazyOnload no se pierde nada por montarlos tras la hidratación.
+  const ga4Allowed = useSyncExternalStore(subscribeNoop, isGa4AllowedLocation, () => false);
 
   if (isUntrackedPath(pathname)) return null;
 
   return (
     <>
-      {GA_ID && (
+      {GA_ID && ga4Allowed && (
         <>
           <Script
             async
