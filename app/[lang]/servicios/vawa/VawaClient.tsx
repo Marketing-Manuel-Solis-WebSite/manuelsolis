@@ -92,7 +92,7 @@ export default function VawaClient({
                   <span className="block font-black text-transparent bg-clip-text bg-gradient-to-r from-[#B2904D] via-[#F3E5AB] to-[#B2904D] drop-shadow-sm">{ui.heroTitle2}</span>
                 </h1>
                 <div className="h-1 w-24 bg-gradient-to-r from-[#B2904D] to-transparent rounded-full" />
-                <Reveal as="p" variant="up" delay={0.1} className="text-lg md:text-xl text-blue-100/70 font-light max-w-xl leading-relaxed">
+                <Reveal as="p" variant="up" eager delay={0.1} className="text-lg md:text-xl text-blue-100/70 font-light max-w-xl leading-relaxed">
                   {ui.heroDescription}
                 </Reveal>
                 <Reveal variant="up" delay={0.2} className="flex flex-wrap gap-4 pt-4">

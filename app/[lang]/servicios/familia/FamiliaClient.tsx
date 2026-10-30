@@ -99,7 +99,7 @@ export default function FamiliaClient({
                   <span className="block text-white/90 font-extralight mb-2">{ui.heroTitle1}</span>{' '}
                   <span className="block font-medium text-[#B2904D] drop-shadow-xl">{ui.heroTitle2}</span>
                 </h1>
-                <Reveal as="div" variant="up" delay={0.15} className="relative pl-6 border-l-2 border-[#B2904D]/50">
+                <Reveal as="div" variant="up" eager delay={0.15} className="relative pl-6 border-l-2 border-[#B2904D]/50">
                   <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">{ui.heroDescription}</p>
                 </Reveal>
                 <Reveal variant="up" delay={0.25} className="flex flex-wrap gap-4 pt-4">

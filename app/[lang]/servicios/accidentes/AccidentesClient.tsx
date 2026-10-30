@@ -106,7 +106,7 @@ export default function AccidentesClient({
                   <span className="block font-medium text-[#B2904D] drop-shadow-xl">{t('heroTitle2')}</span>
                 </h1>
 
-                <Reveal as="div" variant="up" delay={0.15} className="relative pl-6 border-l-2 border-[#B2904D]/50">
+                <Reveal as="div" variant="up" eager delay={0.15} className="relative pl-6 border-l-2 border-[#B2904D]/50">
                   <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">{t('heroDescription')}</p>
                 </Reveal>
 
