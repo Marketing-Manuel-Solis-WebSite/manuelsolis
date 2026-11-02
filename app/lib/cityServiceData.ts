@@ -62,7 +62,7 @@ export const OFFICES: Record<string, OfficeInfo> = {
     openingHours: [{ dayOfWeek: EVERY_DAY, opens: '00:00', closes: '23:59' }],
     additionalOffices: [
       { name: 'Houston Principal', address: '6657 Navigation Blvd, Houston, TX 77011', phone: '(713) 701-1731' },
-      { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(713) 903-7875' },
+      { name: 'Houston Bellaire', address: '9144 Bellaire Blvd, STE E, Houston, TX 77036', phone: '(713) 903-7875' },
     ],
   },
   // Oficina PRINCIPAL de Houston (6657 Navigation Blvd). La usan las landings de
@@ -88,7 +88,7 @@ export const OFFICES: Record<string, OfficeInfo> = {
       { dayOfWeek: 'Saturday', opens: '09:00', closes: '16:00' },
     ],
     additionalOffices: [
-      { name: 'Houston Bellaire', address: '9188 Bellaire Blvd E, Houston, TX 77036', phone: '(713) 903-7875' },
+      { name: 'Houston Bellaire', address: '9144 Bellaire Blvd, STE E, Houston, TX 77036', phone: '(713) 903-7875' },
       { name: 'Houston Accidentes', address: '6705 Navigation Blvd, Houston, TX 77011', phone: '(713) 231-5384' },
     ],
   },

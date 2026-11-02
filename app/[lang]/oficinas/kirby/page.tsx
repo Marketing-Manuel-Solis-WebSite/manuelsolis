@@ -15,7 +15,7 @@ type Props = {
 // --- CONFIGURACIÓN SEO ESPECÍFICA DE LA OFICINA ---
 const OFFICE_INFO = {
   name: "Manuel Solis Law Firm - Houston Kirby",
-  address: "3730 Kirby Dr Suite 1200",
+  address: "3730 Kirby Dr, Ste 57",
   city: "Houston",
   state: "TX",
   zip: "77098",

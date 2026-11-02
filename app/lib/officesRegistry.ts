@@ -86,7 +86,7 @@ export function getOfficePlaceId(slug: string): string | null {
  *   - north-loop   → Regus "Brookhollow Central III", 2950 N Loop W, Ste 500
  *   - northchase   → Regus / HQ (IWG), 16510 Northchase Dr
  *   - main-st      → The Great Jones Building (WeWork/Spaces/Regus), 708 Main St
- *   - kirby        → Regus "River Oaks Tower", 3730 Kirby Dr, Ste 1200
+ *   - kirby        → Regus "River Oaks Tower", 3730 Kirby Dr, Ste 57
  *   - league-city  → Regus, 2600 South Shore Blvd, Ste 300
  *
  * NOTA "con cita": el despacho SÍ atiende clientes en estas direcciones, pero

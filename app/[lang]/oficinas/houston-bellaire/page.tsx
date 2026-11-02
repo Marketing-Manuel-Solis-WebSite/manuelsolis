@@ -15,7 +15,7 @@ type Props = {
 // --- CONFIGURACIÓN SEO ESPECÍFICA DE LA OFICINA ---
 const OFFICE_INFO = {
   name: "Manuel Solis Law Firm - Houston Bellaire",
-  address: "9188 Bellaire Blvd, STE E",
+  address: "9144 Bellaire Blvd, STE E",
   city: "Houston",
   state: "TX",
   zip: "77036",

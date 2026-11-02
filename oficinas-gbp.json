@@ -25,9 +25,9 @@
     "storeCode": "HOU-INM-02",
     "query": "Abogado de Inmigración Manuel Solis, 9144 Bellaire Blvd, Houston, TX",
     "placeId": "ChIJM8zmi1nCQIYRbCqQqM1ZVpw",
-    "direccionSitio": "9188 Bellaire Blvd, STE E, Houston, TX 77036",
+    "direccionSitio": "9144 Bellaire Blvd, STE E, Houston, TX 77036",
     "direccionPanel": "9144 Bellaire Blvd, STE E, Houston, Texas 77036",
-    "nota": "CONFLICTO DURO: 9188 (sitio) vs 9144 (Google). Requiere verificacion fisica o del contrato de arrendamiento."
+    "nota": "Unificado con Google el 2026-11-02 (panel leido el 2026-10-29): el sitio pasa de 9188 a 9144 Bellaire Blvd, STE E."
   },
   {
     "nombre": "Houston — Kirby Dr",
@@ -35,9 +35,9 @@
     "storeCode": "HOS-INM-06",
     "query": "Abogado de Inmigración Manuel Solis, 3730 Kirby Dr, Houston, TX 77098",
     "placeId": "ChIJ6Tfpy6rBQIYRR14_1WwRNYs",
-    "direccionSitio": "3730 Kirby Dr Suite 1200, Houston, TX 77098",
-    "direccionPanel": "3730 Kirby Dr, Houston, Texas 77098",
-    "nota": "Regus River Oaks Tower. El sitio publica Suite 1200; Google no publica suite."
+    "direccionSitio": "3730 Kirby Dr, Ste 57, Houston, TX 77098",
+    "direccionPanel": "3730 Kirby Dr, Ste 57, Houston, Texas 77098",
+    "nota": "Regus River Oaks Tower. Unificado con Google el 2026-11-02 (panel leido el 2026-10-29): Ste 57; se retira Suite 1200."
   },
   {
     "nombre": "Houston — Main St",

@@ -515,6 +515,26 @@ describe('NAP de oficinas — fuente única', () => {
 
     expect(unexpected).toEqual([]);
   });
+
+  it('Bellaire y Kirby publican la dirección de su ficha de Google', () => {
+    // Panel de Google Business Profile leído en vivo el 2026-10-29. El sitio
+    // decía 9188 Bellaire Blvd (y "9188 Bellaire Blvd E" en el schema global)
+    // y "Suite 1200" en Kirby; Google es la fuente de verdad.
+    expect(OFFICES_NAP['houston-bellaire'].street).toBe('9144 Bellaire Blvd, STE E');
+    expect(formatOfficeAddress(OFFICES_NAP['houston-bellaire'])).toContain('Houston, TX 77036');
+    expect(OFFICES_NAP.kirby.street).toBe('3730 Kirby Dr, Ste 57');
+    expect(formatOfficeAddress(OFFICES_NAP.kirby)).toContain('Houston, TX 77098');
+
+    // El schema LawFirm global y cityServiceData no se derivan del NAP: se
+    // fijan aquí para que no vuelvan a divergir.
+    const layout = readFileSync(path.join(process.cwd(), 'app', '[lang]', 'layout.tsx'), 'utf8');
+    expect(layout).toContain("streetAddress: '9144 Bellaire Blvd, STE E'");
+    const cityData = readFileSync(path.join(process.cwd(), 'app', 'lib', 'cityServiceData.ts'), 'utf8');
+    for (const src of [layout, cityData]) {
+      expect(src).not.toMatch(/9188 Bellaire/);
+      expect(src).not.toMatch(/Kirby Dr,? (Suite|Ste) 1200/);
+    }
+  });
 });
 
 describe('Estado operativo por oficina (OFI-5)', () => {
