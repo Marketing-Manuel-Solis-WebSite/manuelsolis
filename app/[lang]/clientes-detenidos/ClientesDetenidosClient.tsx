@@ -222,11 +222,11 @@ export default function ClientesDetenidosClient({ lang }: { lang: 'es' | 'en' })
                 </div>
               </div>
               <a
-                href="tel:+18325980914"
+                href="tel:+18327431127"
                 className="flex items-center gap-3 bg-white text-red-900 font-black text-xl md:text-2xl px-6 py-3 rounded-xl hover:bg-yellow-400 transition-colors whitespace-nowrap shadow-lg"
               >
                 <Phone className="w-6 h-6" />
-                832-598-0914
+                832-743-1127
               </a>
             </div>
             <div className="mt-4 pt-4 border-t border-red-500/30">
@@ -294,10 +294,10 @@ export default function ClientesDetenidosClient({ lang }: { lang: 'es' | 'en' })
                       <p className="text-sm text-white/60 mb-8">{getT(texts.section2.hours)}</p>
 
                       <a
-                          href="tel:+18325980914"
+                          href="tel:+18327431127"
                           className="text-3xl lg:text-4xl font-black text-white hover:text-[#B2904D] transition-colors"
                       >
-                          832-598-0914
+                          832-743-1127
                       </a>
                       <p className="text-xs text-white/40 mt-4 uppercase tracking-widest">
                           {lang === 'es' ? 'Atención Inmediata' : 'Immediate Attention'}

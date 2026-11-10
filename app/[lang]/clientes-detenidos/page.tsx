@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : 'ICE Detainee Emergency Legal Help';
 
   const description = isEs
-    ? '¿Su familiar fue detenido por ICE? Actuamos de inmediato: localizador ICE, audiencia de fianza y defensa en corte. Línea 832-598-0914, L-V 9AM-9PM CST.'
-    : 'Family member detained by ICE? We act immediately: ICE detainee locator, bond hearings and court defense. Help line 832-598-0914, Mon-Fri 9AM-9PM CST.';
+    ? '¿Su familiar fue detenido por ICE? Actuamos de inmediato: localizador ICE, audiencia de fianza y defensa en corte. Línea 832-743-1127, L-V 9AM-9PM CST.'
+    : 'Family member detained by ICE? We act immediately: ICE detainee locator, bond hearings and court defense. Help line 832-743-1127, Mon-Fri 9AM-9PM CST.';
 
   return {
     title,
@@ -91,7 +91,7 @@ const getEmergencySchema = (lang: string) => ({
     '@type': 'ServiceChannel',
     // Debe coincidir con la línea de ayuda que la página marca de verdad
     // (CTA tel: de ClientesDetenidosClient) y con el horario que anuncia.
-    servicePhone: { '@type': 'ContactPoint', telephone: '+1-832-598-0914' },
+    servicePhone: { '@type': 'ContactPoint', telephone: '+1-832-743-1127' },
     availableLanguage: ['Spanish', 'English'],
   },
   provider: { '@id': `${SITE_URL}/#organization` },
